@@ -1,0 +1,30 @@
+export interface ExtensionSettings {
+  defaultSpeed: number;
+  defaultVolume: number;
+  tapSeekSeconds: number;
+  enableShortcuts: boolean;
+  enableInlineButtons: boolean;
+  theme: "system" | "dark" | "light";
+  smoothScrubbing: boolean;
+  autoDownloadFormat: "auto" | "mp3" | "m4a" | "wav";
+}
+
+export interface PlaybackState {
+  hasMedia: boolean;
+  isPlaying: boolean;
+  currentTime: number;
+  duration: number;
+  speed: number;
+  volume: number;
+  isMuted: boolean;
+  formattedCurrent: string;
+  formattedDuration: string;
+}
+
+export interface ShortcutItem {
+  id: string;
+  action: string;
+  keys: string[];
+  description: string;
+  category: "playback" | "navigation" | "speed";
+}

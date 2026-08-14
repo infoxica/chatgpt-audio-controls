@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10a37f" />
+      <stop offset="50%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#10a37f" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="128" height="128" rx="28" fill="url(#bgGrad)" />
+  <rect width="126" height="126" x="1" y="1" rx="27" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+
+  <!-- Subtle glow aura -->
+  <circle cx="64" cy="64" r="38" fill="url(#primaryGrad)" opacity="0.15" filter="url(#glow)" />
+
+  <!-- Center Waveform & Speaker Graphic -->
+  <g transform="translate(24, 28)">
+    <!-- Speaker cone -->
+    <path d="M12 26 L24 26 L38 38 L38 10 L24 22 L12 22 Z" fill="url(#primaryGrad)" />
+    
+    <!-- Sound Waves with dynamic heights -->
+    <path d="M46 16 C52 20, 52 28, 46 32" fill="none" stroke="url(#primaryGrad)" stroke-width="4" stroke-linecap="round" />
+    <path d="M54 10 C64 16, 64 32, 54 38" fill="none" stroke="url(#accentGrad)" stroke-width="4" stroke-linecap="round" opacity="0.9" />
+    <path d="M62 4 C76 13, 76 35, 62 44" fill="none" stroke="url(#primaryGrad)" stroke-width="4" stroke-linecap="round" opacity="0.75" />
+
+    <!-- Play symbol badge in lower right -->
+    <circle cx="56" cy="54" r="16" fill="#10a37f" />
+    <polygon points="53,48 63,54 53,60" fill="#ffffff" />
+  </g>
+</svg>

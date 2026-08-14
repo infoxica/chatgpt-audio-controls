@@ -1,58 +1,48 @@
-// ==UserScript==
-// @name         ChatGPT Read Aloud & Audio Controls
-// @namespace    https://infoxica.com/
-// @version      1.0.0
-// @description  Integrated Read Aloud controls beside the ChatGPT composer: compact 2-row seek player, speed presets, volume slider, instant audio download, shortcuts, and one-click per-response Read Aloud.
-// @author       Infoxica
-// @match        https://chatgpt.com/*
-// @run-at       document-start
-// @grant        unsafeWindow
-// @homepageURL  https://github.com/infoxica/chatgpt-audio-controls
-// @supportURL   https://github.com/infoxica/chatgpt-audio-controls/issues
-// @license      MIT
-// ==/UserScript==
+import { getLucideSvg, setIcon } from "./icons";
+import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
 (function () {
   "use strict";
 
-  const PAGE = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
+  const PAGE: any = typeof window !== "undefined" ? window : globalThis;
 
   const CONFIG = {
     tapSeekSeconds: 10,
-    speeds: [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3],
+    speeds: SPEED_PRESETS,
     defaultSpeed: 1,
     defaultVolume: 1,
-    speedStorage: "cgpt-ra-v4-speed",
-    volumeStorage: "cgpt-ra-v4-volume",
+    speedStorage: STORAGE_KEYS.SPEED,
+    volumeStorage: STORAGE_KEYS.VOLUME,
+    settingsStorage: STORAGE_KEYS.SETTINGS,
     debug: true,
   };
 
-  let activeMedia = null;
-  let activeInlineButton = null;
-  let pendingInlineButton = null;
+  let activeMedia: HTMLMediaElement | null = null;
+  let activeInlineButton: HTMLElement | null = null;
+  let pendingInlineButton: HTMLElement | null = null;
 
-  let leftRail = null;
-  let rightRail = null;
-  let seekSlider = null;
-  let currentLabel = null;
-  let durationLabel = null;
-  let playButton = null;
-  let speedButton = null;
-  let speedMenu = null;
-  let volumeSlider = null;
-  let volumeLabel = null;
-  let downloadButton = null;
+  let leftRail: HTMLElement | null = null;
+  let rightRail: HTMLElement | null = null;
+  let seekSlider: HTMLInputElement | null = null;
+  let currentLabel: HTMLElement | null = null;
+  let durationLabel: HTMLElement | null = null;
+  let playButton: HTMLElement | null = null;
+  let speedButton: HTMLElement | null = null;
+  let speedMenu: HTMLElement | null = null;
+  let volumeSlider: HTMLInputElement | null = null;
+  let volumeLabel: HTMLElement | null = null;
+  let downloadButton: HTMLElement | null = null;
 
   let sliderDragging = false;
 
-  let capturedAudioBlob = null;
+  let capturedAudioBlob: Blob | null = null;
   let capturedAudioMime = "";
   let capturedAudioURL = "";
   let capturedAudioAt = 0;
 
-  const blobURLMap = new Map();
+  const blobURLMap = new Map<string, Blob>();
 
-  function log(...args) {
+  function log(...args: any[]) {
     if (CONFIG.debug) {
       console.log(
         "%c[ChatGPT Read Aloud v4.2]",
@@ -62,15 +52,15 @@
     }
   }
 
-  function warn(...args) {
+  function warn(...args: any[]) {
     console.warn("[ChatGPT Read Aloud v4.2]", ...args);
   }
 
-  function clamp(value, min, max) {
+  function clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
   }
 
-  function formatTime(seconds) {
+  function formatTime(seconds: number): string {
     if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
 
     const total = Math.floor(seconds);
@@ -85,62 +75,30 @@
     return `${minutes}:${String(secs).padStart(2, "0")}`;
   }
 
-  function getSavedSpeed() {
-    const n = parseFloat(localStorage.getItem(CONFIG.speedStorage));
+  function getSavedSpeed(): number {
+    const n = parseFloat(localStorage.getItem(CONFIG.speedStorage) || "");
     return Number.isFinite(n) && n >= 0.25 && n <= 4 ? n : CONFIG.defaultSpeed;
   }
 
-  function getSavedVolume() {
-    const n = parseFloat(localStorage.getItem(CONFIG.volumeStorage));
+  function getSavedVolume(): number {
+    const n = parseFloat(localStorage.getItem(CONFIG.volumeStorage) || "");
     return Number.isFinite(n) && n >= 0 && n <= 1 ? n : CONFIG.defaultVolume;
   }
 
-  /*
-   * Self-contained Lucide SVGs (no external font or CDN required).
-   */
-  const LUCIDE = {
-    play: '<polygon points="6 3 20 12 6 21 6 3"></polygon>',
-    pause: '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>',
-    square: '<rect x="5" y="5" width="14" height="14" rx="2"></rect>',
-    download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line>',
-    "volume-2": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>',
-    "volume-1": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>',
-    "volume-x": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><line x1="22" x2="16" y1="9" y2="15"></line><line x1="16" x2="22" y1="9" y2="15"></line>',
-    "circle-help": '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
-    "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
-    "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
-    "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
-  };
-
-  function lucideIcon(name, className = "") {
-    const body = LUCIDE[name] || LUCIDE["circle-help"];
-    return `
-      <svg
-        class="cgpt-ra-lucide ${className}"
-        viewBox="0 0 24 24"
-        width="18"
-        height="18"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-        focusable="false"
-      >${body}</svg>
-    `;
-  }
-
-  function setIcon(button, iconName, extraHTML = "") {
-    if (!button) return;
-    button.innerHTML = lucideIcon(iconName) + extraHTML;
+  function getSavedSettings(): any {
+    try {
+      const raw = localStorage.getItem(CONFIG.settingsStorage);
+      return raw ? JSON.parse(raw) : {};
+    } catch (_) {
+      return {};
+    }
   }
 
   // ---------------------------------------------------------------------
   // Audio capture / download interception
   // ---------------------------------------------------------------------
 
-  function looksLikeAudio(url, contentType) {
+  function looksLikeAudio(url: string, contentType: string): boolean {
     const u = String(url || "").toLowerCase();
     const type = String(contentType || "").toLowerCase();
 
@@ -154,7 +112,7 @@
     );
   }
 
-  function rememberAudioBlob(blob, sourceURL = "") {
+  function rememberAudioBlob(blob: Blob, sourceURL = ""): void {
     if (!(blob instanceof Blob) || !blob.size) return;
 
     const mime = blob.type || "";
@@ -172,7 +130,7 @@
     });
   }
 
-  function installObjectURLInterceptor() {
+  function installObjectURLInterceptor(): void {
     try {
       const urlObj = PAGE.URL;
       if (!urlObj || urlObj.__cgptRAObjectURLHook) return;
@@ -180,7 +138,7 @@
       const originalCreate = urlObj.createObjectURL.bind(urlObj);
       const originalRevoke = urlObj.revokeObjectURL.bind(urlObj);
 
-      urlObj.createObjectURL = function (object) {
+      urlObj.createObjectURL = function (object: any) {
         const url = originalCreate(object);
 
         try {
@@ -196,7 +154,7 @@
         return url;
       };
 
-      urlObj.revokeObjectURL = function (url) {
+      urlObj.revokeObjectURL = function (url: string) {
         return originalRevoke(url);
       };
 
@@ -209,13 +167,13 @@
     }
   }
 
-  function installFetchInterceptor() {
+  function installFetchInterceptor(): void {
     try {
       if (!PAGE.fetch || PAGE.fetch.__cgptRAFetchHook) return;
 
       const originalFetch = PAGE.fetch.bind(PAGE);
 
-      async function wrappedFetch(...args) {
+      async function wrappedFetch(...args: any[]) {
         const response = await originalFetch(...args);
 
         try {
@@ -230,7 +188,7 @@
             response
               .clone()
               .blob()
-              .then((blob) => rememberAudioBlob(blob, requestURL))
+              .then((blob: Blob) => rememberAudioBlob(blob, requestURL))
               .catch(() => {});
           }
         } catch (_) {}
@@ -247,7 +205,7 @@
     }
   }
 
-  function installXHRInterceptor() {
+  function installXHRInterceptor(): void {
     try {
       const proto = PAGE.XMLHttpRequest?.prototype;
       if (!proto || proto.__cgptRAXHRHook) return;
@@ -255,12 +213,12 @@
       const originalOpen = proto.open;
       const originalSend = proto.send;
 
-      proto.open = function (method, url, ...rest) {
+      proto.open = function (method: string, url: string, ...rest: any[]) {
         this.__cgptRAURL = String(url || "");
         return originalOpen.call(this, method, url, ...rest);
       };
 
-      proto.send = function (...args) {
+      proto.send = function (...args: any[]) {
         this.addEventListener(
           "load",
           () => {
@@ -296,7 +254,7 @@
   // Media interception
   // ---------------------------------------------------------------------
 
-  function getSeekInfo(media = activeMedia) {
+  function getSeekInfo(media = activeMedia): { start: number; end: number; seekable: boolean } {
     if (!media) return { start: 0, end: 0, seekable: false };
 
     try {
@@ -324,7 +282,7 @@
     return { start: 0, end: 0, seekable: false };
   }
 
-  function attachMedia(media, reason = "detected") {
+  function attachMedia(media: HTMLMediaElement, reason = "detected"): void {
     if (!media || typeof media.play !== "function") return;
 
     const changed = activeMedia !== media;
@@ -350,7 +308,7 @@
     log("Attached media:", reason, media);
   }
 
-  function installMediaListeners(media) {
+  function installMediaListeners(media: HTMLMediaElement): void {
     [
       "loadedmetadata",
       "durationchange",
@@ -372,7 +330,7 @@
     });
   }
 
-  function installMediaInterceptor() {
+  function installMediaInterceptor(): void {
     try {
       const proto = PAGE.HTMLMediaElement?.prototype;
       if (!proto || proto.__cgptRAV4Hook) return;
@@ -380,7 +338,7 @@
       const originalPlay = proto.play;
       const originalPause = proto.pause;
 
-      proto.play = function (...args) {
+      proto.play = function (...args: any[]) {
         attachMedia(this, "play() intercepted");
 
         const result = originalPlay.apply(this, args);
@@ -398,7 +356,7 @@
         return result;
       };
 
-      proto.pause = function (...args) {
+      proto.pause = function (...args: any[]) {
         const result = originalPause.apply(this, args);
 
         if (this === activeMedia) {
@@ -423,537 +381,11 @@
   }
 
   // ---------------------------------------------------------------------
-  // Styles
+  // UI Building
   // ---------------------------------------------------------------------
 
-  function installStyles() {
-    if (document.getElementById("cgpt-ra-v4-style")) return;
-
-    const style = document.createElement("style");
-    style.id = "cgpt-ra-v4-style";
-    style.textContent = `
-      :root {
-          --cgpt-ra-bg: rgba(32, 32, 32, .94);
-          --cgpt-ra-bg-hover: rgba(255,255,255,.10);
-          --cgpt-ra-border: rgba(255,255,255,.10);
-          --cgpt-ra-text: rgba(255,255,255,.92);
-          --cgpt-ra-muted: rgba(255,255,255,.55);
-          --cgpt-ra-disabled: rgba(255,255,255,.28);
-      }
-
-      html.light {
-          --cgpt-ra-bg: rgba(245,245,245,.96);
-          --cgpt-ra-bg-hover: rgba(0,0,0,.07);
-          --cgpt-ra-border: rgba(0,0,0,.10);
-          --cgpt-ra-text: rgba(0,0,0,.84);
-          --cgpt-ra-muted: rgba(0,0,0,.52);
-          --cgpt-ra-disabled: rgba(0,0,0,.25);
-      }
-
-      #cgpt-ra-left,
-      #cgpt-ra-right {
-          position: fixed;
-          z-index: 9999;
-          border: 1px solid var(--cgpt-ra-border);
-          background: var(--cgpt-ra-bg);
-          color: var(--cgpt-ra-text);
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
-          box-shadow: 0 1px 2px rgba(0,0,0,.18);
-          transition: opacity .15s ease, transform .15s ease;
-      }
-
-      #cgpt-ra-left {
-          width: 430px;
-          height: 46px;
-          display: block;
-          padding: 0 13px;
-          border-radius: 24px;
-          overflow: visible;
-      }
-
-      #cgpt-ra-left::before {
-          content: "";
-          position: absolute;
-          z-index: 2;
-          top: -1px;
-          left: 50%;
-          width: 120px;
-          height: 3px;
-          transform: translateX(-50%);
-          background: var(--cgpt-ra-bg);
-          pointer-events: none;
-      }
-
-      .cgpt-ra-transport-row {
-          position: absolute;
-          z-index: 3;
-          left: 50%;
-          top: -29px;
-          transform: translateX(-50%);
-          height: 34px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 2px;
-          padding: 2px 5px 3px;
-          margin: 0;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 19px 19px 11px 11px;
-          background: var(--cgpt-ra-bg);
-          box-shadow: 0 1px 2px rgba(0,0,0,.10);
-      }
-
-      .cgpt-ra-transport-row::after {
-          content: "";
-          position: absolute;
-          left: 10px;
-          right: 10px;
-          bottom: -3px;
-          height: 5px;
-          background: var(--cgpt-ra-bg);
-          pointer-events: none;
-      }
-
-      .cgpt-ra-transport-row > * {
-          position: relative;
-          z-index: 1;
-      }
-
-      .cgpt-ra-progress-row {
-          height: 44px;
-          display: grid;
-          grid-template-columns: 70px minmax(0, 1fr);
-          align-items: center;
-          gap: 8px;
-          padding: 0;
-          margin: 0;
-          border: 0;
-      }
-
-      #cgpt-ra-right {
-          width: max-content;
-          min-width: 0;
-          height: 46px;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 5px 7px;
-          border-radius: 24px;
-          white-space: nowrap;
-      }
-
-      #cgpt-ra-left.cgpt-ra-no-media,
-      #cgpt-ra-right.cgpt-ra-no-media {
-          opacity: .42;
-      }
-
-      #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {
-          pointer-events: none !important;
-      }
-
-      .cgpt-ra-icon-btn {
-          position: relative;
-          width: 34px;
-          height: 34px;
-          flex: 0 0 34px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 50%;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          padding: 0;
-          font-size: 17px;
-          transition: background .12s ease, opacity .12s ease;
-      }
-
-      .cgpt-ra-icon-btn:hover {
-          background: var(--cgpt-ra-bg-hover);
-      }
-
-      .cgpt-ra-icon-btn:disabled {
-          color: var(--cgpt-ra-disabled);
-          cursor: default;
-          background: transparent;
-      }
-
-      .cgpt-ra-lucide {
-          display: block;
-          width: 18px;
-          height: 18px;
-          flex: 0 0 18px;
-          overflow: visible;
-          pointer-events: none;
-      }
-
-      .cgpt-ra-icon-btn svg {
-          stroke: currentColor;
-      }
-
-      .cgpt-ra-seek10 {
-          position: relative;
-      }
-
-      .cgpt-ra-seek10 .cgpt-ra-lucide {
-          width: 19px;
-          height: 19px;
-      }
-
-      .cgpt-ra-seek10 .cgpt-ra-ten {
-          position: absolute;
-          inset: 0;
-          display: grid;
-          place-items: center;
-          padding-top: 1px;
-          font-size: 8px;
-          font-weight: 700;
-          font-family: system-ui, sans-serif;
-          pointer-events: none;
-      }
-
-      .cgpt-ra-transport-row .cgpt-ra-icon-btn {
-          width: 30px;
-          height: 30px;
-          flex: 0 0 30px;
-      }
-
-      .cgpt-ra-play {
-          width: 32px !important;
-          height: 32px !important;
-          flex-basis: 32px !important;
-      }
-
-      .cgpt-ra-time {
-          min-width: 0;
-          color: var(--cgpt-ra-muted);
-          font-size: 10px;
-          line-height: 1;
-          font-variant-numeric: tabular-nums;
-          white-space: nowrap;
-          text-align: left;
-      }
-
-      .cgpt-ra-seek-wrap {
-          min-width: 0;
-          display: flex;
-          align-items: center;
-          padding: 0;
-      }
-
-      .cgpt-ra-range {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 18px;
-          margin: 0;
-          padding: 0;
-          border: 0;
-          outline: 0;
-          cursor: pointer;
-          color: var(--cgpt-ra-text);
-          background: transparent;
-      }
-
-      .cgpt-ra-range::-webkit-slider-runnable-track {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: color-mix(in srgb, currentColor 32%, transparent);
-          transition: height .12s ease, background .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-webkit-slider-runnable-track,
-      .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
-          height: 4px;
-          background: color-mix(in srgb, currentColor 44%, transparent);
-      }
-
-      .cgpt-ra-range::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 9px;
-          height: 9px;
-          margin-top: -3.5px;
-          border: 0;
-          border-radius: 50%;
-          background: currentColor;
-          box-shadow: 0 0 0 1px color-mix(in srgb, var(--cgpt-ra-bg) 85%, transparent);
-          transition: width .12s ease, height .12s ease, margin-top .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-webkit-slider-thumb,
-      .cgpt-ra-range:focus-visible::-webkit-slider-thumb {
-          width: 10px;
-          height: 10px;
-          margin-top: -3px;
-      }
-
-      .cgpt-ra-range::-moz-range-track {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: color-mix(in srgb, currentColor 32%, transparent);
-          transition: height .12s ease, background .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-moz-range-track,
-      .cgpt-ra-range:focus-visible::-moz-range-track {
-          height: 4px;
-          background: color-mix(in srgb, currentColor 44%, transparent);
-      }
-
-      .cgpt-ra-range::-moz-range-progress {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: currentColor;
-      }
-
-      .cgpt-ra-range:hover::-moz-range-progress,
-      .cgpt-ra-range:focus-visible::-moz-range-progress {
-          height: 4px;
-      }
-
-      .cgpt-ra-range::-moz-range-thumb {
-          width: 9px;
-          height: 9px;
-          border: 0;
-          border-radius: 50%;
-          background: currentColor;
-      }
-
-      .cgpt-ra-range:disabled {
-          opacity: .35;
-          cursor: default;
-      }
-
-      .cgpt-ra-speed-wrap,
-      .cgpt-ra-volume-wrap,
-      .cgpt-ra-help-wrap {
-          position: relative;
-      }
-
-      .cgpt-ra-speed-btn {
-          width: auto;
-          min-width: 45px;
-          padding: 0 9px;
-          border-radius: 17px;
-          font-size: 12px;
-          font-weight: 600;
-          font-family: system-ui, sans-serif;
-      }
-
-      .cgpt-ra-popover {
-          position: absolute;
-          right: 0;
-          bottom: calc(100% + 9px);
-          display: none;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 12px;
-          background: rgb(40,40,40);
-          color: #fff;
-          box-shadow: 0 10px 30px rgba(0,0,0,.28);
-          overflow: hidden;
-          z-index: 10002;
-      }
-
-      html.light .cgpt-ra-popover {
-          background: #fff;
-          color: #202020;
-      }
-
-      .cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,
-      .cgpt-ra-help-wrap:hover .cgpt-ra-popover,
-      .cgpt-ra-help-wrap:focus-within .cgpt-ra-popover {
-          display: block;
-      }
-
-      .cgpt-ra-speed-menu {
-          min-width: 88px;
-          padding: 5px;
-      }
-
-      .cgpt-ra-speed-option {
-          width: 100%;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 7px;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          font-size: 12px;
-      }
-
-      .cgpt-ra-speed-option:hover,
-      .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(255,255,255,.10);
-      }
-
-      html.light .cgpt-ra-speed-option:hover,
-      html.light .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(0,0,0,.07);
-      }
-
-      .cgpt-ra-volume-popover {
-          position: absolute;
-          left: 50%;
-          bottom: calc(100% + 4px);
-          transform: translateX(-50%);
-          width: 44px;
-          height: 158px;
-          display: flex;
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          gap: 0;
-          padding: 8px 5px 7px;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 22px;
-          background: rgb(40,40,40);
-          color: #fff;
-          box-shadow: 0 10px 30px rgba(0,0,0,.28);
-          transition: opacity .12s ease, visibility .12s ease;
-          z-index: 10002;
-      }
-
-      html.light .cgpt-ra-volume-popover {
-          background: #fff;
-          color: #202020;
-      }
-
-      .cgpt-ra-volume-wrap:hover .cgpt-ra-volume-popover,
-      .cgpt-ra-volume-wrap:focus-within .cgpt-ra-volume-popover {
-          opacity: 1;
-          visibility: visible;
-          pointer-events: auto;
-      }
-
-      .cgpt-ra-volume-popover input[type="range"] {
-          position: absolute;
-          top: 52px;
-          left: 50%;
-          width: 98px;
-          height: 20px;
-          margin: 0;
-          transform: translate(-50%, -50%) rotate(-90deg);
-          accent-color: currentColor;
-      }
-
-      .cgpt-ra-volume-value {
-          position: absolute;
-          left: 6px;
-          right: 6px;
-          bottom: 8px;
-          min-height: 28px;
-          display: flex;
-          align-items: flex-end;
-          justify-content: center;
-          padding-top: 10px;
-          border-top: 1px solid var(--cgpt-ra-border);
-          font-size: 9px;
-          line-height: 1;
-          color: inherit;
-          opacity: .68;
-          text-align: center;
-      }
-
-      .cgpt-ra-help {
-          width: 300px;
-          padding: 11px 13px;
-          font-family: system-ui, sans-serif;
-      }
-
-      .cgpt-ra-help-title {
-          margin-bottom: 8px;
-          font-size: 12px;
-          font-weight: 650;
-      }
-
-      .cgpt-ra-shortcut-row {
-          display: flex;
-          justify-content: space-between;
-          gap: 20px;
-          padding: 4px 0;
-          font-size: 11px;
-      }
-
-      .cgpt-ra-shortcut-key {
-          color: inherit;
-          opacity: .62;
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          white-space: nowrap;
-      }
-
-      .cgpt-ra-download {
-          margin-left: 2px;
-          order: 99;
-      }
-
-      .cgpt-ra-download-busy svg {
-          animation: cgpt-ra-spin .8s linear infinite;
-      }
-
-      @keyframes cgpt-ra-spin {
-          to { transform: rotate(360deg); }
-      }
-
-      .cgpt-inline-readaloud {
-          width: 32px;
-          height: 32px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 8px;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          opacity: .72;
-          padding: 0;
-      }
-
-      .cgpt-inline-readaloud:hover {
-          opacity: 1;
-          background: rgba(127,127,127,.12);
-      }
-
-      .cgpt-inline-readaloud svg {
-          display: block;
-          width: 17px;
-          height: 17px;
-      }
-
-      .cgpt-inline-readaloud.cgpt-active {
-          opacity: 1;
-      }
-
-      @media (max-width: 1180px) {
-          #cgpt-ra-left,
-          #cgpt-ra-right {
-              display: none !important;
-          }
-      }
-    `;
-
-    document.documentElement.appendChild(style);
-  }
-
-  function buildUI() {
+  function buildUI(): void {
     if (leftRail || !document.body) return;
-
-    installStyles();
 
     leftRail = document.createElement("div");
     leftRail.id = "cgpt-ra-left";
@@ -963,18 +395,18 @@
       <div class="cgpt-ra-transport-row">
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
                 title="Back 10 seconds — hold to scrub" disabled>
-          ${lucideIcon("rotate-ccw")}
+          ${getLucideSvg("rotate-ccw")}
           <span class="cgpt-ra-ten">10</span>
         </button>
 
         <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
                 title="Play / Pause (Alt+P)" disabled>
-          ${lucideIcon("play")}
+          ${getLucideSvg("play")}
         </button>
 
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
                 title="Forward 10 seconds — hold to scrub" disabled>
-          ${lucideIcon("rotate-cw")}
+          ${getLucideSvg("rotate-cw")}
           <span class="cgpt-ra-ten">10</span>
         </button>
       </div>
@@ -1005,7 +437,7 @@
 
       <div class="cgpt-ra-volume-wrap cgpt-ra-media-control">
         <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume" disabled>
-          ${lucideIcon("volume-2")}
+          ${getLucideSvg("volume-2")}
         </button>
         <div class="cgpt-ra-volume-popover">
           <input class="cgpt-ra-volume-slider"
@@ -1017,7 +449,7 @@
 
       <div class="cgpt-ra-help-wrap">
         <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts">
-          ${lucideIcon("circle-help")}
+          ${getLucideSvg("circle-help")}
         </button>
         <div class="cgpt-ra-popover cgpt-ra-help">
           <div class="cgpt-ra-help-title">Read Aloud Shortcuts</div>
@@ -1050,7 +482,7 @@
 
       <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
               title="Download audio" disabled>
-        ${lucideIcon("download")}
+        ${getLucideSvg("download")}
       </button>
     `;
 
@@ -1076,85 +508,84 @@
 
       item.addEventListener("click", () => {
         setSpeed(speed);
-        rightRail
-          .querySelector(".cgpt-ra-speed-wrap")
-          ?.classList.remove("cgpt-open");
+        rightRail?.querySelector(".cgpt-ra-speed-wrap")?.classList.remove("cgpt-open");
       });
 
-      speedMenu.appendChild(item);
+      speedMenu?.appendChild(item);
     });
 
-    speedButton.addEventListener("click", (event) => {
+    speedButton?.addEventListener("click", (event) => {
       event.stopPropagation();
-      rightRail
-        .querySelector(".cgpt-ra-speed-wrap")
-        ?.classList.toggle("cgpt-open");
+      rightRail?.querySelector(".cgpt-ra-speed-wrap")?.classList.toggle("cgpt-open");
     });
 
     document.addEventListener("click", () => {
-      rightRail
-        ?.querySelector(".cgpt-ra-speed-wrap")
-        ?.classList.remove("cgpt-open");
+      rightRail?.querySelector(".cgpt-ra-speed-wrap")?.classList.remove("cgpt-open");
     });
 
-    playButton.addEventListener("click", togglePlayback);
+    playButton?.addEventListener("click", togglePlayback);
 
-    installHoldSeek(leftRail.querySelector(".cgpt-ra-back"), -1);
-    installHoldSeek(leftRail.querySelector(".cgpt-ra-forward"), 1);
+    installHoldSeek(leftRail.querySelector(".cgpt-ra-back") as HTMLElement, -1);
+    installHoldSeek(leftRail.querySelector(".cgpt-ra-forward") as HTMLElement, 1);
 
-    seekSlider.addEventListener("pointerdown", () => {
+    seekSlider?.addEventListener("pointerdown", () => {
       sliderDragging = true;
     });
 
-    seekSlider.addEventListener("input", () => {
-      if (!activeMedia) return;
+    seekSlider?.addEventListener("input", () => {
+      if (!activeMedia || !seekSlider || !currentLabel) return;
       const target = parseFloat(seekSlider.value);
       seekAbsolute(target, false);
       currentLabel.textContent = formatTime(target);
     });
 
     const finishSeek = () => {
-      if (!sliderDragging) return;
+      if (!sliderDragging || !seekSlider) return;
       sliderDragging = false;
       seekAbsolute(parseFloat(seekSlider.value), true);
     };
 
-    seekSlider.addEventListener("pointerup", finishSeek);
-    seekSlider.addEventListener("pointercancel", finishSeek);
+    seekSlider?.addEventListener("pointerup", finishSeek);
+    seekSlider?.addEventListener("pointercancel", finishSeek);
 
-    volumeSlider.addEventListener("input", () => {
+    volumeSlider?.addEventListener("input", () => {
+      if (!volumeSlider) return;
       setVolume(parseFloat(volumeSlider.value));
     });
 
-    downloadButton.addEventListener("click", downloadCurrentAudio);
+    downloadButton?.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
     syncComposerLayout();
   }
 
-  function setControlsEnabled(enabled) {
+  function setControlsEnabled(enabled: boolean): void {
     if (!leftRail || !rightRail) return;
 
     leftRail.classList.toggle("cgpt-ra-no-media", !enabled);
     rightRail.classList.toggle("cgpt-ra-no-media", !enabled);
 
-    leftRail.querySelectorAll("button, input").forEach((el) => {
+    leftRail.querySelectorAll<HTMLButtonElement | HTMLInputElement>("button, input").forEach((el) => {
       el.disabled = !enabled;
     });
 
     rightRail
-      .querySelectorAll(
+      .querySelectorAll<HTMLButtonElement | HTMLInputElement>(
         ".cgpt-ra-speed-btn, .cgpt-ra-volume-btn, .cgpt-ra-volume-slider, .cgpt-ra-download",
       )
       .forEach((el) => {
         el.disabled = !enabled;
       });
 
-    const helpButton = rightRail.querySelector(".cgpt-ra-help-wrap > button");
+    const helpButton = rightRail.querySelector<HTMLButtonElement>(".cgpt-ra-help-wrap > button");
     if (helpButton) helpButton.disabled = false;
   }
 
-  function getComposer() {
+  // ---------------------------------------------------------------------
+  // Dynamic Composer Alignment
+  // ---------------------------------------------------------------------
+
+  function getComposer(): HTMLElement | null {
     const prompt =
       document.querySelector("#prompt-textarea") ||
       document.querySelector('[data-testid="composer-text-input"]') ||
@@ -1170,7 +601,7 @@
     );
   }
 
-  function syncComposerLayout() {
+  function syncComposerLayout(): void {
     if (!leftRail || !rightRail) return;
 
     const composer = getComposer();
@@ -1215,16 +646,20 @@
     rightRail.style.top = `${centerY - 23}px`;
   }
 
-  function installHoldSeek(button, direction) {
+  // ---------------------------------------------------------------------
+  // Smooth seek on hold
+  // ---------------------------------------------------------------------
+
+  function installHoldSeek(button: HTMLElement | null, direction: number): void {
     if (!button) return;
 
     let holding = false;
     let holdStarted = 0;
     let lastFrame = 0;
     let becameHold = false;
-    let raf = null;
+    let raf: number | null = null;
 
-    const frame = (now) => {
+    const frame = (now: number) => {
       if (!holding) return;
 
       const heldFor = (now - holdStarted) / 1000;
@@ -1240,7 +675,7 @@
       const dt = Math.max(0, (now - lastFrame) / 1000);
       lastFrame = now;
 
-      let seekRate;
+      let seekRate: number;
       if (heldFor < 1.5) seekRate = 4;
       else if (heldFor < 3) seekRate = 10;
       else if (heldFor < 6) seekRate = 25;
@@ -1252,8 +687,8 @@
       raf = requestAnimationFrame(frame);
     };
 
-    button.addEventListener("pointerdown", (event) => {
-      if (button.disabled || event.button !== 0) return;
+    button.addEventListener("pointerdown", (event: PointerEvent) => {
+      if ((button as HTMLButtonElement).disabled || event.button !== 0) return;
 
       event.preventDefault();
 
@@ -1269,14 +704,15 @@
       raf = requestAnimationFrame(frame);
     });
 
-    const stop = (event) => {
+    const stop = (event: PointerEvent) => {
       if (!holding) return;
       holding = false;
 
       if (raf) cancelAnimationFrame(raf);
 
       if (!becameHold) {
-        seekRelative(direction * CONFIG.tapSeekSeconds);
+        const step = getSavedSettings().tapSeekSeconds || CONFIG.tapSeekSeconds;
+        seekRelative(direction * step);
       }
 
       try {
@@ -1288,7 +724,7 @@
     button.addEventListener("pointercancel", stop);
   }
 
-  function seekAbsolute(target, update = true) {
+  function seekAbsolute(target: number, update = true): void {
     if (!activeMedia) return;
 
     const info = getSeekInfo(activeMedia);
@@ -1305,12 +741,16 @@
     if (update) updateControls();
   }
 
-  function seekRelative(seconds, update = true) {
+  function seekRelative(seconds: number, update = true): void {
     if (!activeMedia) return;
     seekAbsolute((Number(activeMedia.currentTime) || 0) + seconds, update);
   }
 
-  function togglePlayback() {
+  // ---------------------------------------------------------------------
+  // Playback / speed / volume
+  // ---------------------------------------------------------------------
+
+  function togglePlayback(): void {
     if (!activeMedia) return;
 
     try {
@@ -1325,7 +765,7 @@
     }
   }
 
-  function setSpeed(speed) {
+  function setSpeed(speed: number): void {
     if (!Number.isFinite(speed) || speed <= 0) return;
 
     localStorage.setItem(CONFIG.speedStorage, String(speed));
@@ -1340,7 +780,7 @@
     updateControls();
   }
 
-  function setVolume(volume) {
+  function setVolume(volume: number): void {
     volume = clamp(volume, 0, 1);
 
     localStorage.setItem(CONFIG.volumeStorage, String(volume));
@@ -1355,7 +795,7 @@
     updateControls();
   }
 
-  function updateControls() {
+  function updateControls(): void {
     if (!leftRail || !rightRail) return;
 
     if (!activeMedia) {
@@ -1368,26 +808,30 @@
     const current = Number(activeMedia.currentTime) || 0;
     const info = getSeekInfo(activeMedia);
 
-    currentLabel.textContent = formatTime(current);
+    if (currentLabel) currentLabel.textContent = formatTime(current);
 
-    if (Number.isFinite(activeMedia.duration)) {
-      durationLabel.textContent = formatTime(activeMedia.duration);
-    } else if (info.seekable) {
-      durationLabel.textContent = formatTime(info.end);
-    } else {
-      durationLabel.textContent = "--:--";
+    if (durationLabel) {
+      if (Number.isFinite(activeMedia.duration)) {
+        durationLabel.textContent = formatTime(activeMedia.duration);
+      } else if (info.seekable) {
+        durationLabel.textContent = formatTime(info.end);
+      } else {
+        durationLabel.textContent = "--:--";
+      }
     }
 
-    if (info.seekable) {
-      seekSlider.disabled = false;
-      seekSlider.min = String(info.start);
-      seekSlider.max = String(info.end);
+    if (seekSlider) {
+      if (info.seekable) {
+        seekSlider.disabled = false;
+        seekSlider.min = String(info.start);
+        seekSlider.max = String(info.end);
 
-      if (!sliderDragging) {
-        seekSlider.value = String(clamp(current, info.start, info.end));
+        if (!sliderDragging) {
+          seekSlider.value = String(clamp(current, info.start, info.end));
+        }
+      } else {
+        seekSlider.disabled = true;
       }
-    } else {
-      seekSlider.disabled = true;
     }
 
     setIcon(playButton, activeMedia.paused ? "play" : "pause");
@@ -1400,19 +844,19 @@
       volume = activeMedia.volume;
     } catch (_) {}
 
-    speedButton.textContent = `${speed}×`;
+    if (speedButton) speedButton.textContent = `${speed}×`;
 
-    speedMenu?.querySelectorAll(".cgpt-ra-speed-option").forEach((item) => {
+    speedMenu?.querySelectorAll<HTMLElement>(".cgpt-ra-speed-option").forEach((item) => {
       item.classList.toggle(
         "cgpt-selected",
-        Math.abs(parseFloat(item.dataset.speed) - speed) < 0.001,
+        Math.abs(parseFloat(item.dataset.speed || "0") - speed) < 0.001,
       );
     });
 
-    volumeSlider.value = String(volume);
-    volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+    if (volumeSlider) volumeSlider.value = String(volume);
+    if (volumeLabel) volumeLabel.textContent = `${Math.round(volume * 100)}%`;
 
-    const volumeButton = rightRail.querySelector(".cgpt-ra-volume-btn");
+    const volumeButton = rightRail.querySelector<HTMLElement>(".cgpt-ra-volume-btn");
 
     if (volume <= 0 || activeMedia.muted) {
       setIcon(volumeButton, "volume-x");
@@ -1423,7 +867,11 @@
     }
   }
 
-  function extensionFor(mime, url = "") {
+  // ---------------------------------------------------------------------
+  // Download Audio
+  // ---------------------------------------------------------------------
+
+  function extensionFor(mime: string, url = ""): string {
     const type = String(mime || "").toLowerCase();
 
     if (type.includes("mpeg")) return "mp3";
@@ -1439,7 +887,7 @@
     return match ? match[1].toLowerCase() : "mp3";
   }
 
-  async function resolveDownloadBlob() {
+  async function resolveDownloadBlob(): Promise<{ blob: Blob; mime: string; url: string }> {
     if (capturedAudioBlob && Date.now() - capturedAudioAt < 60 * 60 * 1000) {
       return {
         blob: capturedAudioBlob,
@@ -1453,7 +901,7 @@
     const src = activeMedia.currentSrc || activeMedia.src || "";
 
     if (src && blobURLMap.has(src)) {
-      const blob = blobURLMap.get(src);
+      const blob = blobURLMap.get(src)!;
       return { blob, mime: blob.type, url: src };
     }
 
@@ -1475,15 +923,13 @@
       } catch (_) {}
     }
 
-    throw new Error(
-      "The current Read Aloud stream was not exposed as a downloadable media response.",
-    );
+    throw new Error("The current Read Aloud stream was not exposed as a downloadable media response.");
   }
 
-  async function downloadCurrentAudio() {
-    if (!activeMedia) return;
+  async function downloadCurrentAudio(): Promise<void> {
+    if (!activeMedia || !downloadButton) return;
 
-    downloadButton.disabled = true;
+    downloadButton.setAttribute("disabled", "true");
     downloadButton.classList.add("cgpt-ra-download-busy");
     setIcon(downloadButton, "loader-circle");
 
@@ -1511,16 +957,21 @@
     } catch (error) {
       warn("Download failed:", error);
       alert(
-        "Could not download this Read Aloud audio.\n\nOpen DevTools → Console to inspect network details.",
+        "Could not download this Read Aloud audio.\n\nOpen DevTools → Console to see network debug details.",
       );
     } finally {
       downloadButton.classList.remove("cgpt-ra-download-busy");
-      downloadButton.disabled = false;
+      downloadButton.removeAttribute("disabled");
       setIcon(downloadButton, "download");
     }
   }
 
-  function textMeaning(element) {
+  // ---------------------------------------------------------------------
+  // Inline Read Aloud Button
+  // ---------------------------------------------------------------------
+
+  function textMeaning(element: Element | null): string {
+    if (!element) return "";
     return (
       `${element.getAttribute?.("aria-label") || ""} ` +
       `${element.getAttribute?.("title") || ""} ` +
@@ -1530,9 +981,10 @@
       .toLowerCase();
   }
 
-  function findButtonByMeaning(container, phrases) {
+  function findButtonByMeaning(container: Element, phrases: string[]): HTMLButtonElement | null {
+    const buttons = Array.from(container.querySelectorAll("button"));
     return (
-      Array.from(container.querySelectorAll("button")).find((button) => {
+      buttons.find((button) => {
         if (button.classList.contains("cgpt-inline-readaloud")) return false;
         const value = textMeaning(button);
         return phrases.some((phrase) => value.includes(phrase));
@@ -1540,7 +992,7 @@
     );
   }
 
-  function findToolbar(turn) {
+  function findToolbar(turn: Element): Element | null {
     const copy = findButtonByMeaning(turn, ["copy"]);
     if (copy?.parentElement) return copy.parentElement;
 
@@ -1550,7 +1002,10 @@
     return null;
   }
 
-  function installInlineReadAloudButtons() {
+  function installInlineReadAloudButtons(): void {
+    const settings = getSavedSettings();
+    if (settings.enableInlineButtons === false) return;
+
     document
       .querySelectorAll('[data-message-author-role="assistant"]')
       .forEach((message) => {
@@ -1609,7 +1064,7 @@
       });
   }
 
-  async function waitForReadAloudMenuItem(timeout = 1600) {
+  async function waitForReadAloudMenuItem(timeout = 1600): Promise<HTMLElement | null> {
     const started = performance.now();
 
     return new Promise((resolve) => {
@@ -1626,7 +1081,7 @@
             text.includes("read out loud") ||
             text.includes("listen")
           ) {
-            resolve(item);
+            resolve(item as HTMLElement);
             return;
           }
         }
@@ -1643,7 +1098,7 @@
     });
   }
 
-  async function triggerNativeReadAloud(turn) {
+  async function triggerNativeReadAloud(turn: Element): Promise<void> {
     const direct = findButtonByMeaning(turn, ["read aloud", "read out loud"]);
 
     if (direct) {
@@ -1672,8 +1127,8 @@
     menuItem.click();
   }
 
-  function updateInlineButtons() {
-    document.querySelectorAll(".cgpt-inline-readaloud").forEach((button) => {
+  function updateInlineButtons(): void {
+    document.querySelectorAll<HTMLElement>(".cgpt-inline-readaloud").forEach((button) => {
       const active =
         button === activeInlineButton &&
         activeMedia &&
@@ -1692,8 +1147,11 @@
 
   document.addEventListener(
     "keydown",
-    (event) => {
-      const target = event.target;
+    (event: KeyboardEvent) => {
+      const settings = getSavedSettings();
+      if (settings.enableShortcuts === false) return;
+
+      const target = event.target as HTMLElement;
 
       if (
         target instanceof HTMLInputElement ||
@@ -1712,15 +1170,17 @@
 
       if (!activeMedia) return;
 
+      const step = settings.tapSeekSeconds || CONFIG.tapSeekSeconds;
+
       if (event.altKey && event.key === "ArrowLeft") {
         event.preventDefault();
-        seekRelative(-CONFIG.tapSeekSeconds);
+        seekRelative(-step);
         return;
       }
 
       if (event.altKey && event.key === "ArrowRight") {
         event.preventDefault();
-        seekRelative(CONFIG.tapSeekSeconds);
+        seekRelative(step);
         return;
       }
 
@@ -1738,8 +1198,8 @@
     true,
   );
 
-  function changeSpeed(direction) {
-    let current = activeMedia?.playbackRate || getSavedSpeed();
+  function changeSpeed(direction: number): void {
+    const current = activeMedia?.playbackRate || getSavedSpeed();
 
     let closestIndex = 0;
     let closestDistance = Infinity;
@@ -1758,18 +1218,18 @@
   }
 
   // ---------------------------------------------------------------------
-  // Dynamic page
+  // DOM Observer & Poller
   // ---------------------------------------------------------------------
 
-  function scanDOMForPlayingMedia() {
-    document.querySelectorAll("audio, video").forEach((media) => {
+  function scanDOMForPlayingMedia(): void {
+    document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
       if (!media.paused && !media.ended) {
         attachMedia(media, "DOM fallback");
       }
     });
   }
 
-  function startObserver() {
+  function startObserver(): void {
     const observer = new MutationObserver(() => {
       installInlineReadAloudButtons();
       syncComposerLayout();
@@ -1790,7 +1250,7 @@
     }, 1000);
   }
 
-  function animationLoop() {
+  function animationLoop(): void {
     if (activeMedia) updateControls();
     requestAnimationFrame(animationLoop);
   }
@@ -1799,14 +1259,14 @@
   // Init
   // ---------------------------------------------------------------------
 
-  function installEarlyHooks() {
+  function installEarlyHooks(): void {
     installObjectURLInterceptor();
     installFetchInterceptor();
     installXHRInterceptor();
     installMediaInterceptor();
   }
 
-  function initUI() {
+  function initUI(): void {
     if (!document.body) {
       requestAnimationFrame(initUI);
       return;
@@ -1817,7 +1277,7 @@
     startObserver();
     animationLoop();
 
-    log("Ready");
+    log("ChatGPT Audio Controls Extension Ready");
   }
 
   installEarlyHooks();

@@ -1,0 +1,50 @@
+{
+  "name": "chatgpt-audio-controls",
+  "version": "1.0.0",
+  "description": "Integrated Read Aloud and Audio Controls for ChatGPT — Seeker, Speed, Volume, Download, Shortcuts, and Response Speech Buttons.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && bun run scripts/build-content.ts && bun run build:userscript",
+    "build:extension": "tsc && vite build && bun run scripts/build-content.ts",
+    "build:icons": "bun run scripts/generate-icons.ts",
+    "build:userscript": "bun run scripts/sync-userscript.ts",
+    "package": "bun run build && bun run scripts/package-zip.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "chatgpt",
+    "read-aloud",
+    "audio-controls",
+    "text-to-speech",
+    "tts",
+    "browser-extension",
+    "manifest-v3",
+    "chrome-extension",
+    "userscript",
+    "tampermonkey",
+    "react"
+  ],
+  "author": "Infoxica",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/infoxica/chatgpt-audio-controls"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.308",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
+  }
+}

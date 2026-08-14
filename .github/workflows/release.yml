@@ -1,0 +1,58 @@
+name: Build & Package Extension
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Generate Icons
+        run: bun run build:icons
+
+      - name: Build Extension
+        run: bun run build
+
+      - name: Package Extension ZIP
+        run: bun run scripts/package-zip.ts
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-audio-controls-extension
+          path: dist-zip/*.zip
+
+      - name: Create GitHub Release (On Tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist-zip/*.zip
+            userscript/chatgpt-audio-controls.user.js
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
