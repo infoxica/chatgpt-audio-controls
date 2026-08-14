@@ -5,7 +5,7 @@
 **The ultimate audio player and control suite for ChatGPT.**  
 *Seek audio, change speeds, scroll to adjust volume, download voice responses, and trigger speech with a single click.*
 
-[![Version](https://img.shields.io/badge/version-1.0.0-10a37f.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-38bdf8.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)

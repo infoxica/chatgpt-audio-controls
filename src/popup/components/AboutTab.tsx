@@ -11,7 +11,7 @@ export const AboutTab: React.FC = () => {
             width: 44,
             height: 44,
             borderRadius: 12,
-            background: "linear-gradient(135deg, #10a37f, #0d9488)",
+            background: "linear-gradient(135deg, #3968c8, #2d55ad)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

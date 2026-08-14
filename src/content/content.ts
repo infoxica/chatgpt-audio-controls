@@ -50,7 +50,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     if (CONFIG.debug) {
       console.log(
         "%c[ChatGPT Audio Controls]",
-        "color:#10a37f;font-weight:700",
+        "color:#3968c8;font-weight:700",
         ...args,
       );
     }

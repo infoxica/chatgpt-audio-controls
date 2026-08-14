@@ -62,7 +62,7 @@
     if (CONFIG.debug) {
       console.log(
         "%c[ChatGPT Audio Controls]",
-        "color:#10a37f;font-weight:700",
+        "color:#3968c8;font-weight:700",
         ...args,
       );
     }
@@ -150,7 +150,7 @@
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
-        <circle cx="0" cy="0" r="10" fill="#10a37f" stroke="#ffffff" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="10" fill="#3968c8" stroke="#ffffff" stroke-width="1.5" />
         <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
       </g>
     `,
@@ -491,7 +491,7 @@
           --cgpt-ra-text: #ececec;
           --cgpt-ra-muted: #8e8e8e;
           --cgpt-ra-disabled: rgba(255, 255, 255, .28);
-          --theme-submit-btn-bg: #10a37f;
+          --theme-submit-btn-bg: #3968c8;
           --theme-submit-btn-text: #ffffff;
       }
 
@@ -502,7 +502,7 @@
           --cgpt-ra-text: #0d0d0d;
           --cgpt-ra-muted: #5d5d5d;
           --cgpt-ra-disabled: rgba(0, 0, 0, .25);
-          --theme-submit-btn-bg: #10a37f;
+          --theme-submit-btn-bg: #3968c8;
           --theme-submit-btn-text: #ffffff;
       }
 
@@ -590,7 +590,7 @@
           height: 40px !important;
           flex: 0 0 40px !important;
           border-radius: 50% !important;
-          background-color: var(--theme-submit-btn-bg, #10a37f) !important;
+          background-color: var(--theme-submit-btn-bg, #3968c8) !important;
           color: var(--theme-submit-btn-text, #ffffff) !important;
           box-shadow: 0 2px 10px rgba(16, 163, 127, 0.4) !important;
           display: inline-flex;
@@ -654,7 +654,7 @@
 
       #cgpt-ra-floating-toggle:hover {
           transform: scale(1.08);
-          border-color: var(--theme-submit-btn-bg, #10a37f);
+          border-color: var(--theme-submit-btn-bg, #3968c8);
       }
 
       #cgpt-ra-floating-toggle.cgpt-ra-hidden {
@@ -784,7 +784,7 @@
       .cgpt-ra-range:hover::-webkit-slider-runnable-track,
       .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg, #10a37f);
+          background: var(--theme-submit-btn-bg, #3968c8);
       }
 
       .cgpt-ra-range::-webkit-slider-thumb {
@@ -805,7 +805,7 @@
           width: 11px;
           height: 11px;
           margin-top: -3.5px;
-          background: var(--theme-submit-btn-bg, #10a37f);
+          background: var(--theme-submit-btn-bg, #3968c8);
       }
 
       .cgpt-ra-range::-moz-range-track {
@@ -819,14 +819,14 @@
       .cgpt-ra-range:hover::-moz-range-track,
       .cgpt-ra-range:focus-visible::-moz-range-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg, #10a37f);
+          background: var(--theme-submit-btn-bg, #3968c8);
       }
 
       .cgpt-ra-range::-moz-range-progress {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: var(--theme-submit-btn-bg, #10a37f);
+          background: var(--theme-submit-btn-bg, #3968c8);
       }
 
       .cgpt-ra-range::-moz-range-thumb {
@@ -1044,7 +1044,7 @@
 
       .cgpt-inline-readaloud.cgpt-active {
           opacity: 1;
-          color: var(--theme-submit-btn-bg, #10a37f);
+          color: var(--theme-submit-btn-bg, #3968c8);
       }
     `;
 

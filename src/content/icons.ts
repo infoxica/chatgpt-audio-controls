@@ -25,7 +25,7 @@ export const LUCIDE_ICONS: Record<string, string> = {
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
-      <circle cx="0" cy="0" r="10" fill="#10a37f" stroke="#ffffff" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="10" fill="#3968c8" stroke="#ffffff" stroke-width="1.5" />
       <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
     </g>
   `,
