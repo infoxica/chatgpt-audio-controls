@@ -89,3 +89,208 @@ jobs:
             release-assets/userscript/chatgpt-audio-controls.user.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-stores:
+    name: Publish Chrome and Edge store updates
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect version release
+        id: version
+        shell: bash
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+
+          current_version="$(node -p "require('./package.json').version")"
+          previous_version=""
+
+          if [[ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            previous_version="$(git show "$BEFORE_SHA:package.json" | node -e 'let input=""; process.stdin.on("data", chunk => input += chunk).on("end", () => console.log(JSON.parse(input).version));')"
+          fi
+
+          if [[ "$current_version" == "$previous_version" ]]; then
+            echo "No package version change on master ($current_version); store publishing will be skipped."
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Version release detected: ${previous_version:-none} -> $current_version"
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download release package
+        if: steps.version.outputs.should_publish == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-release-${{ github.run_id }}
+          path: release-assets
+
+      - name: Publish to Chrome Web Store
+        if: steps.version.outputs.should_publish == 'true'
+        shell: bash
+        env:
+          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
+          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
+          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          CHROME_PUBLISHER_ID: ${{ secrets.CHROME_PUBLISHER_ID }}
+          CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
+        run: |
+          set -euo pipefail
+
+          : "${CHROME_CLIENT_ID:?Missing CHROME_CLIENT_ID secret}"
+          : "${CHROME_CLIENT_SECRET:?Missing CHROME_CLIENT_SECRET secret}"
+          : "${CHROME_REFRESH_TOKEN:?Missing CHROME_REFRESH_TOKEN secret}"
+          : "${CHROME_PUBLISHER_ID:?Missing CHROME_PUBLISHER_ID secret}"
+          : "${CHROME_EXTENSION_ID:?Missing CHROME_EXTENSION_ID secret}"
+
+          zip_path="$(find release-assets -type f -name 'chatgpt-audio-controls-v*.zip' -print -quit)"
+          : "${zip_path:?Release ZIP was not found}"
+
+          token_response="$(curl --fail-with-body --silent --show-error \
+            --request POST \
+            --data-urlencode "client_id=$CHROME_CLIENT_ID" \
+            --data-urlencode "client_secret=$CHROME_CLIENT_SECRET" \
+            --data-urlencode "refresh_token=$CHROME_REFRESH_TOKEN" \
+            --data-urlencode "grant_type=refresh_token" \
+            https://oauth2.googleapis.com/token)"
+          access_token="$(jq -er '.access_token' <<< "$token_response")"
+
+          item_path="publishers/$CHROME_PUBLISHER_ID/items/$CHROME_EXTENSION_ID"
+          upload_response="$(curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Authorization: Bearer $access_token" \
+            --header "Content-Type: application/zip" \
+            --upload-file "$zip_path" \
+            "https://chromewebstore.googleapis.com/upload/v2/$item_path:upload")"
+          upload_state="$(jq -er '.uploadState' <<< "$upload_response")"
+          echo "Chrome Web Store upload state: $upload_state"
+
+          if [[ "$upload_state" == "IN_PROGRESS" ]]; then
+            for attempt in {1..30}; do
+              sleep 5
+              status_response="$(curl --fail-with-body --silent --show-error \
+                --request GET \
+                --header "Authorization: Bearer $access_token" \
+                "https://chromewebstore.googleapis.com/v2/$item_path:fetchStatus")"
+              upload_state="$(jq -er '.lastAsyncUploadState' <<< "$status_response")"
+              echo "Chrome Web Store upload state ($attempt/30): $upload_state"
+              [[ "$upload_state" == "SUCCEEDED" ]] && break
+              [[ "$upload_state" == "FAILED" || "$upload_state" == "NOT_FOUND" ]] && {
+                echo "$status_response" | jq . >&2
+                exit 1
+              }
+            done
+          fi
+
+          [[ "$upload_state" == "SUCCEEDED" ]] || {
+            echo "Chrome Web Store upload did not succeed: $upload_response" >&2
+            exit 1
+          }
+
+          publish_response="$(curl --fail-with-body --silent --show-error \
+            --request POST \
+            --header "Authorization: Bearer $access_token" \
+            "https://chromewebstore.googleapis.com/v2/$item_path:publish")"
+          echo "Chrome Web Store submission accepted:"
+          echo "$publish_response" | jq .
+
+      - name: Publish to Microsoft Edge Add-ons
+        if: steps.version.outputs.should_publish == 'true'
+        shell: bash
+        env:
+          EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
+          EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+          EDGE_PRODUCT_ID: ${{ secrets.EDGE_PRODUCT_ID }}
+        run: |
+          set -euo pipefail
+
+          : "${EDGE_API_KEY:?Missing EDGE_API_KEY secret}"
+          : "${EDGE_CLIENT_ID:?Missing EDGE_CLIENT_ID secret}"
+          : "${EDGE_PRODUCT_ID:?Missing EDGE_PRODUCT_ID secret}"
+
+          zip_path="$(find release-assets -type f -name 'chatgpt-audio-controls-v*.zip' -print -quit)"
+          : "${zip_path:?Release ZIP was not found}"
+          api_root="https://api.addons.microsoftedge.microsoft.com/v1/products/$EDGE_PRODUCT_ID"
+          auth_args=(
+            --header "Authorization: ApiKey $EDGE_API_KEY"
+            --header "X-ClientID: $EDGE_CLIENT_ID"
+          )
+
+          poll_operation() {
+            local operation_url="$1"
+            local operation_name="$2"
+            local operation_response
+            local operation_status
+
+            for attempt in {1..60}; do
+              operation_response="$(curl --fail-with-body --silent --show-error \
+                --request GET \
+                "${auth_args[@]}" \
+                "$operation_url")"
+              operation_status="$(jq -er '.status' <<< "$operation_response")"
+              echo "Edge $operation_name status ($attempt/60): $operation_status"
+
+              case "$operation_status" in
+                Succeeded)
+                  return 0
+                  ;;
+                Failed)
+                  echo "$operation_response" | jq . >&2
+                  return 1
+                  ;;
+                InProgress)
+                  sleep 5
+                  ;;
+                *)
+                  echo "$operation_response" | jq . >&2
+                  return 1
+                  ;;
+              esac
+            done
+
+            echo "Edge $operation_name did not finish within the polling window." >&2
+            return 1
+          }
+
+          upload_headers="$(mktemp)"
+          upload_body="$(mktemp)"
+          curl --fail-with-body --silent --show-error \
+            --dump-header "$upload_headers" \
+            --output "$upload_body" \
+            --request POST \
+            "${auth_args[@]}" \
+            --header "Content-Type: application/zip" \
+            --upload-file "$zip_path" \
+            "$api_root/submissions/draft/package"
+
+          upload_location="$(awk 'BEGIN { IGNORECASE=1 } /^Location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$upload_headers")"
+          : "${upload_location:?Edge upload did not return an operation Location header}"
+          upload_operation_id="${upload_location##*/}"
+          poll_operation "$api_root/submissions/draft/package/operations/$upload_operation_id" "package upload"
+
+          publish_headers="$(mktemp)"
+          publish_body="$(mktemp)"
+          curl --fail-with-body --silent --show-error \
+            --dump-header "$publish_headers" \
+            --output "$publish_body" \
+            --request POST \
+            "${auth_args[@]}" \
+            --header "Content-Type: application/json" \
+            --data "{\"notes\":\"Automated release from GitHub Actions: $GITHUB_REF_NAME\"}" \
+            "$api_root/submissions"
+
+          publish_location="$(awk 'BEGIN { IGNORECASE=1 } /^Location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$publish_headers")"
+          : "${publish_location:?Edge publish did not return an operation Location header}"
+          publish_operation_id="${publish_location##*/}"
+          poll_operation "$api_root/submissions/operations/$publish_operation_id" "submission"
+
+          echo "Microsoft Edge Add-ons submission accepted for certification."

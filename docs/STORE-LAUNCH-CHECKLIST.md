@@ -14,6 +14,28 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 - [ ] Confirm the package uses Manifest V3, requests only `storage`, and runs content scripts only on `https://chatgpt.com/*`.
 - [ ] Confirm all bundled code and assets are local. Do not add remote JavaScript, remote CSS, remote fonts, telemetry, or analytics.
 
+## GitHub Actions store-publishing secrets
+
+Add these as repository **Actions secrets** before merging a version bump into `master`. Secret values are consumed only by the `publish-stores` job and are never committed to the repository.
+
+### Chrome Web Store
+
+- `CHROME_CLIENT_ID`: OAuth 2.0 client ID for the Chrome Web Store API.
+- `CHROME_CLIENT_SECRET`: OAuth 2.0 client secret.
+- `CHROME_REFRESH_TOKEN`: Refresh token authorized for the `https://www.googleapis.com/auth/chromewebstore` scope.
+- `CHROME_PUBLISHER_ID`: Chrome Web Store publisher ID.
+- `CHROME_EXTENSION_ID`: Existing Chrome Web Store item/extension ID.
+
+The first Chrome Web Store item and its listing/privacy metadata must be created and published manually once. After that, the workflow uploads the versioned package and submits it for review.
+
+### Microsoft Edge Add-ons
+
+- `EDGE_API_KEY`: Edge Add-ons API v1.1 API key.
+- `EDGE_CLIENT_ID`: Edge Add-ons API v1.1 client ID.
+- `EDGE_PRODUCT_ID`: Existing Edge Add-ons product ID.
+
+The first Edge Add-ons product, listing metadata, privacy information, and required visual assets must be created manually in Partner Center. Enable the Edge Add-ons Publish API and create the v1.1 API key/client ID before using these secrets.
+
 ## Browser smoke test
 
 Test the unpacked `dist/` build in the latest stable Chrome and Edge. Sign in to a regular ChatGPT account and open a conversation with an assistant response.
@@ -53,18 +75,19 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - [ ] Set the public privacy-policy URL to the hosted `PRIVACY.md` page or an equivalent accessible policy page.
 - [ ] Provide an accurate short description, detailed description, category, language, and support URL.
 - [ ] Upload clear, current screenshots that show the Read Aloud response action and player in use. Do not use ChatGPT or OpenAI branding in a way that suggests endorsement.
-- [ ] Submit for review and retain the uploaded ZIP and exact Git commit for the release record.
+- [ ] Submit the first listing manually. Subsequent version bumps merged into `master` are uploaded and submitted for review by GitHub Actions.
 
 ## Microsoft Edge Add-ons submission
 
-- [ ] Upload the same release ZIP through Partner Center.
+- [ ] Create the first listing and upload the initial release ZIP through Partner Center.
 - [ ] Complete the Privacy page with the same single purpose, permission justification, data-use disclosure, and accessible privacy-policy URL.
 - [ ] Provide all required listing assets, including the logo and promotional tile, plus clear screenshots.
 - [ ] Add the reviewer test instructions above in Submission Options > Notes for certification.
-- [ ] Ensure all metadata is accurate, non-misleading, and written for Microsoft Edge users where applicable.
+- [ ] Ensure all metadata is accurate, non-misleading, and written for Microsoft Edge users where applicable. Subsequent version bumps merged into `master` are uploaded and submitted by GitHub Actions.
 
 ## Release closeout
 
+- [ ] Merge the version-bumped release PR into `master`. A package version change on `master` triggers the store-publishing job.
 - [ ] Tag the exact approved commit as `v<version>` and push the tag. GitHub Actions will validate the metadata, build the package, and create the GitHub release automatically.
 - [ ] Verify the GitHub release contains the ZIP and userscript.
 - [ ] Install the store-delivered version from both stores and repeat the browser smoke test.
