@@ -26,54 +26,63 @@ export const FaqSection: React.FC = () => {
       <div className="card">
         <div className="card-title">
           <HelpCircle size={16} color="var(--accent)" />
-          <span>Frequently Asked Questions & Technical Details</span>
+          <span>Frequently Asked Questions & User Guide</span>
         </div>
         <p className="card-desc">
-          Everything you need to know about installation, privacy, and how the audio capture engine works.
+          Quick answers to help you get the most out of ChatGPT Audio Controls.
         </p>
 
         <div style={{ marginTop: 8 }}>
           <FaqItem
-            question="How does ChatGPT Audio Controls intercept speech audio?"
+            question="How do I adjust the volume by scrolling with my mouse?"
             answer={
               <p>
-                The extension hooks into ChatGPT's page context at <code>document_start</code>. It transparently observes <code>HTMLMediaElement.prototype.play</code> and network pipelines (<code>fetch</code>, <code>XMLHttpRequest</code>, and <code>URL.createObjectURL</code>). When ChatGPT synthesizes Read Aloud voice streams, the extension captures the audio stream in memory, connects the visual seekbar, and enables instant downloads.
+                Simply hover your mouse pointer over the volume speaker icon on the player rail and scroll your mouse wheel up or down. The volume will smoothly adjust in 5% increments without having to open the slider popover!
               </p>
             }
           />
 
           <FaqItem
-            question="Does the extension collect or transmit any data?"
+            question="Where does the player appear on ChatGPT?"
             answer={
               <p>
-                <strong>Zero data collection.</strong> The extension operates 100% on-device in your browser. No telemetry, analytics, cookies, speech recordings, or prompts are ever uploaded to any external server.
+                The player is anchored conveniently directly beside your message composer prompt. When no audio is playing, a small floating logo button stays neatly docked on the right side. Clicking this button or starting Read Aloud expands the full player capsules.
               </p>
             }
           />
 
           <FaqItem
-            question="Can I also use this as a Tampermonkey script?"
+            question="How do I download the synthesized speech audio?"
             answer={
               <p>
-                Yes! We maintain an identical standalone userscript in <code>userscript/chatgpt-audio-controls.user.js</code> that you can install in Tampermonkey, Violentmonkey, or Greasemonkey for Firefox, Safari, or Chrome.
+                Whenever ChatGPT reads aloud a response, click the download button (📥) on the right rail. The audio stream is instantly saved as a high-quality audio file (<code>.mp3</code>, <code>.m4a</code>, or <code>.wav</code>) onto your computer.
               </p>
             }
           />
 
           <FaqItem
-            question="Why don't the controls show on small laptop screens?"
+            question="Does this work on small laptop screens?"
             answer={
               <p>
-                The controls require at least ~440px of free horizontal space on the left and right sides of ChatGPT's prompt composer. If the browser window is too narrow, the controls automatically hide to avoid overlapping your chat input. Maximizing the window or zooming out will restore them.
+                Yes! The player automatically detects your available screen width and dynamically scales its seekbar to fit your laptop screen comfortably. If space is extremely tight, the floating button stays accessible so you can expand and collapse the player whenever you need it.
               </p>
             }
           />
 
           <FaqItem
-            question="How can I report a bug or contribute?"
+            question="How do I install this via Tampermonkey with auto-updates?"
             answer={
               <p>
-                Visit our GitHub repository at <a href="https://github.com/infoxica/chatgpt-audio-controls" target="_blank" rel="noreferrer" style={{ color: "var(--accent)" }}>github.com/infoxica/chatgpt-audio-controls</a> to file an issue, submit a pull request, or suggest new features!
+                If you use Tampermonkey, Violentmonkey, or Greasemonkey, you can install the standalone script directly from our repository. Tampermonkey will automatically check GitHub for updates and notify you whenever a new version is released.
+              </p>
+            }
+          />
+
+          <FaqItem
+            question="Are my conversations or prompts private?"
+            answer={
+              <p>
+                <strong>100% Private.</strong> The extension runs entirely on your local device. No prompts, answers, audio streams, or personal telemetry are ever sent to any external server.
               </p>
             }
           />

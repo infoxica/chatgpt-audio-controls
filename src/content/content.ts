@@ -20,15 +20,18 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   let activeMedia: HTMLMediaElement | null = null;
   let activeInlineButton: HTMLElement | null = null;
   let pendingInlineButton: HTMLElement | null = null;
+  let userForcedExpand = false;
 
   let leftRail: HTMLElement | null = null;
   let rightRail: HTMLElement | null = null;
+  let floatingToggle: HTMLButtonElement | null = null;
   let seekSlider: HTMLInputElement | null = null;
   let currentLabel: HTMLElement | null = null;
   let durationLabel: HTMLElement | null = null;
   let playButton: HTMLElement | null = null;
   let speedButton: HTMLElement | null = null;
   let speedMenu: HTMLElement | null = null;
+  let volumeWrap: HTMLElement | null = null;
   let volumeSlider: HTMLInputElement | null = null;
   let volumeLabel: HTMLElement | null = null;
   let downloadButton: HTMLElement | null = null;
@@ -45,7 +48,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   function log(...args: any[]) {
     if (CONFIG.debug) {
       console.log(
-        "%c[ChatGPT Read Aloud v4.2]",
+        "%c[ChatGPT Audio Controls]",
         "color:#10a37f;font-weight:700",
         ...args,
       );
@@ -53,7 +56,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   function warn(...args: any[]) {
-    console.warn("[ChatGPT Read Aloud v4.2]", ...args);
+    console.warn("[ChatGPT Audio Controls]", ...args);
   }
 
   function clamp(value: number, min: number, max: number): number {
@@ -287,6 +290,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     const changed = activeMedia !== media;
     activeMedia = media;
+    userForcedExpand = true; // Automatically expand player when speech starts
 
     try {
       media.playbackRate = getSavedSpeed();
@@ -304,6 +308,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
+    syncComposerLayout();
 
     log("Attached media:", reason, media);
   }
@@ -325,6 +330,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
         if (activeMedia === media) {
           updateControls();
           updateInlineButtons();
+          syncComposerLayout();
         }
       });
     });
@@ -363,6 +369,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
+            syncComposerLayout();
           });
         }
 
@@ -387,9 +394,24 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   function buildUI(): void {
     if (leftRail || !document.body) return;
 
+    // 1. Floating Mini Toggle Button (shown when idle / no audio)
+    floatingToggle = document.createElement("button");
+    floatingToggle.id = "cgpt-ra-floating-toggle";
+    floatingToggle.type = "button";
+    floatingToggle.title = "ChatGPT Audio Controls";
+    floatingToggle.setAttribute("aria-label", "Expand ChatGPT Audio Controls");
+    floatingToggle.innerHTML = getLucideSvg("chatgpt-audio");
+
+    floatingToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userForcedExpand = !userForcedExpand;
+      syncComposerLayout();
+    });
+
+    // 2. Left Transport & Seeker Capsule
     leftRail = document.createElement("div");
     leftRail.id = "cgpt-ra-left";
-    leftRail.className = "cgpt-ra-no-media";
+    leftRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     leftRail.innerHTML = `
       <div class="cgpt-ra-transport-row">
@@ -423,9 +445,10 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       </div>
     `;
 
+    // 3. Right Controls Rail (Speed, Volume, Download, Help [Rightmost!])
     rightRail = document.createElement("div");
     rightRail.id = "cgpt-ra-right";
-    rightRail.className = "cgpt-ra-no-media";
+    rightRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     rightRail.innerHTML = `
       <div class="cgpt-ra-speed-wrap cgpt-ra-media-control">
@@ -436,19 +459,24 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       </div>
 
       <div class="cgpt-ra-volume-wrap cgpt-ra-media-control">
-        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume" disabled>
+        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume (Scroll to adjust)" disabled>
           ${getLucideSvg("volume-2")}
         </button>
         <div class="cgpt-ra-volume-popover">
-          <input class="cgpt-ra-volume-slider"
+          <input class="cgpt-ra-range cgpt-ra-volume-slider"
                  type="range" min="0" max="1" step="0.01"
                  value="${getSavedVolume()}">
           <span class="cgpt-ra-volume-value">${Math.round(getSavedVolume() * 100)}%</span>
         </div>
       </div>
 
+      <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
+              title="Download audio" disabled>
+        ${getLucideSvg("download")}
+      </button>
+
       <div class="cgpt-ra-help-wrap">
-        <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts">
+        <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts & gestures">
           ${getLucideSvg("circle-help")}
         </button>
         <div class="cgpt-ra-popover cgpt-ra-help">
@@ -474,19 +502,18 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
             <span class="cgpt-ra-shortcut-key">Shift + &gt;</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
+            <span>Volume Scroll</span>
+            <span class="cgpt-ra-shortcut-key">Scroll on 🔈</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
             <span>Smooth Scrub</span>
             <span class="cgpt-ra-shortcut-key">Hold ◀10 / 10▶</span>
           </div>
         </div>
       </div>
-
-      <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
-              title="Download audio" disabled>
-        ${getLucideSvg("download")}
-      </button>
     `;
 
-    document.body.append(leftRail, rightRail);
+    document.body.append(floatingToggle, leftRail, rightRail);
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
@@ -495,6 +522,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     speedButton = rightRail.querySelector(".cgpt-ra-speed-btn");
     speedMenu = rightRail.querySelector(".cgpt-ra-speed-menu");
+    volumeWrap = rightRail.querySelector(".cgpt-ra-volume-wrap");
     volumeSlider = rightRail.querySelector(".cgpt-ra-volume-slider");
     volumeLabel = rightRail.querySelector(".cgpt-ra-volume-value");
     downloadButton = rightRail.querySelector(".cgpt-ra-download");
@@ -553,6 +581,19 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       setVolume(parseFloat(volumeSlider.value));
     });
 
+    // Hover mouse wheel scroll on volume button to quickly adjust volume
+    volumeWrap?.addEventListener(
+      "wheel",
+      (event: WheelEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const delta = event.deltaY < 0 ? 0.05 : -0.05;
+        const current = activeMedia ? activeMedia.volume : getSavedVolume();
+        setVolume(clamp(current + delta, 0, 1));
+      },
+      { passive: false }
+    );
+
     downloadButton?.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
@@ -582,7 +623,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   // ---------------------------------------------------------------------
-  // Dynamic Composer Alignment
+  // Dynamic Space Detection & Responsive Composer Alignment
   // ---------------------------------------------------------------------
 
   function getComposer(): HTMLElement | null {
@@ -602,42 +643,60 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   function syncComposerLayout(): void {
-    if (!leftRail || !rightRail) return;
+    if (!leftRail || !rightRail || !floatingToggle) return;
 
     const composer = getComposer();
+    const hasActiveAudio = activeMedia && !activeMedia.paused && !activeMedia.ended;
+    const shouldExpand = Boolean(hasActiveAudio || userForcedExpand);
+
     if (!composer) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
+      floatingToggle.style.right = "16px";
+      floatingToggle.style.bottom = "80px";
+      floatingToggle.classList.remove("cgpt-ra-hidden");
       return;
     }
 
     const rect = composer.getBoundingClientRect();
-
-    if (rect.width < 300 || rect.width > window.innerWidth * 0.82) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
-      return;
-    }
-
     const viewportWidth = window.innerWidth;
     const sideGap = 10;
-    const outerMargin = 18;
+    const outerMargin = 14;
 
     const leftAvailable = rect.left - outerMargin - sideGap;
     const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-    const desiredLeftWidth = 440 - sideGap;
 
-    if (leftAvailable < desiredLeftWidth || rightAvailable < 150) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
+    // Small screens or tight composer space
+    const minLeftWidth = 240;
+    const maxLeftWidth = 430;
+
+    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
+
+    if (!canFit || !shouldExpand) {
+      // Show floating mini toggle button docked beside composer right edge
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
+
+      floatingToggle.classList.remove("cgpt-ra-hidden");
+      const toggleX = Math.min(viewportWidth - 48, rect.right + 12);
+      const toggleY = rect.top + rect.height / 2 - 19;
+      floatingToggle.style.left = `${toggleX}px`;
+      floatingToggle.style.top = `${toggleY}px`;
       return;
     }
 
+    // Hide floating mini button when full capsules are expanded
+    floatingToggle.classList.add("cgpt-ra-hidden");
+    leftRail.classList.remove("cgpt-ra-collapsed");
+    rightRail.classList.remove("cgpt-ra-collapsed");
+
+    // Dynamic width scaling to fit laptop screens perfectly
+    const computedLeftWidth = clamp(leftAvailable, minLeftWidth, maxLeftWidth);
     const centerY = rect.top + rect.height / 2;
 
     leftRail.style.display = "block";
-    leftRail.style.width = `${desiredLeftWidth}px`;
-    leftRail.style.left = `${rect.left - sideGap - desiredLeftWidth}px`;
+    leftRail.style.width = `${computedLeftWidth}px`;
+    leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
     leftRail.style.top = `${centerY - 23}px`;
 
     rightRail.style.display = "inline-flex";
@@ -956,9 +1015,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       log("Downloaded audio:", filename, blob.size, mime);
     } catch (error) {
       warn("Download failed:", error);
-      alert(
-        "Could not download this Read Aloud audio.\n\nOpen DevTools → Console to see network debug details.",
-      );
+      alert("Could not download audio stream. Ensure audio is actively loaded.");
     } finally {
       downloadButton.classList.remove("cgpt-ra-download-busy");
       downloadButton.removeAttribute("disabled");
@@ -981,23 +1038,24 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       .toLowerCase();
   }
 
-  function findButtonByMeaning(container: Element, phrases: string[]): HTMLButtonElement | null {
-    const buttons = Array.from(container.querySelectorAll("button"));
-    return (
-      buttons.find((button) => {
-        if (button.classList.contains("cgpt-inline-readaloud")) return false;
-        const value = textMeaning(button);
-        return phrases.some((phrase) => value.includes(phrase));
-      }) || null
-    );
-  }
-
   function findToolbar(turn: Element): Element | null {
-    const copy = findButtonByMeaning(turn, ["copy"]);
-    if (copy?.parentElement) return copy.parentElement;
+    // Look for the specific message action bar containing the copy button
+    const copyButton = Array.from(turn.querySelectorAll("button")).find((btn) => {
+      const txt = textMeaning(btn);
+      return txt === "copy" || txt.includes("copy response") || txt.includes("copy code");
+    });
 
-    const more = findButtonByMeaning(turn, ["more actions", "more"]);
-    if (more?.parentElement) return more.parentElement;
+    if (copyButton?.parentElement) {
+      return copyButton.parentElement;
+    }
+
+    // Fallback: look for the flex container with message actions at the bottom of the turn
+    const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
+    for (const bar of actionBars) {
+      if (bar.querySelector("button") && !bar.closest("pre, code, table")) {
+        return bar;
+      }
+    }
 
     return null;
   }
@@ -1006,71 +1064,77 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const settings = getSavedSettings();
     if (settings.enableInlineButtons === false) return;
 
-    document
-      .querySelectorAll('[data-message-author-role="assistant"]')
-      .forEach((message) => {
-        const turn =
-          message.closest("article") ||
-          message.closest('[data-testid^="conversation-turn"]') ||
-          message.parentElement;
+    // Find assistant messages
+    document.querySelectorAll('[data-message-author-role="assistant"]').forEach((message) => {
+      const turn =
+        message.closest("article") ||
+        message.closest('[data-testid^="conversation-turn"]') ||
+        message.parentElement;
 
-        if (!turn || turn.querySelector(".cgpt-inline-readaloud")) return;
+      if (!turn || turn.querySelector(".cgpt-inline-readaloud")) return;
 
-        const toolbar = findToolbar(turn);
-        if (!toolbar) return;
+      const toolbar = findToolbar(turn);
+      if (!toolbar) return;
 
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "cgpt-inline-readaloud";
-        button.title = "Read aloud";
-        button.setAttribute("aria-label", "Read aloud");
-        setIcon(button, "volume-2");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "cgpt-inline-readaloud";
+      button.title = "Read aloud";
+      button.setAttribute("aria-label", "Read aloud");
+      setIcon(button, "volume-2");
 
-        button.addEventListener("click", async (event) => {
-          event.preventDefault();
-          event.stopPropagation();
+      button.addEventListener("click", async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
 
-          if (
-            button === activeInlineButton &&
-            activeMedia &&
-            !activeMedia.paused &&
-            !activeMedia.ended
-          ) {
-            try {
-              activeMedia.pause();
-              activeMedia.currentTime = 0;
-            } catch (_) {}
+        // If clicking active playing speech, stop it
+        if (
+          button === activeInlineButton &&
+          activeMedia &&
+          !activeMedia.paused &&
+          !activeMedia.ended
+        ) {
+          try {
+            activeMedia.pause();
+            activeMedia.currentTime = 0;
+          } catch (_) {}
 
-            updateInlineButtons();
-            return;
-          }
-
-          if (activeMedia && !activeMedia.paused) {
-            try {
-              activeMedia.pause();
-            } catch (_) {}
-          }
-
-          pendingInlineButton = button;
-          await triggerNativeReadAloud(turn);
-        });
-
-        const copy = findButtonByMeaning(turn, ["copy"]);
-        if (copy && copy.parentElement === toolbar) {
-          copy.insertAdjacentElement("afterend", button);
-        } else {
-          toolbar.insertBefore(button, toolbar.firstChild);
+          updateInlineButtons();
+          return;
         }
+
+        // Stop existing playing audio first
+        if (activeMedia && !activeMedia.paused) {
+          try {
+            activeMedia.pause();
+          } catch (_) {}
+        }
+
+        pendingInlineButton = button;
+        await triggerNativeReadAloud(turn);
       });
+
+      // Insert directly beside the Copy button if found, or prepend to toolbar
+      const copyBtn = Array.from(toolbar.querySelectorAll("button")).find((b) =>
+        textMeaning(b).includes("copy"),
+      );
+
+      if (copyBtn && copyBtn.parentElement === toolbar) {
+        copyBtn.insertAdjacentElement("afterend", button);
+      } else {
+        toolbar.insertBefore(button, toolbar.firstChild);
+      }
+    });
   }
 
-  async function waitForReadAloudMenuItem(timeout = 1600): Promise<HTMLElement | null> {
+  async function waitForReadAloudMenuItem(timeout = 1800): Promise<HTMLElement | null> {
     const started = performance.now();
 
     return new Promise((resolve) => {
       const scan = () => {
         const candidates = document.querySelectorAll(
-          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button',
+          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button, [data-radix-popper-content-wrapper] [role="menuitem"]',
         );
 
         for (const item of candidates) {
@@ -1079,7 +1143,8 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           if (
             text.includes("read aloud") ||
             text.includes("read out loud") ||
-            text.includes("listen")
+            text.includes("listen") ||
+            text === "read"
           ) {
             resolve(item as HTMLElement);
             return;
@@ -1099,28 +1164,43 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   async function triggerNativeReadAloud(turn: Element): Promise<void> {
-    const direct = findButtonByMeaning(turn, ["read aloud", "read out loud"]);
+    // 1. Check if a direct read aloud button exists in this turn
+    const direct = Array.from(turn.querySelectorAll("button")).find((btn) => {
+      if (btn.classList.contains("cgpt-inline-readaloud")) return false;
+      const t = textMeaning(btn);
+      return t.includes("read aloud") || t.includes("read out loud") || t.includes("listen");
+    });
 
     if (direct) {
       direct.click();
       return;
     }
 
-    const more = findButtonByMeaning(turn, ["more actions", "more"]);
+    // 2. Locate the specific More Actions button in the bottom action bar
+    const toolbar = findToolbar(turn);
+    const moreBtn = toolbar
+      ? Array.from(toolbar.querySelectorAll("button")).find((b) => {
+          const t = textMeaning(b);
+          return t.includes("more actions") || t === "more" || t.includes("options");
+        })
+      : null;
 
-    if (!more) {
+    if (!moreBtn) {
       pendingInlineButton = null;
-      warn("Could not find the response More Actions button.");
+      warn("Could not locate the response More Actions button.");
       return;
     }
 
-    more.click();
+    moreBtn.click();
 
+    // 3. Strictly wait for the Read Aloud item
     const menuItem = await waitForReadAloudMenuItem();
 
     if (!menuItem) {
       pendingInlineButton = null;
-      warn("Could not find Read Aloud in the response menu.");
+      warn("Could not find Read Aloud in the response popup menu.");
+      // Close menu by triggering escape
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return;
     }
 

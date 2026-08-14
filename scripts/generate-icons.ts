@@ -65,13 +65,12 @@ function encodeRGBAtoPNG(width: number, height: number, rgba: Uint8Array): Buffe
   return Buffer.concat([header, ihdr, idat, iend]);
 }
 
-function renderIconRGBA(size: number): Uint8Array {
+function renderChatGPTPlayIconRGBA(size: number): Uint8Array {
   const pixels = new Uint8Array(size * size * 4);
 
   const setPixel = (x: number, y: number, r: number, g: number, b: number, a: number) => {
     if (x < 0 || x >= size || y < 0 || y >= size) return;
     const idx = (Math.floor(y) * size + Math.floor(x)) * 4;
-    // Alpha blending
     const srcA = a / 255;
     const dstA = pixels[idx + 3] / 255;
     const outA = srcA + dstA * (1 - srcA);
@@ -84,85 +83,83 @@ function renderIconRGBA(size: number): Uint8Array {
   };
 
   const scale = size / 128;
-  const radius = 26 * scale;
+  const radius = 28 * scale;
+  const cx = size / 2;
+  const cy = size / 2;
 
+  // Background box with ChatGPT dark theme
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      // Rounded box check
       const dx = Math.max(radius - x, 0, x - (size - 1 - radius));
       const dy = Math.max(radius - y, 0, y - (size - 1 - radius));
       const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist <= radius) {
-        // Dark metallic gradient background
-        const t = (x + y) / (size * 2);
-        const r = Math.round(20 + t * 5);
-        const g = Math.round(24 + t * 10);
-        const b = Math.round(30 + t * 15);
-        setPixel(x, y, r, g, b, 255);
+        // Deep obsidian background
+        setPixel(x, y, 28, 28, 30, 255);
 
         // Border highlight
-        if (x === 0 || y === 0 || x === size - 1 || y === size - 1 || dist >= radius - 1.5) {
-          setPixel(x, y, 255, 255, 255, 30);
+        if (x === 0 || y === 0 || x === size - 1 || y === size - 1 || dist >= radius - 1.2) {
+          setPixel(x, y, 255, 255, 255, 28);
         }
       }
     }
   }
 
-  // Draw Speaker and Waves
-  const cx = size * 0.44;
-  const cy = size * 0.46;
+  // Draw 6-Petal Rosette lines
+  const numPetals = 6;
+  for (let i = 0; i < numPetals; i++) {
+    const angle = (i * Math.PI * 2) / numPetals;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
 
-  // Speaker shape
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const nx = (x - cx) / scale;
-      const ny = (y - cy) / scale;
+    // Draw spiral loop arc
+    for (let t = 0; t <= 1; t += 0.01) {
+      // Local coordinate along a petal
+      const lx = (18 * (1 - t) + 12 * Math.cos(t * Math.PI * 1.2)) * scale;
+      const ly = (-34 * (1 - t) + 16 * Math.sin(t * Math.PI * 1.2)) * scale;
 
-      // Speaker body
-      const inCone = nx >= -20 && nx <= 0 && Math.abs(ny) <= (nx >= -10 ? (nx + 10) * 1.5 + 8 : 8);
-      if (inCone) {
-        setPixel(x, y, 16, 163, 127, 255); // OpenAI Emerald
-      }
+      const px = cx + (lx * cos - ly * sin);
+      const py = cy + (lx * sin + ly * cos);
 
-      // Sound waves arcs
-      const waveDist = Math.sqrt(nx * nx + ny * ny);
-      const angle = Math.atan2(ny, nx);
-
-      if (angle >= -Math.PI / 3 && angle <= Math.PI / 3 && nx > 4) {
-        // Wave 1
-        if (Math.abs(waveDist - 12) < 2) {
-          setPixel(x, y, 20, 184, 166, 240);
-        }
-        // Wave 2
-        if (Math.abs(waveDist - 22) < 2.5) {
-          setPixel(x, y, 56, 189, 248, 220); // Sky accent
-        }
-        // Wave 3
-        if (Math.abs(waveDist - 32) < 3) {
-          setPixel(x, y, 16, 163, 127, 200);
+      const strokeW = Math.max(1, 2.5 * scale);
+      for (let sx = -strokeW; sx <= strokeW; sx += 0.5) {
+        for (let sy = -strokeW; sy <= strokeW; sy += 0.5) {
+          if (sx * sx + sy * sy <= strokeW * strokeW) {
+            setPixel(px + sx, py + sy, 240, 240, 240, 240);
+          }
         }
       }
     }
   }
 
-  // Lower-right Play Badge
-  const bx = size * 0.72;
-  const by = size * 0.72;
-  const br = 16 * scale;
-
+  // Center Circle
+  const centerRadius = 16 * scale;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
-      const d = Math.sqrt((x - bx) * (x - bx) + (y - by) * (y - by));
-      if (d <= br) {
-        // Emerald circle
+      const d = Math.sqrt((x - cx) * (x - cx) + (y - cy) * (y - cy));
+      if (d <= centerRadius) {
+        // Emerald center
         setPixel(x, y, 16, 163, 127, 255);
-        // Play triangle inside
-        const tx = (x - bx) / scale;
-        const ty = (y - by) / scale;
-        if (tx >= -4 && tx <= 6 && Math.abs(ty) <= (6 - tx) * 0.8) {
+
+        // Center circle border
+        if (d >= centerRadius - (1.5 * scale)) {
           setPixel(x, y, 255, 255, 255, 255);
         }
+      }
+    }
+  }
+
+  // Center Play Triangle
+  const triScale = 6 * scale;
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const tx = (x - cx) / triScale;
+      const ty = (y - cy) / triScale;
+
+      // Triangle formula: pointing right
+      if (tx >= -0.6 && tx <= 1.2 && Math.abs(ty) <= (1.2 - tx) * 0.7) {
+        setPixel(x, y, 255, 255, 255, 255);
       }
     }
   }
@@ -177,11 +174,11 @@ if (!existsSync(targetDir)) {
 
 const sizes = [16, 32, 48, 128];
 for (const size of sizes) {
-  const rgba = renderIconRGBA(size);
+  const rgba = renderChatGPTPlayIconRGBA(size);
   const pngBuf = encodeRGBAtoPNG(size, size, rgba);
   const outPath = resolve(targetDir, `icon-${size}.png`);
   writeFileSync(outPath, pngBuf);
   console.log(`Generated icon: ${outPath} (${size}x${size}, ${pngBuf.length} bytes)`);
 }
 
-console.log("All extension icons generated successfully.");
+console.log("All extension icons updated successfully.");

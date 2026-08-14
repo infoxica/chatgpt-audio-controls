@@ -1,5 +1,5 @@
 /*
- * Self-contained inline Lucide SVGs for zero-CSP-violation rendering.
+ * Self-contained inline Lucide & ChatGPT SVGs for zero-CSP-violation rendering.
  * Does not depend on external fonts or CDNs.
  */
 export const LUCIDE_ICONS: Record<string, string> = {
@@ -14,6 +14,18 @@ export const LUCIDE_ICONS: Record<string, string> = {
   "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
   "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
   "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
+  "chatgpt-audio": `
+    <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(60)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(120)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
+      <circle cx="0" cy="0" r="10" fill="#10a37f" stroke="#ffffff" stroke-width="1.5" />
+      <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
+    </g>
+  `,
 };
 
 export function getLucideSvg(name: string, className = ""): string {

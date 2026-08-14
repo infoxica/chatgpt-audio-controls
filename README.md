@@ -2,203 +2,145 @@
 
 # 🎙️ ChatGPT Audio Controls & Read Aloud
 
-**The ultimate audio enhancement extension and userscript for ChatGPT.**  
-*Seek, control speed, adjust volume, download voice responses, and trigger speech directly with one click.*
+**The ultimate audio player and control suite for ChatGPT.**  
+*Seek audio, change speeds, scroll to adjust volume, download voice responses, and trigger speech with a single click.*
 
 [![Version](https://img.shields.io/badge/version-1.0.0-10a37f.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-38bdf8.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![Runtime](https://img.shields.io/badge/Runtime-Bun-f472b6.svg?style=for-the-badge&logo=bun&logoColor=white)](https://bun.sh)
-[![React](https://img.shields.io/badge/Frontend-React_SPA-61dafb.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
 
-[Features](#-key-features) • [Installation](#-installation-guide) • [Keyboard Shortcuts](#-keyboard-shortcuts) • [Architecture](#-architecture) • [Contributing](#-contributing) • [Privacy](#-privacy-policy)
+[Features](#-features) • [Installation](#-installation) • [Tampermonkey Guide](#-tampermonkey-guide) • [Shortcuts](#-keyboard-shortcuts--gestures) • [FAQ](#-faq) • [Privacy](#-privacy)
 
 </div>
 
 ---
 
-## 🌟 Overview
+## ✨ Features
 
-OpenAI's ChatGPT includes a built-in **Read Aloud** voice feature, but lacks essential audio controls: there is no seekbar, no speed presets, no volume slider, no keyboard shortcuts, no direct download button, and triggering speech requires digging into context menus.
+### 🎛️ Integrated Floating Player
+- **Sleek Seeker & Scrubbing**: Precise 2px→4px progress bar with live timers (`0:00 / 0:00`).
+- **Hold to Accelerate**: Hold down the ◀10s or 10s▶ buttons to smoothly scrub through long audio with dynamic acceleration (up to 50× seek rate).
+- **Speed Presets**: Instant switching between `0.5×`, `0.75×`, `1.0×`, `1.25×`, `1.5×`, `1.75×`, `2.0×`, `2.5×`, and `3.0×`.
+- **Hover-Scroll Volume**: Hover over the speaker icon and scroll your mouse wheel to adjust volume effortlessly in 5% increments.
+- **One-Click Audio Download**: Save any speech response directly to your computer as high-quality `.mp3` or `.m4a`.
+- **Adaptive Screen Support**: Automatically detects space on laptop screens and scales the player fluidly down to 240px.
+- **Floating Mini Toggle**: When no audio is playing, a neat floating logo button stays docked on the right. Click it anytime to expand the player!
 
-**ChatGPT Audio Controls** solves this by injecting a beautiful, floating, dual-capsule audio player directly beside the ChatGPT prompt composer and placing 1-click speech buttons right on assistant response toolbars.
+### ⚡ 1-Click Response Speech Button
+- Adds a convenient speaker button (`🔈`) directly on assistant message toolbars beside the **Copy** button. Click once to start reading aloud; click again to stop.
 
-Available as both a **Chromium Browser Extension (Manifest V3)** with a full React SPA Popup & Dashboard, and as a lightweight **Standalone Userscript** for Tampermonkey.
-
----
-
-## ✨ Key Features
-
-### 🎛️ Dual-Capsule Floating Player
-- **Transport & Seeker Capsule (Left)**:
-  - Sleek **2px resting / 4px hover** seeker track.
-  - Live tabular timestamp indicators (`0:00 / 0:00`).
-  - Play / Pause and **-10s / +10s** jump buttons.
-  - **Dynamic Hold Acceleration**: Hold down either skip button to smoothly scrub through long audio (accelerates up to 50× seek rate).
-- **Controls & Action Rail (Right)**:
-  - **Speed Menu**: Quick presets from `0.5×` to `3.0×` with persistence.
-  - **Vertical Volume Popover**: Slim slider with percentage readout.
-  - **Direct Audio Downloader**: Instant 1-click download of the synthesized voice stream (`.mp3`, `.m4a`, `.wav`, etc.).
-  - **Shortcuts Tooltip**: Instant hotkey cheatsheet.
-
-### ⚡ 1-Click Inline Speech Trigger
-- Adds a convenient speaker button (`🔈`) directly on every assistant response toolbar right next to the **Copy** button.
-- Click once to read aloud; click again to stop playback.
-
-### ⚛️ Modern React SPA Popup & Options Dashboard
-- Built with **React 19**, **Bun**, and **Lucide Icons** (`lucide-react`).
-- **Extension Popup**: Instant speed presets, volume controls, active ChatGPT tab detection, and shortcuts reference.
-- **Options Dashboard**: Interactive audio player sandbox simulator, soundwave visualizer, audio preference customization, and technical FAQ.
-- Adapts seamlessly to **Dark Mode** and **Light Mode**.
-
-### 🔒 100% Privacy & Zero-CSP Overhead
-- **Zero data collection**, zero analytics, zero external network requests.
-- **100% self-contained**: Inline Lucide SVGs with no remote CDN font or stylesheet dependencies.
+### ⚛️ Extension Popup & Dashboard
+- **Popup**: Instant speed presets, volume slider, active audio detection status, and hotkey cheatsheet.
+- **Settings Dashboard**: Customize step sizes, default rates, soundwave visualizer, and test controls in the interactive sandbox.
+- Matches ChatGPT's native **Dark** and **Light** themes.
 
 ---
 
-## 🚀 Installation Guide
+## 🚀 Installation
 
-### Option 1: Chromium Extension (Chrome, Edge, Brave, Arc, Opera, Vivaldi)
+### Option 1: Chromium Extension (Chrome, Brave, Edge, Opera, Arc)
 
-#### Method A: Load from Source (Recommended for Developers)
-
+#### Method A: Load from Source
 1. Clone or download this repository:
    ```bash
    git clone https://github.com/infoxica/chatgpt-audio-controls.git
    cd chatgpt-audio-controls
    ```
-2. Install dependencies and build with Bun:
+2. Install dependencies and build with Bun (or Node):
    ```bash
    bun install
    bun run build
    ```
-3. Open your browser's extension management page:
+3. Open your browser extension settings:
    - **Chrome**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
    - **Brave**: `brave://extensions/`
-4. Enable **Developer mode** (toggle in top right).
-5. Click **Load unpacked** and select the `dist/` folder inside the project.
-6. Navigate to [https://chatgpt.com](https://chatgpt.com) and start listening!
+   - **Edge**: `edge://extensions/`
+4. Turn on **Developer mode** (toggle in the top-right corner).
+5. Click **Load unpacked** and select the `dist/` directory.
+6. Open [chatgpt.com](https://chatgpt.com) and enjoy full audio control!
 
 #### Method B: Install from Release ZIP
-
-1. Download the latest `chatgpt-audio-controls-vX.X.X.zip` from [Releases](https://github.com/infoxica/chatgpt-audio-controls/releases).
-2. Extract the ZIP to a folder.
-3. Open `chrome://extensions/`, enable **Developer mode**, click **Load unpacked**, and choose the extracted folder.
+1. Download `chatgpt-audio-controls-v1.0.0.zip` from [Releases](https://github.com/infoxica/chatgpt-audio-controls/releases).
+2. Unzip to a folder on your computer.
+3. In `chrome://extensions/`, enable **Developer mode**, click **Load unpacked**, and select the unzipped folder.
 
 ---
 
-### Option 2: Userscript (Tampermonkey / Violentmonkey / Greasemonkey)
+## 🐒 Tampermonkey Guide (No Extension Required)
 
-If you prefer using a userscript manager (e.g. on Firefox, Safari, or Chrome):
+If you prefer using a userscript manager (on Firefox, Chrome, Safari, or Edge):
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) or [Violentmonkey](https://violentmonkey.github.io/).
-2. Click to install: **[chatgpt-audio-controls.user.js](userscript/chatgpt-audio-controls.user.js)**.
-3. Confirm the installation in your userscript manager.
-4. Visit [https://chatgpt.com](https://chatgpt.com) — the player will activate automatically on document start!
+2. Click the link below to open the raw userscript:
+   👉 **[Install ChatGPT Audio Controls Userscript](https://raw.githubusercontent.com/infoxica/chatgpt-audio-controls/master/userscript/chatgpt-audio-controls.user.js)**
+3. Tampermonkey will open and ask you to click **Install**.
+4. Visit [https://chatgpt.com](https://chatgpt.com) — the player is fully active!
+
+> [!TIP]
+> **Automatic Updates**: The userscript includes `@updateURL` and `@downloadURL` pointing to GitHub. Tampermonkey will automatically check for updates and keep your script current.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## ⌨️ Keyboard Shortcuts & Gestures
 
 | Shortcut | Action | Description |
 | :--- | :--- | :--- |
-| <kbd>Alt</kbd> + <kbd>P</kbd> | **Play / Pause** | Toggle active Read Aloud playback |
+| <kbd>Alt</kbd> + <kbd>P</kbd> | **Play / Pause** | Toggle speech playback |
 | <kbd>Alt</kbd> + <kbd>←</kbd> | **Skip Backward** | Jump back 10 seconds (Hold to scrub) |
 | <kbd>Alt</kbd> + <kbd>→</kbd> | **Skip Forward** | Jump forward 10 seconds (Hold to scrub) |
-| <kbd>Shift</kbd> + <kbd>&lt;</kbd> | **Decrease Speed** | Step down to the previous speed preset |
-| <kbd>Shift</kbd> + <kbd>&gt;</kbd> | **Increase Speed** | Step up to the next speed preset |
-| **Hold** <kbd>◀10</kbd> / <kbd>10▶</kbd> | **Smooth Scrub** | Smoothly scrub audio with dynamic acceleration |
+| <kbd>Shift</kbd> + <kbd>&lt;</kbd> | **Slower Speed** | Step down to the previous speed preset |
+| <kbd>Shift</kbd> + <kbd>&gt;</kbd> | **Faster Speed** | Step up to the next speed preset |
+| **Scroll on 🔈** | **Volume Control** | Hover over volume icon & scroll wheel |
+| **Hold ◀10 / 10▶** | **Smooth Scrub** | Hold down skip buttons to fast-forward / rewind |
 
-*(Shortcuts are automatically disabled when typing inside inputs or textareas.)*
-
----
-
-## 🏗️ Architecture
-
-```
-chatGPT_audio_controls/
-├── .github/                       # CI/CD Workflows & Issue Templates
-├── src/
-│   ├── popup/                     # React SPA Extension Action Popup
-│   ├── options/                   # Full-page React SPA Dashboard & Simulator
-│   ├── content/                   # Main-world Content Script & Player Core
-│   │   ├── content.ts             # Audio & DOM Interceptors
-│   │   ├── icons.ts               # Self-Contained Lucide SVGs
-│   │   └── player.css             # Glassmorphic Player Stylesheet
-│   └── shared/                    # Constants, Storage & Types
-├── public/
-│   ├── manifest.json              # Manifest V3 Configuration
-│   └── icons/                     # Multi-res PNG & SVG Icons
-├── userscript/
-│   └── chatgpt-audio-controls.user.js # Standalone Tampermonkey Script
-├── scripts/
-│   ├── generate-icons.ts          # Pure PNG Icon Generator
-│   ├── build-content.ts           # Content Script Bundler
-│   ├── sync-userscript.ts         # Userscript Sync Utility
-│   └── package-zip.ts             # Distributable ZIP Creator
-├── CONTRIBUTING.md
-├── CHANGELOG.md
-├── PRIVACY.md
-└── LICENSE
-```
-
-### Manifest V3 & Audio Interception Mechanism
-
-1. **Page-Context Interception (`world: "MAIN"`)**:  
-   The extension content script runs directly in the page context at `document_start`. This allows transparent hooking into `HTMLMediaElement.prototype.play`/`pause`, `window.fetch`, `window.XMLHttpRequest`, and `URL.createObjectURL` to intercept audio Blobs without context-bridging performance penalties.
-
-2. **Self-Contained Rendering**:  
-   All icons are rendered as inline SVGs. There are zero requests to third-party font servers or CDNs, guaranteeing 100% CSP compliance and instant rendering.
+*(Shortcuts are disabled automatically when typing in prompt inputs.)*
 
 ---
 
-## 🛠️ Development & Building
+## ❓ FAQ
 
-```bash
-# Install dependencies with Bun
-bun install
+<details>
+<summary><strong>How do I download the speech audio?</strong></summary>
+When Read Aloud is playing, click the download icon (📥) on the right rail. The audio stream is immediately saved to your computer as an audio file.
+</details>
 
-# Run Vite dev server for popup & dashboard
-bun run dev
+<details>
+<summary><strong>What happens when no audio is playing?</strong></summary>
+The full player capsules collapse into a small floating logo button on the right side. You can click it anytime to open the player, or it will automatically open when you start Read Aloud.
+</details>
 
-# Generate icon assets
-bun run build:icons
+<details>
+<summary><strong>Will this work on compact laptop screens?</strong></summary>
+Yes! The player measures your available screen space dynamically and scales its seekbar smoothly from 240px to 430px so it never collides with your prompt composer.
+</details>
 
-# Build complete extension bundle
-bun run build
-
-# Package distribution ZIP
-bun run package
-
-# Typecheck
-bun run typecheck
-```
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are very welcome!  
-Please check out [CONTRIBUTING.md](CONTRIBUTING.md) to understand our Git branching model (`master` -> `develop` -> `feature/*`, `bug/*`, `fix/*`) and PR checklist.
+<details>
+<summary><strong>Why didn't icons render in previous Tampermonkey scripts?</strong></summary>
+Previous scripts tried loading external web fonts which browsers blocked. This version uses 100% self-contained inline SVGs, so all icons render instantly with zero network calls.
+</details>
 
 ---
 
 ## 🔒 Privacy Policy
 
-We take user privacy seriously. **ChatGPT Audio Controls collects zero data.**  
-All processing is done 100% on your device. Please read our full [PRIVACY.md](PRIVACY.md).
+ChatGPT Audio Controls operates **100% locally in your browser**.
+- **No data collection**: No prompts, chats, audio files, or telemetry are ever uploaded or transmitted.
+- **No external servers**: Runs entirely on your machine.
+- Read our complete [PRIVACY.md](PRIVACY.md).
+
+---
+
+## 🤝 Contributing
+
+Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
-
----
+This project is licensed under the [MIT License](LICENSE).
 
 <div align="center">
-  <sub>Built with ❤️ by <a href="https://github.com/infoxica">Infoxica</a></sub>
+  <sub>Maintained with ❤️ by <a href="https://github.com/infoxica">Infoxica</a></sub>
 </div>

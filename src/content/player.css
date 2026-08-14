@@ -1,19 +1,21 @@
 :root {
-    --cgpt-ra-bg: rgba(32, 32, 32, .94);
+    --cgpt-ra-bg: rgba(33, 33, 33, .96);
     --cgpt-ra-bg-hover: rgba(255, 255, 255, .10);
-    --cgpt-ra-border: rgba(255, 255, 255, .10);
+    --cgpt-ra-border: rgba(255, 255, 255, .12);
     --cgpt-ra-text: rgba(255, 255, 255, .92);
     --cgpt-ra-muted: rgba(255, 255, 255, .55);
     --cgpt-ra-disabled: rgba(255, 255, 255, .28);
+    --cgpt-ra-accent: #10a37f;
 }
 
 html.light, [data-theme='light'] {
-    --cgpt-ra-bg: rgba(245, 245, 245, .96);
+    --cgpt-ra-bg: rgba(249, 249, 249, .98);
     --cgpt-ra-bg-hover: rgba(0, 0, 0, .07);
-    --cgpt-ra-border: rgba(0, 0, 0, .10);
-    --cgpt-ra-text: rgba(0, 0, 0, .84);
+    --cgpt-ra-border: rgba(0, 0, 0, .12);
+    --cgpt-ra-text: rgba(13, 13, 13, .88);
     --cgpt-ra-muted: rgba(0, 0, 0, .52);
     --cgpt-ra-disabled: rgba(0, 0, 0, .25);
+    --cgpt-ra-accent: #10a37f;
 }
 
 #cgpt-ra-left,
@@ -23,10 +25,10 @@ html.light, [data-theme='light'] {
     border: 1px solid var(--cgpt-ra-border);
     background: var(--cgpt-ra-bg);
     color: var(--cgpt-ra-text);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .18);
-    transition: opacity .15s ease, transform .15s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
+    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
 }
 
 /*
@@ -36,7 +38,8 @@ html.light, [data-theme='light'] {
  * ( 00:00/00:00 -------------------------- )
  */
 #cgpt-ra-left {
-    width: 430px;
+    min-width: 240px;
+    max-width: 430px;
     height: 46px;
     display: block;
     padding: 0 13px;
@@ -95,7 +98,7 @@ html.light, [data-theme='light'] {
 .cgpt-ra-progress-row {
     height: 44px;
     display: grid;
-    grid-template-columns: 70px minmax(0, 1fr);
+    grid-template-columns: 66px minmax(0, 1fr);
     align-items: center;
     gap: 8px;
     padding: 0;
@@ -111,14 +114,75 @@ html.light, [data-theme='light'] {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 5px 7px;
+    padding: 5px 8px;
     border-radius: 24px;
     white-space: nowrap;
 }
 
+/* Reordering right rail items so help is rightmost */
+.cgpt-ra-speed-wrap {
+    order: 1;
+}
+.cgpt-ra-volume-wrap {
+    order: 2;
+}
+.cgpt-ra-download {
+    order: 3;
+    margin-left: 2px;
+}
+.cgpt-ra-help-wrap {
+    order: 4;
+    margin-left: 2px;
+}
+
+/* Floating Toggle Button (shown when no audio or collapsed) */
+#cgpt-ra-floating-toggle {
+    position: fixed;
+    z-index: 9999;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--cgpt-ra-border);
+    background: var(--cgpt-ra-bg);
+    color: var(--cgpt-ra-text);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .28);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: transform .15s ease, background .15s ease, opacity .15s ease;
+}
+
+#cgpt-ra-floating-toggle:hover {
+    transform: scale(1.08);
+    background: var(--cgpt-ra-bg-hover);
+    border-color: var(--cgpt-ra-accent);
+}
+
+#cgpt-ra-floating-toggle svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+#cgpt-ra-floating-toggle.cgpt-ra-hidden {
+    display: none !important;
+}
+
+#cgpt-ra-left.cgpt-ra-collapsed,
+#cgpt-ra-right.cgpt-ra-collapsed {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: scale(0.95);
+}
+
 #cgpt-ra-left.cgpt-ra-no-media,
 #cgpt-ra-right.cgpt-ra-no-media {
-    opacity: .42;
+    opacity: .55;
 }
 
 #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
@@ -220,7 +284,7 @@ html.light, [data-theme='light'] {
 }
 
 /*
- * Sleek seeker:
+ * Sleek seeker & range controls:
  * - 2px visual track normally
  * - 4px track on hover / focus
  */
@@ -249,7 +313,7 @@ html.light, [data-theme='light'] {
 .cgpt-ra-range:hover::-webkit-slider-runnable-track,
 .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
     height: 4px;
-    background: color-mix(in srgb, currentColor 44%, transparent);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-webkit-slider-thumb {
@@ -270,6 +334,7 @@ html.light, [data-theme='light'] {
     width: 10px;
     height: 10px;
     margin-top: -3px;
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-moz-range-track {
@@ -283,7 +348,7 @@ html.light, [data-theme='light'] {
 .cgpt-ra-range:hover::-moz-range-track,
 .cgpt-ra-range:focus-visible::-moz-range-track {
     height: 4px;
-    background: color-mix(in srgb, currentColor 44%, transparent);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-moz-range-progress {
@@ -334,9 +399,9 @@ html.light, [data-theme='light'] {
     display: none;
     border: 1px solid var(--cgpt-ra-border);
     border-radius: 12px;
-    background: rgb(40, 40, 40);
+    background: rgb(38, 38, 38);
     color: #fff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
     overflow: hidden;
     z-index: 10002;
 }
@@ -381,13 +446,14 @@ html.light .cgpt-ra-speed-option.cgpt-selected {
     background: rgba(0, 0, 0, .07);
 }
 
+/* Vertical Volume Popover with proper spacing & seeker-matching slider */
 .cgpt-ra-volume-popover {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 4px);
+    bottom: calc(100% + 6px);
     transform: translateX(-50%);
     width: 44px;
-    height: 158px;
+    height: 165px;
     display: flex;
     opacity: 0;
     visibility: hidden;
@@ -396,12 +462,12 @@ html.light .cgpt-ra-speed-option.cgpt-selected {
     align-items: center;
     justify-content: flex-start;
     gap: 0;
-    padding: 8px 5px 7px;
+    padding: 6px 5px 6px;
     border: 1px solid var(--cgpt-ra-border);
     border-radius: 22px;
-    background: rgb(40, 40, 40);
+    background: rgb(38, 38, 38);
     color: #fff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
     transition: opacity .12s ease, visibility .12s ease;
     z-index: 10002;
 }
@@ -420,43 +486,44 @@ html.light .cgpt-ra-volume-popover {
 
 .cgpt-ra-volume-popover input[type="range"] {
     position: absolute;
-    top: 52px;
+    top: 56px;
     left: 50%;
-    width: 98px;
-    height: 20px;
+    width: 96px;
+    height: 18px;
     margin: 0;
     transform: translate(-50%, -50%) rotate(-90deg);
-    accent-color: currentColor;
+    cursor: pointer;
 }
 
 .cgpt-ra-volume-value {
     position: absolute;
-    left: 6px;
-    right: 6px;
-    bottom: 8px;
-    min-height: 28px;
+    left: 4px;
+    right: 4px;
+    bottom: 6px;
+    height: 24px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    padding-top: 10px;
     border-top: 1px solid var(--cgpt-ra-border);
-    font-size: 9px;
+    font-size: 9.5px;
+    font-weight: 600;
+    font-family: system-ui, sans-serif;
     line-height: 1;
     color: inherit;
-    opacity: .68;
+    opacity: .75;
     text-align: center;
 }
 
 .cgpt-ra-help {
     width: 300px;
-    padding: 11px 13px;
+    padding: 12px 14px;
     font-family: system-ui, sans-serif;
 }
 
 .cgpt-ra-help-title {
     margin-bottom: 8px;
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 700;
 }
 
 .cgpt-ra-shortcut-row {
@@ -469,14 +536,9 @@ html.light .cgpt-ra-volume-popover {
 
 .cgpt-ra-shortcut-key {
     color: inherit;
-    opacity: .62;
+    opacity: .65;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     white-space: nowrap;
-}
-
-.cgpt-ra-download {
-    margin-left: 2px;
-    order: 99;
 }
 
 .cgpt-ra-download-busy svg {
@@ -500,11 +562,12 @@ html.light .cgpt-ra-volume-popover {
     cursor: pointer;
     opacity: .72;
     padding: 0;
+    transition: opacity .12s ease, background .12s ease;
 }
 
 .cgpt-inline-readaloud:hover {
     opacity: 1;
-    background: rgba(127, 127, 127, .12);
+    background: rgba(127, 127, 127, .14);
 }
 
 .cgpt-inline-readaloud svg {
@@ -515,11 +578,5 @@ html.light .cgpt-ra-volume-popover {
 
 .cgpt-inline-readaloud.cgpt-active {
     opacity: 1;
-}
-
-@media (max-width: 1180px) {
-    #cgpt-ra-left,
-    #cgpt-ra-right {
-        display: none !important;
-    }
+    color: var(--cgpt-ra-accent);
 }

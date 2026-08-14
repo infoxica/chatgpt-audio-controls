@@ -2,13 +2,15 @@
 // @name         ChatGPT Read Aloud & Audio Controls
 // @namespace    https://infoxica.com/
 // @version      1.0.0
-// @description  Integrated Read Aloud controls beside the ChatGPT composer: compact 2-row seek player, speed presets, volume slider, instant audio download, shortcuts, and one-click per-response Read Aloud.
+// @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts, and one-click per-response speech.
 // @author       Infoxica
 // @match        https://chatgpt.com/*
 // @run-at       document-start
 // @grant        unsafeWindow
 // @homepageURL  https://github.com/infoxica/chatgpt-audio-controls
 // @supportURL   https://github.com/infoxica/chatgpt-audio-controls/issues
+// @downloadURL  https://raw.githubusercontent.com/infoxica/chatgpt-audio-controls/master/userscript/chatgpt-audio-controls.user.js
+// @updateURL    https://raw.githubusercontent.com/infoxica/chatgpt-audio-controls/master/userscript/chatgpt-audio-controls.user.js
 // @license      MIT
 // ==/UserScript==
 
@@ -30,15 +32,18 @@
   let activeMedia = null;
   let activeInlineButton = null;
   let pendingInlineButton = null;
+  let userForcedExpand = false;
 
   let leftRail = null;
   let rightRail = null;
+  let floatingToggle = null;
   let seekSlider = null;
   let currentLabel = null;
   let durationLabel = null;
   let playButton = null;
   let speedButton = null;
   let speedMenu = null;
+  let volumeWrap = null;
   let volumeSlider = null;
   let volumeLabel = null;
   let downloadButton = null;
@@ -55,7 +60,7 @@
   function log(...args) {
     if (CONFIG.debug) {
       console.log(
-        "%c[ChatGPT Read Aloud v4.2]",
+        "%c[ChatGPT Audio Controls]",
         "color:#10a37f;font-weight:700",
         ...args,
       );
@@ -63,7 +68,7 @@
   }
 
   function warn(...args) {
-    console.warn("[ChatGPT Read Aloud v4.2]", ...args);
+    console.warn("[ChatGPT Audio Controls]", ...args);
   }
 
   function clamp(value, min, max) {
@@ -110,6 +115,18 @@
     "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
     "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
     "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
+    "chatgpt-audio": `
+      <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(60)" />
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(120)" />
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
+        <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
+        <circle cx="0" cy="0" r="10" fill="#10a37f" stroke="#ffffff" stroke-width="1.5" />
+        <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
+      </g>
+    `,
   };
 
   function lucideIcon(name, className = "") {
@@ -329,6 +346,7 @@
 
     const changed = activeMedia !== media;
     activeMedia = media;
+    userForcedExpand = true;
 
     try {
       media.playbackRate = getSavedSpeed();
@@ -346,6 +364,7 @@
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
+    syncComposerLayout();
 
     log("Attached media:", reason, media);
   }
@@ -367,6 +386,7 @@
         if (activeMedia === media) {
           updateControls();
           updateInlineButtons();
+          syncComposerLayout();
         }
       });
     });
@@ -405,6 +425,7 @@
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
+            syncComposerLayout();
           });
         }
 
@@ -433,21 +454,23 @@
     style.id = "cgpt-ra-v4-style";
     style.textContent = `
       :root {
-          --cgpt-ra-bg: rgba(32, 32, 32, .94);
-          --cgpt-ra-bg-hover: rgba(255,255,255,.10);
-          --cgpt-ra-border: rgba(255,255,255,.10);
-          --cgpt-ra-text: rgba(255,255,255,.92);
-          --cgpt-ra-muted: rgba(255,255,255,.55);
-          --cgpt-ra-disabled: rgba(255,255,255,.28);
+          --cgpt-ra-bg: rgba(33, 33, 33, .96);
+          --cgpt-ra-bg-hover: rgba(255, 255, 255, .10);
+          --cgpt-ra-border: rgba(255, 255, 255, .12);
+          --cgpt-ra-text: rgba(255, 255, 255, .92);
+          --cgpt-ra-muted: rgba(255, 255, 255, .55);
+          --cgpt-ra-disabled: rgba(255, 255, 255, .28);
+          --cgpt-ra-accent: #10a37f;
       }
 
       html.light {
-          --cgpt-ra-bg: rgba(245,245,245,.96);
-          --cgpt-ra-bg-hover: rgba(0,0,0,.07);
-          --cgpt-ra-border: rgba(0,0,0,.10);
-          --cgpt-ra-text: rgba(0,0,0,.84);
-          --cgpt-ra-muted: rgba(0,0,0,.52);
-          --cgpt-ra-disabled: rgba(0,0,0,.25);
+          --cgpt-ra-bg: rgba(249, 249, 249, .98);
+          --cgpt-ra-bg-hover: rgba(0, 0, 0, .07);
+          --cgpt-ra-border: rgba(0, 0, 0, .12);
+          --cgpt-ra-text: rgba(13, 13, 13, .88);
+          --cgpt-ra-muted: rgba(0, 0, 0, .52);
+          --cgpt-ra-disabled: rgba(0, 0, 0, .25);
+          --cgpt-ra-accent: #10a37f;
       }
 
       #cgpt-ra-left,
@@ -457,14 +480,15 @@
           border: 1px solid var(--cgpt-ra-border);
           background: var(--cgpt-ra-bg);
           color: var(--cgpt-ra-text);
-          backdrop-filter: blur(18px);
-          -webkit-backdrop-filter: blur(18px);
-          box-shadow: 0 1px 2px rgba(0,0,0,.18);
-          transition: opacity .15s ease, transform .15s ease;
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
+          transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
       }
 
       #cgpt-ra-left {
-          width: 430px;
+          min-width: 240px;
+          max-width: 430px;
           height: 46px;
           display: block;
           padding: 0 13px;
@@ -501,7 +525,7 @@
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 19px 19px 11px 11px;
           background: var(--cgpt-ra-bg);
-          box-shadow: 0 1px 2px rgba(0,0,0,.10);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, .10);
       }
 
       .cgpt-ra-transport-row::after {
@@ -523,7 +547,7 @@
       .cgpt-ra-progress-row {
           height: 44px;
           display: grid;
-          grid-template-columns: 70px minmax(0, 1fr);
+          grid-template-columns: 66px minmax(0, 1fr);
           align-items: center;
           gap: 8px;
           padding: 0;
@@ -538,14 +562,56 @@
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          padding: 5px 7px;
+          padding: 5px 8px;
           border-radius: 24px;
           white-space: nowrap;
       }
 
+      .cgpt-ra-speed-wrap { order: 1; }
+      .cgpt-ra-volume-wrap { order: 2; }
+      .cgpt-ra-download { order: 3; margin-left: 2px; }
+      .cgpt-ra-help-wrap { order: 4; margin-left: 2px; }
+
+      #cgpt-ra-floating-toggle {
+          position: fixed;
+          z-index: 9999;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          border: 1px solid var(--cgpt-ra-border);
+          background: var(--cgpt-ra-bg);
+          color: var(--cgpt-ra-text);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          box-shadow: 0 3px 12px rgba(0, 0, 0, .28);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          padding: 0;
+          transition: transform .15s ease, background .15s ease;
+      }
+
+      #cgpt-ra-floating-toggle:hover {
+          transform: scale(1.08);
+          border-color: var(--cgpt-ra-accent);
+      }
+
+      #cgpt-ra-floating-toggle.cgpt-ra-hidden {
+          display: none !important;
+      }
+
+      #cgpt-ra-left.cgpt-ra-collapsed,
+      #cgpt-ra-right.cgpt-ra-collapsed {
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
+          transform: scale(0.95);
+      }
+
       #cgpt-ra-left.cgpt-ra-no-media,
       #cgpt-ra-right.cgpt-ra-no-media {
-          opacity: .42;
+          opacity: .55;
       }
 
       #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
@@ -671,7 +737,7 @@
       .cgpt-ra-range:hover::-webkit-slider-runnable-track,
       .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
           height: 4px;
-          background: color-mix(in srgb, currentColor 44%, transparent);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-webkit-slider-thumb {
@@ -692,6 +758,7 @@
           width: 10px;
           height: 10px;
           margin-top: -3px;
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-moz-range-track {
@@ -705,7 +772,7 @@
       .cgpt-ra-range:hover::-moz-range-track,
       .cgpt-ra-range:focus-visible::-moz-range-track {
           height: 4px;
-          background: color-mix(in srgb, currentColor 44%, transparent);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-moz-range-progress {
@@ -756,9 +823,9 @@
           display: none;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 12px;
-          background: rgb(40,40,40);
+          background: rgb(38, 38, 38);
           color: #fff;
-          box-shadow: 0 10px 30px rgba(0,0,0,.28);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
           overflow: hidden;
           z-index: 10002;
       }
@@ -795,21 +862,21 @@
 
       .cgpt-ra-speed-option:hover,
       .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(255,255,255,.10);
+          background: rgba(255, 255, 255, .10);
       }
 
       html.light .cgpt-ra-speed-option:hover,
       html.light .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(0,0,0,.07);
+          background: rgba(0, 0, 0, .07);
       }
 
       .cgpt-ra-volume-popover {
           position: absolute;
           left: 50%;
-          bottom: calc(100% + 4px);
+          bottom: calc(100% + 6px);
           transform: translateX(-50%);
           width: 44px;
-          height: 158px;
+          height: 165px;
           display: flex;
           opacity: 0;
           visibility: hidden;
@@ -818,12 +885,12 @@
           align-items: center;
           justify-content: flex-start;
           gap: 0;
-          padding: 8px 5px 7px;
+          padding: 6px 5px 6px;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 22px;
-          background: rgb(40,40,40);
+          background: rgb(38, 38, 38);
           color: #fff;
-          box-shadow: 0 10px 30px rgba(0,0,0,.28);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
           transition: opacity .12s ease, visibility .12s ease;
           z-index: 10002;
       }
@@ -842,43 +909,44 @@
 
       .cgpt-ra-volume-popover input[type="range"] {
           position: absolute;
-          top: 52px;
+          top: 56px;
           left: 50%;
-          width: 98px;
-          height: 20px;
+          width: 96px;
+          height: 18px;
           margin: 0;
           transform: translate(-50%, -50%) rotate(-90deg);
-          accent-color: currentColor;
+          cursor: pointer;
       }
 
       .cgpt-ra-volume-value {
           position: absolute;
-          left: 6px;
-          right: 6px;
-          bottom: 8px;
-          min-height: 28px;
+          left: 4px;
+          right: 4px;
+          bottom: 6px;
+          height: 24px;
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           justify-content: center;
-          padding-top: 10px;
           border-top: 1px solid var(--cgpt-ra-border);
-          font-size: 9px;
+          font-size: 9.5px;
+          font-weight: 600;
+          font-family: system-ui, sans-serif;
           line-height: 1;
           color: inherit;
-          opacity: .68;
+          opacity: .75;
           text-align: center;
       }
 
       .cgpt-ra-help {
           width: 300px;
-          padding: 11px 13px;
+          padding: 12px 14px;
           font-family: system-ui, sans-serif;
       }
 
       .cgpt-ra-help-title {
           margin-bottom: 8px;
           font-size: 12px;
-          font-weight: 650;
+          font-weight: 700;
       }
 
       .cgpt-ra-shortcut-row {
@@ -891,14 +959,9 @@
 
       .cgpt-ra-shortcut-key {
           color: inherit;
-          opacity: .62;
+          opacity: .65;
           font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
           white-space: nowrap;
-      }
-
-      .cgpt-ra-download {
-          margin-left: 2px;
-          order: 99;
       }
 
       .cgpt-ra-download-busy svg {
@@ -922,11 +985,12 @@
           cursor: pointer;
           opacity: .72;
           padding: 0;
+          transition: opacity .12s ease, background .12s ease;
       }
 
       .cgpt-inline-readaloud:hover {
           opacity: 1;
-          background: rgba(127,127,127,.12);
+          background: rgba(127, 127, 127, .14);
       }
 
       .cgpt-inline-readaloud svg {
@@ -937,13 +1001,7 @@
 
       .cgpt-inline-readaloud.cgpt-active {
           opacity: 1;
-      }
-
-      @media (max-width: 1180px) {
-          #cgpt-ra-left,
-          #cgpt-ra-right {
-              display: none !important;
-          }
+          color: var(--cgpt-ra-accent);
       }
     `;
 
@@ -955,9 +1013,22 @@
 
     installStyles();
 
+    floatingToggle = document.createElement("button");
+    floatingToggle.id = "cgpt-ra-floating-toggle";
+    floatingToggle.type = "button";
+    floatingToggle.title = "ChatGPT Audio Controls";
+    floatingToggle.setAttribute("aria-label", "Expand ChatGPT Audio Controls");
+    floatingToggle.innerHTML = lucideIcon("chatgpt-audio");
+
+    floatingToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userForcedExpand = !userForcedExpand;
+      syncComposerLayout();
+    });
+
     leftRail = document.createElement("div");
     leftRail.id = "cgpt-ra-left";
-    leftRail.className = "cgpt-ra-no-media";
+    leftRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     leftRail.innerHTML = `
       <div class="cgpt-ra-transport-row">
@@ -993,7 +1064,7 @@
 
     rightRail = document.createElement("div");
     rightRail.id = "cgpt-ra-right";
-    rightRail.className = "cgpt-ra-no-media";
+    rightRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     rightRail.innerHTML = `
       <div class="cgpt-ra-speed-wrap cgpt-ra-media-control">
@@ -1004,19 +1075,24 @@
       </div>
 
       <div class="cgpt-ra-volume-wrap cgpt-ra-media-control">
-        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume" disabled>
+        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume (Scroll to adjust)" disabled>
           ${lucideIcon("volume-2")}
         </button>
         <div class="cgpt-ra-volume-popover">
-          <input class="cgpt-ra-volume-slider"
+          <input class="cgpt-ra-range cgpt-ra-volume-slider"
                  type="range" min="0" max="1" step="0.01"
                  value="${getSavedVolume()}">
           <span class="cgpt-ra-volume-value">${Math.round(getSavedVolume() * 100)}%</span>
         </div>
       </div>
 
+      <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
+              title="Download audio" disabled>
+        ${lucideIcon("download")}
+      </button>
+
       <div class="cgpt-ra-help-wrap">
-        <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts">
+        <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts & gestures">
           ${lucideIcon("circle-help")}
         </button>
         <div class="cgpt-ra-popover cgpt-ra-help">
@@ -1042,19 +1118,18 @@
             <span class="cgpt-ra-shortcut-key">Shift + &gt;</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
+            <span>Volume Scroll</span>
+            <span class="cgpt-ra-shortcut-key">Scroll on 🔈</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
             <span>Smooth Scrub</span>
             <span class="cgpt-ra-shortcut-key">Hold ◀10 / 10▶</span>
           </div>
         </div>
       </div>
-
-      <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
-              title="Download audio" disabled>
-        ${lucideIcon("download")}
-      </button>
     `;
 
-    document.body.append(leftRail, rightRail);
+    document.body.append(floatingToggle, leftRail, rightRail);
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
@@ -1063,6 +1138,7 @@
 
     speedButton = rightRail.querySelector(".cgpt-ra-speed-btn");
     speedMenu = rightRail.querySelector(".cgpt-ra-speed-menu");
+    volumeWrap = rightRail.querySelector(".cgpt-ra-volume-wrap");
     volumeSlider = rightRail.querySelector(".cgpt-ra-volume-slider");
     volumeLabel = rightRail.querySelector(".cgpt-ra-volume-value");
     downloadButton = rightRail.querySelector(".cgpt-ra-download");
@@ -1077,7 +1153,7 @@
       item.addEventListener("click", () => {
         setSpeed(speed);
         rightRail
-          .querySelector(".cgpt-ra-speed-wrap")
+          ?.querySelector(".cgpt-ra-speed-wrap")
           ?.classList.remove("cgpt-open");
       });
 
@@ -1126,6 +1202,18 @@
       setVolume(parseFloat(volumeSlider.value));
     });
 
+    volumeWrap.addEventListener(
+      "wheel",
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const delta = event.deltaY < 0 ? 0.05 : -0.05;
+        const current = activeMedia ? activeMedia.volume : getSavedVolume();
+        setVolume(clamp(current + delta, 0, 1));
+      },
+      { passive: false },
+    );
+
     downloadButton.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
@@ -1171,42 +1259,56 @@
   }
 
   function syncComposerLayout() {
-    if (!leftRail || !rightRail) return;
+    if (!leftRail || !rightRail || !floatingToggle) return;
 
     const composer = getComposer();
+    const hasActiveAudio = activeMedia && !activeMedia.paused && !activeMedia.ended;
+    const shouldExpand = Boolean(hasActiveAudio || userForcedExpand);
+
     if (!composer) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
+      floatingToggle.style.right = "16px";
+      floatingToggle.style.bottom = "80px";
+      floatingToggle.classList.remove("cgpt-ra-hidden");
       return;
     }
 
     const rect = composer.getBoundingClientRect();
-
-    if (rect.width < 300 || rect.width > window.innerWidth * 0.82) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
-      return;
-    }
-
     const viewportWidth = window.innerWidth;
     const sideGap = 10;
-    const outerMargin = 18;
+    const outerMargin = 14;
 
     const leftAvailable = rect.left - outerMargin - sideGap;
     const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-    const desiredLeftWidth = 440 - sideGap;
 
-    if (leftAvailable < desiredLeftWidth || rightAvailable < 150) {
-      leftRail.style.display = "none";
-      rightRail.style.display = "none";
+    const minLeftWidth = 240;
+    const maxLeftWidth = 430;
+
+    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
+
+    if (!canFit || !shouldExpand) {
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
+
+      floatingToggle.classList.remove("cgpt-ra-hidden");
+      const toggleX = Math.min(viewportWidth - 48, rect.right + 12);
+      const toggleY = rect.top + rect.height / 2 - 19;
+      floatingToggle.style.left = `${toggleX}px`;
+      floatingToggle.style.top = `${toggleY}px`;
       return;
     }
 
+    floatingToggle.classList.add("cgpt-ra-hidden");
+    leftRail.classList.remove("cgpt-ra-collapsed");
+    rightRail.classList.remove("cgpt-ra-collapsed");
+
+    const computedLeftWidth = clamp(leftAvailable, minLeftWidth, maxLeftWidth);
     const centerY = rect.top + rect.height / 2;
 
     leftRail.style.display = "block";
-    leftRail.style.width = `${desiredLeftWidth}px`;
-    leftRail.style.left = `${rect.left - sideGap - desiredLeftWidth}px`;
+    leftRail.style.width = `${computedLeftWidth}px`;
+    leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
     leftRail.style.top = `${centerY - 23}px`;
 
     rightRail.style.display = "inline-flex";
@@ -1510,9 +1612,7 @@
       log("Downloaded audio:", filename, blob.size, mime);
     } catch (error) {
       warn("Download failed:", error);
-      alert(
-        "Could not download this Read Aloud audio.\n\nOpen DevTools → Console to inspect network details.",
-      );
+      alert("Could not download audio stream. Ensure audio is actively loaded.");
     } finally {
       downloadButton.classList.remove("cgpt-ra-download-busy");
       downloadButton.disabled = false;
@@ -1530,22 +1630,22 @@
       .toLowerCase();
   }
 
-  function findButtonByMeaning(container, phrases) {
-    return (
-      Array.from(container.querySelectorAll("button")).find((button) => {
-        if (button.classList.contains("cgpt-inline-readaloud")) return false;
-        const value = textMeaning(button);
-        return phrases.some((phrase) => value.includes(phrase));
-      }) || null
-    );
-  }
-
   function findToolbar(turn) {
-    const copy = findButtonByMeaning(turn, ["copy"]);
-    if (copy?.parentElement) return copy.parentElement;
+    const copyButton = Array.from(turn.querySelectorAll("button")).find((btn) => {
+      const txt = textMeaning(btn);
+      return txt === "copy" || txt.includes("copy response") || txt.includes("copy code");
+    });
 
-    const more = findButtonByMeaning(turn, ["more actions", "more"]);
-    if (more?.parentElement) return more.parentElement;
+    if (copyButton?.parentElement) {
+      return copyButton.parentElement;
+    }
+
+    const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
+    for (const bar of actionBars) {
+      if (bar.querySelector("button") && !bar.closest("pre, code, table")) {
+        return bar;
+      }
+    }
 
     return null;
   }
@@ -1574,6 +1674,7 @@
         button.addEventListener("click", async (event) => {
           event.preventDefault();
           event.stopPropagation();
+          event.stopImmediatePropagation();
 
           if (
             button === activeInlineButton &&
@@ -1600,22 +1701,25 @@
           await triggerNativeReadAloud(turn);
         });
 
-        const copy = findButtonByMeaning(turn, ["copy"]);
-        if (copy && copy.parentElement === toolbar) {
-          copy.insertAdjacentElement("afterend", button);
+        const copyBtn = Array.from(toolbar.querySelectorAll("button")).find((b) =>
+          textMeaning(b).includes("copy"),
+        );
+
+        if (copyBtn && copyBtn.parentElement === toolbar) {
+          copyBtn.insertAdjacentElement("afterend", button);
         } else {
           toolbar.insertBefore(button, toolbar.firstChild);
         }
       });
   }
 
-  async function waitForReadAloudMenuItem(timeout = 1600) {
+  async function waitForReadAloudMenuItem(timeout = 1800) {
     const started = performance.now();
 
     return new Promise((resolve) => {
       const scan = () => {
         const candidates = document.querySelectorAll(
-          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button',
+          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button, [data-radix-popper-content-wrapper] [role="menuitem"]',
         );
 
         for (const item of candidates) {
@@ -1624,7 +1728,8 @@
           if (
             text.includes("read aloud") ||
             text.includes("read out loud") ||
-            text.includes("listen")
+            text.includes("listen") ||
+            text === "read"
           ) {
             resolve(item);
             return;
@@ -1644,28 +1749,39 @@
   }
 
   async function triggerNativeReadAloud(turn) {
-    const direct = findButtonByMeaning(turn, ["read aloud", "read out loud"]);
+    const direct = Array.from(turn.querySelectorAll("button")).find((btn) => {
+      if (btn.classList.contains("cgpt-inline-readaloud")) return false;
+      const t = textMeaning(btn);
+      return t.includes("read aloud") || t.includes("read out loud") || t.includes("listen");
+    });
 
     if (direct) {
       direct.click();
       return;
     }
 
-    const more = findButtonByMeaning(turn, ["more actions", "more"]);
+    const toolbar = findToolbar(turn);
+    const moreBtn = toolbar
+      ? Array.from(toolbar.querySelectorAll("button")).find((b) => {
+          const t = textMeaning(b);
+          return t.includes("more actions") || t === "more" || t.includes("options");
+        })
+      : null;
 
-    if (!more) {
+    if (!moreBtn) {
       pendingInlineButton = null;
       warn("Could not find the response More Actions button.");
       return;
     }
 
-    more.click();
+    moreBtn.click();
 
     const menuItem = await waitForReadAloudMenuItem();
 
     if (!menuItem) {
       pendingInlineButton = null;
-      warn("Could not find Read Aloud in the response menu.");
+      warn("Could not find Read Aloud in the response popup menu.");
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return;
     }
 
@@ -1817,7 +1933,7 @@
     startObserver();
     animationLoop();
 
-    log("Ready");
+    log("ChatGPT Audio Controls Userscript Ready");
   }
 
   installEarlyHooks();
