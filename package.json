@@ -10,6 +10,7 @@
     "build:icons": "bun run scripts/generate-icons.ts",
     "build:userscript": "bun run scripts/sync-userscript.ts",
     "package": "bun run build && bun run scripts/package-zip.ts",
+    "release:check": "bun run scripts/validate-release.ts",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [

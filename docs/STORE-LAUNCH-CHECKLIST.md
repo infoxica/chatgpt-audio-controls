@@ -8,6 +8,7 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 - [ ] Run `bun install --frozen-lockfile`.
 - [ ] Run `bun run typecheck`.
 - [ ] Run `bun run build`.
+- [ ] Set `RELEASE_TAG` to the intended tag and run `bun run release:check`.
 - [ ] Run `bun run package`; upload only the generated `dist-zip/chatgpt-audio-controls-v<version>.zip` archive.
 - [ ] Inspect the archive: `manifest.json` must be at the archive root and the archive must not include source files, `node_modules`, or another enclosing `dist` directory.
 - [ ] Confirm the package uses Manifest V3, requests only `storage`, and runs content scripts only on `https://chatgpt.com/*`.
@@ -64,7 +65,7 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 
 ## Release closeout
 
-- [ ] Tag the exact approved commit as `v<version>` and push the tag to create the GitHub release.
+- [ ] Tag the exact approved commit as `v<version>` and push the tag. GitHub Actions will validate the metadata, build the package, and create the GitHub release automatically.
 - [ ] Verify the GitHub release contains the ZIP and userscript.
 - [ ] Install the store-delivered version from both stores and repeat the browser smoke test.
 - [ ] Update the release notes with any known ChatGPT UI compatibility limitations.

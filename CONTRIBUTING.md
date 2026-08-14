@@ -89,6 +89,7 @@ chore: bump version to X.Y.Z
 | `bun run build:icons` | Generates multi-resolution PNG icons from master SVG |
 | `bun run build:extension` | Compiles the Chromium extension bundle into `dist/` |
 | `bun run package` | Builds and creates a clean distributable `.zip` in `dist-zip/` |
+| `bun run release:check` | Verifies that a `vX.Y.Z` release tag matches all project version metadata |
 | `bun run typecheck` | Runs TypeScript type checking with zero errors |
 
 ---
@@ -106,3 +107,7 @@ chore: bump version to X.Y.Z
 - Use the provided [Bug Report Template](.github/ISSUE_TEMPLATE/bug_report.md) or [Feature Request Template](.github/ISSUE_TEMPLATE/feature_request.md).
 - Ensure all automated checks and `bun run typecheck` pass cleanly.
 - Be respectful and collaborative!
+
+### Automated Releases
+
+Push a semver tag matching the package version, such as `v1.0.2`, after the release commit is merged. The GitHub Actions workflow validates the package, manifest, userscript, and changelog versions, then publishes the extension ZIP and userscript as GitHub Release assets. Branch pushes and pull requests run verification and packaging without publishing a release.
