@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT Audio Controls & Read Aloud",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Complete Read Aloud controls for ChatGPT: integrated seeker, playback speed, volume, download audio, shortcuts, and response speech buttons.",
   "author": "Infoxica",
   "homepage_url": "https://github.com/infoxica/chatgpt-audio-controls",
@@ -28,15 +28,19 @@
   "permissions": [
     "storage"
   ],
-  "host_permissions": [
-    "https://chatgpt.com/*",
-    "https://*.chatgpt.com/*"
-  ],
   "content_scripts": [
     {
       "matches": [
-        "https://chatgpt.com/*",
-        "https://*.chatgpt.com/*"
+        "https://chatgpt.com/*"
+      ],
+      "js": [
+        "content/settings-bridge.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*"
       ],
       "js": [
         "content/content.js"

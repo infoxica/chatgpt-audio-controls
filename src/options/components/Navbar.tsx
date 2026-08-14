@@ -1,7 +1,8 @@
-import { Sliders, PlayCircle, Keyboard, HelpCircle, Volume2, Moon, Sun } from "lucide-react";
+import { Sliders, Keyboard, HelpCircle, Moon, Sun } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
+import { ChatGPTAudioIcon } from "../../shared/ChatGPTAudioIcon";
 
-export type DashboardSection = "settings" | "demo" | "shortcuts" | "faq";
+export type DashboardSection = "settings" | "shortcuts" | "faq";
 
 interface NavbarProps {
   currentSection: DashboardSection;
@@ -18,7 +19,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const navItems: { id: DashboardSection; label: string; icon: React.ReactNode }[] = [
     { id: "settings", label: "Preferences", icon: <Sliders size={16} /> },
-    { id: "demo", label: "Interactive Player", icon: <PlayCircle size={16} /> },
     { id: "shortcuts", label: "Shortcuts & Gestures", icon: <Keyboard size={16} /> },
     { id: "faq", label: "FAQ & Troubleshooting", icon: <HelpCircle size={16} /> },
   ];
@@ -27,7 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     <aside className="dashboard-sidebar">
       <div className="sidebar-brand">
         <div className="brand-icon-lg">
-          <Volume2 size={20} strokeWidth={2.5} />
+          <ChatGPTAudioIcon size={26} />
         </div>
         <div>
           <h2>ChatGPT Audio</h2>

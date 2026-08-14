@@ -1,30 +1,79 @@
 /*
- * ChatGPT native variables with fallbacks to ChatGPT's official color palette
+ * ChatGPT Audio Controls Styles
+ * Strictly scoped to #cgpt-ra-* to NEVER override or affect any native ChatGPT elements.
  */
-:root {
-    --cgpt-ra-bg: var(--bg-primary, #212121);
-    --cgpt-ra-bg-surface: var(--bg-secondary, #303030);
+
+#cgpt-ra-left,
+#cgpt-ra-right,
+#cgpt-ra-floating-toggle {
+    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));
+    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));
     --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));
     --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));
     --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));
     --cgpt-ra-text: var(--text-primary, #ffffff);
     --cgpt-ra-muted: var(--text-tertiary, #afafaf);
     --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));
-    --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
-    --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
+    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
+    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
 }
 
-html.light, [data-theme='light'] {
-    --cgpt-ra-bg: var(--bg-primary, #ffffff);
-    --cgpt-ra-bg-surface: var(--bg-secondary, #f9f9f9);
+html.light #cgpt-ra-left,
+html.light #cgpt-ra-right,
+html.light #cgpt-ra-floating-toggle,
+[data-theme='light'] #cgpt-ra-left,
+[data-theme='light'] #cgpt-ra-right,
+[data-theme='light'] #cgpt-ra-floating-toggle {
+    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));
+    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));
     --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));
     --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));
     --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));
     --cgpt-ra-text: var(--text-primary, #0d0d0d);
     --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);
     --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));
-    --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
-    --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
+    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
+    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
+}
+
+/*
+ * ChatGPT defines these theme variables on the [data-chat-theme] subtree.
+ * Reuse them only on our own elements; no rule here targets native ChatGPT
+ * controls or writes variables on :root/body.
+ */
+[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);
+    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);
+    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);
+    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);
+    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);
+    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);
+    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);
+}
+
+[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);
+    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);
 }
 
 #cgpt-ra-left,
@@ -36,16 +85,13 @@ html.light, [data-theme='light'] {
     color: var(--cgpt-ra-text);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, .32);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);
     opacity: 1 !important;
     transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
 }
 
 /*
- * Fused left player layout (Height 48px, Radius 24px):
- *
- *               (-10   play   +10)
- * ( 00:00/00:00 -------------------------- )
+ * Fused left player layout (Height 48px, Radius 24px)
  */
 #cgpt-ra-left {
     min-width: 240px;
@@ -57,24 +103,21 @@ html.light, [data-theme='light'] {
     overflow: visible;
 }
 
-/* Transport Capsule: top -46px, full border-radius 24px */
+/* Transport controls live in the right rail beside speed/volume controls. */
 .cgpt-ra-transport-row {
-    position: absolute;
-    z-index: 3;
-    left: 50%;
-    top: -46px;
-    transform: translateX(-50%);
-    height: 48px;
+    position: static;
+    z-index: auto;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 4px 8px;
+    gap: 2px;
+    padding: 0;
     margin: 0;
-    border: 1px solid var(--cgpt-ra-border);
-    border-radius: 24px;
-    background: var(--cgpt-ra-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .cgpt-ra-transport-row > * {
@@ -95,9 +138,9 @@ html.light, [data-theme='light'] {
     height: 40px !important;
     flex: 0 0 40px !important;
     border-radius: 50% !important;
-    background-color: var(--theme-submit-btn-bg) !important;
-    color: var(--theme-submit-btn-text) !important;
-    box-shadow: 0 2px 10px rgba(57, 104, 200, 0.4) !important;
+    background-color: var(--cgpt-ra-accent) !important;
+    color: var(--cgpt-ra-accent-text) !important;
+    box-shadow: none !important;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -176,7 +219,7 @@ html.light, [data-theme='light'] {
     color: var(--cgpt-ra-text);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, .32);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,7 +230,7 @@ html.light, [data-theme='light'] {
 
 #cgpt-ra-floating-toggle:hover {
     transform: scale(1.08);
-    border-color: var(--theme-submit-btn-bg);
+    border-color: var(--cgpt-ra-accent);
 }
 
 #cgpt-ra-floating-toggle img,
@@ -305,7 +348,7 @@ html.light, [data-theme='light'] {
 .cgpt-ra-range:hover::-webkit-slider-runnable-track,
 .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
     height: 4px;
-    background: var(--theme-submit-btn-bg);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-webkit-slider-thumb {
@@ -326,7 +369,7 @@ html.light, [data-theme='light'] {
     width: 11px;
     height: 11px;
     margin-top: -3.5px;
-    background: var(--theme-submit-btn-bg);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-moz-range-track {
@@ -340,14 +383,14 @@ html.light, [data-theme='light'] {
 .cgpt-ra-range:hover::-moz-range-track,
 .cgpt-ra-range:focus-visible::-moz-range-track {
     height: 4px;
-    background: var(--theme-submit-btn-bg);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-moz-range-progress {
     height: 2px;
     border: 0;
     border-radius: 999px;
-    background: var(--theme-submit-btn-bg);
+    background: var(--cgpt-ra-accent);
 }
 
 .cgpt-ra-range::-moz-range-thumb {
@@ -389,7 +432,7 @@ html.light, [data-theme='light'] {
     border-radius: 12px;
     background: var(--cgpt-ra-bg-surface);
     color: var(--cgpt-ra-text);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
     overflow: hidden;
     z-index: 10002;
 }
@@ -424,7 +467,7 @@ html.light, [data-theme='light'] {
     background: var(--cgpt-ra-bg-surface-hover);
 }
 
-/* Vertical Volume Popover with exact matching seeker track */
+/* Vertical Volume Popover */
 .cgpt-ra-volume-popover {
     position: absolute;
     left: 50%;
@@ -445,7 +488,7 @@ html.light, [data-theme='light'] {
     border-radius: 22px;
     background: var(--cgpt-ra-bg-surface);
     color: var(--cgpt-ra-text);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
     transition: opacity .12s ease, visibility .12s ease;
     z-index: 10002;
 }
@@ -523,6 +566,7 @@ html.light, [data-theme='light'] {
 }
 
 .cgpt-inline-readaloud {
+    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, #3a83f7));
     width: 32px;
     height: 32px;
     display: inline-flex;
@@ -540,7 +584,7 @@ html.light, [data-theme='light'] {
 
 .cgpt-inline-readaloud:hover {
     opacity: 1;
-    background: var(--cgpt-ra-bg-surface-hover);
+    background: var(--cgpt-ra-bg-surface-hover, rgba(127, 127, 127, .14));
 }
 
 .cgpt-inline-readaloud svg {
@@ -551,5 +595,5 @@ html.light, [data-theme='light'] {
 
 .cgpt-inline-readaloud.cgpt-active {
     opacity: 1;
-    color: var(--theme-submit-btn-bg);
+    color: var(--cgpt-ra-accent);
 }

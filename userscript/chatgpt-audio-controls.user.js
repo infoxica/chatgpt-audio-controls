@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT Read Aloud & Audio Controls
 // @namespace    https://infoxica.com/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts, and one-click per-response speech.
 // @author       Infoxica
 // @match        https://chatgpt.com/*
@@ -33,6 +33,7 @@
   let activeInlineButton = null;
   let pendingInlineButton = null;
   let userForcedExpand = false;
+  let userForcedCollapsed = false;
 
   let leftRail = null;
   let rightRail = null;
@@ -168,7 +169,7 @@
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
-        <circle cx="0" cy="0" r="10" fill="#3968c8" stroke="#ffffff" stroke-width="1.5" />
+        <circle cx="0" cy="0" r="10" fill="var(--cgpt-ra-accent)" stroke="#ffffff" stroke-width="1.5" />
         <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
       </g>
     `,
@@ -392,6 +393,7 @@
     const changed = activeMedia !== media;
     activeMedia = media;
     userForcedExpand = true;
+    userForcedCollapsed = false;
 
     try {
       media.playbackRate = getSavedSpeed();
@@ -503,30 +505,67 @@
     const style = document.createElement("style");
     style.id = "cgpt-ra-v4-style";
     style.textContent = `
-      :root {
-          --cgpt-ra-bg: var(--bg-primary, #212121);
-          --cgpt-ra-bg-surface: var(--bg-secondary, #303030);
+      #cgpt-ra-left,
+      #cgpt-ra-right,
+      #cgpt-ra-floating-toggle {
+          --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));
+          --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));
           --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));
           --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));
           --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));
           --cgpt-ra-text: var(--text-primary, #ffffff);
           --cgpt-ra-muted: var(--text-tertiary, #afafaf);
           --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));
-          --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
-          --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
+          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
+          --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
       }
 
-      html.light {
-          --cgpt-ra-bg: var(--bg-primary, #ffffff);
-          --cgpt-ra-bg-surface: var(--bg-secondary, #f9f9f9);
+      html.light #cgpt-ra-left,
+      html.light #cgpt-ra-right,
+      html.light #cgpt-ra-floating-toggle,
+      [data-theme='light'] #cgpt-ra-left,
+      [data-theme='light'] #cgpt-ra-right,
+      [data-theme='light'] #cgpt-ra-floating-toggle {
+          --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));
+          --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));
           --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));
           --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));
           --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));
           --cgpt-ra-text: var(--text-primary, #0d0d0d);
           --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);
           --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));
-          --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
-          --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
+          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
+          --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
+      }
+
+      /* Use ChatGPT's palette only on controls owned by this userscript. */
+      [data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);
+          --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);
+          --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);
+          --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);
+          --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);
+          --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);
+          --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);
+      }
+      [data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
+          --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);
+          --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);
       }
 
       #cgpt-ra-left,
@@ -554,22 +593,19 @@
       }
 
       .cgpt-ra-transport-row {
-          position: absolute;
-          z-index: 3;
-          left: 50%;
-          top: -46px;
-          transform: translateX(-50%);
-          height: 48px;
+          position: static;
+          z-index: auto;
+          height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          padding: 4px 8px;
+          gap: 2px;
+          padding: 0;
           margin: 0;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 24px;
-          background: var(--cgpt-ra-bg);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+          border: 0;
+          border-radius: 0;
+          background: transparent;
+          box-shadow: none;
       }
 
       .cgpt-ra-transport-row > * {
@@ -589,8 +625,8 @@
           height: 40px !important;
           flex: 0 0 40px !important;
           border-radius: 50% !important;
-          background-color: var(--theme-submit-btn-bg) !important;
-          color: var(--theme-submit-btn-text) !important;
+          background-color: var(--cgpt-ra-accent) !important;
+          color: var(--cgpt-ra-accent-text) !important;
           box-shadow: 0 2px 10px rgba(57, 104, 200, 0.4) !important;
           display: inline-flex;
           align-items: center;
@@ -653,7 +689,7 @@
 
       #cgpt-ra-floating-toggle:hover {
           transform: scale(1.08);
-          border-color: var(--theme-submit-btn-bg);
+          border-color: var(--cgpt-ra-accent);
       }
 
       #cgpt-ra-floating-toggle.cgpt-ra-hidden {
@@ -772,7 +808,7 @@
       .cgpt-ra-range:hover::-webkit-slider-runnable-track,
       .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-webkit-slider-thumb {
@@ -793,7 +829,7 @@
           width: 11px;
           height: 11px;
           margin-top: -3.5px;
-          background: var(--theme-submit-btn-bg);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-moz-range-track {
@@ -807,14 +843,14 @@
       .cgpt-ra-range:hover::-moz-range-track,
       .cgpt-ra-range:focus-visible::-moz-range-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-moz-range-progress {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: var(--theme-submit-btn-bg);
+          background: var(--cgpt-ra-accent);
       }
 
       .cgpt-ra-range::-moz-range-thumb {
@@ -989,6 +1025,7 @@
       }
 
       .cgpt-inline-readaloud {
+          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, #3a83f7));
           width: 32px;
           height: 32px;
           display: inline-flex;
@@ -1017,7 +1054,7 @@
 
       .cgpt-inline-readaloud.cgpt-active {
           opacity: 1;
-          color: var(--theme-submit-btn-bg);
+          color: var(--cgpt-ra-accent);
       }
     `;
 
@@ -1039,6 +1076,7 @@
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = true;
+      userForcedCollapsed = false;
       scheduleLayoutSync();
     });
 
@@ -1047,25 +1085,6 @@
     leftRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     leftRail.innerHTML = `
-      <div class="cgpt-ra-transport-row">
-        <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
-                title="Back 10 seconds — hold to scrub" disabled>
-          ${lucideIcon("rotate-ccw")}
-          <span class="cgpt-ra-ten">10</span>
-        </button>
-
-        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
-                title="Play / Pause (Alt+P)" disabled>
-          ${lucideIcon("play")}
-        </button>
-
-        <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
-                title="Forward 10 seconds — hold to scrub" disabled>
-          ${lucideIcon("rotate-cw")}
-          <span class="cgpt-ra-ten">10</span>
-        </button>
-      </div>
-
       <div class="cgpt-ra-progress-row">
         <span class="cgpt-ra-time">
           <span class="cgpt-ra-current">0:00</span>/<span class="cgpt-ra-duration">0:00</span>
@@ -1083,6 +1102,25 @@
     rightRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
 
     rightRail.innerHTML = `
+      <div class="cgpt-ra-transport-row cgpt-ra-media-control">
+        <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
+                title="Back 10 seconds — hold to scrub" disabled>
+          ${lucideIcon("rotate-ccw")}
+          <span class="cgpt-ra-ten">10</span>
+        </button>
+
+        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
+                title="Play / Pause (Space or K; Alt+P legacy)" disabled>
+          ${lucideIcon("play")}
+        </button>
+
+        <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
+                title="Forward 10 seconds — hold to scrub" disabled>
+          ${lucideIcon("rotate-cw")}
+          <span class="cgpt-ra-ten">10</span>
+        </button>
+      </div>
+
       <div class="cgpt-ra-speed-wrap cgpt-ra-media-control">
         <button class="cgpt-ra-icon-btn cgpt-ra-speed-btn" title="Playback speed" disabled>
           ${getSavedSpeed()}×
@@ -1115,7 +1153,7 @@
           <div class="cgpt-ra-help-title">Read Aloud Shortcuts</div>
           <div class="cgpt-ra-shortcut-row">
             <span>Play / Pause</span>
-            <span class="cgpt-ra-shortcut-key">Alt + P</span>
+            <span class="cgpt-ra-shortcut-key">Space / K</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Back 10 sec</span>
@@ -1155,13 +1193,14 @@
     collapseButton?.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = false;
+      userForcedCollapsed = Boolean(activeMedia);
       scheduleLayoutSync();
     });
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
     durationLabel = leftRail.querySelector(".cgpt-ra-duration");
-    playButton = leftRail.querySelector(".cgpt-ra-play");
+    playButton = rightRail.querySelector(".cgpt-ra-play");
 
     speedButton = rightRail.querySelector(".cgpt-ra-speed-btn");
     speedMenu = rightRail.querySelector(".cgpt-ra-speed-menu");
@@ -1202,8 +1241,8 @@
 
     playButton.addEventListener("click", togglePlayback);
 
-    installHoldSeek(leftRail.querySelector(".cgpt-ra-back"), -1);
-    installHoldSeek(leftRail.querySelector(".cgpt-ra-forward"), 1);
+    installHoldSeek(rightRail.querySelector(".cgpt-ra-back"), -1);
+    installHoldSeek(rightRail.querySelector(".cgpt-ra-forward"), 1);
 
     seekSlider.addEventListener("pointerdown", () => {
       sliderDragging = true;
@@ -1260,7 +1299,7 @@
 
     rightRail
       .querySelectorAll(
-        ".cgpt-ra-speed-btn, .cgpt-ra-volume-btn, .cgpt-ra-volume-slider, .cgpt-ra-download",
+        ".cgpt-ra-transport-row button, .cgpt-ra-speed-btn, .cgpt-ra-volume-btn, .cgpt-ra-volume-slider, .cgpt-ra-download",
       )
       .forEach((el) => {
         el.disabled = !enabled;
@@ -1302,14 +1341,13 @@
 
     const composer = getComposer();
     const hasActiveAudio = activeMedia && !activeMedia.paused && !activeMedia.ended;
-    const shouldExpand = Boolean(hasActiveAudio || userForcedExpand);
+    const shouldStayCollapsed = userForcedCollapsed;
+    const shouldExpand = Boolean(!shouldStayCollapsed && (hasActiveAudio || userForcedExpand));
 
     if (!composer) {
-      if (!cache.isCollapsed) {
-        cache.isCollapsed = true;
-        leftRail.classList.add("cgpt-ra-collapsed");
-        rightRail.classList.add("cgpt-ra-collapsed");
-      }
+      cache.isCollapsed = true;
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
       if (cache.floatingHidden) {
         cache.floatingHidden = false;
         floatingToggle.classList.remove("cgpt-ra-hidden");
@@ -1330,14 +1368,32 @@
     const minLeftWidth = 240;
     const maxLeftWidth = 430;
 
-    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
+    const minRightWidth = 360;
+    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= minRightWidth;
+
+    if (shouldStayCollapsed) {
+      cache.isCollapsed = true;
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
+
+      if (cache.floatingHidden) {
+        cache.floatingHidden = false;
+        floatingToggle.classList.remove("cgpt-ra-hidden");
+      }
+      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
+      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
+
+      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
+      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
+      floatingToggle.style.right = "";
+      floatingToggle.style.bottom = "";
+      return;
+    }
 
     if (!canFit || !shouldExpand) {
-      if (!cache.isCollapsed) {
-        cache.isCollapsed = true;
-        leftRail.classList.add("cgpt-ra-collapsed");
-        rightRail.classList.add("cgpt-ra-collapsed");
-      }
+      cache.isCollapsed = true;
+      leftRail.classList.add("cgpt-ra-collapsed");
+      rightRail.classList.add("cgpt-ra-collapsed");
 
       if (cache.floatingHidden) {
         cache.floatingHidden = false;
@@ -1349,6 +1405,8 @@
 
       if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
       if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
+      floatingToggle.style.right = "";
+      floatingToggle.style.bottom = "";
       return;
     }
 
@@ -1362,7 +1420,6 @@
       leftRail.classList.remove("cgpt-ra-collapsed");
       rightRail.classList.remove("cgpt-ra-collapsed");
     }
-
     const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
     const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
     const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
@@ -1708,19 +1765,173 @@
       .toLowerCase();
   }
 
+  function accessibleMeaning(element) {
+    return `${element.getAttribute?.("aria-label") || ""} ${element.getAttribute?.("title") || ""}`
+      .trim()
+      .toLowerCase();
+  }
+
+  function isCopyControl(button) {
+    const label = textMeaning(button);
+    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
+    return (
+      /(?:^|[-_])(copy|copy-response|copy-code)(?:[-_]|$)/.test(testId) ||
+      label === "copy" ||
+      label.includes("copy response") ||
+      label.includes("copy code")
+    );
+  }
+
+  function isReadAloudControl(button) {
+    const label = accessibleMeaning(button) || textMeaning(button);
+    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
+    return (
+      /(?:read[-_ ]?aloud|read[-_ ]?out[-_ ]?loud|text[-_ ]?to[-_ ]?speech|tts)/.test(testId) ||
+      /\bread aloud\b/.test(label) ||
+      /\bread out loud\b/.test(label) ||
+      label === "read"
+    );
+  }
+
+  function isMoreActionsControl(button) {
+    const label = accessibleMeaning(button);
+    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
+    const identifier = `${label} ${testId}`.trim();
+
+    return (
+      label === "more" ||
+      label.includes("more actions") ||
+      label.includes("more options") ||
+      label.includes("response actions") ||
+      /(?:^|[-_\s])(more|options|overflow|ellipsis|kebab)(?:[-_\s]|$)/.test(identifier)
+    );
+  }
+
+  function findMoreActionsControl(scope) {
+    if (!scope) return null;
+
+    const buttons = [
+      ...(scope.matches("button, [role='button']") ? [scope] : []),
+      ...Array.from(scope.querySelectorAll("button, [role='button']")),
+    ].filter(
+      (button) =>
+        !button.classList.contains("cgpt-inline-readaloud") &&
+        !button.closest("pre, code, table"),
+    );
+
+    return (
+      buttons.find(isMoreActionsControl) ||
+      buttons.find((button) => button.getAttribute("aria-haspopup") === "menu") ||
+      null
+    );
+  }
+
+  function findMoreActionsNear(element, stopAt) {
+    let scope = element;
+
+    while (scope && scope !== document.body) {
+      const moreButton = findMoreActionsControl(scope);
+      if (moreButton) return moreButton;
+      if (scope === stopAt) break;
+      scope = scope.parentElement;
+    }
+
+    return null;
+  }
+
+  function isInteractiveContainer(element) {
+    return Boolean(element?.matches("button, [role='button'], a, input, textarea, select"));
+  }
+
+  function findActionContainer(control, boundary) {
+    let candidate = control.parentElement;
+    let firstSafeContainer = null;
+
+    while (candidate && candidate !== document.body) {
+      if (!isInteractiveContainer(candidate)) {
+        firstSafeContainer ||= candidate;
+
+        const controlCount = candidate.querySelectorAll("button, [role='button']").length;
+        if (controlCount >= 2 || candidate === boundary) return candidate;
+      }
+
+      if (candidate === boundary) break;
+      candidate = candidate.parentElement;
+    }
+
+    return firstSafeContainer;
+  }
+
+  function placeInlineReadAloudButton(toolbar, button) {
+    const copyButton = Array.from(toolbar.querySelectorAll("button, [role='button']")).find(
+      (candidate) => isCopyControl(candidate) && !isInteractiveContainer(candidate.parentElement),
+    );
+
+    if (copyButton) {
+      if (button.previousElementSibling === copyButton) return;
+      copyButton.insertAdjacentElement("afterend", button);
+      return;
+    }
+
+    // Copy's accessible name is localized. When it cannot be identified by
+    // label, place Read Aloud immediately before the response-actions menu.
+    // This preserves the native action order without nesting one button in another.
+    const responseActions = findMoreActionsControl(toolbar);
+    const responseParent = responseActions?.parentElement;
+    if (responseActions && responseParent && !isInteractiveContainer(responseParent)) {
+      if (button.nextElementSibling === responseActions) return;
+      responseActions.insertAdjacentElement("beforebegin", button);
+      return;
+    }
+
+    if (button.parentElement === toolbar) return;
+    toolbar.appendChild(button);
+  }
+
+  function findReadAloudControl(scope) {
+    if (!scope) return null;
+
+    const controls = [
+      ...(scope.matches("button, [role='menuitem'], [role='option']") ? [scope] : []),
+      ...Array.from(scope.querySelectorAll("button, [role='menuitem'], [role='option']")),
+    ];
+
+    return (
+      controls.find(
+        (control) =>
+          !control.classList.contains("cgpt-inline-readaloud") && isReadAloudControl(control),
+      ) || null
+    );
+  }
+
   function findToolbar(turn) {
-    const copyButton = Array.from(turn.querySelectorAll("button")).find((btn) => {
-      const txt = textMeaning(btn);
-      return txt === "copy" || txt.includes("copy response") || txt.includes("copy code");
-    });
+    const responseActions = findMoreActionsControl(turn);
+    if (responseActions) {
+      const responseToolbar = findActionContainer(responseActions, turn);
+      if (responseToolbar) return responseToolbar;
+    }
+
+    const copyButton = Array.from(turn.querySelectorAll("button")).find(
+      (btn) => !btn.closest("pre, code, table") && isCopyControl(btn),
+    );
 
     if (copyButton?.parentElement) {
-      return copyButton.parentElement;
+      const copyToolbar = copyButton.closest('[role="toolbar"], [data-testid*="action"]');
+      if (copyToolbar && !isInteractiveContainer(copyToolbar)) return copyToolbar;
+
+      const copyParent = findActionContainer(copyButton, turn);
+      if (copyParent) return copyParent;
     }
 
     const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
     for (const bar of actionBars) {
-      if (bar.querySelector("button") && !bar.closest("pre, code, table")) {
+      if (
+        !bar.closest("pre, code, table") &&
+        !isInteractiveContainer(bar) &&
+        Array.from(bar.querySelectorAll("button")).some(
+          (button) => isCopyControl(button) || isReadAloudControl(button) || isMoreActionsControl(button),
+        )
+      ) {
         return bar;
       }
     }
@@ -1737,7 +1948,17 @@
           message.closest('[data-testid^="conversation-turn"]') ||
           message.parentElement;
 
-        if (!turn || turn.querySelector(".cgpt-inline-readaloud")) return;
+        const existingButton = turn && turn.querySelector(".cgpt-inline-readaloud");
+        if (existingButton) {
+          const existingToolbar = findToolbar(turn);
+          if (existingToolbar) {
+            placeInlineReadAloudButton(existingToolbar, existingButton);
+          }
+
+          return;
+        }
+
+        if (!turn) return;
 
         const toolbar = findToolbar(turn);
         if (!toolbar) return;
@@ -1777,18 +1998,10 @@
           }
 
           pendingInlineButton = button;
-          await triggerNativeReadAloud(turn);
+          await triggerNativeReadAloud(turn, button);
         });
 
-        const copyBtn = Array.from(toolbar.querySelectorAll("button")).find((b) =>
-          textMeaning(b).includes("copy"),
-        );
-
-        if (copyBtn && copyBtn.parentElement === toolbar) {
-          copyBtn.insertAdjacentElement("afterend", button);
-        } else {
-          toolbar.insertBefore(button, toolbar.firstChild);
-        }
+        placeInlineReadAloudButton(toolbar, button);
       });
   }
 
@@ -1804,12 +2017,7 @@
         for (const item of candidates) {
           const text = textMeaning(item);
 
-          if (
-            text.includes("read aloud") ||
-            text.includes("read out loud") ||
-            text.includes("listen") ||
-            text === "read"
-          ) {
+          if (isReadAloudControl(item) || /\bread aloud\b/.test(text) || /\bread out loud\b/.test(text)) {
             resolve(item);
             return;
           }
@@ -1827,25 +2035,24 @@
     });
   }
 
-  async function triggerNativeReadAloud(turn) {
-    const direct = Array.from(turn.querySelectorAll("button")).find((btn) => {
-      if (btn.classList.contains("cgpt-inline-readaloud")) return false;
-      const t = textMeaning(btn);
-      return t.includes("read aloud") || t.includes("read out loud") || t.includes("listen");
-    });
+  async function triggerNativeReadAloud(turn, inlineButton) {
+    const inlineRow = inlineButton?.parentElement;
+    const toolbar = findToolbar(turn);
+    const direct = [inlineRow, toolbar, turn]
+      .filter((scope, index, scopes) => scope && scopes.indexOf(scope) === index)
+      .map((scope) => findReadAloudControl(scope))
+      .find((control) => Boolean(control));
 
     if (direct) {
       direct.click();
       return;
     }
 
-    const toolbar = findToolbar(turn);
-    const moreBtn = toolbar
-      ? Array.from(toolbar.querySelectorAll("button")).find((b) => {
-          const t = textMeaning(b);
-          return t.includes("more actions") || t === "more" || t.includes("options");
-        })
-      : null;
+    const moreBtn =
+      findMoreActionsControl(inlineRow) ||
+      findMoreActionsControl(toolbar) ||
+      findMoreActionsNear(inlineButton, turn) ||
+      findMoreActionsControl(turn);
 
     if (!moreBtn) {
       pendingInlineButton = null;
@@ -1885,27 +2092,43 @@
   // Shortcuts
   // ---------------------------------------------------------------------
 
-  document.addEventListener(
+  window.addEventListener(
     "keydown",
     (event) => {
-      const target = event.target;
+      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        if (!event.repeat) togglePlayback();
+        return;
+      }
+
+      const target = event.target instanceof HTMLElement ? event.target : null;
 
       if (
-        target instanceof HTMLInputElement ||
-        target instanceof HTMLTextAreaElement ||
-        target?.isContentEditable
+        target?.matches("input, textarea, select, [contenteditable='true']") ||
+        target?.isContentEditable ||
+        target?.closest("button, a, input, textarea, select, [role='button']")
       ) {
         return;
       }
 
-      if (event.altKey && event.code === "KeyP") {
+      if (!activeMedia) return;
+
+      const isPlayPauseKey =
+        !event.altKey &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey &&
+        (event.code === "Space" || event.code === "KeyK" || event.key === " ");
+
+      if (isPlayPauseKey) {
         event.preventDefault();
         event.stopPropagation();
-        togglePlayback();
+        event.stopImmediatePropagation();
+        if (!event.repeat) togglePlayback();
         return;
       }
-
-      if (!activeMedia) return;
 
       if (event.altKey && event.key === "ArrowLeft") {
         event.preventDefault();

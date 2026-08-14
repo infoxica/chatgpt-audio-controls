@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { TabNav, TabType } from "./components/TabNav";
 import { QuickControls } from "./components/QuickControls";
-import { StatusCard } from "./components/StatusCard";
 import { ShortcutsDrawer } from "./components/ShortcutsDrawer";
 import { AboutTab } from "./components/AboutTab";
 import { getSettings, saveSettings } from "../shared/storage";
-import { DEFAULT_SETTINGS } from "../shared/constants";
+import { DEFAULT_SETTINGS, EXTENSION_VERSION } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 import { ExternalLink, Sparkles } from "lucide-react";
 import "./styles/popup.css";
@@ -22,6 +21,37 @@ export const App: React.FC = () => {
       if (loaded.theme) setTheme(loaded.theme);
       applyTheme(loaded.theme);
     });
+
+    try {
+      const rawTheme = localStorage.getItem("cgpt-ra-theme-cache");
+      if (rawTheme) {
+        const parsed = JSON.parse(rawTheme);
+        if (parsed.chatTheme) {
+          document.documentElement.setAttribute("data-chat-theme", parsed.chatTheme);
+        }
+      }
+      if (typeof chrome !== "undefined" && chrome.storage?.local) {
+        chrome.storage.local.get(["cgpt-ra-theme-cache"], (res) => {
+          if (res?.["cgpt-ra-theme-cache"]?.chatTheme) {
+            document.documentElement.setAttribute("data-chat-theme", res["cgpt-ra-theme-cache"].chatTheme);
+          }
+        });
+
+        const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+          if (changes["cgpt-ra-theme-cache"]?.newValue?.chatTheme) {
+            document.documentElement.setAttribute(
+              "data-chat-theme",
+              changes["cgpt-ra-theme-cache"].newValue.chatTheme
+            );
+          }
+        };
+
+        chrome.storage.onChanged.addListener(handleStorageChange);
+        return () => {
+          chrome.storage.onChanged.removeListener(handleStorageChange);
+        };
+      }
+    } catch (_) {}
   }, []);
 
   const applyTheme = (t: "dark" | "light" | "system") => {
@@ -72,7 +102,6 @@ export const App: React.FC = () => {
         {activeTab === "controls" && (
           <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} />
         )}
-        {activeTab === "status" && <StatusCard />}
         {activeTab === "shortcuts" && <ShortcutsDrawer />}
         {activeTab === "about" && <AboutTab />}
       </main>
@@ -82,7 +111,7 @@ export const App: React.FC = () => {
           <Sparkles size={14} /> Open ChatGPT
         </button>
         <div className="secondary-links">
-          <span>v1.0.0</span>
+          <span>v{EXTENSION_VERSION}</span>
           <button
             onClick={handleOpenOptions}
             style={{

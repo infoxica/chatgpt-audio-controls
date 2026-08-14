@@ -8,7 +8,6 @@ const mappings = [
   { src: "favicon-16x16.png", dest: "icon-16.png" },
   { src: "favicon-32x32.png", dest: "icon-32.png" },
   { src: "android-icon-48x48.png", dest: "icon-48.png" },
-  { src: "android-icon-144x144.png", dest: "icon-128.png" },
 ];
 
 for (const m of mappings) {
@@ -20,4 +19,4 @@ for (const m of mappings) {
   }
 }
 
-console.log("Extension icons verified from user provided assets.");
+console.log("Extension icons verified from user provided assets. icon-128.png is maintained as a true 128px asset.");

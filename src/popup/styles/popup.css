@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-chat-theme='blue'] {
   --bg-base: #212121;
   --bg-surface: #171717;
   --bg-surface-hover: #2f2f2f;
@@ -11,13 +12,13 @@
   --text-secondary: #b4b4b4;
   --text-muted: #8e8e8e;
   
-  --accent: #3968c8;
-  --accent-hover: #4a78d8;
-  --accent-glow: rgba(57, 104, 200, 0.25);
-  --accent-light: rgba(57, 104, 200, 0.14);
+  --accent: #2c67c5;
+  --accent-hover: #3a83f7;
+  --accent-glow: rgba(44, 103, 197, 0.25);
+  --accent-light: rgba(44, 103, 197, 0.14);
   
   --danger: #ef4444;
-  --success: #3968c8;
+  --success: #2c67c5;
   --warning: #f59e0b;
   
   --radius-sm: 8px;
@@ -31,6 +32,60 @@
   --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Green Theme */
+[data-chat-theme='green'] {
+  --accent: #48a04c;
+  --accent-hover: #53b559;
+  --accent-glow: rgba(72, 160, 76, 0.25);
+  --accent-light: rgba(72, 160, 76, 0.15);
+  --success: #48a04c;
+}
+
+/* Purple Theme */
+[data-chat-theme='purple'] {
+  --accent: #7849d1;
+  --accent-hover: #8952ee;
+  --accent-glow: rgba(120, 73, 209, 0.25);
+  --accent-light: rgba(120, 73, 209, 0.15);
+  --success: #7849d1;
+}
+
+/* Orange Theme */
+[data-chat-theme='orange'] {
+  --accent: #d25e28;
+  --accent-hover: #ee7c37;
+  --accent-glow: rgba(210, 94, 40, 0.25);
+  --accent-light: rgba(210, 94, 40, 0.15);
+  --success: #d25e28;
+}
+
+/* Pink Theme */
+[data-chat-theme='pink'] {
+  --accent: #cf6194;
+  --accent-hover: #f077af;
+  --accent-glow: rgba(207, 97, 148, 0.25);
+  --accent-light: rgba(207, 97, 148, 0.15);
+  --success: #cf6194;
+}
+
+/* Yellow Theme */
+[data-chat-theme='yellow'] {
+  --accent: #d9a337;
+  --accent-hover: #f6c543;
+  --accent-glow: rgba(217, 163, 55, 0.25);
+  --accent-light: rgba(217, 163, 55, 0.15);
+  --success: #d9a337;
+}
+
+/* Black Theme */
+[data-chat-theme='black'] {
+  --accent: #ffffff;
+  --accent-hover: #f2f2f2;
+  --accent-glow: rgba(255, 255, 255, 0.25);
+  --accent-light: rgba(255, 255, 255, 0.15);
+  --success: #ffffff;
+}
+
 [data-theme='light'] {
   --bg-base: #ffffff;
   --bg-surface: #f9f9f9;
@@ -42,11 +97,63 @@
   --text-primary: #0d0d0d;
   --text-secondary: #5d5d5d;
   --text-muted: #8e8e8e;
-  
-  --accent: #3968c8;
-  --accent-hover: #2d55ad;
-  --accent-glow: rgba(57, 104, 200, 0.2);
-  --accent-light: rgba(57, 104, 200, 0.1);
+}
+
+[data-theme='light'][data-chat-theme='blue'],
+[data-theme='light'] {
+  --accent: #3a83f7;
+  --accent-hover: #539af8;
+  --accent-glow: rgba(58, 131, 247, 0.2);
+  --accent-light: rgba(58, 131, 247, 0.1);
+  --success: #3a83f7;
+}
+
+[data-theme='light'][data-chat-theme='green'] {
+  --accent: #53b559;
+  --accent-hover: #6bc67f;
+  --accent-glow: rgba(83, 181, 89, 0.2);
+  --accent-light: rgba(83, 181, 89, 0.1);
+  --success: #53b559;
+}
+
+[data-theme='light'][data-chat-theme='purple'] {
+  --accent: #8952ee;
+  --accent-hover: #a67df2;
+  --accent-glow: rgba(137, 82, 238, 0.2);
+  --accent-light: rgba(137, 82, 238, 0.1);
+  --success: #8952ee;
+}
+
+[data-theme='light'][data-chat-theme='orange'] {
+  --accent: #ee7c37;
+  --accent-hover: #ef8b57;
+  --accent-glow: rgba(238, 124, 55, 0.2);
+  --accent-light: rgba(238, 124, 55, 0.1);
+  --success: #ee7c37;
+}
+
+[data-theme='light'][data-chat-theme='pink'] {
+  --accent: #f077af;
+  --accent-hover: #f68ebc;
+  --accent-glow: rgba(240, 119, 175, 0.2);
+  --accent-light: rgba(240, 119, 175, 0.1);
+  --success: #f077af;
+}
+
+[data-theme='light'][data-chat-theme='yellow'] {
+  --accent: #f6c543;
+  --accent-hover: #f8d45d;
+  --accent-glow: rgba(246, 197, 67, 0.2);
+  --accent-light: rgba(246, 197, 67, 0.1);
+  --success: #f6c543;
+}
+
+[data-theme='light'][data-chat-theme='black'] {
+  --accent: #000000;
+  --accent-hover: #1f1f1f;
+  --accent-glow: rgba(0, 0, 0, 0.2);
+  --accent-light: rgba(0, 0, 0, 0.1);
+  --success: #000000;
 }
 
 * {
@@ -119,9 +226,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #3968c8;
-  color: #ffffff;
-  box-shadow: 0 2px 8px var(--accent-glow);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
 }
 
 .brand-info h1 {
@@ -224,7 +331,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .section-title {
@@ -267,7 +373,6 @@ body {
   background: var(--accent);
   border-color: var(--accent);
   color: #ffffff;
-  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 /* Volume Control matching Seeker style */
@@ -452,7 +557,6 @@ input:checked + .slider-toggle:before {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   color: var(--text-primary);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
 }
 
 /* Launch Button & Footer */
@@ -483,7 +587,6 @@ input:checked + .slider-toggle:before {
   cursor: pointer;
   text-decoration: none;
   transition: all var(--transition-fast);
-  box-shadow: 0 2px 8px var(--accent-glow);
 }
 
 .primary-btn:hover {

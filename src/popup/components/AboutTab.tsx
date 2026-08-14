@@ -1,6 +1,7 @@
 import React from "react";
 import { Sparkles, ShieldCheck, BookOpen, Bug } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
+import { EXTENSION_VERSION } from "../../shared/constants";
 
 export const AboutTab: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ export const AboutTab: React.FC = () => {
         </div>
         <h2 style={{ fontSize: 14, fontWeight: 700 }}>ChatGPT Audio Controls</h2>
         <span style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
-          v1.0.0 • Open Source by Infoxica
+          v{EXTENSION_VERSION} • Open Source by Infoxica
         </span>
         <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.4 }}>
           Elevating ChatGPT's voice experience with seamless audio scrubbing, dynamic speed presets, 

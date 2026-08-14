@@ -2,17 +2,29 @@
 
 # 🎙️ ChatGPT Audio Controls & Read Aloud
 
-**The ultimate audio player and control suite for ChatGPT.**  
-*Seek audio, change speeds, scroll to adjust volume, download voice responses, and trigger speech with a single click.*
+**Playback controls that make ChatGPT Read Aloud usable.**<br />
+*Play, pause, seek, change speed, adjust volume, download audio, and start Read Aloud directly from a response.*
 
-[![Version](https://img.shields.io/badge/version-1.0.0-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Version](https://img.shields.io/badge/version-1.0.1-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-38bdf8.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 
-[Features](#-features) • [Installation](#-installation) • [Tampermonkey Guide](#-tampermonkey-guide) • [Shortcuts](#-keyboard-shortcuts--gestures) • [FAQ](#-faq) • [Privacy](#-privacy)
+[Why I Created This](#-why-i-created-this) • [Features](#-features) • [Installation](#-installation) • [Tampermonkey Guide](#-tampermonkey-guide) • [Shortcuts](#-keyboard-shortcuts--gestures) • [FAQ](#-faq) • [Privacy](#-privacy)
 
 </div>
+
+---
+
+## 🎧 Why I Created This
+
+In the AI age, a simple question can turn into a kilometre-long answer before you have finished your coffee. ChatGPT's Read Aloud is useful, but it is tucked away in the response menu—and once it starts, the native experience offers little more than **Stop**.
+
+Pause halfway through because a call comes in? Suddenly you are choosing between real life and the remaining half of an AI-generated epic. That felt needlessly frustrating.
+
+This extension makes Read Aloud obvious and controllable: a visible action on each response, plus play/pause, seeking, speed, volume, and download controls right where the conversation happens. No more choosing between the call and the answer. 😄
+
+> ChatGPT Audio Controls is an independent project and is not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.
 
 ---
 
@@ -23,16 +35,16 @@
 - **Hold to Accelerate**: Hold down the ◀10s or 10s▶ buttons to smoothly scrub through long audio with dynamic acceleration (up to 50× seek rate).
 - **Speed Presets**: Instant switching between `0.5×`, `0.75×`, `1.0×`, `1.25×`, `1.5×`, `1.75×`, `2.0×`, `2.5×`, and `3.0×`.
 - **Hover-Scroll Volume**: Hover over the speaker icon and scroll your mouse wheel to adjust volume effortlessly in 5% increments.
-- **One-Click Audio Download**: Save any speech response directly to your computer as high-quality `.mp3` or `.m4a`.
-- **Adaptive Screen Support**: Automatically detects space on laptop screens and scales the player fluidly down to 240px.
+- **One-Click Audio Download**: Save the active Read Aloud stream directly to your computer in the source format exposed by ChatGPT.
+- **Responsive Layout**: Keeps the player usable on narrow laptop screens.
 - **Floating Mini Toggle**: When no audio is playing, a neat floating logo button stays docked on the right. Click it anytime to expand the player!
 
 ### ⚡ 1-Click Response Speech Button
-- Adds a convenient speaker button (`🔈`) directly on assistant message toolbars beside the **Copy** button. Click once to start reading aloud; click again to stop.
+- Adds a convenient Read Aloud button directly on assistant-message toolbars, immediately after **Copy**. Click once to start reading aloud; click again to stop.
 
 ### ⚛️ Extension Popup & Dashboard
-- **Popup**: Instant speed presets, volume slider, active audio detection status, and hotkey cheatsheet.
-- **Settings Dashboard**: Customize step sizes, default rates, soundwave visualizer, and test controls in the interactive sandbox.
+- **Popup**: Instant speed presets, volume slider, and controls for inline actions, shortcuts, and smooth scrubbing.
+- **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
 - Matches ChatGPT's native **Dark** and **Light** themes.
 
 ---
@@ -47,7 +59,7 @@
    git clone https://github.com/infoxica/chatgpt-audio-controls.git
    cd chatgpt-audio-controls
    ```
-2. Install dependencies and build with Bun (or Node):
+2. Install dependencies and build with Bun:
    ```bash
    bun install
    bun run build
@@ -61,7 +73,7 @@
 6. Open [chatgpt.com](https://chatgpt.com) and enjoy full audio control!
 
 #### Method B: Install from Release ZIP
-1. Download `chatgpt-audio-controls-v1.0.0.zip` from [Releases](https://github.com/infoxica/chatgpt-audio-controls/releases).
+1. Download the latest `chatgpt-audio-controls-v*.zip` from [Releases](https://github.com/infoxica/chatgpt-audio-controls/releases).
 2. Unzip to a folder on your computer.
 3. In `chrome://extensions/`, enable **Developer mode**, click **Load unpacked**, and select the unzipped folder.
 
@@ -86,7 +98,7 @@ If you prefer using a userscript manager (on Firefox, Chrome, Safari, or Edge):
 
 | Shortcut | Action | Description |
 | :--- | :--- | :--- |
-| <kbd>Alt</kbd> + <kbd>P</kbd> | **Play / Pause** | Toggle speech playback |
+| <kbd>Space</kbd> / <kbd>K</kbd> | **Play / Pause** | Toggle speech playback (Alt + P remains supported) |
 | <kbd>Alt</kbd> + <kbd>←</kbd> | **Skip Backward** | Jump back 10 seconds (Hold to scrub) |
 | <kbd>Alt</kbd> + <kbd>→</kbd> | **Skip Forward** | Jump forward 10 seconds (Hold to scrub) |
 | <kbd>Shift</kbd> + <kbd>&lt;</kbd> | **Slower Speed** | Step down to the previous speed preset |
@@ -134,6 +146,8 @@ ChatGPT Audio Controls operates **100% locally in your browser**.
 ## 🤝 Contributing
 
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
+
+Maintainers preparing a Chrome Web Store or Microsoft Edge Add-ons submission should also use the [store launch checklist](docs/STORE-LAUNCH-CHECKLIST.md).
 
 ---
 

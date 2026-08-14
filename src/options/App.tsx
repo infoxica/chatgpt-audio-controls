@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, DashboardSection } from "./components/Navbar";
 import { GeneralSettings } from "./components/GeneralSettings";
-import { InteractivePlayerDemo } from "./components/InteractivePlayerDemo";
 import { ShortcutsGuide } from "./components/ShortcutsGuide";
 import { FaqSection } from "./components/FaqSection";
 import { getSettings, saveSettings } from "../shared/storage";
@@ -20,6 +19,37 @@ export const App: React.FC = () => {
       if (loaded.theme) setTheme(loaded.theme);
       applyTheme(loaded.theme);
     });
+
+    try {
+      const rawTheme = localStorage.getItem("cgpt-ra-theme-cache");
+      if (rawTheme) {
+        const parsed = JSON.parse(rawTheme);
+        if (parsed.chatTheme) {
+          document.documentElement.setAttribute("data-chat-theme", parsed.chatTheme);
+        }
+      }
+      if (typeof chrome !== "undefined" && chrome.storage?.local) {
+        chrome.storage.local.get(["cgpt-ra-theme-cache"], (res) => {
+          if (res?.["cgpt-ra-theme-cache"]?.chatTheme) {
+            document.documentElement.setAttribute("data-chat-theme", res["cgpt-ra-theme-cache"].chatTheme);
+          }
+        });
+
+        const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
+          if (changes["cgpt-ra-theme-cache"]?.newValue?.chatTheme) {
+            document.documentElement.setAttribute(
+              "data-chat-theme",
+              changes["cgpt-ra-theme-cache"].newValue.chatTheme
+            );
+          }
+        };
+
+        chrome.storage.onChanged.addListener(handleStorageChange);
+        return () => {
+          chrome.storage.onChanged.removeListener(handleStorageChange);
+        };
+      }
+    } catch (_) {}
   }, []);
 
   const applyTheme = (t: "dark" | "light" | "system") => {
@@ -54,13 +84,11 @@ export const App: React.FC = () => {
           <div className="header-title-block">
             <h1>
               {section === "settings" && "Audio & Playback Preferences"}
-              {section === "demo" && "Interactive Controls Sandbox"}
               {section === "shortcuts" && "Keyboard Shortcuts & Gestures"}
               {section === "faq" && "FAQ & Troubleshooting"}
             </h1>
             <p>
               {section === "settings" && "Configure playback speed presets, default volume, and features."}
-              {section === "demo" && "Preview the floating player and test responsiveness."}
               {section === "shortcuts" && "Master quick hotkeys for effortless playback manipulation."}
               {section === "faq" && "Detailed technical guide, security, and support answers."}
             </p>
@@ -70,7 +98,6 @@ export const App: React.FC = () => {
         {section === "settings" && (
           <GeneralSettings settings={settings} onUpdateSettings={handleUpdateSettings} />
         )}
-        {section === "demo" && <InteractivePlayerDemo />}
         {section === "shortcuts" && <ShortcutsGuide />}
         {section === "faq" && <FaqSection />}
       </main>

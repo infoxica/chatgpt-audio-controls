@@ -25,7 +25,7 @@ export const LUCIDE_ICONS: Record<string, string> = {
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
-      <circle cx="0" cy="0" r="10" fill="#3968c8" stroke="#ffffff" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="10" fill="var(--cgpt-ra-accent)" stroke="#ffffff" stroke-width="1.5" />
       <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
     </g>
   `,
@@ -52,5 +52,13 @@ export function getLucideSvg(name: string, className = ""): string {
 
 export function setIcon(button: HTMLElement | null, iconName: string, extraHTML = ""): void {
   if (!button) return;
+
+  // updateControls() runs for every media timeupdate. Avoid rebuilding the
+  // SVG subtree when the icon did not change; doing so creates mutation
+  // records and needlessly invalidates layout/style work on the host page.
+  const iconKey = `${iconName}\u0000${extraHTML}`;
+  if (button.dataset.cgptRaIcon === iconKey) return;
+
+  button.dataset.cgptRaIcon = iconKey;
   button.innerHTML = getLucideSvg(iconName) + extraHTML;
 }

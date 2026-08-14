@@ -1,15 +1,18 @@
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { execSync } from "node:child_process";
 
 const distDir = resolve(__dirname, "../dist");
 const zipDir = resolve(__dirname, "../dist-zip");
+const packageJson = JSON.parse(readFileSync(resolve(__dirname, "../package.json"), "utf8")) as {
+  version: string;
+};
 
 if (!existsSync(zipDir)) {
   mkdirSync(zipDir, { recursive: true });
 }
 
-const zipPath = resolve(zipDir, "chatgpt-audio-controls-v1.0.0.zip");
+const zipPath = resolve(zipDir, `chatgpt-audio-controls-v${packageJson.version}.zip`);
 
 if (process.platform === "win32") {
   execSync(

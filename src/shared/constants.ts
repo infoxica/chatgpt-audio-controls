@@ -1,5 +1,7 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
+export const EXTENSION_VERSION = "1.0.1";
+
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
 export const STORAGE_KEYS = {
@@ -23,8 +25,8 @@ export const SHORTCUTS: ShortcutItem[] = [
   {
     id: "play-pause",
     action: "Play / Pause",
-    keys: ["Alt", "P"],
-    description: "Toggle Read Aloud audio playback",
+    keys: ["Space / K"],
+    description: "Toggle playback, matching common web and desktop players (Alt+P remains supported)",
     category: "playback",
   },
   {

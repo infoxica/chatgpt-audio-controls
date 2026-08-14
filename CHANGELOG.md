@@ -4,6 +4,22 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.0.1] - 2026-08-14
+
+### ✨ Launch Readiness & Playback Polish
+- Added the shared ChatGPT Audio brand mark to the popup and options navigation, with theme-aware accent treatment.
+- Removed the popup Status tab and the options interactive player sandbox.
+- Connected popup and options preferences to the main-world audio player through a dedicated settings bridge.
+- Made Inline Speech Buttons, Global Shortcuts, and Smooth Scrubbing settings apply immediately to an open ChatGPT page.
+- Restored and documented `Space` / `K` play-pause controls while retaining `Alt+P` as an alias.
+- Updated the floating control icon to follow the active ChatGPT theme accent.
+
+### 🔒 Store Readiness
+- Restricted content-script access to `https://chatgpt.com/*` only.
+- Clarified local-only data handling, ChatGPT page access, and project independence in the privacy policy.
+- Added Chrome Web Store and Microsoft Edge Add-ons submission guidance.
+- Made the release ZIP filename follow the package version automatically.
+
 ## [1.0.0] - 2026-08-14
 
 ### ✨ Chromium Extension Release (Manifest V3)

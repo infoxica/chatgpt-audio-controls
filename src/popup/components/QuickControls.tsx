@@ -104,7 +104,7 @@ export const QuickControls: React.FC<QuickControlsProps> = ({ settings, onUpdate
         <div className="toggle-row">
           <div className="toggle-info">
             <span className="toggle-label">Global Shortcuts</span>
-            <span className="toggle-desc">Enable Alt+P, Alt+Arrows & speed keys</span>
+            <span className="toggle-desc">Enable Space/K, Alt+P, Alt+Arrows & speed keys</span>
           </div>
           <label className="switch">
             <input

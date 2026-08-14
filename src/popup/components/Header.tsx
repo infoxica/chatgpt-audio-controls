@@ -1,5 +1,6 @@
 import React from "react";
-import { Volume2, Sun, Moon, ExternalLink } from "lucide-react";
+import { Sun, Moon, ExternalLink } from "lucide-react";
+import { ChatGPTAudioIcon } from "../../shared/ChatGPTAudioIcon";
 
 interface HeaderProps {
   theme: "dark" | "light" | "system";
@@ -12,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onOpenOpti
     <header className="popup-header">
       <div className="brand-wrapper">
         <div className="brand-icon">
-          <Volume2 size={16} strokeWidth={2.5} />
+          <ChatGPTAudioIcon size={20} />
         </div>
         <div className="brand-info">
           <h1>ChatGPT Audio</h1>
