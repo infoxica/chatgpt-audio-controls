@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { execSync } from "node:child_process";
 
@@ -13,10 +13,11 @@ if (!existsSync(zipDir)) {
 }
 
 const zipPath = resolve(zipDir, `chatgpt-audio-controls-v${packageJson.version}.zip`);
+rmSync(zipPath, { force: true });
 
 if (process.platform === "win32") {
   execSync(
-    `powershell -Command "if (Test-Path '${zipPath}') { Remove-Item '${zipPath}' }; Compress-Archive -Path '${distDir}\\*' -DestinationPath '${zipPath}'"`,
+    `powershell -Command "Compress-Archive -Path '${distDir}\\*' -DestinationPath '${zipPath}'"`,
     { stdio: "inherit" }
   );
 } else {

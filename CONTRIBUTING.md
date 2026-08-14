@@ -9,7 +9,7 @@ Thank you for your interest in contributing to **ChatGPT Audio Controls & Read A
 This project uses **[Bun](https://bun.sh)** (v1.3.9+) as the package manager and runtime, together with **React**, **TypeScript**, and **Vite**.
 
 ### Prerequisites
-- [Bun](https://bun.sh) (`bun --version` >= 1.2)
+- [Bun](https://bun.sh) (`bun --version` >= 1.3.9)
 - Google Chrome, Microsoft Edge, Brave, or any Chromium-based browser
 
 ### Setup

@@ -58,6 +58,7 @@
   let capturedAudioAt = 0;
 
   const blobURLMap = new Map();
+  const mediaListenersInstalled = new WeakSet();
 
   // Cached DOM state to completely eliminate flickering and redundant reflows
   const cache = {
@@ -247,12 +248,9 @@
         const url = originalCreate(object);
 
         try {
-          if (object instanceof PAGE.Blob) {
+          if (object instanceof PAGE.Blob && looksLikeAudio(url, object.type)) {
             blobURLMap.set(url, object);
-
-            if (looksLikeAudio(url, object.type)) {
-              rememberAudioBlob(object, url);
-            }
+            rememberAudioBlob(object, url);
           }
         } catch (_) {}
 
@@ -260,6 +258,7 @@
       };
 
       urlObj.revokeObjectURL = function (url) {
+        blobURLMap.delete(url);
         return originalRevoke(url);
       };
 
@@ -387,19 +386,36 @@
     return { start: 0, end: 0, seekable: false };
   }
 
+  function isReadAloudMedia(media) {
+    if (media.tagName !== "AUDIO") return false;
+
+    const source = media.currentSrc || media.src || "";
+    return (
+      !media.isConnected ||
+      Boolean(pendingInlineButton) ||
+      blobURLMap.has(source) ||
+      source === capturedAudioURL ||
+      looksLikeAudio(source, "")
+    );
+  }
+
   function attachMedia(media, reason = "detected") {
-    if (!media || typeof media.play !== "function") return;
+    if (!media || typeof media.play !== "function" || !isReadAloudMedia(media)) return;
 
     const changed = activeMedia !== media;
     activeMedia = media;
-    userForcedExpand = true;
-    userForcedCollapsed = false;
+    if (changed) {
+      userForcedExpand = true;
+      userForcedCollapsed = false;
+    }
 
-    try {
-      media.playbackRate = getSavedSpeed();
-      media.defaultPlaybackRate = getSavedSpeed();
-      media.volume = getSavedVolume();
-    } catch (_) {}
+    if (changed) {
+      try {
+        media.playbackRate = getSavedSpeed();
+        media.defaultPlaybackRate = getSavedSpeed();
+        media.volume = getSavedVolume();
+      } catch (_) {}
+    }
 
     if (pendingInlineButton) {
       activeInlineButton = pendingInlineButton;
@@ -418,6 +434,9 @@
   }
 
   function installMediaListeners(media) {
+    if (mediaListenersInstalled.has(media)) return;
+    mediaListenersInstalled.add(media);
+
     [
       "loadedmetadata",
       "durationchange",
@@ -451,12 +470,14 @@
       const originalPause = proto.pause;
 
       proto.play = function (...args) {
-        attachMedia(this, "play() intercepted");
+        const isReadAloud = isReadAloudMedia(this);
+        if (isReadAloud) attachMedia(this, "play() intercepted");
 
         const result = originalPlay.apply(this, args);
 
         queueMicrotask(() => {
           try {
+            if (!isReadAloud) return;
             this.playbackRate = getSavedSpeed();
             this.defaultPlaybackRate = getSavedSpeed();
             this.volume = getSavedVolume();
@@ -1441,6 +1462,7 @@
     let lastFrame = 0;
     let becameHold = false;
     let raf = null;
+    let pointerId = null;
 
     const frame = (now) => {
       if (!holding) return;
@@ -1476,6 +1498,7 @@
       event.preventDefault();
 
       holding = true;
+      pointerId = event.pointerId;
       becameHold = false;
       holdStarted = performance.now();
       lastFrame = 0;
@@ -1489,6 +1512,7 @@
 
     const stop = (event) => {
       if (!holding) return;
+      if (event?.pointerId !== undefined && event.pointerId !== pointerId) return;
       holding = false;
 
       if (raf) cancelAnimationFrame(raf);
@@ -1498,12 +1522,19 @@
       }
 
       try {
-        button.releasePointerCapture(event.pointerId);
+        if (pointerId !== null && button.hasPointerCapture(pointerId)) {
+          button.releasePointerCapture(pointerId);
+        }
       } catch (_) {}
+
+      pointerId = null;
     };
 
     button.addEventListener("pointerup", stop);
     button.addEventListener("pointercancel", stop);
+    button.addEventListener("lostpointercapture", stop);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
   }
 
   function seekAbsolute(target, update = true) {
@@ -1948,11 +1979,19 @@
           message.closest('[data-testid^="conversation-turn"]') ||
           message.parentElement;
 
+        if (
+          turn?.getAttribute("data-cgpt-ra-inline-ready") === "true" &&
+          turn.querySelector(".cgpt-inline-readaloud")
+        ) {
+          return;
+        }
+
         const existingButton = turn && turn.querySelector(".cgpt-inline-readaloud");
         if (existingButton) {
           const existingToolbar = findToolbar(turn);
           if (existingToolbar) {
             placeInlineReadAloudButton(existingToolbar, existingButton);
+            turn.setAttribute("data-cgpt-ra-inline-ready", "true");
           }
 
           return;
@@ -2002,6 +2041,7 @@
         });
 
         placeInlineReadAloudButton(toolbar, button);
+        turn.setAttribute("data-cgpt-ra-inline-ready", "true");
       });
   }
 
@@ -2095,14 +2135,6 @@
   window.addEventListener(
     "keydown",
     (event) => {
-      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        if (!event.repeat) togglePlayback();
-        return;
-      }
-
       const target = event.target instanceof HTMLElement ? event.target : null;
 
       if (
@@ -2114,6 +2146,14 @@
       }
 
       if (!activeMedia) return;
+
+      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        if (!event.repeat) togglePlayback();
+        return;
+      }
 
       const isPlayPauseKey =
         !event.altKey &&
@@ -2181,7 +2221,7 @@
 
   function scanDOMForPlayingMedia() {
     document.querySelectorAll("audio, video").forEach((media) => {
-      if (!media.paused && !media.ended) {
+      if (!media.paused && !media.ended && isReadAloudMedia(media)) {
         attachMedia(media, "DOM fallback");
       }
     });
@@ -2207,10 +2247,18 @@
     window.addEventListener("scroll", scheduleLayoutSync, { passive: true });
 
     setInterval(() => {
-      installInlineReadAloudButtons();
-      scanDOMForPlayingMedia();
-      scheduleLayoutSync();
-    }, 2000);
+      const scan = () => {
+        installInlineReadAloudButtons();
+        scanDOMForPlayingMedia();
+        scheduleLayoutSync();
+      };
+
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(scan, { timeout: 2000 });
+      } else {
+        window.setTimeout(scan, 0);
+      }
+    }, 5000);
   }
 
   // ---------------------------------------------------------------------

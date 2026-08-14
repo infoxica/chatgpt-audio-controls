@@ -11,10 +11,15 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
 
   return (
     <div className="faq-item">
-      <div className="faq-header" onClick={() => setOpen(!open)}>
+      <button
+        type="button"
+        className="faq-header"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
         <span>{question}</span>
         {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-      </div>
+      </button>
       {open && <div className="faq-body">{answer}</div>}
     </div>
   );

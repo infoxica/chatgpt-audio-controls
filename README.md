@@ -10,7 +10,7 @@
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 
-[Why I Created This](#-why-i-created-this) • [Features](#-features) • [Installation](#-installation) • [Tampermonkey Guide](#-tampermonkey-guide) • [Shortcuts](#-keyboard-shortcuts--gestures) • [FAQ](#-faq) • [Privacy](#-privacy)
+[Why I Created This](#why-i-created-this) • [Features](#features) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
 </div>
 

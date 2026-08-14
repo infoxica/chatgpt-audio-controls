@@ -22,6 +22,8 @@ import { ExtensionSettings } from "../shared/types";
 
   let activeMedia: HTMLMediaElement | null = null;
   let settingsCache: ExtensionSettings | null = null;
+  let sessionSpeed: number | null = null;
+  let sessionVolume: number | null = null;
   let activeInlineButton: HTMLElement | null = null;
   let pendingInlineButton: HTMLElement | null = null;
   const inlineButtons = new Set<HTMLElement>();
@@ -135,6 +137,8 @@ import { ExtensionSettings } from "../shared/types";
   }
 
   function getSavedSpeed(): number {
+    if (sessionSpeed !== null) return sessionSpeed;
+
     const configuredSpeed = Number(settingsCache?.defaultSpeed);
     if (Number.isFinite(configuredSpeed) && configuredSpeed >= 0.25 && configuredSpeed <= 4) {
       return configuredSpeed;
@@ -145,6 +149,8 @@ import { ExtensionSettings } from "../shared/types";
   }
 
   function getSavedVolume(): number {
+    if (sessionVolume !== null) return sessionVolume;
+
     const configuredVolume = Number(settingsCache?.defaultVolume);
     if (Number.isFinite(configuredVolume) && configuredVolume >= 0 && configuredVolume <= 1) {
       return configuredVolume;
@@ -290,9 +296,14 @@ import { ExtensionSettings } from "../shared/types";
       };
 
       localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
-      if (typeof chrome !== "undefined" && chrome.storage?.local) {
-        chrome.storage.local.set({ "cgpt-ra-theme-cache": themeCache });
-      }
+      window.postMessage(
+        {
+          source: "chatgpt-audio-controls-settings-bridge",
+          type: "CGPT_RA_THEME_UPDATE",
+          theme: themeCache,
+        },
+        "*",
+      );
 
       log("Synchronized ChatGPT Theme:", chatTheme, isDark ? "Dark" : "Light");
     } catch (_) {}
@@ -519,19 +530,36 @@ import { ExtensionSettings } from "../shared/types";
     return { start: 0, end: 0, seekable: false };
   }
 
+  function isReadAloudMedia(media: HTMLMediaElement): boolean {
+    if (media.tagName !== "AUDIO") return false;
+
+    const source = media.currentSrc || media.src || "";
+    return (
+      !media.isConnected ||
+      Boolean(pendingInlineButton) ||
+      blobURLMap.has(source) ||
+      source === capturedAudioURL ||
+      looksLikeAudio(source, "")
+    );
+  }
+
   function attachMedia(media: HTMLMediaElement, reason = "detected"): void {
-    if (!media || typeof media.play !== "function") return;
+    if (!media || typeof media.play !== "function" || !isReadAloudMedia(media)) return;
 
     const changed = activeMedia !== media;
     activeMedia = media;
-    userForcedExpand = true;
-    userForcedCollapsed = false;
+    if (changed) {
+      userForcedExpand = true;
+      userForcedCollapsed = false;
+    }
 
-    try {
-      media.playbackRate = getSavedSpeed();
-      media.defaultPlaybackRate = getSavedSpeed();
-      media.volume = getSavedVolume();
-    } catch (_) {}
+    if (changed) {
+      try {
+        media.playbackRate = getSavedSpeed();
+        media.defaultPlaybackRate = getSavedSpeed();
+        media.volume = getSavedVolume();
+      } catch (_) {}
+    }
 
     if (pendingInlineButton) {
       activeInlineButton = pendingInlineButton;
@@ -586,12 +614,14 @@ import { ExtensionSettings } from "../shared/types";
       const originalPause = proto.pause;
 
       proto.play = function (...args: any[]) {
-        attachMedia(this, "play() intercepted");
+        const isReadAloud = isReadAloudMedia(this);
+        if (isReadAloud) attachMedia(this, "play() intercepted");
 
         const result = originalPlay.apply(this, args);
 
         queueMicrotask(() => {
           try {
+            if (!isReadAloud) return;
             this.playbackRate = getSavedSpeed();
             this.defaultPlaybackRate = getSavedSpeed();
             this.volume = getSavedVolume();
@@ -1018,6 +1048,7 @@ import { ExtensionSettings } from "../shared/types";
     let becameHold = false;
     let smoothScrubbingEnabled = true;
     let raf: number | null = null;
+    let pointerId: number | null = null;
 
     const frame = (now: number) => {
       if (!holding) return;
@@ -1054,6 +1085,7 @@ import { ExtensionSettings } from "../shared/types";
       event.preventDefault();
 
       holding = true;
+      pointerId = event.pointerId;
       becameHold = false;
       smoothScrubbingEnabled = getSavedSettings().smoothScrubbing !== false;
       holdStarted = performance.now();
@@ -1068,6 +1100,7 @@ import { ExtensionSettings } from "../shared/types";
 
     const stop = (event: PointerEvent) => {
       if (!holding) return;
+      if (event.pointerId !== pointerId) return;
       holding = false;
 
       if (raf) cancelAnimationFrame(raf);
@@ -1078,12 +1111,19 @@ import { ExtensionSettings } from "../shared/types";
       }
 
       try {
-        button.releasePointerCapture(event.pointerId);
+        if (pointerId !== null && button.hasPointerCapture(pointerId)) {
+          button.releasePointerCapture(pointerId);
+        }
       } catch (_) {}
+
+      pointerId = null;
     };
 
     button.addEventListener("pointerup", stop);
     button.addEventListener("pointercancel", stop);
+    button.addEventListener("lostpointercapture", stop);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
   }
 
   function seekAbsolute(target: number, update = true): void {
@@ -1130,6 +1170,7 @@ import { ExtensionSettings } from "../shared/types";
   function setSpeed(speed: number): void {
     if (!Number.isFinite(speed) || speed <= 0) return;
 
+    sessionSpeed = speed;
     localStorage.setItem(CONFIG.speedStorage, String(speed));
 
     if (activeMedia) {
@@ -1146,6 +1187,7 @@ import { ExtensionSettings } from "../shared/types";
   function setVolume(volume: number): void {
     volume = clamp(volume, 0, 1);
 
+    sessionVolume = volume;
     localStorage.setItem(CONFIG.volumeStorage, String(volume));
 
     if (activeMedia) {
@@ -1561,12 +1603,20 @@ import { ExtensionSettings } from "../shared/types";
 
       if (!turn) return;
 
+      if (
+        turn.getAttribute("data-cgpt-ra-inline-ready") === "true" &&
+        turn.querySelector(".cgpt-inline-readaloud")
+      ) {
+        return;
+      }
+
       const toolbar = findToolbar(turn);
       const existingButton = turn.querySelector<HTMLElement>(".cgpt-inline-readaloud");
       if (existingButton) {
         inlineButtons.add(existingButton);
         if (toolbar) {
           placeInlineReadAloudButton(toolbar, existingButton);
+          turn.setAttribute("data-cgpt-ra-inline-ready", "true");
         }
 
         return;
@@ -1615,6 +1665,7 @@ import { ExtensionSettings } from "../shared/types";
       placeInlineReadAloudButton(toolbar, button);
 
       inlineButtons.add(button);
+      turn.setAttribute("data-cgpt-ra-inline-ready", "true");
     });
   }
 
@@ -1717,16 +1768,6 @@ import { ExtensionSettings } from "../shared/types";
       const settings = getSavedSettings();
       if (settings.enableShortcuts === false) return;
 
-      // Keep Alt+P as a legacy alias. Space/K are the primary player shortcuts
-      // because they match common web and desktop media players.
-      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        if (!event.repeat) togglePlayback();
-        return;
-      }
-
       const target = event.target instanceof HTMLElement ? event.target : null;
 
       if (
@@ -1738,6 +1779,16 @@ import { ExtensionSettings } from "../shared/types";
       }
 
       if (!activeMedia) return;
+
+      // Keep Alt+P as a legacy alias. Space/K are the primary player shortcuts
+      // because they match common web and desktop media players.
+      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        if (!event.repeat) togglePlayback();
+        return;
+      }
 
       const isPlayPauseKey =
         !event.altKey &&
@@ -1807,7 +1858,7 @@ import { ExtensionSettings } from "../shared/types";
 
   function scanDOMForPlayingMedia(): void {
     document.querySelectorAll<HTMLMediaElement>("audio, video").forEach((media) => {
-      if (!media.paused && !media.ended) {
+      if (!media.paused && !media.ended && isReadAloudMedia(media)) {
         attachMedia(media, "DOM fallback");
       }
     });

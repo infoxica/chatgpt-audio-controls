@@ -15,8 +15,8 @@ Fixes #(issue)
 
 ## Checklist
 
-- [ ] My branch follows the Git rules (`feature/*`, `bug/*`, or `fix/*`).
-- [ ] My PR targets the correct branch (`develop` for features/bugs, or `master` for hotfixes/releases).
+- [ ] My branch follows the Git rules (`feature/*`, `bug/*`, or `fix/*`; `develop` is allowed for a release PR to `master`).
+- [ ] My PR targets the correct branch (`develop` for features/bugs, or `master` from `develop`, `hotfix/*`, or `release/*`).
 - [ ] If targeting `master`, the last commit is a version bump commit (`chore: bump version to X.Y.Z`).
 - [ ] I have run `bun run typecheck` and `bun run build` with zero errors.
 - [ ] I have tested the changes locally on ChatGPT.

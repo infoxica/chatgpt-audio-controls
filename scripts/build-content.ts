@@ -45,4 +45,7 @@ async function buildContentScript() {
   console.log("Content script and styles compiled successfully to dist/content/");
 }
 
-buildContentScript().catch(console.error);
+buildContentScript().catch((error) => {
+  console.error("Content script build failed:", error);
+  process.exit(1);
+});

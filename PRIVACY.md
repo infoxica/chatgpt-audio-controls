@@ -25,11 +25,11 @@ The extension only reads and writes local settings necessary for its operation:
    - Preferred skip step (e.g. `10 seconds`)
    - Feature flags (toggling keyboard shortcuts or inline buttons)
    - UI Theme (`dark`, `light`, `system`)
-   - Stored in standard `chrome.storage.sync` or `localStorage` on your own device.
+   - Stored in `chrome.storage.sync` (which Chrome may synchronize through its sync service when enabled) or `localStorage` for the standalone userscript.
 
 2. **Audio Streams**:
    - When ChatGPT generates Read Aloud voice responses, the audio stream is temporarily held in your browser's local memory (`Blob`) solely to enable seeking and user-initiated file downloads (`.mp3`/`.m4a`/`.wav`).
-   - The audio stream is never sent over any network.
+   - The extension never uploads audio to an extension-operated backend. For a user-initiated download, it may fetch the already-authorized ChatGPT media URL from ChatGPT.
 
 3. **ChatGPT Page Interface**:
    - The extension reads the presence of ChatGPT assistant-response toolbars and the browser media element that plays Read Aloud audio. It does not parse, store, or transmit conversation text.

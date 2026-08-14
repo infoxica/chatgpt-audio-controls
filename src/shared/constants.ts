@@ -21,6 +21,19 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   autoDownloadFormat: "auto",
 };
 
+// Keep each preference under its own sync key so independent updates from the
+// popup and options page cannot overwrite one another.
+export const SETTING_STORAGE_KEYS: Record<keyof ExtensionSettings, string> = {
+  defaultSpeed: "cgpt-ra-settings.defaultSpeed",
+  defaultVolume: "cgpt-ra-settings.defaultVolume",
+  tapSeekSeconds: "cgpt-ra-settings.tapSeekSeconds",
+  enableShortcuts: "cgpt-ra-settings.enableShortcuts",
+  enableInlineButtons: "cgpt-ra-settings.enableInlineButtons",
+  theme: "cgpt-ra-settings.theme",
+  smoothScrubbing: "cgpt-ra-settings.smoothScrubbing",
+  autoDownloadFormat: "cgpt-ra-settings.autoDownloadFormat",
+};
+
 export const SHORTCUTS: ShortcutItem[] = [
   {
     id: "play-pause",
