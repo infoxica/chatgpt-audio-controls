@@ -14,7 +14,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     speedStorage: STORAGE_KEYS.SPEED,
     volumeStorage: STORAGE_KEYS.VOLUME,
     settingsStorage: STORAGE_KEYS.SETTINGS,
-    debug: true,
+    debug: false,
   };
 
   let activeMedia: HTMLMediaElement | null = null;
@@ -45,6 +45,25 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   let capturedAudioAt = 0;
 
   const blobURLMap = new Map<string, Blob>();
+
+  // Cached DOM state to completely eliminate flickering and redundant reflows
+  const cache = {
+    currentTimeStr: "",
+    durationStr: "",
+    isPaused: true,
+    speed: 1,
+    volume: 1,
+    isMuted: false,
+    controlsEnabled: false,
+    leftWidth: "",
+    leftX: "",
+    leftY: "",
+    rightX: "",
+    rightY: "",
+    isCollapsed: true,
+    floatingHidden: false,
+    lastBroadcast: 0,
+  };
 
   function log(...args: any[]) {
     if (CONFIG.debug) {
@@ -98,7 +117,40 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     }
   }
 
-  function broadcastLiveAudioState(): void {
+  // Detect and broadcast ChatGPT theme and accent color for popup/options
+  function detectAndCacheChatGPTTheme(): void {
+    try {
+      const rootStyle = getComputedStyle(document.documentElement);
+      const isDark = document.documentElement.classList.contains("dark") ||
+        !document.documentElement.classList.contains("light");
+
+      const themeAccent =
+        rootStyle.getPropertyValue("--interactive-bg-accent-secondary-default").trim() ||
+        rootStyle.getPropertyValue("--theme-submit-btn-bg").trim() ||
+        rootStyle.getPropertyValue("--theme-blue-default").trim() ||
+        "#3968c8";
+
+      const themeCache = {
+        isDark,
+        themeAccent,
+        bgPrimary: rootStyle.getPropertyValue("--bg-primary").trim() || (isDark ? "#212121" : "#ffffff"),
+        bgSecondary: rootStyle.getPropertyValue("--bg-secondary").trim() || (isDark ? "#303030" : "#f9f9f9"),
+        textPrimary: rootStyle.getPropertyValue("--text-primary").trim() || (isDark ? "#ffffff" : "#0d0d0d"),
+        updatedAt: Date.now(),
+      };
+
+      localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
+      if (typeof chrome !== "undefined" && chrome.storage?.local) {
+        chrome.storage.local.set({ "cgpt-ra-theme-cache": themeCache });
+      }
+    } catch (_) {}
+  }
+
+  function broadcastLiveAudioState(force = false): void {
+    const now = Date.now();
+    if (!force && now - cache.lastBroadcast < 500) return;
+    cache.lastBroadcast = now;
+
     const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
     const current = Number(activeMedia?.currentTime) || 0;
     const duration = Number(activeMedia?.duration) || 0;
@@ -115,7 +167,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       isMuted: Boolean(activeMedia?.muted || volume === 0),
       formattedCurrent: formatTime(current),
       formattedDuration: formatTime(duration),
-      updatedAt: Date.now(),
+      updatedAt: now,
     };
 
     try {
@@ -322,7 +374,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     const changed = activeMedia !== media;
     activeMedia = media;
-    userForcedExpand = true; // Automatically expand player when speech starts
+    userForcedExpand = true;
 
     try {
       media.playbackRate = getSavedSpeed();
@@ -340,8 +392,8 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
-    broadcastLiveAudioState();
-    syncComposerLayout();
+    broadcastLiveAudioState(true);
+    scheduleLayoutSync();
 
     log("Attached media:", reason, media);
   }
@@ -351,7 +403,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       "loadedmetadata",
       "durationchange",
       "timeupdate",
-      "progress",
       "ratechange",
       "volumechange",
       "play",
@@ -364,7 +415,9 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           updateControls();
           updateInlineButtons();
           broadcastLiveAudioState();
-          syncComposerLayout();
+          if (name === "play" || name === "pause" || name === "ended") {
+            scheduleLayoutSync();
+          }
         }
       });
     });
@@ -391,7 +444,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           } catch (_) {}
 
           updateControls();
-          broadcastLiveAudioState();
+          broadcastLiveAudioState(true);
         });
 
         return result;
@@ -404,8 +457,8 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
-            broadcastLiveAudioState();
-            syncComposerLayout();
+            broadcastLiveAudioState(true);
+            scheduleLayoutSync();
           });
         }
 
@@ -441,7 +494,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = true;
-      syncComposerLayout();
+      scheduleLayoutSync();
     });
 
     // 2. Left Transport & Seeker Capsule (Overall 48px, Radius 24px)
@@ -559,7 +612,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     collapseButton?.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = false;
-      syncComposerLayout();
+      scheduleLayoutSync();
     });
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
@@ -628,7 +681,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       setVolume(parseFloat(volumeSlider.value));
     });
 
-    // Hover mouse wheel scroll on volume button to quickly adjust volume
     volumeWrap?.addEventListener(
       "wheel",
       (event: WheelEvent) => {
@@ -644,12 +696,13 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     downloadButton?.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
-    broadcastLiveAudioState();
+    detectAndCacheChatGPTTheme();
     syncComposerLayout();
   }
 
   function setControlsEnabled(enabled: boolean): void {
-    if (!leftRail || !rightRail) return;
+    if (!leftRail || !rightRail || cache.controlsEnabled === enabled) return;
+    cache.controlsEnabled = enabled;
 
     leftRail.classList.toggle("cgpt-ra-no-media", !enabled);
     rightRail.classList.toggle("cgpt-ra-no-media", !enabled);
@@ -673,8 +726,17 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   // ---------------------------------------------------------------------
-  // Dynamic Space Detection & Responsive Composer Alignment
+  // Debounced Layout Alignment (Zero Flickering)
   // ---------------------------------------------------------------------
+
+  let layoutRaf: number | null = null;
+  function scheduleLayoutSync(): void {
+    if (layoutRaf) return;
+    layoutRaf = requestAnimationFrame(() => {
+      layoutRaf = null;
+      syncComposerLayout();
+    });
+  }
 
   function getComposer(): HTMLElement | null {
     const prompt =
@@ -700,11 +762,17 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const shouldExpand = Boolean(hasActiveAudio || userForcedExpand);
 
     if (!composer) {
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
+      if (!cache.isCollapsed) {
+        cache.isCollapsed = true;
+        leftRail.classList.add("cgpt-ra-collapsed");
+        rightRail.classList.add("cgpt-ra-collapsed");
+      }
+      if (cache.floatingHidden) {
+        cache.floatingHidden = false;
+        floatingToggle.classList.remove("cgpt-ra-hidden");
+      }
       floatingToggle.style.right = "16px";
       floatingToggle.style.bottom = "80px";
-      floatingToggle.classList.remove("cgpt-ra-hidden");
       return;
     }
 
@@ -722,33 +790,47 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
 
     if (!canFit || !shouldExpand) {
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
+      if (!cache.isCollapsed) {
+        cache.isCollapsed = true;
+        leftRail.classList.add("cgpt-ra-collapsed");
+        rightRail.classList.add("cgpt-ra-collapsed");
+      }
 
-      floatingToggle.classList.remove("cgpt-ra-hidden");
-      const toggleX = Math.min(viewportWidth - 52, rect.right + 12);
-      const toggleY = rect.top + rect.height / 2 - 21;
-      floatingToggle.style.left = `${toggleX}px`;
-      floatingToggle.style.top = `${toggleY}px`;
+      if (cache.floatingHidden) {
+        cache.floatingHidden = false;
+        floatingToggle.classList.remove("cgpt-ra-hidden");
+      }
+
+      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
+      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
+
+      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
+      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
       return;
     }
 
-    floatingToggle.classList.add("cgpt-ra-hidden");
-    leftRail.classList.remove("cgpt-ra-collapsed");
-    rightRail.classList.remove("cgpt-ra-collapsed");
+    if (!cache.floatingHidden) {
+      cache.floatingHidden = true;
+      floatingToggle.classList.add("cgpt-ra-hidden");
+    }
 
-    const computedLeftWidth = clamp(leftAvailable, minLeftWidth, maxLeftWidth);
-    const centerY = rect.top + rect.height / 2;
+    if (cache.isCollapsed) {
+      cache.isCollapsed = false;
+      leftRail.classList.remove("cgpt-ra-collapsed");
+      rightRail.classList.remove("cgpt-ra-collapsed");
+    }
 
-    leftRail.style.display = "block";
-    leftRail.style.width = `${computedLeftWidth}px`;
-    leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
-    leftRail.style.top = `${centerY - 24}px`;
+    const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
+    const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
+    const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
+    const rightX = `${Math.round(rect.right + sideGap)}px`;
 
-    rightRail.style.display = "inline-flex";
-    rightRail.style.width = "max-content";
-    rightRail.style.left = `${rect.right + sideGap}px`;
-    rightRail.style.top = `${centerY - 24}px`;
+    if (leftRail.style.width !== computedLeftWidth) leftRail.style.width = computedLeftWidth;
+    if (leftRail.style.left !== leftX) leftRail.style.left = leftX;
+    if (leftRail.style.top !== leftY) leftRail.style.top = leftY;
+
+    if (rightRail.style.left !== rightX) rightRail.style.left = rightX;
+    if (rightRail.style.top !== leftY) rightRail.style.top = leftY;
   }
 
   // ---------------------------------------------------------------------
@@ -852,7 +934,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   // ---------------------------------------------------------------------
-  // Playback / speed / volume
+  // Playback / speed / volume with DOM Cache
   // ---------------------------------------------------------------------
 
   function togglePlayback(): void {
@@ -883,7 +965,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     }
 
     updateControls();
-    broadcastLiveAudioState();
+    broadcastLiveAudioState(true);
   }
 
   function setVolume(volume: number): void {
@@ -899,7 +981,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     }
 
     updateControls();
-    broadcastLiveAudioState();
+    broadcastLiveAudioState(true);
   }
 
   function updateControls(): void {
@@ -915,62 +997,75 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const current = Number(activeMedia.currentTime) || 0;
     const info = getSeekInfo(activeMedia);
 
-    if (currentLabel) currentLabel.textContent = formatTime(current);
+    const formattedCur = formatTime(current);
+    if (currentLabel && cache.currentTimeStr !== formattedCur) {
+      cache.currentTimeStr = formattedCur;
+      currentLabel.textContent = formattedCur;
+    }
 
-    if (durationLabel) {
-      if (Number.isFinite(activeMedia.duration)) {
-        durationLabel.textContent = formatTime(activeMedia.duration);
-      } else if (info.seekable) {
-        durationLabel.textContent = formatTime(info.end);
-      } else {
-        durationLabel.textContent = "--:--";
-      }
+    const durationNum = Number.isFinite(activeMedia.duration)
+      ? activeMedia.duration
+      : info.seekable
+      ? info.end
+      : 0;
+
+    const formattedDur = durationNum > 0 ? formatTime(durationNum) : "--:--";
+    if (durationLabel && cache.durationStr !== formattedDur) {
+      cache.durationStr = formattedDur;
+      durationLabel.textContent = formattedDur;
     }
 
     if (seekSlider) {
       if (info.seekable) {
-        seekSlider.disabled = false;
+        if (seekSlider.disabled) seekSlider.disabled = false;
         seekSlider.min = String(info.start);
         seekSlider.max = String(info.end);
 
         if (!sliderDragging) {
           seekSlider.value = String(clamp(current, info.start, info.end));
         }
-      } else {
+      } else if (!seekSlider.disabled) {
         seekSlider.disabled = true;
       }
     }
 
-    setIcon(playButton, activeMedia.paused ? "play" : "pause");
+    const isPaused = activeMedia.paused;
+    if (cache.isPaused !== isPaused) {
+      cache.isPaused = isPaused;
+      setIcon(playButton, isPaused ? "play" : "pause");
+    }
 
-    let speed = getSavedSpeed();
-    let volume = getSavedVolume();
+    const speed = activeMedia.playbackRate || getSavedSpeed();
+    if (cache.speed !== speed) {
+      cache.speed = speed;
+      if (speedButton) speedButton.textContent = `${speed}×`;
 
-    try {
-      speed = activeMedia.playbackRate;
-      volume = activeMedia.volume;
-    } catch (_) {}
+      speedMenu?.querySelectorAll<HTMLElement>(".cgpt-ra-speed-option").forEach((item) => {
+        item.classList.toggle(
+          "cgpt-selected",
+          Math.abs(parseFloat(item.dataset.speed || "0") - speed) < 0.001,
+        );
+      });
+    }
 
-    if (speedButton) speedButton.textContent = `${speed}×`;
+    const volume = activeMedia.volume;
+    const isMuted = activeMedia.muted || volume <= 0;
 
-    speedMenu?.querySelectorAll<HTMLElement>(".cgpt-ra-speed-option").forEach((item) => {
-      item.classList.toggle(
-        "cgpt-selected",
-        Math.abs(parseFloat(item.dataset.speed || "0") - speed) < 0.001,
-      );
-    });
+    if (cache.volume !== volume || cache.isMuted !== isMuted) {
+      cache.volume = volume;
+      cache.isMuted = isMuted;
 
-    if (volumeSlider) volumeSlider.value = String(volume);
-    if (volumeLabel) volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+      if (volumeSlider) volumeSlider.value = String(volume);
+      if (volumeLabel) volumeLabel.textContent = `${Math.round(volume * 100)}%`;
 
-    const volumeButton = rightRail.querySelector<HTMLElement>(".cgpt-ra-volume-btn");
-
-    if (volume <= 0 || activeMedia.muted) {
-      setIcon(volumeButton, "volume-x");
-    } else if (volume < 0.5) {
-      setIcon(volumeButton, "volume-1");
-    } else {
-      setIcon(volumeButton, "volume-2");
+      const volumeButton = rightRail.querySelector<HTMLElement>(".cgpt-ra-volume-btn");
+      if (isMuted) {
+        setIcon(volumeButton, "volume-x");
+      } else if (volume < 0.5) {
+        setIcon(volumeButton, "volume-1");
+      } else {
+        setIcon(volumeButton, "volume-2");
+      }
     }
   }
 
@@ -1145,7 +1240,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           } catch (_) {}
 
           updateInlineButtons();
-          broadcastLiveAudioState();
+          broadcastLiveAudioState(true);
           return;
         }
 
@@ -1337,7 +1432,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   // ---------------------------------------------------------------------
-  // DOM Observer & Poller
+  // DOM Observer & Poller (Zero Thrashing)
   // ---------------------------------------------------------------------
 
   function scanDOMForPlayingMedia(): void {
@@ -1348,10 +1443,15 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     });
   }
 
+  let observerTimeout: any = null;
   function startObserver(): void {
     const observer = new MutationObserver(() => {
-      installInlineReadAloudButtons();
-      syncComposerLayout();
+      if (observerTimeout) return;
+      observerTimeout = setTimeout(() => {
+        observerTimeout = null;
+        installInlineReadAloudButtons();
+        scheduleLayoutSync();
+      }, 250);
     });
 
     observer.observe(document.documentElement, {
@@ -1359,22 +1459,15 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       subtree: true,
     });
 
-    window.addEventListener("resize", syncComposerLayout, { passive: true });
-    window.addEventListener("scroll", syncComposerLayout, { passive: true });
+    window.addEventListener("resize", scheduleLayoutSync, { passive: true });
+    window.addEventListener("scroll", scheduleLayoutSync, { passive: true });
 
     setInterval(() => {
       installInlineReadAloudButtons();
       scanDOMForPlayingMedia();
-      broadcastLiveAudioState();
-      syncComposerLayout();
-    }, 1000);
-  }
-
-  function animationLoop(): void {
-    if (activeMedia) {
-      updateControls();
-    }
-    requestAnimationFrame(animationLoop);
+      detectAndCacheChatGPTTheme();
+      scheduleLayoutSync();
+    }, 2000);
   }
 
   // ---------------------------------------------------------------------
@@ -1397,7 +1490,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     buildUI();
     installInlineReadAloudButtons();
     startObserver();
-    animationLoop();
 
     log("ChatGPT Audio Controls Extension Ready");
   }

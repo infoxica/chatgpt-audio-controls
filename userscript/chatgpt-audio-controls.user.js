@@ -26,7 +26,7 @@
     defaultVolume: 1,
     speedStorage: "cgpt-ra-v4-speed",
     volumeStorage: "cgpt-ra-v4-volume",
-    debug: true,
+    debug: false,
   };
 
   let activeMedia = null;
@@ -57,6 +57,20 @@
   let capturedAudioAt = 0;
 
   const blobURLMap = new Map();
+
+  // Cached DOM state to completely eliminate flickering and redundant reflows
+  const cache = {
+    currentTimeStr: "",
+    durationStr: "",
+    isPaused: true,
+    speed: 1,
+    volume: 1,
+    isMuted: false,
+    controlsEnabled: false,
+    isCollapsed: true,
+    floatingHidden: false,
+    lastBroadcast: 0,
+  };
 
   function log(...args) {
     if (CONFIG.debug) {
@@ -101,7 +115,11 @@
     return Number.isFinite(n) && n >= 0 && n <= 1 ? n : CONFIG.defaultVolume;
   }
 
-  function broadcastLiveAudioState() {
+  function broadcastLiveAudioState(force = false) {
+    const now = Date.now();
+    if (!force && now - cache.lastBroadcast < 500) return;
+    cache.lastBroadcast = now;
+
     const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
     const current = Number(activeMedia?.currentTime) || 0;
     const duration = Number(activeMedia?.duration) || 0;
@@ -118,7 +136,7 @@
       isMuted: Boolean(activeMedia?.muted || volume === 0),
       formattedCurrent: formatTime(current),
       formattedDuration: formatTime(duration),
-      updatedAt: Date.now(),
+      updatedAt: now,
     };
 
     try {
@@ -391,8 +409,8 @@
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
-    broadcastLiveAudioState();
-    syncComposerLayout();
+    broadcastLiveAudioState(true);
+    scheduleLayoutSync();
 
     log("Attached media:", reason, media);
   }
@@ -402,7 +420,6 @@
       "loadedmetadata",
       "durationchange",
       "timeupdate",
-      "progress",
       "ratechange",
       "volumechange",
       "play",
@@ -415,7 +432,9 @@
           updateControls();
           updateInlineButtons();
           broadcastLiveAudioState();
-          syncComposerLayout();
+          if (name === "play" || name === "pause" || name === "ended") {
+            scheduleLayoutSync();
+          }
         }
       });
     });
@@ -442,7 +461,7 @@
           } catch (_) {}
 
           updateControls();
-          broadcastLiveAudioState();
+          broadcastLiveAudioState(true);
         });
 
         return result;
@@ -455,8 +474,8 @@
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
-            broadcastLiveAudioState();
-            syncComposerLayout();
+            broadcastLiveAudioState(true);
+            scheduleLayoutSync();
           });
         }
 
@@ -475,7 +494,7 @@
   }
 
   // ---------------------------------------------------------------------
-  // Styles (48px Height, 24px Radius, 36px Buttons, Primary Play)
+  // Styles (Using ChatGPT Native CSS Vars)
   // ---------------------------------------------------------------------
 
   function installStyles() {
@@ -485,25 +504,29 @@
     style.id = "cgpt-ra-v4-style";
     style.textContent = `
       :root {
-          --cgpt-ra-bg: #212121;
-          --cgpt-ra-bg-hover: rgba(255, 255, 255, .10);
-          --cgpt-ra-border: rgba(255, 255, 255, .12);
-          --cgpt-ra-text: #ececec;
-          --cgpt-ra-muted: #8e8e8e;
-          --cgpt-ra-disabled: rgba(255, 255, 255, .28);
-          --theme-submit-btn-bg: #3968c8;
-          --theme-submit-btn-text: #ffffff;
+          --cgpt-ra-bg: var(--bg-primary, #212121);
+          --cgpt-ra-bg-surface: var(--bg-secondary, #303030);
+          --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));
+          --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));
+          --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));
+          --cgpt-ra-text: var(--text-primary, #ffffff);
+          --cgpt-ra-muted: var(--text-tertiary, #afafaf);
+          --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));
+          --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
+          --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
       }
 
       html.light {
-          --cgpt-ra-bg: #ffffff;
-          --cgpt-ra-bg-hover: rgba(0, 0, 0, .07);
-          --cgpt-ra-border: rgba(0, 0, 0, .12);
-          --cgpt-ra-text: #0d0d0d;
-          --cgpt-ra-muted: #5d5d5d;
-          --cgpt-ra-disabled: rgba(0, 0, 0, .25);
-          --theme-submit-btn-bg: #3968c8;
-          --theme-submit-btn-text: #ffffff;
+          --cgpt-ra-bg: var(--bg-primary, #ffffff);
+          --cgpt-ra-bg-surface: var(--bg-secondary, #f9f9f9);
+          --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));
+          --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));
+          --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));
+          --cgpt-ra-text: var(--text-primary, #0d0d0d);
+          --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);
+          --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));
+          --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
+          --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
       }
 
       #cgpt-ra-left,
@@ -530,24 +553,11 @@
           overflow: visible;
       }
 
-      #cgpt-ra-left::before {
-          content: "";
-          position: absolute;
-          z-index: 2;
-          top: -1px;
-          left: 50%;
-          width: 140px;
-          height: 4px;
-          transform: translateX(-50%);
-          background: var(--cgpt-ra-bg);
-          pointer-events: none;
-      }
-
       .cgpt-ra-transport-row {
           position: absolute;
           z-index: 3;
           left: 50%;
-          top: -40px;
+          top: -46px;
           transform: translateX(-50%);
           height: 48px;
           display: flex;
@@ -557,20 +567,9 @@
           padding: 4px 8px;
           margin: 0;
           border: 1px solid var(--cgpt-ra-border);
-          border-radius: 24px 24px 14px 14px;
+          border-radius: 24px;
           background: var(--cgpt-ra-bg);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, .14);
-      }
-
-      .cgpt-ra-transport-row::after {
-          content: "";
-          position: absolute;
-          left: 12px;
-          right: 12px;
-          bottom: -4px;
-          height: 6px;
-          background: var(--cgpt-ra-bg);
-          pointer-events: none;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
       }
 
       .cgpt-ra-transport-row > * {
@@ -590,9 +589,9 @@
           height: 40px !important;
           flex: 0 0 40px !important;
           border-radius: 50% !important;
-          background-color: var(--theme-submit-btn-bg, #3968c8) !important;
-          color: var(--theme-submit-btn-text, #ffffff) !important;
-          box-shadow: 0 2px 10px rgba(16, 163, 127, 0.4) !important;
+          background-color: var(--theme-submit-btn-bg) !important;
+          color: var(--theme-submit-btn-text) !important;
+          box-shadow: 0 2px 10px rgba(57, 104, 200, 0.4) !important;
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -654,7 +653,7 @@
 
       #cgpt-ra-floating-toggle:hover {
           transform: scale(1.08);
-          border-color: var(--theme-submit-btn-bg, #3968c8);
+          border-color: var(--theme-submit-btn-bg);
       }
 
       #cgpt-ra-floating-toggle.cgpt-ra-hidden {
@@ -667,13 +666,6 @@
           visibility: hidden !important;
           pointer-events: none !important;
           transform: scale(0.95);
-      }
-
-      #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,
-      #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {
-          pointer-events: none !important;
       }
 
       .cgpt-ra-icon-btn {
@@ -695,7 +687,7 @@
       }
 
       .cgpt-ra-icon-btn:hover {
-          background: var(--cgpt-ra-bg-hover);
+          background: var(--cgpt-ra-bg-surface-hover);
       }
 
       .cgpt-ra-icon-btn:disabled {
@@ -773,18 +765,14 @@
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.2);
+          background: var(--cgpt-ra-border);
           transition: height .12s ease, background .12s ease;
-      }
-
-      html.light .cgpt-ra-range::-webkit-slider-runnable-track {
-          background: rgba(0, 0, 0, 0.18);
       }
 
       .cgpt-ra-range:hover::-webkit-slider-runnable-track,
       .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg, #3968c8);
+          background: var(--theme-submit-btn-bg);
       }
 
       .cgpt-ra-range::-webkit-slider-thumb {
@@ -805,28 +793,28 @@
           width: 11px;
           height: 11px;
           margin-top: -3.5px;
-          background: var(--theme-submit-btn-bg, #3968c8);
+          background: var(--theme-submit-btn-bg);
       }
 
       .cgpt-ra-range::-moz-range-track {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.2);
+          background: var(--cgpt-ra-border);
           transition: height .12s ease, background .12s ease;
       }
 
       .cgpt-ra-range:hover::-moz-range-track,
       .cgpt-ra-range:focus-visible::-moz-range-track {
           height: 4px;
-          background: var(--theme-submit-btn-bg, #3968c8);
+          background: var(--theme-submit-btn-bg);
       }
 
       .cgpt-ra-range::-moz-range-progress {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: var(--theme-submit-btn-bg, #3968c8);
+          background: var(--theme-submit-btn-bg);
       }
 
       .cgpt-ra-range::-moz-range-thumb {
@@ -866,16 +854,11 @@
           display: none;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 12px;
-          background: #282828;
-          color: #fff;
+          background: var(--cgpt-ra-bg-surface);
+          color: var(--cgpt-ra-text);
           box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
           overflow: hidden;
           z-index: 10002;
-      }
-
-      html.light .cgpt-ra-popover {
-          background: #ffffff;
-          color: #202020;
       }
 
       .cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,
@@ -905,12 +888,7 @@
 
       .cgpt-ra-speed-option:hover,
       .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(255, 255, 255, .10);
-      }
-
-      html.light .cgpt-ra-speed-option:hover,
-      html.light .cgpt-ra-speed-option.cgpt-selected {
-          background: rgba(0, 0, 0, .07);
+          background: var(--cgpt-ra-bg-surface-hover);
       }
 
       .cgpt-ra-volume-popover {
@@ -931,16 +909,11 @@
           padding: 6px 5px 6px;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 22px;
-          background: #282828;
-          color: #fff;
+          background: var(--cgpt-ra-bg-surface);
+          color: var(--cgpt-ra-text);
           box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
           transition: opacity .12s ease, visibility .12s ease;
           z-index: 10002;
-      }
-
-      html.light .cgpt-ra-volume-popover {
-          background: #ffffff;
-          color: #202020;
       }
 
       .cgpt-ra-volume-wrap:hover .cgpt-ra-volume-popover,
@@ -1033,7 +1006,7 @@
 
       .cgpt-inline-readaloud:hover {
           opacity: 1;
-          background: rgba(127, 127, 127, .14);
+          background: var(--cgpt-ra-bg-surface-hover);
       }
 
       .cgpt-inline-readaloud svg {
@@ -1044,7 +1017,7 @@
 
       .cgpt-inline-readaloud.cgpt-active {
           opacity: 1;
-          color: var(--theme-submit-btn-bg, #3968c8);
+          color: var(--theme-submit-btn-bg);
       }
     `;
 
@@ -1066,7 +1039,7 @@
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = true;
-      syncComposerLayout();
+      scheduleLayoutSync();
     });
 
     leftRail = document.createElement("div");
@@ -1182,7 +1155,7 @@
     collapseButton?.addEventListener("click", (e) => {
       e.stopPropagation();
       userForcedExpand = false;
-      syncComposerLayout();
+      scheduleLayoutSync();
     });
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
@@ -1271,12 +1244,12 @@
     downloadButton.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
-    broadcastLiveAudioState();
     syncComposerLayout();
   }
 
   function setControlsEnabled(enabled) {
-    if (!leftRail || !rightRail) return;
+    if (!leftRail || !rightRail || cache.controlsEnabled === enabled) return;
+    cache.controlsEnabled = enabled;
 
     leftRail.classList.toggle("cgpt-ra-no-media", !enabled);
     rightRail.classList.toggle("cgpt-ra-no-media", !enabled);
@@ -1297,6 +1270,15 @@
     if (helpButton) helpButton.disabled = false;
 
     if (collapseButton) collapseButton.disabled = false;
+  }
+
+  let layoutRaf = null;
+  function scheduleLayoutSync() {
+    if (layoutRaf) return;
+    layoutRaf = requestAnimationFrame(() => {
+      layoutRaf = null;
+      syncComposerLayout();
+    });
   }
 
   function getComposer() {
@@ -1323,11 +1305,17 @@
     const shouldExpand = Boolean(hasActiveAudio || userForcedExpand);
 
     if (!composer) {
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
+      if (!cache.isCollapsed) {
+        cache.isCollapsed = true;
+        leftRail.classList.add("cgpt-ra-collapsed");
+        rightRail.classList.add("cgpt-ra-collapsed");
+      }
+      if (cache.floatingHidden) {
+        cache.floatingHidden = false;
+        floatingToggle.classList.remove("cgpt-ra-hidden");
+      }
       floatingToggle.style.right = "16px";
       floatingToggle.style.bottom = "80px";
-      floatingToggle.classList.remove("cgpt-ra-hidden");
       return;
     }
 
@@ -1345,33 +1333,47 @@
     const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
 
     if (!canFit || !shouldExpand) {
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
+      if (!cache.isCollapsed) {
+        cache.isCollapsed = true;
+        leftRail.classList.add("cgpt-ra-collapsed");
+        rightRail.classList.add("cgpt-ra-collapsed");
+      }
 
-      floatingToggle.classList.remove("cgpt-ra-hidden");
-      const toggleX = Math.min(viewportWidth - 52, rect.right + 12);
-      const toggleY = rect.top + rect.height / 2 - 21;
-      floatingToggle.style.left = `${toggleX}px`;
-      floatingToggle.style.top = `${toggleY}px`;
+      if (cache.floatingHidden) {
+        cache.floatingHidden = false;
+        floatingToggle.classList.remove("cgpt-ra-hidden");
+      }
+
+      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
+      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
+
+      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
+      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
       return;
     }
 
-    floatingToggle.classList.add("cgpt-ra-hidden");
-    leftRail.classList.remove("cgpt-ra-collapsed");
-    rightRail.classList.remove("cgpt-ra-collapsed");
+    if (!cache.floatingHidden) {
+      cache.floatingHidden = true;
+      floatingToggle.classList.add("cgpt-ra-hidden");
+    }
 
-    const computedLeftWidth = clamp(leftAvailable, minLeftWidth, maxLeftWidth);
-    const centerY = rect.top + rect.height / 2;
+    if (cache.isCollapsed) {
+      cache.isCollapsed = false;
+      leftRail.classList.remove("cgpt-ra-collapsed");
+      rightRail.classList.remove("cgpt-ra-collapsed");
+    }
 
-    leftRail.style.display = "block";
-    leftRail.style.width = `${computedLeftWidth}px`;
-    leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
-    leftRail.style.top = `${centerY - 24}px`;
+    const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
+    const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
+    const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
+    const rightX = `${Math.round(rect.right + sideGap)}px`;
 
-    rightRail.style.display = "inline-flex";
-    rightRail.style.width = "max-content";
-    rightRail.style.left = `${rect.right + sideGap}px`;
-    rightRail.style.top = `${centerY - 24}px`;
+    if (leftRail.style.width !== computedLeftWidth) leftRail.style.width = computedLeftWidth;
+    if (leftRail.style.left !== leftX) leftRail.style.left = leftX;
+    if (leftRail.style.top !== leftY) leftRail.style.top = leftY;
+
+    if (rightRail.style.left !== rightX) rightRail.style.left = rightX;
+    if (rightRail.style.top !== leftY) rightRail.style.top = leftY;
   }
 
   function installHoldSeek(button, direction) {
@@ -1497,7 +1499,7 @@
     }
 
     updateControls();
-    broadcastLiveAudioState();
+    broadcastLiveAudioState(true);
   }
 
   function setVolume(volume) {
@@ -1513,7 +1515,7 @@
     }
 
     updateControls();
-    broadcastLiveAudioState();
+    broadcastLiveAudioState(true);
   }
 
   function updateControls() {
@@ -1529,58 +1531,75 @@
     const current = Number(activeMedia.currentTime) || 0;
     const info = getSeekInfo(activeMedia);
 
-    currentLabel.textContent = formatTime(current);
-
-    if (Number.isFinite(activeMedia.duration)) {
-      durationLabel.textContent = formatTime(activeMedia.duration);
-    } else if (info.seekable) {
-      durationLabel.textContent = formatTime(info.end);
-    } else {
-      durationLabel.textContent = "--:--";
+    const formattedCur = formatTime(current);
+    if (currentLabel && cache.currentTimeStr !== formattedCur) {
+      cache.currentTimeStr = formattedCur;
+      currentLabel.textContent = formattedCur;
     }
 
-    if (info.seekable) {
-      seekSlider.disabled = false;
-      seekSlider.min = String(info.start);
-      seekSlider.max = String(info.end);
+    const durationNum = Number.isFinite(activeMedia.duration)
+      ? activeMedia.duration
+      : info.seekable
+      ? info.end
+      : 0;
 
-      if (!sliderDragging) {
-        seekSlider.value = String(clamp(current, info.start, info.end));
+    const formattedDur = durationNum > 0 ? formatTime(durationNum) : "--:--";
+    if (durationLabel && cache.durationStr !== formattedDur) {
+      cache.durationStr = formattedDur;
+      durationLabel.textContent = formattedDur;
+    }
+
+    if (seekSlider) {
+      if (info.seekable) {
+        if (seekSlider.disabled) seekSlider.disabled = false;
+        seekSlider.min = String(info.start);
+        seekSlider.max = String(info.end);
+
+        if (!sliderDragging) {
+          seekSlider.value = String(clamp(current, info.start, info.end));
+        }
+      } else if (!seekSlider.disabled) {
+        seekSlider.disabled = true;
       }
-    } else {
-      seekSlider.disabled = true;
     }
 
-    setIcon(playButton, activeMedia.paused ? "play" : "pause");
+    const isPaused = activeMedia.paused;
+    if (cache.isPaused !== isPaused) {
+      cache.isPaused = isPaused;
+      setIcon(playButton, isPaused ? "play" : "pause");
+    }
 
-    let speed = getSavedSpeed();
-    let volume = getSavedVolume();
+    const speed = activeMedia.playbackRate || getSavedSpeed();
+    if (cache.speed !== speed) {
+      cache.speed = speed;
+      speedButton.textContent = `${speed}×`;
 
-    try {
-      speed = activeMedia.playbackRate;
-      volume = activeMedia.volume;
-    } catch (_) {}
+      speedMenu?.querySelectorAll(".cgpt-ra-speed-option").forEach((item) => {
+        item.classList.toggle(
+          "cgpt-selected",
+          Math.abs(parseFloat(item.dataset.speed) - speed) < 0.001,
+        );
+      });
+    }
 
-    speedButton.textContent = `${speed}×`;
+    const volume = activeMedia.volume;
+    const isMuted = activeMedia.muted || volume <= 0;
 
-    speedMenu?.querySelectorAll(".cgpt-ra-speed-option").forEach((item) => {
-      item.classList.toggle(
-        "cgpt-selected",
-        Math.abs(parseFloat(item.dataset.speed) - speed) < 0.001,
-      );
-    });
+    if (cache.volume !== volume || cache.isMuted !== isMuted) {
+      cache.volume = volume;
+      cache.isMuted = isMuted;
 
-    volumeSlider.value = String(volume);
-    volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+      volumeSlider.value = String(volume);
+      volumeLabel.textContent = `${Math.round(volume * 100)}%`;
 
-    const volumeButton = rightRail.querySelector(".cgpt-ra-volume-btn");
-
-    if (volume <= 0 || activeMedia.muted) {
-      setIcon(volumeButton, "volume-x");
-    } else if (volume < 0.5) {
-      setIcon(volumeButton, "volume-1");
-    } else {
-      setIcon(volumeButton, "volume-2");
+      const volumeButton = rightRail.querySelector(".cgpt-ra-volume-btn");
+      if (isMuted) {
+        setIcon(volumeButton, "volume-x");
+      } else if (volume < 0.5) {
+        setIcon(volumeButton, "volume-1");
+      } else {
+        setIcon(volumeButton, "volume-2");
+      }
     }
   }
 
@@ -1747,7 +1766,7 @@
             } catch (_) {}
 
             updateInlineButtons();
-            broadcastLiveAudioState();
+            broadcastLiveAudioState(true);
             return;
           }
 
@@ -1934,7 +1953,7 @@
   }
 
   // ---------------------------------------------------------------------
-  // Dynamic page
+  // DOM Observer & Poller (Zero Thrashing)
   // ---------------------------------------------------------------------
 
   function scanDOMForPlayingMedia() {
@@ -1945,10 +1964,15 @@
     });
   }
 
+  let observerTimeout = null;
   function startObserver() {
     const observer = new MutationObserver(() => {
-      installInlineReadAloudButtons();
-      syncComposerLayout();
+      if (observerTimeout) return;
+      observerTimeout = setTimeout(() => {
+        observerTimeout = null;
+        installInlineReadAloudButtons();
+        scheduleLayoutSync();
+      }, 250);
     });
 
     observer.observe(document.documentElement, {
@@ -1956,20 +1980,14 @@
       subtree: true,
     });
 
-    window.addEventListener("resize", syncComposerLayout, { passive: true });
-    window.addEventListener("scroll", syncComposerLayout, { passive: true });
+    window.addEventListener("resize", scheduleLayoutSync, { passive: true });
+    window.addEventListener("scroll", scheduleLayoutSync, { passive: true });
 
     setInterval(() => {
       installInlineReadAloudButtons();
       scanDOMForPlayingMedia();
-      broadcastLiveAudioState();
-      syncComposerLayout();
-    }, 1000);
-  }
-
-  function animationLoop() {
-    if (activeMedia) updateControls();
-    requestAnimationFrame(animationLoop);
+      scheduleLayoutSync();
+    }, 2000);
   }
 
   // ---------------------------------------------------------------------
@@ -1992,7 +2010,6 @@
     buildUI();
     installInlineReadAloudButtons();
     startObserver();
-    animationLoop();
 
     log("ChatGPT Audio Controls Userscript Ready");
   }

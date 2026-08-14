@@ -90,9 +90,9 @@ export const InteractivePlayerDemo: React.FC = () => {
                   width: 44,
                   height: 44,
                   borderRadius: "50%",
-                  background: "#212121",
-                  border: "1px solid rgba(255, 255, 255, 0.15)",
-                  color: "#ececec",
+                  background: "var(--bg-primary, #212121)",
+                  border: "1px solid var(--border-default, rgba(255, 255, 255, 0.15))",
+                  color: "var(--text-primary, #ececec)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -112,20 +112,20 @@ export const InteractivePlayerDemo: React.FC = () => {
                     position: "relative",
                     width: 380,
                     height: 48,
-                    background: "#212121",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    background: "var(--bg-primary, #212121)",
+                    border: "1px solid var(--border-default, rgba(255, 255, 255, 0.12))",
                     borderRadius: 24,
                     padding: "0 14px",
                     display: "block",
                     boxShadow: "0 4px 18px rgba(0,0,0,0.32)",
                   }}
                 >
-                  {/* Transport Pill rising above (Height 48px, Radius 24px) */}
+                  {/* Transport Pill rising above: top -46px, border-radius 24px */}
                   <div
                     style={{
                       position: "absolute",
                       left: "50%",
-                      top: -40,
+                      top: -46,
                       transform: "translateX(-50%)",
                       height: 48,
                       display: "flex",
@@ -133,10 +133,10 @@ export const InteractivePlayerDemo: React.FC = () => {
                       justifyContent: "center",
                       gap: 6,
                       padding: "4px 8px",
-                      background: "#212121",
-                      border: "1px solid rgba(255, 255, 255, 0.12)",
-                      borderRadius: "24px 24px 14px 14px",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                      background: "var(--bg-primary, #212121)",
+                      border: "1px solid var(--border-default, rgba(255, 255, 255, 0.12))",
+                      borderRadius: 24,
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.18)",
                     }}
                   >
                     <button
@@ -155,8 +155,8 @@ export const InteractivePlayerDemo: React.FC = () => {
                         height: 40,
                         borderRadius: "50%",
                         backgroundColor: "var(--accent)",
-                        color: "#fff",
-                        boxShadow: "0 2px 10px rgba(16, 163, 127, 0.4)",
+                        color: "var(--theme-submit-btn-text, #fff)",
+                        boxShadow: "0 2px 10px rgba(57, 104, 200, 0.4)",
                       }}
                       onClick={() => setIsPlaying(!isPlaying)}
                       title={isPlaying ? "Pause" : "Play"}
@@ -176,7 +176,7 @@ export const InteractivePlayerDemo: React.FC = () => {
 
                   {/* Progress & Seeker Row */}
                   <div style={{ height: 46, display: "grid", gridTemplateColumns: "70px minmax(0, 1fr)", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 10.5, fontFamily: "var(--font-mono)", color: "rgba(255,255,255,0.65)" }}>
+                    <span style={{ fontSize: 10.5, fontFamily: "var(--font-mono)", color: "var(--text-muted, rgba(255,255,255,0.65))" }}>
                       {formatTime(currentTime)}/{formatTime(duration)}
                     </span>
                     <input
@@ -195,8 +195,8 @@ export const InteractivePlayerDemo: React.FC = () => {
                 <div
                   style={{
                     height: 48,
-                    background: "#212121",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
+                    background: "var(--bg-primary, #212121)",
+                    border: "1px solid var(--border-default, rgba(255, 255, 255, 0.12))",
                     borderRadius: 24,
                     padding: "5px 8px",
                     display: "inline-flex",
@@ -231,8 +231,8 @@ export const InteractivePlayerDemo: React.FC = () => {
                           position: "absolute",
                           bottom: "calc(100% + 8px)",
                           left: 0,
-                          background: "#282828",
-                          border: "1px solid rgba(255,255,255,0.12)",
+                          background: "var(--bg-secondary, #303030)",
+                          border: "1px solid var(--border-default, rgba(255,255,255,0.12))",
                           borderRadius: 12,
                           padding: 4,
                           display: "grid",
@@ -251,9 +251,9 @@ export const InteractivePlayerDemo: React.FC = () => {
                             }}
                             style={{
                               padding: "4px 8px",
-                              background: speed === s ? "rgba(255,255,255,0.12)" : "transparent",
+                              background: speed === s ? "var(--interactive-bg-secondary-hover, rgba(255,255,255,0.12))" : "transparent",
                               border: "none",
-                              color: "#fff",
+                              color: "var(--text-primary, #fff)",
                               borderRadius: 6,
                               cursor: "pointer",
                               fontSize: 11,
@@ -291,8 +291,8 @@ export const InteractivePlayerDemo: React.FC = () => {
                           transform: "translateX(-50%)",
                           width: 44,
                           height: 165,
-                          background: "#282828",
-                          border: "1px solid rgba(255,255,255,0.12)",
+                          background: "var(--bg-secondary, #303030)",
+                          border: "1px solid var(--border-default, rgba(255,255,255,0.12))",
                           borderRadius: 22,
                           display: "flex",
                           flexDirection: "column",
@@ -330,7 +330,7 @@ export const InteractivePlayerDemo: React.FC = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            borderTop: "1px solid rgba(255,255,255,0.12)",
+                            borderTop: "1px solid var(--border-default, rgba(255,255,255,0.12))",
                             fontSize: 9.5,
                             fontWeight: 600,
                             opacity: 0.8,
@@ -370,8 +370,8 @@ export const InteractivePlayerDemo: React.FC = () => {
                           bottom: "calc(100% + 8px)",
                           right: 0,
                           width: 260,
-                          background: "#282828",
-                          border: "1px solid rgba(255,255,255,0.12)",
+                          background: "var(--bg-secondary, #303030)",
+                          border: "1px solid var(--border-default, rgba(255,255,255,0.12))",
                           borderRadius: 12,
                           padding: "10px 12px",
                           zIndex: 100,

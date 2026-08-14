@@ -1,23 +1,30 @@
+/*
+ * ChatGPT native variables with fallbacks to ChatGPT's official color palette
+ */
 :root {
-    --cgpt-ra-bg: #212121;
-    --cgpt-ra-bg-hover: rgba(255, 255, 255, .10);
-    --cgpt-ra-border: rgba(255, 255, 255, .12);
-    --cgpt-ra-text: #ececec;
-    --cgpt-ra-muted: #8e8e8e;
-    --cgpt-ra-disabled: rgba(255, 255, 255, .28);
-    --theme-submit-btn-bg: #3968c8;
-    --theme-submit-btn-text: #ffffff;
+    --cgpt-ra-bg: var(--bg-primary, #212121);
+    --cgpt-ra-bg-surface: var(--bg-secondary, #303030);
+    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));
+    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));
+    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));
+    --cgpt-ra-text: var(--text-primary, #ffffff);
+    --cgpt-ra-muted: var(--text-tertiary, #afafaf);
+    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));
+    --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
+    --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
 }
 
 html.light, [data-theme='light'] {
-    --cgpt-ra-bg: #ffffff;
-    --cgpt-ra-bg-hover: rgba(0, 0, 0, .07);
-    --cgpt-ra-border: rgba(0, 0, 0, .12);
-    --cgpt-ra-text: #0d0d0d;
-    --cgpt-ra-muted: #5d5d5d;
-    --cgpt-ra-disabled: rgba(0, 0, 0, .25);
-    --theme-submit-btn-bg: #3968c8;
-    --theme-submit-btn-text: #ffffff;
+    --cgpt-ra-bg: var(--bg-primary, #ffffff);
+    --cgpt-ra-bg-surface: var(--bg-secondary, #f9f9f9);
+    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));
+    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));
+    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));
+    --cgpt-ra-text: var(--text-primary, #0d0d0d);
+    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);
+    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));
+    --theme-submit-btn-bg: var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3968c8));
+    --theme-submit-btn-text: var(--interactive-label-primary-default, #ffffff);
 }
 
 #cgpt-ra-left,
@@ -30,7 +37,7 @@ html.light, [data-theme='light'] {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, .32);
-    opacity: 1 !important; /* Solid, no see-through transparency */
+    opacity: 1 !important;
     transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
 }
 
@@ -50,25 +57,12 @@ html.light, [data-theme='light'] {
     overflow: visible;
 }
 
-#cgpt-ra-left::before {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: -1px;
-    left: 50%;
-    width: 140px;
-    height: 4px;
-    transform: translateX(-50%);
-    background: var(--cgpt-ra-bg);
-    pointer-events: none;
-}
-
-/* Raised Transport Capsule (Height 48px, Radius 24px) */
+/* Transport Capsule: top -46px, full border-radius 24px */
 .cgpt-ra-transport-row {
     position: absolute;
     z-index: 3;
     left: 50%;
-    top: -40px;
+    top: -46px;
     transform: translateX(-50%);
     height: 48px;
     display: flex;
@@ -78,20 +72,9 @@ html.light, [data-theme='light'] {
     padding: 4px 8px;
     margin: 0;
     border: 1px solid var(--cgpt-ra-border);
-    border-radius: 24px 24px 14px 14px;
+    border-radius: 24px;
     background: var(--cgpt-ra-bg);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .14);
-}
-
-.cgpt-ra-transport-row::after {
-    content: "";
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: -4px;
-    height: 6px;
-    background: var(--cgpt-ra-bg);
-    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
 }
 
 .cgpt-ra-transport-row > * {
@@ -112,8 +95,8 @@ html.light, [data-theme='light'] {
     height: 40px !important;
     flex: 0 0 40px !important;
     border-radius: 50% !important;
-    background-color: var(--theme-submit-btn-bg, #3968c8) !important;
-    color: var(--theme-submit-btn-text, #ffffff) !important;
+    background-color: var(--theme-submit-btn-bg) !important;
+    color: var(--theme-submit-btn-text) !important;
     box-shadow: 0 2px 10px rgba(57, 104, 200, 0.4) !important;
     display: inline-flex;
     align-items: center;
@@ -204,7 +187,7 @@ html.light, [data-theme='light'] {
 
 #cgpt-ra-floating-toggle:hover {
     transform: scale(1.08);
-    border-color: var(--theme-submit-btn-bg, #3968c8);
+    border-color: var(--theme-submit-btn-bg);
 }
 
 #cgpt-ra-floating-toggle img,
@@ -226,7 +209,7 @@ html.light, [data-theme='light'] {
     transform: scale(0.95);
 }
 
-/* Disabled controls stay clean and opaque */
+/* Disabled controls */
 #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
 #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,
 #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,
@@ -253,7 +236,7 @@ html.light, [data-theme='light'] {
 }
 
 .cgpt-ra-icon-btn:hover {
-    background: var(--cgpt-ra-bg-hover);
+    background: var(--cgpt-ra-bg-surface-hover);
 }
 
 .cgpt-ra-icon-btn:disabled {
@@ -315,18 +298,14 @@ html.light, [data-theme='light'] {
     height: 2px;
     border: 0;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--cgpt-ra-border);
     transition: height .12s ease, background .12s ease;
-}
-
-[data-theme='light'] .cgpt-ra-range::-webkit-slider-runnable-track {
-    background: rgba(0, 0, 0, 0.18);
 }
 
 .cgpt-ra-range:hover::-webkit-slider-runnable-track,
 .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
     height: 4px;
-    background: var(--theme-submit-btn-bg, #3968c8);
+    background: var(--theme-submit-btn-bg);
 }
 
 .cgpt-ra-range::-webkit-slider-thumb {
@@ -347,28 +326,28 @@ html.light, [data-theme='light'] {
     width: 11px;
     height: 11px;
     margin-top: -3.5px;
-    background: var(--theme-submit-btn-bg, #3968c8);
+    background: var(--theme-submit-btn-bg);
 }
 
 .cgpt-ra-range::-moz-range-track {
     height: 2px;
     border: 0;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--cgpt-ra-border);
     transition: height .12s ease, background .12s ease;
 }
 
 .cgpt-ra-range:hover::-moz-range-track,
 .cgpt-ra-range:focus-visible::-moz-range-track {
     height: 4px;
-    background: var(--theme-submit-btn-bg, #3968c8);
+    background: var(--theme-submit-btn-bg);
 }
 
 .cgpt-ra-range::-moz-range-progress {
     height: 2px;
     border: 0;
     border-radius: 999px;
-    background: var(--theme-submit-btn-bg, #3968c8);
+    background: var(--theme-submit-btn-bg);
 }
 
 .cgpt-ra-range::-moz-range-thumb {
@@ -408,16 +387,11 @@ html.light, [data-theme='light'] {
     display: none;
     border: 1px solid var(--cgpt-ra-border);
     border-radius: 12px;
-    background: #282828;
-    color: #fff;
+    background: var(--cgpt-ra-bg-surface);
+    color: var(--cgpt-ra-text);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
     overflow: hidden;
     z-index: 10002;
-}
-
-html.light .cgpt-ra-popover {
-    background: #ffffff;
-    color: #202020;
 }
 
 .cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,
@@ -447,12 +421,7 @@ html.light .cgpt-ra-popover {
 
 .cgpt-ra-speed-option:hover,
 .cgpt-ra-speed-option.cgpt-selected {
-    background: rgba(255, 255, 255, .10);
-}
-
-html.light .cgpt-ra-speed-option:hover,
-html.light .cgpt-ra-speed-option.cgpt-selected {
-    background: rgba(0, 0, 0, .07);
+    background: var(--cgpt-ra-bg-surface-hover);
 }
 
 /* Vertical Volume Popover with exact matching seeker track */
@@ -474,16 +443,11 @@ html.light .cgpt-ra-speed-option.cgpt-selected {
     padding: 6px 5px 6px;
     border: 1px solid var(--cgpt-ra-border);
     border-radius: 22px;
-    background: #282828;
-    color: #fff;
+    background: var(--cgpt-ra-bg-surface);
+    color: var(--cgpt-ra-text);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
     transition: opacity .12s ease, visibility .12s ease;
     z-index: 10002;
-}
-
-html.light .cgpt-ra-volume-popover {
-    background: #ffffff;
-    color: #202020;
 }
 
 .cgpt-ra-volume-wrap:hover .cgpt-ra-volume-popover,
@@ -576,7 +540,7 @@ html.light .cgpt-ra-volume-popover {
 
 .cgpt-inline-readaloud:hover {
     opacity: 1;
-    background: rgba(127, 127, 127, .14);
+    background: var(--cgpt-ra-bg-surface-hover);
 }
 
 .cgpt-inline-readaloud svg {
@@ -587,5 +551,5 @@ html.light .cgpt-ra-volume-popover {
 
 .cgpt-inline-readaloud.cgpt-active {
     opacity: 1;
-    color: var(--theme-submit-btn-bg, #3968c8);
+    color: var(--theme-submit-btn-bg);
 }
