@@ -57,8 +57,8 @@
 
 body {
   width: 360px;
-  min-height: 480px;
-  max-height: 600px;
+  min-height: 540px;
+  max-height: 660px;
   background-color: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -89,7 +89,7 @@ body {
 .popup-container {
   display: flex;
   flex-direction: column;
-  min-height: 480px;
+  min-height: 540px;
   background: var(--bg-base);
 }
 
