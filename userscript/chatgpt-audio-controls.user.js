@@ -37,6 +37,7 @@
   let leftRail = null;
   let rightRail = null;
   let floatingToggle = null;
+  let collapseButton = null;
   let seekSlider = null;
   let currentLabel = null;
   let durationLabel = null;
@@ -100,6 +101,31 @@
     return Number.isFinite(n) && n >= 0 && n <= 1 ? n : CONFIG.defaultVolume;
   }
 
+  function broadcastLiveAudioState() {
+    const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
+    const current = Number(activeMedia?.currentTime) || 0;
+    const duration = Number(activeMedia?.duration) || 0;
+    const speed = activeMedia?.playbackRate || getSavedSpeed();
+    const volume = activeMedia ? activeMedia.volume : getSavedVolume();
+
+    const liveState = {
+      hasMedia: Boolean(activeMedia),
+      isPlaying,
+      currentTime: current,
+      duration,
+      speed,
+      volume,
+      isMuted: Boolean(activeMedia?.muted || volume === 0),
+      formattedCurrent: formatTime(current),
+      formattedDuration: formatTime(duration),
+      updatedAt: Date.now(),
+    };
+
+    try {
+      localStorage.setItem("cgpt-ra-live-state", JSON.stringify(liveState));
+    } catch (_) {}
+  }
+
   /*
    * Self-contained Lucide SVGs (no external font or CDN required).
    */
@@ -115,6 +141,7 @@
     "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
     "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
     "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
+    "minimize-2": '<polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line>',
     "chatgpt-audio": `
       <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
         <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
@@ -135,8 +162,8 @@
       <svg
         class="cgpt-ra-lucide ${className}"
         viewBox="0 0 24 24"
-        width="18"
-        height="18"
+        width="19"
+        height="19"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
@@ -364,6 +391,7 @@
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
+    broadcastLiveAudioState();
     syncComposerLayout();
 
     log("Attached media:", reason, media);
@@ -386,6 +414,7 @@
         if (activeMedia === media) {
           updateControls();
           updateInlineButtons();
+          broadcastLiveAudioState();
           syncComposerLayout();
         }
       });
@@ -413,6 +442,7 @@
           } catch (_) {}
 
           updateControls();
+          broadcastLiveAudioState();
         });
 
         return result;
@@ -425,6 +455,7 @@
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
+            broadcastLiveAudioState();
             syncComposerLayout();
           });
         }
@@ -444,7 +475,7 @@
   }
 
   // ---------------------------------------------------------------------
-  // Styles
+  // Styles (48px Height, 24px Radius, 36px Buttons, Primary Play)
   // ---------------------------------------------------------------------
 
   function installStyles() {
@@ -454,23 +485,25 @@
     style.id = "cgpt-ra-v4-style";
     style.textContent = `
       :root {
-          --cgpt-ra-bg: rgba(33, 33, 33, .96);
+          --cgpt-ra-bg: #212121;
           --cgpt-ra-bg-hover: rgba(255, 255, 255, .10);
           --cgpt-ra-border: rgba(255, 255, 255, .12);
-          --cgpt-ra-text: rgba(255, 255, 255, .92);
-          --cgpt-ra-muted: rgba(255, 255, 255, .55);
+          --cgpt-ra-text: #ececec;
+          --cgpt-ra-muted: #8e8e8e;
           --cgpt-ra-disabled: rgba(255, 255, 255, .28);
-          --cgpt-ra-accent: #10a37f;
+          --theme-submit-btn-bg: #10a37f;
+          --theme-submit-btn-text: #ffffff;
       }
 
       html.light {
-          --cgpt-ra-bg: rgba(249, 249, 249, .98);
+          --cgpt-ra-bg: #ffffff;
           --cgpt-ra-bg-hover: rgba(0, 0, 0, .07);
           --cgpt-ra-border: rgba(0, 0, 0, .12);
-          --cgpt-ra-text: rgba(13, 13, 13, .88);
-          --cgpt-ra-muted: rgba(0, 0, 0, .52);
+          --cgpt-ra-text: #0d0d0d;
+          --cgpt-ra-muted: #5d5d5d;
           --cgpt-ra-disabled: rgba(0, 0, 0, .25);
-          --cgpt-ra-accent: #10a37f;
+          --theme-submit-btn-bg: #10a37f;
+          --theme-submit-btn-text: #ffffff;
       }
 
       #cgpt-ra-left,
@@ -482,16 +515,17 @@
           color: var(--cgpt-ra-text);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, .32);
+          opacity: 1 !important;
           transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
       }
 
       #cgpt-ra-left {
           min-width: 240px;
           max-width: 430px;
-          height: 46px;
+          height: 48px;
           display: block;
-          padding: 0 13px;
+          padding: 0 14px;
           border-radius: 24px;
           overflow: visible;
       }
@@ -502,8 +536,8 @@
           z-index: 2;
           top: -1px;
           left: 50%;
-          width: 120px;
-          height: 3px;
+          width: 140px;
+          height: 4px;
           transform: translateX(-50%);
           background: var(--cgpt-ra-bg);
           pointer-events: none;
@@ -513,28 +547,28 @@
           position: absolute;
           z-index: 3;
           left: 50%;
-          top: -29px;
+          top: -40px;
           transform: translateX(-50%);
-          height: 34px;
+          height: 48px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 2px;
-          padding: 2px 5px 3px;
+          gap: 6px;
+          padding: 4px 8px;
           margin: 0;
           border: 1px solid var(--cgpt-ra-border);
-          border-radius: 19px 19px 11px 11px;
+          border-radius: 24px 24px 14px 14px;
           background: var(--cgpt-ra-bg);
-          box-shadow: 0 1px 2px rgba(0, 0, 0, .10);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, .14);
       }
 
       .cgpt-ra-transport-row::after {
           content: "";
           position: absolute;
-          left: 10px;
-          right: 10px;
-          bottom: -3px;
-          height: 5px;
+          left: 12px;
+          right: 12px;
+          bottom: -4px;
+          height: 6px;
           background: var(--cgpt-ra-bg);
           pointer-events: none;
       }
@@ -544,12 +578,37 @@
           z-index: 1;
       }
 
-      .cgpt-ra-progress-row {
-          height: 44px;
-          display: grid;
-          grid-template-columns: 66px minmax(0, 1fr);
+      .cgpt-ra-transport-row .cgpt-ra-icon-btn {
+          width: 36px;
+          height: 36px;
+          flex: 0 0 36px;
+          border-radius: 50%;
+      }
+
+      .cgpt-ra-play {
+          width: 40px !important;
+          height: 40px !important;
+          flex: 0 0 40px !important;
+          border-radius: 50% !important;
+          background-color: var(--theme-submit-btn-bg, #10a37f) !important;
+          color: var(--theme-submit-btn-text, #ffffff) !important;
+          box-shadow: 0 2px 10px rgba(16, 163, 127, 0.4) !important;
+          display: inline-flex;
           align-items: center;
-          gap: 8px;
+          justify-content: center;
+      }
+
+      .cgpt-ra-play svg {
+          stroke: currentColor;
+          fill: currentColor;
+      }
+
+      .cgpt-ra-progress-row {
+          height: 46px;
+          display: grid;
+          grid-template-columns: 70px minmax(0, 1fr);
+          align-items: center;
+          gap: 10px;
           padding: 0;
           margin: 0;
           border: 0;
@@ -558,7 +617,7 @@
       #cgpt-ra-right {
           width: max-content;
           min-width: 0;
-          height: 46px;
+          height: 48px;
           display: inline-flex;
           align-items: center;
           gap: 4px;
@@ -571,19 +630,20 @@
       .cgpt-ra-volume-wrap { order: 2; }
       .cgpt-ra-download { order: 3; margin-left: 2px; }
       .cgpt-ra-help-wrap { order: 4; margin-left: 2px; }
+      .cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }
 
       #cgpt-ra-floating-toggle {
           position: fixed;
           z-index: 9999;
-          width: 38px;
-          height: 38px;
+          width: 42px;
+          height: 42px;
           border-radius: 50%;
           border: 1px solid var(--cgpt-ra-border);
           background: var(--cgpt-ra-bg);
           color: var(--cgpt-ra-text);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          box-shadow: 0 3px 12px rgba(0, 0, 0, .28);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, .32);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -594,7 +654,7 @@
 
       #cgpt-ra-floating-toggle:hover {
           transform: scale(1.08);
-          border-color: var(--cgpt-ra-accent);
+          border-color: var(--theme-submit-btn-bg, #10a37f);
       }
 
       #cgpt-ra-floating-toggle.cgpt-ra-hidden {
@@ -609,11 +669,6 @@
           transform: scale(0.95);
       }
 
-      #cgpt-ra-left.cgpt-ra-no-media,
-      #cgpt-ra-right.cgpt-ra-no-media {
-          opacity: .55;
-      }
-
       #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
       #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,
       #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,
@@ -623,9 +678,9 @@
 
       .cgpt-ra-icon-btn {
           position: relative;
-          width: 34px;
-          height: 34px;
-          flex: 0 0 34px;
+          width: 36px;
+          height: 36px;
+          flex: 0 0 36px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -644,16 +699,16 @@
       }
 
       .cgpt-ra-icon-btn:disabled {
-          color: var(--cgpt-ra-disabled);
+          opacity: 0.38;
           cursor: default;
           background: transparent;
       }
 
       .cgpt-ra-lucide {
           display: block;
-          width: 18px;
-          height: 18px;
-          flex: 0 0 18px;
+          width: 19px;
+          height: 19px;
+          flex: 0 0 19px;
           overflow: visible;
           pointer-events: none;
       }
@@ -667,8 +722,8 @@
       }
 
       .cgpt-ra-seek10 .cgpt-ra-lucide {
-          width: 19px;
-          height: 19px;
+          width: 22px;
+          height: 22px;
       }
 
       .cgpt-ra-seek10 .cgpt-ra-ten {
@@ -676,29 +731,17 @@
           inset: 0;
           display: grid;
           place-items: center;
-          padding-top: 1px;
-          font-size: 8px;
+          padding-top: 2px;
+          font-size: 9px;
           font-weight: 700;
           font-family: system-ui, sans-serif;
           pointer-events: none;
       }
 
-      .cgpt-ra-transport-row .cgpt-ra-icon-btn {
-          width: 30px;
-          height: 30px;
-          flex: 0 0 30px;
-      }
-
-      .cgpt-ra-play {
-          width: 32px !important;
-          height: 32px !important;
-          flex-basis: 32px !important;
-      }
-
       .cgpt-ra-time {
           min-width: 0;
           color: var(--cgpt-ra-muted);
-          font-size: 10px;
+          font-size: 10.5px;
           line-height: 1;
           font-variant-numeric: tabular-nums;
           white-space: nowrap;
@@ -730,69 +773,68 @@
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: color-mix(in srgb, currentColor 32%, transparent);
+          background: rgba(255, 255, 255, 0.2);
           transition: height .12s ease, background .12s ease;
+      }
+
+      html.light .cgpt-ra-range::-webkit-slider-runnable-track {
+          background: rgba(0, 0, 0, 0.18);
       }
 
       .cgpt-ra-range:hover::-webkit-slider-runnable-track,
       .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
           height: 4px;
-          background: var(--cgpt-ra-accent);
+          background: var(--theme-submit-btn-bg, #10a37f);
       }
 
       .cgpt-ra-range::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: 9px;
-          height: 9px;
-          margin-top: -3.5px;
+          width: 10px;
+          height: 10px;
+          margin-top: -4px;
           border: 0;
           border-radius: 50%;
-          background: currentColor;
-          box-shadow: 0 0 0 1px color-mix(in srgb, var(--cgpt-ra-bg) 85%, transparent);
+          background: var(--cgpt-ra-text);
+          box-shadow: 0 0 0 1px var(--cgpt-ra-bg);
           transition: width .12s ease, height .12s ease, margin-top .12s ease;
       }
 
       .cgpt-ra-range:hover::-webkit-slider-thumb,
       .cgpt-ra-range:focus-visible::-webkit-slider-thumb {
-          width: 10px;
-          height: 10px;
-          margin-top: -3px;
-          background: var(--cgpt-ra-accent);
+          width: 11px;
+          height: 11px;
+          margin-top: -3.5px;
+          background: var(--theme-submit-btn-bg, #10a37f);
       }
 
       .cgpt-ra-range::-moz-range-track {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: color-mix(in srgb, currentColor 32%, transparent);
+          background: rgba(255, 255, 255, 0.2);
           transition: height .12s ease, background .12s ease;
       }
 
       .cgpt-ra-range:hover::-moz-range-track,
       .cgpt-ra-range:focus-visible::-moz-range-track {
           height: 4px;
-          background: var(--cgpt-ra-accent);
+          background: var(--theme-submit-btn-bg, #10a37f);
       }
 
       .cgpt-ra-range::-moz-range-progress {
           height: 2px;
           border: 0;
           border-radius: 999px;
-          background: currentColor;
-      }
-
-      .cgpt-ra-range:hover::-moz-range-progress,
-      .cgpt-ra-range:focus-visible::-moz-range-progress {
-          height: 4px;
+          background: var(--theme-submit-btn-bg, #10a37f);
       }
 
       .cgpt-ra-range::-moz-range-thumb {
-          width: 9px;
-          height: 9px;
+          width: 10px;
+          height: 10px;
           border: 0;
           border-radius: 50%;
-          background: currentColor;
+          background: var(--cgpt-ra-text);
       }
 
       .cgpt-ra-range:disabled {
@@ -808,10 +850,11 @@
 
       .cgpt-ra-speed-btn {
           width: auto;
-          min-width: 45px;
-          padding: 0 9px;
-          border-radius: 17px;
-          font-size: 12px;
+          min-width: 48px;
+          height: 36px;
+          padding: 0 10px;
+          border-radius: 18px;
+          font-size: 12.5px;
           font-weight: 600;
           font-family: system-ui, sans-serif;
       }
@@ -823,15 +866,15 @@
           display: none;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 12px;
-          background: rgb(38, 38, 38);
+          background: #282828;
           color: #fff;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
           overflow: hidden;
           z-index: 10002;
       }
 
       html.light .cgpt-ra-popover {
-          background: #fff;
+          background: #ffffff;
           color: #202020;
       }
 
@@ -842,7 +885,7 @@
       }
 
       .cgpt-ra-speed-menu {
-          min-width: 88px;
+          min-width: 90px;
           padding: 5px;
       }
 
@@ -888,15 +931,15 @@
           padding: 6px 5px 6px;
           border: 1px solid var(--cgpt-ra-border);
           border-radius: 22px;
-          background: rgb(38, 38, 38);
+          background: #282828;
           color: #fff;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, .32);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
           transition: opacity .12s ease, visibility .12s ease;
           z-index: 10002;
       }
 
       html.light .cgpt-ra-volume-popover {
-          background: #fff;
+          background: #ffffff;
           color: #202020;
       }
 
@@ -933,7 +976,7 @@
           font-family: system-ui, sans-serif;
           line-height: 1;
           color: inherit;
-          opacity: .75;
+          opacity: .80;
           text-align: center;
       }
 
@@ -1001,7 +1044,7 @@
 
       .cgpt-inline-readaloud.cgpt-active {
           opacity: 1;
-          color: var(--cgpt-ra-accent);
+          color: var(--theme-submit-btn-bg, #10a37f);
       }
     `;
 
@@ -1022,7 +1065,7 @@
 
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
-      userForcedExpand = !userForcedExpand;
+      userForcedExpand = true;
       syncComposerLayout();
     });
 
@@ -1127,9 +1170,20 @@
           </div>
         </div>
       </div>
+
+      <button class="cgpt-ra-icon-btn cgpt-ra-collapse-btn" title="Collapse Player">
+        ${lucideIcon("minimize-2")}
+      </button>
     `;
 
     document.body.append(floatingToggle, leftRail, rightRail);
+
+    collapseButton = rightRail.querySelector(".cgpt-ra-collapse-btn");
+    collapseButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userForcedExpand = false;
+      syncComposerLayout();
+    });
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
@@ -1217,6 +1271,7 @@
     downloadButton.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
+    broadcastLiveAudioState();
     syncComposerLayout();
   }
 
@@ -1240,6 +1295,8 @@
 
     const helpButton = rightRail.querySelector(".cgpt-ra-help-wrap > button");
     if (helpButton) helpButton.disabled = false;
+
+    if (collapseButton) collapseButton.disabled = false;
   }
 
   function getComposer() {
@@ -1292,8 +1349,8 @@
       rightRail.classList.add("cgpt-ra-collapsed");
 
       floatingToggle.classList.remove("cgpt-ra-hidden");
-      const toggleX = Math.min(viewportWidth - 48, rect.right + 12);
-      const toggleY = rect.top + rect.height / 2 - 19;
+      const toggleX = Math.min(viewportWidth - 52, rect.right + 12);
+      const toggleY = rect.top + rect.height / 2 - 21;
       floatingToggle.style.left = `${toggleX}px`;
       floatingToggle.style.top = `${toggleY}px`;
       return;
@@ -1309,12 +1366,12 @@
     leftRail.style.display = "block";
     leftRail.style.width = `${computedLeftWidth}px`;
     leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
-    leftRail.style.top = `${centerY - 23}px`;
+    leftRail.style.top = `${centerY - 24}px`;
 
     rightRail.style.display = "inline-flex";
     rightRail.style.width = "max-content";
     rightRail.style.left = `${rect.right + sideGap}px`;
-    rightRail.style.top = `${centerY - 23}px`;
+    rightRail.style.top = `${centerY - 24}px`;
   }
 
   function installHoldSeek(button, direction) {
@@ -1440,6 +1497,7 @@
     }
 
     updateControls();
+    broadcastLiveAudioState();
   }
 
   function setVolume(volume) {
@@ -1455,6 +1513,7 @@
     }
 
     updateControls();
+    broadcastLiveAudioState();
   }
 
   function updateControls() {
@@ -1688,6 +1747,7 @@
             } catch (_) {}
 
             updateInlineButtons();
+            broadcastLiveAudioState();
             return;
           }
 
@@ -1902,6 +1962,7 @@
     setInterval(() => {
       installInlineReadAloudButtons();
       scanDOMForPlayingMedia();
+      broadcastLiveAudioState();
       syncComposerLayout();
     }, 1000);
   }

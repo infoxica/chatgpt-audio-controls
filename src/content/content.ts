@@ -25,6 +25,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   let leftRail: HTMLElement | null = null;
   let rightRail: HTMLElement | null = null;
   let floatingToggle: HTMLButtonElement | null = null;
+  let collapseButton: HTMLButtonElement | null = null;
   let seekSlider: HTMLInputElement | null = null;
   let currentLabel: HTMLElement | null = null;
   let durationLabel: HTMLElement | null = null;
@@ -94,6 +95,37 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       return raw ? JSON.parse(raw) : {};
     } catch (_) {
       return {};
+    }
+  }
+
+  function broadcastLiveAudioState(): void {
+    const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
+    const current = Number(activeMedia?.currentTime) || 0;
+    const duration = Number(activeMedia?.duration) || 0;
+    const speed = activeMedia?.playbackRate || getSavedSpeed();
+    const volume = activeMedia ? activeMedia.volume : getSavedVolume();
+
+    const liveState = {
+      hasMedia: Boolean(activeMedia),
+      isPlaying,
+      currentTime: current,
+      duration,
+      speed,
+      volume,
+      isMuted: Boolean(activeMedia?.muted || volume === 0),
+      formattedCurrent: formatTime(current),
+      formattedDuration: formatTime(duration),
+      updatedAt: Date.now(),
+    };
+
+    try {
+      localStorage.setItem("cgpt-ra-live-state", JSON.stringify(liveState));
+    } catch (_) {}
+
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      try {
+        chrome.storage.local.set({ "cgpt-ra-live-state": liveState });
+      } catch (_) {}
     }
   }
 
@@ -308,6 +340,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     setControlsEnabled(true);
     updateControls();
     updateInlineButtons();
+    broadcastLiveAudioState();
     syncComposerLayout();
 
     log("Attached media:", reason, media);
@@ -330,6 +363,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
         if (activeMedia === media) {
           updateControls();
           updateInlineButtons();
+          broadcastLiveAudioState();
           syncComposerLayout();
         }
       });
@@ -357,6 +391,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           } catch (_) {}
 
           updateControls();
+          broadcastLiveAudioState();
         });
 
         return result;
@@ -369,6 +404,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           queueMicrotask(() => {
             updateControls();
             updateInlineButtons();
+            broadcastLiveAudioState();
             syncComposerLayout();
           });
         }
@@ -388,7 +424,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   // ---------------------------------------------------------------------
-  // UI Building
+  // UI Building (48px Height, 24px Radius, 36px Buttons, Primary Play)
   // ---------------------------------------------------------------------
 
   function buildUI(): void {
@@ -404,11 +440,11 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
-      userForcedExpand = !userForcedExpand;
+      userForcedExpand = true;
       syncComposerLayout();
     });
 
-    // 2. Left Transport & Seeker Capsule
+    // 2. Left Transport & Seeker Capsule (Overall 48px, Radius 24px)
     leftRail = document.createElement("div");
     leftRail.id = "cgpt-ra-left";
     leftRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
@@ -445,7 +481,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       </div>
     `;
 
-    // 3. Right Controls Rail (Speed, Volume, Download, Help [Rightmost!])
+    // 3. Right Controls Rail (Speed, Volume, Download, Help [Rightmost], Collapse)
     rightRail = document.createElement("div");
     rightRail.id = "cgpt-ra-right";
     rightRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
@@ -511,9 +547,20 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           </div>
         </div>
       </div>
+
+      <button class="cgpt-ra-icon-btn cgpt-ra-collapse-btn" title="Collapse Player">
+        ${getLucideSvg("minimize-2")}
+      </button>
     `;
 
     document.body.append(floatingToggle, leftRail, rightRail);
+
+    collapseButton = rightRail.querySelector(".cgpt-ra-collapse-btn");
+    collapseButton?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      userForcedExpand = false;
+      syncComposerLayout();
+    });
 
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
@@ -597,6 +644,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     downloadButton?.addEventListener("click", downloadCurrentAudio);
 
     setControlsEnabled(Boolean(activeMedia));
+    broadcastLiveAudioState();
     syncComposerLayout();
   }
 
@@ -620,6 +668,8 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     const helpButton = rightRail.querySelector<HTMLButtonElement>(".cgpt-ra-help-wrap > button");
     if (helpButton) helpButton.disabled = false;
+
+    if (collapseButton) collapseButton.disabled = false;
   }
 
   // ---------------------------------------------------------------------
@@ -666,43 +716,39 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const leftAvailable = rect.left - outerMargin - sideGap;
     const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
 
-    // Small screens or tight composer space
     const minLeftWidth = 240;
     const maxLeftWidth = 430;
 
     const canFit = leftAvailable >= minLeftWidth && rightAvailable >= 120;
 
     if (!canFit || !shouldExpand) {
-      // Show floating mini toggle button docked beside composer right edge
       leftRail.classList.add("cgpt-ra-collapsed");
       rightRail.classList.add("cgpt-ra-collapsed");
 
       floatingToggle.classList.remove("cgpt-ra-hidden");
-      const toggleX = Math.min(viewportWidth - 48, rect.right + 12);
-      const toggleY = rect.top + rect.height / 2 - 19;
+      const toggleX = Math.min(viewportWidth - 52, rect.right + 12);
+      const toggleY = rect.top + rect.height / 2 - 21;
       floatingToggle.style.left = `${toggleX}px`;
       floatingToggle.style.top = `${toggleY}px`;
       return;
     }
 
-    // Hide floating mini button when full capsules are expanded
     floatingToggle.classList.add("cgpt-ra-hidden");
     leftRail.classList.remove("cgpt-ra-collapsed");
     rightRail.classList.remove("cgpt-ra-collapsed");
 
-    // Dynamic width scaling to fit laptop screens perfectly
     const computedLeftWidth = clamp(leftAvailable, minLeftWidth, maxLeftWidth);
     const centerY = rect.top + rect.height / 2;
 
     leftRail.style.display = "block";
     leftRail.style.width = `${computedLeftWidth}px`;
     leftRail.style.left = `${rect.left - sideGap - computedLeftWidth}px`;
-    leftRail.style.top = `${centerY - 23}px`;
+    leftRail.style.top = `${centerY - 24}px`;
 
     rightRail.style.display = "inline-flex";
     rightRail.style.width = "max-content";
     rightRail.style.left = `${rect.right + sideGap}px`;
-    rightRail.style.top = `${centerY - 23}px`;
+    rightRail.style.top = `${centerY - 24}px`;
   }
 
   // ---------------------------------------------------------------------
@@ -837,6 +883,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     }
 
     updateControls();
+    broadcastLiveAudioState();
   }
 
   function setVolume(volume: number): void {
@@ -852,6 +899,7 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     }
 
     updateControls();
+    broadcastLiveAudioState();
   }
 
   function updateControls(): void {
@@ -1039,7 +1087,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   function findToolbar(turn: Element): Element | null {
-    // Look for the specific message action bar containing the copy button
     const copyButton = Array.from(turn.querySelectorAll("button")).find((btn) => {
       const txt = textMeaning(btn);
       return txt === "copy" || txt.includes("copy response") || txt.includes("copy code");
@@ -1049,7 +1096,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       return copyButton.parentElement;
     }
 
-    // Fallback: look for the flex container with message actions at the bottom of the turn
     const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
     for (const bar of actionBars) {
       if (bar.querySelector("button") && !bar.closest("pre, code, table")) {
@@ -1064,7 +1110,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     const settings = getSavedSettings();
     if (settings.enableInlineButtons === false) return;
 
-    // Find assistant messages
     document.querySelectorAll('[data-message-author-role="assistant"]').forEach((message) => {
       const turn =
         message.closest("article") ||
@@ -1088,7 +1133,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
         event.stopPropagation();
         event.stopImmediatePropagation();
 
-        // If clicking active playing speech, stop it
         if (
           button === activeInlineButton &&
           activeMedia &&
@@ -1101,10 +1145,10 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
           } catch (_) {}
 
           updateInlineButtons();
+          broadcastLiveAudioState();
           return;
         }
 
-        // Stop existing playing audio first
         if (activeMedia && !activeMedia.paused) {
           try {
             activeMedia.pause();
@@ -1115,7 +1159,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
         await triggerNativeReadAloud(turn);
       });
 
-      // Insert directly beside the Copy button if found, or prepend to toolbar
       const copyBtn = Array.from(toolbar.querySelectorAll("button")).find((b) =>
         textMeaning(b).includes("copy"),
       );
@@ -1164,7 +1207,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
   }
 
   async function triggerNativeReadAloud(turn: Element): Promise<void> {
-    // 1. Check if a direct read aloud button exists in this turn
     const direct = Array.from(turn.querySelectorAll("button")).find((btn) => {
       if (btn.classList.contains("cgpt-inline-readaloud")) return false;
       const t = textMeaning(btn);
@@ -1176,7 +1218,6 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
       return;
     }
 
-    // 2. Locate the specific More Actions button in the bottom action bar
     const toolbar = findToolbar(turn);
     const moreBtn = toolbar
       ? Array.from(toolbar.querySelectorAll("button")).find((b) => {
@@ -1193,13 +1234,11 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 
     moreBtn.click();
 
-    // 3. Strictly wait for the Read Aloud item
     const menuItem = await waitForReadAloudMenuItem();
 
     if (!menuItem) {
       pendingInlineButton = null;
       warn("Could not find Read Aloud in the response popup menu.");
-      // Close menu by triggering escape
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return;
     }
@@ -1326,12 +1365,15 @@ import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
     setInterval(() => {
       installInlineReadAloudButtons();
       scanDOMForPlayingMedia();
+      broadcastLiveAudioState();
       syncComposerLayout();
     }, 1000);
   }
 
   function animationLoop(): void {
-    if (activeMedia) updateControls();
+    if (activeMedia) {
+      updateControls();
+    }
     requestAnimationFrame(animationLoop);
   }
 

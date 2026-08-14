@@ -14,6 +14,9 @@ export const LUCIDE_ICONS: Record<string, string> = {
   "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
   "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
   "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
+  "chevron-right": '<polyline points="9 18 15 12 9 6"></polyline>',
+  "chevron-left": '<polyline points="15 18 9 12 15 6"></polyline>',
+  "minimize-2": '<polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line>',
   "chatgpt-audio": `
     <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
       <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
