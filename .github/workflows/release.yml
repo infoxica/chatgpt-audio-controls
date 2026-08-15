@@ -11,6 +11,16 @@ on:
     branches:
       - master
       - develop
+  workflow_dispatch:
+    inputs:
+      publish_to_stores:
+        description: "Publish this version to the Chrome Web Store and Microsoft Edge Add-ons?"
+        required: true
+        default: "no"
+        type: choice
+        options:
+          - "no"
+          - "yes"
 
 permissions:
   contents: read
@@ -93,7 +103,8 @@ jobs:
   publish-stores:
     name: Publish Chrome and Edge store updates
     needs: verify
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    # Temporary launch safeguard: releases require an explicit manual confirmation.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master' && inputs.publish_to_stores == 'yes'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -104,38 +115,13 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Detect version release
-        id: version
-        shell: bash
-        env:
-          BEFORE_SHA: ${{ github.event.before }}
-        run: |
-          set -euo pipefail
-
-          current_version="$(node -p "require('./package.json').version")"
-          previous_version=""
-
-          if [[ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ]]; then
-            previous_version="$(git show "$BEFORE_SHA:package.json" | node -e 'let input=""; process.stdin.on("data", chunk => input += chunk).on("end", () => console.log(JSON.parse(input).version));')"
-          fi
-
-          if [[ "$current_version" == "$previous_version" ]]; then
-            echo "No package version change on master ($current_version); store publishing will be skipped."
-            echo "should_publish=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "Version release detected: ${previous_version:-none} -> $current_version"
-            echo "should_publish=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Download release package
-        if: steps.version.outputs.should_publish == 'true'
         uses: actions/download-artifact@v4
         with:
           name: extension-release-${{ github.run_id }}
           path: release-assets
 
       - name: Publish to Chrome Web Store
-        if: steps.version.outputs.should_publish == 'true'
         shell: bash
         env:
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
@@ -204,7 +190,6 @@ jobs:
           echo "$publish_response" | jq .
 
       - name: Publish to Microsoft Edge Add-ons
-        if: steps.version.outputs.should_publish == 'true'
         shell: bash
         env:
           EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
