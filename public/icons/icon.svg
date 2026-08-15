@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Dark themed canvas background with subtle gradient -->
+    <linearGradient id="chatgptBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#212121" />
+      <stop offset="100%" stop-color="#141414" />
+    </linearGradient>
+    <linearGradient id="emeraldAura" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10a37f" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect width="128" height="128" rx="28" fill="url(#chatgptBg)" />
+  <rect width="126" height="126" x="1" y="1" rx="27" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+
+  <!-- ChatGPT Swirl Rosette + Play Emblem Group -->
+  <g transform="translate(64,64)" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    
+    <!-- 6 Interlocking Segments of ChatGPT Logo -->
+    <g id="petal">
+      <path d="M 0,-36 C 14,-36 24,-26 24,-12 L 24,-2 C 24,6 18,12 10,12 L 0,12" />
+    </g>
+    <use href="#petal" transform="rotate(60)" />
+    <use href="#petal" transform="rotate(120)" />
+    <use href="#petal" transform="rotate(180)" />
+    <use href="#petal" transform="rotate(240)" />
+    <use href="#petal" transform="rotate(300)" />
+
+    <!-- Center Play Emblem Badge -->
+    <circle cx="0" cy="0" r="16" fill="#10a37f" stroke="#ffffff" stroke-width="2.5" />
+    <!-- Play Triangle -->
+    <polygon points="-3,-6 7,0 -3,6" fill="#ffffff" stroke="none" />
+  </g>
+</svg>
