@@ -5,12 +5,27 @@
 **Playback controls that make ChatGPT Read Aloud usable.**<br />
 *Play, pause, seek, change speed, adjust volume, download audio, and start Read Aloud directly from a response.*
 
-[![Version](https://img.shields.io/badge/version-1.0.1-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-38bdf8.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/">
+    <img src="assets/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" height="58" />
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf">
+    <img src="assets/English_Get%20it%20from%20Microsoft%20Edge.png" alt="Get it from Microsoft Edge" height="58" />
+  </a>
+</p>
+
+[![Version](https://img.shields.io/badge/version-1.0.2-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.0.2-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
+[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.0.2-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 
 [Why I Created This](#why-i-created-this) • [Features](#features) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
+
+<br />
+
+<img src="assets/store/marquee-promo-1400x560.png" alt="ChatGPT Audio Controls Preview Banner" width="100%" />
 
 </div>
 
@@ -30,6 +45,10 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 
 ## ✨ Features
 
+<div align="center">
+  <img src="assets/store/screenshots/01-active-read-aloud-1280x800.png" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
+</div>
+
 ### 🎛️ Integrated Floating Player
 - **Sleek Seeker & Scrubbing**: Precise 2px→4px progress bar with live timers (`0:00 / 0:00`).
 - **Hold to Accelerate**: Hold down the ◀10s or 10s▶ buttons to smoothly scrub through long audio with dynamic acceleration (up to 50× seek rate).
@@ -43,6 +62,11 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 - Adds a convenient Read Aloud button directly on assistant-message toolbars, immediately after **Copy**. Click once to start reading aloud; click again to stop.
 
 ### ⚛️ Extension Popup & Dashboard
+
+<div align="center">
+  <img src="assets/store/screenshots/03-popup-controls-1280x800.png" alt="Popup Dashboard and Settings" width="85%" />
+</div>
+
 - **Popup**: Instant speed presets, volume slider, and controls for inline actions, shortcuts, and smooth scrubbing.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
 - Matches ChatGPT's native **Dark** and **Light** themes.
@@ -51,7 +75,18 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 
 ## 🚀 Installation
 
-### Option 1: Chromium Extension (Chrome, Brave, Edge, Opera, Arc)
+### Option 1: Official Browser Stores (Recommended)
+
+Get automatic updates and seamless one-click installation from your browser's official store:
+
+| Store | Supported Browsers | Install Badge | Direct Link |
+| :--- | :--- | :---: | :--- |
+| **Chrome Web Store** | Google Chrome, Brave, Arc, Opera, Vivaldi | <a href="https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/"><img src="assets/HRs9MPufa1J1h5glNhut.png" alt="Available in the Chrome Web Store" height="42" /></a> | [Install from Chrome Web Store](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/) |
+| **Microsoft Edge Add-ons** | Microsoft Edge | <a href="https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf"><img src="assets/English_Get%20it%20from%20Microsoft%20Edge.png" alt="Get it from Microsoft Edge" height="42" /></a> | [Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf) |
+
+---
+
+### Option 2: Manual Installation (Developer Mode / Unpacked)
 
 #### Method A: Load from Source
 1. Clone or download this repository:
