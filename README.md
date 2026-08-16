@@ -15,9 +15,9 @@
   </a>
 </p>
 
-[![Version](https://img.shields.io/badge/version-1.0.1-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.0.1-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
-[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.0.1-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
+[![Version](https://img.shields.io/badge/version-1.0.2-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.0.2-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
+[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.0.2-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 

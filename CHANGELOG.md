@@ -4,6 +4,13 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.0.2] - 2026-08-16
+
+### 🏪 Store Badges & UI Showcase
+- Added official Chrome Web Store and Microsoft Edge Add-ons installation badges and direct store links.
+- Reorganized the installation guide to highlight one-click store installation as the primary recommended option.
+- Added live UI preview screenshots for the floating Read Aloud player in ChatGPT and the popup settings dashboard.
+
 ## [1.0.1] - 2026-08-14
 
 ### ✨ Launch Readiness & Playback Polish
