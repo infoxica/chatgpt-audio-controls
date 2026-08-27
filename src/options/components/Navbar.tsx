@@ -1,6 +1,8 @@
+import React from "react";
 import { Sliders, Keyboard, HelpCircle, Moon, Sun } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
 import { ChatGPTAudioIcon } from "../../shared/ChatGPTAudioIcon";
+import { TranslationSchema } from "../../shared/i18n";
 
 export type DashboardSection = "settings" | "shortcuts" | "faq";
 
@@ -9,6 +11,7 @@ interface NavbarProps {
   onSelectSection: (sec: DashboardSection) => void;
   theme: "dark" | "light" | "system";
   onToggleTheme: () => void;
+  t: TranslationSchema;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -16,11 +19,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectSection,
   theme,
   onToggleTheme,
+  t,
 }) => {
   const navItems: { id: DashboardSection; label: string; icon: React.ReactNode }[] = [
-    { id: "settings", label: "Preferences", icon: <Sliders size={16} /> },
-    { id: "shortcuts", label: "Shortcuts & Gestures", icon: <Keyboard size={16} /> },
-    { id: "faq", label: "FAQ & Troubleshooting", icon: <HelpCircle size={16} /> },
+    { id: "settings", label: t.options.nav.preferences, icon: <Sliders size={16} /> },
+    { id: "shortcuts", label: t.options.nav.shortcuts, icon: <Keyboard size={16} /> },
+    { id: "faq", label: t.options.nav.faq, icon: <HelpCircle size={16} /> },
   ];
 
   return (
@@ -30,8 +34,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <ChatGPTAudioIcon size={26} />
         </div>
         <div>
-          <h2>ChatGPT Audio</h2>
-          <span>Dashboard & Setup</span>
+          <h2>{t.options.nav.dashboardTitle}</h2>
+          <span>{t.options.nav.dashboardSubtitle}</span>
         </div>
       </div>
 
@@ -51,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="sidebar-footer">
         <button className="btn-outline" onClick={onToggleTheme} style={{ width: "100%", justifyContent: "center" }}>
           {theme === "light" ? <Moon size={14} /> : <Sun size={14} />}
-          <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
+          <span>{theme === "light" ? t.options.nav.darkMode : t.options.nav.lightMode}</span>
         </button>
 
         <a
@@ -62,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           style={{ width: "100%", justifyContent: "center", textDecoration: "none" }}
         >
           <GithubIcon size={14} />
-          <span>GitHub Repo</span>
+          <span>{t.options.nav.githubRepo}</span>
         </a>
       </div>
     </aside>

@@ -1,0 +1,18 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls & Read Aloud",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "Read Aloud controls for ChatGPT: seek, playback speed, volume, audio downloads, shortcuts, and response buttons.",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls",
+    "description": "Tooltip for the extension icon in the toolbar"
+  },
+  "storeDescription": {
+    "message": "ChatGPT Audio Controls & Read Aloud makes ChatGPT's built-in Read Aloud feature easier to find, use, and control.\n\nLong AI responses can be useful, but listening should not mean giving up control. ChatGPT's native Read Aloud action is easy to miss in a response menu, and its basic playback experience can leave you without a convenient way to pause, resume, skip back, change speed, or adjust volume. This extension puts those controls where they are useful: alongside your ChatGPT conversation.\n\nInstall ChatGPT Audio Controls & Read Aloud if you want to listen through long answers while staying in charge of playback. It is useful when you are reading while working, moving between tasks, taking a call, or simply prefer listening to a response at your own pace.\n\nWhat you can do:\n\n- Start Read Aloud directly from an assistant response with a visible one-click action.\n- Play and pause without losing your place.\n- Jump backward or forward 10 seconds, or hold the seek controls for faster scrubbing.\n- Change playback speed to match your preferred listening pace.\n- Adjust volume from the player, including quick scroll-wheel volume changes.\n- Use keyboard shortcuts for play/pause, seeking, and speed changes.\n- Download the current Read Aloud audio when ChatGPT exposes it as a downloadable media stream.\n- Keep the controls available in a compact, responsive player designed to sit naturally beside the conversation.\n\nThe extension works only on chatgpt.com and adds controls only for the Read Aloud audio that you choose to play. It does not replace ChatGPT's voice; it gives you practical control over the native audio experience.\n\nPrivacy matters. ChatGPT Audio Controls & Read Aloud does not collect prompts, responses, audio, or personal information. It has no analytics, telemetry, or extension-operated backend. Your preferences are stored with the browser, and audio handling remains local to your browser. When you choose to download audio, the extension may retrieve the already-authorized ChatGPT media URL needed to create that file.\n\nChatGPT Audio Controls & Read Aloud is an independent open-source project. It is not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.",
+    "description": "Full store description for the Chrome Web Store and Edge Add-ons listing"
+  }
+}

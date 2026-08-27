@@ -15,13 +15,13 @@
   </a>
 </p>
 
-[![Version](https://img.shields.io/badge/version-1.0.2-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.0.2-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
-[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.0.2-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
+[![Version](https://img.shields.io/badge/version-1.1.0-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.1.0-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
+[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.1.0-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 
-[Why I Created This](#why-i-created-this) • [Features](#features) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
+[Why I Created This](#why-i-created-this) • [Features](#features) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
 <br />
 
@@ -70,6 +70,20 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 - **Popup**: Instant speed presets, volume slider, and controls for inline actions, shortcuts, and smooth scrubbing.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
 - Matches ChatGPT's native **Dark** and **Light** themes.
+
+### 🌐 Multi-Language & Internationalization (i18n)
+- **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
+- **Customizable in Settings**: Switch your preferred interface language anytime from the Dashboard.
+- **Supported Languages & Regional Variants**:
+  - 🇺🇸 **English** (`en`)
+  - 🇨🇳 **Chinese (Simplified)** — 简体中文 (`zh-CN`)
+  - 🇹🇼 / 🇭🇰 **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
+  - 🇻🇳 **Vietnamese** — Tiếng Việt (`vi`)
+  - 🇹🇭 **Thai** — ไทย (`th`)
+  - 🇪🇸 **Spanish** — Español (`es`)
+  - 🇧🇷 **Portuguese (Brazil)** — Português do Brasil (`pt-BR`)
+  - 🇵🇹 **Portuguese (Portugal)** — Português de Portugal (`pt-PT`)
+  - 🇷🇺 **Russian** — Русский (`ru`)
 
 ---
 
