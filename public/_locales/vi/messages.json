@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "ChatGPT Audio - Điều khiển & Đọc to văn bản",
+    "message": "ChatGPT Audio Controls & Read Aloud",
     "description": "The title of the extension displayed in the browser"
   },
   "extensionDescription": {
@@ -10,5 +10,9 @@
   "extensionActionTitle": {
     "message": "ChatGPT Audio Controls",
     "description": "Tooltip for the extension icon in the toolbar"
+  },
+  "storeDescription": {
+    "message": "ChatGPT Audio Controls & Read Aloud giúp tính năng Đọc to (Read Aloud) tích hợp sẵn của ChatGPT trở nên dễ tìm, dễ dùng và dễ điều khiển hơn bao giờ hết.\n\nCác câu trả lời dài từ AI rất hữu ích, nhưng việc lắng nghe không có nghĩa là bạn phải từ bỏ quyền kiểm soát. Thao tác Đọc to mặc định của ChatGPT rất dễ bị bỏ qua trong menu tùy chọn, và trải nghiệm phát âm thanh cơ bản không cung cấp cách thuận tiện để tạm dừng, phát tiếp, tua lùi, đổi tốc độ hay chỉnh âm lượng. Tiện ích mở rộng này đặt toàn bộ các nút điều khiển đó ngay cạnh cuộc trò chuyện ChatGPT của bạn.\n\nHãy cài đặt ChatGPT Audio Controls & Read Aloud nếu bạn muốn lắng nghe các câu trả lời dài trong khi vẫn hoàn toàn chủ động điều khiển quá trình phát. Tiện ích cực kỳ hữu ích khi bạn vừa làm việc vừa đọc, chuyển đổi giữa các tác vụ, nghe điện thoại hoặc đơn giản là muốn nghe câu trả lời theo tốc độ của riêng mình.\n\nCác tính năng nổi bật:\n\n- Bắt đầu Đọc to trực tiếp từ câu trả lời của trợ lý với nút bấm 1 chạm rõ ràng.\n- Phát và tạm dừng linh hoạt mà không bị mất vị trí đang nghe.\n- Tua lùi hoặc tiến 10 giây, hoặc nhấn giữ nút tua để lướt âm thanh nhanh mượt mà.\n- Thay đổi tốc độ phát để phù hợp với nhịp độ nghe yêu thích của bạn.\n- Điều chỉnh âm lượng ngay trên trình phát, hỗ trợ lăn con trỏ chuột để tăng giảm âm lượng nhanh chóng.\n- Sử dụng phím tắt bàn phím tiện lợi cho việc phát/tạm dừng, tua và đổi tốc độ.\n- Tải xuống tệp âm thanh Đọc to khi ChatGPT cung cấp luồng media có thể tải về.\n- Giao diện trình phát nhỏ gọn, linh hoạt và được thiết kế vừa vặn tự nhiên bên cạnh cuộc trò chuyện.\n\nTiện ích mở rộng chỉ hoạt động trên chatgpt.com và chỉ thêm điều khiển cho âm thanh Đọc to mà bạn chủ động phát. Tiện ích không thay thế giọng nói của ChatGPT mà mang lại cho bạn khả năng kiểm soát thực tế đối với trải nghiệm âm thanh gốc.\n\nBảo vệ quyền riêng tư là ưu tiên hàng đầu. ChatGPT Audio Controls & Read Aloud không thu thập câu lệnh (prompt), phản hồi, âm thanh hay thông tin cá nhân. Tiện ích không có công cụ phân tích, theo dõi từ xa hay máy chủ backend nào. Các tùy chọn của bạn được lưu trong trình duyệt và việc xử lý âm thanh diễn ra hoàn toàn cục bộ trên máy của bạn. Khi bạn tải xuống âm thanh, tiện ích chỉ truy xuất URL media ChatGPT đã được cấp quyền để tạo tệp đó.\n\nChatGPT Audio Controls & Read Aloud là một dự án mã nguồn mở độc lập. Dự án không liên kết, không được chứng thực hoặc tài trợ bởi OpenAI. ChatGPT là nhãn hiệu của OpenAI.",
+    "description": "Full store description for the Chrome Web Store and Edge Add-ons listing"
   }
 }

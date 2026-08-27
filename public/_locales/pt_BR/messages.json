@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "ChatGPT Audio - Controles e Leitura em Voz Alta",
+    "message": "ChatGPT Audio Controls & Read Aloud",
     "description": "The title of the extension displayed in the browser"
   },
   "extensionDescription": {
@@ -10,5 +10,9 @@
   "extensionActionTitle": {
     "message": "ChatGPT Audio Controls",
     "description": "Tooltip for the extension icon in the toolbar"
+  },
+  "storeDescription": {
+    "message": "ChatGPT Audio Controls & Read Aloud torna o recurso nativo de Leitura em Voz Alta do ChatGPT muito mais fácil de encontrar, usar e controlar.\n\nRespostas longas de IA são muito úteis, mas ouvir não deve significar perder o controle da reprodução. A ação nativa de Leitura em Voz Alta do ChatGPT é fácil de passar despercebida no menu de respostas, e sua experiência básica não oferece uma maneira prática de pausar, retomar, retroceder, alterar a velocidade ou ajustar o volume. Esta extensão coloca todos esses controles onde eles são mais úteis: ao lado da sua conversa no ChatGPT.\n\nInstale o ChatGPT Audio Controls & Read Aloud se você deseja ouvir respostas longas mantendo o controle total da reprodução. É ideal para quando você está trabalhando enquanto ouve, alternando entre tarefas, atendendo a uma ligação ou simplesmente prefere ouvir uma resposta no seu próprio ritmo.\n\nO que você pode fazer:\n\n- Iniciar a Leitura em Voz Alta diretamente na resposta do assistente com um botão visível de 1 clique.\n- Reproduzir e pausar sem perder sua posição no áudio.\n- Avançar ou retroceder 10 segundos, ou segurar os botões para um deslocamento rápido e contínuo.\n- Alterar a velocidade de reprodução para corresponder ao seu ritmo ideal de escuta.\n- Ajustar o volume no próprio player, incluindo ajuste rápido pela roda de rolagem do mouse.\n- Usar atalhos de teclado para reproduzir/pausar, avançar/retroceder e ajustar velocidade.\n- Baixar o áudio da Leitura em Voz Alta quando o ChatGPT o disponibiliza como fluxo de mídia para download.\n- Ter os controles sempre disponíveis em um player compacto e responsivo, projetado para se integrar naturalmente à conversa.\n\nA extensão funciona exclusivamente em chatgpt.com e adiciona controles apenas para o áudio de Leitura em Voz Alta que você optar por reproduzir. Ela não substitui a voz do ChatGPT; ela oferece controle prático sobre a experiência de áudio nativa.\n\nSua privacidade é prioridade. O ChatGPT Audio Controls & Read Aloud não coleta comandos (prompts), respostas, áudios ou informações pessoais. Não há ferramentas de análise, telemetria nem servidores backend operados pela extensão. Suas preferências são salvas no navegador e o processamento de áudio permanece 100% local no seu dispositivo. Quando você opta por baixar um áudio, a extensão apenas recupera a URL de mídia já autorizada do ChatGPT para gerar o arquivo.\n\nChatGPT Audio Controls & Read Aloud é um projeto independente de código aberto. Não é afiliado, endossado ou patrocinado pela OpenAI. ChatGPT é uma marca registrada da OpenAI.",
+    "description": "Full store description for the Chrome Web Store and Edge Add-ons listing"
   }
 }
