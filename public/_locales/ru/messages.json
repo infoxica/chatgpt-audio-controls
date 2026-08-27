@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio - Управление и Озвучивание",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "Управление озвучиванием ChatGPT: перемотка, скорость, громкость, скачивание аудио, горячие клавиши и быстрые кнопки.",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls",
+    "description": "Tooltip for the extension icon in the toolbar"
+  }
+}

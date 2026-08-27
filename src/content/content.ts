@@ -1,6 +1,7 @@
 import { getLucideSvg, setIcon } from "./icons";
 import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
+import { getTranslations } from "../shared/i18n";
 
 (function () {
   "use strict";
@@ -171,6 +172,87 @@ import { ExtensionSettings } from "../shared/types";
     }
   }
 
+  function getI18n() {
+    return getTranslations(settingsCache?.language);
+  }
+
+  function applyI18nLabels(): void {
+    const t = getI18n();
+    const settings = getSavedSettings();
+    const step = settings.tapSeekSeconds || CONFIG.tapSeekSeconds;
+
+    if (floatingToggle) {
+      floatingToggle.title = t.common.extensionName;
+      floatingToggle.setAttribute("aria-label", t.content.tooltips.expand);
+    }
+
+    if (rightRail) {
+      const backBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-back");
+      if (backBtn) backBtn.title = t.content.tooltips.back.replace("{s}", String(step));
+
+      const playBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-play");
+      if (playBtn) playBtn.title = t.content.tooltips.playPause;
+
+      const forwardBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-forward");
+      if (forwardBtn) forwardBtn.title = t.content.tooltips.forward.replace("{s}", String(step));
+
+      const speedBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-speed-btn");
+      if (speedBtn) speedBtn.title = t.content.tooltips.speed;
+
+      const volBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-volume-btn");
+      if (volBtn) volBtn.title = t.content.tooltips.volume;
+
+      const volSlider = rightRail.querySelector<HTMLInputElement>(".cgpt-ra-volume-slider");
+      if (volSlider) volSlider.setAttribute("aria-label", t.content.tooltips.volumeSlider);
+
+      const dlBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-download");
+      if (dlBtn) dlBtn.title = t.content.tooltips.download;
+
+      const helpBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-help-wrap .cgpt-ra-icon-btn");
+      if (helpBtn) helpBtn.title = t.content.tooltips.shortcuts;
+
+      const helpPopover = rightRail.querySelector<HTMLElement>(".cgpt-ra-popover.cgpt-ra-help");
+      if (helpPopover) {
+        helpPopover.innerHTML = `
+          <div class="cgpt-ra-help-title">${t.content.shortcutsPopover.title}</div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.playPause}</span>
+            <span class="cgpt-ra-shortcut-key">Space / K</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.back.replace("{s}", String(step))}</span>
+            <span class="cgpt-ra-shortcut-key">Alt + ←</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.forward.replace("{s}", String(step))}</span>
+            <span class="cgpt-ra-shortcut-key">Alt + →</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.slower}</span>
+            <span class="cgpt-ra-shortcut-key">Shift + &lt;</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.faster}</span>
+            <span class="cgpt-ra-shortcut-key">Shift + &gt;</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.volumeScroll}</span>
+            <span class="cgpt-ra-shortcut-key">${t.content.shortcutsPopover.volumeScrollKey}</span>
+          </div>
+          <div class="cgpt-ra-shortcut-row">
+            <span>${t.content.shortcutsPopover.smoothScrub}</span>
+            <span class="cgpt-ra-shortcut-key">${t.content.shortcutsPopover.smoothScrubKey.replace(/{s}/g, String(step))}</span>
+          </div>
+        `;
+      }
+
+      const collapseBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-collapse-btn");
+      if (collapseBtn) collapseBtn.title = t.content.tooltips.collapse;
+    }
+
+    updateInlineButtons();
+  }
+
   function installSettingsBridge(): void {
     window.addEventListener("message", (event: MessageEvent) => {
       if (
@@ -191,6 +273,7 @@ import { ExtensionSettings } from "../shared/types";
         } catch (_) {}
       }
 
+      applyI18nLabels();
       installInlineReadAloudButtons();
       updateControls();
     });
@@ -878,6 +961,7 @@ import { ExtensionSettings } from "../shared/types";
 
     downloadButton?.addEventListener("click", downloadCurrentAudio);
 
+    applyI18nLabels();
     setControlsEnabled(Boolean(activeMedia));
     detectAndCacheChatGPTTheme();
     syncComposerLayout();
@@ -1379,7 +1463,7 @@ import { ExtensionSettings } from "../shared/types";
       log("Downloaded audio:", filename, blob.size, mime);
     } catch (error) {
       warn("Download failed:", error);
-      alert("Could not download audio stream. Ensure audio is actively loaded.");
+      alert(getI18n().content.alerts.downloadError);
     } finally {
       downloadButton.classList.remove("cgpt-ra-download-busy");
       downloadButton.removeAttribute("disabled");
@@ -1739,6 +1823,7 @@ import { ExtensionSettings } from "../shared/types";
   }
 
   function updateInlineButtons(): void {
+    const t = getI18n();
     for (const button of inlineButtons) {
       if (!button.isConnected) {
         inlineButtons.delete(button);
@@ -1754,7 +1839,9 @@ import { ExtensionSettings } from "../shared/types";
 
       button.classList.toggle("cgpt-active", Boolean(active));
       setIcon(button, active ? "square" : "volume-2");
-      button.title = active ? "Stop read aloud" : "Read aloud";
+      const label = active ? t.content.tooltips.stopReadAloud : t.content.tooltips.readAloud;
+      button.title = label;
+      button.setAttribute("aria-label", label);
     }
   }
 

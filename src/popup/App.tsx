@@ -7,6 +7,7 @@ import { AboutTab } from "./components/AboutTab";
 import { getSettings, saveSettings } from "../shared/storage";
 import { DEFAULT_SETTINGS, EXTENSION_VERSION } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
+import { useTranslation } from "../shared/i18n";
 import { ExternalLink, Sparkles } from "lucide-react";
 import "./styles/popup.css";
 
@@ -14,6 +15,7 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("controls");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
+  const { t } = useTranslation(settings.language);
 
   useEffect(() => {
     getSettings().then((loaded) => {
@@ -54,9 +56,9 @@ export const App: React.FC = () => {
     } catch (_) {}
   }, []);
 
-  const applyTheme = (t: "dark" | "light" | "system") => {
+  const applyTheme = (tTheme: "dark" | "light" | "system") => {
     const isDark =
-      t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      tTheme === "dark" || (tTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   };
 
@@ -94,24 +96,25 @@ export const App: React.FC = () => {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         onOpenOptions={handleOpenOptions}
+        t={t}
       />
 
-      <TabNav activeTab={activeTab} onSelectTab={setActiveTab} />
+      <TabNav activeTab={activeTab} onSelectTab={setActiveTab} t={t} />
 
       <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         {activeTab === "controls" && (
-          <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} />
+          <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
-        {activeTab === "shortcuts" && <ShortcutsDrawer />}
-        {activeTab === "about" && <AboutTab />}
+        {activeTab === "shortcuts" && <ShortcutsDrawer t={t} />}
+        {activeTab === "about" && <AboutTab t={t} />}
       </main>
 
       <footer className="popup-footer">
         <button className="primary-btn" onClick={handleOpenChatGPT}>
-          <Sparkles size={14} /> Open ChatGPT
+          <Sparkles size={14} /> {t.common.openChatGPT}
         </button>
         <div className="secondary-links">
-          <span>v{EXTENSION_VERSION}</span>
+          <span>{t.common.version}{EXTENSION_VERSION}</span>
           <button
             onClick={handleOpenOptions}
             style={{
@@ -125,7 +128,7 @@ export const App: React.FC = () => {
               fontSize: 10.5,
             }}
           >
-            Dashboard <ExternalLink size={10} />
+            {t.common.dashboard} <ExternalLink size={10} />
           </button>
         </div>
       </footer>

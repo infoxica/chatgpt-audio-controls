@@ -1,21 +1,58 @@
 import React from "react";
-import { Keyboard, MousePointer, Sparkles } from "lucide-react";
-import { SHORTCUTS } from "../../shared/constants";
+import { Keyboard, MousePointer } from "lucide-react";
+import { TranslationSchema } from "../../shared/i18n";
 
-export const ShortcutsGuide: React.FC = () => {
+interface ShortcutsGuideProps {
+  t: TranslationSchema;
+}
+
+export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t }) => {
+  const shortcutEntries = [
+    {
+      id: "play-pause",
+      action: t.shortcuts.playPause.action,
+      description: t.shortcuts.playPause.description,
+      keys: ["Space / K"],
+    },
+    {
+      id: "seek-back",
+      action: t.shortcuts.seekBack.action,
+      description: t.shortcuts.seekBack.description,
+      keys: ["Alt", "←"],
+    },
+    {
+      id: "seek-forward",
+      action: t.shortcuts.seekForward.action,
+      description: t.shortcuts.seekForward.description,
+      keys: ["Alt", "→"],
+    },
+    {
+      id: "speed-decrease",
+      action: t.shortcuts.speedDecrease.action,
+      description: t.shortcuts.speedDecrease.description,
+      keys: ["Shift", "<"],
+    },
+    {
+      id: "speed-increase",
+      action: t.shortcuts.speedIncrease.action,
+      description: t.shortcuts.speedIncrease.description,
+      keys: ["Shift", ">"],
+    },
+  ];
+
   return (
     <div className="settings-section">
       <div className="card">
         <div className="card-title">
           <Keyboard size={16} color="var(--accent)" />
-          <span>Keyboard Shortcuts Reference</span>
+          <span>{t.options.shortcutsGuide.title}</span>
         </div>
         <p className="card-desc">
-          Accelerate your workflow with ergonomic single-hand and YouTube-standard playback hotkeys.
+          {t.options.shortcutsGuide.desc}
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
-          {SHORTCUTS.map((s) => (
+          {shortcutEntries.map((s) => (
             <div
               key={s.id}
               style={{
@@ -49,17 +86,17 @@ export const ShortcutsGuide: React.FC = () => {
       <div className="card">
         <div className="card-title">
           <MousePointer size={16} color="var(--accent)" />
-          <span>Mouse & Hold Scrub Gestures</span>
+          <span>{t.options.shortcutsGuide.gesturesTitle}</span>
         </div>
         <p className="card-desc">
-          Hold down either the ◀10s or 10s▶ buttons to smoothly scrub through long voice answers with dynamic acceleration:
+          {t.options.shortcutsGuide.gesturesDesc}
         </p>
 
         <ul style={{ paddingLeft: 20, display: "flex", flexDirection: "column", gap: 6, fontSize: 13, color: "var(--text-secondary)" }}>
-          <li><strong>0.3s Hold:</strong> Enters smooth scrubbing mode (4× normal speed).</li>
-          <li><strong>1.5s Hold:</strong> Accelerates to 10× seeking rate.</li>
-          <li><strong>3.0s Hold:</strong> High-speed jump rate at 25× rate.</li>
-          <li><strong>Release:</strong> Seamlessly locks to the desired position.</li>
+          <li><strong>0.3s:</strong> {t.options.shortcutsGuide.gestureHold03}</li>
+          <li><strong>1.5s:</strong> {t.options.shortcutsGuide.gestureHold15}</li>
+          <li><strong>3.0s:</strong> {t.options.shortcutsGuide.gestureHold30}</li>
+          <li><strong>Release:</strong> {t.options.shortcutsGuide.gestureRelease}</li>
         </ul>
       </div>
     </div>

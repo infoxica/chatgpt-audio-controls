@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT 音频控制与朗读增强",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT 朗读控制增强：进度跳转、动态倍速、音量调节、音频一键下载、快捷键与单条朗读按钮。",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT 音频控制",
+    "description": "Tooltip for the extension icon in the toolbar"
+  }
+}

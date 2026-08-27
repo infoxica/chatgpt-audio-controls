@@ -6,12 +6,14 @@ import { FaqSection } from "./components/FaqSection";
 import { getSettings, saveSettings } from "../shared/storage";
 import { DEFAULT_SETTINGS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
+import { useTranslation } from "../shared/i18n";
 import "./styles/options.css";
 
 export const App: React.FC = () => {
   const [section, setSection] = useState<DashboardSection>("settings");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
+  const { t } = useTranslation(settings.language);
 
   useEffect(() => {
     getSettings().then((loaded) => {
@@ -52,9 +54,9 @@ export const App: React.FC = () => {
     } catch (_) {}
   }, []);
 
-  const applyTheme = (t: "dark" | "light" | "system") => {
+  const applyTheme = (tTheme: "dark" | "light" | "system") => {
     const isDark =
-      t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      tTheme === "dark" || (tTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   };
 
@@ -77,29 +79,30 @@ export const App: React.FC = () => {
         onSelectSection={setSection}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        t={t}
       />
 
       <main className="dashboard-main">
         <header className="main-header">
           <div className="header-title-block">
             <h1>
-              {section === "settings" && "Audio & Playback Preferences"}
-              {section === "shortcuts" && "Keyboard Shortcuts & Gestures"}
-              {section === "faq" && "FAQ & Troubleshooting"}
+              {section === "settings" && t.options.headers.preferencesTitle}
+              {section === "shortcuts" && t.options.headers.shortcutsTitle}
+              {section === "faq" && t.options.headers.faqTitle}
             </h1>
             <p>
-              {section === "settings" && "Configure playback speed presets, default volume, and features."}
-              {section === "shortcuts" && "Master quick hotkeys for effortless playback manipulation."}
-              {section === "faq" && "Detailed technical guide, security, and support answers."}
+              {section === "settings" && t.options.headers.preferencesDesc}
+              {section === "shortcuts" && t.options.headers.shortcutsDesc}
+              {section === "faq" && t.options.headers.faqDesc}
             </p>
           </div>
         </header>
 
         {section === "settings" && (
-          <GeneralSettings settings={settings} onUpdateSettings={handleUpdateSettings} />
+          <GeneralSettings settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
-        {section === "shortcuts" && <ShortcutsGuide />}
-        {section === "faq" && <FaqSection />}
+        {section === "shortcuts" && <ShortcutsGuide t={t} />}
+        {section === "faq" && <FaqSection t={t} />}
       </main>
     </div>
   );

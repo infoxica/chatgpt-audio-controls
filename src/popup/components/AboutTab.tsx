@@ -2,8 +2,13 @@ import React from "react";
 import { Sparkles, ShieldCheck, BookOpen, Bug } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
 import { EXTENSION_VERSION } from "../../shared/constants";
+import { TranslationSchema } from "../../shared/i18n";
 
-export const AboutTab: React.FC = () => {
+interface AboutTabProps {
+  t: TranslationSchema;
+}
+
+export const AboutTab: React.FC<AboutTabProps> = ({ t }) => {
   return (
     <div className="popup-body">
       <div className="section-card" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
@@ -23,13 +28,12 @@ export const AboutTab: React.FC = () => {
         >
           <Sparkles size={22} />
         </div>
-        <h2 style={{ fontSize: 14, fontWeight: 700 }}>ChatGPT Audio Controls</h2>
+        <h2 style={{ fontSize: 14, fontWeight: 700 }}>{t.popup.about.title}</h2>
         <span style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
-          v{EXTENSION_VERSION} • Open Source by Infoxica
+          {t.common.version}{EXTENSION_VERSION} • {t.popup.about.byInfoxica}
         </span>
         <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.4 }}>
-          Elevating ChatGPT's voice experience with seamless audio scrubbing, dynamic speed presets, 
-          direct audio downloads, and one-click speech triggers.
+          {t.popup.about.description}
         </p>
       </div>
 
@@ -37,9 +41,9 @@ export const AboutTab: React.FC = () => {
         <div className="toggle-row">
           <div className="toggle-info">
             <span className="toggle-label" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <ShieldCheck size={14} color="var(--accent)" /> 100% Privacy Focused
+              <ShieldCheck size={14} color="var(--accent)" /> {t.popup.about.privacyTitle}
             </span>
-            <span className="toggle-desc">No trackers, no telemetry. Everything runs on your machine.</span>
+            <span className="toggle-desc">{t.popup.about.privacyDesc}</span>
           </div>
         </div>
       </div>
@@ -54,9 +58,9 @@ export const AboutTab: React.FC = () => {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <GithubIcon size={13} /> GitHub Repository
+              <GithubIcon size={13} /> {t.popup.about.githubRepo}
             </span>
-            <span className="kbd">★ Star</span>
+            <span className="kbd">{t.common.star}</span>
           </a>
 
           <a
@@ -67,9 +71,9 @@ export const AboutTab: React.FC = () => {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <BookOpen size={13} /> Documentation
+              <BookOpen size={13} /> {t.popup.about.documentation}
             </span>
-            <span className="kbd">Docs</span>
+            <span className="kbd">{t.common.docs}</span>
           </a>
 
           <a
@@ -80,9 +84,9 @@ export const AboutTab: React.FC = () => {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <Bug size={13} /> Report an Issue
+              <Bug size={13} /> {t.popup.about.reportIssue}
             </span>
-            <span className="kbd">Issues</span>
+            <span className="kbd">{t.common.issues}</span>
           </a>
         </div>
       </div>

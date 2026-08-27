@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio - Controlos e Leitura em Voz Alta",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "Controlos de leitura para o ChatGPT: avanço contínuo, velocidade, volume, transferência de áudio, atalhos e botões rápidos.",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls",
+    "description": "Tooltip for the extension icon in the toolbar"
+  }
+}

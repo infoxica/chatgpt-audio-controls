@@ -19,6 +19,7 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   theme: "system",
   smoothScrubbing: true,
   autoDownloadFormat: "auto",
+  language: "auto",
 };
 
 // Keep each preference under its own sync key so independent updates from the
@@ -32,7 +33,28 @@ export const SETTING_STORAGE_KEYS: Record<keyof ExtensionSettings, string> = {
   theme: "cgpt-ra-settings.theme",
   smoothScrubbing: "cgpt-ra-settings.smoothScrubbing",
   autoDownloadFormat: "cgpt-ra-settings.autoDownloadFormat",
+  language: "cgpt-ra-settings.language",
 };
+
+export interface LanguageOption {
+  code: ExtensionSettings["language"];
+  label: string;
+  nativeName: string;
+  flag?: string;
+}
+
+export const SUPPORTED_LANGUAGES: LanguageOption[] = [
+  { code: "auto", label: "Auto Detect", nativeName: "Auto (Browser Default)" },
+  { code: "en", label: "English", nativeName: "English" },
+  { code: "zh-CN", label: "Chinese (Simplified)", nativeName: "简体中文" },
+  { code: "zh-TW", label: "Chinese (Traditional)", nativeName: "繁體中文" },
+  { code: "vi", label: "Vietnamese", nativeName: "Tiếng Việt" },
+  { code: "th", label: "Thai", nativeName: "ไทย" },
+  { code: "es", label: "Spanish", nativeName: "Español" },
+  { code: "pt-BR", label: "Portuguese (Brazil)", nativeName: "Português (Brasil)" },
+  { code: "pt-PT", label: "Portuguese (Portugal)", nativeName: "Português (Portugal)" },
+  { code: "ru", label: "Russian", nativeName: "Русский" },
+];
 
 export const SHORTCUTS: ShortcutItem[] = [
   {

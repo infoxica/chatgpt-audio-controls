@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls & Read Aloud",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "Read Aloud controls for ChatGPT: seek, playback speed, volume, audio downloads, shortcuts, and response buttons.",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls",
+    "description": "Tooltip for the extension icon in the toolbar"
+  }
+}

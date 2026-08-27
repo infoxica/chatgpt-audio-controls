@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio - ตัวควบคุมเสียง & อ่านออกเสียง",
+    "description": "The title of the extension displayed in the browser"
+  },
+  "extensionDescription": {
+    "message": "ตัวควบคุมการอ่านออกเสียงสำหรับ ChatGPT: กรอเสียง, ปรับความเร็ว, ระดับเสียง, ดาวน์โหลดเสียง, ปุ่มลัด และปุ่มอ่านทันที",
+    "description": "The description of the extension displayed in the browser store"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls",
+    "description": "Tooltip for the extension icon in the toolbar"
+  }
+}
