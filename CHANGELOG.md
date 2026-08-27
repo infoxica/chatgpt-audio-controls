@@ -4,6 +4,24 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.1.0] - 2026-08-27
+
+### 🌐 Multi-Language & Internationalization (i18n) Support
+- **Supported Languages & Regional Variants**:
+  - 🇺🇸 English (`en`) — Default fallback
+  - 🇨🇳 Chinese (Simplified) — 简体中文 (`zh-CN`)
+  - 🇹🇼 / 🇭🇰 Chinese (Traditional) — 繁體中文 (`zh-TW`)
+  - 🇻🇳 Vietnamese — Tiếng Việt (`vi`)
+  - 🇹🇭 Thai — ไทย (`th`)
+  - 🇪🇸 Spanish — Español (`es`)
+  - 🇧🇷 Portuguese (Brazil) — Português do Brasil (`pt-BR`)
+  - 🇵🇹 Portuguese (Portugal) — Português de Portugal (`pt-PT`)
+  - 🇷🇺 Russian — Русский (`ru`)
+- **Automatic Browser Locale Detection**: Detects user browser language via `chrome.i18n.getUILanguage()` and `navigator.languages` with exact regional variant matching.
+- **Language Switcher in Options Dashboard**: Allows users to manually configure and switch their preferred extension language.
+- **Comprehensive Real-Time UI Localization**: Localized Options Dashboard, Popup extension interface, floating Read Aloud player tooltips, shortcuts popover, and inline response speech buttons.
+- **Chrome Store & Edge Add-ons Multilingual Listings**: Created localized `_locales` metadata and `docs/STORE-LISTINGS.md` for store publishing.
+
 ## [1.0.2] - 2026-08-16
 
 ### 🏪 Store Badges & UI Showcase
