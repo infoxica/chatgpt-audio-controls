@@ -1,3 +1,15 @@
+export type SupportedLanguage =
+  | "auto"
+  | "en"
+  | "zh-CN"
+  | "zh-TW"
+  | "vi"
+  | "th"
+  | "es"
+  | "pt-BR"
+  | "pt-PT"
+  | "ru";
+
 export interface ExtensionSettings {
   defaultSpeed: number;
   defaultVolume: number;
@@ -7,6 +19,7 @@ export interface ExtensionSettings {
   theme: "system" | "dark" | "light";
   smoothScrubbing: boolean;
   autoDownloadFormat: "auto" | "mp3" | "m4a" | "wav";
+  language: SupportedLanguage;
 }
 
 export interface PlaybackState {
