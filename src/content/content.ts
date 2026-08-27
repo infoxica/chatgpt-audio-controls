@@ -1504,13 +1504,34 @@ import { getTranslations } from "../shared/i18n";
     );
   }
 
+  // ChatGPT's accessible labels follow its own UI language, which can differ
+  // from the extension language. Keep every supported native label here so
+  // toolbar buttons and overflow-menu items use the same matching logic.
+  const READ_ALOUD_LABELS = [
+    "read aloud",
+    "read out loud",
+    "leer en voz alta",
+    "leer respuesta",
+    "ler em voz alta",
+    "ler resposta",
+    "прочитать вслух",
+    "озвучить ответ",
+    "đọc to",
+    "đọc to câu trả lời",
+    "อ่านออกเสียง",
+    "อ่านออกเสียงคำตอบ",
+    "朗读",
+    "朗读回答",
+    "朗讀",
+    "朗讀回答",
+  ];
+
   function isReadAloudControl(button: Element): boolean {
     const label = accessibleMeaning(button) || textMeaning(button);
     const testId = (button.getAttribute("data-testid") || "").toLowerCase();
     return (
       /(?:read[-_ ]?aloud|read[-_ ]?out[-_ ]?loud|text[-_ ]?to[-_ ]?speech|tts)/.test(testId) ||
-      /\bread aloud\b/.test(label) ||
-      /\bread out loud\b/.test(label) ||
+      READ_ALOUD_LABELS.some((nativeLabel) => label.includes(nativeLabel)) ||
       label === "read"
     );
   }
@@ -1763,9 +1784,7 @@ import { getTranslations } from "../shared/i18n";
         );
 
         for (const item of candidates) {
-          const text = textMeaning(item);
-
-          if (isReadAloudControl(item) || /\bread aloud\b/.test(text) || /\bread out loud\b/.test(text)) {
+          if (isReadAloudControl(item)) {
             resolve(item as HTMLElement);
             return;
           }
