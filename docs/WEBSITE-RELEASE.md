@@ -14,8 +14,10 @@ Production URL: https://infoxica.github.io/chatgpt-audio-controls/
    reviewers and any existing deployment protections.
 3. For the initial launch, ensure `.github/workflows/pages.yml` exists on the
    default branch before using workflow_dispatch. If master does not contain it
-   yet, promote only this workflow through a reviewed bootstrap PR to master.
-   Keep the extension version unchanged in that bootstrap PR. Do not merge the
+   yet, promote a dispatch-only copy of this workflow through a reviewed bootstrap
+   PR to master: omit its push and pull_request triggers until master contains the
+   site sources. Dispatch it against develop, where those sources exist. Keep the
+   extension version unchanged in that bootstrap PR. Do not merge the
    unaccepted extension release just to make the website workflow available.
 4. Run the Official website workflow against develop with publish_website=true:
 
