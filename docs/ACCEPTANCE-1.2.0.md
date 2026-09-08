@@ -1,6 +1,12 @@
 # v1.2.0 release acceptance
 
-The candidate ZIP is for acceptance testing until every required flag in `config/acceptance.json` is supported by recorded evidence. Record browser/OS versions, candidate commit or ZIP SHA-256, date and result. Store review acceptance and public availability are separate milestones.
+The candidate ZIP is for acceptance testing until every required flag in `config/acceptance.json` is supported by recorded evidence or an explicitly documented owner waiver. Record browser/OS versions, candidate commit or ZIP SHA-256, date and result. Store review acceptance and public availability are separate milestones.
+
+## Owner decisions — 2026-09-09
+
+For v1.2.0 the owner explicitly waived native Mac acceptance and authorized proceeding without waiting for processed GA4 reports. `nativeMac: "waived-by-owner"` records a release decision, not a passed native-device test. The owner confirmed GA4 setup; live website deployment and consent-gated collection transport were previously verified. Delayed reports do not block this release. Chrome/Edge live acceptance remains required. Search Console and store listing work remain separate outstanding tasks.
+
+The owner subsequently confirmed testing v1.2.0 on live ChatGPT in both Chrome and Edge, covering playback, pause, compact layout, hide/show and shortcuts, with everything working as expected. The corresponding flags record owner-reported acceptance. Browser version details and a separate actual-uninstall result for installed Chrome were not supplied; automated Chromium and Edge uninstall checks remain the available uninstall evidence.
 
 ## Native Mac check (owner's friend)
 
