@@ -86,6 +86,16 @@ jobs:
           bun run scripts/build-site.ts
           bun run scripts/build-feedback.ts
 
+      - name: Prepare Edge store listing inputs
+        run: bun run scripts/build-edge-listings.ts
+
+      - name: Upload Edge store listing inputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: edge-store-listings-${{ github.run_id }}
+          path: build/edge-store-listings/
+          if-no-files-found: error
+
       - name: Install test browser
         run: bunx playwright install --with-deps chromium
 

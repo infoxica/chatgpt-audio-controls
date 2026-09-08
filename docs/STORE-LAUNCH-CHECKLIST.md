@@ -36,6 +36,10 @@ The first Chrome Web Store item and its listing/privacy metadata must be created
 
 The first Edge Add-ons product, listing metadata, privacy information, and required visual assets must be created manually in Partner Center. Enable the Edge Add-ons Publish API and create the v1.1 API key/client ID before using these secrets.
 
+Adding interface languages can introduce incomplete draft listings even for an existing published product. The Edge Update REST API explicitly does not support updating listing metadata. `ModuleStateUnPublishable` with `Invalid module : LISTING` requires completing descriptions and logos in Partner Center, not changing credentials or rebuilding the ZIP.
+
+CI publishes an `edge-store-listings-<run-id>` artifact containing a description and the extension logo for all 17 locales. Generate it locally with `bun run scripts/build-edge-listings.ts`. These are manual Partner Center inputs, not an import API payload. Complete and save every included language, then retry only Edge using the workflow's `store=edge` option. New locales or later metadata changes require another Partner Center update.
+
 ## Browser smoke test
 
 Test the unpacked `dist/` build in the latest stable Chrome and Edge. Sign in to a regular ChatGPT account and open a conversation with an assistant response.
