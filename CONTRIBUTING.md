@@ -4,6 +4,10 @@ Thank you for your interest in contributing to **ChatGPT Audio Controls & Read A
 
 ---
 
+## Public repository privacy
+
+Keep personal account emails, credentials, private service identifiers, and account-level analytics out of code, documentation, pull requests, comments, and screenshots. Store release ownership and private deployment records outside version control. Use GitHub's no-reply email for commit metadata. Public store links and client-side website measurement IDs may be included when required by the product.
+
 ## 🛠️ Development Environment
 
 This project uses **[Bun](https://bun.sh)** (v1.3.9+) as the package manager and runtime, together with **React**, **TypeScript**, and **Vite**.

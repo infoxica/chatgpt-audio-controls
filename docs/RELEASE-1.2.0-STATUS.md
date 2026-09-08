@@ -3,7 +3,7 @@
 Project: Infoxica. Account identities and private service identifiers belong in private release records, never repository files or pull requests.
 
 ## Completed
-- PR #8 updated at 014dda8: version-change publishing policy, independent Chrome/Edge jobs, per-store retry, ZIP validation.
+- PR #8 updated: version-change publishing policy, independent Chrome/Edge jobs, per-store retry, ZIP validation.
 - Local policy tests and archive validation passed. GitHub run 34205468386 verified packaging successfully.
 - Implemented compact/wide layouts, visibility settings, the browser command, assignment/Mac display, recovery and first-use help.
 - Added eight complete interface locales and translated new flows, manifest catalogs and store copy for all 17 locales.
