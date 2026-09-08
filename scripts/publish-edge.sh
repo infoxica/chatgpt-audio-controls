@@ -32,6 +32,19 @@ poll_operation() {
         return 0
         ;;
       Failed)
+        if jq -e '.errorCode == "ModuleStateUnPublishable" and any(.errors[]?; (.message // "") | contains("LISTING"))' <<< "$operation_response" >/dev/null; then
+          echo '::error title=Edge store listings incomplete::Package upload does not populate store descriptions or logos. Complete every included language in Partner Center > Store listings, save each draft, then retry only Edge. Use the edge-store-listings artifact for localized text and logos.' >&2
+          if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+            cat >> "$GITHUB_STEP_SUMMARY" <<'SUMMARY'
+### Edge submission blocked by store listings
+
+The package processing step and the listing validation step are separate. Edge rejected the LISTING module.
+Download this run's **edge-store-listings** artifact, then complete the description and logo for every included language in Partner Center and save each draft.
+The [Edge Update REST API does not support metadata updates](https://learn.microsoft.com/en-us/microsoft-edge/extensions/update/api/using-addons-api#using-the-api-endpoints).
+After saving valid listings, retry the workflow on **master** with **publish_to_stores=yes** and **store=edge**. Do not rerun Chrome for this failure.
+SUMMARY
+          fi
+        fi
         echo "$operation_response" | jq . >&2
         return 1
         ;;
