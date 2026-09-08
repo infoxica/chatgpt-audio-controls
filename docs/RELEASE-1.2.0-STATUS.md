@@ -9,16 +9,26 @@ Project: Infoxica. Account identities and private service identifiers belong in 
 - Added eight complete interface locales and translated new flows, manifest catalogs and store copy for all 17 locales.
 - Built the static localized website and separate Pages workflow, including SEO metadata, consent-gated analytics and tagged store links.
 - Built the Apps Script survey and private workbook candidate. Server validation/duplicate handling and the two-click client flow have local tests.
-- Local checks: typecheck/build; 7 unit tests with 148 assertions; 4 browser integration tests using a loaded Chromium extension and controlled host/site/survey fixtures.
+- Local checks refreshed on 2026-09-08: typecheck, extension/userscript build, 85-page website build, feedback fixture build; 7 unit tests with 148 assertions; 8 browser integration tests using a loaded Chromium extension and controlled host/site/survey fixtures; 6 HTTP tests including malicious redirect/path cases.
 - Windows ZIP validation: 61 entries, manifest version 1.2.0; website and feedback files excluded. Userscript changes are version metadata only.
 - Copied supplied CSV exports byte-for-byte to ignored `build/baseline`, with SHA-256 checksums. No baseline data uploaded.
 - Draft PR #9 is pushed. GitHub CI run 34211421048 passed verification, browser tests and packaging; website build run 34211421309 passed. Deployments and store jobs were skipped as intended.
 - Verified the designated project owner, corrected missing OAuth permissions and enabled the Apps Script API. Created the survey project and uploaded all four generated source files successfully. It is not yet deployed.
 - Created the separate website Analytics property and configured its public measurement ID in the website build. Optional account data sharing and enhanced measurement are disabled. Event-scoped custom dimensions cover store, locale and placement. Website loading remains consent-gated; deployed event receipt is not yet verified.
 - Inspected store analytics and marked the existing install event as a key event. Treat this as a reporting configuration change, not an acquisition increase or a historical-data correction. Keep account-level analytics and baseline figures in private release records.
+- Refined the website with React/Radix navigation, a desktop language grid, consistent Support summaries, localized guides, official store badges and review links. Popup/options now link to the localized website. Markdown mirrors include freshness, sitemap sections and canonical headers in the preview.
+
+## Security and candidate verification (2026-09-08)
+- Reviewed the pending website, extension-link, build, workflow and test changes. Found and fixed a low-severity open redirect in the preview server; regression tests cover double/encoded slashes, backslashes and control characters. No high or critical findings in this bounded diff review.
+- Gitleaks 8.30.1 (download checksum verified): no detected credentials in 173 candidate repository files, 23 reachable Git commits, extension build output or website build output. A separate personal-email check found no matches in candidate source files. Reports and private inputs remain ignored local artifacts.
+- `bun audit --json` returned no known dependency advisories. This is a point-in-time result, not proof that dependencies are vulnerability-free.
+- Rebuilt and validated `chatgpt-audio-controls-v1.2.0.zip`: 61 entries, version 1.2.0, SHA-256 `d03c7ee580c08661b6030e458fe202f0b55ba137d56c064de0737b5b1ef66cf1`. Website and feedback service files remain outside the extension package.
+- Explicit `RELEASE_TAG=v1.2.0` validation correctly fails with `A verified production feedback URL is required.` Live acceptance flags remain false. This ZIP is an acceptance candidate, not a publishable final release.
+- Security review and tests are local evidence. They do not establish deployed-service security, native Mac acceptance, public store availability, or removal of historical copies outside reachable local Git history.
 
 ## In progress
 - Feature branch feature/v1.2.0-release includes PR #8; production configuration and live acceptance remain open.
+- PR #8 remains the publishing prerequisite and should merge into develop first. PR #9 stays draft for the full v1.2.0 candidate. A normal merge preserves their shared ancestry; reconcile the feature branch if #8 is squash-merged. The latest local website/security preparation still needs pushing and fresh CI before it is represented by PR #9.
 - Candidate ZIP is available for playback/Mac testing. The uninstall URL is intentionally unset until a real survey write is verified.
 - No website deployment, survey deployment, real Sheet writes, Search Console setup, console listing update, store submission or public v1.2.0 availability has been confirmed. The new GA4 property is configured but has received no website data yet.
 

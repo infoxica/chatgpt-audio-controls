@@ -32,7 +32,7 @@ for (const [code, c] of Object.entries(releaseLocales)) {
   mkdirSync(folder, { recursive: true });
   writeFileSync(file, JSON.stringify({ extensionName: { message: title }, extensionDescription: { message: description }, extensionActionTitle: { message: 'ChatGPT Audio Controls' }, visibilityCommand: { message: c.visibilityShortcut } }, null, 2) + '\n');
   const site = config.siteUrl + (code === 'en' ? '' : code + '/');
-  listings += `## ${code}\n\n### Title\n\n${title}\n\n### Summary\n\n${description}\n\n### Description\n\n${c.siteIntro}\n\n${c.quickStartBody}\n\n${c.compactHelp}\n\n${c.hideHint}\n${c.idleOnly} / ${c.allUi}\n\n${c.visibilityShortcut}: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). ${c.customize}.\n${c.shortcutScope}\n\n${c.sourceFormat}\n\n${c.desktop}\n\n${c.privacyBody}\n\n${c.feedbackPolicy}\n\n${c.independent}\n\n${c.help}: ${site}#help\n${c.privacy}: ${site}#privacy\n\n`;
+  listings += `## ${code}\n\n### Title\n\n${title}\n\n### Summary\n\n${description}\n\n### Description\n\n${c.siteIntro}\n\n${c.quickStartBody}\n\n${c.compactHelp}\n\n${c.hideHint}\n${c.idleOnly} / ${c.allUi}\n\n${c.visibilityShortcut}: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). ${c.customize}.\n${c.shortcutScope}\n\n${c.sourceFormat}\n\n${c.desktop}\n\n${c.privacyBody}\n\n${c.feedbackPolicy}\n\n${c.independent}\n\n${c.website}: ${site}\n${c.help}: ${site}#help\n${c.privacy}: ${site}#privacy\n\n`;
 }
 writeFileSync('docs/STORE-LISTINGS.md', listings.trimEnd() + '\n');
 console.log('Generated 17 manifest catalogs and store listings.');

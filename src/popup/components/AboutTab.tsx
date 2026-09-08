@@ -1,14 +1,19 @@
 import React from "react";
-import { Sparkles, ShieldCheck, BookOpen, Bug } from "lucide-react";
+import { Sparkles, ShieldCheck, BookOpen, Bug, Globe } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
 import { EXTENSION_VERSION } from "../../shared/constants";
 import { TranslationSchema } from "../../shared/i18n";
+import { resolveLanguage } from "../../shared/i18n/core";
+import { getReleaseCopy } from "../../shared/i18n/release-copy";
+import config from "../../../config/release.json";
 
 interface AboutTabProps {
   t: TranslationSchema;
+  language: string;
 }
 
-export const AboutTab: React.FC<AboutTabProps> = ({ t }) => {
+export const AboutTab: React.FC<AboutTabProps> = ({ t, language }) => {
+  const locale = resolveLanguage(language);
   return (
     <div className="popup-body">
       <div className="section-card" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
@@ -50,6 +55,10 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t }) => {
 
       <div className="section-card">
         <div className="shortcut-list">
+          <a href={`${config.siteUrl}${locale === 'en' ? '' : locale + '/'}`} target="_blank" rel="noreferrer" className="shortcut-row" style={{ textDecoration: "none", color: "inherit" }}>
+            <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}><Globe size={13} /> {getReleaseCopy(language).website}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
           <a
             href="https://github.com/infoxica/chatgpt-audio-controls"
             target="_blank"
