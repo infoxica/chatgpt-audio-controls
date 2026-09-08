@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — 읽어주기"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT 소리 내어 읽기 제어: 일시 정지, 탐색, 속도, 음량, 오디오 다운로드, 단축키, 응답 읽기 버튼."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "플로팅 컨트롤 표시 / 숨기기"
+  }
+}

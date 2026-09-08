@@ -36,6 +36,9 @@ async function buildContentScript() {
     process.exit(1);
   }
 
+  const worker = await Bun.build({ entrypoints: [resolve(__dirname, "../src/background/worker.ts")], outdir: resolve(__dirname, "../dist/background"), target: "browser", naming: "worker.js" });
+  if (!worker.success) throw new Error(`Worker build failed: ${worker.logs}`);
+
   // Copy player.css
   copyFileSync(
     resolve(__dirname, "../src/content/player.css"),

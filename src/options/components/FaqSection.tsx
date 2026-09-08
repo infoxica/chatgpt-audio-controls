@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 import { TranslationSchema } from "../../shared/i18n";
+import { getReleaseCopy } from '../../shared/i18n/release-copy';
 
 interface FaqItemProps {
   question: string;
@@ -28,9 +29,11 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
 
 interface FaqSectionProps {
   t: TranslationSchema;
+  language?: string;
 }
 
-export const FaqSection: React.FC<FaqSectionProps> = ({ t }) => {
+export const FaqSection: React.FC<FaqSectionProps> = ({ t, language }) => {
+  const copy = getReleaseCopy(language);
   return (
     <div className="settings-section">
       <div className="card">
@@ -55,12 +58,12 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ t }) => {
 
           <FaqItem
             question={t.options.faq.q3}
-            answer={<p>{t.options.faq.a3}</p>}
+            answer={<p>{copy.sourceFormat}</p>}
           />
 
           <FaqItem
             question={t.options.faq.q4}
-            answer={<p>{t.options.faq.a4}</p>}
+            answer={<p>{copy.compactHelp}</p>}
           />
 
           <FaqItem
@@ -70,7 +73,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ t }) => {
 
           <FaqItem
             question={t.options.faq.q6}
-            answer={<p>{t.options.faq.a6}</p>}
+            answer={<p>{copy.privacyBody}</p>}
           />
         </div>
       </div>

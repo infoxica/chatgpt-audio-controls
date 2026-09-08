@@ -21,7 +21,7 @@ if (process.platform === "win32") {
     { stdio: "inherit" }
   );
 } else {
-  execSync(`cd "${distDir}" && zip -r "${zipPath}" ./*`, { stdio: "inherit" });
+  execSync(`cd "${distDir}" && zip -r "${zipPath}" *`, { stdio: "inherit" });
 }
 
 console.log(`Extension package zip created at: ${zipPath}`);

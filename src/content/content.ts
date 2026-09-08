@@ -1,7 +1,10 @@
+import { getReleaseCopy } from "../shared/i18n/release-copy";
+import { floatingVisibility } from "../shared/visibility";
+import { playbackAction, platformKeys } from "../shared/shortcuts";
 import { getLucideSvg, setIcon } from "./icons";
 import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
-import { getTranslations } from "../shared/i18n";
+import { getTranslations } from "../shared/i18n/core";
 
 (function () {
   "use strict";
@@ -23,6 +26,7 @@ import { getTranslations } from "../shared/i18n";
 
   let activeMedia: HTMLMediaElement | null = null;
   let settingsCache: ExtensionSettings | null = null;
+  let visibilityShortcut = '';
   let sessionSpeed: number | null = null;
   let sessionVolume: number | null = null;
   let activeInlineButton: HTMLElement | null = null;
@@ -118,6 +122,18 @@ import { getTranslations } from "../shared/i18n";
     console.warn("[ChatGPT Audio Controls]", ...args);
   }
 
+  let statusTimer = 0;
+  function showStatus(message: string, error = false): void {
+    let status = document.getElementById('cgpt-ra-status');
+    if (!status) { status = document.createElement('div'); status.id = 'cgpt-ra-status'; status.setAttribute('role', 'status'); document.body.append(status); }
+    status.textContent = message;
+    status.hidden = false;
+    status.dataset.error = String(error);
+    window.clearTimeout(statusTimer);
+    statusTimer = window.setTimeout(() => { if (status) status.hidden = true; }, error ? 12000 : 4000);
+  }
+  function recoveryCopy() { return getReleaseCopy(settingsCache?.language); }
+
   function clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
   }
@@ -191,7 +207,7 @@ import { getTranslations } from "../shared/i18n";
       if (backBtn) backBtn.title = t.content.tooltips.back.replace("{s}", String(step));
 
       const playBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-play");
-      if (playBtn) playBtn.title = t.content.tooltips.playPause;
+      if (playBtn) playBtn.title = platformKeys(t.content.tooltips.playPause);
 
       const forwardBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-forward");
       if (forwardBtn) forwardBtn.title = t.content.tooltips.forward.replace("{s}", String(step));
@@ -221,19 +237,19 @@ import { getTranslations } from "../shared/i18n";
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>${t.content.shortcutsPopover.back.replace("{s}", String(step))}</span>
-            <span class="cgpt-ra-shortcut-key">Alt + ←</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + ←</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>${t.content.shortcutsPopover.forward.replace("{s}", String(step))}</span>
-            <span class="cgpt-ra-shortcut-key">Alt + →</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + →</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>${t.content.shortcutsPopover.slower}</span>
-            <span class="cgpt-ra-shortcut-key">Shift + &lt;</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + ,</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>${t.content.shortcutsPopover.faster}</span>
-            <span class="cgpt-ra-shortcut-key">Shift + &gt;</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + .</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>${t.content.shortcutsPopover.volumeScroll}</span>
@@ -244,6 +260,17 @@ import { getTranslations } from "../shared/i18n";
             <span class="cgpt-ra-shortcut-key">${t.content.shortcutsPopover.smoothScrubKey.replace(/{s}/g, String(step))}</span>
           </div>
         `;
+        const commandRow = document.createElement('div');
+        commandRow.className = 'cgpt-ra-shortcut-row';
+        const commandLabel = document.createElement('span');
+        commandLabel.textContent = recoveryCopy().visibilityShortcut;
+        const commandKey = document.createElement('span');
+        commandKey.className = 'cgpt-ra-shortcut-key';
+        commandKey.textContent = visibilityShortcut ? platformKeys(visibilityShortcut) : recoveryCopy().unassigned;
+        commandRow.append(commandLabel, commandKey);
+        const scope = document.createElement('p');
+        scope.textContent = recoveryCopy().shortcutScope;
+        helpPopover.append(commandRow, scope);
       }
 
       const collapseBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-collapse-btn");
@@ -264,6 +291,7 @@ import { getTranslations } from "../shared/i18n";
       }
 
       settingsCache = event.data.settings as ExtensionSettings;
+      visibilityShortcut = typeof event.data.shortcut === 'string' ? event.data.shortcut.slice(0, 80) : '';
 
       if (activeMedia) {
         try {
@@ -276,6 +304,7 @@ import { getTranslations } from "../shared/i18n";
       applyI18nLabels();
       installInlineReadAloudButtons();
       updateControls();
+      scheduleLayoutSync();
     });
 
     window.postMessage(
@@ -841,19 +870,19 @@ import { getTranslations } from "../shared/i18n";
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Back 10 sec</span>
-            <span class="cgpt-ra-shortcut-key">Alt + ←</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + ←</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Forward 10 sec</span>
-            <span class="cgpt-ra-shortcut-key">Alt + →</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + →</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Slower Preset</span>
-            <span class="cgpt-ra-shortcut-key">Shift + &lt;</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + ,</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Faster Preset</span>
-            <span class="cgpt-ra-shortcut-key">Shift + &gt;</span>
+            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + .</span>
           </div>
           <div class="cgpt-ra-shortcut-row">
             <span>Volume Scroll</span>
@@ -1025,87 +1054,41 @@ import { getTranslations } from "../shared/i18n";
     if (!leftRail || !rightRail || !floatingToggle) return;
 
     const composer = getComposer();
-    const hasActiveAudio = activeMedia && !activeMedia.paused && !activeMedia.ended;
-    const shouldStayCollapsed = userForcedCollapsed;
-    const shouldExpand = Boolean(!shouldStayCollapsed && (hasActiveAudio || userForcedExpand));
-
-    if (!composer) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-      floatingToggle.style.right = "16px";
-      floatingToggle.style.bottom = "80px";
-      return;
-    }
-
-    const rect = composer.getBoundingClientRect();
+    const settings = getSavedSettings();
+    const hasSession = Boolean(activeMedia && !activeMedia.ended);
+    const shouldExpand = !userForcedCollapsed && (hasSession || userForcedExpand);
+    const visible = floatingVisibility(Boolean(settings.floatingUiHidden), settings.floatingUiHideMode || 'idle-only', hasSession, shouldExpand);
+    leftRail.classList.toggle('cgpt-ra-collapsed', !visible.player);
+    rightRail.classList.toggle('cgpt-ra-collapsed', !visible.player);
+    floatingToggle.classList.toggle('cgpt-ra-hidden', !visible.launcher);
+    cache.isCollapsed = !visible.player;
+    cache.floatingHidden = !visible.launcher;
     const viewportWidth = window.innerWidth;
-    const sideGap = 10;
-    const outerMargin = 14;
-
+    const rect = composer?.getBoundingClientRect() || { left: 16, right: viewportWidth - 16, top: window.innerHeight - 72, height: 48 };
+    floatingToggle.style.left = `${Math.round(Math.max(8, Math.min(viewportWidth - 52, rect.right + 12)))}px`;
+    floatingToggle.style.top = `${Math.round(Math.max(8, Math.min(window.innerHeight - 52, rect.top + rect.height / 2 - 21)))}px`;
+    floatingToggle.style.right = '';
+    floatingToggle.style.bottom = '';
+    const sideGap = 10, outerMargin = 14, minLeftWidth = 240, maxLeftWidth = 430;
     const leftAvailable = rect.left - outerMargin - sideGap;
     const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-
-    const minLeftWidth = 240;
-    const maxLeftWidth = 430;
-
-    const minRightWidth = 360;
-    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= minRightWidth;
-
-    if (shouldStayCollapsed) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-
-      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
-      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
-
-      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
-      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
-      floatingToggle.style.right = "";
-      floatingToggle.style.bottom = "";
+    const compact = leftAvailable < minLeftWidth || rightAvailable < 360;
+    leftRail.classList.toggle('cgpt-ra-compact', compact);
+    rightRail.classList.toggle('cgpt-ra-compact', compact);
+    if (!visible.player) return;
+    if (compact) {
+      const width = Math.max(160, Math.min(430, viewportWidth - 24));
+      const left = Math.max(12, Math.min(viewportWidth - width - 12, (rect.left + rect.right - width) / 2));
+      rightRail.style.width = `${width}px`;
+      const rightHeight = rightRail.getBoundingClientRect().height || 48;
+      const top = Math.max(8, rect.top - rightHeight - 64);
+      leftRail.style.width = `${width}px`;
+      leftRail.style.left = rightRail.style.left = `${left}px`;
+      leftRail.style.top = `${top}px`;
+      rightRail.style.top = `${top + 48}px`;
       return;
     }
-
-    if (!canFit || !shouldExpand) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-
-      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
-      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
-
-      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
-      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
-      floatingToggle.style.right = "";
-      floatingToggle.style.bottom = "";
-      return;
-    }
-
-    if (!cache.floatingHidden) {
-      cache.floatingHidden = true;
-      floatingToggle.classList.add("cgpt-ra-hidden");
-    }
-
-    if (cache.isCollapsed) {
-      cache.isCollapsed = false;
-      leftRail.classList.remove("cgpt-ra-collapsed");
-      rightRail.classList.remove("cgpt-ra-collapsed");
-    }
+    rightRail.style.width = '';
     const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
     const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
     const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
@@ -1242,12 +1225,13 @@ import { getTranslations } from "../shared/i18n";
     try {
       if (activeMedia.paused) {
         const p = activeMedia.play();
-        if (p?.catch) p.catch((error) => warn("Play failed:", error));
+        if (p?.catch) p.catch((error) => { warn("Play failed:", error); showStatus(recoveryCopy().playError, true); });
       } else {
         activeMedia.pause();
       }
     } catch (error) {
       warn("Play/pause failed:", error);
+      showStatus(recoveryCopy().playError, true);
     }
   }
 
@@ -1436,6 +1420,7 @@ import { getTranslations } from "../shared/i18n";
   async function downloadCurrentAudio(): Promise<void> {
     if (!activeMedia || !downloadButton) return;
 
+    showStatus(recoveryCopy().downloading);
     downloadButton.setAttribute("disabled", "true");
     downloadButton.classList.add("cgpt-ra-download-busy");
     setIcon(downloadButton, "loader-circle");
@@ -1463,7 +1448,7 @@ import { getTranslations } from "../shared/i18n";
       log("Downloaded audio:", filename, blob.size, mime);
     } catch (error) {
       warn("Download failed:", error);
-      alert(getI18n().content.alerts.downloadError);
+      showStatus(recoveryCopy().downloadError, true);
     } finally {
       downloadButton.classList.remove("cgpt-ra-download-busy");
       downloadButton.removeAttribute("disabled");
@@ -1501,6 +1486,7 @@ import { getTranslations } from "../shared/i18n";
       label === "copy" ||
       label.includes("copy response") ||
       label.includes("copy code")
+      || ['コピー', '복사', 'copier', 'kopieren', 'copia', 'salin', 'kopyala', 'कॉपी करें', 'sao chép', 'คัดลอก', '复制', '複製', 'copiar', 'копировать'].some(value => label.includes(value))
     );
   }
 
@@ -1509,6 +1495,7 @@ import { getTranslations } from "../shared/i18n";
   // toolbar buttons and overflow-menu items use the same matching logic.
   const READ_ALOUD_LABELS = [
     "read aloud",
+    "読み上げ", "音声で読み上げる", "소리 내어 읽기", "lire à voix haute", "vorlesen", "leggi ad alta voce", "bacakan", "baca dengan lantang", "sesli oku", "ज़ोर से पढ़ें", "जोर से पढ़ें",
     "read out loud",
     "leer en voz alta",
     "leer respuesta",
@@ -1546,6 +1533,7 @@ import { getTranslations } from "../shared/i18n";
       label.includes("more actions") ||
       label.includes("more options") ||
       label.includes("response actions") ||
+      ['その他', '他の操作', '더 보기', '추가 작업', 'plus d’actions', "plus d'actions", 'weitere aktionen', 'weitere optionen', 'altre azioni', 'azioni aggiuntive', 'opsi lainnya', 'tindakan lainnya', 'diğer işlemler', 'diğer seçenekler', 'और विकल्प', 'thao tác khác', 'tùy chọn khác', 'การดำเนินการเพิ่มเติม', '更多', 'más acciones', 'mais ações', 'другие действия', 'дополнительные действия'].some(value => label.includes(value)) ||
       /(?:^|[-_\s])(more|options|overflow|ellipsis|kebab)(?:[-_\s]|$)/.test(identifier)
     );
   }
@@ -1803,6 +1791,7 @@ import { getTranslations } from "../shared/i18n";
   }
 
   async function triggerNativeReadAloud(turn: Element, inlineButton: HTMLElement): Promise<void> {
+    showStatus(recoveryCopy().pending);
     const inlineRow = inlineButton.parentElement;
     const toolbar = findToolbar(turn);
     const direct = [inlineRow, toolbar, turn]
@@ -1824,6 +1813,7 @@ import { getTranslations } from "../shared/i18n";
     if (!moreBtn) {
       pendingInlineButton = null;
       warn("Could not locate the response More Actions button.");
+      showStatus(recoveryCopy().nativeHelp, true);
       return;
     }
 
@@ -1834,6 +1824,7 @@ import { getTranslations } from "../shared/i18n";
     if (!menuItem) {
       pendingInlineButton = null;
       warn("Could not find Read Aloud in the response popup menu.");
+      showStatus(recoveryCopy().nativeHelp, true);
       document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
       return;
     }
@@ -1886,55 +1877,16 @@ import { getTranslations } from "../shared/i18n";
 
       if (!activeMedia) return;
 
-      // Keep Alt+P as a legacy alias. Space/K are the primary player shortcuts
-      // because they match common web and desktop media players.
-      if (event.altKey && (event.code === "KeyP" || event.key.toLowerCase() === "p")) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        if (!event.repeat) togglePlayback();
-        return;
-      }
-
-      const isPlayPauseKey =
-        !event.altKey &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.shiftKey &&
-        (event.code === "Space" || event.code === "KeyK" || event.key === " ");
-
-      if (isPlayPauseKey) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        if (!event.repeat) togglePlayback();
-        return;
-      }
-
+      const action = playbackAction(event);
+      if (!action) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (action === 'play') { event.stopImmediatePropagation(); if (!event.repeat) togglePlayback(); }
       const step = settings.tapSeekSeconds || CONFIG.tapSeekSeconds;
-
-      if (event.altKey && event.key === "ArrowLeft") {
-        event.preventDefault();
-        seekRelative(-step);
-        return;
-      }
-
-      if (event.altKey && event.key === "ArrowRight") {
-        event.preventDefault();
-        seekRelative(step);
-        return;
-      }
-
-      if (event.shiftKey && event.code === "Comma") {
-        event.preventDefault();
-        changeSpeed(-1);
-        return;
-      }
-
-      if (event.shiftKey && event.code === "Period") {
-        event.preventDefault();
-        changeSpeed(1);
-      }
+      if (action === 'back') seekRelative(-step);
+      if (action === 'forward') seekRelative(step);
+      if (action === 'slower') changeSpeed(-1);
+      if (action === 'faster') changeSpeed(1);
     },
     true,
   );

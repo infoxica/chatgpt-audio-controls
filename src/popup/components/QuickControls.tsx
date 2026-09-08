@@ -1,3 +1,5 @@
+import { VisibilitySettings } from "../../shared/VisibilitySettings";
+import { platformKeys } from '../../shared/shortcuts';
 import React from "react";
 import { Volume2, VolumeX, Gauge, Zap } from "lucide-react";
 import { SPEED_PRESETS } from "../../shared/constants";
@@ -34,6 +36,7 @@ export const QuickControls: React.FC<QuickControlsProps> = ({
 
   return (
     <div className="popup-body">
+      <VisibilitySettings settings={settings} onUpdateSettings={onUpdateSettings} />
       {/* Speed Presets */}
       <div className="section-card">
         <div className="section-title">
@@ -80,7 +83,7 @@ export const QuickControls: React.FC<QuickControlsProps> = ({
             value={settings.defaultVolume}
             onChange={handleVolumeChange}
             className="custom-range"
-            aria-label="Volume Slider"
+            aria-label={t.content.tooltips.volumeSlider}
           />
         </div>
       </div>
@@ -111,7 +114,7 @@ export const QuickControls: React.FC<QuickControlsProps> = ({
         <div className="toggle-row">
           <div className="toggle-info">
             <span className="toggle-label">{t.popup.quickControls.globalShortcuts}</span>
-            <span className="toggle-desc">{t.popup.quickControls.globalShortcutsDesc}</span>
+            <span className="toggle-desc">{platformKeys(t.popup.quickControls.globalShortcutsDesc)}</span>
           </div>
           <label className="switch">
             <input

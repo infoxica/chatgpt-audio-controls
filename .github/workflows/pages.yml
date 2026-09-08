@@ -1,9 +1,14 @@
 name: Official website
 on:
+  push:
+    branches: [master]
+    paths: ['site/**', 'scripts/build-site.ts', 'scripts/preview-site.py', 'tests/site_http_test.py', 'src/shared/i18n/**', 'src/shared/constants.ts', 'config/release.json', 'assets/**', 'public/icons/**', '.github/workflows/pages.yml', 'package.json', 'bun.lock']
+  pull_request:
+    branches: [develop, master]
   workflow_dispatch:
     inputs:
       publish_website:
-        description: 'Deploy the reviewed website from develop (does not submit stores)'
+        description: 'Deploy the reviewed website from develop or master (does not submit stores)'
         type: boolean
         default: false
         required: true
@@ -30,8 +35,9 @@ jobs:
           path: site-dist
   deploy:
     if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
       (github.event_name == 'workflow_dispatch' && inputs.publish_website == true &&
-      github.ref == 'refs/heads/develop')
+      (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'))
     needs: build
     permissions:
       pages: write

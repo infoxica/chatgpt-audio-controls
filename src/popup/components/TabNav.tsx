@@ -18,7 +18,7 @@ export const TabNav: React.FC<TabNavProps> = ({ activeTab, onSelectTab, t }) => 
   ];
 
   return (
-    <nav className="tabs-nav" aria-label="Extension Navigation">
+    <nav className="tabs-nav" aria-label={t.common.extensionName}>
       {tabs.map((tab) => (
         <button
           key={tab.id}

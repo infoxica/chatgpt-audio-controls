@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Baca nyaring"
+  },
+  "extensionDescription": {
+    "message": "Kontrol Baca dengan lantang ChatGPT: jeda, geser, kecepatan, volume, unduh audio, pintasan, dan tombol respons."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Tampilkan / sembunyikan kontrol mengambang"
+  }
+}

@@ -1,10 +1,12 @@
+import { QuickStart } from "../shared/QuickStart";
+import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { TabNav, TabType } from "./components/TabNav";
 import { QuickControls } from "./components/QuickControls";
 import { ShortcutsDrawer } from "./components/ShortcutsDrawer";
 import { AboutTab } from "./components/AboutTab";
-import { getSettings, saveSettings } from "../shared/storage";
+import { getSettings, saveSettings, subscribeSettings } from "../shared/storage";
 import { DEFAULT_SETTINGS, EXTENSION_VERSION } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 import { useTranslation } from "../shared/i18n";
@@ -16,6 +18,8 @@ export const App: React.FC = () => {
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
   const { t } = useTranslation(settings.language);
+
+  useEffect(() => subscribeSettings(setSettings), []);
 
   useEffect(() => {
     getSettings().then((loaded) => {
@@ -69,9 +73,10 @@ export const App: React.FC = () => {
     handleUpdateSettings({ theme: next });
   };
 
+  const [saveError, setSaveError] = useState(false);
   const handleUpdateSettings = async (partial: Partial<ExtensionSettings>) => {
-    const updated = await saveSettings(partial);
-    setSettings(updated);
+    try { const updated = await saveSettings(partial); setSettings(updated); setSaveError(false); }
+    catch { setSaveError(true); }
   };
 
   const handleOpenChatGPT = () => {
@@ -99,14 +104,16 @@ export const App: React.FC = () => {
         t={t}
       />
 
+      <QuickStart language={settings.language} />
       <TabNav activeTab={activeTab} onSelectTab={setActiveTab} t={t} />
 
+      {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}
       <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         {activeTab === "controls" && (
           <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
-        {activeTab === "shortcuts" && <ShortcutsDrawer t={t} />}
-        {activeTab === "about" && <AboutTab t={t} />}
+        {activeTab === "shortcuts" && <ShortcutsDrawer language={settings.language} t={t} />}
+        {activeTab === "about" && <AboutTab t={t} language={settings.language} />}
       </main>
 
       <footer className="popup-footer">

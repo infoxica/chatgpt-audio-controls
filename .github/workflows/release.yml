@@ -21,6 +21,11 @@ on:
         options:
           - "no"
           - "yes"
+      store:
+        description: "Store to retry"
+        type: choice
+        default: both
+        options: [both, chrome, edge]
 
 permissions:
   contents: read
@@ -33,10 +38,15 @@ jobs:
   verify:
     name: Verify and package extension
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.policy.outputs.publish }}
+      version: ${{ steps.policy.outputs.version }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -49,20 +59,44 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
+      - name: Tests
+        run: bun test
+
+      - name: Release policy
+        id: policy
+        run: bun scripts/release-policy.mjs
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          MANUAL_PUBLISH: ${{ inputs.publish_to_stores }}
+
       - name: Generate icons
         run: bun run build:icons
 
       - name: Validate release metadata
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: startsWith(github.ref, 'refs/tags/v') || steps.policy.outputs.publish == 'true'
         run: bun run release:check
         env:
-          RELEASE_TAG: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('v{0}', steps.policy.outputs.version) }}
 
       - name: Build extension and userscript
         run: bun run build
 
+      - name: Build website and feedback fixtures
+        run: |
+          bun run scripts/build-site.ts
+          bun run scripts/build-feedback.ts
+
+      - name: Install test browser
+        run: bunx playwright install --with-deps chromium
+
+      - name: Browser integration checks
+        run: bunx playwright test
+
       - name: Package extension ZIP
         run: bun run scripts/package-zip.ts
+
+      - name: Validate archive
+        run: python3 scripts/validate-package.py dist-zip/*.zip
 
       - name: Upload release assets
         uses: actions/upload-artifact@v4
@@ -76,7 +110,7 @@ jobs:
   release:
     name: Publish GitHub release
     needs: verify
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'push' && github.ref == 'refs/heads/master' && needs.verify.outputs.publish == 'true')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -91,7 +125,8 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('v{0}', needs.verify.outputs.version) }}
+          target_commitish: ${{ github.sha }}
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
@@ -100,182 +135,42 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  publish-stores:
-    name: Publish Chrome and Edge store updates
+  publish-chrome:
+    name: Publish chrome store update
     needs: verify
-    # Temporary launch safeguard: releases require an explicit manual confirmation.
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master' && inputs.publish_to_stores == 'yes'
+    if: needs.verify.outputs.publish == 'true' && (github.event_name != 'workflow_dispatch' || inputs.store == 'both' || inputs.store == 'chrome')
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
+    timeout-minutes: 15
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Download release package
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: extension-release-${{ github.run_id }}
           path: release-assets
-
-      - name: Publish to Chrome Web Store
-        shell: bash
+      - name: Submit to chrome
         env:
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
           CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
           CHROME_PUBLISHER_ID: ${{ secrets.CHROME_PUBLISHER_ID }}
           CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-        run: |
-          set -euo pipefail
+        run: bash scripts/publish-chrome.sh
 
-          : "${CHROME_CLIENT_ID:?Missing CHROME_CLIENT_ID secret}"
-          : "${CHROME_CLIENT_SECRET:?Missing CHROME_CLIENT_SECRET secret}"
-          : "${CHROME_REFRESH_TOKEN:?Missing CHROME_REFRESH_TOKEN secret}"
-          : "${CHROME_PUBLISHER_ID:?Missing CHROME_PUBLISHER_ID secret}"
-          : "${CHROME_EXTENSION_ID:?Missing CHROME_EXTENSION_ID secret}"
-
-          zip_path="$(find release-assets -type f -name 'chatgpt-audio-controls-v*.zip' -print -quit)"
-          : "${zip_path:?Release ZIP was not found}"
-
-          token_response="$(curl --fail-with-body --silent --show-error \
-            --request POST \
-            --data-urlencode "client_id=$CHROME_CLIENT_ID" \
-            --data-urlencode "client_secret=$CHROME_CLIENT_SECRET" \
-            --data-urlencode "refresh_token=$CHROME_REFRESH_TOKEN" \
-            --data-urlencode "grant_type=refresh_token" \
-            https://oauth2.googleapis.com/token)"
-          access_token="$(jq -er '.access_token' <<< "$token_response")"
-
-          item_path="publishers/$CHROME_PUBLISHER_ID/items/$CHROME_EXTENSION_ID"
-          upload_response="$(curl --fail-with-body --silent --show-error \
-            --request POST \
-            --header "Authorization: Bearer $access_token" \
-            --header "Content-Type: application/zip" \
-            --upload-file "$zip_path" \
-            "https://chromewebstore.googleapis.com/upload/v2/$item_path:upload")"
-          upload_state="$(jq -er '.uploadState' <<< "$upload_response")"
-          echo "Chrome Web Store upload state: $upload_state"
-
-          if [[ "$upload_state" == "IN_PROGRESS" ]]; then
-            for attempt in {1..30}; do
-              sleep 5
-              status_response="$(curl --fail-with-body --silent --show-error \
-                --request GET \
-                --header "Authorization: Bearer $access_token" \
-                "https://chromewebstore.googleapis.com/v2/$item_path:fetchStatus")"
-              upload_state="$(jq -er '.lastAsyncUploadState' <<< "$status_response")"
-              echo "Chrome Web Store upload state ($attempt/30): $upload_state"
-              [[ "$upload_state" == "SUCCEEDED" ]] && break
-              [[ "$upload_state" == "FAILED" || "$upload_state" == "NOT_FOUND" ]] && {
-                echo "$status_response" | jq . >&2
-                exit 1
-              }
-            done
-          fi
-
-          [[ "$upload_state" == "SUCCEEDED" ]] || {
-            echo "Chrome Web Store upload did not succeed: $upload_response" >&2
-            exit 1
-          }
-
-          publish_response="$(curl --fail-with-body --silent --show-error \
-            --request POST \
-            --header "Authorization: Bearer $access_token" \
-            "https://chromewebstore.googleapis.com/v2/$item_path:publish")"
-          echo "Chrome Web Store submission accepted:"
-          echo "$publish_response" | jq .
-
-      - name: Publish to Microsoft Edge Add-ons
-        shell: bash
+  publish-edge:
+    name: Publish edge store update
+    needs: verify
+    if: needs.verify.outputs.publish == 'true' && (github.event_name != 'workflow_dispatch' || inputs.store == 'both' || inputs.store == 'edge')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: extension-release-${{ github.run_id }}
+          path: release-assets
+      - name: Submit to edge
         env:
           EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
           EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
           EDGE_PRODUCT_ID: ${{ secrets.EDGE_PRODUCT_ID }}
-        run: |
-          set -euo pipefail
-
-          : "${EDGE_API_KEY:?Missing EDGE_API_KEY secret}"
-          : "${EDGE_CLIENT_ID:?Missing EDGE_CLIENT_ID secret}"
-          : "${EDGE_PRODUCT_ID:?Missing EDGE_PRODUCT_ID secret}"
-
-          zip_path="$(find release-assets -type f -name 'chatgpt-audio-controls-v*.zip' -print -quit)"
-          : "${zip_path:?Release ZIP was not found}"
-          api_root="https://api.addons.microsoftedge.microsoft.com/v1/products/$EDGE_PRODUCT_ID"
-          auth_args=(
-            --header "Authorization: ApiKey $EDGE_API_KEY"
-            --header "X-ClientID: $EDGE_CLIENT_ID"
-          )
-
-          poll_operation() {
-            local operation_url="$1"
-            local operation_name="$2"
-            local operation_response
-            local operation_status
-
-            for attempt in {1..60}; do
-              operation_response="$(curl --fail-with-body --silent --show-error \
-                --request GET \
-                "${auth_args[@]}" \
-                "$operation_url")"
-              operation_status="$(jq -er '.status' <<< "$operation_response")"
-              echo "Edge $operation_name status ($attempt/60): $operation_status"
-
-              case "$operation_status" in
-                Succeeded)
-                  return 0
-                  ;;
-                Failed)
-                  echo "$operation_response" | jq . >&2
-                  return 1
-                  ;;
-                InProgress)
-                  sleep 5
-                  ;;
-                *)
-                  echo "$operation_response" | jq . >&2
-                  return 1
-                  ;;
-              esac
-            done
-
-            echo "Edge $operation_name did not finish within the polling window." >&2
-            return 1
-          }
-
-          upload_headers="$(mktemp)"
-          upload_body="$(mktemp)"
-          curl --fail-with-body --silent --show-error \
-            --dump-header "$upload_headers" \
-            --output "$upload_body" \
-            --request POST \
-            "${auth_args[@]}" \
-            --header "Content-Type: application/zip" \
-            --upload-file "$zip_path" \
-            "$api_root/submissions/draft/package"
-
-          upload_location="$(awk 'BEGIN { IGNORECASE=1 } /^Location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$upload_headers")"
-          : "${upload_location:?Edge upload did not return an operation Location header}"
-          upload_operation_id="${upload_location##*/}"
-          poll_operation "$api_root/submissions/draft/package/operations/$upload_operation_id" "package upload"
-
-          publish_headers="$(mktemp)"
-          publish_body="$(mktemp)"
-          curl --fail-with-body --silent --show-error \
-            --dump-header "$publish_headers" \
-            --output "$publish_body" \
-            --request POST \
-            "${auth_args[@]}" \
-            --header "Content-Type: application/json" \
-            --data "{\"notes\":\"Automated release from GitHub Actions: $GITHUB_REF_NAME\"}" \
-            "$api_root/submissions"
-
-          publish_location="$(awk 'BEGIN { IGNORECASE=1 } /^Location:/ { sub(/\r$/, ""); sub(/^[^:]+:[[:space:]]*/, ""); print; exit }' "$publish_headers")"
-          : "${publish_location:?Edge publish did not return an operation Location header}"
-          publish_operation_id="${publish_location##*/}"
-          poll_operation "$api_root/submissions/operations/$publish_operation_id" "submission"
-
-          echo "Microsoft Edge Add-ons submission accepted for certification."
+        run: bash scripts/publish-edge.sh

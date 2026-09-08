@@ -1,18 +1,14 @@
 {
   "extensionName": {
-    "message": "ChatGPT 音訊控制與朗讀增強",
-    "description": "The title of the extension displayed in the browser"
+    "message": "ChatGPT 音訊控制與朗讀增強"
   },
   "extensionDescription": {
-    "message": "ChatGPT 朗讀控制增強：進度跳轉、動態倍速、音量調節、音訊下載、快捷鍵與單則朗讀按鈕。",
-    "description": "The description of the extension displayed in the browser store"
+    "message": "ChatGPT 朗讀控制項：暫停、跳轉、調速、音量、音訊下載、快速鍵和回覆按鈕。"
   },
   "extensionActionTitle": {
-    "message": "ChatGPT 音訊控制",
-    "description": "Tooltip for the extension icon in the toolbar"
+    "message": "ChatGPT Audio Controls"
   },
-  "storeDescription": {
-    "message": "ChatGPT 音訊控制與朗讀增強 (ChatGPT Audio Controls & Read Aloud) 讓 ChatGPT 內建的「朗讀」功能更容易尋找、使用與掌握。\n\n長篇 AI 回覆內容非常實用，但聆聽時不應失去對進度的控制。ChatGPT 原生的朗讀功能隱藏在回覆選單中，容易被忽略；其基礎的播放體驗也缺少便捷的暫停、繼續、倒帶、調速或調整音量的方式。本擴充功能將這些實用控制項直接放置在最需要的地方：緊鄰您的 ChatGPT 對話介面。\n\n如果您希望在聆聽長篇回答的同時完全掌控播放進度，請安裝 ChatGPT 音訊控制與朗讀增強。無論您是在邊工作邊閱讀、在多工任務間切換、接聽電話，或是偏好依照自己的節奏聆聽回覆，它都能帶來絕佳便利。\n\n核心功能：\n\n- 直接在 AI 回覆工具列中點擊醒目的一鍵朗讀按鈕開始朗讀。\n- 隨時播放與暫停，無需擔心遺失當前播放位置。\n- 單擊快進或倒退 10 秒，或長按快進/倒退按鈕實現平滑極速拖曳。\n- 自由調節播放倍速，符合您最舒適的聆聽節奏。\n- 在播放器中直接調整音量，支援滑鼠滾輪懸停快速調節音量。\n- 提供符合標準播放器的鍵盤快捷鍵（播放/暫停、快進/倒退、調速）。\n- 在 ChatGPT 暴露可下載媒體串流時，一鍵下載當前的朗讀音訊檔案。\n- 緊湊且自適應的膠囊播放器設計，自然融入對話介面。\n\n本擴充功能僅在 chatgpt.com 上運作，且僅針對您主動選擇播放的朗讀音訊提供控制。它不會取代 ChatGPT 的語音，而是為您提供對原生音訊體驗的實用掌控力。\n\n隱私至關重要。ChatGPT 音訊控制與朗讀增強不會收集您的提示詞、回覆內容、音訊或任何個人資訊。擴充功能完全無分析追蹤、無遙測資料、無擴充功能營運的後端伺服器。您的偏好設定儲存在本機瀏覽器中，所有音訊處理均在瀏覽器本機完成。當您選擇下載音訊時，擴充功能僅會取得產生該檔案所需的已授權 ChatGPT 媒體 URL。\n\nChatGPT 音訊控制與朗讀增強是一個獨立的開源專案，與 OpenAI 無關聯、無背書或贊助關係。ChatGPT 是 OpenAI 的商標。",
-    "description": "Full store description for the Chrome Web Store and Edge Add-ons listing"
+  "visibilityCommand": {
+    "message": "顯示／隱藏浮動控制項"
   }
 }

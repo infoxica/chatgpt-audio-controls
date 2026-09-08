@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — 読み上げ"
+  },
+  "extensionDescription": {
+    "message": "ChatGPTの読み上げを操作：一時停止、シーク、速度、音量、音声ダウンロード、ショートカット、回答の読み上げボタン。"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "フローティングコントロールの表示／非表示"
+  }
+}

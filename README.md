@@ -20,6 +20,7 @@
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.1.0-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
+[![Agent Ready](https://agent-ready.dev/api/badge/item-loaded-partial-complexity.trycloudflare.com)](https://agent-ready.dev)
 
 [Why I Created This](#why-i-created-this) • [Features](#features) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
@@ -191,6 +192,16 @@ ChatGPT Audio Controls operates **100% locally in your browser**.
 - Read our complete [PRIVACY.md](PRIVACY.md).
 
 ---
+
+## v1.2.0 candidate
+
+The extension candidate adds Hindi, French, German, Japanese, Korean, Indonesian, Italian and Turkish, for 17 locales. It includes compact controls above the composer, controls that remain available while paused, and two floating-UI visibility modes in the popup and options.
+
+Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
+
+The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
+
+See the [delivery status](docs/RELEASE-1.2.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.2.0.md) for remaining checks. This candidate is not a claim of store availability. The standalone userscript preserves its existing functionality and does not gain all new extension features.
 
 ## 🤝 Contributing
 

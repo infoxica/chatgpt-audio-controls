@@ -1,0 +1,8 @@
+{
+  "version": "1.2.0",
+  "feedbackDeployment": true,
+  "chromeLive": true,
+  "edgeLive": true,
+  "nativeMac": "waived-by-owner",
+  "websiteDeployment": true
+}
