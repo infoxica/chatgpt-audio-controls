@@ -1,12 +1,15 @@
+import { platformKeys } from "../../shared/shortcuts";
+import { CommandShortcut } from "../../shared/CommandShortcut";
 import React from "react";
 import { Keyboard, MousePointer } from "lucide-react";
 import { TranslationSchema } from "../../shared/i18n";
 
 interface ShortcutsGuideProps {
   t: TranslationSchema;
+  language?: string;
 }
 
-export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t }) => {
+export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t, language }) => {
   const shortcutEntries = [
     {
       id: "play-pause",
@@ -30,18 +33,19 @@ export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t }) => {
       id: "speed-decrease",
       action: t.shortcuts.speedDecrease.action,
       description: t.shortcuts.speedDecrease.description,
-      keys: ["Shift", "<"],
+      keys: ["Shift", ","],
     },
     {
       id: "speed-increase",
       action: t.shortcuts.speedIncrease.action,
       description: t.shortcuts.speedIncrease.description,
-      keys: ["Shift", ">"],
+      keys: ["Shift", "."],
     },
   ];
 
   return (
     <div className="settings-section">
+      <CommandShortcut language={language} />
       <div className="card">
         <div className="card-title">
           <Keyboard size={16} color="var(--accent)" />
@@ -68,13 +72,13 @@ export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t }) => {
               <div>
                 <div style={{ fontWeight: 600, fontSize: 13.5 }}>{s.action}</div>
                 <div style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 2 }}>
-                  {s.description}
+                  {platformKeys(s.description)}
                 </div>
               </div>
               <div style={{ display: "flex", gap: 4 }}>
                 {s.keys.map((k, i) => (
                   <span key={i} className="kbd" style={{ padding: "4px 8px", fontSize: 11 }}>
-                    {k}
+                    {platformKeys(k)}
                   </span>
                 ))}
               </div>

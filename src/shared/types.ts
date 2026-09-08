@@ -8,9 +8,19 @@ export type SupportedLanguage =
   | "es"
   | "pt-BR"
   | "pt-PT"
-  | "ru";
+  | "ru"
+  | "hi"
+  | "fr"
+  | "de"
+  | "ja"
+  | "ko"
+  | "id"
+  | "it"
+  | "tr";
 
 export interface ExtensionSettings {
+  floatingUiHidden: boolean;
+  floatingUiHideMode: "idle-only" | "all";
   defaultSpeed: number;
   defaultVolume: number;
   tapSeekSeconds: number;

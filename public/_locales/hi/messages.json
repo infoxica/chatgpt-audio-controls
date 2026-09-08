@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — पढ़कर सुनाएँ"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT Read Aloud के कंट्रोल: रोकें, आगे-पीछे जाएँ, गति और आवाज़ बदलें, ऑडियो डाउनलोड करें और शॉर्टकट इस्तेमाल करें।"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "फ़्लोटिंग कंट्रोल दिखाएँ / छिपाएँ"
+  }
+}

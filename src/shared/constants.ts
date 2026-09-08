@@ -1,6 +1,6 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
-export const EXTENSION_VERSION = "1.1.0";
+export const EXTENSION_VERSION = "1.2.0";
 
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
@@ -11,6 +11,8 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const DEFAULT_SETTINGS: ExtensionSettings = {
+  floatingUiHidden: false,
+  floatingUiHideMode: "idle-only",
   defaultSpeed: 1,
   defaultVolume: 1,
   tapSeekSeconds: 10,
@@ -25,6 +27,8 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
 // Keep each preference under its own sync key so independent updates from the
 // popup and options page cannot overwrite one another.
 export const SETTING_STORAGE_KEYS: Record<keyof ExtensionSettings, string> = {
+  floatingUiHidden: "cgpt-ra-settings.floatingUiHidden",
+  floatingUiHideMode: "cgpt-ra-settings.floatingUiHideMode",
   defaultSpeed: "cgpt-ra-settings.defaultSpeed",
   defaultVolume: "cgpt-ra-settings.defaultVolume",
   tapSeekSeconds: "cgpt-ra-settings.tapSeekSeconds",
@@ -54,6 +58,15 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: "pt-BR", label: "Portuguese (Brazil)", nativeName: "Português (Brasil)" },
   { code: "pt-PT", label: "Portuguese (Portugal)", nativeName: "Português (Portugal)" },
   { code: "ru", label: "Russian", nativeName: "Русский" },
+  { code: "hi", label: "Hindi", nativeName: "हिन्दी" },
+  { code: "fr", label: "French", nativeName: "Français" },
+  { code: "de", label: "German", nativeName: "Deutsch" },
+  { code: "ja", label: "Japanese", nativeName: "日本語" },
+  { code: "ko", label: "Korean", nativeName: "한국어" },
+  { code: "id", label: "Indonesian", nativeName: "Bahasa Indonesia" },
+  { code: "it", label: "Italian", nativeName: "Italiano" },
+  { code: "tr", label: "Turkish", nativeName: "Türkçe" },
+
 ];
 
 export const SHORTCUTS: ShortcutItem[] = [

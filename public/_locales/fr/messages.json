@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Lire à voix haute"
+  },
+  "extensionDescription": {
+    "message": "Contrôlez la lecture à voix haute de ChatGPT : pause, avance, vitesse, volume, téléchargement audio et raccourcis."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Afficher / masquer les commandes flottantes"
+  }
+}

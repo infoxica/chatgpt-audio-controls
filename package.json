@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-audio-controls",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Integrated Read Aloud and Audio Controls for ChatGPT — Seeker, Speed, Volume, Download, Shortcuts, and Response Speech Buttons.",
   "type": "module",
   "scripts": {
@@ -40,6 +40,7 @@
     "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/chrome": "^0.0.308",
     "@types/node": "^22.13.4",
     "@types/react": "^19.0.10",

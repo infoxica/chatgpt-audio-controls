@@ -253,6 +253,38 @@ html.light #cgpt-ra-floating-toggle,
 }
 
 /* Disabled controls */
+#cgpt-ra-left.cgpt-ra-compact {
+    min-width: 0;
+    box-sizing: border-box;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+}
+#cgpt-ra-right.cgpt-ra-compact {
+    min-width: 0;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 0 0 16px 16px;
+    padding: 5px;
+}
+#cgpt-ra-status {
+    position: fixed;
+    z-index: 10001;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: min(540px, calc(100vw - 32px));
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: #202938;
+    color: #fff;
+    box-shadow: 0 2px 12px #0004;
+    font: 14px/1.5 system-ui, sans-serif;
+}
+#cgpt-ra-status[hidden] { display: none; }
+
 #cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,
 #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,
 #cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,

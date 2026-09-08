@@ -1,12 +1,15 @@
+import { platformKeys } from "../../shared/shortcuts";
+import { CommandShortcut } from "../../shared/CommandShortcut";
 import React from "react";
 import { Keyboard, MousePointerClick } from "lucide-react";
 import { TranslationSchema } from "../../shared/i18n";
 
 interface ShortcutsDrawerProps {
   t: TranslationSchema;
+  language?: string;
 }
 
-export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t }) => {
+export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t, language }) => {
   const shortcutEntries = [
     {
       id: "play-pause",
@@ -26,17 +29,18 @@ export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t }) => {
     {
       id: "speed-decrease",
       action: t.shortcuts.speedDecrease.action,
-      keys: ["Shift", "<"],
+      keys: ["Shift", ","],
     },
     {
       id: "speed-increase",
       action: t.shortcuts.speedIncrease.action,
-      keys: ["Shift", ">"],
+      keys: ["Shift", "."],
     },
   ];
 
   return (
     <div className="popup-body">
+      <CommandShortcut language={language} />
       <div className="section-card">
         <div className="section-title">
           <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -52,7 +56,7 @@ export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t }) => {
               <div className="key-combo">
                 {s.keys.map((k, i) => (
                   <span key={i} className="kbd">
-                    {k}
+                    {platformKeys(k)}
                   </span>
                 ))}
               </div>

@@ -1,3 +1,5 @@
+import { getSettings, saveSettings } from "../shared/storage";
+import { VISIBILITY_COMMAND } from "../shared/shortcuts";
 import { DEFAULT_SETTINGS, SETTING_STORAGE_KEYS, STORAGE_KEYS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 
@@ -24,12 +26,13 @@ function getStoredSettings(data: Record<string, unknown>): ExtensionSettings {
   } as ExtensionSettings;
 }
 
-function publish(settings: ExtensionSettings): void {
+function publish(settings: ExtensionSettings, shortcut = ''): void {
   window.postMessage(
     {
       source: BRIDGE_SOURCE,
       type: UPDATE_TYPE,
       settings,
+      shortcut,
     },
     "*",
   );
@@ -38,7 +41,8 @@ function publish(settings: ExtensionSettings): void {
 async function readSettings(): Promise<void> {
   try {
     const stored = await chrome.storage.sync.get([STORAGE_KEYS.SETTINGS, ...settingStorageKeyNames]);
-    publish(getStoredSettings(stored));
+    const command = await chrome.runtime.sendMessage({ type: 'get-visibility-shortcut' }).catch(() => null);
+    publish(getStoredSettings(stored), typeof command?.shortcut === 'string' ? command.shortcut : '');
   } catch (_) {
     publish(DEFAULT_SETTINGS);
   }
@@ -78,3 +82,14 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 });
 
 void readSettings();
+window.addEventListener('focus', () => { void readSettings(); });
+
+// Only the extension service worker can request a persistent visibility change.
+chrome.runtime.onMessage.addListener((message, sender, reply) => {
+  if (sender.id !== chrome.runtime.id || message?.type !== VISIBILITY_COMMAND) return;
+  void getSettings().then(async settings => {
+    if (settings.enableShortcuts) await saveSettings({ floatingUiHidden: !settings.floatingUiHidden });
+    reply({ ok: true });
+  }).catch(() => reply({ ok: false }));
+  return true;
+});
