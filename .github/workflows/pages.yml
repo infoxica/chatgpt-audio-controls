@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [develop, master]
   workflow_dispatch:
+    inputs:
+      publish_website:
+        description: 'Deploy the reviewed website from develop or master (does not submit stores)'
+        type: boolean
+        default: false
+        required: true
 permissions:
   contents: read
 concurrency:
@@ -28,7 +34,10 @@ jobs:
         with:
           path: site-dist
   deploy:
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      (github.event_name == 'workflow_dispatch' && inputs.publish_website == true &&
+      (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'))
     needs: build
     permissions:
       pages: write
