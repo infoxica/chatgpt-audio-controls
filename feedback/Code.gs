@@ -28,17 +28,16 @@ function initializeFeedback_() {
     if (current.some(String) && current.join('|') !== HEADERS.join('|')) throw new Error('Unexpected headers; existing responses were not changed.');
     responses.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
     responses.setFrozenRows(1);
-    if (!book.getSheetByName('Summary')) {
-      const summary = book.insertSheet('Summary');
-      summary.getRange('A1').setValue('Voluntary feedback — respondents only');
-      summary.getRange('A2').setValue('Responses');
-      summary.getRange('B2').setFormula('=COUNTA(Responses!I2:I)');
-      [['A4', 'B', 'Reason'], ['D4', 'D', 'Language'], ['G4', 'E', 'Version'], ['J4', 'F', 'Browser']].forEach(function (entry) {
-        const column = entry[1];
-        summary.getRange(entry[0]).setFormula('=IFERROR(QUERY(Responses!A2:I,"select ' + column + ', count(I) where I is not null group by ' + column + ' label ' + column + " '" + entry[2] + "', count(I) 'Responses'" + '",0),"No responses yet")');
-      });
-      summary.setFrozenRows(2);
-    }
+    const summary = book.getSheetByName('Summary') || book.insertSheet('Summary');
+    // Reapply the complete summary layout so retries repair partial or stale setup.
+    summary.getRange('A1').setValue('Voluntary feedback — respondents only');
+    summary.getRange('A2').setValue('Responses');
+    summary.getRange('B2').setFormula('=COUNTA(Responses!I2:I)');
+    [['A4', 'B', 'Reason'], ['D4', 'D', 'Language'], ['G4', 'E', 'Version'], ['J4', 'F', 'Browser']].forEach(function (entry) {
+      const column = entry[1];
+      summary.getRange(entry[0]).setFormula('=IFERROR(QUERY(Responses!A2:I,"select ' + column + ', count(I) where I is not null group by ' + column + ' label ' + column + " '" + entry[2] + "', count(I) 'Responses'" + '",0),"No responses yet")');
+    });
+    summary.setFrozenRows(2);
     if (!props.getProperty('SIGNING_SECRET')) props.setProperty('SIGNING_SECRET', Utilities.getUuid() + Utilities.getUuid());
     SpreadsheetApp.flush();
     return { configured: true };
