@@ -36,6 +36,7 @@ Uninstall feedback is optional. Submitted answers and coarse technical context a
 
 An independent open-source project by Infoxica. Not affiliated with or endorsed by OpenAI.
 
+Official website: https://infoxica.github.io/chatgpt-audio-controls/
 Help and troubleshooting: https://infoxica.github.io/chatgpt-audio-controls/#help
 Privacy: https://infoxica.github.io/chatgpt-audio-controls/#privacy
 
@@ -73,6 +74,7 @@ ChatGPTが提供する音声形式でダウンロードします。音声形式�
 
 Infoxicaによる独立したオープンソースプロジェクトです。OpenAIとは提携しておらず、承認も受けていません。
 
+公式サイト: https://infoxica.github.io/chatgpt-audio-controls/ja/
 ヘルプとトラブルシューティング: https://infoxica.github.io/chatgpt-audio-controls/ja/#help
 プライバシー: https://infoxica.github.io/chatgpt-audio-controls/ja/#privacy
 
@@ -110,6 +112,7 @@ ChatGPT에서 제공하는 오디오 형식으로 다운로드합니다. 확장 
 
 Infoxica의 독립적인 오픈소스 프로젝트입니다. OpenAI와 제휴하거나 보증받지 않았습니다.
 
+공식 웹사이트: https://infoxica.github.io/chatgpt-audio-controls/ko/
 도움말 및 문제 해결: https://infoxica.github.io/chatgpt-audio-controls/ko/#help
 개인정보 보호: https://infoxica.github.io/chatgpt-audio-controls/ko/#privacy
 
@@ -147,6 +150,7 @@ ChatGPT खोलें और पूरे हो चुके उत्तर 
 
 Infoxica का स्वतंत्र ओपन-सोर्स प्रोजेक्ट। OpenAI से संबद्ध या अनुमोदित नहीं है।
 
+आधिकारिक वेबसाइट: https://infoxica.github.io/chatgpt-audio-controls/hi/
 मदद और समस्या समाधान: https://infoxica.github.io/chatgpt-audio-controls/hi/#help
 गोपनीयता: https://infoxica.github.io/chatgpt-audio-controls/hi/#privacy
 
@@ -184,6 +188,7 @@ L’avis de désinstallation est facultatif. Les réponses et le contexte techni
 
 Un projet open source indépendant d’Infoxica. Sans affiliation ni approbation d’OpenAI.
 
+Site officiel: https://infoxica.github.io/chatgpt-audio-controls/fr/
 Aide et dépannage: https://infoxica.github.io/chatgpt-audio-controls/fr/#help
 Confidentialité: https://infoxica.github.io/chatgpt-audio-controls/fr/#privacy
 
@@ -221,6 +226,7 @@ Feedback bei der Deinstallation ist freiwillig. Gesendete Antworten und grobe te
 
 Ein unabhängiges Open-Source-Projekt von Infoxica. Keine Verbindung zu oder Unterstützung durch OpenAI.
 
+Offizielle Website: https://infoxica.github.io/chatgpt-audio-controls/de/
 Hilfe und Fehlerbehebung: https://infoxica.github.io/chatgpt-audio-controls/de/#help
 Datenschutz: https://infoxica.github.io/chatgpt-audio-controls/de/#privacy
 
@@ -258,6 +264,7 @@ Il feedback di disinstallazione è facoltativo. Le risposte inviate e il contest
 
 Un progetto open source indipendente di Infoxica. Non affiliato né approvato da OpenAI.
 
+Sito ufficiale: https://infoxica.github.io/chatgpt-audio-controls/it/
 Aiuto e risoluzione dei problemi: https://infoxica.github.io/chatgpt-audio-controls/it/#help
 Privacy: https://infoxica.github.io/chatgpt-audio-controls/it/#privacy
 
@@ -295,6 +302,7 @@ Masukan saat menghapus bersifat opsional. Jawaban dan konteks teknis umum disimp
 
 Proyek sumber terbuka independen oleh Infoxica. Tidak berafiliasi atau didukung oleh OpenAI.
 
+Situs resmi: https://infoxica.github.io/chatgpt-audio-controls/id/
 Bantuan dan pemecahan masalah: https://infoxica.github.io/chatgpt-audio-controls/id/#help
 Privasi: https://infoxica.github.io/chatgpt-audio-controls/id/#privacy
 
@@ -332,6 +340,7 @@ Kaldırma geri bildirimi isteğe bağlıdır. Gönderilen yanıtlar ve genel tek
 
 Infoxica’nın bağımsız açık kaynak projesi. OpenAI ile bağlantılı değildir ve OpenAI tarafından onaylanmamıştır.
 
+Resmî web sitesi: https://infoxica.github.io/chatgpt-audio-controls/tr/
 Yardım ve sorun giderme: https://infoxica.github.io/chatgpt-audio-controls/tr/#help
 Gizlilik: https://infoxica.github.io/chatgpt-audio-controls/tr/#privacy
 
@@ -369,6 +378,7 @@ Phản hồi khi gỡ cài đặt là tự nguyện. Câu trả lời và thông
 
 Dự án mã nguồn mở độc lập của Infoxica. Không liên kết hoặc được OpenAI chứng thực.
 
+Trang web chính thức: https://infoxica.github.io/chatgpt-audio-controls/vi/
 Trợ giúp và khắc phục sự cố: https://infoxica.github.io/chatgpt-audio-controls/vi/#help
 Quyền riêng tư: https://infoxica.github.io/chatgpt-audio-controls/vi/#privacy
 
@@ -406,6 +416,7 @@ ChatGPT Audio Controls & Read Aloud
 
 โครงการโอเพนซอร์สอิสระจาก Infoxica ไม่มีความเกี่ยวข้องหรือการรับรองจาก OpenAI
 
+เว็บไซต์อย่างเป็นทางการ: https://infoxica.github.io/chatgpt-audio-controls/th/
 ความช่วยเหลือและแก้ปัญหา: https://infoxica.github.io/chatgpt-audio-controls/th/#help
 ความเป็นส่วนตัว: https://infoxica.github.io/chatgpt-audio-controls/th/#privacy
 
@@ -443,6 +454,7 @@ ChatGPT 朗读控件：暂停、跳转、调速、音量、音频下载、快捷
 
 Infoxica 的独立开源项目。与 OpenAI 无关联，也未经其认可。
 
+官方网站: https://infoxica.github.io/chatgpt-audio-controls/zh-CN/
 帮助与故障排除: https://infoxica.github.io/chatgpt-audio-controls/zh-CN/#help
 隐私: https://infoxica.github.io/chatgpt-audio-controls/zh-CN/#privacy
 
@@ -480,6 +492,7 @@ ChatGPT 朗讀控制項：暫停、跳轉、調速、音量、音訊下載、快
 
 Infoxica 的獨立開源專案。與 OpenAI 無關聯，也未經其認可。
 
+官方網站: https://infoxica.github.io/chatgpt-audio-controls/zh-TW/
 說明與疑難排解: https://infoxica.github.io/chatgpt-audio-controls/zh-TW/#help
 隱私權: https://infoxica.github.io/chatgpt-audio-controls/zh-TW/#privacy
 
@@ -517,6 +530,7 @@ Los comentarios al desinstalar son opcionales. Las respuestas enviadas y el cont
 
 Un proyecto independiente de código abierto de Infoxica. Sin afiliación ni respaldo de OpenAI.
 
+Sitio web oficial: https://infoxica.github.io/chatgpt-audio-controls/es/
 Ayuda y solución de problemas: https://infoxica.github.io/chatgpt-audio-controls/es/#help
 Privacidad: https://infoxica.github.io/chatgpt-audio-controls/es/#privacy
 
@@ -554,6 +568,7 @@ O feedback ao desinstalar é opcional. As respostas e o contexto técnico geral 
 
 Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.
 
+Site oficial: https://infoxica.github.io/chatgpt-audio-controls/pt-BR/
 Ajuda e solução de problemas: https://infoxica.github.io/chatgpt-audio-controls/pt-BR/#help
 Privacidade: https://infoxica.github.io/chatgpt-audio-controls/pt-BR/#privacy
 
@@ -591,6 +606,7 @@ ChatGPT Audio Controls & Read Aloud
 
 Независимый проект Infoxica с открытым исходным кодом. Не связан с OpenAI и не одобрен ею.
 
+Официальный сайт: https://infoxica.github.io/chatgpt-audio-controls/ru/
 Помощь и устранение неполадок: https://infoxica.github.io/chatgpt-audio-controls/ru/#help
 Конфиденциальность: https://infoxica.github.io/chatgpt-audio-controls/ru/#privacy
 
@@ -628,5 +644,6 @@ A opinião ao desinstalar é opcional. As respostas e o contexto técnico geral 
 
 Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.
 
+Site oficial: https://infoxica.github.io/chatgpt-audio-controls/pt-PT/
 Ajuda e solução de problemas: https://infoxica.github.io/chatgpt-audio-controls/pt-PT/#help
 Privacidade: https://infoxica.github.io/chatgpt-audio-controls/pt-PT/#privacy

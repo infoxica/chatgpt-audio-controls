@@ -98,3 +98,21 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - The main audio player intentionally runs in the page's `MAIN` execution world so it can observe the media element that ChatGPT creates. The separate settings bridge remains in the extension's isolated world to access `chrome.storage` safely.
 - ChatGPT's DOM is not a public extension API and may change. Treat the browser smoke test as a required release gate.
 - The project is independent and not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.
+
+## Website link update (prepared; console update pending)
+
+The permanent website is `https://infoxica.github.io/chatgpt-audio-controls/`.
+It returned HTTP 404 on 2026-09-08; publish and verify it before using it in the
+public store listing. Do not substitute a temporary trycloudflare.com preview.
+
+For a website-only update to the current Chrome listing, preserve the existing
+published feature description and append:
+
+```text
+Official website: https://infoxica.github.io/chatgpt-audio-controls/
+```
+
+Set the listing's website URL to the same permanent address. After saving/submitting
+the metadata change in the developer console, verify the public listing separately.
+The localized v1.2.0 descriptions in `docs/STORE-LISTINGS.md` now include their
+localized website links; they remain release copy, not evidence of console changes.

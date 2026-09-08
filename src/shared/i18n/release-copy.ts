@@ -58,8 +58,8 @@ export const releaseEnglish = {
   privacy: 'Privacy',
   privacyBody: 'The extension has no analytics or telemetry. Audio and conversation handling stay in your browser. Browser sync may synchronize preferences.',
   independent: 'An independent open-source project by Infoxica. Not affiliated with or endorsed by OpenAI.',
-  analyticsTitle: 'Optional website analytics',
-  analyticsBody: 'Allow Google Analytics to measure visits and store-link clicks on this website? The extension and uninstall survey remain free of analytics.',
+  analyticsTitle: "Help us make this website more useful",
+  analyticsBody: "Help us learn which pages are useful and how people discover the extension. Allow Google Analytics to measure website visits and store-link clicks? The extension and uninstall survey stay free of analytics. You can change your choice anytime.",
   accept: 'Allow analytics',
   decline: 'No thanks',
   preferences: 'Analytics preferences',
@@ -67,6 +67,7 @@ export const releaseEnglish = {
   feedbackPolicy: 'Uninstall feedback is optional. Submitted answers and coarse technical context are stored privately in Google Sheets to help improve the extension. Do not include personal information or conversations.',
   screenshot: 'ChatGPT Read Aloud playback controls',
   available: 'Check your store for the currently available version.',
+  website: 'Official website',
 };
 export type ReleaseCopy = { [K in keyof typeof releaseEnglish]: string };
 export const releaseLocales: Record<string, ReleaseCopy> = { en: releaseEnglish, ...translated };

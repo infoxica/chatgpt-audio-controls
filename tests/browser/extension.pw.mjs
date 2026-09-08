@@ -1,5 +1,6 @@
 import { test, expect, chromium } from '@playwright/test';
 import path from 'node:path';
+import { SETTING_STORAGE_KEYS } from '../../src/shared/constants.ts';
 let context, worker, extensionId;
 const labels={en:['Copy','More actions','Read aloud'],vi:['Sao chép','Thao tác khác','Đọc to'],ja:['コピー','その他','読み上げ']};
 function wav() {
@@ -54,5 +55,13 @@ test('visibility sync, typing, popup and assigned command display use the real e
   await expect(popup.getByText('Show / hide floating controls',{exact:true})).toBeVisible();
   const commands=await worker.evaluate(()=>chrome.commands.getAll());expect(commands.find(command=>command.name==='toggle-floating-ui').shortcut).toBeTruthy();
   await popup.screenshot({path:'build/browser-results/popup.png'});
+  await popup.getByRole('button',{name:'About',exact:true}).click();
+  await expect(popup.getByRole('link',{name:'Official website'})).toHaveAttribute('href','https://infoxica.github.io/chatgpt-audio-controls/');
+  const options=await context.newPage();await options.goto(`chrome-extension://${extensionId}/src/options/index.html`);
+  await expect(options.getByRole('link',{name:'Official website'})).toHaveAttribute('href','https://infoxica.github.io/chatgpt-audio-controls/');
+  await worker.evaluate(async key=>chrome.storage.sync.set({[key]:'ja'}),SETTING_STORAGE_KEYS.language);
+  await expect(options.getByRole('link',{name:'公式サイト',exact:true})).toHaveAttribute('href','https://infoxica.github.io/chatgpt-audio-controls/ja/');
+  await expect(popup.getByRole('link',{name:'公式サイト',exact:true})).toHaveAttribute('href','https://infoxica.github.io/chatgpt-audio-controls/ja/');
+  await options.close();
   await page.close();await popup.close();
 });
