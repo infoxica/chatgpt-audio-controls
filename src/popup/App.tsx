@@ -113,7 +113,7 @@ export const App: React.FC = () => {
           <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
         {activeTab === "shortcuts" && <ShortcutsDrawer language={settings.language} t={t} />}
-        {activeTab === "about" && <AboutTab t={t} />}
+        {activeTab === "about" && <AboutTab t={t} language={settings.language} />}
       </main>
 
       <footer className="popup-footer">

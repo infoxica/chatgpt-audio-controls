@@ -56,15 +56,16 @@
     "privacy": "プライバシー",
     "privacyBody": "拡張機能にアクセス解析やテレメトリーはありません。音声と会話の処理はブラウザー内で行います。設定はブラウザーの同期機能で同期される場合があります。",
     "independent": "Infoxicaによる独立したオープンソースプロジェクトです。OpenAIとは提携しておらず、承認も受けていません。",
-    "analyticsTitle": "ウェブサイトの任意のアクセス解析",
-    "analyticsBody": "このサイトの閲覧とストアリンクのクリックをGoogle Analyticsで計測してもよいですか？拡張機能とアンケートにはアクセス解析はありません。",
+    "analyticsTitle": "もっと役立つサイトにするために",
+    "analyticsBody": "役立つページや、この拡張機能を知ったきっかけを把握するため、ご協力ください。Google Analytics によるサイト訪問とストアリンクのクリック計測を許可しますか？拡張機能とアンインストール時のアンケートではアクセス解析を行いません。設定はいつでも変更できます。",
     "accept": "解析を許可",
     "decline": "許可しない",
     "preferences": "アクセス解析の設定",
     "websitePrivacy": "このサイトは同意後にのみGoogle Analyticsを使用します。計測対象は閲覧とストアリンクのクリックであり、インストールや拡張機能の利用ではありません。アクセス解析の設定から同意を取り消せます。",
     "feedbackPolicy": "アンインストール時の回答は任意です。送信された回答と大まかな技術情報は改善のためにGoogleスプレッドシートに非公開で保存します。個人情報や会話は含めないでください。",
     "screenshot": "ChatGPT読み上げの再生コントロール",
-    "available": "現在利用できるバージョンは各ストアでご確認ください。"
+    "available": "現在利用できるバージョンは各ストアでご確認ください。",
+    "website": "公式サイト"
   },
   "ko": {
     "hide": "플로팅 컨트롤 숨기기",
@@ -123,15 +124,16 @@
     "privacy": "개인정보 보호",
     "privacyBody": "확장 프로그램에는 분석이나 원격 측정이 없습니다. 오디오와 대화 처리는 브라우저 안에서 이루어집니다. 브라우저 동기화로 설정이 동기화될 수 있습니다.",
     "independent": "Infoxica의 독립적인 오픈소스 프로젝트입니다. OpenAI와 제휴하거나 보증받지 않았습니다.",
-    "analyticsTitle": "선택적 웹사이트 분석",
-    "analyticsBody": "이 웹사이트의 방문과 스토어 링크 클릭을 Google Analytics로 측정하도록 허용할까요? 확장 프로그램과 삭제 설문에는 분석을 사용하지 않습니다.",
+    "analyticsTitle": "더 유용한 웹사이트를 함께 만들어요",
+    "analyticsBody": "어떤 페이지가 유용하고 사람들이 확장 프로그램을 어떻게 발견하는지 알려 주세요. Google Analytics로 웹사이트 방문과 스토어 링크 클릭을 측정하도록 허용하시겠어요? 확장 프로그램과 삭제 설문에는 분석 도구가 없습니다. 언제든 선택을 변경할 수 있습니다.",
     "accept": "분석 허용",
     "decline": "거절",
     "preferences": "분석 설정",
     "websitePrivacy": "이 웹사이트는 동의한 경우에만 Google Analytics를 사용합니다. 방문과 스토어 링크 클릭을 측정하며 설치나 확장 프로그램 사용은 측정하지 않습니다. 분석 설정에서 동의를 철회할 수 있습니다.",
     "feedbackPolicy": "삭제 피드백은 선택 사항입니다. 제출한 답변과 대략적인 기술 정보는 개선을 위해 Google Sheets에 비공개로 저장합니다. 개인정보나 대화를 포함하지 마세요.",
     "screenshot": "ChatGPT 소리 내어 읽기 재생 컨트롤",
-    "available": "현재 제공되는 버전은 각 스토어에서 확인하세요."
+    "available": "현재 제공되는 버전은 각 스토어에서 확인하세요.",
+    "website": "공식 웹사이트"
   },
   "hi": {
     "hide": "फ़्लोटिंग कंट्रोल छिपाएँ",
@@ -190,15 +192,16 @@
     "privacy": "गोपनीयता",
     "privacyBody": "एक्सटेंशन में एनालिटिक्स या टेलीमेट्री नहीं है। ऑडियो और बातचीत की प्रोसेसिंग आपके ब्राउज़र में होती है। ब्राउज़र सिंक से सेटिंग सिंक हो सकती हैं।",
     "independent": "Infoxica का स्वतंत्र ओपन-सोर्स प्रोजेक्ट। OpenAI से संबद्ध या अनुमोदित नहीं है।",
-    "analyticsTitle": "वैकल्पिक वेबसाइट एनालिटिक्स",
-    "analyticsBody": "क्या इस वेबसाइट के विज़िट और स्टोर लिंक क्लिक मापने के लिए Google Analytics की अनुमति देंगे? एक्सटेंशन और अनइंस्टॉल सर्वे में एनालिटिक्स नहीं है।",
+    "analyticsTitle": "इस वेबसाइट को और उपयोगी बनाने में मदद करें",
+    "analyticsBody": "जानने में मदद करें कि कौन से पेज उपयोगी हैं और लोग एक्सटेंशन तक कैसे पहुँचते हैं। क्या Google Analytics को वेबसाइट विज़िट और स्टोर लिंक क्लिक मापने की अनुमति देंगे? एक्सटेंशन और अनइंस्टॉल सर्वे में एनालिटिक्स नहीं चलता। आप अपना निर्णय कभी भी बदल सकते हैं।",
     "accept": "एनालिटिक्स की अनुमति दें",
     "decline": "नहीं, धन्यवाद",
     "preferences": "एनालिटिक्स सेटिंग",
     "websitePrivacy": "यह वेबसाइट आपकी अनुमति के बाद ही Google Analytics इस्तेमाल करती है। यह विज़िट और स्टोर लिंक क्लिक मापती है, इंस्टॉल या एक्सटेंशन का उपयोग नहीं। एनालिटिक्स सेटिंग से अनुमति वापस ले सकते हैं।",
     "feedbackPolicy": "अनइंस्टॉल फ़ीडबैक देना वैकल्पिक है। भेजे गए उत्तर और सामान्य तकनीकी जानकारी सुधार के लिए निजी Google Sheets में सेव होती है। निजी जानकारी या बातचीत न लिखें।",
     "screenshot": "ChatGPT Read Aloud के प्लेबैक कंट्रोल",
-    "available": "फ़िलहाल उपलब्ध वर्शन के लिए अपना स्टोर देखें।"
+    "available": "फ़िलहाल उपलब्ध वर्शन के लिए अपना स्टोर देखें।",
+    "website": "आधिकारिक वेबसाइट"
   },
   "fr": {
     "hide": "Masquer les commandes flottantes",
@@ -257,15 +260,16 @@
     "privacy": "Confidentialité",
     "privacyBody": "L’extension n’intègre ni analyse d’audience ni télémétrie. L’audio et les conversations sont traités dans votre navigateur. Les préférences peuvent être synchronisées par le navigateur.",
     "independent": "Un projet open source indépendant d’Infoxica. Sans affiliation ni approbation d’OpenAI.",
-    "analyticsTitle": "Analyse d’audience facultative",
-    "analyticsBody": "Autoriser Google Analytics à mesurer les visites et les clics vers les boutiques sur ce site ? L’extension et le questionnaire de désinstallation restent sans suivi analytique.",
+    "analyticsTitle": "Aidez-nous à rendre ce site plus utile",
+    "analyticsBody": "Aidez-nous à comprendre quelles pages sont utiles et comment les gens découvrent l’extension. Autoriser Google Analytics à mesurer les visites du site et les clics vers les boutiques ? L’extension et le questionnaire de désinstallation restent sans analyse. Vous pouvez changer d’avis à tout moment.",
     "accept": "Autoriser l’analyse",
     "decline": "Non merci",
     "preferences": "Préférences d’analyse",
     "websitePrivacy": "Ce site utilise Google Analytics uniquement avec votre accord. Il mesure les visites et les clics vers les boutiques, pas les installations ni l’utilisation de l’extension. Vous pouvez retirer votre accord dans les préférences d’analyse.",
     "feedbackPolicy": "L’avis de désinstallation est facultatif. Les réponses et le contexte technique général sont conservés dans Google Sheets de manière privée pour améliorer l’extension. N’incluez ni données personnelles ni conversations.",
     "screenshot": "Commandes de lecture à voix haute de ChatGPT",
-    "available": "Consultez votre boutique pour connaître la version disponible."
+    "available": "Consultez votre boutique pour connaître la version disponible.",
+    "website": "Site officiel"
   },
   "de": {
     "hide": "Schwebende Steuerelemente ausblenden",
@@ -324,15 +328,16 @@
     "privacy": "Datenschutz",
     "privacyBody": "Die Erweiterung enthält weder Analyse noch Telemetrie. Audio und Gespräche werden in deinem Browser verarbeitet. Einstellungen können über die Browsersynchronisierung abgeglichen werden.",
     "independent": "Ein unabhängiges Open-Source-Projekt von Infoxica. Keine Verbindung zu oder Unterstützung durch OpenAI.",
-    "analyticsTitle": "Optionale Website-Analyse",
-    "analyticsBody": "Darf Google Analytics Besuche und Store-Link-Klicks auf dieser Website messen? Erweiterung und Deinstallationsumfrage bleiben ohne Analyse.",
+    "analyticsTitle": "Hilf uns, diese Website nützlicher zu machen",
+    "analyticsBody": "Hilf uns zu verstehen, welche Seiten nützlich sind und wie Menschen die Erweiterung entdecken. Darf Google Analytics Websitebesuche und Klicks auf Store-Links messen? Erweiterung und Deinstallationsumfrage bleiben ohne Analyse. Du kannst deine Wahl jederzeit ändern.",
     "accept": "Analyse erlauben",
     "decline": "Nein danke",
     "preferences": "Analyseeinstellungen",
     "websitePrivacy": "Diese Website verwendet Google Analytics nur nach deiner Zustimmung. Gemessen werden Besuche und Store-Link-Klicks, keine Installationen oder Erweiterungsnutzung. Du kannst die Zustimmung in den Analyseeinstellungen widerrufen.",
     "feedbackPolicy": "Feedback bei der Deinstallation ist freiwillig. Gesendete Antworten und grobe technische Angaben werden privat in Google Sheets gespeichert, um die Erweiterung zu verbessern. Keine persönlichen Daten oder Gespräche angeben.",
     "screenshot": "Wiedergabesteuerung für ChatGPT Vorlesen",
-    "available": "Die derzeit verfügbare Version findest du in deinem Store."
+    "available": "Die derzeit verfügbare Version findest du in deinem Store.",
+    "website": "Offizielle Website"
   },
   "it": {
     "hide": "Nascondi i controlli mobili",
@@ -391,15 +396,16 @@
     "privacy": "Privacy",
     "privacyBody": "L’estensione non contiene analisi o telemetria. Audio e conversazioni vengono gestiti nel browser. La sincronizzazione del browser può sincronizzare le preferenze.",
     "independent": "Un progetto open source indipendente di Infoxica. Non affiliato né approvato da OpenAI.",
-    "analyticsTitle": "Analisi facoltativa del sito",
-    "analyticsBody": "Consenti a Google Analytics di misurare visite e clic sui link agli store su questo sito? L’estensione e il sondaggio di disinstallazione restano senza analisi.",
+    "analyticsTitle": "Aiutaci a rendere questo sito più utile",
+    "analyticsBody": "Aiutaci a capire quali pagine sono utili e come le persone scoprono l’estensione. Consentire a Google Analytics di misurare visite e clic verso gli store? L’estensione e il sondaggio di disinstallazione restano senza analisi. Puoi cambiare scelta in qualsiasi momento.",
     "accept": "Consenti analisi",
     "decline": "No grazie",
     "preferences": "Preferenze di analisi",
     "websitePrivacy": "Questo sito usa Google Analytics solo con il tuo consenso. Misura visite e clic verso gli store, non installazioni o uso dell’estensione. Puoi revocare il consenso nelle preferenze di analisi.",
     "feedbackPolicy": "Il feedback di disinstallazione è facoltativo. Le risposte inviate e il contesto tecnico generale vengono salvati privatamente in Google Sheets per migliorare l’estensione. Non includere dati personali o conversazioni.",
     "screenshot": "Controlli di riproduzione per la lettura ad alta voce di ChatGPT",
-    "available": "Controlla lo store per la versione attualmente disponibile."
+    "available": "Controlla lo store per la versione attualmente disponibile.",
+    "website": "Sito ufficiale"
   },
   "id": {
     "hide": "Sembunyikan kontrol mengambang",
@@ -458,15 +464,16 @@
     "privacy": "Privasi",
     "privacyBody": "Ekstensi tidak memiliki analitik atau telemetri. Audio dan percakapan diproses dalam browser Anda. Sinkronisasi browser dapat menyinkronkan preferensi.",
     "independent": "Proyek sumber terbuka independen oleh Infoxica. Tidak berafiliasi atau didukung oleh OpenAI.",
-    "analyticsTitle": "Analitik situs opsional",
-    "analyticsBody": "Izinkan Google Analytics mengukur kunjungan dan klik tautan toko di situs ini? Ekstensi dan survei penghapusan tetap tanpa analitik.",
+    "analyticsTitle": "Bantu kami membuat situs ini lebih bermanfaat",
+    "analyticsBody": "Bantu kami memahami halaman yang berguna dan cara orang menemukan ekstensi ini. Izinkan Google Analytics mengukur kunjungan situs dan klik tautan toko? Ekstensi dan survei penghapusan tetap tanpa analitik. Anda dapat mengubah pilihan kapan saja.",
     "accept": "Izinkan analitik",
     "decline": "Tidak, terima kasih",
     "preferences": "Preferensi analitik",
     "websitePrivacy": "Situs ini menggunakan Google Analytics hanya setelah Anda mengizinkannya. Yang diukur adalah kunjungan dan klik tautan toko, bukan pemasangan atau penggunaan ekstensi. Anda dapat mencabut izin melalui Preferensi analitik.",
     "feedbackPolicy": "Masukan saat menghapus bersifat opsional. Jawaban dan konteks teknis umum disimpan secara pribadi di Google Sheets untuk memperbaiki ekstensi. Jangan sertakan informasi pribadi atau percakapan.",
     "screenshot": "Kontrol pemutaran Baca dengan lantang ChatGPT",
-    "available": "Periksa toko Anda untuk versi yang tersedia saat ini."
+    "available": "Periksa toko Anda untuk versi yang tersedia saat ini.",
+    "website": "Situs resmi"
   },
   "tr": {
     "hide": "Yüzen kontrolleri gizle",
@@ -525,15 +532,16 @@
     "privacy": "Gizlilik",
     "privacyBody": "Uzantıda analiz veya telemetri yoktur. Ses ve konuşmalar tarayıcınızda işlenir. Tercihler tarayıcı eşitlemesiyle eşitlenebilir.",
     "independent": "Infoxica’nın bağımsız açık kaynak projesi. OpenAI ile bağlantılı değildir ve OpenAI tarafından onaylanmamıştır.",
-    "analyticsTitle": "İsteğe bağlı site analizi",
-    "analyticsBody": "Google Analytics’in bu sitedeki ziyaretleri ve mağaza bağlantısı tıklamalarını ölçmesine izin verilsin mi? Uzantı ve kaldırma anketi analiz içermez.",
+    "analyticsTitle": "Bu siteyi daha yararlı yapmamıza yardımcı olun",
+    "analyticsBody": "Hangi sayfaların yararlı olduğunu ve insanların uzantıyı nasıl keşfettiğini anlamamıza yardımcı olun. Google Analytics’in site ziyaretlerini ve mağaza bağlantısı tıklamalarını ölçmesine izin veriyor musunuz? Uzantı ve kaldırma anketinde analiz yapılmaz. Seçiminizi istediğiniz zaman değiştirebilirsiniz.",
     "accept": "Analize izin ver",
     "decline": "Hayır, teşekkürler",
     "preferences": "Analiz tercihleri",
     "websitePrivacy": "Bu site Google Analytics’i yalnızca izninizle kullanır. Ziyaretleri ve mağaza bağlantısı tıklamalarını ölçer; yüklemeleri veya uzantı kullanımını ölçmez. Analiz tercihlerinden izninizi geri çekebilirsiniz.",
     "feedbackPolicy": "Kaldırma geri bildirimi isteğe bağlıdır. Gönderilen yanıtlar ve genel teknik bilgiler uzantıyı geliştirmek için Google E-Tablolar’da özel olarak saklanır. Kişisel bilgi veya konuşma eklemeyin.",
     "screenshot": "ChatGPT Sesli Oku oynatma kontrolleri",
-    "available": "Kullanılabilir sürüm için mağazanızı kontrol edin."
+    "available": "Kullanılabilir sürüm için mağazanızı kontrol edin.",
+    "website": "Resmî web sitesi"
   },
   "vi": {
     "hide": "Ẩn bộ điều khiển nổi",
@@ -592,15 +600,16 @@
     "privacy": "Quyền riêng tư",
     "privacyBody": "Tiện ích không có phân tích hay đo từ xa. Âm thanh và cuộc trò chuyện được xử lý trong trình duyệt. Tùy chọn có thể được đồng bộ bằng chức năng đồng bộ của trình duyệt.",
     "independent": "Dự án mã nguồn mở độc lập của Infoxica. Không liên kết hoặc được OpenAI chứng thực.",
-    "analyticsTitle": "Phân tích trang web tùy chọn",
-    "analyticsBody": "Cho phép Google Analytics đo lượt truy cập và nhấp liên kết cửa hàng trên trang này? Tiện ích và khảo sát gỡ cài đặt vẫn không có phân tích.",
+    "analyticsTitle": "Giúp chúng tôi làm trang web hữu ích hơn",
+    "analyticsBody": "Giúp chúng tôi biết trang nào hữu ích và mọi người tìm thấy tiện ích bằng cách nào. Cho phép Google Analytics đo lượt truy cập trang web và nhấp liên kết cửa hàng? Tiện ích và khảo sát gỡ cài đặt vẫn không có phân tích. Bạn có thể đổi lựa chọn bất cứ lúc nào.",
     "accept": "Cho phép phân tích",
     "decline": "Không, cảm ơn",
     "preferences": "Tùy chọn phân tích",
     "websitePrivacy": "Trang này chỉ dùng Google Analytics sau khi bạn đồng ý. Chúng tôi đo lượt truy cập và nhấp liên kết cửa hàng, không đo lượt cài đặt hay việc sử dụng tiện ích. Bạn có thể rút lại đồng ý trong Tùy chọn phân tích.",
     "feedbackPolicy": "Phản hồi khi gỡ cài đặt là tự nguyện. Câu trả lời và thông tin kỹ thuật khái quát được lưu riêng tư trong Google Sheets để cải thiện tiện ích. Không nhập thông tin cá nhân hoặc cuộc trò chuyện.",
     "screenshot": "Bộ điều khiển phát Đọc to của ChatGPT",
-    "available": "Xem cửa hàng để biết phiên bản hiện có."
+    "available": "Xem cửa hàng để biết phiên bản hiện có.",
+    "website": "Trang web chính thức"
   },
   "th": {
     "hide": "ซ่อนตัวควบคุมลอย",
@@ -659,15 +668,16 @@
     "privacy": "ความเป็นส่วนตัว",
     "privacyBody": "ส่วนขยายไม่มีการวิเคราะห์หรือข้อมูลการใช้งานระยะไกล เสียงและบทสนทนาถูกประมวลผลในเบราว์เซอร์ การซิงค์ของเบราว์เซอร์อาจซิงค์การตั้งค่า",
     "independent": "โครงการโอเพนซอร์สอิสระจาก Infoxica ไม่มีความเกี่ยวข้องหรือการรับรองจาก OpenAI",
-    "analyticsTitle": "การวิเคราะห์เว็บไซต์แบบเลือกได้",
-    "analyticsBody": "อนุญาตให้ Google Analytics วัดการเข้าชมและการคลิกลิงก์ร้านค้าบนเว็บไซต์นี้ไหม? ส่วนขยายและแบบสอบถามถอนการติดตั้งไม่มีการวิเคราะห์",
+    "analyticsTitle": "ช่วยทำให้เว็บไซต์นี้มีประโยชน์ยิ่งขึ้น",
+    "analyticsBody": "ช่วยให้เรารู้ว่าหน้าใดมีประโยชน์และผู้คนพบส่วนขยายได้อย่างไร อนุญาตให้ Google Analytics วัดการเข้าชมเว็บไซต์และการคลิกลิงก์ร้านค้าหรือไม่? ส่วนขยายและแบบสอบถามถอนการติดตั้งไม่มีการวิเคราะห์ คุณเปลี่ยนตัวเลือกได้ทุกเมื่อ",
     "accept": "อนุญาตการวิเคราะห์",
     "decline": "ไม่ ขอบคุณ",
     "preferences": "การตั้งค่าการวิเคราะห์",
     "websitePrivacy": "เว็บไซต์นี้ใช้ Google Analytics เมื่อคุณยินยอมเท่านั้น วัดการเข้าชมและคลิกลิงก์ร้านค้า ไม่ใช่การติดตั้งหรือการใช้ส่วนขยาย คุณถอนความยินยอมได้ในการตั้งค่าการวิเคราะห์",
     "feedbackPolicy": "ความคิดเห็นเมื่อถอนการติดตั้งเป็นทางเลือก คำตอบที่ส่งและข้อมูลทางเทคนิคทั่วไปถูกเก็บเป็นส่วนตัวใน Google Sheets เพื่อปรับปรุงส่วนขยาย อย่าใส่ข้อมูลส่วนตัวหรือบทสนทนา",
     "screenshot": "ตัวควบคุมการอ่านออกเสียง ChatGPT",
-    "available": "ดูเวอร์ชันที่พร้อมใช้งานในร้านค้าของคุณ"
+    "available": "ดูเวอร์ชันที่พร้อมใช้งานในร้านค้าของคุณ",
+    "website": "เว็บไซต์อย่างเป็นทางการ"
   },
   "zh-CN": {
     "hide": "隐藏浮动控件",
@@ -726,15 +736,16 @@
     "privacy": "隐私",
     "privacyBody": "扩展没有分析或遥测。音频和对话处理在浏览器内进行。偏好设置可能通过浏览器同步功能同步。",
     "independent": "Infoxica 的独立开源项目。与 OpenAI 无关联，也未经其认可。",
-    "analyticsTitle": "可选的网站分析",
-    "analyticsBody": "是否允许 Google Analytics 统计本网站的访问和商店链接点击？扩展和卸载问卷仍不含分析。",
+    "analyticsTitle": "帮助我们让网站更实用",
+    "analyticsBody": "帮助我们了解哪些页面有用，以及大家如何发现这款扩展。允许 Google Analytics 统计网站访问和商店链接点击吗？扩展和卸载问卷仍不使用访问分析。你可以随时更改选择。",
     "accept": "允许分析",
     "decline": "不用，谢谢",
     "preferences": "分析偏好设置",
     "websitePrivacy": "本网站仅在你同意后使用 Google Analytics。统计内容是访问和商店链接点击，不是安装或扩展使用情况。你可以在分析偏好设置中撤回同意。",
     "feedbackPolicy": "卸载反馈完全自愿。提交的答案和概括性技术信息将私密保存于 Google 表格，用于改进扩展。请勿包含个人信息或对话。",
     "screenshot": "ChatGPT 朗读播放控件",
-    "available": "请在商店查看当前可用版本。"
+    "available": "请在商店查看当前可用版本。",
+    "website": "官方网站"
   },
   "zh-TW": {
     "hide": "隱藏浮動控制項",
@@ -793,15 +804,16 @@
     "privacy": "隱私權",
     "privacyBody": "擴充功能沒有分析或遙測。音訊和對話處理在瀏覽器內進行。偏好設定可能透過瀏覽器同步功能同步。",
     "independent": "Infoxica 的獨立開源專案。與 OpenAI 無關聯，也未經其認可。",
-    "analyticsTitle": "可選的網站分析",
-    "analyticsBody": "是否允許 Google Analytics 統計本網站的造訪和商店連結點擊？擴充功能和解除安裝問卷仍不含分析。",
+    "analyticsTitle": "幫助我們讓網站更實用",
+    "analyticsBody": "幫助我們了解哪些頁面有用，以及大家如何發現這款擴充功能。允許 Google Analytics 統計網站造訪和商店連結點擊嗎？擴充功能和解除安裝問卷仍不使用存取分析。你可以隨時變更選擇。",
     "accept": "允許分析",
     "decline": "不用，謝謝",
     "preferences": "分析偏好設定",
     "websitePrivacy": "本網站僅在你同意後使用 Google Analytics。統計內容是造訪和商店連結點擊，不是安裝或擴充功能使用情況。你可以在分析偏好設定中撤回同意。",
     "feedbackPolicy": "解除安裝意見回饋完全自願。提交的答案和概括性技術資訊將私密儲存於 Google 試算表，用於改進擴充功能。請勿包含個人資訊或對話。",
     "screenshot": "ChatGPT 朗讀播放控制項",
-    "available": "請在商店查看目前可用版本。"
+    "available": "請在商店查看目前可用版本。",
+    "website": "官方網站"
   },
   "es": {
     "hide": "Ocultar controles flotantes",
@@ -860,15 +872,16 @@
     "privacy": "Privacidad",
     "privacyBody": "La extensión no tiene analítica ni telemetría. El audio y las conversaciones se procesan en tu navegador. La sincronización del navegador puede sincronizar las preferencias.",
     "independent": "Un proyecto independiente de código abierto de Infoxica. Sin afiliación ni respaldo de OpenAI.",
-    "analyticsTitle": "Analítica web opcional",
-    "analyticsBody": "¿Permites que Google Analytics mida las visitas y los clics a las tiendas en esta web? La extensión y la encuesta de desinstalación no incluyen analítica.",
+    "analyticsTitle": "Ayúdanos a hacer esta web más útil",
+    "analyticsBody": "Ayúdanos a saber qué páginas son útiles y cómo descubren la extensión. ¿Permites que Google Analytics mida las visitas y los clics hacia las tiendas? La extensión y la encuesta de desinstalación siguen sin analítica. Puedes cambiar tu elección cuando quieras.",
     "accept": "Permitir analítica",
     "decline": "No, gracias",
     "preferences": "Preferencias de analítica",
     "websitePrivacy": "Esta web usa Google Analytics solo tras tu consentimiento. Mide visitas y clics a las tiendas, no instalaciones ni uso de la extensión. Puedes retirar tu consentimiento en Preferencias de analítica.",
     "feedbackPolicy": "Los comentarios al desinstalar son opcionales. Las respuestas enviadas y el contexto técnico general se guardan de forma privada en Google Sheets para mejorar la extensión. No incluyas datos personales ni conversaciones.",
     "screenshot": "Controles de reproducción de Leer en voz alta de ChatGPT",
-    "available": "Consulta tu tienda para ver la versión disponible."
+    "available": "Consulta tu tienda para ver la versión disponible.",
+    "website": "Sitio web oficial"
   },
   "pt-BR": {
     "hide": "Ocultar controles flutuantes",
@@ -927,15 +940,16 @@
     "privacy": "Privacidade",
     "privacyBody": "A extensão não tem análise nem telemetria. O áudio e as conversas são processados no seu navegador. As preferências podem ser sincronizadas pela sincronização do navegador.",
     "independent": "Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.",
-    "analyticsTitle": "Análise opcional do site",
-    "analyticsBody": "Permitir que o Google Analytics meça visitas e cliques em links das lojas neste site? A extensão e a pesquisa de desinstalação continuam sem análise.",
+    "analyticsTitle": "Ajude a tornar este site mais útil",
+    "analyticsBody": "Ajude a entender quais páginas são úteis e como as pessoas descobrem a extensão. Permitir que o Google Analytics meça visitas e cliques nos links das lojas? A extensão e a pesquisa de desinstalação continuam sem análise. Você pode mudar sua escolha quando quiser.",
     "accept": "Permitir análise",
     "decline": "Não, obrigado",
     "preferences": "Preferências de análise",
     "websitePrivacy": "Este site usa o Google Analytics somente com sua permissão. Mede visitas e cliques nas lojas, não instalações nem uso da extensão. Você pode retirar a permissão nas Preferências de análise.",
     "feedbackPolicy": "O feedback ao desinstalar é opcional. As respostas e o contexto técnico geral são salvos de forma privada no Google Sheets para melhorar a extensão. Não inclua dados pessoais nem conversas.",
     "screenshot": "Controles de reprodução de Ler em voz alta do ChatGPT",
-    "available": "Confira na loja a versão disponível."
+    "available": "Confira na loja a versão disponível.",
+    "website": "Site oficial"
   },
   "ru": {
     "hide": "Скрыть плавающие элементы управления",
@@ -994,15 +1008,16 @@
     "privacy": "Конфиденциальность",
     "privacyBody": "В расширении нет аналитики или телеметрии. Аудио и разговоры обрабатываются в браузере. Настройки могут синхронизироваться средствами браузера.",
     "independent": "Независимый проект Infoxica с открытым исходным кодом. Не связан с OpenAI и не одобрен ею.",
-    "analyticsTitle": "Необязательная аналитика сайта",
-    "analyticsBody": "Разрешить Google Analytics измерять посещения сайта и переходы в магазины? Расширение и опрос при удалении останутся без аналитики.",
+    "analyticsTitle": "Помогите сделать сайт полезнее",
+    "analyticsBody": "Помогите понять, какие страницы полезны и как люди находят расширение. Разрешить Google Analytics измерять посещения сайта и переходы в магазины? В расширении и опросе при удалении аналитики нет. Вы можете изменить свой выбор в любое время.",
     "accept": "Разрешить аналитику",
     "decline": "Нет, спасибо",
     "preferences": "Настройки аналитики",
     "websitePrivacy": "Сайт использует Google Analytics только с вашего согласия. Измеряются посещения и переходы в магазины, а не установки или использование расширения. Согласие можно отозвать в настройках аналитики.",
     "feedbackPolicy": "Отзыв при удалении добровольный. Отправленные ответы и общие технические сведения хранятся в закрытой Google Таблице для улучшения расширения. Не указывайте личные данные или переписку.",
     "screenshot": "Управление воспроизведением чтения вслух ChatGPT",
-    "available": "Доступную версию смотрите в магазине."
+    "available": "Доступную версию смотрите в магазине.",
+    "website": "Официальный сайт"
   },
   "pt-PT": {
     "hide": "Ocultar controlos flutuantes",
@@ -1061,14 +1076,15 @@
     "privacy": "Privacidade",
     "privacyBody": "A extensão não tem análise nem telemetria. O áudio e as conversas são processados no seu navegador. As preferências podem ser sincronizadas através da sincronização do navegador.",
     "independent": "Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.",
-    "analyticsTitle": "Análise opcional do site",
-    "analyticsBody": "Permitir que o Google Analytics meça visitas e cliques em ligações para as lojas neste site? A extensão e o inquérito de desinstalação continuam sem análise.",
+    "analyticsTitle": "Ajude a tornar este site mais útil",
+    "analyticsBody": "Ajude a perceber quais páginas são úteis e como as pessoas descobrem a extensão. Permitir que o Google Analytics meça visitas e cliques nas ligações das lojas? A extensão e o questionário de desinstalação continuam sem análise. Pode mudar a sua escolha a qualquer momento.",
     "accept": "Permitir análise",
     "decline": "Não, obrigado",
     "preferences": "Preferências de análise",
     "websitePrivacy": "Este site usa o Google Analytics apenas com a sua permissão. Mede visitas e cliques nas lojas, não instalações nem utilização da extensão. Pode retirar a permissão nas Preferências de análise.",
     "feedbackPolicy": "A opinião ao desinstalar é opcional. As respostas e o contexto técnico geral são guardados de forma privada no Google Sheets para melhorar a extensão. Não inclua dados pessoais nem conversas.",
     "screenshot": "Controlos de reprodução de Ler em voz alta do ChatGPT",
-    "available": "Consulte a loja para saber a versão disponível."
+    "available": "Consulte a loja para saber a versão disponível.",
+    "website": "Site oficial"
   }
 }

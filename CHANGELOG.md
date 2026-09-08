@@ -12,6 +12,8 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 - Add a customizable browser visibility command that works while typing, with Mac labels and actual assigned shortcuts.
 - Add localized first-use help, playback/download recovery messages and native control detection independent of extension language.
 - Add the localized official website, optional website analytics, and voluntary uninstall survey service. Production configuration and deployment remain release requirements.
+- Match the website to the extension design with accessible React/Radix menus, a desktop language grid, on-site guides, official store badges and review links. Link the localized website from popup and options.
+- Generate canonical sitemaps, Markdown mirrors and full context files for all 85 localized pages. Keep preview redirects within the preview origin.
 - Gate automatic master publishing on version increases and verified acceptance; separate Chrome/Edge submission and manual retries. Validate archive contents and exercise the loaded extension in Chromium fixtures.
 - Preserve standalone userscript functionality. Its version metadata follows this release; new extension features are not a claim of userscript parity.
 

@@ -79,6 +79,7 @@ export const App: React.FC = () => {
   return (
     <div className="dashboard-layout">
       <Navbar
+        language={settings.language}
         currentSection={section}
         onSelectSection={setSection}
         theme={theme}
