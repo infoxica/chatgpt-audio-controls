@@ -2,6 +2,14 @@
 
 Project: Infoxica. Account identities and private service identifiers belong in private release records, never repository files or pull requests.
 
+## Current release decision (2026-09-09)
+- PR #13 merged into develop at `5cee2f1`; post-merge CI 34264705594 passed. The merged summary-repair fix is deployed as Apps Script version 2 at the existing public URL; anonymous access was rechecked.
+- The owner confirmed v1.2.0 live Chrome and Edge playback, pause, compact layout, hide/show and shortcut testing passed. This is owner-reported acceptance, not an automated live-browser result.
+- The owner explicitly waived native Mac testing and confirmed GA4 setup, authorizing release without waiting for processed traffic reports. Mac remains unverified and is recorded as `waived-by-owner`, never as a passed test.
+- Feedback and website deployment flags now reflect verified services. Release metadata validation passes. Typecheck and 9 unit tests / 180 assertions passed, including rejection of missing checks and waivers on checks other than Mac.
+- Search Console and store listing updates remain outstanding. Required PR review, final master CI, Chrome/Edge submissions and public availability remain separate release steps. All required store secret names are present; that does not establish credential validity or successful publishing.
+- Earlier entries below are the dated implementation and acceptance history; the decisions in this section supersede their former acceptance blockers.
+
 ## Completed
 - PR #8 updated: version-change publishing policy, independent Chrome/Edge jobs, per-store retry, ZIP validation.
 - Local policy tests and archive validation passed. GitHub run 34205468386 verified packaging successfully.
@@ -51,4 +59,4 @@ Project: Infoxica. Account identities and private service identifiers belong in 
 Baseline exports, account-level metrics and service ownership records remain private. Store analytics measure listing visitors, not extension usage. Do not combine overlapping extracts or infer cohort churn from event totals. Survey respondents are self-selected; reason distributions do not represent all uninstalls.
 
 ## Release boundary
-Do not merge the release into master or submit stores until configured survey writes, browser checks, and native Mac acceptance are verified. Report submission acceptance separately from public store availability.
+The recorded owner decisions above clear the acceptance gate for v1.2.0. Follow required PR review and master CI before store submissions; do not bypass branch protection. Report submission acceptance separately from public store availability.
