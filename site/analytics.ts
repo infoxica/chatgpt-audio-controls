@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    dataLayer?: unknown[][];
+    dataLayer?: (IArguments | unknown[])[];
     gtag?: (...args: unknown[]) => void;
     [key: `ga-disable-${string}`]: boolean | undefined;
   }
@@ -22,7 +22,8 @@ export function enableAnalytics() {
   }
   loaded = true;
   target.dataLayer ||= [];
-  target.gtag = (...args) => { target.dataLayer!.push(args); };
+  // gtag consumes Arguments objects; ordinary arrays are not command records.
+  target.gtag = function (..._args: unknown[]) { target.dataLayer!.push(arguments); };
   target.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
   target.gtag('js', new Date());
   target.gtag('config', measurement, {

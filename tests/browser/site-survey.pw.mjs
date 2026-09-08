@@ -42,6 +42,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   await expect(page.locator('#locale')).toBeFocused();
   await page.getByRole('button',{name:'Analytics preferences'}).click();await page.getByRole('button',{name:'Allow analytics',exact:true}).click();
   await expect.poll(()=>tracking.filter(url=>url.includes('googletagmanager')).length).toBe(1);
+  expect(await page.evaluate(()=>window.dataLayer.every(command=>Object.prototype.toString.call(command)==='[object Arguments]'))).toBe(true);
   await page.locator('a[data-store=chrome][data-placement=hero]').click({modifiers:['Control']});
   const event=await page.evaluate(()=>window.dataLayer.map(args=>Array.from(args)).find(args=>args[0]==='event'));
   expect(event).toEqual(['event','store_link_click',{store:'chrome',locale:'en',placement:'hero',transport_type:'beacon'}]);
