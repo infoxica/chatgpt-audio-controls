@@ -192,6 +192,16 @@ ChatGPT Audio Controls operates **100% locally in your browser**.
 
 ---
 
+## v1.2.0 candidate
+
+The extension candidate adds Hindi, French, German, Japanese, Korean, Indonesian, Italian and Turkish, for 17 locales. It includes compact controls above the composer, controls that remain available while paused, and two floating-UI visibility modes in the popup and options.
+
+Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
+
+The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
+
+See the [delivery status](docs/RELEASE-1.2.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.2.0.md) for remaining checks. This candidate is not a claim of store availability. The standalone userscript preserves its existing functionality and does not gain all new extension features.
+
 ## 🤝 Contributing
 
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.

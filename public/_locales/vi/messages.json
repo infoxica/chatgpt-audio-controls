@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "ChatGPT Audio Controls & Read Aloud",
-    "description": "The title of the extension displayed in the browser"
+    "message": "ChatGPT Audio Controls & Read Aloud"
   },
   "extensionDescription": {
-    "message": "Điều khiển đọc to cho ChatGPT: tua âm thanh, tốc độ phát, âm lượng, tải xuống âm thanh, phím tắt và nút đọc nhanh.",
-    "description": "The description of the extension displayed in the browser store"
+    "message": "Điều khiển Đọc to của ChatGPT: tạm dừng, tua, tốc độ, âm lượng, tải âm thanh, phím tắt và nút đọc phản hồi."
   },
   "extensionActionTitle": {
-    "message": "ChatGPT Audio Controls",
-    "description": "Tooltip for the extension icon in the toolbar"
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Hiện / ẩn bộ điều khiển nổi"
   }
 }

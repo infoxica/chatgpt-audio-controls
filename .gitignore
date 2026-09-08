@@ -6,6 +6,9 @@ node_modules/
 dist/
 dist-zip/
 build/
+site-dist/
+.clasp.json
+.clasprc.json
 *.zip
 
 # Environment & Temp

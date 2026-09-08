@@ -1,0 +1,10 @@
+.release-ui .btn-outline{padding:8px 12px;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-card);color:var(--text-primary);font:inherit;cursor:pointer;text-align:center}
+.release-ui .btn-outline:hover{background:var(--bg-surface-hover)}
+.release-ui a{color:var(--accent);text-underline-offset:3px}
+.release-ui p{line-height:1.5;color:var(--text-secondary);font-size:12px}
+.release-ui select{background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border-color);padding:9px;border-radius:8px;font:inherit;width:100%;max-width:100%}
+.release-ui input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;cursor:pointer}
+.release-ui label.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.release-ui .shortcut-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.release-ui kbd{white-space:nowrap;font:11px var(--font-mono);padding:4px;border-radius:4px;background:var(--bg-surface)}
+.release-ui :is(a,button,input,select):focus-visible{outline:2px solid var(--accent);outline-offset:3px}

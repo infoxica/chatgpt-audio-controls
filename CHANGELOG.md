@@ -4,6 +4,17 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.2.0] - Unreleased
+
+- Add Hindi, French, German, Japanese, Korean, Indonesian, Italian and Turkish, for 17 interface and manifest locales.
+- Keep paused audio controls visible and use a compact panel above the composer when side controls cannot fit.
+- Add synchronized floating-control visibility settings, with idle-bubble-only and all-controls modes.
+- Add a customizable browser visibility command that works while typing, with Mac labels and actual assigned shortcuts.
+- Add localized first-use help, playback/download recovery messages and native control detection independent of extension language.
+- Add the localized official website, optional website analytics, and voluntary uninstall survey service. Production configuration and deployment remain release requirements.
+- Gate automatic master publishing on version increases and verified acceptance; separate Chrome/Edge submission and manual retries. Validate archive contents and exercise the loaded extension in Chromium fixtures.
+- Preserve standalone userscript functionality. Its version metadata follows this release; new extension features are not a claim of userscript parity.
+
 ## [1.1.0] - 2026-08-27
 
 ### 🌐 Multi-Language & Internationalization (i18n) Support

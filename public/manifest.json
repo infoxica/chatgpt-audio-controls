@@ -2,10 +2,10 @@
   "manifest_version": 3,
   "default_locale": "en",
   "name": "__MSG_extensionName__",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "__MSG_extensionDescription__",
   "author": "Infoxica",
-  "homepage_url": "https://github.com/infoxica/chatgpt-audio-controls",
+  "homepage_url": "https://infoxica.github.io/chatgpt-audio-controls/",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
@@ -52,5 +52,18 @@
       "run_at": "document_start",
       "world": "MAIN"
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background/worker.js",
+    "type": "module"
+  },
+  "commands": {
+    "toggle-floating-ui": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y",
+        "mac": "Option+Shift+Y"
+      },
+      "description": "__MSG_visibilityCommand__"
+    }
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Vorlesen"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT Vorlesen steuern: Pause, Spulen, Tempo, Lautstärke, Audio-Downloads, Tastenkürzel und Antwortschaltflächen."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Schwebende Steuerelemente ein-/ausblenden"
+  }
+}

@@ -1,4 +1,6 @@
+import { VisibilitySettings } from "../../shared/VisibilitySettings";
 import React from "react";
+import { platformKeys } from '../../shared/shortcuts';
 import { Gauge, Volume2, FastForward, Check, Globe } from "lucide-react";
 import { SPEED_PRESETS, SUPPORTED_LANGUAGES } from "../../shared/constants";
 import { ExtensionSettings, SupportedLanguage } from "../../shared/types";
@@ -21,6 +23,7 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
 
   return (
     <div className="settings-section">
+      <VisibilitySettings settings={settings} onUpdateSettings={onUpdateSettings} />
       {/* Language & Localization */}
       <div className="card">
         <div className="card-title">
@@ -132,7 +135,7 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
           <span>{t.options.general.seekTitle}</span>
         </div>
         <p className="card-desc">
-          {t.options.general.seekDesc}
+          {platformKeys(t.options.general.seekDesc)}
         </p>
 
         <div style={{ display: "flex", gap: 10, marginTop: 4 }}>

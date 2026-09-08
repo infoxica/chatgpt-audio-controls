@@ -1,9 +1,10 @@
+import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
 import { Navbar, DashboardSection } from "./components/Navbar";
 import { GeneralSettings } from "./components/GeneralSettings";
 import { ShortcutsGuide } from "./components/ShortcutsGuide";
 import { FaqSection } from "./components/FaqSection";
-import { getSettings, saveSettings } from "../shared/storage";
+import { getSettings, saveSettings, subscribeSettings } from "../shared/storage";
 import { DEFAULT_SETTINGS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 import { useTranslation } from "../shared/i18n";
@@ -14,6 +15,8 @@ export const App: React.FC = () => {
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
   const { t } = useTranslation(settings.language);
+
+  useEffect(() => subscribeSettings(setSettings), []);
 
   useEffect(() => {
     getSettings().then((loaded) => {
@@ -67,9 +70,10 @@ export const App: React.FC = () => {
     handleUpdateSettings({ theme: next });
   };
 
+  const [saveError, setSaveError] = useState(false);
   const handleUpdateSettings = async (partial: Partial<ExtensionSettings>) => {
-    const updated = await saveSettings(partial);
-    setSettings(updated);
+    try { const updated = await saveSettings(partial); setSettings(updated); setSaveError(false); }
+    catch { setSaveError(true); }
   };
 
   return (
@@ -82,6 +86,7 @@ export const App: React.FC = () => {
         t={t}
       />
 
+      {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}
       <main className="dashboard-main">
         <header className="main-header">
           <div className="header-title-block">
@@ -101,8 +106,8 @@ export const App: React.FC = () => {
         {section === "settings" && (
           <GeneralSettings settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
-        {section === "shortcuts" && <ShortcutsGuide t={t} />}
-        {section === "faq" && <FaqSection t={t} />}
+        {section === "shortcuts" && <ShortcutsGuide language={settings.language} t={t} />}
+        {section === "faq" && <FaqSection t={t} language={settings.language} />}
       </main>
     </div>
   );

@@ -64,3 +64,14 @@ export async function saveSettings(settings: Partial<ExtensionSettings>): Promis
 
   return updated;
 }
+
+export function subscribeSettings(listener: (settings: ExtensionSettings) => void): () => void {
+  if (typeof chrome === "undefined" || !chrome.storage?.onChanged) return () => {};
+  const change = (changes: Record<string, chrome.storage.StorageChange>, area: string) => {
+    if (area === "sync" && (changes[STORAGE_KEYS.SETTINGS] || settingStorageKeyNames.some(key => changes[key]))) {
+      void getSettings().then(listener);
+    }
+  };
+  chrome.storage.onChanged.addListener(change);
+  return () => chrome.storage.onChanged.removeListener(change);
+}

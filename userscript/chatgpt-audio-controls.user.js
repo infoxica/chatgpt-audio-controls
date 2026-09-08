@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT Read Aloud & Audio Controls
 // @namespace    https://infoxica.com/
-// @version      1.1.0
+// @version      1.2.0
 // @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts, and one-click per-response speech.
 // @author       Infoxica
 // @match        https://chatgpt.com/*
