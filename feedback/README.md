@@ -3,7 +3,7 @@
 Deploy with Apps Script HTML Service using the designated project owner's account, executing as the owner, accessible to anyone without sign-in. The response spreadsheet must remain private. Keep account emails, private project and spreadsheet identifiers, and credentials out of repository files and pull requests.
 
 1. Run `bun run scripts/build-feedback.ts` to generate `build/feedback` from these sources and the shared translations.
-2. Set Script Properties `SPREADSHEET_ID` to the private feedback workbook ID and `SIGNING_SECRET` to a securely generated random secret. Never commit the secret.
+2. Run `initializeFeedback` from the signed-in owner's Apps Script editor and approve the spreadsheet and account-email scopes. The email scope only checks that setup is run by the owner; it is not stored in feedback. Anonymous callers are rejected before setup. It creates a private native workbook, Responses headers and Summary breakdowns, and sets Script Properties without printing their values. Re-running reuses the workbook and signing secret. Alternatively, configure an existing private workbook with `SPREADSHEET_ID` and `SIGNING_SECRET` manually. Never commit either value.
 3. The `Responses` header must match `HEADERS` in Code.gs exactly. Summary formulas read the response columns; do not add test rows to production statistics.
 4. Deploy a versioned web app. Test unsigned URL input, language switching, every reason, blank notes, literal formula-like comments, Skip, duplicate submissions and simulated lost replies. Verify anonymous access and actual Sheet writes.
 5. Put the verified `/exec` URL in `config/release.json`; build the extension and test actual uninstall in isolated Chrome and Edge profiles.

@@ -40,3 +40,44 @@ test('invalid, oversized, expired and throttled submissions cannot append rows',
   s.props.HOURLY_LIMIT=JSON.stringify({period:'2026-09-08-10',count:100});expect(()=>s.context.submitFeedback(s.input)).toThrow('Busy');
   expect(s.rows.length).toBe(1); expect(s.isLocked()).toBe(false);
 });
+
+test('setup rejects non-owners before accessing resources and reuses existing data',()=>{
+  let active='', created=0, locked=false;
+  const props={}, sheets=new Map(), formulas=[];
+  function makeSheet(name) {
+    const rows=[], cells={};
+    const sheet={rows,cells,setName(next){sheets.delete(name);name=next;sheets.set(next,sheet);},setFrozenRows(count){cells.frozenRows=count;},getRange(row){return {
+      getValues:()=>[rows[0]||Array(9).fill('')],
+      setValues(values){if(!locked)throw Error('Unserialized setup');rows[0]=Array.from(values[0]);return this;},
+      setFontWeight(){return this;},setValue(value){cells[row]=value;return this;},setFormula(value){cells[row]=value;formulas.push(value);return this;}
+    };}};
+    sheets.set(name,sheet);return sheet;
+  }
+  const book={getId:()=> 'private-test-id',getSheets:()=>Array.from(sheets.values()),getSheetByName:name=>sheets.get(name),insertSheet:makeSheet};
+  const context=vm.createContext({
+    Session:{getActiveUser:()=>({getEmail:()=>active}),getEffectiveUser:()=>({getEmail:()=> 'owner'})},
+    PropertiesService:{getScriptProperties:()=>({getProperty:key=>props[key],setProperty:(key,value)=>{props[key]=value;}})},
+    LockService:{getScriptLock:()=>({waitLock:()=>{locked=true;},releaseLock:()=>{locked=false;}})},
+    Utilities:{getUuid:()=> 'random-test-value'},
+    SpreadsheetApp:{create:()=>{created++;makeSheet('Sheet1');return book;},openById:()=>book,flush:()=>{}}
+  });
+  vm.runInContext(fs.readFileSync('feedback/Code.gs','utf8'),context);
+  for(const identity of ['', 'another-user']) {
+    active=identity;expect(()=>context.initializeFeedback()).toThrow('Owner authorization');
+    expect(created).toBe(0);expect(Object.keys(props)).toHaveLength(0);
+  }
+  active='owner';expect(context.initializeFeedback().configured).toBe(true);
+  const responses=sheets.get('Responses');responses.rows.push(['existing response']);
+  const summary=sheets.get('Summary');summary.cells.A1='stale';summary.cells.A4='broken formula';delete summary.cells.D4;
+  props.SIGNING_SECRET='preserve-existing-secret';
+  expect(context.initializeFeedback().configured).toBe(true);
+  expect(created).toBe(1);expect(formulas).toHaveLength(10);
+  expect(summary.cells.A1).toBe('Voluntary feedback — respondents only');
+  expect(summary.cells.A4).toContain('select B, count(I)');expect(summary.cells.D4).toContain('select D, count(I)');
+  expect(summary.cells.frozenRows).toBe(2);
+  expect(responses.rows[1]).toEqual(['existing response']);
+  expect(props.SIGNING_SECRET).toBe('preserve-existing-secret');expect(locked).toBe(false);
+  responses.rows[0][0]='Unexpected header';
+  expect(()=>context.initializeFeedback()).toThrow('Unexpected headers');
+  expect(responses.rows[0][0]).toBe('Unexpected header');expect(locked).toBe(false);
+});
