@@ -152,6 +152,9 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect(popup.locator('html')).toHaveAttribute('data-theme','light');
     await popup.emulateMedia({colorScheme:'dark'}); await expect(popup.locator('html')).toHaveAttribute('data-theme','dark');
     await popup.reload(); await expect(popup.getByRole('combobox',{name:'Appearance'})).toHaveValue('system');
+    await dashboard.setViewportSize({width:1280,height:800});
+    await dashboard.evaluate(()=>Promise.all(document.getAnimations().map(animation=>animation.finished.catch(()=>{}))));
+    await dashboard.screenshot({path:'build/browser-results/dashboard-v1.3.0.png'});
     await popup.close(); await dashboard.close();
   });
 });

@@ -80,6 +80,7 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - [ ] Set the public privacy-policy URL to the hosted `PRIVACY.md` page or an equivalent accessible policy page.
 - [ ] Provide an accurate short description, detailed description, category, language, and support URL.
 - [ ] Upload fresh screenshots of the native Read Aloud button and v1.3.0 capsules. Remove screenshots advertising the former injected button. Do not imply OpenAI endorsement.
+  Use the three images listed in `assets/store/screenshots/V1.3.0.md`; the historical numbered images are not the 1.3.0 submission set.
 - [ ] Submit the first listing manually. Subsequent version bumps merged into `master` are uploaded and submitted for review by GitHub Actions.
 
 ## Microsoft Edge Add-ons submission

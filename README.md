@@ -47,7 +47,7 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 ## ✨ Features
 
 <div align="center">
-  <img src="assets/store/screenshots/01-active-read-aloud-1280x800.png" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
+  <img src="assets/store/screenshots/v1.3.0-player-active.jpg" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
 </div>
 
 ### 🎛️ Integrated Floating Player
@@ -62,7 +62,7 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 ### ⚛️ Extension Popup & Dashboard
 
 <div align="center">
-  <img src="assets/store/screenshots/03-popup-controls-1280x800.png" alt="Popup Dashboard and Settings" width="85%" />
+  <img src="assets/store/screenshots/v1.3.0-dashboard.png" alt="Version 1.3.0 settings dashboard" width="85%" />
 </div>
 
 - **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.
