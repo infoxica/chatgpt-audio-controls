@@ -197,15 +197,15 @@ Your feedback is optional and private, even after uninstalling. No name or email
 
 ---
 
-## v1.3.0 candidate
+## v1.3.0
 
-This candidate repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
+Version 1.3.0 repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
 
 Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
 
 The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
 
-See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.3.0.md). Candidate status does not establish public availability. Native Mac testing is waived for v1.3.0 only. The standalone userscript receives the playback and capsule changes; popup, dashboard, and uninstall registration are extension features.
+See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.3.0.md). GitHub publication and availability in each browser store are tracked separately. Native Mac testing is waived for v1.3.0 only. The standalone userscript receives the playback and capsule changes; popup, dashboard, and uninstall registration are extension features.
 
 ## 🤝 Contributing
 

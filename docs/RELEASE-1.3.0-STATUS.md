@@ -2,7 +2,7 @@
 
 ## Release decision
 
-Implementation candidate. Do not publish extension assets or submit to stores until the fresh acceptance gates in `config/acceptance.json` are satisfied. Previous v1.2.0 results do not count for this release. **Native Mac testing waived for v1.3.0** by the owner; it has not passed native Mac testing.
+Implementation and acceptance gates are complete; production PR review and publication remain pending. Previous v1.2.0 results do not count for this release. **Native Mac testing waived for v1.3.0** by the owner; it has not passed native Mac testing.
 
 ## Implemented
 
@@ -40,7 +40,7 @@ Release review follow-up: automated review identified direct-URL retention being
 
 - Chrome, Edge and actual Tampermonkey acceptance were confirmed by the owner on 26 October for candidate `14254cb`. Browser versions and per-scenario results were not supplied; the acceptance record distinguishes these owner confirmations from directly observed tests. The three live acceptance flags are now true. Native Mac remains waived for 1.3.0 only.
 - Fresh 1280×800 active/paused player images were captured from a real Edge ChatGPT session with the `3c3a6e2` build. Resume advanced from the saved position and seeking worked during capture. A current settings-page screenshot was also captured from the unpacked extension verification profile. README/website references now use these images; see `assets/store/screenshots/V1.3.0.md`. Store-console image replacement is still pending and may need the owner because browser automation blocks those pages.
-- PR #20 is ready for review. CI run `40318614229` and website build run `40318614223` passed for `14254cb`. Both protected branches require one approving review and approval after the latest push; no approval is recorded. Complete feature → develop review, website deployment and live verification, then final version-bump commit and develop → master review.
+- PR #20 merged into develop on 26 October (`f53444d`); CI run `40325056147` passed. Pages deployment run `40327347760` succeeded. All 85 live localized HTML pages match the verified build except its modification timestamp, and both current screenshots match byte-for-byte. Live Edge verified privacy/help content, analytics decline, and feedback health. All acceptance flags are now satisfied. Finalization reapplies the premature version bump as the final commit; merge its PR using **Rebase and merge** before opening develop → master. Required reviews remain in place.
 - Verified GitHub assets, independent Chrome and Edge submissions, then separate public-availability checks. Neither store has been submitted for v1.3.0.
 - Release notes and authorized replies for GitHub #18/#19 and the identified Chrome one-star review are prepared in `RELEASE-NOTES-1.3.0.md` and `RELEASE-COMMUNICATIONS-1.3.0.md`. No replies have been posted. Browser automation denies access to store reviews/developer-console pages; the Chrome reply may require owner posting after public availability.
 

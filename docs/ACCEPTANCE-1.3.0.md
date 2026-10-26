@@ -32,18 +32,18 @@ Subsequent PR review found direct HTTP audio recovery was cancelled by MediaSour
 - [x] Existing Google URL serves the transition; no further spreadsheet writes.
 - [x] Controlled tests cover no default selection, both modes, 17 locales, note limit, Skip/no-write, validation/origin/body limits, challenge rejection, concurrent duplicate persistence, changed-ID conflict, lost reply retry and database outage.
 - [x] Complete typecheck, unit, extension/userscript browser fixtures, website checks, Worker dry run, release-policy tests and ZIP validation on candidate `14254cb`: CI run `40318614229` passed; website run `40318614223` passed its build/checks. Recheck after any release changes.
-- [ ] Deploy reviewed GitHub Pages content and verify help/privacy, links, localization and consent behavior live.
+- [x] GitHub Pages deployed from develop `f53444d` in run `40327347760` on 26 October. All 85 localized HTML pages match the verified build except the generated modification timestamp; both new screenshot assets match byte-for-byte. Live Edge verified help/privacy content and the Analytics preferences / No thanks interaction. Feedback `/health` reports `ok: true` in Edge.
 
 ## Publication record
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
-| Feature → develop review | Ready; approval required | PR #20, one approving review required by branch protection |
+| Feature → develop review | Merged | PR #20 merged 26 October; develop CI run `40325056147` passed |
 | Tested candidate hash | Recorded | SHA-256 above; final publication artifact must also be verified |
 | Chrome live acceptance | Owner confirmed | 26 October 2026, current candidate |
 | Edge live acceptance | Owner confirmed | 26 October 2026, current candidate |
 | Tampermonkey live acceptance | Owner confirmed | 26 October 2026, current candidate |
-| Website deployment | Pending | |
+| Website deployment | Verified | Pages run `40327347760`; live checks above |
 | Develop → master review | Pending | |
 | GitHub assets | Not published | |
 | Chrome submission | Not submitted | |
