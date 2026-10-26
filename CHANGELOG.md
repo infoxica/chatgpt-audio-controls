@@ -4,6 +4,19 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.3.0] - 2026-10-26
+
+- Preserve playback position, speed and volume across destructive host pauses with a session-specific retained source and an owned audio element. Ignore stale loads and play results, show loading/recovery state, and prevent overlapping sessions.
+- Reset the playback progress anchor after seeking so a backward seek during resume cannot cause a false loading timeout; seeking alone does not count as advancing playback.
+- Recognize ChatGPT's updated composer. Restore two separate rounded capsules beside it when space permits and above it on narrow screens.
+- Remove injected response Read Aloud buttons, toolbar/menu automation and the obsolete setting from both extension and userscript. Start with ChatGPT's native button.
+- Move Help beside Dashboard and add localized Send feedback links in About and settings.
+- Add remembered System / Light / Dark preferences to popup, dashboard and feedback, with icon controls on the feedback form.
+- Keep the README source-version badge and heading synchronized with release metadata through CI and packaging checks.
+- Replace the Google survey backend with a Cloudflare Worker, private D1 storage and Turnstile. Support voluntary uninstall reasons and installed-user bug/suggestion/other feedback in 17 languages, with idempotent submissions and owner query/export tools.
+- Keep the existing Google URL as a localized transition page with no spreadsheet writes. Update privacy and store disclosures.
+- Reset release acceptance; require fresh Windows Chrome, Edge and actual Tampermonkey checks. Native Mac testing is waived for v1.3.0, not passed.
+
 ## [1.2.0] - 2026-09-09
 
 - Add Hindi, French, German, Japanese, Korean, Indonesian, Italian and Turkish, for 17 interface and manifest locales.

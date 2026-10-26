@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         ChatGPT Read Aloud & Audio Controls
 // @namespace    https://infoxica.com/
-// @version      1.2.0
-// @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts, and one-click per-response speech.
+// @version      1.3.0
+// @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts.
 // @author       Infoxica
 // @match        https://chatgpt.com/*
 // @run-at       document-start
@@ -16,6 +16,464 @@
 
 (function () {
   "use strict";
+class StreamingAudioCapture {
+  requests = new Set;
+  sources = new Map;
+  urls = new Map;
+  buffers = new WeakMap;
+  begin() {
+    let resolve, reject;
+    const promise = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    promise.catch(() => {});
+    const controller = new AbortController;
+    const request = {
+      controller,
+      promise,
+      resolve,
+      reject,
+      claimed: false,
+      timer: setTimeout(() => {
+        controller.abort();
+        reject(new Error("Audio capture timed out"));
+        this.requests.delete(request);
+      }, 60000)
+    };
+    this.requests.add(request);
+    const waiting = [...this.sources.values()].filter((stream) => !stream.request && !stream.settled);
+    for (const stream of waiting)
+      stream.candidates.push(request);
+    const active = waiting.filter((stream) => stream.active);
+    if (active.length === 1 && active[0].candidates.length === 1)
+      this.bind(active[0], request);
+    while (this.requests.size > 4) {
+      const oldest = [...this.requests].find((request) => !request.claimed) || this.requests.values().next().value;
+      this.releaseRequest(oldest);
+    }
+    return request;
+  }
+  complete(request, payload) {
+    payload.then((blob) => {
+      clearTimeout(request.timer);
+      request.resolve(blob);
+    }, (error) => {
+      clearTimeout(request.timer);
+      request.reject(error);
+      this.requests.delete(request);
+    });
+  }
+  register(source, url) {
+    let resolve, reject;
+    const promise = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    promise.catch(() => {});
+    const candidates = [...this.requests].filter((request) => !request.claimed);
+    const stream = { candidates, prefix: new Uint8Array, promise, resolve, reject, settled: false, active: false };
+    this.sources.set(source, stream);
+    this.urls.set(url, stream);
+    while (this.sources.size > 8) {
+      const oldest = [...this.sources].find(([, value]) => !value.active);
+      if (!oldest)
+        break;
+      oldest[1].settled = true;
+      oldest[1].reject(new Error("Unused stream replaced"));
+      this.sources.delete(oldest[0]);
+      for (const [key, value] of this.urls)
+        if (value === oldest[1])
+          this.urls.delete(key);
+    }
+  }
+  addBuffer(source, buffer) {
+    const stream = this.sources.get(source);
+    if (stream)
+      this.buffers.set(buffer, stream);
+  }
+  append(buffer, data) {
+    const stream = this.buffers.get(buffer);
+    if (!stream || stream.prefix.length >= 4096)
+      return;
+    const bytes = ArrayBuffer.isView(data) ? new Uint8Array(data.buffer, data.byteOffset, data.byteLength) : new Uint8Array(data);
+    const length = Math.min(bytes.length, 4096 - stream.prefix.length);
+    const prefix = new Uint8Array(stream.prefix.length + length);
+    prefix.set(stream.prefix);
+    prefix.set(bytes.subarray(0, length), stream.prefix.length);
+    stream.prefix = prefix;
+    if (stream.active && !stream.request && prefix.length >= 1024)
+      this.match(stream);
+  }
+  async match(stream) {
+    const matches = await Promise.all(stream.candidates.map(async (request) => {
+      try {
+        return await this.matches(stream.prefix, await request.promise) ? request : undefined;
+      } catch {
+        return;
+      }
+    }));
+    const eligible = matches.filter(Boolean);
+    if (!stream.settled && eligible.length === 1 && !stream.request && !eligible[0].claimed)
+      this.bind(stream, eligible[0]);
+  }
+  async matches(prefix, blob) {
+    const bytes = new Uint8Array(await blob.slice(0, prefix.length).arrayBuffer());
+    return bytes.length === prefix.length && bytes.every((byte, index) => byte === prefix[index]);
+  }
+  bind(stream, request) {
+    stream.request = request;
+    request.claimed = true;
+    request.promise.then(async (blob) => {
+      if (stream.settled)
+        return;
+      if (stream.prefix.length && !await this.matches(stream.prefix, blob))
+        throw new Error("Audio stream mismatch");
+      stream.settled = true;
+      stream.resolve(blob);
+    }).catch((error) => {
+      stream.settled = true;
+      stream.reject(error);
+    });
+  }
+  has(url) {
+    return this.urls.has(url);
+  }
+  retain(url) {
+    const stream = this.urls.get(url);
+    if (!stream)
+      return;
+    stream.active = true;
+    if (!stream.request) {
+      const eligible = stream.candidates.filter((request) => !request.claimed);
+      if (eligible.length === 1)
+        this.bind(stream, eligible[0]);
+      else if (stream.prefix.length >= 1024)
+        this.match(stream);
+    }
+    return stream.promise;
+  }
+  releaseRequest(request) {
+    clearTimeout(request.timer);
+    request.controller.abort();
+    request.reject(new Error("Audio session replaced"));
+    this.requests.delete(request);
+  }
+  clearExcept(url = "") {
+    const keep = this.urls.get(url);
+    for (const request of this.requests)
+      if (request !== keep?.request && !keep?.candidates.includes(request))
+        this.releaseRequest(request);
+    for (const [source, stream] of this.sources)
+      if (stream !== keep) {
+        stream.settled = true;
+        stream.reject(new Error("Audio session replaced"));
+        this.sources.delete(source);
+      }
+    for (const [key, stream] of this.urls)
+      if (stream !== keep)
+        this.urls.delete(key);
+  }
+}
+
+
+
+function installStreamingInterceptor() {
+  const source = PAGE.MediaSource?.prototype;
+  const buffer = PAGE.SourceBuffer?.prototype;
+  if (!source || !buffer || source.__cgptRAStreamHook)
+    return;
+  const add = source.addSourceBuffer, append = buffer.appendBuffer;
+  source.addSourceBuffer = function(...args) {
+    const result = add.apply(this, args);
+    streamingAudio.addBuffer(this, result);
+    return result;
+  };
+  buffer.appendBuffer = function(data) {
+    const result = append.call(this, data);
+    streamingAudio.append(this, data);
+    return result;
+  };
+  Object.defineProperty(source, "__cgptRAStreamHook", { value: true, configurable: true });
+}
+
+
+
+class PlaybackSession {
+  retain;
+  changed;
+  failed;
+  media = null;
+  host = null;
+  owned = null;
+  source = "";
+  objectURL = "";
+  generation = 0;
+  pending = null;
+  payload = null;
+  controller = null;
+  wantsPlay = false;
+  savedTime = 0;
+  savedDuration = 0;
+  ready = false;
+  advancing = false;
+  playAnchor = 0;
+  playTimer;
+  playAttempt = 0;
+  constructor(retain, changed, failed) {
+    this.retain = retain;
+    this.changed = changed;
+    this.failed = failed;
+  }
+  isOwned(media) {
+    return media === this.owned;
+  }
+  get url() {
+    return this.source;
+  }
+  get time() {
+    return this.owned && !this.ready ? this.savedTime : this.media?.currentTime || 0;
+  }
+  get duration() {
+    return this.owned && !this.ready ? this.savedDuration : this.media?.duration || 0;
+  }
+  get loading() {
+    return this.wantsPlay && (!this.advancing || Boolean(this.pending));
+  }
+  get playing() {
+    return this.advancing && Boolean(this.media && !this.media.paused && !this.media.ended);
+  }
+  get paused() {
+    return !this.wantsPlay;
+  }
+  attach(media) {
+    if (this.isOwned(media))
+      return;
+    const source = media.src || media.currentSrc;
+    if (this.host === media && this.source === source && !this.owned)
+      return;
+    this.dispose(media);
+    this.host = this.media = media;
+    this.source = source;
+    this.wantsPlay = true;
+    this.controller = new AbortController;
+    this.watch(media);
+    this.payload = this.retain(source, this.controller.signal);
+    this.payload.catch(() => {});
+  }
+  watch(media) {
+    const generation = this.generation;
+    const current = () => generation === this.generation && media === this.media;
+    const signal = this.controller?.signal;
+    for (const name of ["play", "pause", "ended", "waiting", "timeupdate"]) {
+      media.addEventListener(name, () => {
+        if (!current())
+          return;
+        if (name === "play" || name === "waiting") {
+          if (media.paused)
+            return;
+          this.advancing = false;
+          this.playAnchor = media.currentTime;
+          this.wantsPlay = true;
+        } else if (name === "pause" || name === "ended") {
+          if (media.paused)
+            this.wantsPlay = this.advancing = false;
+        } else if (!media.paused && media.currentTime > this.playAnchor) {
+          this.advancing = true;
+          clearTimeout(this.playTimer);
+        }
+        this.changed(media);
+      }, { signal });
+    }
+  }
+  async blob() {
+    if (!this.payload)
+      throw new Error("No active audio source");
+    return this.payload;
+  }
+  seek(time) {
+    this.savedTime = time;
+    if (this.media && (!this.owned || this.ready)) {
+      this.media.currentTime = time;
+      // Measure playback progress from the seek destination, not the old position.
+      this.playAnchor = this.media.currentTime;
+    }
+  }
+  toggle() {
+    if (!this.media)
+      return;
+    const attempt = ++this.playAttempt;
+    if (this.owned) {
+      this.wantsPlay = !this.wantsPlay;
+      if (!this.wantsPlay) {
+        this.advancing = false;
+        clearTimeout(this.playTimer);
+        this.media.pause();
+      } else if (!this.pending) {
+        if (!this.ready)
+          this.prepare();
+        else
+          this.playOwned();
+      }
+      return;
+    }
+    if (!this.wantsPlay) {
+      this.wantsPlay = true;
+      const generation = this.generation;
+      this.media.play().catch(() => {
+        if (generation === this.generation && attempt === this.playAttempt) {
+          this.wantsPlay = false;
+          this.failed();
+          this.changed(this.media);
+        }
+      });
+      return;
+    }
+    const host = this.media;
+    this.savedTime = host.currentTime || 0;
+    this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
+    if (!this.savedDuration && host.buffered?.length)
+      this.savedDuration = host.buffered.end(host.buffered.length - 1);
+    const owned = new Audio;
+    owned.preload = "auto";
+    owned.playbackRate = host.playbackRate;
+    owned.defaultPlaybackRate = host.playbackRate;
+    owned.volume = host.volume;
+    owned.muted = host.muted;
+    this.owned = owned;
+    this.media = owned;
+    this.wantsPlay = false;
+    this.advancing = false;
+    this.watch(owned);
+    this.changed(owned);
+    host.pause();
+    this.prepare();
+  }
+  prepare() {
+    const owned = this.owned;
+    if (!owned || this.pending)
+      return;
+    const generation = this.generation;
+    const signal = this.controller.signal;
+    const current = () => this.generation === generation && this.owned === owned;
+    this.pending = (async () => {
+      try {
+        const blob = await new Promise((resolve, reject) => {
+          const aborted = () => finish(new Error("Session replaced"));
+          const timer = setTimeout(() => finish(new Error("Audio retention timed out")), 60000);
+          const finish = (error, blob) => {
+            clearTimeout(timer);
+            signal.removeEventListener("abort", aborted);
+            error ? reject(error) : resolve(blob);
+          };
+          signal.addEventListener("abort", aborted, { once: true });
+          this.blob().then((blob) => finish(undefined, blob), (error) => finish(error));
+        });
+        if (!current())
+          return;
+        if (this.objectURL)
+          URL.revokeObjectURL(this.objectURL);
+        this.objectURL = URL.createObjectURL(blob);
+        await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => finish(new Error("Audio load timed out")), 15000);
+          const finish = (error) => {
+            clearTimeout(timer);
+            owned.removeEventListener("loadedmetadata", loaded);
+            owned.removeEventListener("error", failed);
+            signal.removeEventListener("abort", aborted);
+            error ? reject(error) : resolve();
+          };
+          const loaded = () => finish();
+          const failed = () => finish(new Error("Audio load failed"));
+          const aborted = () => finish(new Error("Session replaced"));
+          owned.addEventListener("loadedmetadata", loaded, { once: true });
+          owned.addEventListener("error", failed, { once: true });
+          signal.addEventListener("abort", aborted, { once: true });
+          owned.src = this.objectURL;
+          owned.load();
+        });
+        if (!current())
+          return;
+        owned.currentTime = Math.min(this.savedTime, Number.isFinite(owned.duration) ? owned.duration : this.savedTime);
+        this.ready = true;
+        if (this.wantsPlay)
+          this.playOwned();
+      } catch {
+        if (current()) {
+          this.wantsPlay = false;
+          this.failed();
+        }
+      } finally {
+        if (current()) {
+          this.pending = null;
+          this.changed(owned);
+        }
+      }
+    })();
+  }
+  playOwned() {
+    const owned = this.owned, generation = this.generation, attempt = this.playAttempt;
+    if (!owned)
+      return;
+    this.advancing = false;
+    this.playAnchor = owned.currentTime;
+    clearTimeout(this.playTimer);
+    this.playTimer = setTimeout(() => {
+      if (generation === this.generation && attempt === this.playAttempt && this.wantsPlay && !this.advancing) {
+        this.wantsPlay = false;
+        owned.pause();
+        this.failed();
+        this.changed(owned);
+      }
+    }, 15000);
+    owned.play().catch(() => {
+      if (generation === this.generation && attempt === this.playAttempt && this.wantsPlay) {
+        clearTimeout(this.playTimer);
+        this.wantsPlay = false;
+        this.failed();
+        this.changed(owned);
+      }
+    });
+  }
+  dispose(next) {
+    this.generation++;
+    this.playAttempt++;
+    clearTimeout(this.playTimer);
+    this.controller?.abort();
+    this.controller = null;
+    const media = this.media;
+    this.media = this.host = null;
+    if (media && media !== next)
+      media.pause();
+    if (this.owned) {
+      this.owned.removeAttribute("src");
+      this.owned.load();
+    }
+    if (this.objectURL)
+      URL.revokeObjectURL(this.objectURL);
+    this.owned = null;
+    this.objectURL = this.source = "";
+    this.pending = this.payload = null;
+    this.ready = this.wantsPlay = this.advancing = false;
+    this.savedTime = this.savedDuration = 0;
+  }
+}
+
+
+
+function floatingVisibility(hidden, mode, session, expanded) {
+  const hideAll = hidden && mode === "all";
+  return { player: !hideAll && expanded, launcher: !hideAll && !expanded && (!hidden || session) };
+}
+
+let observedComposer = null;
+const composerObserver = new ResizeObserver(scheduleLayoutSync);
+const composerAttributes = new MutationObserver(scheduleLayoutSync);
+let conversationPath = location.pathname;
+
+function getSavedSettings() { return {}; }
+function recoveryCopy() { return { pending: 'Loading audio…', playError: 'Playback could not resume. Start Read Aloud again using ChatGPT’s response button.' }; }
+function showStatus(message) { let status=document.getElementById('cgpt-ra-status'); if(!status){status=document.createElement('div');status.id='cgpt-ra-status';status.setAttribute('role','status');document.body.append(status);}status.textContent=message;status.hidden=false;setTimeout(()=>status.hidden=true,8000); }
 
   const PAGE = typeof unsafeWindow !== "undefined" ? unsafeWindow : window;
 
@@ -30,8 +488,6 @@
   };
 
   let activeMedia = null;
-  let activeInlineButton = null;
-  let pendingInlineButton = null;
   let userForcedExpand = false;
   let userForcedCollapsed = false;
 
@@ -52,12 +508,33 @@
 
   let sliderDragging = false;
 
-  let capturedAudioBlob = null;
-  let capturedAudioMime = "";
-  let capturedAudioURL = "";
-  let capturedAudioAt = 0;
 
-  const blobURLMap = new Map();
+const MAX_BLOB_MAP_ENTRIES = 4;
+const MAX_BLOB_MAP_BYTES = 64 * 1024 * 1024;
+const blobURLMap = new Map;
+let blobURLBytes = 0;
+function removeBlobURL(url) {
+  const blob = blobURLMap.get(url);
+  if (!blob)
+    return;
+  blobURLBytes -= blob.size;
+  blobURLMap.delete(url);
+}
+function pruneBlobMap() {
+  while (blobURLMap.size > MAX_BLOB_MAP_ENTRIES || blobURLBytes > MAX_BLOB_MAP_BYTES) {
+    const firstEntry = blobURLMap.entries().next().value;
+    if (!firstEntry)
+      break;
+    removeBlobURL(firstEntry[0]);
+  }
+}
+function rememberBlobURL(url, blob) {
+  removeBlobURL(url);
+  blobURLMap.set(url, blob);
+  blobURLBytes += blob.size;
+  pruneBlobMap();
+}
+
   const mediaListenersInstalled = new WeakSet();
 
   // Cached DOM state to completely eliminate flickering and redundant reflows
@@ -118,33 +595,37 @@
   }
 
   function broadcastLiveAudioState(force = false) {
-    const now = Date.now();
-    if (!force && now - cache.lastBroadcast < 500) return;
-    cache.lastBroadcast = now;
-
-    const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
-    const current = Number(activeMedia?.currentTime) || 0;
-    const duration = Number(activeMedia?.duration) || 0;
-    const speed = activeMedia?.playbackRate || getSavedSpeed();
-    const volume = activeMedia ? activeMedia.volume : getSavedVolume();
-
-    const liveState = {
-      hasMedia: Boolean(activeMedia),
-      isPlaying,
-      currentTime: current,
-      duration,
-      speed,
-      volume,
-      isMuted: Boolean(activeMedia?.muted || volume === 0),
-      formattedCurrent: formatTime(current),
-      formattedDuration: formatTime(duration),
-      updatedAt: now,
-    };
-
+  const now = Date.now();
+  if (!force && now - cache.lastBroadcast < 500)
+    return;
+  cache.lastBroadcast = now;
+  const isPlaying = playback.playing;
+  const current = playback.time;
+  const duration = playback.duration;
+  const speed = activeMedia?.playbackRate || getSavedSpeed();
+  const volume = activeMedia ? activeMedia.volume : getSavedVolume();
+  const liveState = {
+    hasMedia: Boolean(activeMedia),
+    isPlaying,
+    currentTime: current,
+    duration,
+    speed,
+    volume,
+    isMuted: Boolean(activeMedia?.muted || volume === 0),
+    formattedCurrent: formatTime(current),
+    formattedDuration: formatTime(duration),
+    updatedAt: now
+  };
+  try {
+    localStorage.setItem("cgpt-ra-live-state", JSON.stringify(liveState));
+  } catch (_) {}
+  if (typeof chrome !== "undefined" && chrome.storage?.local) {
     try {
-      localStorage.setItem("cgpt-ra-live-state", JSON.stringify(liveState));
+      chrome.storage.local.set({ "cgpt-ra-live-state": liveState });
     } catch (_) {}
   }
+}
+
 
   /*
    * Self-contained Lucide SVGs (no external font or CDN required).
@@ -205,882 +686,353 @@
   // ---------------------------------------------------------------------
 
   function looksLikeAudio(url, contentType) {
-    const u = String(url || "").toLowerCase();
-    const type = String(contentType || "").toLowerCase();
+  const u = String(url || "").toLowerCase();
+  const type = String(contentType || "").toLowerCase();
+  return type.startsWith("audio/") || type.includes("application/ogg") || type.includes("application/octet-stream") && /(audio|speech|voice|tts|synth)/.test(u) || /\.(mp3|m4a|aac|wav|ogg|opus|webm)(?:$|\?)/i.test(u) || /(read.?aloud|text.?to.?speech|tts|synthesi[sz]e|speech)/i.test(u);
+}
 
-    return (
-      type.startsWith("audio/") ||
-      type.includes("application/ogg") ||
-      (type.includes("application/octet-stream") &&
-        /(audio|speech|voice|tts|synth)/.test(u)) ||
-      /\.(mp3|m4a|aac|wav|ogg|opus|webm)(?:$|\?)/i.test(u) ||
-      /(read.?aloud|text.?to.?speech|tts|synthesi[sz]e|speech)/i.test(u)
-    );
-  }
 
   function rememberAudioBlob(blob, sourceURL = "") {
-    if (!(blob instanceof Blob) || !blob.size) return;
-
-    const mime = blob.type || "";
-    if (mime && !looksLikeAudio(sourceURL, mime)) return;
-
-    capturedAudioBlob = blob;
-    capturedAudioMime = mime;
-    capturedAudioURL = sourceURL;
-    capturedAudioAt = Date.now();
-
-    log("Captured audio payload", {
-      size: blob.size,
-      type: blob.type,
-      sourceURL,
-    });
+  if (blob.size && blob.size <= MAX_BLOB_MAP_BYTES && looksLikeAudio(sourceURL, blob.type))
+    rememberBlobURL(sourceURL, blob);
+}
+const retentionFetch = PAGE.fetch.bind(PAGE);
+const streamingAudio = new StreamingAudioCapture();
+async function readAudio(response) {
+  if (Number(response.headers.get("content-length")) > MAX_BLOB_MAP_BYTES || !response.body)
+    throw new Error("Audio size unsupported");
+  const reader = response.body.getReader();
+  const parts = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done)
+        break;
+      size += value.byteLength;
+      if (size > MAX_BLOB_MAP_BYTES) {
+        reader.cancel().catch(() => {});
+        throw new Error("Audio size unsupported");
+      }
+      parts.push(value);
+    }
+  } finally {
+    reader.releaseLock();
   }
+  if (!size)
+    throw new Error("Empty audio");
+  return new Blob(parts, { type: response.headers.get("content-type") || "application/octet-stream" });
+}
+async function retainAudio(source, signal) {
+  if (!source)
+    throw new Error("No audio source");
+  const stream = streamingAudio.retain(source);
+  if (stream)
+    return stream;
+  const cached = blobURLMap.get(source);
+  if (cached)
+    return cached;
+  const response = await retentionFetch(source, { credentials: "include", signal: AbortSignal.any([signal, AbortSignal.timeout(60000)]) });
+  if (!response.ok)
+    throw new Error("Audio unavailable");
+  return readAudio(response);
+}
+
+
+
+const playback = new PlaybackSession(retainAudio, (media) => {
+  activeMedia = media;
+  if (media)
+    installMediaListeners(media);
+  updateControls();
+  broadcastLiveAudioState(true);
+  scheduleLayoutSync();
+}, () => showStatus(recoveryCopy().playError, true));
+window.addEventListener("pagehide", () => {
+  playback.dispose();
+  activeMedia = null;
+  blobURLMap.clear();
+  blobURLBytes = 0;
+
+  streamingAudio.clearExcept();
+});
+
 
   function installObjectURLInterceptor() {
-    try {
-      const urlObj = PAGE.URL;
-      if (!urlObj || urlObj.__cgptRAObjectURLHook) return;
-
-      const originalCreate = urlObj.createObjectURL.bind(urlObj);
-      const originalRevoke = urlObj.revokeObjectURL.bind(urlObj);
-
-      urlObj.createObjectURL = function (object) {
-        const url = originalCreate(object);
-
-        try {
-          if (object instanceof PAGE.Blob && looksLikeAudio(url, object.type)) {
-            blobURLMap.set(url, object);
-            rememberAudioBlob(object, url);
-          }
-        } catch (_) {}
-
-        return url;
-      };
-
-      urlObj.revokeObjectURL = function (url) {
-        blobURLMap.delete(url);
-        return originalRevoke(url);
-      };
-
-      Object.defineProperty(urlObj, "__cgptRAObjectURLHook", {
-        value: true,
-        configurable: true,
-      });
-    } catch (error) {
-      warn("Object URL interception failed:", error);
-    }
+  try {
+    const urlObj = PAGE.URL;
+    if (!urlObj || urlObj.__cgptRAObjectURLHook)
+      return;
+    const originalCreate = urlObj.createObjectURL.bind(urlObj);
+    const originalRevoke = urlObj.revokeObjectURL.bind(urlObj);
+    urlObj.createObjectURL = function(object) {
+      const url = originalCreate(object);
+      if (PAGE.MediaSource && object instanceof PAGE.MediaSource)
+        streamingAudio.register(object, url);
+      try {
+        if (object instanceof PAGE.Blob && object.size && looksLikeAudio(url, object.type)) {
+          rememberBlobURL(url, object);
+          rememberAudioBlob(object, url);
+        }
+      } catch (_) {}
+      return url;
+    };
+    urlObj.revokeObjectURL = function(url) {
+      removeBlobURL(url);
+      return originalRevoke(url);
+    };
+    Object.defineProperty(urlObj, "__cgptRAObjectURLHook", {
+      value: true,
+      configurable: true
+    });
+  } catch (error) {
+    warn("Object URL interception failed:", error);
   }
+}
+
+
+
+
 
   function installFetchInterceptor() {
-    try {
-      if (!PAGE.fetch || PAGE.fetch.__cgptRAFetchHook) return;
-
-      const originalFetch = PAGE.fetch.bind(PAGE);
-
-      async function wrappedFetch(...args) {
-        const response = await originalFetch(...args);
-
-        try {
-          const requestURL =
-            typeof args[0] === "string"
-              ? args[0]
-              : args[0]?.url || response.url || "";
-
-          const type = response.headers?.get("content-type") || "";
-
-          if (looksLikeAudio(requestURL, type)) {
-            response
-              .clone()
-              .blob()
-              .then((blob) => rememberAudioBlob(blob, requestURL))
-              .catch(() => {});
-          }
-        } catch (_) {}
-
-        return response;
+  try {
+    if (!PAGE.fetch || PAGE.fetch.__cgptRAFetchHook)
+      return;
+    const originalFetch = PAGE.fetch.bind(PAGE);
+    async function wrappedFetch(...args) {
+      const inputURL = typeof args[0] === "string" ? args[0] : args[0]?.url || "";
+      const signal = args[1]?.signal || args[0]?.signal;
+      const capture = looksLikeAudio(inputURL, "") && !signal?.aborted ? streamingAudio.begin() : null;
+      let response;
+      try {
+        response = await originalFetch(...capture ? [args[0], { ...args[1], signal: capture.controller.signal }] : args);
+      } catch (error) {
+        if (capture)
+          streamingAudio.complete(capture, Promise.reject(error));
+        throw error;
       }
-
-      wrappedFetch.__cgptRAFetchHook = true;
-      PAGE.fetch = wrappedFetch;
-
-      log("fetch() audio capture installed");
-    } catch (error) {
-      warn("fetch interception failed:", error);
+      try {
+        const requestURL = typeof args[0] === "string" ? args[0] : args[0]?.url || response.url || "";
+        const type = response.headers?.get("content-type") || "";
+        if (looksLikeAudio(requestURL, type)) {
+          const pending = readAudio(response.clone());
+          if (capture)
+            streamingAudio.complete(capture, pending);
+          pending.catch(() => {});
+        } else if (capture)
+          streamingAudio.complete(capture, Promise.reject(new Error("Not audio")));
+      } catch (_) {}
+      return response;
     }
+    wrappedFetch.__cgptRAFetchHook = true;
+    PAGE.fetch = wrappedFetch;
+    log("fetch() audio capture installed");
+  } catch (error) {
+    warn("fetch interception failed:", error);
   }
+}
+
+
+
+
 
   function installXHRInterceptor() {
-    try {
-      const proto = PAGE.XMLHttpRequest?.prototype;
-      if (!proto || proto.__cgptRAXHRHook) return;
-
-      const originalOpen = proto.open;
-      const originalSend = proto.send;
-
-      proto.open = function (method, url, ...rest) {
-        this.__cgptRAURL = String(url || "");
-        return originalOpen.call(this, method, url, ...rest);
-      };
-
-      proto.send = function (...args) {
-        this.addEventListener(
-          "load",
-          () => {
-            try {
-              const type = this.getResponseHeader("content-type") || "";
-              const url = this.responseURL || this.__cgptRAURL || "";
-
-              if (!looksLikeAudio(url, type)) return;
-
-              if (this.response instanceof PAGE.Blob) {
-                rememberAudioBlob(this.response, url);
-              } else if (this.response instanceof PAGE.ArrayBuffer) {
-                rememberAudioBlob(new Blob([this.response], { type }), url);
-              }
-            } catch (_) {}
-          },
-          { once: true },
-        );
-
-        return originalSend.apply(this, args);
-      };
-
-      Object.defineProperty(proto, "__cgptRAXHRHook", {
-        value: true,
-        configurable: true,
-      });
-    } catch (error) {
-      warn("XHR interception failed:", error);
-    }
+  try {
+    const proto = PAGE.XMLHttpRequest?.prototype;
+    if (!proto || proto.__cgptRAXHRHook)
+      return;
+    const originalOpen = proto.open;
+    const originalSend = proto.send;
+    proto.open = function(method, url, ...rest) {
+      this.__cgptRAURL = String(url || "");
+      return originalOpen.call(this, method, url, ...rest);
+    };
+    proto.send = function(...args) {
+      this.addEventListener("load", () => {
+        try {
+          const type = this.getResponseHeader("content-type") || "";
+          const url = this.responseURL || this.__cgptRAURL || "";
+          if (!looksLikeAudio(url, type))
+            return;
+          if (this.response instanceof PAGE.Blob) {
+            rememberAudioBlob(this.response, url);
+          } else if (this.response instanceof PAGE.ArrayBuffer) {
+            rememberAudioBlob(new Blob([this.response], { type }), url);
+          }
+        } catch (_) {}
+      }, { once: true });
+      return originalSend.apply(this, args);
+    };
+    Object.defineProperty(proto, "__cgptRAXHRHook", {
+      value: true,
+      configurable: true
+    });
+  } catch (error) {
+    warn("XHR interception failed:", error);
   }
+}
+
 
   // ---------------------------------------------------------------------
   // Media interception
   // ---------------------------------------------------------------------
 
   function getSeekInfo(media = activeMedia) {
-    if (!media) return { start: 0, end: 0, seekable: false };
-
-    try {
-      if (Number.isFinite(media.duration) && media.duration > 0) {
-        return { start: 0, end: media.duration, seekable: true };
-      }
-
-      if (media.seekable?.length) {
-        return {
-          start: media.seekable.start(0),
-          end: media.seekable.end(media.seekable.length - 1),
-          seekable: true,
-        };
-      }
-
-      if (media.buffered?.length) {
-        return {
-          start: 0,
-          end: media.buffered.end(media.buffered.length - 1),
-          seekable: true,
-        };
-      }
-    } catch (_) {}
-
+  if (!media)
     return { start: 0, end: 0, seekable: false };
-  }
+  try {
+    if (playback.isOwned(media) && playback.duration > 0)
+      return { start: 0, end: playback.duration, seekable: true };
+    if (Number.isFinite(media.duration) && media.duration > 0) {
+      return { start: 0, end: media.duration, seekable: true };
+    }
+    if (media.seekable?.length) {
+      return {
+        start: media.seekable.start(0),
+        end: media.seekable.end(media.seekable.length - 1),
+        seekable: true
+      };
+    }
+    if (media.buffered?.length) {
+      return {
+        start: 0,
+        end: media.buffered.end(media.buffered.length - 1),
+        seekable: true
+      };
+    }
+  } catch (_) {}
+  return { start: 0, end: 0, seekable: false };
+}
+
 
   function isReadAloudMedia(media) {
-    if (media.tagName !== "AUDIO") return false;
+  if (media.tagName !== "AUDIO")
+    return false;
+  const source = media.src || media.currentSrc || "";
+  return blobURLMap.has(source) || streamingAudio.has(source) || looksLikeAudio(source, "");
+}
 
-    const source = media.currentSrc || media.src || "";
-    return (
-      !media.isConnected ||
-      Boolean(pendingInlineButton) ||
-      blobURLMap.has(source) ||
-      source === capturedAudioURL ||
-      looksLikeAudio(source, "")
-    );
-  }
+
+
+
 
   function attachMedia(media, reason = "detected") {
-    if (!media || typeof media.play !== "function" || !isReadAloudMedia(media)) return;
-
-    const changed = activeMedia !== media;
-    activeMedia = media;
-    if (changed) {
-      userForcedExpand = true;
-      userForcedCollapsed = false;
-    }
-
-    if (changed) {
-      try {
-        media.playbackRate = getSavedSpeed();
-        media.defaultPlaybackRate = getSavedSpeed();
-        media.volume = getSavedVolume();
-      } catch (_) {}
-    }
-
-    if (pendingInlineButton) {
-      activeInlineButton = pendingInlineButton;
-      pendingInlineButton = null;
-    }
-
-    if (changed) installMediaListeners(media);
-
-    setControlsEnabled(true);
-    updateControls();
-    updateInlineButtons();
-    broadcastLiveAudioState(true);
-    scheduleLayoutSync();
-
-    log("Attached media:", reason, media);
+  if (!media || playback.isOwned(media) || typeof media.play !== "function" || !isReadAloudMedia(media))
+    return;
+  const source = media.src || media.currentSrc;
+  const changed = activeMedia !== media || playback.url !== source;
+  playback.attach(media);
+  if (changed) {
+    streamingAudio.clearExcept(source);
+    for (const url of blobURLMap.keys())
+      if (url !== source)
+        removeBlobURL(url);
   }
+  activeMedia = media;
+  if (changed) {
+    userForcedExpand = true;
+    userForcedCollapsed = false;
+  }
+  if (changed) {
+    try {
+      media.playbackRate = getSavedSpeed();
+      media.defaultPlaybackRate = getSavedSpeed();
+      media.volume = getSavedVolume();
+    } catch (_) {}
+  }
+  if (changed)
+    installMediaListeners(media);
+  setControlsEnabled(true);
+  updateControls();
+  broadcastLiveAudioState(true);
+  scheduleLayoutSync();
+  log("Attached media:", reason, media);
+}
+
+
+
+
 
   function installMediaListeners(media) {
-    if (mediaListenersInstalled.has(media)) return;
-    mediaListenersInstalled.add(media);
-
-    [
-      "loadedmetadata",
-      "durationchange",
-      "timeupdate",
-      "ratechange",
-      "volumechange",
-      "play",
-      "pause",
-      "ended",
-      "canplay",
-    ].forEach((name) => {
-      media.addEventListener(name, () => {
-        if (activeMedia === media) {
-          updateControls();
-          updateInlineButtons();
-          broadcastLiveAudioState();
-          if (name === "play" || name === "pause" || name === "ended") {
-            scheduleLayoutSync();
-          }
+  if (mediaListenersInstalled.has(media))
+    return;
+  mediaListenersInstalled.add(media);
+  [
+    "loadedmetadata",
+    "durationchange",
+    "timeupdate",
+    "ratechange",
+    "volumechange",
+    "play",
+    "pause",
+    "ended",
+    "canplay"
+  ].forEach((name) => {
+    media.addEventListener(name, () => {
+      if (activeMedia === media) {
+        updateControls();
+        broadcastLiveAudioState();
+        if (name === "play" || name === "pause" || name === "ended") {
+          scheduleLayoutSync();
         }
-      });
+      }
     });
-  }
+  });
+}
+
 
   function installMediaInterceptor() {
-    try {
-      const proto = PAGE.HTMLMediaElement?.prototype;
-      if (!proto || proto.__cgptRAV4Hook) return;
-
-      const originalPlay = proto.play;
-      const originalPause = proto.pause;
-
-      proto.play = function (...args) {
-        const isReadAloud = isReadAloudMedia(this);
-        if (isReadAloud) attachMedia(this, "play() intercepted");
-
-        const result = originalPlay.apply(this, args);
-
+  try {
+    const proto = PAGE.HTMLMediaElement?.prototype;
+    if (!proto || proto.__cgptRAV4Hook)
+      return;
+    const originalPlay = proto.play;
+    const originalPause = proto.pause;
+    proto.play = function(...args) {
+      const isReadAloud = !playback.isOwned(this) && isReadAloudMedia(this);
+      if (isReadAloud)
+        attachMedia(this, "play() intercepted");
+      const result = originalPlay.apply(this, args);
+      queueMicrotask(() => {
+        try {
+          if (!isReadAloud)
+            return;
+          this.playbackRate = getSavedSpeed();
+          this.defaultPlaybackRate = getSavedSpeed();
+          this.volume = getSavedVolume();
+        } catch (_) {}
+        updateControls();
+        broadcastLiveAudioState(true);
+      });
+      return result;
+    };
+    proto.pause = function(...args) {
+      const result = originalPause.apply(this, args);
+      if (this === activeMedia) {
         queueMicrotask(() => {
-          try {
-            if (!isReadAloud) return;
-            this.playbackRate = getSavedSpeed();
-            this.defaultPlaybackRate = getSavedSpeed();
-            this.volume = getSavedVolume();
-          } catch (_) {}
-
           updateControls();
           broadcastLiveAudioState(true);
+          scheduleLayoutSync();
         });
-
-        return result;
-      };
-
-      proto.pause = function (...args) {
-        const result = originalPause.apply(this, args);
-
-        if (this === activeMedia) {
-          queueMicrotask(() => {
-            updateControls();
-            updateInlineButtons();
-            broadcastLiveAudioState(true);
-            scheduleLayoutSync();
-          });
-        }
-
-        return result;
-      };
-
-      Object.defineProperty(proto, "__cgptRAV4Hook", {
-        value: true,
-        configurable: true,
-      });
-
-      log("HTMLMediaElement hook installed");
-    } catch (error) {
-      warn("Media hook failed:", error);
-    }
+      }
+      return result;
+    };
+    Object.defineProperty(proto, "__cgptRAV4Hook", {
+      value: true,
+      configurable: true
+    });
+    log("HTMLMediaElement hook installed");
+  } catch (error) {
+    warn("Media hook failed:", error);
   }
+}
+
 
   // ---------------------------------------------------------------------
   // Styles (Using ChatGPT Native CSS Vars)
   // ---------------------------------------------------------------------
 
-  function installStyles() {
-    if (document.getElementById("cgpt-ra-v4-style")) return;
-
-    const style = document.createElement("style");
-    style.id = "cgpt-ra-v4-style";
-    style.textContent = `
-      #cgpt-ra-left,
-      #cgpt-ra-right,
-      #cgpt-ra-floating-toggle {
-          --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));
-          --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));
-          --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));
-          --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));
-          --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));
-          --cgpt-ra-text: var(--text-primary, #ffffff);
-          --cgpt-ra-muted: var(--text-tertiary, #afafaf);
-          --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));
-          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
-          --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
-      }
-
-      html.light #cgpt-ra-left,
-      html.light #cgpt-ra-right,
-      html.light #cgpt-ra-floating-toggle,
-      [data-theme='light'] #cgpt-ra-left,
-      [data-theme='light'] #cgpt-ra-right,
-      [data-theme='light'] #cgpt-ra-floating-toggle {
-          --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));
-          --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));
-          --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));
-          --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));
-          --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));
-          --cgpt-ra-text: var(--text-primary, #0d0d0d);
-          --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);
-          --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));
-          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));
-          --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
-      }
-
-      /* Use ChatGPT's palette only on controls owned by this userscript. */
-      [data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);
-          --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);
-          --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);
-          --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);
-          --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);
-          --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);
-          --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);
-      }
-      [data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-inline-readaloud) {
-          --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);
-          --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);
-      }
-
-      #cgpt-ra-left,
-      #cgpt-ra-right {
-          position: fixed;
-          z-index: 9999;
-          border: 1px solid var(--cgpt-ra-border);
-          background: var(--cgpt-ra-bg);
-          color: var(--cgpt-ra-text);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, .32);
-          opacity: 1 !important;
-          transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
-      }
-
-      #cgpt-ra-left {
-          min-width: 240px;
-          max-width: 430px;
-          height: 48px;
-          display: block;
-          padding: 0 14px;
-          border-radius: 24px;
-          overflow: visible;
-      }
-
-      .cgpt-ra-transport-row {
-          position: static;
-          z-index: auto;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 2px;
-          padding: 0;
-          margin: 0;
-          border: 0;
-          border-radius: 0;
-          background: transparent;
-          box-shadow: none;
-      }
-
-      .cgpt-ra-transport-row > * {
-          position: relative;
-          z-index: 1;
-      }
-
-      .cgpt-ra-transport-row .cgpt-ra-icon-btn {
-          width: 36px;
-          height: 36px;
-          flex: 0 0 36px;
-          border-radius: 50%;
-      }
-
-      .cgpt-ra-play {
-          width: 40px !important;
-          height: 40px !important;
-          flex: 0 0 40px !important;
-          border-radius: 50% !important;
-          background-color: var(--cgpt-ra-accent) !important;
-          color: var(--cgpt-ra-accent-text) !important;
-          box-shadow: 0 2px 10px rgba(57, 104, 200, 0.4) !important;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-      }
-
-      .cgpt-ra-play svg {
-          stroke: currentColor;
-          fill: currentColor;
-      }
-
-      .cgpt-ra-progress-row {
-          height: 46px;
-          display: grid;
-          grid-template-columns: 70px minmax(0, 1fr);
-          align-items: center;
-          gap: 10px;
-          padding: 0;
-          margin: 0;
-          border: 0;
-      }
-
-      #cgpt-ra-right {
-          width: max-content;
-          min-width: 0;
-          height: 48px;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 5px 8px;
-          border-radius: 24px;
-          white-space: nowrap;
-      }
-
-      .cgpt-ra-speed-wrap { order: 1; }
-      .cgpt-ra-volume-wrap { order: 2; }
-      .cgpt-ra-download { order: 3; margin-left: 2px; }
-      .cgpt-ra-help-wrap { order: 4; margin-left: 2px; }
-      .cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }
-
-      #cgpt-ra-floating-toggle {
-          position: fixed;
-          z-index: 9999;
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          border: 1px solid var(--cgpt-ra-border);
-          background: var(--cgpt-ra-bg);
-          color: var(--cgpt-ra-text);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          box-shadow: 0 4px 14px rgba(0, 0, 0, .32);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          padding: 0;
-          transition: transform .15s ease, background .15s ease;
-      }
-
-      #cgpt-ra-floating-toggle:hover {
-          transform: scale(1.08);
-          border-color: var(--cgpt-ra-accent);
-      }
-
-      #cgpt-ra-floating-toggle.cgpt-ra-hidden {
-          display: none !important;
-      }
-
-      #cgpt-ra-left.cgpt-ra-collapsed,
-      #cgpt-ra-right.cgpt-ra-collapsed {
-          opacity: 0 !important;
-          visibility: hidden !important;
-          pointer-events: none !important;
-          transform: scale(0.95);
-      }
-
-      .cgpt-ra-icon-btn {
-          position: relative;
-          width: 36px;
-          height: 36px;
-          flex: 0 0 36px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 50%;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          padding: 0;
-          font-size: 17px;
-          transition: background .12s ease, opacity .12s ease;
-      }
-
-      .cgpt-ra-icon-btn:hover {
-          background: var(--cgpt-ra-bg-surface-hover);
-      }
-
-      .cgpt-ra-icon-btn:disabled {
-          opacity: 0.38;
-          cursor: default;
-          background: transparent;
-      }
-
-      .cgpt-ra-lucide {
-          display: block;
-          width: 19px;
-          height: 19px;
-          flex: 0 0 19px;
-          overflow: visible;
-          pointer-events: none;
-      }
-
-      .cgpt-ra-icon-btn svg {
-          stroke: currentColor;
-      }
-
-      .cgpt-ra-seek10 {
-          position: relative;
-      }
-
-      .cgpt-ra-seek10 .cgpt-ra-lucide {
-          width: 22px;
-          height: 22px;
-      }
-
-      .cgpt-ra-seek10 .cgpt-ra-ten {
-          position: absolute;
-          inset: 0;
-          display: grid;
-          place-items: center;
-          padding-top: 2px;
-          font-size: 9px;
-          font-weight: 700;
-          font-family: system-ui, sans-serif;
-          pointer-events: none;
-      }
-
-      .cgpt-ra-time {
-          min-width: 0;
-          color: var(--cgpt-ra-muted);
-          font-size: 10.5px;
-          line-height: 1;
-          font-variant-numeric: tabular-nums;
-          white-space: nowrap;
-          text-align: left;
-      }
-
-      .cgpt-ra-seek-wrap {
-          min-width: 0;
-          display: flex;
-          align-items: center;
-          padding: 0;
-      }
-
-      .cgpt-ra-range {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 18px;
-          margin: 0;
-          padding: 0;
-          border: 0;
-          outline: 0;
-          cursor: pointer;
-          color: var(--cgpt-ra-text);
-          background: transparent;
-      }
-
-      .cgpt-ra-range::-webkit-slider-runnable-track {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: var(--cgpt-ra-border);
-          transition: height .12s ease, background .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-webkit-slider-runnable-track,
-      .cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {
-          height: 4px;
-          background: var(--cgpt-ra-accent);
-      }
-
-      .cgpt-ra-range::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 10px;
-          height: 10px;
-          margin-top: -4px;
-          border: 0;
-          border-radius: 50%;
-          background: var(--cgpt-ra-text);
-          box-shadow: 0 0 0 1px var(--cgpt-ra-bg);
-          transition: width .12s ease, height .12s ease, margin-top .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-webkit-slider-thumb,
-      .cgpt-ra-range:focus-visible::-webkit-slider-thumb {
-          width: 11px;
-          height: 11px;
-          margin-top: -3.5px;
-          background: var(--cgpt-ra-accent);
-      }
-
-      .cgpt-ra-range::-moz-range-track {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: var(--cgpt-ra-border);
-          transition: height .12s ease, background .12s ease;
-      }
-
-      .cgpt-ra-range:hover::-moz-range-track,
-      .cgpt-ra-range:focus-visible::-moz-range-track {
-          height: 4px;
-          background: var(--cgpt-ra-accent);
-      }
-
-      .cgpt-ra-range::-moz-range-progress {
-          height: 2px;
-          border: 0;
-          border-radius: 999px;
-          background: var(--cgpt-ra-accent);
-      }
-
-      .cgpt-ra-range::-moz-range-thumb {
-          width: 10px;
-          height: 10px;
-          border: 0;
-          border-radius: 50%;
-          background: var(--cgpt-ra-text);
-      }
-
-      .cgpt-ra-range:disabled {
-          opacity: .35;
-          cursor: default;
-      }
-
-      .cgpt-ra-speed-wrap,
-      .cgpt-ra-volume-wrap,
-      .cgpt-ra-help-wrap {
-          position: relative;
-      }
-
-      .cgpt-ra-speed-btn {
-          width: auto;
-          min-width: 48px;
-          height: 36px;
-          padding: 0 10px;
-          border-radius: 18px;
-          font-size: 12.5px;
-          font-weight: 600;
-          font-family: system-ui, sans-serif;
-      }
-
-      .cgpt-ra-popover {
-          position: absolute;
-          right: 0;
-          bottom: calc(100% + 9px);
-          display: none;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 12px;
-          background: var(--cgpt-ra-bg-surface);
-          color: var(--cgpt-ra-text);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-          overflow: hidden;
-          z-index: 10002;
-      }
-
-      .cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,
-      .cgpt-ra-help-wrap:hover .cgpt-ra-popover,
-      .cgpt-ra-help-wrap:focus-within .cgpt-ra-popover {
-          display: block;
-      }
-
-      .cgpt-ra-speed-menu {
-          min-width: 90px;
-          padding: 5px;
-      }
-
-      .cgpt-ra-speed-option {
-          width: 100%;
-          height: 30px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 7px;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          font-size: 12px;
-      }
-
-      .cgpt-ra-speed-option:hover,
-      .cgpt-ra-speed-option.cgpt-selected {
-          background: var(--cgpt-ra-bg-surface-hover);
-      }
-
-      .cgpt-ra-volume-popover {
-          position: absolute;
-          left: 50%;
-          bottom: calc(100% + 6px);
-          transform: translateX(-50%);
-          width: 44px;
-          height: 165px;
-          display: flex;
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          gap: 0;
-          padding: 6px 5px 6px;
-          border: 1px solid var(--cgpt-ra-border);
-          border-radius: 22px;
-          background: var(--cgpt-ra-bg-surface);
-          color: var(--cgpt-ra-text);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-          transition: opacity .12s ease, visibility .12s ease;
-          z-index: 10002;
-      }
-
-      .cgpt-ra-volume-wrap:hover .cgpt-ra-volume-popover,
-      .cgpt-ra-volume-wrap:focus-within .cgpt-ra-volume-popover {
-          opacity: 1;
-          visibility: visible;
-          pointer-events: auto;
-      }
-
-      .cgpt-ra-volume-popover input[type="range"] {
-          position: absolute;
-          top: 56px;
-          left: 50%;
-          width: 96px;
-          height: 18px;
-          margin: 0;
-          transform: translate(-50%, -50%) rotate(-90deg);
-          cursor: pointer;
-      }
-
-      .cgpt-ra-volume-value {
-          position: absolute;
-          left: 4px;
-          right: 4px;
-          bottom: 6px;
-          height: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-top: 1px solid var(--cgpt-ra-border);
-          font-size: 9.5px;
-          font-weight: 600;
-          font-family: system-ui, sans-serif;
-          line-height: 1;
-          color: inherit;
-          opacity: .80;
-          text-align: center;
-      }
-
-      .cgpt-ra-help {
-          width: 300px;
-          padding: 12px 14px;
-          font-family: system-ui, sans-serif;
-      }
-
-      .cgpt-ra-help-title {
-          margin-bottom: 8px;
-          font-size: 12px;
-          font-weight: 700;
-      }
-
-      .cgpt-ra-shortcut-row {
-          display: flex;
-          justify-content: space-between;
-          gap: 20px;
-          padding: 4px 0;
-          font-size: 11px;
-      }
-
-      .cgpt-ra-shortcut-key {
-          color: inherit;
-          opacity: .65;
-          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-          white-space: nowrap;
-      }
-
-      .cgpt-ra-download-busy svg {
-          animation: cgpt-ra-spin .8s linear infinite;
-      }
-
-      @keyframes cgpt-ra-spin {
-          to { transform: rotate(360deg); }
-      }
-
-      .cgpt-inline-readaloud {
-          --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, #3a83f7));
-          width: 32px;
-          height: 32px;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          border: 0;
-          border-radius: 8px;
-          background: transparent;
-          color: inherit;
-          cursor: pointer;
-          opacity: .72;
-          padding: 0;
-          transition: opacity .12s ease, background .12s ease;
-      }
-
-      .cgpt-inline-readaloud:hover {
-          opacity: 1;
-          background: var(--cgpt-ra-bg-surface-hover);
-      }
-
-      .cgpt-inline-readaloud svg {
-          display: block;
-          width: 17px;
-          height: 17px;
-      }
-
-      .cgpt-inline-readaloud.cgpt-active {
-          opacity: 1;
-          color: var(--cgpt-ra-accent);
-      }
-    `;
-
-    document.documentElement.appendChild(style);
-  }
+  function installStyles() { const style=document.createElement('style'); style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Strictly scoped to #cgpt-ra-* to NEVER override or affect any native ChatGPT elements.\r\n */\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(20px);\r\n    -webkit-backdrop-filter: blur(20px);\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, transform .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 40px !important;\r\n    height: 40px !important;\r\n    flex: 0 0 40px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden !important;\r\n    pointer-events: none !important;\r\n    transform: scale(0.95);\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap:hover .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap:focus-within .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap:hover .cgpt-ra-volume-popover,\r\n.cgpt-ra-volume-wrap:focus-within .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n"; document.documentElement.append(style); }
 
   function buildUI() {
     if (leftRail || !document.body) return;
@@ -1342,117 +1294,95 @@
   }
 
   function getComposer() {
-    const prompt =
-      document.querySelector("#prompt-textarea") ||
-      document.querySelector('[data-testid="composer-text-input"]') ||
-      document.querySelector('textarea[placeholder*="Ask"]');
+  const candidates = document.querySelectorAll('[data-chatgpt-composer], [data-type="unified-composer"]');
+  const composer = Array.from(candidates).find((el) => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"]'));
+  if (composer)
+    return composer;
+  const prompt = document.querySelector('#prompt-textarea, [data-testid="composer-text-input"], textarea[placeholder*="Ask"]');
+  return prompt?.closest("form") || prompt?.parentElement || null;
+}
 
-    if (!prompt) return null;
-
-    return (
-      prompt.closest('[data-type="unified-composer"]') ||
-      prompt.closest("form") ||
-      prompt.parentElement?.parentElement?.parentElement ||
-      prompt.parentElement
-    );
-  }
 
   function syncComposerLayout() {
-    if (!leftRail || !rightRail || !floatingToggle) return;
-
-    const composer = getComposer();
-    const hasActiveAudio = activeMedia && !activeMedia.paused && !activeMedia.ended;
-    const shouldStayCollapsed = userForcedCollapsed;
-    const shouldExpand = Boolean(!shouldStayCollapsed && (hasActiveAudio || userForcedExpand));
-
-    if (!composer) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-      floatingToggle.style.right = "16px";
-      floatingToggle.style.bottom = "80px";
-      return;
-    }
-
-    const rect = composer.getBoundingClientRect();
-    const viewportWidth = window.innerWidth;
-    const sideGap = 10;
-    const outerMargin = 14;
-
-    const leftAvailable = rect.left - outerMargin - sideGap;
-    const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-
-    const minLeftWidth = 240;
-    const maxLeftWidth = 430;
-
-    const minRightWidth = 360;
-    const canFit = leftAvailable >= minLeftWidth && rightAvailable >= minRightWidth;
-
-    if (shouldStayCollapsed) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
-      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
-
-      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
-      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
-      floatingToggle.style.right = "";
-      floatingToggle.style.bottom = "";
-      return;
-    }
-
-    if (!canFit || !shouldExpand) {
-      cache.isCollapsed = true;
-      leftRail.classList.add("cgpt-ra-collapsed");
-      rightRail.classList.add("cgpt-ra-collapsed");
-
-      if (cache.floatingHidden) {
-        cache.floatingHidden = false;
-        floatingToggle.classList.remove("cgpt-ra-hidden");
-      }
-
-      const toggleX = `${Math.round(Math.min(viewportWidth - 52, rect.right + 12))}px`;
-      const toggleY = `${Math.round(rect.top + rect.height / 2 - 21)}px`;
-
-      if (floatingToggle.style.left !== toggleX) floatingToggle.style.left = toggleX;
-      if (floatingToggle.style.top !== toggleY) floatingToggle.style.top = toggleY;
-      floatingToggle.style.right = "";
-      floatingToggle.style.bottom = "";
-      return;
-    }
-
-    if (!cache.floatingHidden) {
-      cache.floatingHidden = true;
-      floatingToggle.classList.add("cgpt-ra-hidden");
-    }
-
-    if (cache.isCollapsed) {
-      cache.isCollapsed = false;
-      leftRail.classList.remove("cgpt-ra-collapsed");
-      rightRail.classList.remove("cgpt-ra-collapsed");
-    }
-    const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
-    const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
-    const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
-    const rightX = `${Math.round(rect.right + sideGap)}px`;
-
-    if (leftRail.style.width !== computedLeftWidth) leftRail.style.width = computedLeftWidth;
-    if (leftRail.style.left !== leftX) leftRail.style.left = leftX;
-    if (leftRail.style.top !== leftY) leftRail.style.top = leftY;
-
-    if (rightRail.style.left !== rightX) rightRail.style.left = rightX;
-    if (rightRail.style.top !== leftY) rightRail.style.top = leftY;
+  if (!leftRail || !rightRail || !floatingToggle)
+    return;
+  if (location.pathname !== conversationPath) {
+    conversationPath = location.pathname;
+    playback.dispose();
+    activeMedia = null;
+    userForcedExpand = false;
+    streamingAudio.clearExcept();
+    blobURLMap.clear();
+    blobURLBytes = 0;
+    updateControls();
   }
+  const composer = getComposer();
+  if (composer !== observedComposer) {
+    composerObserver.disconnect();
+    composerAttributes.disconnect();
+    observedComposer = composer;
+    for (let parent = composer;parent; parent = parent.parentElement) {
+      composerObserver.observe(parent);
+      composerAttributes.observe(parent, { attributes: true, attributeFilter: ["class", "style", "hidden", "data-state"] });
+    }
+  }
+  const settings = getSavedSettings();
+  const hasSession = Boolean(activeMedia && !activeMedia.ended);
+  const shouldExpand = !userForcedCollapsed && (hasSession || userForcedExpand);
+  const visible = floatingVisibility(Boolean(settings.floatingUiHidden), settings.floatingUiHideMode || "idle-only", hasSession, shouldExpand);
+  leftRail.classList.toggle("cgpt-ra-collapsed", !visible.player);
+  rightRail.classList.toggle("cgpt-ra-collapsed", !visible.player);
+  floatingToggle.classList.toggle("cgpt-ra-hidden", !visible.launcher);
+  cache.isCollapsed = !visible.player;
+  cache.floatingHidden = !visible.launcher;
+  const viewportWidth = window.innerWidth;
+  const rect = composer?.getBoundingClientRect() || { left: 16, right: viewportWidth - 16, top: window.innerHeight - 72, height: 48 };
+  floatingToggle.style.left = `${Math.round(Math.max(8, Math.min(viewportWidth - 52, rect.right + 12)))}px`;
+  floatingToggle.style.top = `${Math.round(Math.max(8, Math.min(window.innerHeight - 52, rect.top + rect.height / 2 - 21)))}px`;
+  floatingToggle.style.right = "";
+  floatingToggle.style.bottom = "";
+  const sideGap = 10, outerMargin = 14, minLeftWidth = 240, maxLeftWidth = 430;
+  const leftAvailable = rect.left - outerMargin - sideGap;
+  const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
+  rightRail.style.width = "";
+  const railWidth = rightRail.scrollWidth + 2;
+  const compact = leftAvailable < minLeftWidth || rightAvailable < railWidth;
+  leftRail.classList.toggle("cgpt-ra-compact", compact);
+  rightRail.classList.toggle("cgpt-ra-compact", compact);
+  if (!visible.player)
+    return;
+  if (compact) {
+    const width = Math.max(160, Math.min(430, viewportWidth - 24));
+    const left = Math.max(12, Math.min(viewportWidth - width - 12, (rect.left + rect.right - width) / 2));
+    rightRail.style.width = `${width}px`;
+    const rightHeight = rightRail.getBoundingClientRect().height || 48;
+    const top = Math.max(8, rect.top - rightHeight - 68);
+    leftRail.style.width = `${width}px`;
+    leftRail.style.left = rightRail.style.left = `${left}px`;
+    leftRail.style.top = `${top}px`;
+    rightRail.style.top = `${top + 56}px`;
+    return;
+  }
+  rightRail.style.width = "";
+  const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
+  const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
+  const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
+  const rightX = `${Math.round(rect.right + sideGap)}px`;
+  if (leftRail.style.width !== computedLeftWidth)
+    leftRail.style.width = computedLeftWidth;
+  if (leftRail.style.left !== leftX)
+    leftRail.style.left = leftX;
+  if (leftRail.style.top !== leftY)
+    leftRail.style.top = leftY;
+  if (rightRail.style.left !== rightX)
+    rightRail.style.left = rightX;
+  if (rightRail.style.top !== leftY)
+    rightRail.style.top = leftY;
+}
+
+
+
+
 
   function installHoldSeek(button, direction) {
     if (!button) return;
@@ -1538,41 +1468,36 @@
   }
 
   function seekAbsolute(target, update = true) {
-    if (!activeMedia) return;
-
-    const info = getSeekInfo(activeMedia);
-    if (!info.seekable) return;
-
-    target = clamp(target, info.start, info.end);
-
-    try {
-      activeMedia.currentTime = target;
-    } catch (error) {
-      warn("Seek failed:", error);
-    }
-
-    if (update) updateControls();
+  if (!activeMedia)
+    return;
+  const info = getSeekInfo(activeMedia);
+  if (!info.seekable)
+    return;
+  target = clamp(target, info.start, info.end);
+  try {
+    playback.seek(target);
+  } catch (error) {
+    warn("Seek failed:", error);
   }
+  if (update)
+    updateControls();
+}
+
 
   function seekRelative(seconds, update = true) {
-    if (!activeMedia) return;
-    seekAbsolute((Number(activeMedia.currentTime) || 0) + seconds, update);
-  }
+  if (!activeMedia)
+    return;
+  seekAbsolute(playback.time + seconds, update);
+}
+
 
   function togglePlayback() {
-    if (!activeMedia) return;
+  playback.toggle();
+  updateControls();
+  broadcastLiveAudioState(true);
+  scheduleLayoutSync();
+}
 
-    try {
-      if (activeMedia.paused) {
-        const p = activeMedia.play();
-        if (p?.catch) p.catch((error) => warn("Play failed:", error));
-      } else {
-        activeMedia.pause();
-      }
-    } catch (error) {
-      warn("Play/pause failed:", error);
-    }
-  }
 
   function setSpeed(speed) {
     if (!Number.isFinite(speed) || speed <= 0) return;
@@ -1607,89 +1532,80 @@
   }
 
   function updateControls() {
-    if (!leftRail || !rightRail) return;
-
-    if (!activeMedia) {
-      setControlsEnabled(false);
-      return;
-    }
-
-    setControlsEnabled(true);
-
-    const current = Number(activeMedia.currentTime) || 0;
-    const info = getSeekInfo(activeMedia);
-
-    const formattedCur = formatTime(current);
-    if (currentLabel && cache.currentTimeStr !== formattedCur) {
-      cache.currentTimeStr = formattedCur;
-      currentLabel.textContent = formattedCur;
-    }
-
-    const durationNum = Number.isFinite(activeMedia.duration)
-      ? activeMedia.duration
-      : info.seekable
-      ? info.end
-      : 0;
-
-    const formattedDur = durationNum > 0 ? formatTime(durationNum) : "--:--";
-    if (durationLabel && cache.durationStr !== formattedDur) {
-      cache.durationStr = formattedDur;
-      durationLabel.textContent = formattedDur;
-    }
-
-    if (seekSlider) {
-      if (info.seekable) {
-        if (seekSlider.disabled) seekSlider.disabled = false;
-        seekSlider.min = String(info.start);
-        seekSlider.max = String(info.end);
-
-        if (!sliderDragging) {
-          seekSlider.value = String(clamp(current, info.start, info.end));
-        }
-      } else if (!seekSlider.disabled) {
-        seekSlider.disabled = true;
+  if (!leftRail || !rightRail)
+    return;
+  if (!activeMedia) {
+    setControlsEnabled(false);
+    return;
+  }
+  setControlsEnabled(true);
+  const current = playback.time;
+  const info = getSeekInfo(activeMedia);
+  const formattedCur = formatTime(current);
+  if (currentLabel && cache.currentTimeStr !== formattedCur) {
+    cache.currentTimeStr = formattedCur;
+    currentLabel.textContent = formattedCur;
+  }
+  const durationNum = Number.isFinite(playback.duration) ? playback.duration : info.seekable ? info.end : 0;
+  const formattedDur = durationNum > 0 ? formatTime(durationNum) : "--:--";
+  if (durationLabel && cache.durationStr !== formattedDur) {
+    cache.durationStr = formattedDur;
+    durationLabel.textContent = formattedDur;
+  }
+  if (seekSlider) {
+    if (info.seekable) {
+      if (seekSlider.disabled)
+        seekSlider.disabled = false;
+      seekSlider.min = String(info.start);
+      seekSlider.max = String(info.end);
+      if (!sliderDragging) {
+        seekSlider.value = String(clamp(current, info.start, info.end));
       }
-    }
-
-    const isPaused = activeMedia.paused;
-    if (cache.isPaused !== isPaused) {
-      cache.isPaused = isPaused;
-      setIcon(playButton, isPaused ? "play" : "pause");
-    }
-
-    const speed = activeMedia.playbackRate || getSavedSpeed();
-    if (cache.speed !== speed) {
-      cache.speed = speed;
-      speedButton.textContent = `${speed}×`;
-
-      speedMenu?.querySelectorAll(".cgpt-ra-speed-option").forEach((item) => {
-        item.classList.toggle(
-          "cgpt-selected",
-          Math.abs(parseFloat(item.dataset.speed) - speed) < 0.001,
-        );
-      });
-    }
-
-    const volume = activeMedia.volume;
-    const isMuted = activeMedia.muted || volume <= 0;
-
-    if (cache.volume !== volume || cache.isMuted !== isMuted) {
-      cache.volume = volume;
-      cache.isMuted = isMuted;
-
-      volumeSlider.value = String(volume);
-      volumeLabel.textContent = `${Math.round(volume * 100)}%`;
-
-      const volumeButton = rightRail.querySelector(".cgpt-ra-volume-btn");
-      if (isMuted) {
-        setIcon(volumeButton, "volume-x");
-      } else if (volume < 0.5) {
-        setIcon(volumeButton, "volume-1");
-      } else {
-        setIcon(volumeButton, "volume-2");
-      }
+    } else if (!seekSlider.disabled) {
+      seekSlider.disabled = true;
     }
   }
+  const isPaused = playback.paused;
+  playButton?.setAttribute("aria-busy", String(playback.loading));
+  playButton?.classList.toggle("cgpt-ra-buffering", playback.loading);
+  if (playButton) {
+    playButton.dataset.defaultTitle ||= playButton.title;
+    playButton.title = playback.loading ? recoveryCopy().pending : playButton.dataset.defaultTitle;
+    playButton.setAttribute("aria-label", playButton.title);
+  }
+  if (cache.isPaused !== isPaused) {
+    cache.isPaused = isPaused;
+    setIcon(playButton, isPaused ? "play" : "pause");
+  }
+  const speed = activeMedia.playbackRate || getSavedSpeed();
+  if (cache.speed !== speed) {
+    cache.speed = speed;
+    if (speedButton)
+      speedButton.textContent = `${speed}×`;
+    speedMenu?.querySelectorAll(".cgpt-ra-speed-option").forEach((item) => {
+      item.classList.toggle("cgpt-selected", Math.abs(parseFloat(item.dataset.speed || "0") - speed) < 0.001);
+    });
+  }
+  const volume = activeMedia.volume;
+  const isMuted = activeMedia.muted || volume <= 0;
+  if (cache.volume !== volume || cache.isMuted !== isMuted) {
+    cache.volume = volume;
+    cache.isMuted = isMuted;
+    if (volumeSlider)
+      volumeSlider.value = String(volume);
+    if (volumeLabel)
+      volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+    const volumeButton = rightRail.querySelector(".cgpt-ra-volume-btn");
+    if (isMuted) {
+      setIcon(volumeButton, "volume-x");
+    } else if (volume < 0.5) {
+      setIcon(volumeButton, "volume-1");
+    } else {
+      setIcon(volumeButton, "volume-2");
+    }
+  }
+}
+
 
   function extensionFor(mime, url = "") {
     const type = String(mime || "").toLowerCase();
@@ -1708,45 +1624,10 @@
   }
 
   async function resolveDownloadBlob() {
-    if (capturedAudioBlob && Date.now() - capturedAudioAt < 60 * 60 * 1000) {
-      return {
-        blob: capturedAudioBlob,
-        mime: capturedAudioMime || capturedAudioBlob.type,
-        url: capturedAudioURL,
-      };
-    }
+  const blob = await playback.blob();
+  return { blob, mime: blob.type, url: activeMedia?.currentSrc || activeMedia?.src || "" };
+}
 
-    if (!activeMedia) throw new Error("No active Read Aloud audio.");
-
-    const src = activeMedia.currentSrc || activeMedia.src || "";
-
-    if (src && blobURLMap.has(src)) {
-      const blob = blobURLMap.get(src);
-      return { blob, mime: blob.type, url: src };
-    }
-
-    if (src) {
-      try {
-        const response = await PAGE.fetch(src, { credentials: "include" });
-
-        if (response.ok) {
-          const blob = await response.blob();
-
-          if (blob.size) {
-            return {
-              blob,
-              mime: blob.type || response.headers.get("content-type") || "",
-              url: src,
-            };
-          }
-        }
-      } catch (_) {}
-    }
-
-    throw new Error(
-      "The current Read Aloud stream was not exposed as a downloadable media response.",
-    );
-  }
 
   async function downloadCurrentAudio() {
     if (!activeMedia) return;
@@ -1786,349 +1667,7 @@
     }
   }
 
-  function textMeaning(element) {
-    return (
-      `${element.getAttribute?.("aria-label") || ""} ` +
-      `${element.getAttribute?.("title") || ""} ` +
-      `${element.textContent || ""}`
-    )
-      .trim()
-      .toLowerCase();
-  }
-
-  function accessibleMeaning(element) {
-    return `${element.getAttribute?.("aria-label") || ""} ${element.getAttribute?.("title") || ""}`
-      .trim()
-      .toLowerCase();
-  }
-
-  function isCopyControl(button) {
-    const label = textMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    return (
-      /(?:^|[-_])(copy|copy-response|copy-code)(?:[-_]|$)/.test(testId) ||
-      label === "copy" ||
-      label.includes("copy response") ||
-      label.includes("copy code")
-    );
-  }
-
-  function isReadAloudControl(button) {
-    const label = accessibleMeaning(button) || textMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    return (
-      /(?:read[-_ ]?aloud|read[-_ ]?out[-_ ]?loud|text[-_ ]?to[-_ ]?speech|tts)/.test(testId) ||
-      /\bread aloud\b/.test(label) ||
-      /\bread out loud\b/.test(label) ||
-      label === "read"
-    );
-  }
-
-  function isMoreActionsControl(button) {
-    const label = accessibleMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    const identifier = `${label} ${testId}`.trim();
-
-    return (
-      label === "more" ||
-      label.includes("more actions") ||
-      label.includes("more options") ||
-      label.includes("response actions") ||
-      /(?:^|[-_\s])(more|options|overflow|ellipsis|kebab)(?:[-_\s]|$)/.test(identifier)
-    );
-  }
-
-  function findMoreActionsControl(scope) {
-    if (!scope) return null;
-
-    const buttons = [
-      ...(scope.matches("button, [role='button']") ? [scope] : []),
-      ...Array.from(scope.querySelectorAll("button, [role='button']")),
-    ].filter(
-      (button) =>
-        !button.classList.contains("cgpt-inline-readaloud") &&
-        !button.closest("pre, code, table"),
-    );
-
-    return (
-      buttons.find(isMoreActionsControl) ||
-      buttons.find((button) => button.getAttribute("aria-haspopup") === "menu") ||
-      null
-    );
-  }
-
-  function findMoreActionsNear(element, stopAt) {
-    let scope = element;
-
-    while (scope && scope !== document.body) {
-      const moreButton = findMoreActionsControl(scope);
-      if (moreButton) return moreButton;
-      if (scope === stopAt) break;
-      scope = scope.parentElement;
-    }
-
-    return null;
-  }
-
-  function isInteractiveContainer(element) {
-    return Boolean(element?.matches("button, [role='button'], a, input, textarea, select"));
-  }
-
-  function findActionContainer(control, boundary) {
-    let candidate = control.parentElement;
-    let firstSafeContainer = null;
-
-    while (candidate && candidate !== document.body) {
-      if (!isInteractiveContainer(candidate)) {
-        firstSafeContainer ||= candidate;
-
-        const controlCount = candidate.querySelectorAll("button, [role='button']").length;
-        if (controlCount >= 2 || candidate === boundary) return candidate;
-      }
-
-      if (candidate === boundary) break;
-      candidate = candidate.parentElement;
-    }
-
-    return firstSafeContainer;
-  }
-
-  function placeInlineReadAloudButton(toolbar, button) {
-    const copyButton = Array.from(toolbar.querySelectorAll("button, [role='button']")).find(
-      (candidate) => isCopyControl(candidate) && !isInteractiveContainer(candidate.parentElement),
-    );
-
-    if (copyButton) {
-      if (button.previousElementSibling === copyButton) return;
-      copyButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    // Copy's accessible name is localized. When it cannot be identified by
-    // label, place Read Aloud immediately before the response-actions menu.
-    // This preserves the native action order without nesting one button in another.
-    const responseActions = findMoreActionsControl(toolbar);
-    const responseParent = responseActions?.parentElement;
-    if (responseActions && responseParent && !isInteractiveContainer(responseParent)) {
-      if (button.nextElementSibling === responseActions) return;
-      responseActions.insertAdjacentElement("beforebegin", button);
-      return;
-    }
-
-    if (button.parentElement === toolbar) return;
-    toolbar.appendChild(button);
-  }
-
-  function findReadAloudControl(scope) {
-    if (!scope) return null;
-
-    const controls = [
-      ...(scope.matches("button, [role='menuitem'], [role='option']") ? [scope] : []),
-      ...Array.from(scope.querySelectorAll("button, [role='menuitem'], [role='option']")),
-    ];
-
-    return (
-      controls.find(
-        (control) =>
-          !control.classList.contains("cgpt-inline-readaloud") && isReadAloudControl(control),
-      ) || null
-    );
-  }
-
-  function findToolbar(turn) {
-    const responseActions = findMoreActionsControl(turn);
-    if (responseActions) {
-      const responseToolbar = findActionContainer(responseActions, turn);
-      if (responseToolbar) return responseToolbar;
-    }
-
-    const copyButton = Array.from(turn.querySelectorAll("button")).find(
-      (btn) => !btn.closest("pre, code, table") && isCopyControl(btn),
-    );
-
-    if (copyButton?.parentElement) {
-      const copyToolbar = copyButton.closest('[role="toolbar"], [data-testid*="action"]');
-      if (copyToolbar && !isInteractiveContainer(copyToolbar)) return copyToolbar;
-
-      const copyParent = findActionContainer(copyButton, turn);
-      if (copyParent) return copyParent;
-    }
-
-    const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
-    for (const bar of actionBars) {
-      if (
-        !bar.closest("pre, code, table") &&
-        !isInteractiveContainer(bar) &&
-        Array.from(bar.querySelectorAll("button")).some(
-          (button) => isCopyControl(button) || isReadAloudControl(button) || isMoreActionsControl(button),
-        )
-      ) {
-        return bar;
-      }
-    }
-
-    return null;
-  }
-
-  function installInlineReadAloudButtons() {
-    document
-      .querySelectorAll('[data-message-author-role="assistant"]')
-      .forEach((message) => {
-        const turn =
-          message.closest("article") ||
-          message.closest('[data-testid^="conversation-turn"]') ||
-          message.parentElement;
-
-        if (
-          turn?.getAttribute("data-cgpt-ra-inline-ready") === "true" &&
-          turn.querySelector(".cgpt-inline-readaloud")
-        ) {
-          return;
-        }
-
-        const existingButton = turn && turn.querySelector(".cgpt-inline-readaloud");
-        if (existingButton) {
-          const existingToolbar = findToolbar(turn);
-          if (existingToolbar) {
-            placeInlineReadAloudButton(existingToolbar, existingButton);
-            turn.setAttribute("data-cgpt-ra-inline-ready", "true");
-          }
-
-          return;
-        }
-
-        if (!turn) return;
-
-        const toolbar = findToolbar(turn);
-        if (!toolbar) return;
-
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "cgpt-inline-readaloud";
-        button.title = "Read aloud";
-        button.setAttribute("aria-label", "Read aloud");
-        setIcon(button, "volume-2");
-
-        button.addEventListener("click", async (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-
-          if (
-            button === activeInlineButton &&
-            activeMedia &&
-            !activeMedia.paused &&
-            !activeMedia.ended
-          ) {
-            try {
-              activeMedia.pause();
-              activeMedia.currentTime = 0;
-            } catch (_) {}
-
-            updateInlineButtons();
-            broadcastLiveAudioState(true);
-            return;
-          }
-
-          if (activeMedia && !activeMedia.paused) {
-            try {
-              activeMedia.pause();
-            } catch (_) {}
-          }
-
-          pendingInlineButton = button;
-          await triggerNativeReadAloud(turn, button);
-        });
-
-        placeInlineReadAloudButton(toolbar, button);
-        turn.setAttribute("data-cgpt-ra-inline-ready", "true");
-      });
-  }
-
-  async function waitForReadAloudMenuItem(timeout = 1800) {
-    const started = performance.now();
-
-    return new Promise((resolve) => {
-      const scan = () => {
-        const candidates = document.querySelectorAll(
-          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button, [data-radix-popper-content-wrapper] [role="menuitem"]',
-        );
-
-        for (const item of candidates) {
-          const text = textMeaning(item);
-
-          if (isReadAloudControl(item) || /\bread aloud\b/.test(text) || /\bread out loud\b/.test(text)) {
-            resolve(item);
-            return;
-          }
-        }
-
-        if (performance.now() - started >= timeout) {
-          resolve(null);
-          return;
-        }
-
-        requestAnimationFrame(scan);
-      };
-
-      scan();
-    });
-  }
-
-  async function triggerNativeReadAloud(turn, inlineButton) {
-    const inlineRow = inlineButton?.parentElement;
-    const toolbar = findToolbar(turn);
-    const direct = [inlineRow, toolbar, turn]
-      .filter((scope, index, scopes) => scope && scopes.indexOf(scope) === index)
-      .map((scope) => findReadAloudControl(scope))
-      .find((control) => Boolean(control));
-
-    if (direct) {
-      direct.click();
-      return;
-    }
-
-    const moreBtn =
-      findMoreActionsControl(inlineRow) ||
-      findMoreActionsControl(toolbar) ||
-      findMoreActionsNear(inlineButton, turn) ||
-      findMoreActionsControl(turn);
-
-    if (!moreBtn) {
-      pendingInlineButton = null;
-      warn("Could not find the response More Actions button.");
-      return;
-    }
-
-    moreBtn.click();
-
-    const menuItem = await waitForReadAloudMenuItem();
-
-    if (!menuItem) {
-      pendingInlineButton = null;
-      warn("Could not find Read Aloud in the response popup menu.");
-      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-      return;
-    }
-
-    menuItem.click();
-  }
-
-  function updateInlineButtons() {
-    document.querySelectorAll(".cgpt-inline-readaloud").forEach((button) => {
-      const active =
-        button === activeInlineButton &&
-        activeMedia &&
-        !activeMedia.paused &&
-        !activeMedia.ended;
-
-      button.classList.toggle("cgpt-active", Boolean(active));
-      setIcon(button, active ? "square" : "volume-2");
-      button.title = active ? "Stop read aloud" : "Read aloud";
-    });
-  }
-
-  // ---------------------------------------------------------------------
+    // ---------------------------------------------------------------------
   // Shortcuts
   // ---------------------------------------------------------------------
 
@@ -2233,7 +1772,6 @@
       if (observerTimeout) return;
       observerTimeout = setTimeout(() => {
         observerTimeout = null;
-        installInlineReadAloudButtons();
         scheduleLayoutSync();
       }, 250);
     });
@@ -2244,11 +1782,12 @@
     });
 
     window.addEventListener("resize", scheduleLayoutSync, { passive: true });
+window.visualViewport?.addEventListener('resize', scheduleLayoutSync, { passive: true });
+window.visualViewport?.addEventListener('scroll', scheduleLayoutSync, { passive: true });
     window.addEventListener("scroll", scheduleLayoutSync, { passive: true });
 
     setInterval(() => {
       const scan = () => {
-        installInlineReadAloudButtons();
         scanDOMForPlayingMedia();
         scheduleLayoutSync();
       };
@@ -2266,11 +1805,15 @@
   // ---------------------------------------------------------------------
 
   function installEarlyHooks() {
-    installObjectURLInterceptor();
-    installFetchInterceptor();
-    installXHRInterceptor();
-    installMediaInterceptor();
-  }
+  installStreamingInterceptor();
+  installObjectURLInterceptor();
+  installFetchInterceptor();
+  installXHRInterceptor();
+  installMediaInterceptor();
+}
+
+
+
 
   function initUI() {
     if (!document.body) {
@@ -2279,7 +1822,6 @@
     }
 
     buildUI();
-    installInlineReadAloudButtons();
     startObserver();
 
     log("ChatGPT Audio Controls Userscript Ready");

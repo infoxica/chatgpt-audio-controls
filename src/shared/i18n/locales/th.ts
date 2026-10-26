@@ -28,8 +28,6 @@ export const th: TranslationSchema = {
       mute: "ปิดเสียง",
       unmute: "เปิดเสียง",
       smartIntegrations: "การเชื่อมต่ออัจฉริยะ",
-      inlineSpeech: "ปุ่มอ่านออกเสียงในข้อความ",
-      inlineSpeechDesc: "เพิ่มปุ่มอ่านออกเสียง 1 คลิก ข้างปุ่มคัดลอกคำตอบ",
       globalShortcuts: "ปุ่มลัดทั่วทั้งหน้า",
       globalShortcutsDesc: "เปิดใช้ Space/K, Alt+P, Alt+ลูกศร และปุ่มปรับความเร็ว",
       smoothScrubbing: "กรอเสียงนุ่มนวลเมื่อกดค้าง",
@@ -39,10 +37,8 @@ export const th: TranslationSchema = {
       title: "ปุ่มลัดแป้นพิมพ์",
       gesturesTitle: "การควบคุมด้วยเมาส์และท่าทาง",
       smoothAudioScrub: "กรอเสียงอย่างราบรื่น",
-      instantResponseRead: "อ่านคำตอบทันที",
       directDownload: "ดาวน์โหลดเสียงโดยตรง",
       holdScrubKey: "กดค้าง ◀10 / 10▶",
-      clickSpeechKey: "คลิกปุ่ม 🔈",
       clickDownloadKey: "คลิกปุ่ม 📥",
     },
     about: {
@@ -129,7 +125,6 @@ export const th: TranslationSchema = {
       collapse: "ย่อแถบควบคุม",
       expand: "ขยายแถบควบคุมเสียง ChatGPT",
       readAloud: "อ่านออกเสียงคำตอบ",
-      stopReadAloud: "หยุดอ่านออกเสียง",
     },
     shortcutsPopover: {
       title: "ปุ่มลัดการอ่านออกเสียง",

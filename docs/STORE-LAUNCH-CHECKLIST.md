@@ -4,7 +4,8 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 
 ## Release preflight
 
-- [ ] Update the release version consistently in `package.json`, `public/manifest.json`, the userscript header, and `CHANGELOG.md`.
+- [ ] Update the release version consistently in `package.json`, `public/manifest.json`, `src/shared/constants.ts`, the userscript header, `CHANGELOG.md`, and the README source-version badge and current version heading.
+- [ ] Run `bun run version:check`. Stale README badges, links, headings, or mismatched source versions must block the release.
 - [ ] Run `bun install --frozen-lockfile`.
 - [ ] Run `bun run typecheck`.
 - [ ] Run `bun run build`.
@@ -36,14 +37,18 @@ The first Chrome Web Store item and its listing/privacy metadata must be created
 
 The first Edge Add-ons product, listing metadata, privacy information, and required visual assets must be created manually in Partner Center. Enable the Edge Add-ons Publish API and create the v1.1 API key/client ID before using these secrets.
 
+Adding interface languages can introduce incomplete draft listings even for an existing published product. The Edge Update REST API explicitly does not support updating listing metadata. `ModuleStateUnPublishable` with `Invalid module : LISTING` requires completing descriptions and logos in Partner Center, not changing credentials or rebuilding the ZIP.
+
+CI publishes an `edge-store-listings-<run-id>` artifact containing a description and the extension logo for all 17 locales. Generate it locally with `bun run scripts/build-edge-listings.ts`. These are manual Partner Center inputs, not an import API payload. Complete and save every included language, then retry only Edge using the workflow's `store=edge` option. New locales or later metadata changes require another Partner Center update.
+
 ## Browser smoke test
 
 Test the unpacked `dist/` build in the latest stable Chrome and Edge. Sign in to a regular ChatGPT account and open a conversation with an assistant response.
 
-- [ ] Verify the response Read Aloud action appears immediately after Copy and starts/stops the native Read Aloud flow.
+- [ ] Verify ChatGPT's native Read Aloud button starts a session and no duplicate response action is injected.
 - [ ] Verify the floating player tracks the active Read Aloud audio: play/pause, seek, speed, volume, and download.
 - [ ] Verify Space, K, Alt+P, Alt+Left, Alt+Right, Shift+<, and Shift+> work outside editable fields and do not fire while typing in the prompt.
-- [ ] In the popup, change speed, volume, Inline Speech Buttons, Global Shortcuts, and Smooth Scrubbing; confirm the open ChatGPT tab updates without a reload.
+- [ ] In the popup, change speed, volume, Global Shortcuts, and Smooth Scrubbing; confirm the open ChatGPT tab updates without a reload. Check Help beside Dashboard and Send feedback in About.
 - [ ] In the options page, change the seek step; confirm click and keyboard seeking use it.
 - [ ] Verify all three ChatGPT themes used by the extension (dark, light, and an accent theme) keep the extension controls readable without recolouring native ChatGPT controls.
 - [ ] Refresh the ChatGPT tab, start a new response, navigate between conversations, and leave the page open for several minutes; verify no duplicated controls, console errors, or UI flicker.
@@ -54,19 +59,19 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 
 **Single purpose**
 
-> Adds visible Read Aloud actions and local playback controls—play/pause, seek, speed, volume, and download—to ChatGPT Read Aloud audio.
+> Adds local playback controls—play/pause, resume, seek, speed, volume, and download—to audio started with ChatGPT's native Read Aloud button.
 
 **ChatGPT site-access justification**
 
-> Runs only on chatgpt.com to add the Read Aloud action and control the audio that ChatGPT plays in the current page.
+> Runs only on chatgpt.com to control the Read Aloud audio that ChatGPT plays in the current page and position the player around the composer.
 
 **Data-use disclosure**
 
-> The extension stores only user preferences in browser storage. It handles the active ChatGPT Read Aloud stream locally to provide playback controls and user-initiated downloads. It does not collect, transmit, sell, or use conversation data, audio, or personal information.
+> Playback and preferences stay in the browser, with optional browser sync. The extension does not upload conversations, audio, installation identifiers, or automatic diagnostics. Optional feedback opens a separate Cloudflare-hosted form protected by Turnstile. Explicit submissions store the chosen category/reason, optional note, language, version and coarse browser/OS in private Cloudflare D1 storage. There is no email field or attachment. Opening or skipping the form stores no feedback. See the public privacy policy for Cloudflare security processing and retention.
 
 **Reviewer test instructions**
 
-> Sign in to ChatGPT with a regular account, open any assistant response, use its More actions menu to start Read Aloud, then use the extension's response action and floating controls. No developer account, test account, or external service is required.
+> Sign in to ChatGPT with a regular account, open a completed assistant response, and use ChatGPT's native Read Aloud button. Pause and resume repeatedly with the floating controls, then test seeking, speed, volume and download. Resize the window to check separate capsules above the composer. The optional Send feedback link opens a hosted form; submitting is not required for playback.
 
 ## Chrome Web Store submission
 
@@ -74,7 +79,8 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - [ ] Complete the Privacy tab with the single purpose and data-use disclosure above.
 - [ ] Set the public privacy-policy URL to the hosted `PRIVACY.md` page or an equivalent accessible policy page.
 - [ ] Provide an accurate short description, detailed description, category, language, and support URL.
-- [ ] Upload clear, current screenshots that show the Read Aloud response action and player in use. Do not use ChatGPT or OpenAI branding in a way that suggests endorsement.
+- [ ] Upload fresh screenshots of the native Read Aloud button and v1.3.0 capsules. Remove screenshots advertising the former injected button. Do not imply OpenAI endorsement.
+  Use the three images listed in `assets/store/screenshots/V1.3.0.md`; the historical numbered images are not the 1.3.0 submission set.
 - [ ] Submit the first listing manually. Subsequent version bumps merged into `master` are uploaded and submitted for review by GitHub Actions.
 
 ## Microsoft Edge Add-ons submission
@@ -114,5 +120,5 @@ Official website: https://infoxica.github.io/chatgpt-audio-controls/
 
 Set the listing's website URL to the same permanent address. After saving/submitting
 the metadata change in the developer console, verify the public listing separately.
-The localized v1.2.0 descriptions in `docs/STORE-LISTINGS.md` now include their
+The localized release descriptions in `docs/STORE-LISTINGS.md` include their
 localized website links; they remain release copy, not evidence of console changes.

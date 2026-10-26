@@ -28,8 +28,6 @@ export const ru: TranslationSchema = {
       mute: "Выключить звук",
       unmute: "Включить звук",
       smartIntegrations: "Умные интеграции",
-      inlineSpeech: "Кнопка озвучки каждого ответа",
-      inlineSpeechDesc: "Добавляет кнопку озвучивания рядом с кнопкой копирования ответа",
       globalShortcuts: "Глобальные горячие клавиши",
       globalShortcutsDesc: "Включить Пробел/K, Alt+P, Alt+Стрелки и клавиши скорости",
       smoothScrubbing: "Плавная перемотка при удержании",
@@ -39,10 +37,8 @@ export const ru: TranslationSchema = {
       title: "Горячие клавиши",
       gesturesTitle: "Мышь и жесты",
       smoothAudioScrub: "Плавная перемотка аудио",
-      instantResponseRead: "Мгновенное озвучивание ответа",
       directDownload: "Прямое скачивание аудио",
       holdScrubKey: "Удерживать ◀10 / 10▶",
-      clickSpeechKey: "Нажать кнопку 🔈",
       clickDownloadKey: "Нажать кнопку 📥",
     },
     about: {
@@ -129,7 +125,6 @@ export const ru: TranslationSchema = {
       collapse: "Свернуть плеер",
       expand: "Развернуть ChatGPT Audio Controls",
       readAloud: "Озвучить ответ",
-      stopReadAloud: "Остановить озвучивание",
     },
     shortcutsPopover: {
       title: "Горячие клавиши озвучки",

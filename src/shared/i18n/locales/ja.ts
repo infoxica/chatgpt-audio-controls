@@ -27,8 +27,6 @@ export const ja: TranslationSchema = {
       "mute": "ミュート",
       "unmute": "ミュート解除",
       "smartIntegrations": "便利な機能",
-      "inlineSpeech": "回答の読み上げボタン",
-      "inlineSpeechDesc": "回答のコピーボタン横に読み上げを追加",
       "globalShortcuts": "キーボードショートカット",
       "globalShortcutsDesc": "Space/K、Alt+P、Alt+矢印、速度キーを有効にする",
       "smoothScrubbing": "スムーズなシーク",
@@ -38,10 +36,8 @@ export const ja: TranslationSchema = {
       "title": "キーボードショートカット",
       "gesturesTitle": "マウスとタッチ操作",
       "smoothAudioScrub": "スムーズな音声シーク",
-      "instantResponseRead": "回答をすぐ読み上げる",
       "directDownload": "直接ダウンロード",
       "holdScrubKey": "◀10 / 10▶を長押し",
-      "clickSpeechKey": "🔈ボタンをクリック",
       "clickDownloadKey": "📥ボタンをクリック"
     },
     "about": {
@@ -127,7 +123,6 @@ export const ja: TranslationSchema = {
       "collapse": "プレーヤーを折りたたむ",
       "expand": "ChatGPT Audio Controlsを展開",
       "readAloud": "読み上げ",
-      "stopReadAloud": "読み上げを停止"
     },
     "shortcutsPopover": {
       "title": "読み上げのショートカット",

@@ -27,8 +27,6 @@ export const hi: TranslationSchema = {
       "mute": "म्यूट करें",
       "unmute": "म्यूट हटाएँ",
       "smartIntegrations": "उपयोगी सुविधाएँ",
-      "inlineSpeech": "उत्तर सुनाने के बटन",
-      "inlineSpeechDesc": "उत्तर के कॉपी बटन के पास पढ़कर सुनाने का बटन जोड़ें",
       "globalShortcuts": "कीबोर्ड शॉर्टकट",
       "globalShortcutsDesc": "Space/K, Alt+P, Alt+तीर और गति कुंजियाँ चालू करें",
       "smoothScrubbing": "आसानी से आगे-पीछे जाएँ",
@@ -38,10 +36,8 @@ export const hi: TranslationSchema = {
       "title": "कीबोर्ड शॉर्टकट",
       "gesturesTitle": "माउस और टच जेस्चर",
       "smoothAudioScrub": "ऑडियो में आसानी से आगे-पीछे जाएँ",
-      "instantResponseRead": "उत्तर तुरंत सुनें",
       "directDownload": "सीधा डाउनलोड",
       "holdScrubKey": "◀10 / 10▶ दबाकर रखें",
-      "clickSpeechKey": "🔈 बटन क्लिक करें",
       "clickDownloadKey": "📥 बटन क्लिक करें"
     },
     "about": {
@@ -127,7 +123,6 @@ export const hi: TranslationSchema = {
       "collapse": "प्लेयर समेटें",
       "expand": "ChatGPT Audio Controls खोलें",
       "readAloud": "पढ़कर सुनाएँ",
-      "stopReadAloud": "पढ़कर सुनाना बंद करें"
     },
     "shortcutsPopover": {
       "title": "पढ़कर सुनाने के शॉर्टकट",

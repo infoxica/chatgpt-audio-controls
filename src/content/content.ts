@@ -1,3 +1,5 @@
+import { PlaybackSession } from "./playback-session";
+import { StreamingAudioCapture } from "./streaming-audio";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import { floatingVisibility } from "../shared/visibility";
 import { playbackAction, platformKeys } from "../shared/shortcuts";
@@ -29,9 +31,6 @@ import { getTranslations } from "../shared/i18n/core";
   let visibilityShortcut = '';
   let sessionSpeed: number | null = null;
   let sessionVolume: number | null = null;
-  let activeInlineButton: HTMLElement | null = null;
-  let pendingInlineButton: HTMLElement | null = null;
-  const inlineButtons = new Set<HTMLElement>();
   const mediaListenersInstalled = new WeakSet<HTMLMediaElement>();
   let userForcedExpand = false;
   let userForcedCollapsed = false;
@@ -53,15 +52,11 @@ import { getTranslations } from "../shared/i18n/core";
 
   let sliderDragging = false;
 
-  let capturedAudioBlob: Blob | null = null;
-  let capturedAudioMime = "";
-  let capturedAudioURL = "";
-  let capturedAudioAt = 0;
 
   // Keep only a small byte-bounded cache. A Blob is a strong reference to the
   // complete audio payload, so an entry-count cap alone can retain too much.
   const MAX_BLOB_MAP_ENTRIES = 4;
-  const MAX_BLOB_MAP_BYTES = 8 * 1024 * 1024;
+  const MAX_BLOB_MAP_BYTES = 64 * 1024 * 1024;
   const blobURLMap = new Map<string, Blob>();
   let blobURLBytes = 0;
 
@@ -207,7 +202,7 @@ import { getTranslations } from "../shared/i18n/core";
       if (backBtn) backBtn.title = t.content.tooltips.back.replace("{s}", String(step));
 
       const playBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-play");
-      if (playBtn) playBtn.title = platformKeys(t.content.tooltips.playPause);
+      if (playBtn) { playBtn.title = platformKeys(t.content.tooltips.playPause); playBtn.dataset.defaultTitle = playBtn.title; }
 
       const forwardBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-forward");
       if (forwardBtn) forwardBtn.title = t.content.tooltips.forward.replace("{s}", String(step));
@@ -277,7 +272,6 @@ import { getTranslations } from "../shared/i18n/core";
       if (collapseBtn) collapseBtn.title = t.content.tooltips.collapse;
     }
 
-    updateInlineButtons();
   }
 
   function installSettingsBridge(): void {
@@ -302,7 +296,6 @@ import { getTranslations } from "../shared/i18n/core";
       }
 
       applyI18nLabels();
-      installInlineReadAloudButtons();
       updateControls();
       scheduleLayoutSync();
     });
@@ -426,9 +419,9 @@ import { getTranslations } from "../shared/i18n/core";
     if (!force && now - cache.lastBroadcast < 500) return;
     cache.lastBroadcast = now;
 
-    const isPlaying = Boolean(activeMedia && !activeMedia.paused && !activeMedia.ended);
-    const current = Number(activeMedia?.currentTime) || 0;
-    const duration = Number(activeMedia?.duration) || 0;
+    const isPlaying = playback.playing;
+    const current = playback.time;
+    const duration = playback.duration;
     const speed = activeMedia?.playbackRate || getSavedSpeed();
     const volume = activeMedia ? activeMedia.volume : getSavedVolume();
 
@@ -475,22 +468,48 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   function rememberAudioBlob(blob: Blob, sourceURL = ""): void {
-    if (!(blob instanceof Blob) || !blob.size) return;
-
-    const mime = blob.type || "";
-    if (mime && !looksLikeAudio(sourceURL, mime)) return;
-
-    capturedAudioBlob = blob;
-    capturedAudioMime = mime;
-    capturedAudioURL = sourceURL;
-    capturedAudioAt = Date.now();
-
-    log("Captured audio payload", {
-      size: blob.size,
-      type: blob.type,
-      sourceURL,
-    });
+    if (blob.size && blob.size <= MAX_BLOB_MAP_BYTES && looksLikeAudio(sourceURL, blob.type)) rememberBlobURL(sourceURL, blob);
   }
+
+  // Session-owned direct downloads must bypass our streaming interceptor: its
+  // cleanup owns MediaSource requests and must not cancel this fallback.
+  const retentionFetch: typeof fetch = PAGE.fetch.bind(PAGE);
+  const streamingAudio = new StreamingAudioCapture();
+  async function readAudio(response: Response): Promise<Blob> {
+    if (Number(response.headers.get('content-length')) > MAX_BLOB_MAP_BYTES || !response.body) throw new Error('Audio size unsupported');
+    const reader = response.body.getReader();
+    const parts: Uint8Array<ArrayBuffer>[] = [];
+    let size = 0;
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > MAX_BLOB_MAP_BYTES) { void reader.cancel().catch(() => {}); throw new Error('Audio size unsupported'); }
+        parts.push(value as Uint8Array<ArrayBuffer>);
+      }
+    } finally { reader.releaseLock(); }
+    if (!size) throw new Error('Empty audio');
+    return new Blob(parts, { type: response.headers.get('content-type') || 'application/octet-stream' });
+  }
+  async function retainAudio(source: string, signal: AbortSignal): Promise<Blob> {
+    if (!source) throw new Error('No audio source');
+    const stream = streamingAudio.retain(source);
+    if (stream) return stream;
+    const cached = blobURLMap.get(source);
+    if (cached) return cached;
+    const response = await retentionFetch(source, { credentials: 'include', signal: AbortSignal.any([signal, AbortSignal.timeout(60000)]) });
+    if (!response.ok) throw new Error('Audio unavailable');
+    return readAudio(response);
+  }
+  const playback = new PlaybackSession(retainAudio, media => {
+    activeMedia = media;
+    if (media) installMediaListeners(media);
+    updateControls();
+    broadcastLiveAudioState(true);
+    scheduleLayoutSync();
+  }, () => showStatus(recoveryCopy().playError, true));
+  window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; streamingAudio.clearExcept(); });
 
   function installObjectURLInterceptor(): void {
     try {
@@ -502,6 +521,7 @@ import { getTranslations } from "../shared/i18n/core";
 
       urlObj.createObjectURL = function (object: any) {
         const url = originalCreate(object);
+        if (PAGE.MediaSource && object instanceof PAGE.MediaSource) streamingAudio.register(object, url);
 
         try {
           if (object instanceof PAGE.Blob && object.size && looksLikeAudio(url, object.type)) {
@@ -534,7 +554,18 @@ import { getTranslations } from "../shared/i18n/core";
       const originalFetch = PAGE.fetch.bind(PAGE);
 
       async function wrappedFetch(...args: any[]) {
-        const response = await originalFetch(...args);
+        const inputURL = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
+        const signal = args[1]?.signal || args[0]?.signal;
+        const capture = looksLikeAudio(inputURL, '') && !signal?.aborted ? streamingAudio.begin() : null;
+        let response: Response;
+        try {
+          // ChatGPT aborts its reader on Pause. Keep only the recognized audio
+          // request alive for bounded retention; all other fetches are untouched.
+          response = await originalFetch(...(capture ? [args[0], { ...args[1], signal: capture.controller.signal }] : args));
+        } catch (error) {
+          if (capture) streamingAudio.complete(capture, Promise.reject(error));
+          throw error;
+        }
 
         try {
           const requestURL =
@@ -545,12 +576,10 @@ import { getTranslations } from "../shared/i18n/core";
           const type = response.headers?.get("content-type") || "";
 
           if (looksLikeAudio(requestURL, type)) {
-            response
-              .clone()
-              .blob()
-              .then((blob: Blob) => rememberAudioBlob(blob, requestURL))
-              .catch(() => {});
-          }
+            const pending = readAudio(response.clone());
+            if (capture) streamingAudio.complete(capture, pending);
+            void pending.catch(() => {});
+          } else if (capture) streamingAudio.complete(capture, Promise.reject(new Error('Not audio')));
         } catch (_) {}
 
         return response;
@@ -563,6 +592,24 @@ import { getTranslations } from "../shared/i18n/core";
     } catch (error) {
       warn("fetch interception failed:", error);
     }
+  }
+
+  function installStreamingInterceptor(): void {
+    const source = PAGE.MediaSource?.prototype;
+    const buffer = PAGE.SourceBuffer?.prototype;
+    if (!source || !buffer || source.__cgptRAStreamHook) return;
+    const add = source.addSourceBuffer, append = buffer.appendBuffer;
+    source.addSourceBuffer = function (...args: any[]) {
+      const result = add.apply(this, args);
+      streamingAudio.addBuffer(this, result);
+      return result;
+    };
+    buffer.appendBuffer = function (data: ArrayBuffer | ArrayBufferView) {
+      const result = append.call(this, data);
+      streamingAudio.append(this, data);
+      return result;
+    };
+    Object.defineProperty(source, '__cgptRAStreamHook', { value: true, configurable: true });
   }
 
   function installXHRInterceptor(): void {
@@ -618,6 +665,7 @@ import { getTranslations } from "../shared/i18n/core";
     if (!media) return { start: 0, end: 0, seekable: false };
 
     try {
+      if (playback.isOwned(media) && playback.duration > 0) return { start: 0, end: playback.duration, seekable: true };
       if (Number.isFinite(media.duration) && media.duration > 0) {
         return { start: 0, end: media.duration, seekable: true };
       }
@@ -645,20 +693,24 @@ import { getTranslations } from "../shared/i18n/core";
   function isReadAloudMedia(media: HTMLMediaElement): boolean {
     if (media.tagName !== "AUDIO") return false;
 
-    const source = media.currentSrc || media.src || "";
+    const source = media.src || media.currentSrc || "";
     return (
-      !media.isConnected ||
-      Boolean(pendingInlineButton) ||
       blobURLMap.has(source) ||
-      source === capturedAudioURL ||
+      streamingAudio.has(source) ||
       looksLikeAudio(source, "")
     );
   }
 
   function attachMedia(media: HTMLMediaElement, reason = "detected"): void {
-    if (!media || typeof media.play !== "function" || !isReadAloudMedia(media)) return;
+    if (!media || playback.isOwned(media) || typeof media.play !== "function" || !isReadAloudMedia(media)) return;
 
-    const changed = activeMedia !== media;
+    const source = media.src || media.currentSrc;
+    const changed = activeMedia !== media || playback.url !== source;
+    playback.attach(media);
+    if (changed) {
+      streamingAudio.clearExcept(source);
+      for (const url of blobURLMap.keys()) if (url !== source) removeBlobURL(url);
+    }
     activeMedia = media;
     if (changed) {
       userForcedExpand = true;
@@ -673,16 +725,11 @@ import { getTranslations } from "../shared/i18n/core";
       } catch (_) {}
     }
 
-    if (pendingInlineButton) {
-      activeInlineButton = pendingInlineButton;
-      pendingInlineButton = null;
-    }
 
     if (changed) installMediaListeners(media);
 
     setControlsEnabled(true);
     updateControls();
-    updateInlineButtons();
     broadcastLiveAudioState(true);
     scheduleLayoutSync();
 
@@ -707,7 +754,6 @@ import { getTranslations } from "../shared/i18n/core";
       media.addEventListener(name, () => {
         if (activeMedia === media) {
           updateControls();
-          updateInlineButtons();
           broadcastLiveAudioState();
           if (name === "play" || name === "pause" || name === "ended") {
             scheduleLayoutSync();
@@ -726,7 +772,7 @@ import { getTranslations } from "../shared/i18n/core";
       const originalPause = proto.pause;
 
       proto.play = function (...args: any[]) {
-        const isReadAloud = isReadAloudMedia(this);
+        const isReadAloud = !playback.isOwned(this) && isReadAloudMedia(this);
         if (isReadAloud) attachMedia(this, "play() intercepted");
 
         const result = originalPlay.apply(this, args);
@@ -752,7 +798,6 @@ import { getTranslations } from "../shared/i18n/core";
         if (this === activeMedia) {
           queueMicrotask(() => {
             updateControls();
-            updateInlineButtons();
             broadcastLiveAudioState(true);
             scheduleLayoutSync();
           });
@@ -1034,26 +1079,37 @@ import { getTranslations } from "../shared/i18n/core";
     });
   }
 
+  let observedComposer: HTMLElement | null = null;
+  const composerObserver = new ResizeObserver(scheduleLayoutSync);
+  const composerAttributes = new MutationObserver(scheduleLayoutSync);
+  let conversationPath = location.pathname;
   function getComposer(): HTMLElement | null {
-    const prompt =
-      document.querySelector("#prompt-textarea") ||
-      document.querySelector('[data-testid="composer-text-input"]') ||
-      document.querySelector('textarea[placeholder*="Ask"]');
-
-    if (!prompt) return null;
-
-    return (
-      prompt.closest('[data-type="unified-composer"]') ||
-      prompt.closest("form") ||
-      prompt.parentElement?.parentElement?.parentElement ||
-      prompt.parentElement
-    );
+    const candidates = document.querySelectorAll<HTMLElement>('[data-chatgpt-composer], [data-type="unified-composer"]');
+    const composer = Array.from(candidates).find(el => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"]'));
+    if (composer) return composer;
+    const prompt = document.querySelector<HTMLElement>('#prompt-textarea, [data-testid="composer-text-input"], textarea[placeholder*="Ask"]');
+    return prompt?.closest('form') || prompt?.parentElement || null;
   }
 
   function syncComposerLayout(): void {
     if (!leftRail || !rightRail || !floatingToggle) return;
 
+    if (location.pathname !== conversationPath) {
+      conversationPath = location.pathname;
+      playback.dispose(); activeMedia = null; userForcedExpand = false; streamingAudio.clearExcept();
+      blobURLMap.clear(); blobURLBytes = 0;
+      updateControls();
+    }
     const composer = getComposer();
+    if (composer !== observedComposer) {
+      composerObserver.disconnect();
+      composerAttributes.disconnect();
+      observedComposer = composer;
+      for (let parent: HTMLElement | null = composer; parent; parent = parent.parentElement) {
+        composerObserver.observe(parent);
+        composerAttributes.observe(parent, { attributes: true, attributeFilter: ['class', 'style', 'hidden', 'data-state'] });
+      }
+    }
     const settings = getSavedSettings();
     const hasSession = Boolean(activeMedia && !activeMedia.ended);
     const shouldExpand = !userForcedCollapsed && (hasSession || userForcedExpand);
@@ -1072,7 +1128,9 @@ import { getTranslations } from "../shared/i18n/core";
     const sideGap = 10, outerMargin = 14, minLeftWidth = 240, maxLeftWidth = 430;
     const leftAvailable = rect.left - outerMargin - sideGap;
     const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-    const compact = leftAvailable < minLeftWidth || rightAvailable < 360;
+    rightRail.style.width = '';
+    const railWidth = rightRail.scrollWidth + 2;
+    const compact = leftAvailable < minLeftWidth || rightAvailable < railWidth;
     leftRail.classList.toggle('cgpt-ra-compact', compact);
     rightRail.classList.toggle('cgpt-ra-compact', compact);
     if (!visible.player) return;
@@ -1081,11 +1139,11 @@ import { getTranslations } from "../shared/i18n/core";
       const left = Math.max(12, Math.min(viewportWidth - width - 12, (rect.left + rect.right - width) / 2));
       rightRail.style.width = `${width}px`;
       const rightHeight = rightRail.getBoundingClientRect().height || 48;
-      const top = Math.max(8, rect.top - rightHeight - 64);
+      const top = Math.max(8, rect.top - rightHeight - 68);
       leftRail.style.width = `${width}px`;
       leftRail.style.left = rightRail.style.left = `${left}px`;
       leftRail.style.top = `${top}px`;
-      rightRail.style.top = `${top + 48}px`;
+      rightRail.style.top = `${top + 56}px`;
       return;
     }
     rightRail.style.width = '';
@@ -1202,7 +1260,7 @@ import { getTranslations } from "../shared/i18n/core";
     target = clamp(target, info.start, info.end);
 
     try {
-      activeMedia.currentTime = target;
+      playback.seek(target);
     } catch (error) {
       warn("Seek failed:", error);
     }
@@ -1212,7 +1270,7 @@ import { getTranslations } from "../shared/i18n/core";
 
   function seekRelative(seconds: number, update = true): void {
     if (!activeMedia) return;
-    seekAbsolute((Number(activeMedia.currentTime) || 0) + seconds, update);
+    seekAbsolute((playback.time) + seconds, update);
   }
 
   // ---------------------------------------------------------------------
@@ -1220,19 +1278,10 @@ import { getTranslations } from "../shared/i18n/core";
   // ---------------------------------------------------------------------
 
   function togglePlayback(): void {
-    if (!activeMedia) return;
-
-    try {
-      if (activeMedia.paused) {
-        const p = activeMedia.play();
-        if (p?.catch) p.catch((error) => { warn("Play failed:", error); showStatus(recoveryCopy().playError, true); });
-      } else {
-        activeMedia.pause();
-      }
-    } catch (error) {
-      warn("Play/pause failed:", error);
-      showStatus(recoveryCopy().playError, true);
-    }
+    playback.toggle();
+    updateControls();
+    broadcastLiveAudioState(true);
+    scheduleLayoutSync();
   }
 
   function setSpeed(speed: number): void {
@@ -1279,7 +1328,7 @@ import { getTranslations } from "../shared/i18n/core";
 
     setControlsEnabled(true);
 
-    const current = Number(activeMedia.currentTime) || 0;
+    const current = playback.time;
     const info = getSeekInfo(activeMedia);
 
     const formattedCur = formatTime(current);
@@ -1288,8 +1337,8 @@ import { getTranslations } from "../shared/i18n/core";
       currentLabel.textContent = formattedCur;
     }
 
-    const durationNum = Number.isFinite(activeMedia.duration)
-      ? activeMedia.duration
+    const durationNum = Number.isFinite(playback.duration)
+      ? playback.duration
       : info.seekable
       ? info.end
       : 0;
@@ -1314,7 +1363,14 @@ import { getTranslations } from "../shared/i18n/core";
       }
     }
 
-    const isPaused = activeMedia.paused;
+    const isPaused = playback.paused;
+    playButton?.setAttribute('aria-busy', String(playback.loading));
+    playButton?.classList.toggle('cgpt-ra-buffering', playback.loading);
+    if (playButton) {
+      playButton.dataset.defaultTitle ||= playButton.title;
+      playButton.title = playback.loading ? recoveryCopy().pending : playButton.dataset.defaultTitle;
+      playButton.setAttribute('aria-label', playButton.title);
+    }
     if (cache.isPaused !== isPaused) {
       cache.isPaused = isPaused;
       setIcon(playButton, isPaused ? "play" : "pause");
@@ -1375,46 +1431,8 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   async function resolveDownloadBlob(): Promise<{ blob: Blob; mime: string; url: string }> {
-    if (capturedAudioBlob && Date.now() - capturedAudioAt < 60 * 60 * 1000) {
-      return {
-        blob: capturedAudioBlob,
-        mime: capturedAudioMime || capturedAudioBlob.type,
-        url: capturedAudioURL,
-      };
-    }
-
-    if (!activeMedia) throw new Error("No active Read Aloud audio.");
-
-    const src = activeMedia.currentSrc || activeMedia.src || "";
-
-    if (src && blobURLMap.has(src)) {
-      const blob = blobURLMap.get(src)!;
-
-      // Touch the entry so the cache behaves as an LRU when it is pruned.
-      blobURLMap.delete(src);
-      blobURLMap.set(src, blob);
-      return { blob, mime: blob.type, url: src };
-    }
-
-    if (src) {
-      try {
-        const response = await PAGE.fetch(src, { credentials: "include" });
-
-        if (response.ok) {
-          const blob = await response.blob();
-
-          if (blob.size) {
-            return {
-              blob,
-              mime: blob.type || response.headers.get("content-type") || "",
-              url: src,
-            };
-          }
-        }
-      } catch (_) {}
-    }
-
-    throw new Error("The current Read Aloud stream was not exposed as a downloadable media response.");
+    const blob = await playback.blob();
+    return { blob, mime: blob.type, url: activeMedia?.currentSrc || activeMedia?.src || '' };
   }
 
   async function downloadCurrentAudio(): Promise<void> {
@@ -1453,405 +1471,6 @@ import { getTranslations } from "../shared/i18n/core";
       downloadButton.classList.remove("cgpt-ra-download-busy");
       downloadButton.removeAttribute("disabled");
       setIcon(downloadButton, "download");
-    }
-  }
-
-  // ---------------------------------------------------------------------
-  // Inline Read Aloud Button
-  // ---------------------------------------------------------------------
-
-  function textMeaning(element: Element | null): string {
-    if (!element) return "";
-    return (
-      `${element.getAttribute?.("aria-label") || ""} ` +
-      `${element.getAttribute?.("title") || ""} ` +
-      `${element.textContent || ""}`
-    )
-      .trim()
-      .toLowerCase();
-  }
-
-  function accessibleMeaning(element: Element | null): string {
-    if (!element) return "";
-    return `${element.getAttribute("aria-label") || ""} ${element.getAttribute("title") || ""}`
-      .trim()
-      .toLowerCase();
-  }
-
-  function isCopyControl(button: Element): boolean {
-    const label = textMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    return (
-      /(?:^|[-_])(copy|copy-response|copy-code)(?:[-_]|$)/.test(testId) ||
-      label === "copy" ||
-      label.includes("copy response") ||
-      label.includes("copy code")
-      || ['コピー', '복사', 'copier', 'kopieren', 'copia', 'salin', 'kopyala', 'कॉपी करें', 'sao chép', 'คัดลอก', '复制', '複製', 'copiar', 'копировать'].some(value => label.includes(value))
-    );
-  }
-
-  // ChatGPT's accessible labels follow its own UI language, which can differ
-  // from the extension language. Keep every supported native label here so
-  // toolbar buttons and overflow-menu items use the same matching logic.
-  const READ_ALOUD_LABELS = [
-    "read aloud",
-    "読み上げ", "音声で読み上げる", "소리 내어 읽기", "lire à voix haute", "vorlesen", "leggi ad alta voce", "bacakan", "baca dengan lantang", "sesli oku", "ज़ोर से पढ़ें", "जोर से पढ़ें",
-    "read out loud",
-    "leer en voz alta",
-    "leer respuesta",
-    "ler em voz alta",
-    "ler resposta",
-    "прочитать вслух",
-    "озвучить ответ",
-    "đọc to",
-    "đọc to câu trả lời",
-    "อ่านออกเสียง",
-    "อ่านออกเสียงคำตอบ",
-    "朗读",
-    "朗读回答",
-    "朗讀",
-    "朗讀回答",
-  ];
-
-  function isReadAloudControl(button: Element): boolean {
-    const label = accessibleMeaning(button) || textMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    return (
-      /(?:read[-_ ]?aloud|read[-_ ]?out[-_ ]?loud|text[-_ ]?to[-_ ]?speech|tts)/.test(testId) ||
-      READ_ALOUD_LABELS.some((nativeLabel) => label.includes(nativeLabel)) ||
-      label === "read"
-    );
-  }
-
-  function isMoreActionsControl(button: Element): boolean {
-    const label = accessibleMeaning(button);
-    const testId = (button.getAttribute("data-testid") || "").toLowerCase();
-    const identifier = `${label} ${testId}`.trim();
-
-    return (
-      label === "more" ||
-      label.includes("more actions") ||
-      label.includes("more options") ||
-      label.includes("response actions") ||
-      ['その他', '他の操作', '더 보기', '추가 작업', 'plus d’actions', "plus d'actions", 'weitere aktionen', 'weitere optionen', 'altre azioni', 'azioni aggiuntive', 'opsi lainnya', 'tindakan lainnya', 'diğer işlemler', 'diğer seçenekler', 'और विकल्प', 'thao tác khác', 'tùy chọn khác', 'การดำเนินการเพิ่มเติม', '更多', 'más acciones', 'mais ações', 'другие действия', 'дополнительные действия'].some(value => label.includes(value)) ||
-      /(?:^|[-_\s])(more|options|overflow|ellipsis|kebab)(?:[-_\s]|$)/.test(identifier)
-    );
-  }
-
-  function findMoreActionsControl(scope: Element | null): HTMLElement | null {
-    if (!scope) return null;
-
-    const buttons = [
-      ...(scope.matches("button, [role='button']") ? [scope as HTMLElement] : []),
-      ...Array.from(scope.querySelectorAll<HTMLElement>("button, [role='button']")),
-    ].filter(
-      (button) =>
-        !button.classList.contains("cgpt-inline-readaloud") &&
-        !button.closest("pre, code, table"),
-    );
-
-    return (
-      buttons.find(isMoreActionsControl) ||
-      buttons.find((button) => button.getAttribute("aria-haspopup") === "menu") ||
-      null
-    );
-  }
-
-  function findMoreActionsNear(element: Element | null, stopAt: Element | null): HTMLElement | null {
-    let scope = element;
-
-    while (scope && scope !== document.body) {
-      const moreButton = findMoreActionsControl(scope);
-      if (moreButton) return moreButton;
-      if (scope === stopAt) break;
-      scope = scope.parentElement;
-    }
-
-    return null;
-  }
-
-  function isInteractiveContainer(element: Element | null): boolean {
-    return Boolean(element?.matches("button, [role='button'], a, input, textarea, select"));
-  }
-
-  function findActionContainer(control: Element, boundary: Element): Element | null {
-    let candidate = control.parentElement;
-    let firstSafeContainer: Element | null = null;
-
-    while (candidate && candidate !== document.body) {
-      if (!isInteractiveContainer(candidate)) {
-        firstSafeContainer ||= candidate;
-
-        const controlCount = candidate.querySelectorAll("button, [role='button']").length;
-        if (controlCount >= 2 || candidate === boundary) return candidate;
-      }
-
-      if (candidate === boundary) break;
-      candidate = candidate.parentElement;
-    }
-
-    return firstSafeContainer;
-  }
-
-  function placeInlineReadAloudButton(toolbar: Element, button: HTMLElement): void {
-    const copyButton = Array.from(toolbar.querySelectorAll<HTMLElement>("button, [role='button']")).find(
-      (candidate) => isCopyControl(candidate) && !isInteractiveContainer(candidate.parentElement),
-    );
-
-    if (copyButton) {
-      if (button.previousElementSibling === copyButton) return;
-      copyButton.insertAdjacentElement("afterend", button);
-      return;
-    }
-
-    // Copy's accessible name is localized. When it cannot be identified by
-    // label, place Read Aloud immediately before the response-actions menu.
-    // This preserves the native action order without nesting one button in another.
-    const responseActions = findMoreActionsControl(toolbar);
-    const responseParent = responseActions?.parentElement;
-    if (responseActions && responseParent && !isInteractiveContainer(responseParent)) {
-      if (button.nextElementSibling === responseActions) return;
-      responseActions.insertAdjacentElement("beforebegin", button);
-      return;
-    }
-
-    if (button.parentElement === toolbar) return;
-    toolbar.appendChild(button);
-  }
-
-  function findReadAloudControl(scope: Element | null): HTMLElement | null {
-    if (!scope) return null;
-
-    const controls = [
-      ...(scope.matches("button, [role='menuitem'], [role='option']") ? [scope as HTMLElement] : []),
-      ...Array.from(scope.querySelectorAll<HTMLElement>("button, [role='menuitem'], [role='option']")),
-    ];
-
-    return (
-      controls.find(
-        (control) =>
-          !control.classList.contains("cgpt-inline-readaloud") && isReadAloudControl(control),
-      ) || null
-    );
-  }
-
-  function findToolbar(turn: Element): Element | null {
-    const responseActions = findMoreActionsControl(turn);
-    if (responseActions) {
-      const responseToolbar = findActionContainer(responseActions, turn);
-      if (responseToolbar) return responseToolbar;
-    }
-
-    const copyButton = Array.from(turn.querySelectorAll("button")).find(
-      (btn) => !btn.closest("pre, code, table") && isCopyControl(btn),
-    );
-
-    if (copyButton?.parentElement) {
-      const copyToolbar = copyButton.closest('[role="toolbar"], [data-testid*="action"]');
-      if (copyToolbar && !isInteractiveContainer(copyToolbar)) return copyToolbar;
-
-      const copyParent = findActionContainer(copyButton, turn);
-      if (copyParent) return copyParent;
-    }
-
-    const actionBars = Array.from(turn.querySelectorAll(".flex, [role='toolbar'], [data-testid*='action']"));
-    for (const bar of actionBars) {
-      if (
-        !bar.closest("pre, code, table") &&
-        !isInteractiveContainer(bar) &&
-        Array.from(bar.querySelectorAll("button")).some(
-          (button) => isCopyControl(button) || isReadAloudControl(button) || isMoreActionsControl(button),
-        )
-      ) {
-        return bar;
-      }
-    }
-
-    return null;
-  }
-
-  function installInlineReadAloudButtons(): void {
-    for (const button of inlineButtons) {
-      if (!button.isConnected) {
-        inlineButtons.delete(button);
-        if (activeInlineButton === button) activeInlineButton = null;
-      }
-    }
-
-    const settings = getSavedSettings();
-    if (settings.enableInlineButtons === false) {
-      document.querySelectorAll<HTMLElement>(".cgpt-inline-readaloud").forEach((button) => {
-        button.remove();
-        inlineButtons.delete(button);
-        if (activeInlineButton === button) activeInlineButton = null;
-      });
-      return;
-    }
-
-    document.querySelectorAll('[data-message-author-role="assistant"]').forEach((message) => {
-      const turn =
-        message.closest("article") ||
-        message.closest('[data-testid^="conversation-turn"]') ||
-        message.parentElement;
-
-      if (!turn) return;
-
-      if (
-        turn.getAttribute("data-cgpt-ra-inline-ready") === "true" &&
-        turn.querySelector(".cgpt-inline-readaloud")
-      ) {
-        return;
-      }
-
-      const toolbar = findToolbar(turn);
-      const existingButton = turn.querySelector<HTMLElement>(".cgpt-inline-readaloud");
-      if (existingButton) {
-        inlineButtons.add(existingButton);
-        if (toolbar) {
-          placeInlineReadAloudButton(toolbar, existingButton);
-          turn.setAttribute("data-cgpt-ra-inline-ready", "true");
-        }
-
-        return;
-      }
-
-      if (!toolbar) return;
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "cgpt-inline-readaloud";
-      button.title = "Read aloud";
-      button.setAttribute("aria-label", "Read aloud");
-      setIcon(button, "volume-2");
-
-      button.addEventListener("click", async (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-
-        if (
-          button === activeInlineButton &&
-          activeMedia &&
-          !activeMedia.paused &&
-          !activeMedia.ended
-        ) {
-          try {
-            activeMedia.pause();
-            activeMedia.currentTime = 0;
-          } catch (_) {}
-
-          updateInlineButtons();
-          broadcastLiveAudioState(true);
-          return;
-        }
-
-        if (activeMedia && !activeMedia.paused) {
-          try {
-            activeMedia.pause();
-          } catch (_) {}
-        }
-
-        pendingInlineButton = button;
-        await triggerNativeReadAloud(turn, button);
-      });
-
-      placeInlineReadAloudButton(toolbar, button);
-
-      inlineButtons.add(button);
-      turn.setAttribute("data-cgpt-ra-inline-ready", "true");
-    });
-  }
-
-  async function waitForReadAloudMenuItem(timeout = 1800): Promise<HTMLElement | null> {
-    const started = performance.now();
-
-    return new Promise((resolve) => {
-      const scan = () => {
-        const candidates = document.querySelectorAll(
-          '[role="menuitem"], [role="option"], [data-radix-popper-content-wrapper] button, [data-radix-popper-content-wrapper] [role="menuitem"]',
-        );
-
-        for (const item of candidates) {
-          if (isReadAloudControl(item)) {
-            resolve(item as HTMLElement);
-            return;
-          }
-        }
-
-        if (performance.now() - started >= timeout) {
-          resolve(null);
-          return;
-        }
-
-        requestAnimationFrame(scan);
-      };
-
-      scan();
-    });
-  }
-
-  async function triggerNativeReadAloud(turn: Element, inlineButton: HTMLElement): Promise<void> {
-    showStatus(recoveryCopy().pending);
-    const inlineRow = inlineButton.parentElement;
-    const toolbar = findToolbar(turn);
-    const direct = [inlineRow, toolbar, turn]
-      .filter((scope, index, scopes) => scope && scopes.indexOf(scope) === index)
-      .map((scope) => findReadAloudControl(scope))
-      .find((control): control is HTMLElement => Boolean(control));
-
-    if (direct) {
-      direct.click();
-      return;
-    }
-
-    const moreBtn =
-      findMoreActionsControl(inlineRow) ||
-      findMoreActionsControl(toolbar) ||
-      findMoreActionsNear(inlineButton, turn) ||
-      findMoreActionsControl(turn);
-
-    if (!moreBtn) {
-      pendingInlineButton = null;
-      warn("Could not locate the response More Actions button.");
-      showStatus(recoveryCopy().nativeHelp, true);
-      return;
-    }
-
-    moreBtn.click();
-
-    const menuItem = await waitForReadAloudMenuItem();
-
-    if (!menuItem) {
-      pendingInlineButton = null;
-      warn("Could not find Read Aloud in the response popup menu.");
-      showStatus(recoveryCopy().nativeHelp, true);
-      document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-      return;
-    }
-
-    menuItem.click();
-  }
-
-  function updateInlineButtons(): void {
-    const t = getI18n();
-    for (const button of inlineButtons) {
-      if (!button.isConnected) {
-        inlineButtons.delete(button);
-        if (activeInlineButton === button) activeInlineButton = null;
-        continue;
-      }
-
-      const active =
-        button === activeInlineButton &&
-        activeMedia &&
-        !activeMedia.paused &&
-        !activeMedia.ended;
-
-      button.classList.toggle("cgpt-active", Boolean(active));
-      setIcon(button, active ? "square" : "volume-2");
-      const label = active ? t.content.tooltips.stopReadAloud : t.content.tooltips.readAloud;
-      button.title = label;
-      button.setAttribute("aria-label", label);
     }
   }
 
@@ -1935,14 +1554,13 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   function startObserver(): void {
-    // Structural changes are needed for response buttons, but attribute
+    // Structural changes can replace the composer, but attribute
     // changes across the whole ChatGPT tree are far too noisy (hover/focus
     // state alone can produce many). Keep this observer child-list only.
     const observer = new MutationObserver(() => {
       if (observerTimeout) return;
       observerTimeout = window.setTimeout(() => {
         observerTimeout = null;
-        installInlineReadAloudButtons();
         scheduleLayoutSync();
       }, 500);
     });
@@ -1969,10 +1587,11 @@ import { getTranslations } from "../shared/i18n/core";
     }
 
     window.addEventListener("resize", scheduleLayoutSync, { passive: true });
+    window.visualViewport?.addEventListener('resize', scheduleLayoutSync, { passive: true });
+    window.visualViewport?.addEventListener('scroll', scheduleLayoutSync, { passive: true });
     window.addEventListener("scroll", scheduleLayoutSync, { passive: true });
 
     window.setInterval(() => {
-      installInlineReadAloudButtons();
       scanDOMForPlayingMedia();
       scheduleThemeSync();
       scheduleLayoutSync();
@@ -1984,6 +1603,7 @@ import { getTranslations } from "../shared/i18n/core";
   // ---------------------------------------------------------------------
 
   function installEarlyHooks(): void {
+    installStreamingInterceptor();
     installObjectURLInterceptor();
     installFetchInterceptor();
     installXHRInterceptor();
@@ -1998,7 +1618,6 @@ import { getTranslations } from "../shared/i18n/core";
 
     installSettingsBridge();
     buildUI();
-    installInlineReadAloudButtons();
     startObserver();
 
     log("ChatGPT Audio Controls Extension Ready");

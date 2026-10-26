@@ -27,8 +27,6 @@ export const fr: TranslationSchema = {
       "mute": "Couper le son",
       "unmute": "Rétablir le son",
       "smartIntegrations": "Fonctions pratiques",
-      "inlineSpeech": "Boutons de lecture des réponses",
-      "inlineSpeechDesc": "Ajoute la lecture à côté du bouton Copier",
       "globalShortcuts": "Raccourcis clavier",
       "globalShortcutsDesc": "Activer Espace/K, Alt+P, Alt+flèches et les touches de vitesse",
       "smoothScrubbing": "Navigation fluide",
@@ -38,10 +36,8 @@ export const fr: TranslationSchema = {
       "title": "Raccourcis clavier",
       "gesturesTitle": "Gestes souris et tactiles",
       "smoothAudioScrub": "Navigation audio fluide",
-      "instantResponseRead": "Lire une réponse immédiatement",
       "directDownload": "Téléchargement direct",
       "holdScrubKey": "Maintenir ◀10 / 10▶",
-      "clickSpeechKey": "Cliquer sur 🔈",
       "clickDownloadKey": "Cliquer sur 📥"
     },
     "about": {
@@ -127,7 +123,6 @@ export const fr: TranslationSchema = {
       "collapse": "Réduire le lecteur",
       "expand": "Déployer ChatGPT Audio Controls",
       "readAloud": "Lire à voix haute",
-      "stopReadAloud": "Arrêter la lecture"
     },
     "shortcutsPopover": {
       "title": "Raccourcis de lecture",

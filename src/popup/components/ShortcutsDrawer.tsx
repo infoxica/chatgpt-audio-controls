@@ -77,10 +77,6 @@ export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t, language })
             <span className="kbd" style={{ fontSize: 9.5 }}>{t.popup.shortcuts.holdScrubKey}</span>
           </div>
           <div className="shortcut-row">
-            <span className="shortcut-name">{t.popup.shortcuts.instantResponseRead}</span>
-            <span className="kbd" style={{ fontSize: 9.5 }}>{t.popup.shortcuts.clickSpeechKey}</span>
-          </div>
-          <div className="shortcut-row">
             <span className="shortcut-name">{t.popup.shortcuts.directDownload}</span>
             <span className="kbd" style={{ fontSize: 9.5 }}>{t.popup.shortcuts.clickDownloadKey}</span>
           </div>

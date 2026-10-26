@@ -28,8 +28,6 @@ export const ptBR: TranslationSchema = {
       mute: "Silenciar",
       unmute: "Ativar Som",
       smartIntegrations: "Integrações Inteligentes",
-      inlineSpeech: "Botão de leitura em cada resposta",
-      inlineSpeechDesc: "Adiciona leitura em 1 clique ao lado do botão copiar resposta",
       globalShortcuts: "Atalhos Globais de Teclado",
       globalShortcutsDesc: "Ativar Espaço/K, Alt+P, Alt+Setas e teclas de velocidade",
       smoothScrubbing: "Avanço contínuo ao segurar",
@@ -39,10 +37,8 @@ export const ptBR: TranslationSchema = {
       title: "Atalhos de Teclado",
       gesturesTitle: "Gestos de Mouse e Toque",
       smoothAudioScrub: "Avanço Contínuo de Áudio",
-      instantResponseRead: "Leitura Instantânea",
       directDownload: "Download Direto de Áudio",
       holdScrubKey: "Segurar ◀10 / 10▶",
-      clickSpeechKey: "Clicar no botão 🔈",
       clickDownloadKey: "Clicar no botão 📥",
     },
     about: {
@@ -129,7 +125,6 @@ export const ptBR: TranslationSchema = {
       collapse: "Recolher Player",
       expand: "Expandir controles de áudio do ChatGPT",
       readAloud: "Ler resposta",
-      stopReadAloud: "Parar leitura",
     },
     shortcutsPopover: {
       title: "Atalhos de Leitura",

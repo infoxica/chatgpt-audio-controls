@@ -27,8 +27,6 @@ export const tr: TranslationSchema = {
       "mute": "Sesi kapat",
       "unmute": "Sesi aç",
       "smartIntegrations": "Pratik özellikler",
-      "inlineSpeech": "Yanıtları sesli okuma düğmeleri",
-      "inlineSpeechDesc": "Kopyala düğmesinin yanına sesli okuma ekler",
       "globalShortcuts": "Klavye kısayolları",
       "globalShortcutsDesc": "Boşluk/K, Alt+P, Alt+oklar ve hız tuşlarını etkinleştir",
       "smoothScrubbing": "Akıcı ileri geri sarma",
@@ -38,10 +36,8 @@ export const tr: TranslationSchema = {
       "title": "Klavye kısayolları",
       "gesturesTitle": "Fare ve dokunma hareketleri",
       "smoothAudioScrub": "Akıcı ses sarma",
-      "instantResponseRead": "Yanıtı hemen oku",
       "directDownload": "Doğrudan indir",
       "holdScrubKey": "◀10 / 10▶ düğmesini basılı tutun",
-      "clickSpeechKey": "🔈 düğmesine tıklayın",
       "clickDownloadKey": "📥 düğmesine tıklayın"
     },
     "about": {
@@ -127,7 +123,6 @@ export const tr: TranslationSchema = {
       "collapse": "Oynatıcıyı daralt",
       "expand": "ChatGPT Audio Controls’ü genişlet",
       "readAloud": "Sesli oku",
-      "stopReadAloud": "Sesli okumayı durdur"
     },
     "shortcutsPopover": {
       "title": "Sesli okuma kısayolları",

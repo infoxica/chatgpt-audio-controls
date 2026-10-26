@@ -28,8 +28,6 @@ export const zhCN: TranslationSchema = {
       mute: "静音",
       unmute: "取消静音",
       smartIntegrations: "智能集成",
-      inlineSpeech: "单条回答朗读按钮",
-      inlineSpeechDesc: "在每条回答的复制按钮旁添加一键朗读按钮",
       globalShortcuts: "全局快捷键",
       globalShortcutsDesc: "启用 Space/K、Alt+P、Alt+方向键及调速快捷键",
       smoothScrubbing: "平滑长按快进/快退",
@@ -39,10 +37,8 @@ export const zhCN: TranslationSchema = {
       title: "键盘快捷键",
       gesturesTitle: "鼠标与手势操作",
       smoothAudioScrub: "平滑快进/快退",
-      instantResponseRead: "单条回答即时朗读",
       directDownload: "直接下载音频",
       holdScrubKey: "长按 ◀10 / 10▶",
-      clickSpeechKey: "点击 🔈 按钮",
       clickDownloadKey: "点击 📥 按钮",
     },
     about: {
@@ -129,7 +125,6 @@ export const zhCN: TranslationSchema = {
       collapse: "收起播放器",
       expand: "展开 ChatGPT 音频控制",
       readAloud: "朗读回答",
-      stopReadAloud: "停止朗读",
     },
     shortcutsPopover: {
       title: "朗读快捷键",
