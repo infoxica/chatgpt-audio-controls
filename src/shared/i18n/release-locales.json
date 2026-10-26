@@ -70,7 +70,7 @@
     "decline": "許可しない",
     "preferences": "アクセス解析の設定",
     "websitePrivacy": "このサイトは同意後にのみGoogle Analyticsを使用します。計測対象は閲覧とストアリンクのクリックであり、インストールや拡張機能の利用ではありません。アクセス解析の設定から同意を取り消せます。",
-    "feedbackPolicy": "フィードバックは任意です。回答、言語、拡張機能のバージョン、ブラウザー、OSをCloudflare D1に非公開で保存します。Cloudflare Turnstileで迷惑送信を防ぎます。氏名やメールは不要です。個人情報や会話を含めないでください。",
+    "feedbackPolicy": "フィードバックはアンインストール後も任意で、公開されません。氏名やメールアドレスは不要です。個人情報や会話の内容は含めないでください。",
     "screenshot": "ChatGPT読み上げの再生コントロール",
     "available": "現在利用できるバージョンは各ストアでご確認ください。",
     "website": "公式サイト"
@@ -146,7 +146,7 @@
     "decline": "거절",
     "preferences": "분석 설정",
     "websitePrivacy": "이 웹사이트는 동의한 경우에만 Google Analytics를 사용합니다. 방문과 스토어 링크 클릭을 측정하며 설치나 확장 프로그램 사용은 측정하지 않습니다. 분석 설정에서 동의를 철회할 수 있습니다.",
-    "feedbackPolicy": "피드백은 선택 사항입니다. 답변, 언어, 버전, 브라우저 및 운영체제 정보를 Cloudflare D1에 비공개로 저장합니다. Cloudflare Turnstile로 스팸을 방지합니다. 이름이나 이메일은 필요하지 않습니다. 개인 정보나 대화 내용을 포함하지 마세요.",
+    "feedbackPolicy": "삭제 후에도 피드백은 선택 사항이며 비공개로 처리됩니다. 이름이나 이메일은 필요하지 않습니다. 개인 정보나 대화 내용은 포함하지 마세요.",
     "screenshot": "ChatGPT 소리 내어 읽기 재생 컨트롤",
     "available": "현재 제공되는 버전은 각 스토어에서 확인하세요.",
     "website": "공식 웹사이트"
@@ -222,7 +222,7 @@
     "decline": "नहीं, धन्यवाद",
     "preferences": "एनालिटिक्स सेटिंग",
     "websitePrivacy": "यह वेबसाइट आपकी अनुमति के बाद ही Google Analytics इस्तेमाल करती है। यह विज़िट और स्टोर लिंक क्लिक मापती है, इंस्टॉल या एक्सटेंशन का उपयोग नहीं। एनालिटिक्स सेटिंग से अनुमति वापस ले सकते हैं।",
-    "feedbackPolicy": "प्रतिक्रिया देना वैकल्पिक है। उत्तर, भाषा, संस्करण, ब्राउज़र और ऑपरेटिंग सिस्टम की जानकारी Cloudflare D1 में निजी रूप से रखी जाती है। Cloudflare Turnstile स्पैम रोकता है। नाम या ईमेल आवश्यक नहीं है। निजी जानकारी या बातचीत शामिल न करें।",
+    "feedbackPolicy": "अनइंस्टॉल करने के बाद भी प्रतिक्रिया देना वैकल्पिक है और आपकी प्रतिक्रिया निजी रहती है। नाम या ईमेल की ज़रूरत नहीं है। कृपया निजी जानकारी या बातचीत शामिल न करें।",
     "screenshot": "ChatGPT Read Aloud के प्लेबैक कंट्रोल",
     "available": "फ़िलहाल उपलब्ध वर्शन के लिए अपना स्टोर देखें।",
     "website": "आधिकारिक वेबसाइट"
@@ -298,7 +298,7 @@
     "decline": "Non merci",
     "preferences": "Préférences d’analyse",
     "websitePrivacy": "Ce site utilise Google Analytics uniquement avec votre accord. Il mesure les visites et les clics vers les boutiques, pas les installations ni l’utilisation de l’extension. Vous pouvez retirer votre accord dans les préférences d’analyse.",
-    "feedbackPolicy": "Les commentaires sont facultatifs. Les réponses, langue, version, navigateur et système sont stockés de façon privée dans Cloudflare D1. Cloudflare Turnstile protège contre le spam. Aucun nom ni e-mail requis. N’incluez pas de données personnelles ni de conversations.",
+    "feedbackPolicy": "Vos commentaires sont facultatifs et privés, même après la désinstallation. Aucun nom ni e-mail n’est requis. Merci de ne pas inclure de données personnelles ni de conversations.",
     "screenshot": "Commandes de lecture à voix haute de ChatGPT",
     "available": "Consultez votre boutique pour connaître la version disponible.",
     "website": "Site officiel"
@@ -374,7 +374,7 @@
     "decline": "Nein danke",
     "preferences": "Analyseeinstellungen",
     "websitePrivacy": "Diese Website verwendet Google Analytics nur nach deiner Zustimmung. Gemessen werden Besuche und Store-Link-Klicks, keine Installationen oder Erweiterungsnutzung. Du kannst die Zustimmung in den Analyseeinstellungen widerrufen.",
-    "feedbackPolicy": "Feedback ist freiwillig. Antworten, Sprache, Version, Browser und Betriebssystem werden privat in Cloudflare D1 gespeichert. Cloudflare Turnstile schützt vor Spam. Name und E-Mail sind nicht erforderlich. Keine persönlichen Daten oder Gespräche angeben.",
+    "feedbackPolicy": "Dein Feedback ist freiwillig und privat, auch nach der Deinstallation. Name oder E-Mail sind nicht erforderlich. Bitte gib keine persönlichen Daten oder Gesprächsinhalte an.",
     "screenshot": "Wiedergabesteuerung für ChatGPT Vorlesen",
     "available": "Die derzeit verfügbare Version findest du in deinem Store.",
     "website": "Offizielle Website"
@@ -450,7 +450,7 @@
     "decline": "No grazie",
     "preferences": "Preferenze di analisi",
     "websitePrivacy": "Questo sito usa Google Analytics solo con il tuo consenso. Misura visite e clic verso gli store, non installazioni o uso dell’estensione. Puoi revocare il consenso nelle preferenze di analisi.",
-    "feedbackPolicy": "Il feedback è facoltativo. Risposte, lingua, versione, browser e sistema sono archiviati privatamente in Cloudflare D1. Cloudflare Turnstile protegge dallo spam. Nome ed e-mail non sono richiesti. Non includere dati personali o conversazioni.",
+    "feedbackPolicy": "Il tuo feedback è facoltativo e privato, anche dopo la disinstallazione. Non servono nome o e-mail. Non includere dati personali o conversazioni.",
     "screenshot": "Controlli di riproduzione per la lettura ad alta voce di ChatGPT",
     "available": "Controlla lo store per la versione attualmente disponibile.",
     "website": "Sito ufficiale"
@@ -526,7 +526,7 @@
     "decline": "Tidak, terima kasih",
     "preferences": "Preferensi analitik",
     "websitePrivacy": "Situs ini menggunakan Google Analytics hanya setelah Anda mengizinkannya. Yang diukur adalah kunjungan dan klik tautan toko, bukan pemasangan atau penggunaan ekstensi. Anda dapat mencabut izin melalui Preferensi analitik.",
-    "feedbackPolicy": "Masukan bersifat sukarela. Jawaban, bahasa, versi, browser, dan sistem disimpan secara privat di Cloudflare D1. Cloudflare Turnstile mencegah spam. Nama dan email tidak diperlukan. Jangan sertakan data pribadi atau percakapan.",
+    "feedbackPolicy": "Masukan Anda bersifat sukarela dan pribadi, bahkan setelah menghapus ekstensi. Nama atau email tidak diperlukan. Jangan sertakan data pribadi atau percakapan.",
     "screenshot": "Kontrol pemutaran Baca dengan lantang ChatGPT",
     "available": "Periksa toko Anda untuk versi yang tersedia saat ini.",
     "website": "Situs resmi"
@@ -602,7 +602,7 @@
     "decline": "Hayır, teşekkürler",
     "preferences": "Analiz tercihleri",
     "websitePrivacy": "Bu site Google Analytics’i yalnızca izninizle kullanır. Ziyaretleri ve mağaza bağlantısı tıklamalarını ölçer; yüklemeleri veya uzantı kullanımını ölçmez. Analiz tercihlerinden izninizi geri çekebilirsiniz.",
-    "feedbackPolicy": "Geri bildirim isteğe bağlıdır. Yanıtlar, dil, sürüm, tarayıcı ve işletim sistemi Cloudflare D1 içinde özel olarak saklanır. Cloudflare Turnstile spam’i önler. Ad veya e-posta gerekmez. Kişisel bilgi veya konuşma eklemeyin.",
+    "feedbackPolicy": "Kaldırdıktan sonra da geri bildiriminiz isteğe bağlı ve gizlidir. Ad veya e-posta gerekmez. Lütfen kişisel bilgileri ya da konuşmaları eklemeyin.",
     "screenshot": "ChatGPT Sesli Oku oynatma kontrolleri",
     "available": "Kullanılabilir sürüm için mağazanızı kontrol edin.",
     "website": "Resmî web sitesi"
@@ -678,7 +678,7 @@
     "decline": "Không, cảm ơn",
     "preferences": "Tùy chọn phân tích",
     "websitePrivacy": "Trang này chỉ dùng Google Analytics sau khi bạn đồng ý. Chúng tôi đo lượt truy cập và nhấp liên kết cửa hàng, không đo lượt cài đặt hay việc sử dụng tiện ích. Bạn có thể rút lại đồng ý trong Tùy chọn phân tích.",
-    "feedbackPolicy": "Phản hồi là tự nguyện. Câu trả lời, ngôn ngữ, phiên bản tiện ích, trình duyệt và hệ điều hành được lưu riêng trong Cloudflare D1. Cloudflare Turnstile chống thư rác. Không cần tên hay email. Đừng gửi thông tin cá nhân hoặc hội thoại.",
+    "feedbackPolicy": "Phản hồi của bạn là tự nguyện và riêng tư, kể cả sau khi gỡ cài đặt. Không cần tên hay email. Vui lòng không gửi thông tin cá nhân hoặc nội dung hội thoại.",
     "screenshot": "Bộ điều khiển phát Đọc to của ChatGPT",
     "available": "Xem cửa hàng để biết phiên bản hiện có.",
     "website": "Trang web chính thức"
@@ -754,7 +754,7 @@
     "decline": "ไม่ ขอบคุณ",
     "preferences": "การตั้งค่าการวิเคราะห์",
     "websitePrivacy": "เว็บไซต์นี้ใช้ Google Analytics เมื่อคุณยินยอมเท่านั้น วัดการเข้าชมและคลิกลิงก์ร้านค้า ไม่ใช่การติดตั้งหรือการใช้ส่วนขยาย คุณถอนความยินยอมได้ในการตั้งค่าการวิเคราะห์",
-    "feedbackPolicy": "การส่งความคิดเห็นเป็นทางเลือก คำตอบ ภาษา เวอร์ชันส่วนขยาย เบราว์เซอร์ และระบบปฏิบัติการจะถูกเก็บเป็นส่วนตัวใน Cloudflare D1 โดยใช้ Cloudflare Turnstile ป้องกันสแปม ไม่ต้องระบุชื่อหรืออีเมล โปรดอย่าใส่ข้อมูลส่วนตัวหรือบทสนทนา",
+    "feedbackPolicy": "ความคิดเห็นของคุณเป็นทางเลือกและเป็นส่วนตัว แม้หลังถอนการติดตั้ง ไม่ต้องระบุชื่อหรืออีเมล โปรดอย่าใส่ข้อมูลส่วนตัวหรือบทสนทนา",
     "screenshot": "ตัวควบคุมการอ่านออกเสียง ChatGPT",
     "available": "ดูเวอร์ชันที่พร้อมใช้งานในร้านค้าของคุณ",
     "website": "เว็บไซต์อย่างเป็นทางการ"
@@ -830,7 +830,7 @@
     "decline": "不用，谢谢",
     "preferences": "分析偏好设置",
     "websitePrivacy": "本网站仅在你同意后使用 Google Analytics。统计内容是访问和商店链接点击，不是安装或扩展使用情况。你可以在分析偏好设置中撤回同意。",
-    "feedbackPolicy": "反馈为自愿提交。答案、语言、扩展版本、浏览器和操作系统信息私密存储在 Cloudflare D1。Cloudflare Turnstile 用于防止垃圾提交。无需姓名或电子邮件。请勿包含个人信息或对话。",
+    "feedbackPolicy": "反馈由您自愿提交并保持私密，卸载后也一样。无需填写姓名或电子邮件。请勿包含个人信息或对话内容。",
     "screenshot": "ChatGPT 朗读播放控件",
     "available": "请在商店查看当前可用版本。",
     "website": "官方网站"
@@ -906,7 +906,7 @@
     "decline": "不用，謝謝",
     "preferences": "分析偏好設定",
     "websitePrivacy": "本網站僅在你同意後使用 Google Analytics。統計內容是造訪和商店連結點擊，不是安裝或擴充功能使用情況。你可以在分析偏好設定中撤回同意。",
-    "feedbackPolicy": "意見回饋為自願提交。答案、語言、擴充功能版本、瀏覽器和作業系統資訊私密儲存於 Cloudflare D1。Cloudflare Turnstile 用於防止垃圾提交。無需姓名或電子郵件。請勿包含個人資訊或對話。",
+    "feedbackPolicy": "意見回饋由您自願提交並保持私密，解除安裝後也一樣。無需填寫姓名或電子郵件。請勿包含個人資訊或對話內容。",
     "screenshot": "ChatGPT 朗讀播放控制項",
     "available": "請在商店查看目前可用版本。",
     "website": "官方網站"
@@ -982,7 +982,7 @@
     "decline": "No, gracias",
     "preferences": "Preferencias de analítica",
     "websitePrivacy": "Esta web usa Google Analytics solo tras tu consentimiento. Mide visitas y clics a las tiendas, no instalaciones ni uso de la extensión. Puedes retirar tu consentimiento en Preferencias de analítica.",
-    "feedbackPolicy": "Los comentarios son opcionales. Las respuestas, idioma, versión, navegador y sistema se guardan de forma privada en Cloudflare D1. Cloudflare Turnstile evita el spam. No se requiere nombre ni correo. No incluyas datos personales ni conversaciones.",
+    "feedbackPolicy": "Tus comentarios son opcionales y privados, incluso después de desinstalar. No necesitas dar tu nombre ni correo electrónico. No incluyas datos personales ni conversaciones.",
     "screenshot": "Controles de reproducción de Leer en voz alta de ChatGPT",
     "available": "Consulta tu tienda para ver la versión disponible.",
     "website": "Sitio web oficial"
@@ -1058,7 +1058,7 @@
     "decline": "Não, obrigado",
     "preferences": "Preferências de análise",
     "websitePrivacy": "Este site usa o Google Analytics somente com sua permissão. Mede visitas e cliques nas lojas, não instalações nem uso da extensão. Você pode retirar a permissão nas Preferências de análise.",
-    "feedbackPolicy": "O feedback é opcional. Respostas, idioma, versão, navegador e sistema são armazenados de forma privada no Cloudflare D1. O Cloudflare Turnstile previne spam. Não é necessário nome nem e-mail. Não inclua dados pessoais ou conversas.",
+    "feedbackPolicy": "Seu feedback é opcional e privado, mesmo após desinstalar. Não é necessário informar nome ou e-mail. Não inclua dados pessoais nem conversas.",
     "screenshot": "Controles de reprodução de Ler em voz alta do ChatGPT",
     "available": "Confira na loja a versão disponível.",
     "website": "Site oficial"
@@ -1134,7 +1134,7 @@
     "decline": "Нет, спасибо",
     "preferences": "Настройки аналитики",
     "websitePrivacy": "Сайт использует Google Analytics только с вашего согласия. Измеряются посещения и переходы в магазины, а не установки или использование расширения. Согласие можно отозвать в настройках аналитики.",
-    "feedbackPolicy": "Отзывы добровольны. Ответы, язык, версия, браузер и ОС хранятся конфиденциально в Cloudflare D1. Cloudflare Turnstile защищает от спама. Имя и почта не нужны. Не включайте личные данные или переписку.",
+    "feedbackPolicy": "Ваш отзыв добровольный и непубличный, даже после удаления расширения. Имя и электронная почта не нужны. Не включайте личные данные или переписку.",
     "screenshot": "Управление воспроизведением чтения вслух ChatGPT",
     "available": "Доступную версию смотрите в магазине.",
     "website": "Официальный сайт"
@@ -1210,7 +1210,7 @@
     "decline": "Não, obrigado",
     "preferences": "Preferências de análise",
     "websitePrivacy": "Este site usa o Google Analytics apenas com a sua permissão. Mede visitas e cliques nas lojas, não instalações nem utilização da extensão. Pode retirar a permissão nas Preferências de análise.",
-    "feedbackPolicy": "O feedback é opcional. Respostas, idioma, versão, navegador e sistema são guardados de forma privada no Cloudflare D1. O Cloudflare Turnstile previne spam. Não é necessário nome nem e-mail. Não inclua dados pessoais ou conversas.",
+    "feedbackPolicy": "A sua opinião é facultativa e privada, mesmo após a desinstalação. Não é necessário indicar nome ou e-mail. Não inclua dados pessoais nem conversas.",
     "screenshot": "Controlos de reprodução de Ler em voz alta do ChatGPT",
     "available": "Consulte a loja para saber a versão disponível.",
     "website": "Site oficial"

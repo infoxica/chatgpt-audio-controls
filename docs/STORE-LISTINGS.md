@@ -32,7 +32,7 @@ For desktop Chrome, Edge and compatible browsers. Open this page on your compute
 
 The extension has no analytics or telemetry. Audio and conversation handling stay in your browser. Browser sync may synchronize preferences.
 
-Feedback is optional, including after uninstall. Submitted answers and coarse technical context are stored privately in Cloudflare D1. Turnstile helps prevent spam. Do not include personal information or conversations.
+Your feedback is optional and private, even after uninstalling. No name or email is required. Please don’t include personal details or conversations.
 
 An independent open-source project by Infoxica. Not affiliated with or endorsed by OpenAI.
 
@@ -70,7 +70,7 @@ ChatGPTが提供する音声形式でダウンロードします。音声形式�
 
 拡張機能にアクセス解析やテレメトリーはありません。音声と会話の処理はブラウザー内で行います。設定はブラウザーの同期機能で同期される場合があります。
 
-フィードバックは任意です。回答、言語、拡張機能のバージョン、ブラウザー、OSをCloudflare D1に非公開で保存します。Cloudflare Turnstileで迷惑送信を防ぎます。氏名やメールは不要です。個人情報や会話を含めないでください。
+フィードバックはアンインストール後も任意で、公開されません。氏名やメールアドレスは不要です。個人情報や会話の内容は含めないでください。
 
 Infoxicaによる独立したオープンソースプロジェクトです。OpenAIとは提携しておらず、承認も受けていません。
 
@@ -108,7 +108,7 @@ ChatGPT에서 제공하는 오디오 형식으로 다운로드합니다. 확장 
 
 확장 프로그램에는 분석이나 원격 측정이 없습니다. 오디오와 대화 처리는 브라우저 안에서 이루어집니다. 브라우저 동기화로 설정이 동기화될 수 있습니다.
 
-피드백은 선택 사항입니다. 답변, 언어, 버전, 브라우저 및 운영체제 정보를 Cloudflare D1에 비공개로 저장합니다. Cloudflare Turnstile로 스팸을 방지합니다. 이름이나 이메일은 필요하지 않습니다. 개인 정보나 대화 내용을 포함하지 마세요.
+삭제 후에도 피드백은 선택 사항이며 비공개로 처리됩니다. 이름이나 이메일은 필요하지 않습니다. 개인 정보나 대화 내용은 포함하지 마세요.
 
 Infoxica의 독립적인 오픈소스 프로젝트입니다. OpenAI와 제휴하거나 보증받지 않았습니다.
 
@@ -146,7 +146,7 @@ ChatGPT खोलें और पूरे हो चुके उत्तर 
 
 एक्सटेंशन में एनालिटिक्स या टेलीमेट्री नहीं है। ऑडियो और बातचीत की प्रोसेसिंग आपके ब्राउज़र में होती है। ब्राउज़र सिंक से सेटिंग सिंक हो सकती हैं।
 
-प्रतिक्रिया देना वैकल्पिक है। उत्तर, भाषा, संस्करण, ब्राउज़र और ऑपरेटिंग सिस्टम की जानकारी Cloudflare D1 में निजी रूप से रखी जाती है। Cloudflare Turnstile स्पैम रोकता है। नाम या ईमेल आवश्यक नहीं है। निजी जानकारी या बातचीत शामिल न करें।
+अनइंस्टॉल करने के बाद भी प्रतिक्रिया देना वैकल्पिक है और आपकी प्रतिक्रिया निजी रहती है। नाम या ईमेल की ज़रूरत नहीं है। कृपया निजी जानकारी या बातचीत शामिल न करें।
 
 Infoxica का स्वतंत्र ओपन-सोर्स प्रोजेक्ट। OpenAI से संबद्ध या अनुमोदित नहीं है।
 
@@ -184,7 +184,7 @@ Pour Chrome, Edge et les navigateurs compatibles sur ordinateur. Ouvrez cette pa
 
 L’extension n’intègre ni analyse d’audience ni télémétrie. L’audio et les conversations sont traités dans votre navigateur. Les préférences peuvent être synchronisées par le navigateur.
 
-Les commentaires sont facultatifs. Les réponses, langue, version, navigateur et système sont stockés de façon privée dans Cloudflare D1. Cloudflare Turnstile protège contre le spam. Aucun nom ni e-mail requis. N’incluez pas de données personnelles ni de conversations.
+Vos commentaires sont facultatifs et privés, même après la désinstallation. Aucun nom ni e-mail n’est requis. Merci de ne pas inclure de données personnelles ni de conversations.
 
 Un projet open source indépendant d’Infoxica. Sans affiliation ni approbation d’OpenAI.
 
@@ -222,7 +222,7 @@ Für Chrome, Edge und kompatible Desktop-Browser. Öffne diese Seite am Computer
 
 Die Erweiterung enthält weder Analyse noch Telemetrie. Audio und Gespräche werden in deinem Browser verarbeitet. Einstellungen können über die Browsersynchronisierung abgeglichen werden.
 
-Feedback ist freiwillig. Antworten, Sprache, Version, Browser und Betriebssystem werden privat in Cloudflare D1 gespeichert. Cloudflare Turnstile schützt vor Spam. Name und E-Mail sind nicht erforderlich. Keine persönlichen Daten oder Gespräche angeben.
+Dein Feedback ist freiwillig und privat, auch nach der Deinstallation. Name oder E-Mail sind nicht erforderlich. Bitte gib keine persönlichen Daten oder Gesprächsinhalte an.
 
 Ein unabhängiges Open-Source-Projekt von Infoxica. Keine Verbindung zu oder Unterstützung durch OpenAI.
 
@@ -260,7 +260,7 @@ Per Chrome, Edge e browser compatibili su computer. Apri questa pagina sul compu
 
 L’estensione non contiene analisi o telemetria. Audio e conversazioni vengono gestiti nel browser. La sincronizzazione del browser può sincronizzare le preferenze.
 
-Il feedback è facoltativo. Risposte, lingua, versione, browser e sistema sono archiviati privatamente in Cloudflare D1. Cloudflare Turnstile protegge dallo spam. Nome ed e-mail non sono richiesti. Non includere dati personali o conversazioni.
+Il tuo feedback è facoltativo e privato, anche dopo la disinstallazione. Non servono nome o e-mail. Non includere dati personali o conversazioni.
 
 Un progetto open source indipendente di Infoxica. Non affiliato né approvato da OpenAI.
 
@@ -298,7 +298,7 @@ Untuk Chrome, Edge, dan browser kompatibel di desktop. Buka halaman ini di kompu
 
 Ekstensi tidak memiliki analitik atau telemetri. Audio dan percakapan diproses dalam browser Anda. Sinkronisasi browser dapat menyinkronkan preferensi.
 
-Masukan bersifat sukarela. Jawaban, bahasa, versi, browser, dan sistem disimpan secara privat di Cloudflare D1. Cloudflare Turnstile mencegah spam. Nama dan email tidak diperlukan. Jangan sertakan data pribadi atau percakapan.
+Masukan Anda bersifat sukarela dan pribadi, bahkan setelah menghapus ekstensi. Nama atau email tidak diperlukan. Jangan sertakan data pribadi atau percakapan.
 
 Proyek sumber terbuka independen oleh Infoxica. Tidak berafiliasi atau didukung oleh OpenAI.
 
@@ -336,7 +336,7 @@ Masaüstü Chrome, Edge ve uyumlu tarayıcılar içindir. Yüklemek için bu say
 
 Uzantıda analiz veya telemetri yoktur. Ses ve konuşmalar tarayıcınızda işlenir. Tercihler tarayıcı eşitlemesiyle eşitlenebilir.
 
-Geri bildirim isteğe bağlıdır. Yanıtlar, dil, sürüm, tarayıcı ve işletim sistemi Cloudflare D1 içinde özel olarak saklanır. Cloudflare Turnstile spam’i önler. Ad veya e-posta gerekmez. Kişisel bilgi veya konuşma eklemeyin.
+Kaldırdıktan sonra da geri bildiriminiz isteğe bağlı ve gizlidir. Ad veya e-posta gerekmez. Lütfen kişisel bilgileri ya da konuşmaları eklemeyin.
 
 Infoxica’nın bağımsız açık kaynak projesi. OpenAI ile bağlantılı değildir ve OpenAI tarafından onaylanmamıştır.
 
@@ -374,7 +374,7 @@ Dành cho Chrome, Edge và trình duyệt tương thích trên máy tính. Mở 
 
 Tiện ích không có phân tích hay đo từ xa. Âm thanh và cuộc trò chuyện được xử lý trong trình duyệt. Tùy chọn có thể được đồng bộ bằng chức năng đồng bộ của trình duyệt.
 
-Phản hồi là tự nguyện. Câu trả lời, ngôn ngữ, phiên bản tiện ích, trình duyệt và hệ điều hành được lưu riêng trong Cloudflare D1. Cloudflare Turnstile chống thư rác. Không cần tên hay email. Đừng gửi thông tin cá nhân hoặc hội thoại.
+Phản hồi của bạn là tự nguyện và riêng tư, kể cả sau khi gỡ cài đặt. Không cần tên hay email. Vui lòng không gửi thông tin cá nhân hoặc nội dung hội thoại.
 
 Dự án mã nguồn mở độc lập của Infoxica. Không liên kết hoặc được OpenAI chứng thực.
 
@@ -412,7 +412,7 @@ ChatGPT Audio Controls & Read Aloud
 
 ส่วนขยายไม่มีการวิเคราะห์หรือข้อมูลการใช้งานระยะไกล เสียงและบทสนทนาถูกประมวลผลในเบราว์เซอร์ การซิงค์ของเบราว์เซอร์อาจซิงค์การตั้งค่า
 
-การส่งความคิดเห็นเป็นทางเลือก คำตอบ ภาษา เวอร์ชันส่วนขยาย เบราว์เซอร์ และระบบปฏิบัติการจะถูกเก็บเป็นส่วนตัวใน Cloudflare D1 โดยใช้ Cloudflare Turnstile ป้องกันสแปม ไม่ต้องระบุชื่อหรืออีเมล โปรดอย่าใส่ข้อมูลส่วนตัวหรือบทสนทนา
+ความคิดเห็นของคุณเป็นทางเลือกและเป็นส่วนตัว แม้หลังถอนการติดตั้ง ไม่ต้องระบุชื่อหรืออีเมล โปรดอย่าใส่ข้อมูลส่วนตัวหรือบทสนทนา
 
 โครงการโอเพนซอร์สอิสระจาก Infoxica ไม่มีความเกี่ยวข้องหรือการรับรองจาก OpenAI
 
@@ -450,7 +450,7 @@ ChatGPT 朗读控件：暂停、跳转、调速、音量、音频下载和快捷
 
 扩展没有分析或遥测。音频和对话处理在浏览器内进行。偏好设置可能通过浏览器同步功能同步。
 
-反馈为自愿提交。答案、语言、扩展版本、浏览器和操作系统信息私密存储在 Cloudflare D1。Cloudflare Turnstile 用于防止垃圾提交。无需姓名或电子邮件。请勿包含个人信息或对话。
+反馈由您自愿提交并保持私密，卸载后也一样。无需填写姓名或电子邮件。请勿包含个人信息或对话内容。
 
 Infoxica 的独立开源项目。与 OpenAI 无关联，也未经其认可。
 
@@ -488,7 +488,7 @@ ChatGPT 朗讀控制項：暫停、跳轉、調速、音量、音訊下載和快
 
 擴充功能沒有分析或遙測。音訊和對話處理在瀏覽器內進行。偏好設定可能透過瀏覽器同步功能同步。
 
-意見回饋為自願提交。答案、語言、擴充功能版本、瀏覽器和作業系統資訊私密儲存於 Cloudflare D1。Cloudflare Turnstile 用於防止垃圾提交。無需姓名或電子郵件。請勿包含個人資訊或對話。
+意見回饋由您自願提交並保持私密，解除安裝後也一樣。無需填寫姓名或電子郵件。請勿包含個人資訊或對話內容。
 
 Infoxica 的獨立開源專案。與 OpenAI 無關聯，也未經其認可。
 
@@ -526,7 +526,7 @@ Para Chrome, Edge y navegadores compatibles de escritorio. Abre esta página en 
 
 La extensión no tiene analítica ni telemetría. El audio y las conversaciones se procesan en tu navegador. La sincronización del navegador puede sincronizar las preferencias.
 
-Los comentarios son opcionales. Las respuestas, idioma, versión, navegador y sistema se guardan de forma privada en Cloudflare D1. Cloudflare Turnstile evita el spam. No se requiere nombre ni correo. No incluyas datos personales ni conversaciones.
+Tus comentarios son opcionales y privados, incluso después de desinstalar. No necesitas dar tu nombre ni correo electrónico. No incluyas datos personales ni conversaciones.
 
 Un proyecto independiente de código abierto de Infoxica. Sin afiliación ni respaldo de OpenAI.
 
@@ -564,7 +564,7 @@ Para Chrome, Edge e navegadores compatíveis no computador. Abra esta página no
 
 A extensão não tem análise nem telemetria. O áudio e as conversas são processados no seu navegador. As preferências podem ser sincronizadas pela sincronização do navegador.
 
-O feedback é opcional. Respostas, idioma, versão, navegador e sistema são armazenados de forma privada no Cloudflare D1. O Cloudflare Turnstile previne spam. Não é necessário nome nem e-mail. Não inclua dados pessoais ou conversas.
+Seu feedback é opcional e privado, mesmo após desinstalar. Não é necessário informar nome ou e-mail. Não inclua dados pessoais nem conversas.
 
 Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.
 
@@ -602,7 +602,7 @@ ChatGPT Audio Controls & Read Aloud
 
 В расширении нет аналитики или телеметрии. Аудио и разговоры обрабатываются в браузере. Настройки могут синхронизироваться средствами браузера.
 
-Отзывы добровольны. Ответы, язык, версия, браузер и ОС хранятся конфиденциально в Cloudflare D1. Cloudflare Turnstile защищает от спама. Имя и почта не нужны. Не включайте личные данные или переписку.
+Ваш отзыв добровольный и непубличный, даже после удаления расширения. Имя и электронная почта не нужны. Не включайте личные данные или переписку.
 
 Независимый проект Infoxica с открытым исходным кодом. Не связан с OpenAI и не одобрен ею.
 
@@ -640,7 +640,7 @@ Para Chrome, Edge e navegadores compatíveis no computador. Abra esta página no
 
 A extensão não tem análise nem telemetria. O áudio e as conversas são processados no seu navegador. As preferências podem ser sincronizadas através da sincronização do navegador.
 
-O feedback é opcional. Respostas, idioma, versão, navegador e sistema são guardados de forma privada no Cloudflare D1. O Cloudflare Turnstile previne spam. Não é necessário nome nem e-mail. Não inclua dados pessoais ou conversas.
+A sua opinião é facultativa e privada, mesmo após a desinstalação. Não é necessário indicar nome ou e-mail. Não inclua dados pessoais nem conversas.
 
 Um projeto independente de código aberto da Infoxica. Sem afiliação ou endosso da OpenAI.
 

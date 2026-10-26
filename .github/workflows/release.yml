@@ -59,6 +59,9 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
+      - name: Check source and README versions
+        run: bun run version:check
+
       - name: Build feedback translations
         run: bun scripts/build-feedback-copy.ts
 

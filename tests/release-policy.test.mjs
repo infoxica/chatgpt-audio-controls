@@ -1,6 +1,18 @@
 import { expect, test } from 'bun:test';
 import { shouldPublish, versionIncreased } from '../scripts/release-policy.mjs';
 import { acceptanceComplete } from '../scripts/release-acceptance.ts';
+import { checkVersions, validateReadmeVersion } from '../scripts/check-versions.ts';
+import { readFileSync } from 'node:fs';
+
+test('README versions match the checkout and stale badges block validation', () => {
+  const version = checkVersions();
+  const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+  expect(() => validateReadmeVersion(readme, version)).not.toThrow();
+  expect(() => validateReadmeVersion(readme.replace(`source-v${version}-`, 'source-v0.0.1-'), version)).toThrow('badge');
+  expect(() => validateReadmeVersion(readme.replace('](CHANGELOG.md)', '](https://github.com/infoxica/chatgpt-audio-controls/releases/tag/v0.0.1)'), version)).toThrow('badge');
+  expect(() => validateReadmeVersion(readme.replace(`## v${version}`, '## v0.0.1'), version)).toThrow('heading');
+  expect(() => validateReadmeVersion(readme.replace(/^\[!\[Source version\].*$/m, ''), version)).toThrow('badge');
+});
 
 test('only the recorded Mac waiver satisfies an unverified check', () => {
   const accepted = { version: '1.2.0', feedbackDeployment: true, chromeLive: true, edgeLive: true, websiteDeployment: true, userscriptLive: true, nativeMac: 'waived-by-owner' };

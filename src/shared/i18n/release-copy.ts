@@ -72,7 +72,7 @@ export const releaseEnglish = {
   decline: 'No thanks',
   preferences: 'Analytics preferences',
   websitePrivacy: 'This website uses Google Analytics only after you allow it. It measures visits and store-link clicks, not installations or extension usage. You can withdraw permission using Analytics preferences.',
-  feedbackPolicy: 'Feedback is optional, including after uninstall. Submitted answers and coarse technical context are stored privately in Cloudflare D1. Turnstile helps prevent spam. Do not include personal information or conversations.',
+  feedbackPolicy: 'Your feedback is optional and private, even after uninstalling. No name or email is required. Please don’t include personal details or conversations.',
   screenshot: 'ChatGPT Read Aloud playback controls',
   available: 'Check your store for the currently available version.',
   website: 'Official website',

@@ -30,9 +30,11 @@ Implementation candidate. Do not publish extension assets or submit to stores un
 - Updated local verification: 21 unit tests / 228 assertions, 25 browser tests, six website HTTP tests, extension/Worker typechecks, builds and ZIP validation. The privacy disclosure received an additional four-test feedback pass. PR #20 CI before this follow-up passed; the updated revision requires fresh CI.
 - Local candidate ZIP SHA-256: `a4de1ba4d7dcc251c44978d3fd5e8d1ea34c6d14df1785bf240c21f8000e4938`. This replaces the earlier local candidate hash. Store assets must use one verified archive consistently.
 
-### Still required
-
 Feedback appearance follow-up (26 October): the form now matches the landing page's neutral light/dark palette and rounded language/theme icon controls. Localized accessible names, tooltips, native keyboard selection and System / Light / Dark preferences remain available. Worker typecheck and all four feedback browser tests passed, including mobile layout, focus order, icon states and answer retention. Live Edge verified the deployed controls and keyboard theme selection. Staging version: `00154b90-d71e-4cd2-b923-7cfb049a5ac4`; production version: `73729aa6-8519-4a8e-ad69-b443bc07c404`. No schema or submission changes. CI for the preceding revision `5f4f889` completed successfully (run `40313065122`); this appearance revision requires its own CI.
+
+Feedback copy and README follow-up (26 October): simplified the shared privacy message in all 17 languages, regenerated website/store copy, and verified the new message on the live form. Staging version: `e4634965-a736-421f-996a-b9e8e95d7912`; production version: `19b46632-5f29-4585-ba69-dc699d260943`. The README source badge now explicitly shows 1.3.0. CI, packaging, and release validation reject stale README badges/links/headings and mismatched package, manifest, UI, userscript or changelog versions. Local verification passed: typecheck, 22 unit tests / 233 assertions, four feedback browser tests, six website HTTP tests, website/extension builds, and ZIP validation (61 entries). Current candidate ZIP SHA-256: `25c54dea7ba4619737667891108b3db12f9756b89b66ba9214c71992b64683b3`, superseding the earlier candidate hashes. Website and store text is prepared in the feature branch; public publication still follows the release workflow below.
+
+### Still required
 
 - Fresh installed Chrome and Edge on Windows: live ChatGPT pause/resume, immediate pause, long responses, new response, navigation, seeking, speed, volume/download, themes, sidebars and actual 100%/125%/150% zoom. Record browser versions, artifact hash and results.
 - Actual Tampermonkey installation and live ChatGPT checks; injected userscript fixtures do not establish manager integration.

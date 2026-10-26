@@ -1,6 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { execSync } from "node:child_process";
+import { checkVersions } from './check-versions';
+
+checkVersions();
 
 const distDir = resolve(__dirname, "../dist");
 const zipDir = resolve(__dirname, "../dist-zip");

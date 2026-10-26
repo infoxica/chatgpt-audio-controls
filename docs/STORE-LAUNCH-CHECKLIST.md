@@ -4,7 +4,8 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 
 ## Release preflight
 
-- [ ] Update the release version consistently in `package.json`, `public/manifest.json`, the userscript header, and `CHANGELOG.md`.
+- [ ] Update the release version consistently in `package.json`, `public/manifest.json`, `src/shared/constants.ts`, the userscript header, `CHANGELOG.md`, and the README source-version badge and current version heading.
+- [ ] Run `bun run version:check`. Stale README badges, links, headings, or mismatched source versions must block the release.
 - [ ] Run `bun install --frozen-lockfile`.
 - [ ] Run `bun run typecheck`.
 - [ ] Run `bun run build`.

@@ -15,7 +15,7 @@
   </a>
 </p>
 
-[![Version](https://img.shields.io/badge/version-candidate-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
+[![Source version](https://img.shields.io/badge/source-v1.3.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
@@ -67,7 +67,7 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 
 - **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
-- Matches ChatGPT's native **Dark** and **Light** themes.
+- **System, Light, or Dark** appearance for the popup, settings dashboard, and feedback form. System follows your device preference; your choice is remembered.
 
 ### 🌐 Multi-Language & Internationalization (i18n)
 - **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
@@ -82,6 +82,14 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
   - 🇧🇷 **Portuguese (Brazil)** — Português do Brasil (`pt-BR`)
   - 🇵🇹 **Portuguese (Portugal)** — Português de Portugal (`pt-PT`)
   - 🇷🇺 **Russian** — Русский (`ru`)
+  - 🇯🇵 **Japanese** — 日本語 (`ja`)
+  - 🇰🇷 **Korean** — 한국어 (`ko`)
+  - 🇮🇳 **Hindi** — हिन्दी (`hi`)
+  - 🇫🇷 **French** — Français (`fr`)
+  - 🇩🇪 **German** — Deutsch (`de`)
+  - 🇮🇹 **Italian** — Italiano (`it`)
+  - 🇮🇩 **Indonesian** — Bahasa Indonesia (`id`)
+  - 🇹🇷 **Turkish** — Türkçe (`tr`)
 
 ---
 
@@ -185,13 +193,13 @@ Previous scripts tried loading external web fonts which browsers blocked. This v
 
 Playback, retained audio, seeking, and downloads run locally in your browser. The extension has no analytics or automatic diagnostic uploads. Browser sync may synchronize preferences.
 
-Feedback is voluntary. **Send feedback** in About or the settings dashboard opens a Cloudflare-hosted form. Uninstall opens the same service. Only an explicit submission saves answers and coarse language, version, browser and OS details in private D1 storage. Opening, skipping, or closing the form saves no feedback. Turnstile protects the form. See [PRIVACY.md](PRIVACY.md).
+Your feedback is optional and private, even after uninstalling. No name or email is required. Please don’t include personal details or conversations. Use **Send feedback** in About or the settings dashboard; the same form opens after uninstalling. Only submitting the form saves feedback. Opening, skipping, or closing it saves nothing. See [PRIVACY.md](PRIVACY.md) for full details.
 
 ---
 
 ## v1.3.0 candidate
 
-This candidate repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds Cloudflare feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening.
+This candidate repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
 
 Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
 
@@ -204,6 +212,8 @@ See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklis
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
 
 Maintainers preparing a Chrome Web Store or Microsoft Edge Add-ons submission should also use the [store launch checklist](docs/STORE-LAUNCH-CHECKLIST.md).
+
+Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and current version heading to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
 
 ---
 
