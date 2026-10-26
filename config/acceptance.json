@@ -5,5 +5,5 @@
   "edgeLive": true,
   "userscriptLive": true,
   "nativeMac": "waived-by-owner",
-  "websiteDeployment": false
+  "websiteDeployment": true
 }

@@ -4,7 +4,7 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
-## [1.3.0] - Candidate
+## [1.3.0] - 2026-10-26
 
 - Preserve playback position, speed and volume across destructive host pauses with a session-specific retained source and an owned audio element. Ignore stale loads and play results, show loading/recovery state, and prevent overlapping sessions.
 - Recognize ChatGPT's updated composer. Restore two separate rounded capsules beside it when space permits and above it on narrow screens.
