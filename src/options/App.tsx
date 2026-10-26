@@ -1,3 +1,5 @@
+import { useTheme } from '../shared/ThemeSelect';
+import { FeedbackLink } from "../shared/FeedbackLink";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
 import { Navbar, DashboardSection } from "./components/Navbar";
@@ -13,7 +15,7 @@ import "./styles/options.css";
 export const App: React.FC = () => {
   const [section, setSection] = useState<DashboardSection>("settings");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
-  const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
+  useTheme(settings.theme);
   const { t } = useTranslation(settings.language);
 
   useEffect(() => subscribeSettings(setSettings), []);
@@ -21,8 +23,6 @@ export const App: React.FC = () => {
   useEffect(() => {
     getSettings().then((loaded) => {
       setSettings(loaded);
-      if (loaded.theme) setTheme(loaded.theme);
-      applyTheme(loaded.theme);
     });
 
     try {
@@ -57,19 +57,6 @@ export const App: React.FC = () => {
     } catch (_) {}
   }, []);
 
-  const applyTheme = (tTheme: "dark" | "light" | "system") => {
-    const isDark =
-      tTheme === "dark" || (tTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-  };
-
-  const handleToggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    applyTheme(next);
-    handleUpdateSettings({ theme: next });
-  };
-
   const [saveError, setSaveError] = useState(false);
   const handleUpdateSettings = async (partial: Partial<ExtensionSettings>) => {
     try { const updated = await saveSettings(partial); setSettings(updated); setSaveError(false); }
@@ -82,13 +69,14 @@ export const App: React.FC = () => {
         language={settings.language}
         currentSection={section}
         onSelectSection={setSection}
-        theme={theme}
-        onToggleTheme={handleToggleTheme}
+        theme={settings.theme}
+        onThemeChange={theme => void handleUpdateSettings({ theme })}
         t={t}
       />
 
       {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}
       <main className="dashboard-main">
+          <FeedbackLink language={settings.language} theme={settings.theme} />
         <header className="main-header">
           <div className="header-title-block">
             <h1>

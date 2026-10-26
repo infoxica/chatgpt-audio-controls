@@ -27,8 +27,6 @@ export const de: TranslationSchema = {
       "mute": "Stummschalten",
       "unmute": "Ton einschalten",
       "smartIntegrations": "Praktische Funktionen",
-      "inlineSpeech": "Vorlesetasten an Antworten",
-      "inlineSpeechDesc": "Fügt Vorlesen neben der Kopiertaste hinzu",
       "globalShortcuts": "Tastenkürzel",
       "globalShortcutsDesc": "Leertaste/K, Alt+P, Alt+Pfeile und Geschwindigkeitstasten aktivieren",
       "smoothScrubbing": "Flüssiges Spulen",
@@ -38,10 +36,8 @@ export const de: TranslationSchema = {
       "title": "Tastenkürzel",
       "gesturesTitle": "Maus- und Touchgesten",
       "smoothAudioScrub": "Flüssiges Audiospulen",
-      "instantResponseRead": "Antwort sofort vorlesen",
       "directDownload": "Direkter Download",
       "holdScrubKey": "◀10 / 10▶ gedrückt halten",
-      "clickSpeechKey": "🔈 anklicken",
       "clickDownloadKey": "📥 anklicken"
     },
     "about": {
@@ -127,7 +123,6 @@ export const de: TranslationSchema = {
       "collapse": "Player einklappen",
       "expand": "ChatGPT Audio Controls ausklappen",
       "readAloud": "Vorlesen",
-      "stopReadAloud": "Vorlesen stoppen"
     },
     "shortcutsPopover": {
       "title": "Vorlese-Tastenkürzel",

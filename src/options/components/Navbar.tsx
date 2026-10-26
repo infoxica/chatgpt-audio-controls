@@ -1,5 +1,6 @@
+import { ThemeSelect, ThemePreference } from '../../shared/ThemeSelect';
 import React from "react";
-import { Sliders, Keyboard, HelpCircle, Moon, Sun, Globe } from "lucide-react";
+import { Sliders, Keyboard, HelpCircle, Globe } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
 import { ChatGPTAudioIcon } from "../../shared/ChatGPTAudioIcon";
 import { TranslationSchema } from "../../shared/i18n";
@@ -13,7 +14,7 @@ interface NavbarProps {
   currentSection: DashboardSection;
   onSelectSection: (sec: DashboardSection) => void;
   theme: "dark" | "light" | "system";
-  onToggleTheme: () => void;
+  onThemeChange: (theme: ThemePreference) => void;
   t: TranslationSchema;
   language: string;
 }
@@ -22,7 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentSection,
   onSelectSection,
   theme,
-  onToggleTheme,
+  onThemeChange,
   t,
   language,
 }) => {
@@ -62,10 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a href={`${config.siteUrl}${locale === 'en' ? '' : locale + '/'}`} target="_blank" rel="noreferrer" className="btn-outline" style={{ width: "100%", justifyContent: "center", textDecoration: "none" }}>
           <Globe size={14} /><span>{getReleaseCopy(language).website}</span>
         </a>
-        <button className="btn-outline" onClick={onToggleTheme} style={{ width: "100%", justifyContent: "center" }}>
-          {theme === "light" ? <Moon size={14} /> : <Sun size={14} />}
-          <span>{theme === "light" ? t.options.nav.darkMode : t.options.nav.lightMode}</span>
-        </button>
+        <ThemeSelect value={theme} onChange={onThemeChange} language={language} />
 
         <a
           href="https://github.com/infoxica/chatgpt-audio-controls"

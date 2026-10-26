@@ -3,7 +3,7 @@
 # 🎙️ ChatGPT Audio Controls & Read Aloud
 
 **Playback controls that make ChatGPT Read Aloud usable.**<br />
-*Play, pause, seek, change speed, adjust volume, download audio, and start Read Aloud directly from a response.*
+*Play, pause, seek, change speed, adjust volume, download audio, and keep your place while listening.*
 
 <p align="center">
   <a href="https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/">
@@ -15,9 +15,9 @@
   </a>
 </p>
 
-[![Version](https://img.shields.io/badge/version-1.1.0-3968c8.svg?style=for-the-badge)](https://github.com/infoxica/chatgpt-audio-controls/releases)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-v1.1.0-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
-[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-v1.1.0-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
+[![Source version](https://img.shields.io/badge/source-v1.3.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
+[![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 [![Agent Ready](https://agent-ready.dev/api/badge/item-loaded-partial-complexity.trycloudflare.com)](https://agent-ready.dev)
@@ -34,11 +34,11 @@
 
 ## 🎧 Why I Created This
 
-In the AI age, a simple question can turn into a kilometre-long answer before you have finished your coffee. ChatGPT's Read Aloud is useful, but it is tucked away in the response menu—and once it starts, the native experience offers little more than **Stop**.
+In the AI age, a simple question can turn into a kilometre-long answer before you have finished your coffee. ChatGPT's native Read Aloud button starts playback; longer answers benefit from pause, resume, and seeking controls.
 
 Pause halfway through because a call comes in? Suddenly you are choosing between real life and the remaining half of an AI-generated epic. That felt needlessly frustrating.
 
-This extension makes Read Aloud obvious and controllable: a visible action on each response, plus play/pause, seeking, speed, volume, and download controls right where the conversation happens. No more choosing between the call and the answer. 😄
+This extension adds play/pause, seeking, speed, volume, and download controls right where the conversation happens.
 
 > ChatGPT Audio Controls is an independent project and is not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.
 
@@ -47,7 +47,7 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 ## ✨ Features
 
 <div align="center">
-  <img src="assets/store/screenshots/01-active-read-aloud-1280x800.png" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
+  <img src="assets/store/screenshots/v1.3.0-player-active.jpg" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
 </div>
 
 ### 🎛️ Integrated Floating Player
@@ -59,18 +59,15 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
 - **Responsive Layout**: Keeps the player usable on narrow laptop screens.
 - **Floating Mini Toggle**: When no audio is playing, a neat floating logo button stays docked on the right. Click it anytime to expand the player!
 
-### ⚡ 1-Click Response Speech Button
-- Adds a convenient Read Aloud button directly on assistant-message toolbars, immediately after **Copy**. Click once to start reading aloud; click again to stop.
-
 ### ⚛️ Extension Popup & Dashboard
 
 <div align="center">
-  <img src="assets/store/screenshots/03-popup-controls-1280x800.png" alt="Popup Dashboard and Settings" width="85%" />
+  <img src="assets/store/screenshots/v1.3.0-dashboard.png" alt="Version 1.3.0 settings dashboard" width="85%" />
 </div>
 
-- **Popup**: Instant speed presets, volume slider, and controls for inline actions, shortcuts, and smooth scrubbing.
+- **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
-- Matches ChatGPT's native **Dark** and **Light** themes.
+- **System, Light, or Dark** appearance for the popup, settings dashboard, and feedback form. System follows your device preference; your choice is remembered.
 
 ### 🌐 Multi-Language & Internationalization (i18n)
 - **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
@@ -85,6 +82,14 @@ This extension makes Read Aloud obvious and controllable: a visible action on ea
   - 🇧🇷 **Portuguese (Brazil)** — Português do Brasil (`pt-BR`)
   - 🇵🇹 **Portuguese (Portugal)** — Português de Portugal (`pt-PT`)
   - 🇷🇺 **Russian** — Русский (`ru`)
+  - 🇯🇵 **Japanese** — 日本語 (`ja`)
+  - 🇰🇷 **Korean** — 한국어 (`ko`)
+  - 🇮🇳 **Hindi** — हिन्दी (`hi`)
+  - 🇫🇷 **French** — Français (`fr`)
+  - 🇩🇪 **German** — Deutsch (`de`)
+  - 🇮🇹 **Italian** — Italiano (`it`)
+  - 🇮🇩 **Indonesian** — Bahasa Indonesia (`id`)
+  - 🇹🇷 **Turkish** — Türkçe (`tr`)
 
 ---
 
@@ -174,7 +179,7 @@ The full player capsules collapse into a small floating logo button on the right
 
 <details>
 <summary><strong>Will this work on compact laptop screens?</strong></summary>
-Yes! The player measures your available screen space dynamically and scales its seekbar smoothly from 240px to 430px so it never collides with your prompt composer.
+The player measures available space. Two separate rounded capsules sit beside the composer when they fit, or above it with a gap on narrower screens.
 </details>
 
 <details>
@@ -186,28 +191,29 @@ Previous scripts tried loading external web fonts which browsers blocked. This v
 
 ## 🔒 Privacy Policy
 
-ChatGPT Audio Controls operates **100% locally in your browser**.
-- **No data collection**: No prompts, chats, audio files, or telemetry are ever uploaded or transmitted.
-- **No external servers**: Runs entirely on your machine.
-- Read our complete [PRIVACY.md](PRIVACY.md).
+Playback, retained audio, seeking, and downloads run locally in your browser. The extension has no analytics or automatic diagnostic uploads. Browser sync may synchronize preferences.
+
+Your feedback is optional and private, even after uninstalling. No name or email is required. Please don’t include personal details or conversations. Use **Send feedback** in About or the settings dashboard; the same form opens after uninstalling. Only submitting the form saves feedback. Opening, skipping, or closing it saves nothing. See [PRIVACY.md](PRIVACY.md) for full details.
 
 ---
 
-## v1.2.0 candidate
+## v1.3.0 candidate
 
-The extension candidate adds Hindi, French, German, Japanese, Korean, Indonesian, Italian and Turkish, for 17 locales. It includes compact controls above the composer, controls that remain available while paused, and two floating-UI visibility modes in the popup and options.
+This candidate repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
 
 Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
 
 The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
 
-See the [delivery status](docs/RELEASE-1.2.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.2.0.md) for remaining checks. This candidate is not a claim of store availability. The standalone userscript preserves its existing functionality and does not gain all new extension features.
+See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.3.0.md). Candidate status does not establish public availability. Native Mac testing is waived for v1.3.0 only. The standalone userscript receives the playback and capsule changes; popup, dashboard, and uninstall registration are extension features.
 
 ## 🤝 Contributing
 
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
 
 Maintainers preparing a Chrome Web Store or Microsoft Edge Add-ons submission should also use the [store launch checklist](docs/STORE-LAUNCH-CHECKLIST.md).
+
+Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and current version heading to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
 
 ---
 

@@ -27,8 +27,6 @@ export const ko: TranslationSchema = {
       "mute": "음소거",
       "unmute": "음소거 해제",
       "smartIntegrations": "편리한 기능",
-      "inlineSpeech": "답변 읽어주기 버튼",
-      "inlineSpeechDesc": "답변 복사 버튼 옆에 읽어주기를 추가합니다",
       "globalShortcuts": "키보드 단축키",
       "globalShortcutsDesc": "Space/K, Alt+P, Alt+화살표 및 속도 키 사용",
       "smoothScrubbing": "부드러운 탐색",
@@ -38,10 +36,8 @@ export const ko: TranslationSchema = {
       "title": "키보드 단축키",
       "gesturesTitle": "마우스 및 터치 동작",
       "smoothAudioScrub": "부드러운 오디오 탐색",
-      "instantResponseRead": "답변 바로 읽기",
       "directDownload": "바로 다운로드",
       "holdScrubKey": "◀10 / 10▶ 길게 누르기",
-      "clickSpeechKey": "🔈 버튼 클릭",
       "clickDownloadKey": "📥 버튼 클릭"
     },
     "about": {
@@ -127,7 +123,6 @@ export const ko: TranslationSchema = {
       "collapse": "플레이어 접기",
       "expand": "ChatGPT Audio Controls 펼치기",
       "readAloud": "읽어주기",
-      "stopReadAloud": "읽어주기 중지"
     },
     "shortcutsPopover": {
       "title": "읽어주기 단축키",

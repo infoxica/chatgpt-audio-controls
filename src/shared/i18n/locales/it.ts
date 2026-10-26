@@ -27,8 +27,6 @@ export const it: TranslationSchema = {
       "mute": "Disattiva audio",
       "unmute": "Attiva audio",
       "smartIntegrations": "Funzioni utili",
-      "inlineSpeech": "Pulsanti di lettura delle risposte",
-      "inlineSpeechDesc": "Aggiunge la lettura accanto al pulsante Copia",
       "globalShortcuts": "Scorciatoie da tastiera",
       "globalShortcutsDesc": "Attiva Spazio/K, Alt+P, Alt+frecce e i tasti della velocità",
       "smoothScrubbing": "Scorrimento fluido",
@@ -38,10 +36,8 @@ export const it: TranslationSchema = {
       "title": "Scorciatoie da tastiera",
       "gesturesTitle": "Gesti del mouse e touch",
       "smoothAudioScrub": "Scorrimento audio fluido",
-      "instantResponseRead": "Leggi subito la risposta",
       "directDownload": "Download diretto",
       "holdScrubKey": "Tieni premuto ◀10 / 10▶",
-      "clickSpeechKey": "Fai clic su 🔈",
       "clickDownloadKey": "Fai clic su 📥"
     },
     "about": {
@@ -127,7 +123,6 @@ export const it: TranslationSchema = {
       "collapse": "Riduci lettore",
       "expand": "Espandi ChatGPT Audio Controls",
       "readAloud": "Leggi ad alta voce",
-      "stopReadAloud": "Interrompi lettura"
     },
     "shortcutsPopover": {
       "title": "Scorciatoie della lettura",

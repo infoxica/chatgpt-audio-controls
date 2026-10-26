@@ -59,6 +59,15 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
+      - name: Check source and README versions
+        run: bun run version:check
+
+      - name: Build feedback translations
+        run: bun scripts/build-feedback-copy.ts
+
+      - name: Typecheck feedback
+        run: bun run typecheck:feedback
+
       - name: Tests
         run: bun test
 
@@ -85,6 +94,7 @@ jobs:
         run: |
           bun run scripts/build-site.ts
           bun run scripts/build-feedback.ts
+          bun run build:feedback
 
       - name: Prepare Edge store listing inputs
         run: bun run scripts/build-edge-listings.ts

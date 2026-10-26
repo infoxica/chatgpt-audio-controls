@@ -1,3 +1,6 @@
+import { useTheme } from '../shared/ThemeSelect';
+import config from "../../config/release.json";
+import { resolveLanguage } from "../shared/i18n/core";
 import { QuickStart } from "../shared/QuickStart";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
@@ -16,7 +19,7 @@ import "./styles/popup.css";
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("controls");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
-  const [theme, setTheme] = useState<"dark" | "light" | "system">("dark");
+  useTheme(settings.theme);
   const { t } = useTranslation(settings.language);
 
   useEffect(() => subscribeSettings(setSettings), []);
@@ -24,8 +27,6 @@ export const App: React.FC = () => {
   useEffect(() => {
     getSettings().then((loaded) => {
       setSettings(loaded);
-      if (loaded.theme) setTheme(loaded.theme);
-      applyTheme(loaded.theme);
     });
 
     try {
@@ -60,19 +61,6 @@ export const App: React.FC = () => {
     } catch (_) {}
   }, []);
 
-  const applyTheme = (tTheme: "dark" | "light" | "system") => {
-    const isDark =
-      tTheme === "dark" || (tTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
-  };
-
-  const handleToggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    applyTheme(next);
-    handleUpdateSettings({ theme: next });
-  };
-
   const [saveError, setSaveError] = useState(false);
   const handleUpdateSettings = async (partial: Partial<ExtensionSettings>) => {
     try { const updated = await saveSettings(partial); setSettings(updated); setSaveError(false); }
@@ -98,8 +86,9 @@ export const App: React.FC = () => {
   return (
     <div className="popup-container">
       <Header
-        theme={theme}
-        onToggleTheme={handleToggleTheme}
+        language={settings.language}
+        theme={settings.theme}
+        onThemeChange={theme => void handleUpdateSettings({ theme })}
         onOpenOptions={handleOpenOptions}
         t={t}
       />
@@ -113,7 +102,7 @@ export const App: React.FC = () => {
           <QuickControls settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}
         {activeTab === "shortcuts" && <ShortcutsDrawer language={settings.language} t={t} />}
-        {activeTab === "about" && <AboutTab t={t} language={settings.language} />}
+        {activeTab === "about" && <AboutTab t={t} language={settings.language} theme={settings.theme} />}
       </main>
 
       <footer className="popup-footer">
@@ -122,6 +111,7 @@ export const App: React.FC = () => {
         </button>
         <div className="secondary-links">
           <span>{t.common.version}{EXTENSION_VERSION}</span>
+          <div className="footer-links"><a href={`${config.siteUrl}${resolveLanguage(settings.language) === "en" ? "" : resolveLanguage(settings.language) + "/"}#help`} target="_blank" rel="noreferrer">{getReleaseCopy(settings.language).help}</a>
           <button
             onClick={handleOpenOptions}
             style={{
@@ -136,7 +126,7 @@ export const App: React.FC = () => {
             }}
           >
             {t.common.dashboard} <ExternalLink size={10} />
-          </button>
+          </button></div>
         </div>
       </footer>
     </div>

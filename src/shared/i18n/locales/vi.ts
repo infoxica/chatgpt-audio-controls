@@ -28,8 +28,6 @@ export const vi: TranslationSchema = {
       mute: "Tắt tiếng",
       unmute: "Bật tiếng",
       smartIntegrations: "Tính năng thông minh",
-      inlineSpeech: "Nút đọc to từng câu trả lời",
-      inlineSpeechDesc: "Thêm nút đọc to 1 chạm bên cạnh nút sao chép câu trả lời",
       globalShortcuts: "Phím tắt toàn cầu",
       globalShortcutsDesc: "Bật Space/K, Alt+P, Alt+Mũi tên & phím điều chỉnh tốc độ",
       smoothScrubbing: "Tua nhanh mượt mà khi giữ",
@@ -39,10 +37,8 @@ export const vi: TranslationSchema = {
       title: "Phím tắt bàn phím",
       gesturesTitle: "Thao tác chuột & Cử chỉ",
       smoothAudioScrub: "Tua âm thanh mượt mà",
-      instantResponseRead: "Đọc câu trả lời tức thì",
       directDownload: "Tải xuống âm thanh trực tiếp",
       holdScrubKey: "Nhấn giữ ◀10 / 10▶",
-      clickSpeechKey: "Nhấn nút 🔈",
       clickDownloadKey: "Nhấn nút 📥",
     },
     about: {
@@ -129,7 +125,6 @@ export const vi: TranslationSchema = {
       collapse: "Thu gọn trình phát",
       expand: "Mở rộng ChatGPT Audio Controls",
       readAloud: "Đọc to câu trả lời",
-      stopReadAloud: "Dừng đọc to",
     },
     shortcutsPopover: {
       title: "Phím tắt Đọc to",

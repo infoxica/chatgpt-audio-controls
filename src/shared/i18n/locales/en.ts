@@ -28,8 +28,6 @@ export const en: TranslationSchema = {
       mute: "Mute",
       unmute: "Unmute",
       smartIntegrations: "Smart Integrations",
-      inlineSpeech: "Inline Speech Buttons",
-      inlineSpeechDesc: "Adds 1-click Read Aloud beside response Copy",
       globalShortcuts: "Global Shortcuts",
       globalShortcutsDesc: "Enable Space/K, Alt+P, Alt+Arrows & speed keys",
       smoothScrubbing: "Smooth Scrubbing",
@@ -39,10 +37,8 @@ export const en: TranslationSchema = {
       title: "Keyboard Shortcuts",
       gesturesTitle: "Mouse & Touch Gestures",
       smoothAudioScrub: "Smooth Audio Scrub",
-      instantResponseRead: "Instant Response Read",
       directDownload: "Direct Download",
       holdScrubKey: "Hold ◀10 / 10▶",
-      clickSpeechKey: "Click 🔈 button",
       clickDownloadKey: "Click 📥 button",
     },
     about: {
@@ -129,7 +125,6 @@ export const en: TranslationSchema = {
       collapse: "Collapse Player",
       expand: "Expand ChatGPT Audio Controls",
       readAloud: "Read aloud",
-      stopReadAloud: "Stop read aloud",
     },
     shortcutsPopover: {
       title: "Read Aloud Shortcuts",

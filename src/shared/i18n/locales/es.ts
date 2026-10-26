@@ -28,8 +28,6 @@ export const es: TranslationSchema = {
       mute: "Silenciar",
       unmute: "Activar Sonido",
       smartIntegrations: "Integraciones Inteligentes",
-      inlineSpeech: "Botón de lectura en cada respuesta",
-      inlineSpeechDesc: "Añade lectura en 1 clic junto al botón de copiar respuesta",
       globalShortcuts: "Atajos Globales de Teclado",
       globalShortcutsDesc: "Activar Espacio/K, Alt+P, Alt+Flechas y teclas de velocidad",
       smoothScrubbing: "Avance rápido fluido al mantener presionado",
@@ -39,10 +37,8 @@ export const es: TranslationSchema = {
       title: "Atajos de Teclado",
       gesturesTitle: "Gestos de Ratón y Toque",
       smoothAudioScrub: "Desplazamiento Fluido",
-      instantResponseRead: "Lectura Inmediata",
       directDownload: "Descarga Directa de Audio",
       holdScrubKey: "Mantener ◀10 / 10▶",
-      clickSpeechKey: "Clic en botón 🔈",
       clickDownloadKey: "Clic en botón 📥",
     },
     about: {
@@ -129,7 +125,6 @@ export const es: TranslationSchema = {
       collapse: "Ocultar reproductor",
       expand: "Expandir controles de audio de ChatGPT",
       readAloud: "Leer respuesta",
-      stopReadAloud: "Detener lectura",
     },
     shortcutsPopover: {
       title: "Atajos de Lectura",

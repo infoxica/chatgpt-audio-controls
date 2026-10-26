@@ -25,7 +25,6 @@ export interface ExtensionSettings {
   defaultVolume: number;
   tapSeekSeconds: number;
   enableShortcuts: boolean;
-  enableInlineButtons: boolean;
   theme: "system" | "dark" | "light";
   smoothScrubbing: boolean;
   autoDownloadFormat: "auto" | "mp3" | "m4a" | "wav";

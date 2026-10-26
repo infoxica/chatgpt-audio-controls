@@ -3,7 +3,7 @@
     "message": "ChatGPT Audio Controls & Read Aloud"
   },
   "extensionDescription": {
-    "message": "ควบคุมการอ่านออกเสียง ChatGPT: หยุดชั่วคราว เลื่อน ความเร็ว ระดับเสียง ดาวน์โหลด ปุ่มลัด และปุ่มอ่านคำตอบ"
+    "message": "ควบคุมการอ่านออกเสียง ChatGPT: หยุดชั่วคราว เลื่อน ความเร็ว ระดับเสียง ดาวน์โหลด ปุ่มลัด"
   },
   "extensionActionTitle": {
     "message": "ChatGPT Audio Controls"

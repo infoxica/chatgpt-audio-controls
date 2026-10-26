@@ -1,6 +1,6 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
-export const EXTENSION_VERSION = "1.2.0";
+export const EXTENSION_VERSION = "1.3.0";
 
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
@@ -17,7 +17,6 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
   defaultVolume: 1,
   tapSeekSeconds: 10,
   enableShortcuts: true,
-  enableInlineButtons: true,
   theme: "system",
   smoothScrubbing: true,
   autoDownloadFormat: "auto",
@@ -33,7 +32,6 @@ export const SETTING_STORAGE_KEYS: Record<keyof ExtensionSettings, string> = {
   defaultVolume: "cgpt-ra-settings.defaultVolume",
   tapSeekSeconds: "cgpt-ra-settings.tapSeekSeconds",
   enableShortcuts: "cgpt-ra-settings.enableShortcuts",
-  enableInlineButtons: "cgpt-ra-settings.enableInlineButtons",
   theme: "cgpt-ra-settings.theme",
   smoothScrubbing: "cgpt-ra-settings.smoothScrubbing",
   autoDownloadFormat: "cgpt-ra-settings.autoDownloadFormat",
