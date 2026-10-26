@@ -5,7 +5,9 @@ The public website remains on GitHub Pages. `worker/` is an independent TypeScri
 | Environment | Form |
 | --- | --- |
 | Staging | https://chatgpt-audio-feedback-staging.anand224patel.workers.dev/feedback |
-| Production | https://chatgpt-audio-feedback.anand224patel.workers.dev/feedback |
+| Production | https://chatgpt-audio-controls.infoxica.com/feedback |
+
+The production Worker also retains its original workers.dev address for existing links. The custom domain belongs to the confirmed Anand account and is included in the production Turnstile widget's hostname list. The form defaults to the system color scheme, supports saved Light/Dark overrides, and keeps implementation details behind the Privacy disclosure.
 
 Use `source=installed` or `source=uninstall`. The form accepts `lang`, `version`, `browser`, and `os`; all are sanitized. No reason is selected by default. GET and Skip never write feedback. Only POST `/api/feedback` persists. `/health` checks database reachability.
 

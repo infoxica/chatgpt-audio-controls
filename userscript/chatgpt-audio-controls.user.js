@@ -16,6 +16,187 @@
 
 (function () {
   "use strict";
+class StreamingAudioCapture {
+  requests = new Set;
+  sources = new Map;
+  urls = new Map;
+  buffers = new WeakMap;
+  begin() {
+    let resolve, reject;
+    const promise = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    promise.catch(() => {});
+    const controller = new AbortController;
+    const request = {
+      controller,
+      promise,
+      resolve,
+      reject,
+      claimed: false,
+      timer: setTimeout(() => {
+        controller.abort();
+        reject(new Error("Audio capture timed out"));
+        this.requests.delete(request);
+      }, 60000)
+    };
+    this.requests.add(request);
+    const waiting = [...this.sources.values()].filter((stream) => !stream.request && !stream.settled);
+    for (const stream of waiting)
+      stream.candidates.push(request);
+    const active = waiting.filter((stream) => stream.active);
+    if (active.length === 1 && active[0].candidates.length === 1)
+      this.bind(active[0], request);
+    while (this.requests.size > 4) {
+      const oldest = [...this.requests].find((request) => !request.claimed) || this.requests.values().next().value;
+      this.releaseRequest(oldest);
+    }
+    return request;
+  }
+  complete(request, payload) {
+    payload.then((blob) => {
+      clearTimeout(request.timer);
+      request.resolve(blob);
+    }, (error) => {
+      clearTimeout(request.timer);
+      request.reject(error);
+      this.requests.delete(request);
+    });
+  }
+  register(source, url) {
+    let resolve, reject;
+    const promise = new Promise((yes, no) => {
+      resolve = yes;
+      reject = no;
+    });
+    promise.catch(() => {});
+    const candidates = [...this.requests].filter((request) => !request.claimed);
+    const stream = { candidates, prefix: new Uint8Array, promise, resolve, reject, settled: false, active: false };
+    this.sources.set(source, stream);
+    this.urls.set(url, stream);
+    while (this.sources.size > 8) {
+      const oldest = [...this.sources].find(([, value]) => !value.active);
+      if (!oldest)
+        break;
+      oldest[1].settled = true;
+      oldest[1].reject(new Error("Unused stream replaced"));
+      this.sources.delete(oldest[0]);
+      for (const [key, value] of this.urls)
+        if (value === oldest[1])
+          this.urls.delete(key);
+    }
+  }
+  addBuffer(source, buffer) {
+    const stream = this.sources.get(source);
+    if (stream)
+      this.buffers.set(buffer, stream);
+  }
+  append(buffer, data) {
+    const stream = this.buffers.get(buffer);
+    if (!stream || stream.prefix.length >= 4096)
+      return;
+    const bytes = ArrayBuffer.isView(data) ? new Uint8Array(data.buffer, data.byteOffset, data.byteLength) : new Uint8Array(data);
+    const length = Math.min(bytes.length, 4096 - stream.prefix.length);
+    const prefix = new Uint8Array(stream.prefix.length + length);
+    prefix.set(stream.prefix);
+    prefix.set(bytes.subarray(0, length), stream.prefix.length);
+    stream.prefix = prefix;
+    if (stream.active && !stream.request && prefix.length >= 1024)
+      this.match(stream);
+  }
+  async match(stream) {
+    const matches = await Promise.all(stream.candidates.map(async (request) => {
+      try {
+        return await this.matches(stream.prefix, await request.promise) ? request : undefined;
+      } catch {
+        return;
+      }
+    }));
+    const eligible = matches.filter(Boolean);
+    if (!stream.settled && eligible.length === 1 && !stream.request && !eligible[0].claimed)
+      this.bind(stream, eligible[0]);
+  }
+  async matches(prefix, blob) {
+    const bytes = new Uint8Array(await blob.slice(0, prefix.length).arrayBuffer());
+    return bytes.length === prefix.length && bytes.every((byte, index) => byte === prefix[index]);
+  }
+  bind(stream, request) {
+    stream.request = request;
+    request.claimed = true;
+    request.promise.then(async (blob) => {
+      if (stream.settled)
+        return;
+      if (stream.prefix.length && !await this.matches(stream.prefix, blob))
+        throw new Error("Audio stream mismatch");
+      stream.settled = true;
+      stream.resolve(blob);
+    }).catch((error) => {
+      stream.settled = true;
+      stream.reject(error);
+    });
+  }
+  has(url) {
+    return this.urls.has(url);
+  }
+  retain(url) {
+    const stream = this.urls.get(url);
+    if (!stream)
+      return;
+    stream.active = true;
+    if (!stream.request) {
+      const eligible = stream.candidates.filter((request) => !request.claimed);
+      if (eligible.length === 1)
+        this.bind(stream, eligible[0]);
+      else if (stream.prefix.length >= 1024)
+        this.match(stream);
+    }
+    return stream.promise;
+  }
+  releaseRequest(request) {
+    clearTimeout(request.timer);
+    request.controller.abort();
+    request.reject(new Error("Audio session replaced"));
+    this.requests.delete(request);
+  }
+  clearExcept(url = "") {
+    const keep = this.urls.get(url);
+    for (const request of this.requests)
+      if (request !== keep?.request && !keep?.candidates.includes(request))
+        this.releaseRequest(request);
+    for (const [source, stream] of this.sources)
+      if (stream !== keep) {
+        stream.settled = true;
+        stream.reject(new Error("Audio session replaced"));
+        this.sources.delete(source);
+      }
+    for (const [key, stream] of this.urls)
+      if (stream !== keep)
+        this.urls.delete(key);
+  }
+}
+
+
+function installStreamingInterceptor() {
+  const source = PAGE.MediaSource?.prototype;
+  const buffer = PAGE.SourceBuffer?.prototype;
+  if (!source || !buffer || source.__cgptRAStreamHook)
+    return;
+  const add = source.addSourceBuffer, append = buffer.appendBuffer;
+  source.addSourceBuffer = function(...args) {
+    const result = add.apply(this, args);
+    streamingAudio.addBuffer(this, result);
+    return result;
+  };
+  buffer.appendBuffer = function(data) {
+    const result = append.call(this, data);
+    streamingAudio.append(this, data);
+    return result;
+  };
+  Object.defineProperty(source, "__cgptRAStreamHook", { value: true, configurable: true });
+}
+
+
 class PlaybackSession {
   retain;
   changed;
@@ -146,6 +327,8 @@ class PlaybackSession {
     const host = this.media;
     this.savedTime = host.currentTime || 0;
     this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
+    if (!this.savedDuration && host.buffered?.length)
+      this.savedDuration = host.buffered.end(host.buffered.length - 1);
     const owned = new Audio;
     owned.preload = "auto";
     owned.playbackRate = host.playbackRate;
@@ -172,7 +355,7 @@ class PlaybackSession {
       try {
         const blob = await new Promise((resolve, reject) => {
           const aborted = () => finish(new Error("Session replaced"));
-          const timer = setTimeout(() => finish(new Error("Audio retention timed out")), 30000);
+          const timer = setTimeout(() => finish(new Error("Audio retention timed out")), 60000);
           const finish = (error, blob) => {
             clearTimeout(timer);
             signal.removeEventListener("abort", aborted);
@@ -270,6 +453,7 @@ class PlaybackSession {
     this.savedTime = this.savedDuration = 0;
   }
 }
+
 
 function floatingVisibility(hidden, mode, session, expanded) {
   const hideAll = hidden && mode === "all";
@@ -507,6 +691,7 @@ function rememberBlobURL(url, blob) {
     rememberBlobURL(sourceURL, blob);
 }
 const audioRequests = new Map;
+const streamingAudio = new StreamingAudioCapture();
 async function readAudio(response) {
   if (Number(response.headers.get("content-length")) > MAX_BLOB_MAP_BYTES || !response.body)
     throw new Error("Audio size unsupported");
@@ -535,6 +720,9 @@ async function readAudio(response) {
 async function retainAudio(source, signal) {
   if (!source)
     throw new Error("No audio source");
+  const stream = streamingAudio.retain(source);
+  if (stream)
+    return stream;
   const cached = blobURLMap.get(source);
   if (cached)
     return cached;
@@ -546,6 +734,8 @@ async function retainAudio(source, signal) {
     throw new Error("Audio unavailable");
   return readAudio(response);
 }
+
+
 const playback = new PlaybackSession(retainAudio, (media) => {
   activeMedia = media;
   if (media)
@@ -560,6 +750,7 @@ window.addEventListener("pagehide", () => {
   blobURLMap.clear();
   blobURLBytes = 0;
   audioRequests.clear();
+  streamingAudio.clearExcept();
 });
 
 
@@ -572,6 +763,8 @@ window.addEventListener("pagehide", () => {
     const originalRevoke = urlObj.revokeObjectURL.bind(urlObj);
     urlObj.createObjectURL = function(object) {
       const url = originalCreate(object);
+      if (PAGE.MediaSource && object instanceof PAGE.MediaSource)
+        streamingAudio.register(object, url);
       try {
         if (object instanceof PAGE.Blob && object.size && looksLikeAudio(url, object.type)) {
           rememberBlobURL(url, object);
@@ -594,18 +787,32 @@ window.addEventListener("pagehide", () => {
 }
 
 
+
+
   function installFetchInterceptor() {
   try {
     if (!PAGE.fetch || PAGE.fetch.__cgptRAFetchHook)
       return;
     const originalFetch = PAGE.fetch.bind(PAGE);
     async function wrappedFetch(...args) {
-      const response = await originalFetch(...args);
+      const inputURL = typeof args[0] === "string" ? args[0] : args[0]?.url || "";
+      const signal = args[1]?.signal || args[0]?.signal;
+      const capture = looksLikeAudio(inputURL, "") && !signal?.aborted ? streamingAudio.begin() : null;
+      let response;
+      try {
+        response = await originalFetch(...capture ? [args[0], { ...args[1], signal: capture.controller.signal }] : args);
+      } catch (error) {
+        if (capture)
+          streamingAudio.complete(capture, Promise.reject(error));
+        throw error;
+      }
       try {
         const requestURL = typeof args[0] === "string" ? args[0] : args[0]?.url || response.url || "";
         const type = response.headers?.get("content-type") || "";
         if (looksLikeAudio(requestURL, type)) {
           const pending = readAudio(response.clone());
+          if (capture)
+            streamingAudio.complete(capture, pending);
           audioRequests.set(requestURL, pending);
           if (audioRequests.size > 4)
             audioRequests.delete(audioRequests.keys().next().value);
@@ -613,7 +820,8 @@ window.addEventListener("pagehide", () => {
             if (audioRequests.get(requestURL) === pending)
               audioRequests.delete(requestURL);
           });
-        }
+        } else if (capture)
+          streamingAudio.complete(capture, Promise.reject(new Error("Not audio")));
       } catch (_) {}
       return response;
     }
@@ -624,6 +832,8 @@ window.addEventListener("pagehide", () => {
     warn("fetch interception failed:", error);
   }
 }
+
+
 
 
   function installXHRInterceptor() {
@@ -699,8 +909,10 @@ window.addEventListener("pagehide", () => {
   if (media.tagName !== "AUDIO")
     return false;
   const source = media.src || media.currentSrc || "";
-  return blobURLMap.has(source) || looksLikeAudio(source, "");
+  return blobURLMap.has(source) || streamingAudio.has(source) || looksLikeAudio(source, "");
 }
+
+
 
 
   function attachMedia(media, reason = "detected") {
@@ -710,6 +922,7 @@ window.addEventListener("pagehide", () => {
   const changed = activeMedia !== media || playback.url !== source;
   playback.attach(media);
   if (changed) {
+    streamingAudio.clearExcept(source);
     for (const url of blobURLMap.keys())
       if (url !== source)
         removeBlobURL(url);
@@ -737,6 +950,8 @@ window.addEventListener("pagehide", () => {
   scheduleLayoutSync();
   log("Attached media:", reason, media);
 }
+
+
 
 
   function installMediaListeners(media) {
@@ -1097,6 +1312,7 @@ window.addEventListener("pagehide", () => {
     playback.dispose();
     activeMedia = null;
     userForcedExpand = false;
+    streamingAudio.clearExcept();
     blobURLMap.clear();
     blobURLBytes = 0;
     audioRequests.clear();
@@ -1165,6 +1381,8 @@ window.addEventListener("pagehide", () => {
   if (rightRail.style.top !== leftY)
     rightRail.style.top = leftY;
 }
+
+
 
 
   function installHoldSeek(button, direction) {
@@ -1588,11 +1806,14 @@ window.visualViewport?.addEventListener('scroll', scheduleLayoutSync, { passive:
   // ---------------------------------------------------------------------
 
   function installEarlyHooks() {
-    installObjectURLInterceptor();
-    installFetchInterceptor();
-    installXHRInterceptor();
-    installMediaInterceptor();
-  }
+  installStreamingInterceptor();
+  installObjectURLInterceptor();
+  installFetchInterceptor();
+  installXHRInterceptor();
+  installMediaInterceptor();
+}
+
+
 
   function initUI() {
     if (!document.body) {

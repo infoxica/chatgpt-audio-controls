@@ -54,6 +54,17 @@ test('pause while retention is pending cancels playback intent without losing se
   session.toggle(); (session.media as unknown as Media).advance(1); expect(session.playing).toBe(true);
 });
 
+test('streaming pause preserves buffered duration while the complete payload loads', async () => {
+  let resolve!: (blob: Blob) => void;
+  const { session, host } = setup(() => new Promise(r => { resolve = r; }));
+  host.duration = Infinity;
+  Object.assign(host, { buffered: { length: 1, end: () => 70 } });
+  session.toggle();
+  expect(session.time).toBe(42); expect(session.duration).toBe(70);
+  resolve(new Blob(['audio'])); await flush();
+  expect(session.paused).toBe(true);
+});
+
 test('replacement ignores stale payload and aborts its retention', async () => {
   const resolvers: ((blob: Blob) => void)[] = []; const signals: AbortSignal[] = [];
   const { session } = setup((_, s) => { signals.push(s); return new Promise(r => { resolvers.push(r); }); });

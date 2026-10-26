@@ -614,3 +614,7 @@ input:checked + .slider-toggle:before {
 
 .footer-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .feedback-link { color: var(--accent); display: inline-block; padding: 8px 0; }
+
+.theme-select { max-width: 110px; padding: 7px 5px; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); background: var(--bg-surface); font: inherit; font-size: 12px; cursor: pointer; }
+.theme-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sidebar-footer .theme-select { max-width: none; width: 100%; }

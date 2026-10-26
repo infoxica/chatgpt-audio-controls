@@ -1,3 +1,4 @@
+import type { ThemePreference } from '../../shared/ThemeSelect';
 import { FeedbackLink } from "../../shared/FeedbackLink";
 import React from "react";
 import { Sparkles, ShieldCheck, BookOpen, Bug, Globe } from "lucide-react";
@@ -11,9 +12,10 @@ import config from "../../../config/release.json";
 interface AboutTabProps {
   t: TranslationSchema;
   language: string;
+  theme: ThemePreference;
 }
 
-export const AboutTab: React.FC<AboutTabProps> = ({ t, language }) => {
+export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
   const locale = resolveLanguage(language);
   return (
     <div className="popup-body">
@@ -56,7 +58,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t, language }) => {
 
       <div className="section-card">
         <div className="shortcut-list">
-          <FeedbackLink language={language} />
+          <FeedbackLink language={language} theme={theme} />
           <a href={`${config.siteUrl}${locale === 'en' ? '' : locale + '/'}`} target="_blank" rel="noreferrer" className="shortcut-row" style={{ textDecoration: "none", color: "inherit" }}>
             <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}><Globe size={13} /> {getReleaseCopy(language).website}</span>
             <span aria-hidden="true">↗</span>

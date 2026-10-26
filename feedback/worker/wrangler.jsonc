@@ -46,6 +46,7 @@
     },
     "production": {
       "name": "chatgpt-audio-feedback",
+      "routes": [{ "pattern": "chatgpt-audio-controls.infoxica.com", "custom_domain": true }],
       "vars": {
         "TURNSTILE_SITE_KEY": "0x4AAAAAAFmZI5PtqIBrKeQK",
         "ENVIRONMENT": "production"

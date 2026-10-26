@@ -15,10 +15,27 @@ test.beforeAll(async () => {
 test.afterAll(async () => { await mf?.dispose(); });
 async function open(page, source = 'installed', firstToken = 'valid') {
   await page.route('https://challenges.cloudflare.com/**', route => route.fulfill({ contentType: 'application/javascript', body:
-    `window.turnstile={render:(selector,options)=>{window.testChallenge=options;options.callback(${JSON.stringify(firstToken)});return 1;},reset:()=>window.testChallenge.callback('valid')};window.feedbackChallengeReady();` }));
+    `window.turnstile={remove:()=>{},render:(selector,options)=>{window.testChallenge=options;options.callback(${JSON.stringify(firstToken)});return 1;},reset:()=>window.testChallenge.callback('valid')};window.feedbackChallengeReady();` }));
   await page.goto(`${origin}/feedback?source=${source}&lang=en&version=1.3.0&browser=Edge&os=Windows`);
 }
 const count = async () => (await db.prepare('SELECT COUNT(*) AS n FROM feedback').first()).n;
+
+test('theme follows system changes, remembers overrides and preserves answers', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' }); await open(page);
+  await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+  await expect(page.locator('#theme')).toHaveValue('system');
+  await expect(page.locator('#privacy')).toContainText('Your feedback is optional');
+  await expect(page.locator('#privacy')).not.toContainText('Cloudflare');
+  await page.locator('input[value=bug]').check(); await page.locator('summary').first().click(); await page.locator('#note').fill('Keep this answer.');
+  await page.emulateMedia({colorScheme:'light'}); await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+  await page.locator('#theme').selectOption('dark');
+  await expect(page.locator('#note')).toHaveValue('Keep this answer.'); await expect(page.locator('input[value=bug]')).toBeChecked();
+  await page.screenshot({path:'build/browser-results/feedback-dark.png',fullPage:true});
+  await page.reload(); await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+  await page.locator('#theme').selectOption('system'); await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+  await page.setViewportSize({width:390,height:844}); await page.screenshot({path:'build/browser-results/feedback-light-mobile.png',fullPage:true});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});
 test('both modes, no default choice, 17 languages and Skip create no record', async ({ page }) => {
   const before = await count();
   for (const [mode, total] of [['installed', 3], ['uninstall', 8]]) {
@@ -34,7 +51,7 @@ test('both modes, no default choice, 17 languages and Skip create no record', as
 });
 test('challenge rejection preserves answers and resets the token for retry', async ({ page }) => {
   const before = await count(); await open(page, 'installed', 'expired');
-  await page.locator('input[value=bug]').check(); await page.locator('summary').click();
+  await page.locator('input[value=bug]').check(); await page.locator('summary').first().click();
   await page.locator('#note').fill('A deliberate browser test.');
   await expect(page.locator('#note')).toHaveAttribute('maxlength', '1000');
   await page.locator('#send').click(); await expect(page.getByRole('alert')).toContainText('wasn’t confirmed');

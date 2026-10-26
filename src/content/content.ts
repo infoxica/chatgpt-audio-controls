@@ -1,4 +1,5 @@
 import { PlaybackSession } from "./playback-session";
+import { StreamingAudioCapture } from "./streaming-audio";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import { floatingVisibility } from "../shared/visibility";
 import { playbackAction, platformKeys } from "../shared/shortcuts";
@@ -471,6 +472,7 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   const audioRequests = new Map<string, Promise<Blob>>();
+  const streamingAudio = new StreamingAudioCapture();
   async function readAudio(response: Response): Promise<Blob> {
     if (Number(response.headers.get('content-length')) > MAX_BLOB_MAP_BYTES || !response.body) throw new Error('Audio size unsupported');
     const reader = response.body.getReader();
@@ -490,6 +492,8 @@ import { getTranslations } from "../shared/i18n/core";
   }
   async function retainAudio(source: string, signal: AbortSignal): Promise<Blob> {
     if (!source) throw new Error('No audio source');
+    const stream = streamingAudio.retain(source);
+    if (stream) return stream;
     const cached = blobURLMap.get(source);
     if (cached) return cached;
     const pending = audioRequests.get(source);
@@ -505,7 +509,7 @@ import { getTranslations } from "../shared/i18n/core";
     broadcastLiveAudioState(true);
     scheduleLayoutSync();
   }, () => showStatus(recoveryCopy().playError, true));
-  window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; audioRequests.clear(); });
+  window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; audioRequests.clear(); streamingAudio.clearExcept(); });
 
   function installObjectURLInterceptor(): void {
     try {
@@ -517,6 +521,7 @@ import { getTranslations } from "../shared/i18n/core";
 
       urlObj.createObjectURL = function (object: any) {
         const url = originalCreate(object);
+        if (PAGE.MediaSource && object instanceof PAGE.MediaSource) streamingAudio.register(object, url);
 
         try {
           if (object instanceof PAGE.Blob && object.size && looksLikeAudio(url, object.type)) {
@@ -549,7 +554,18 @@ import { getTranslations } from "../shared/i18n/core";
       const originalFetch = PAGE.fetch.bind(PAGE);
 
       async function wrappedFetch(...args: any[]) {
-        const response = await originalFetch(...args);
+        const inputURL = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
+        const signal = args[1]?.signal || args[0]?.signal;
+        const capture = looksLikeAudio(inputURL, '') && !signal?.aborted ? streamingAudio.begin() : null;
+        let response: Response;
+        try {
+          // ChatGPT aborts its reader on Pause. Keep only the recognized audio
+          // request alive for bounded retention; all other fetches are untouched.
+          response = await originalFetch(...(capture ? [args[0], { ...args[1], signal: capture.controller.signal }] : args));
+        } catch (error) {
+          if (capture) streamingAudio.complete(capture, Promise.reject(error));
+          throw error;
+        }
 
         try {
           const requestURL =
@@ -561,12 +577,13 @@ import { getTranslations } from "../shared/i18n/core";
 
           if (looksLikeAudio(requestURL, type)) {
             const pending = readAudio(response.clone());
+            if (capture) streamingAudio.complete(capture, pending);
             audioRequests.set(requestURL, pending);
             if (audioRequests.size > 4) audioRequests.delete(audioRequests.keys().next().value!);
             void pending.catch(() => {}).finally(() => {
               if (audioRequests.get(requestURL) === pending) audioRequests.delete(requestURL);
             });
-          }
+          } else if (capture) streamingAudio.complete(capture, Promise.reject(new Error('Not audio')));
         } catch (_) {}
 
         return response;
@@ -579,6 +596,24 @@ import { getTranslations } from "../shared/i18n/core";
     } catch (error) {
       warn("fetch interception failed:", error);
     }
+  }
+
+  function installStreamingInterceptor(): void {
+    const source = PAGE.MediaSource?.prototype;
+    const buffer = PAGE.SourceBuffer?.prototype;
+    if (!source || !buffer || source.__cgptRAStreamHook) return;
+    const add = source.addSourceBuffer, append = buffer.appendBuffer;
+    source.addSourceBuffer = function (...args: any[]) {
+      const result = add.apply(this, args);
+      streamingAudio.addBuffer(this, result);
+      return result;
+    };
+    buffer.appendBuffer = function (data: ArrayBuffer | ArrayBufferView) {
+      const result = append.call(this, data);
+      streamingAudio.append(this, data);
+      return result;
+    };
+    Object.defineProperty(source, '__cgptRAStreamHook', { value: true, configurable: true });
   }
 
   function installXHRInterceptor(): void {
@@ -665,6 +700,7 @@ import { getTranslations } from "../shared/i18n/core";
     const source = media.src || media.currentSrc || "";
     return (
       blobURLMap.has(source) ||
+      streamingAudio.has(source) ||
       looksLikeAudio(source, "")
     );
   }
@@ -676,6 +712,7 @@ import { getTranslations } from "../shared/i18n/core";
     const changed = activeMedia !== media || playback.url !== source;
     playback.attach(media);
     if (changed) {
+      streamingAudio.clearExcept(source);
       for (const url of blobURLMap.keys()) if (url !== source) removeBlobURL(url);
       for (const url of audioRequests.keys()) if (url !== source) audioRequests.delete(url);
     }
@@ -1064,7 +1101,7 @@ import { getTranslations } from "../shared/i18n/core";
 
     if (location.pathname !== conversationPath) {
       conversationPath = location.pathname;
-      playback.dispose(); activeMedia = null; userForcedExpand = false;
+      playback.dispose(); activeMedia = null; userForcedExpand = false; streamingAudio.clearExcept();
       blobURLMap.clear(); blobURLBytes = 0; audioRequests.clear();
       updateControls();
     }
@@ -1571,6 +1608,7 @@ import { getTranslations } from "../shared/i18n/core";
   // ---------------------------------------------------------------------
 
   function installEarlyHooks(): void {
+    installStreamingInterceptor();
     installObjectURLInterceptor();
     installFetchInterceptor();
     installXHRInterceptor();

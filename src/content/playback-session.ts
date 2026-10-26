@@ -108,6 +108,7 @@ export class PlaybackSession {
     const host = this.media;
     this.savedTime = host.currentTime || 0;
     this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
+    if (!this.savedDuration && host.buffered?.length) this.savedDuration = host.buffered.end(host.buffered.length - 1);
     const owned = new Audio();
     owned.preload = 'auto';
     owned.playbackRate = host.playbackRate;
@@ -135,7 +136,7 @@ export class PlaybackSession {
       try {
         const blob = await new Promise<Blob>((resolve, reject) => {
           const aborted = () => finish(new Error('Session replaced'));
-          const timer = setTimeout(() => finish(new Error('Audio retention timed out')), 30000);
+          const timer = setTimeout(() => finish(new Error('Audio retention timed out')), 60000);
           const finish = (error?: Error, blob?: Blob) => {
             clearTimeout(timer); signal.removeEventListener('abort', aborted);
             error ? reject(error) : resolve(blob!);

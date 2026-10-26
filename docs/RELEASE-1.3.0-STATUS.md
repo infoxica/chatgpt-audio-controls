@@ -21,6 +21,17 @@ Implementation candidate. Do not publish extension assets or submit to stores un
 
 ## Remaining release gates
 
+### Follow-up implementation and live evidence — 26 October 2026
+
+- Live Edge revealed that the current native Read Aloud uses a detached AUDIO element with a MediaSource URL. Added session-bound streaming HTTP capture, byte matching for concurrent requests, bounded retention through host cancellation, and matching fixtures for both distributions. Live Edge subsequently resumed three times, advanced from the saved position, retained the complete 1:38 duration, and supported paused seeking and speed changes. This is partial Edge evidence, not the complete acceptance matrix.
+- Feedback now uses `https://chatgpt-audio-controls.infoxica.com/feedback`. The active `infoxica.com` zone was verified in the approved Anand account. Production Turnstile allows both the custom hostname and the original workers.dev hostname. A real submission from the custom domain passed Turnstile and persisted to D1; only that exact synthetic test row was removed afterward.
+- Final staging Worker version: `e811c11d-0bf5-4efc-9b12-e3a09657da8d`; production: `03a8ea63-52e6-4971-b512-a0d964bdb27b`. Apps Script transition updated in place to version 4 with the custom address and friendly localized copy.
+- All 17 feedback languages use reader-focused copy. Technical privacy information remains available in an expandable disclosure. Feedback, popup and dashboard offer System / Light / Dark; System reacts to changes, overrides persist, and extension pages synchronize their shared preference. Theme changes preserve form answers.
+- Updated local verification: 21 unit tests / 228 assertions, 25 browser tests, six website HTTP tests, extension/Worker typechecks, builds and ZIP validation. The privacy disclosure received an additional four-test feedback pass. PR #20 CI before this follow-up passed; the updated revision requires fresh CI.
+- Local candidate ZIP SHA-256: `a4de1ba4d7dcc251c44978d3fd5e8d1ea34c6d14df1785bf240c21f8000e4938`. This replaces the earlier local candidate hash. Store assets must use one verified archive consistently.
+
+### Still required
+
 - Fresh installed Chrome and Edge on Windows: live ChatGPT pause/resume, immediate pause, long responses, new response, navigation, seeking, speed, volume/download, themes, sidebars and actual 100%/125%/150% zoom. Record browser versions, artifact hash and results.
 - Actual Tampermonkey installation and live ChatGPT checks; injected userscript fixtures do not establish manager integration.
 - Fresh store screenshots showing the new capsules and native response action. Existing store images are historical until replaced; fixture screenshots must not be represented as live ChatGPT captures.

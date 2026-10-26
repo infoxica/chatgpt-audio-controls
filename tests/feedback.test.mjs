@@ -4,6 +4,8 @@ import vm from 'node:vm';
 import { validFeedbackURL, feedbackURL } from '../src/shared/feedback';
 test('feedback links are restricted to the production Worker',()=>{
   expect(validFeedbackURL('https://chatgpt-audio-feedback.example.workers.dev/feedback')).toBe(true);
+  expect(validFeedbackURL('https://chatgpt-audio-controls.infoxica.com/feedback')).toBe(true);
+  expect(validFeedbackURL('https://chatgpt-audio-controls.infoxica.com.evil.test/feedback')).toBe(false);
   for(const url of ['http://chatgpt-audio-feedback.example.workers.dev/feedback','https://evil.test/feedback','https://chatgpt-audio-feedback-staging.example.workers.dev/feedback','https://chatgpt-audio-feedback.example.workers.dev/feedback?redirect=https://evil.test','https://user@chatgpt-audio-feedback.example.workers.dev/feedback'])expect(validFeedbackURL(url)).toBe(false);
   const url=new URL(feedbackURL('ja','uninstall','Windows'));expect(url.searchParams.get('source')).toBe('uninstall');expect(url.searchParams.get('lang')).toBe('ja');
 });

@@ -20,7 +20,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     context=await chromium.launchPersistentContext('',{channel:'chromium',headless:true,args:[...(process.platform==='win32'?['--disable-features=HardwareMediaKeyHandling,MediaSessionService']:[]),...(distribution==='extension'?[`--disable-extensions-except=${path.resolve('dist')}`,`--load-extension=${path.resolve('dist')}`]:[])]});
     if(distribution==='extension'){worker=context.serviceWorkers()[0]||await context.waitForEvent('serviceworker');extensionId=worker.url().split('/')[2];}
     else await context.addInitScript({content:await fs.readFile('userscript/chatgpt-audio-controls.user.js','utf8')});
-    await context.route('https://chatgpt.com/**',route=>route.request().url().endsWith('/speech.wav')?route.fulfill({contentType:'audio/wav',body:wav()}):route.fulfill({contentType:'text/html',body:fixture()}));
+    await context.route('https://chatgpt.com/**',async route=>route.request().url().endsWith('/speech.mp3')?route.fulfill({contentType:'audio/mpeg',body:await fs.readFile('tests/fixtures/speech.mp3')}):route.request().url().endsWith('/speech.wav')?route.fulfill({contentType:'audio/wav',body:wav()}):route.fulfill({contentType:'text/html',body:fixture()}));
   });
   test.afterAll(async()=>{await context?.close();});
   async function open(width=1366){
@@ -57,6 +57,34 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const page=await open();await page.locator('#native-read').click();await expect(page.locator('.cgpt-ra-play')).toBeEnabled();
     await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();
     await expect(page.locator('.cgpt-ra-play polygon')).toHaveCount(1);await page.locator('.cgpt-ra-play').click();await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(1);await page.close();
+  });
+  test('MediaSource speech survives host abort, source removal and immediate pause',async()=>{
+    const page=await open();
+    for(const immediate of [false,true]){
+      await page.evaluate(async()=>{
+        const response=await fetch('/speech.mp3',{signal:(window.speechAbort=new AbortController()).signal});
+        const source=new MediaSource(),host=document.getElementById('host');
+        host.addEventListener('pause',()=>window.speechAbort.abort(),{once:true});
+        source.addEventListener('sourceopen',async()=>{
+          if(source.readyState!=='open')return;
+          const buffer=source.addSourceBuffer('audio/mpeg');
+          const bytes=await response.arrayBuffer();
+          if(source.readyState!=='open')return;
+          buffer.addEventListener('updateend',()=>{if(source.readyState==='open')source.endOfStream();},{once:true});
+          buffer.appendBuffer(bytes);
+        },{once:true});
+        host.src=URL.createObjectURL(source);void host.play().catch(()=>{});
+      });
+      await expect(page.locator('.cgpt-ra-play')).toBeEnabled();
+      if(!immediate)await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(2);
+      const before=await time(page);await page.locator('.cgpt-ra-play').click();
+      await expect(page.locator('#host')).not.toHaveAttribute('src');
+      expect(await page.evaluate(()=>window.speechAbort.signal.aborted)).toBe(true);
+      await page.locator('.cgpt-ra-play').click();
+      await expect.poll(()=>time(page)).toBeGreaterThan(before);
+      await expect(page.locator('.cgpt-ra-duration')).toHaveText('0:30');
+    }
+    await page.close();
   });
   test('capsules avoid composer across viewport and content sizes',async()=>{
     const page=await open(2124);await page.locator('#native-read').click();await expect(page.locator('#cgpt-ra-right')).not.toHaveClass(/cgpt-ra-compact/);
@@ -97,5 +125,20 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect(help).toHaveAttribute('href',/chatgpt-audio-controls\/#help/);
     await page.getByRole('button',{name:'About',exact:true}).click();await expect(page.getByRole('link',{name:/Send feedback/})).toHaveAttribute('href',/source=installed/);
     await page.screenshot({path:'build/browser-results/popup-v1.3.0.png'});await page.close();
+  });
+  if(distribution==='extension') test('popup and dashboard share theme preferences and follow system changes',async()=>{
+    await worker.evaluate(()=>chrome.storage.sync.clear());
+    const popup=await context.newPage(),dashboard=await context.newPage();
+    await popup.emulateMedia({colorScheme:'light'}); await dashboard.emulateMedia({colorScheme:'light'});
+    await popup.goto(`chrome-extension://${extensionId}/src/popup/index.html`);
+    await dashboard.goto(`chrome-extension://${extensionId}/src/options/index.html`);
+    await expect(popup.locator('html')).toHaveAttribute('data-theme','light');
+    await popup.getByRole('combobox',{name:'Appearance'}).selectOption('dark');
+    await expect(dashboard.locator('html')).toHaveAttribute('data-theme','dark');
+    await dashboard.getByRole('combobox',{name:'Appearance'}).selectOption('system');
+    await expect(popup.locator('html')).toHaveAttribute('data-theme','light');
+    await popup.emulateMedia({colorScheme:'dark'}); await expect(popup.locator('html')).toHaveAttribute('data-theme','dark');
+    await popup.reload(); await expect(popup.getByRole('combobox',{name:'Appearance'})).toHaveValue('system');
+    await popup.close(); await dashboard.close();
   });
 });

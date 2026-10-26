@@ -14,7 +14,7 @@ The extension requests `storage` for preferences and ChatGPT site access for its
 
 ## Voluntary feedback
 
-The popup About tab and settings dashboard link to a Cloudflare Worker form. Uninstall opens the same form in uninstall mode. Opening, skipping, or closing it creates no feedback record. Sending is optional and requires an explicit action.
+The popup About tab and settings dashboard link to [our feedback form](https://chatgpt-audio-controls.infoxica.com/feedback), hosted on a Cloudflare Worker. Uninstall opens the same form in uninstall mode. Opening, skipping, or closing it creates no feedback record. Sending is optional and requires an explicit action. The form stores your appearance choice locally in your browser; it follows your system theme unless you choose Light or Dark.
 
 A submission stores a randomly generated submission ID, server timestamp, installed/uninstall source, selected category or reason, optional comment (maximum 1,000 characters), language, extension version, coarse browser and OS family, and form version in a private Cloudflare D1 database. The submission ID is for retry deduplication, not an installation identifier. There is no name, email, attachment or contact field. Please do not put personal information, conversations or audio in comments.
 
