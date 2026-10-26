@@ -32,6 +32,8 @@ Implementation candidate. Do not publish extension assets or submit to stores un
 
 ### Still required
 
+Feedback appearance follow-up (26 October): the form now matches the landing page's neutral light/dark palette and rounded language/theme icon controls. Localized accessible names, tooltips, native keyboard selection and System / Light / Dark preferences remain available. Worker typecheck and all four feedback browser tests passed, including mobile layout, focus order, icon states and answer retention. Live Edge verified the deployed controls and keyboard theme selection. Staging version: `00154b90-d71e-4cd2-b923-7cfb049a5ac4`; production version: `73729aa6-8519-4a8e-ad69-b443bc07c404`. No schema or submission changes. CI for the preceding revision `5f4f889` completed successfully (run `40313065122`); this appearance revision requires its own CI.
+
 - Fresh installed Chrome and Edge on Windows: live ChatGPT pause/resume, immediate pause, long responses, new response, navigation, seeking, speed, volume/download, themes, sidebars and actual 100%/125%/150% zoom. Record browser versions, artifact hash and results.
 - Actual Tampermonkey installation and live ChatGPT checks; injected userscript fixtures do not establish manager integration.
 - Fresh store screenshots showing the new capsules and native response action. Existing store images are historical until replaced; fixture screenshots must not be represented as live ChatGPT captures.
