@@ -471,7 +471,9 @@ import { getTranslations } from "../shared/i18n/core";
     if (blob.size && blob.size <= MAX_BLOB_MAP_BYTES && looksLikeAudio(sourceURL, blob.type)) rememberBlobURL(sourceURL, blob);
   }
 
-  const audioRequests = new Map<string, Promise<Blob>>();
+  // Session-owned direct downloads must bypass our streaming interceptor: its
+  // cleanup owns MediaSource requests and must not cancel this fallback.
+  const retentionFetch: typeof fetch = PAGE.fetch.bind(PAGE);
   const streamingAudio = new StreamingAudioCapture();
   async function readAudio(response: Response): Promise<Blob> {
     if (Number(response.headers.get('content-length')) > MAX_BLOB_MAP_BYTES || !response.body) throw new Error('Audio size unsupported');
@@ -496,9 +498,7 @@ import { getTranslations } from "../shared/i18n/core";
     if (stream) return stream;
     const cached = blobURLMap.get(source);
     if (cached) return cached;
-    const pending = audioRequests.get(source);
-    if (pending) return pending;
-    const response = await fetch(source, { credentials: 'include', signal });
+    const response = await retentionFetch(source, { credentials: 'include', signal: AbortSignal.any([signal, AbortSignal.timeout(60000)]) });
     if (!response.ok) throw new Error('Audio unavailable');
     return readAudio(response);
   }
@@ -509,7 +509,7 @@ import { getTranslations } from "../shared/i18n/core";
     broadcastLiveAudioState(true);
     scheduleLayoutSync();
   }, () => showStatus(recoveryCopy().playError, true));
-  window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; audioRequests.clear(); streamingAudio.clearExcept(); });
+  window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; streamingAudio.clearExcept(); });
 
   function installObjectURLInterceptor(): void {
     try {
@@ -578,11 +578,7 @@ import { getTranslations } from "../shared/i18n/core";
           if (looksLikeAudio(requestURL, type)) {
             const pending = readAudio(response.clone());
             if (capture) streamingAudio.complete(capture, pending);
-            audioRequests.set(requestURL, pending);
-            if (audioRequests.size > 4) audioRequests.delete(audioRequests.keys().next().value!);
-            void pending.catch(() => {}).finally(() => {
-              if (audioRequests.get(requestURL) === pending) audioRequests.delete(requestURL);
-            });
+            void pending.catch(() => {});
           } else if (capture) streamingAudio.complete(capture, Promise.reject(new Error('Not audio')));
         } catch (_) {}
 
@@ -714,7 +710,6 @@ import { getTranslations } from "../shared/i18n/core";
     if (changed) {
       streamingAudio.clearExcept(source);
       for (const url of blobURLMap.keys()) if (url !== source) removeBlobURL(url);
-      for (const url of audioRequests.keys()) if (url !== source) audioRequests.delete(url);
     }
     activeMedia = media;
     if (changed) {
@@ -1102,7 +1097,7 @@ import { getTranslations } from "../shared/i18n/core";
     if (location.pathname !== conversationPath) {
       conversationPath = location.pathname;
       playback.dispose(); activeMedia = null; userForcedExpand = false; streamingAudio.clearExcept();
-      blobURLMap.clear(); blobURLBytes = 0; audioRequests.clear();
+      blobURLMap.clear(); blobURLBytes = 0;
       updateControls();
     }
     const composer = getComposer();

@@ -177,6 +177,7 @@ class StreamingAudioCapture {
 }
 
 
+
 function installStreamingInterceptor() {
   const source = PAGE.MediaSource?.prototype;
   const buffer = PAGE.SourceBuffer?.prototype;
@@ -195,6 +196,7 @@ function installStreamingInterceptor() {
   };
   Object.defineProperty(source, "__cgptRAStreamHook", { value: true, configurable: true });
 }
+
 
 
 class PlaybackSession {
@@ -455,6 +457,7 @@ class PlaybackSession {
 }
 
 
+
 function floatingVisibility(hidden, mode, session, expanded) {
   const hideAll = hidden && mode === "all";
   return { player: !hideAll && expanded, launcher: !hideAll && !expanded && (!hidden || session) };
@@ -690,7 +693,7 @@ function rememberBlobURL(url, blob) {
   if (blob.size && blob.size <= MAX_BLOB_MAP_BYTES && looksLikeAudio(sourceURL, blob.type))
     rememberBlobURL(sourceURL, blob);
 }
-const audioRequests = new Map;
+const retentionFetch = PAGE.fetch.bind(PAGE);
 const streamingAudio = new StreamingAudioCapture();
 async function readAudio(response) {
   if (Number(response.headers.get("content-length")) > MAX_BLOB_MAP_BYTES || !response.body)
@@ -726,14 +729,12 @@ async function retainAudio(source, signal) {
   const cached = blobURLMap.get(source);
   if (cached)
     return cached;
-  const pending = audioRequests.get(source);
-  if (pending)
-    return pending;
-  const response = await fetch(source, { credentials: "include", signal });
+  const response = await retentionFetch(source, { credentials: "include", signal: AbortSignal.any([signal, AbortSignal.timeout(60000)]) });
   if (!response.ok)
     throw new Error("Audio unavailable");
   return readAudio(response);
 }
+
 
 
 const playback = new PlaybackSession(retainAudio, (media) => {
@@ -749,7 +750,7 @@ window.addEventListener("pagehide", () => {
   activeMedia = null;
   blobURLMap.clear();
   blobURLBytes = 0;
-  audioRequests.clear();
+
   streamingAudio.clearExcept();
 });
 
@@ -789,6 +790,7 @@ window.addEventListener("pagehide", () => {
 
 
 
+
   function installFetchInterceptor() {
   try {
     if (!PAGE.fetch || PAGE.fetch.__cgptRAFetchHook)
@@ -813,13 +815,7 @@ window.addEventListener("pagehide", () => {
           const pending = readAudio(response.clone());
           if (capture)
             streamingAudio.complete(capture, pending);
-          audioRequests.set(requestURL, pending);
-          if (audioRequests.size > 4)
-            audioRequests.delete(audioRequests.keys().next().value);
-          pending.catch(() => {}).finally(() => {
-            if (audioRequests.get(requestURL) === pending)
-              audioRequests.delete(requestURL);
-          });
+          pending.catch(() => {});
         } else if (capture)
           streamingAudio.complete(capture, Promise.reject(new Error("Not audio")));
       } catch (_) {}
@@ -832,6 +828,7 @@ window.addEventListener("pagehide", () => {
     warn("fetch interception failed:", error);
   }
 }
+
 
 
 
@@ -915,6 +912,7 @@ window.addEventListener("pagehide", () => {
 
 
 
+
   function attachMedia(media, reason = "detected") {
   if (!media || playback.isOwned(media) || typeof media.play !== "function" || !isReadAloudMedia(media))
     return;
@@ -926,9 +924,6 @@ window.addEventListener("pagehide", () => {
     for (const url of blobURLMap.keys())
       if (url !== source)
         removeBlobURL(url);
-    for (const url of audioRequests.keys())
-      if (url !== source)
-        audioRequests.delete(url);
   }
   activeMedia = media;
   if (changed) {
@@ -950,6 +945,7 @@ window.addEventListener("pagehide", () => {
   scheduleLayoutSync();
   log("Attached media:", reason, media);
 }
+
 
 
 
@@ -1315,7 +1311,6 @@ window.addEventListener("pagehide", () => {
     streamingAudio.clearExcept();
     blobURLMap.clear();
     blobURLBytes = 0;
-    audioRequests.clear();
     updateControls();
   }
   const composer = getComposer();
@@ -1381,6 +1376,7 @@ window.addEventListener("pagehide", () => {
   if (rightRail.style.top !== leftY)
     rightRail.style.top = leftY;
 }
+
 
 
 
@@ -1812,6 +1808,7 @@ window.visualViewport?.addEventListener('scroll', scheduleLayoutSync, { passive:
   installXHRInterceptor();
   installMediaInterceptor();
 }
+
 
 
 

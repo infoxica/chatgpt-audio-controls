@@ -58,6 +58,19 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();
     await expect(page.locator('.cgpt-ra-play polygon')).toHaveCount(1);await page.locator('.cgpt-ra-play').click();await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(1);await page.close();
   });
+  test('direct audio URL retains recovery payload through destructive pause',async()=>{
+    const page=await open();
+    await page.evaluate(()=>{const host=document.getElementById('host');host.src='/speech.wav';void host.play();});
+    await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(2);
+    const before=await time(page);await page.locator('.cgpt-ra-play').click();
+    await expect(page.locator('#host')).not.toHaveAttribute('src');
+    await page.locator('.cgpt-ra-play').click();
+    await expect.poll(()=>time(page)).toBeGreaterThan(before);
+    await expect(page.locator('.cgpt-ra-duration')).toHaveText('2:00');
+    const downloading=page.waitForEvent('download');await page.locator('.cgpt-ra-download').click();
+    expect(await fs.readFile(await (await downloading).path())).toEqual(wav());
+    await page.close();
+  });
   test('MediaSource speech survives host abort, source removal and immediate pause',async()=>{
     const page=await open();
     for(const immediate of [false,true]){

@@ -36,6 +36,8 @@ Feedback copy and README follow-up (26 October): simplified the shared privacy m
 
 ### Still required
 
+Release review follow-up: automated review identified direct-URL retention being aborted by MediaSource cleanup. The new shared browser fixture failed for extension and userscript before the fix and passed afterward, including exact audio download. Direct retention now uses the pre-interceptor fetch with session cancellation and a 60-second timeout; the obsolete pending-request cache was removed. All 18 extension/userscript browser tests, 22 unit tests / 233 assertions, typecheck/build and ZIP validation passed. Updated archive SHA-256: `30eb7621dc7a8abbb6f64729a3feffcfcfd4ba93360593607fd66ea57e7aa90a`. This supersedes the earlier archive; owner acceptance is still explicitly attributed to the earlier candidate.
+
 - Chrome, Edge and actual Tampermonkey acceptance were confirmed by the owner on 26 October for candidate `14254cb`. Browser versions and per-scenario results were not supplied; the acceptance record distinguishes these owner confirmations from directly observed tests. The three live acceptance flags are now true. Native Mac remains waived for 1.3.0 only.
 - Fresh store screenshots showing the new capsules and native response action. Existing store images are historical until replaced; fixture screenshots must not be represented as live ChatGPT captures.
 - PR #20 is ready for review. CI run `40318614229` and website build run `40318614223` passed for `14254cb`. Both protected branches require one approving review and approval after the latest push; no approval is recorded. Complete feature → develop review, website deployment and live verification, then final version-bump commit and develop → master review.

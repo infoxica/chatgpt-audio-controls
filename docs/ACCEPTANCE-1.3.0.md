@@ -24,6 +24,8 @@ Native Mac testing: **waived for v1.3.0 by owner; not tested/passed**.
 
 The owner confirmed testing the current candidate in Chrome and Tampermonkey, then explicitly confirmed Edge also passed. These confirmations satisfy the three live acceptance flags. Candidate commit: `14254cb`; ZIP SHA-256: `25c54dea7ba4619737667891108b3db12f9756b89b66ba9214c71992b64683b3`. Browser versions and individual scenario results were not supplied, so the granular checklist above is not marked as independently witnessed. Earlier agent-observed Edge playback evidence remains in the release status document.
 
+Subsequent PR review found direct HTTP audio recovery was cancelled by MediaSource cleanup. A regression fixture reproduced the failure in both distributions. Session-owned direct retention now bypasses the streaming interceptor, keeps its own cancellation/60-second timeout, and passes resume-position, duration and exact-download checks. All 18 extension/userscript browser tests and 22 unit tests passed after the fix. Updated ZIP SHA-256: `30eb7621dc7a8abbb6f64729a3feffcfcfd4ba93360593607fd66ea57e7aa90a`. Owner confirmations above predate this narrow fix and are not relabeled as tests of the new archive.
+
 ## Feedback and automated verification
 
 - [x] Staging then production deployed in the confirmed Cloudflare account; real Turnstile submissions persisted to D1.
