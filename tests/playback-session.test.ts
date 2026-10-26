@@ -1,4 +1,5 @@
 import { afterEach, expect, test } from 'bun:test';
+import { readFileSync } from 'node:fs';
 import { PlaybackSession } from '../src/content/playback-session';
 
 class Media extends EventTarget {
@@ -17,10 +18,10 @@ const original = globalThis.Audio;
 const sessions: PlaybackSession[] = [];
 afterEach(() => { sessions.forEach(s => s.dispose()); sessions.length = 0; globalThis.Audio = original; Media.instances.length = 0; });
 const flush = async () => { for (let i = 0; i < 10; i++) await Promise.resolve(); };
-function setup(retain: (source: string, signal: AbortSignal) => Promise<Blob> = async () => new Blob(['audio'])) {
+function setup(retain: (source: string, signal: AbortSignal) => Promise<Blob> = async () => new Blob(['audio']), Session = PlaybackSession) {
   globalThis.Audio = Media as unknown as typeof Audio;
   let failures = 0;
-  const session = new PlaybackSession(retain, () => {}, () => failures++);
+  const session = new Session(retain, () => {}, () => failures++);
   sessions.push(session);
   const host = new Media(); host.src = 'new-response.wav'; host.currentSrc = 'old-response.wav';
   host.currentTime = 42; host.playbackRate = 1.5; host.volume = .4; host.paused = false;
@@ -92,3 +93,31 @@ test('an older rejected play promise cannot cancel a newer resume', async () => 
   reject(new Error('Aborted by intervening pause')); await flush(); owned.advance(1);
   expect(session.playing).toBe(true); expect(session.paused).toBe(false); expect(failures()).toBe(0);
 });
+
+// Exercise the standalone distribution directly; it is maintained separately.
+const userscript = readFileSync(new URL('../userscript/chatgpt-audio-controls.user.js', import.meta.url), 'utf8');
+const userscriptSession = new Function(`${userscript.slice(userscript.indexOf('class PlaybackSession {'), userscript.indexOf('function floatingVisibility('))}; return PlaybackSession;`)() as typeof PlaybackSession;
+for (const [distribution, Session] of [['extension', PlaybackSession], ['userscript', userscriptSession]] as const) {
+  test(`${distribution}: seeking during resume measures progress from the new position`, async () => {
+    const { session, host, failures } = setup(undefined, Session);
+    host.currentTime = 60;
+    session.toggle(); await flush();
+    const owned = session.media as unknown as Media;
+    session.toggle();
+    expect(session.loading).toBe(true);
+    session.seek(0);
+    owned.advance(0); // A seek's timeupdate alone is not playback progress.
+    expect(session.loading).toBe(true);
+    owned.advance(.25);
+    expect(session.playing).toBe(true);
+    expect(session.loading).toBe(false);
+    // Also ensure a forward seek cannot itself satisfy a new resume attempt.
+    session.toggle(); session.toggle(); session.seek(90); owned.advance(0);
+    expect(session.loading).toBe(true);
+    owned.advance(.25);
+    expect(session.playing).toBe(true);
+    await new Promise(resolve => setTimeout(resolve, 15100));
+    expect(failures()).toBe(0);
+    expect(owned.paused).toBe(false);
+  }, 20000);
+}
