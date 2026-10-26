@@ -3,12 +3,12 @@ import { shouldPublish, versionIncreased } from '../scripts/release-policy.mjs';
 import { acceptanceComplete } from '../scripts/release-acceptance.ts';
 
 test('only the recorded Mac waiver satisfies an unverified check', () => {
-  const accepted = { version: '1.2.0', feedbackDeployment: true, chromeLive: true, edgeLive: true, websiteDeployment: true, nativeMac: 'waived-by-owner' };
+  const accepted = { version: '1.2.0', feedbackDeployment: true, chromeLive: true, edgeLive: true, websiteDeployment: true, userscriptLive: true, nativeMac: 'waived-by-owner' };
   expect(acceptanceComplete(accepted, '1.2.0')).toBe(true);
   expect(acceptanceComplete({ ...accepted, nativeMac: true }, '1.2.0')).toBe(true);
   expect(acceptanceComplete({ ...accepted, nativeMac: false }, '1.2.0')).toBe(false);
   expect(acceptanceComplete(accepted, '1.2.1')).toBe(false);
-  for (const key of ['feedbackDeployment', 'chromeLive', 'edgeLive', 'websiteDeployment']) {
+  for (const key of ['feedbackDeployment', 'chromeLive', 'edgeLive', 'websiteDeployment', 'userscriptLive']) {
     expect(acceptanceComplete({ ...accepted, [key]: 'waived-by-owner' }, '1.2.0')).toBe(false);
     const missing = { ...accepted }; delete missing[key];
     expect(acceptanceComplete(missing, '1.2.0')).toBe(false);

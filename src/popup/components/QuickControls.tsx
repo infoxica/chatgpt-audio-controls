@@ -98,21 +98,6 @@ export const QuickControls: React.FC<QuickControlsProps> = ({
 
         <div className="toggle-row">
           <div className="toggle-info">
-            <span className="toggle-label">{t.popup.quickControls.inlineSpeech}</span>
-            <span className="toggle-desc">{t.popup.quickControls.inlineSpeechDesc}</span>
-          </div>
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={settings.enableInlineButtons}
-              onChange={(e) => onUpdateSettings({ enableInlineButtons: e.target.checked })}
-            />
-            <span className="slider-toggle" />
-          </label>
-        </div>
-
-        <div className="toggle-row">
-          <div className="toggle-info">
             <span className="toggle-label">{t.popup.quickControls.globalShortcuts}</span>
             <span className="toggle-desc">{platformKeys(t.popup.quickControls.globalShortcutsDesc)}</span>
           </div>

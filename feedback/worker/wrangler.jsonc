@@ -1,0 +1,73 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "chatgpt-audio-feedback-local",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-26",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  },
+  "vars": {
+    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    "ENVIRONMENT": "local"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "chatgpt-audio-feedback-local",
+      "database_id": "local",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "env": {
+    "staging": {
+      "name": "chatgpt-audio-feedback-staging",
+      "vars": {
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAFmYysX2jPu8WFFj",
+        "ENVIRONMENT": "staging"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "chatgpt-audio-feedback-staging",
+          "migrations_dir": "migrations",
+          "database_id": "d63139b6-978e-4282-862e-26c7d15c5941"
+        }
+      ],
+      "secrets": {
+        "required": [
+          "TURNSTILE_SECRET_KEY"
+        ]
+      }
+    },
+    "production": {
+      "name": "chatgpt-audio-feedback",
+      "vars": {
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAFmZI5PtqIBrKeQK",
+        "ENVIRONMENT": "production"
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "chatgpt-audio-feedback",
+          "migrations_dir": "migrations",
+          "database_id": "3da56913-abc9-4059-9942-4bcb38419e7f"
+        }
+      ],
+      "secrets": {
+        "required": [
+          "TURNSTILE_SECRET_KEY"
+        ]
+      }
+    }
+  },
+  "secrets": {
+    "required": [
+      "TURNSTILE_SECRET_KEY"
+    ]
+  }
+}

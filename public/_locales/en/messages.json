@@ -3,7 +3,7 @@
     "message": "ChatGPT Audio Controls & Read Aloud"
   },
   "extensionDescription": {
-    "message": "ChatGPT Read Aloud controls: pause, seek, speed, volume, audio downloads, shortcuts and response buttons."
+    "message": "ChatGPT Read Aloud controls: pause, seek, speed, volume, audio downloads, shortcuts."
   },
   "extensionActionTitle": {
     "message": "ChatGPT Audio Controls"

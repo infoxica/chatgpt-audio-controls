@@ -26,8 +26,6 @@ export interface TranslationSchema {
       mute: string;
       unmute: string;
       smartIntegrations: string;
-      inlineSpeech: string;
-      inlineSpeechDesc: string;
       globalShortcuts: string;
       globalShortcutsDesc: string;
       smoothScrubbing: string;
@@ -37,10 +35,8 @@ export interface TranslationSchema {
       title: string;
       gesturesTitle: string;
       smoothAudioScrub: string;
-      instantResponseRead: string;
       directDownload: string;
       holdScrubKey: string;
-      clickSpeechKey: string;
       clickDownloadKey: string;
     };
     about: {
@@ -126,7 +122,6 @@ export interface TranslationSchema {
       collapse: string;
       expand: string;
       readAloud: string;
-      stopReadAloud: string;
     };
     shortcutsPopover: {
       title: string;

@@ -1,7 +1,7 @@
 {
   "name": "chatgpt-audio-controls",
   "version": "1.2.0",
-  "description": "Integrated Read Aloud and Audio Controls for ChatGPT — Seeker, Speed, Volume, Download, Shortcuts, and Response Speech Buttons.",
+  "description": "Audio Controls for ChatGPT \u2014 Pause, Resume, Seeker, Speed, Volume, Download, and Shortcuts.",
   "type": "module",
   "scripts": {
     "build:site": "bun run scripts/build-site.ts",
@@ -14,7 +14,10 @@
     "build:userscript": "bun run scripts/sync-userscript.ts",
     "package": "bun run build && bun run scripts/package-zip.ts",
     "release:check": "bun run scripts/validate-release.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:feedback": "bun scripts/build-feedback-copy.ts && wrangler deploy --config feedback/worker/wrangler.jsonc --dry-run --outdir ../../build/feedback-worker",
+    "typecheck:feedback": "bun run typegen:feedback && tsc -p feedback/worker/tsconfig.json",
+    "typegen:feedback": "wrangler types --config feedback/worker/wrangler.jsonc feedback/worker/worker-configuration.d.ts"
   },
   "keywords": [
     "chatgpt",
@@ -56,8 +59,10 @@
     "@types/react-dom": "^19.0.4",
     "@types/turndown": "^5.0.6",
     "@vitejs/plugin-react": "^4.3.4",
+    "miniflare": "^4.20260730.0",
     "turndown": "^7.2.4",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "wrangler": "^4.152.0"
   }
 }

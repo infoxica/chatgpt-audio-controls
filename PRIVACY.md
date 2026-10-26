@@ -1,69 +1,33 @@
 # Privacy Policy
 
-**Last Updated: August 2026**
+Last updated: 26 October 2026
 
-ChatGPT Audio Controls & Read Aloud is built with a strict **Privacy-First** architecture. We believe that browser extensions and developer tools should never compromise user trust, personal conversations, or browsing activity.
+ChatGPT Audio Controls provides local playback controls for audio you choose to play with ChatGPT’s native Read Aloud button. It does not collect conversations, audio, browsing history, installation identifiers, or automatic diagnostics. The extension contains no analytics or remote executable code.
 
----
+## Playback and preferences
 
-## Summary (TL;DR)
+Audio is retained temporarily in browser memory to preserve paused sessions and support seeking and downloads. The extension may fetch the active, already-authorized ChatGPT media URL. It does not upload the audio. Replacing the session or closing the page releases retained media.
 
-- **Zero Data Collection**: We do not collect, track, store, or transmit your prompts, responses, audio files, or personal information.
-- **100% On-Device Processing**: All audio interception, seeking, playback speed alterations, volume adjustments, and downloads run strictly locally inside your web browser.
-- **Zero Telemetry & Analytics**: No third-party trackers, analytics libraries (e.g. Google Analytics), or error-logging beacons are bundled or loaded.
-- **No Developer-Operated Network Calls**: The extension does not communicate with any external backend servers. ChatGPT continues to make its normal requests to provide its own service.
+Speed, volume, shortcuts, language, theme and visibility preferences use browser storage. Chrome/Edge sync may synchronize these preferences when enabled. The standalone userscript uses local browser storage. Page access is limited to ChatGPT; it detects media and composer geometry without reading conversation text for feedback.
 
----
+The extension requests `storage` for preferences and ChatGPT site access for its player. It adds no duplicate response button.
 
-## Data Handled Locally
+## Voluntary feedback
 
-The extension only reads and writes local settings necessary for its operation:
+The popup About tab and settings dashboard link to a Cloudflare Worker form. Uninstall opens the same form in uninstall mode. Opening, skipping, or closing it creates no feedback record. Sending is optional and requires an explicit action.
 
-1. **User Preferences**:
-   - Default playback rate (e.g. `1.25x`)
-   - Default volume level (e.g. `80%`)
-   - Preferred skip step (e.g. `10 seconds`)
-   - Feature flags (toggling keyboard shortcuts or inline buttons)
-   - UI Theme (`dark`, `light`, `system`)
-   - Stored in `chrome.storage.sync` (which Chrome may synchronize through its sync service when enabled) or `localStorage` for the standalone userscript.
+A submission stores a randomly generated submission ID, server timestamp, installed/uninstall source, selected category or reason, optional comment (maximum 1,000 characters), language, extension version, coarse browser and OS family, and form version in a private Cloudflare D1 database. The submission ID is for retry deduplication, not an installation identifier. There is no name, email, attachment or contact field. Please do not put personal information, conversations or audio in comments.
 
-2. **Audio Streams**:
-   - When ChatGPT generates Read Aloud voice responses, the audio stream is temporarily held in your browser's local memory (`Blob`) solely to enable seeking and user-initiated file downloads (`.mp3`/`.m4a`/`.wav`).
-   - The extension never uploads audio to an extension-operated backend. For a user-initiated download, it may fetch the already-authorized ChatGPT media URL from ChatGPT.
+Cloudflare Turnstile prevents automated submissions. Cloudflare processes network and browser signals for security as described in its [privacy policy](https://www.cloudflare.com/privacypolicy/). Our feedback application does not store IP addresses, user-agent strings, challenge tokens or fingerprints. Application logs contain operational outcomes only, not answers or tokens. Authorized project owners can query and export feedback using authenticated Cloudflare tooling. Feedback is retained until the owner deletes it; v1.3.0 introduces no automatic deletion schedule.
 
-3. **ChatGPT Page Interface**:
-   - The extension reads the presence of ChatGPT assistant-response toolbars and the browser media element that plays Read Aloud audio. It does not parse, store, or transmit conversation text.
-   - This local access is used only to add the Read Aloud action and provide playback controls for the audio the user chooses to play.
+Older installations may visit a Google Apps Script transition page that links to the Worker. The transition code does not accept or write survey answers to a spreadsheet.
 
----
+## Public website
 
-## Permissions Transparency (Manifest V3)
+The public website remains on GitHub Pages. Google Analytics loads only after website consent, measures website visits and store-link clicks, and can be disabled with Analytics preferences. The extension and feedback form do not use Google Analytics.
 
-The Chromium extension requests only the minimum browser access required:
+## Contact and source
 
-- **`storage`**: Used exclusively to persist user preferences (speed, volume, shortcuts) across browser restarts.
-- **ChatGPT site access (`https://chatgpt.com/*`)**: The content scripts run only on ChatGPT to add the interactive audio control player and inline speech buttons. The extension does not request broad host permissions.
+Privacy questions: [GitHub issues](https://github.com/infoxica/chatgpt-audio-controls/issues). Do not post sensitive information publicly. Source: [repository](https://github.com/infoxica/chatgpt-audio-controls).
 
----
-
-## Third-Party Services & Dependencies
-
-The extension is entirely self-contained. It contains **no CDN stylesheets, remote fonts, or external JavaScript files**. All icon assets (Lucide SVGs) and styling are bundled locally within the extension to ensure complete offline safety and strict Content Security Policy (CSP) compliance.
-
----
-
-## Open Source & Auditability
-
-This project is fully open source under the MIT license. Anyone can inspect and audit the complete codebase:
-- **Repository**: [https://github.com/infoxica/chatgpt-audio-controls](https://github.com/infoxica/chatgpt-audio-controls)
-
-## Independence and Trademarks
-
-ChatGPT Audio Controls is an independent project and is not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.
-
----
-
-## Contact
-
-For privacy-related inquiries or questions, open an issue on GitHub:
-- [https://github.com/infoxica/chatgpt-audio-controls/issues](https://github.com/infoxica/chatgpt-audio-controls/issues)
+This is an independent project, not affiliated with or endorsed by OpenAI. ChatGPT is a trademark of OpenAI.

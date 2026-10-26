@@ -21,7 +21,7 @@ function getStoredSettings(data: Record<string, unknown>): ExtensionSettings {
 
   return {
     ...DEFAULT_SETTINGS,
-    ...(legacySettings && typeof legacySettings === "object" ? legacySettings : {}),
+    ...Object.fromEntries(Object.entries(legacySettings && typeof legacySettings === "object" ? legacySettings : {}).filter(([key]) => Object.hasOwn(DEFAULT_SETTINGS, key))),
     ...flatSettings,
   } as ExtensionSettings;
 }

@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
-import vm from 'node:vm';
 const base='https://infoxica.github.io/chatgpt-audio-controls/';
 async function serveSite(context,tracking=[]) {
   await context.route('**/*',async route=>{
@@ -121,27 +120,6 @@ test('guide pages stay local, align with the homepage, and preserve locale-speci
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),relative).toBe(true);
   }
   expect(errors).toEqual([]);
-});
-
-test('survey selects then submits, skips without writes and preserves input after failure',async({page})=>{
-  const translations=vm.runInNewContext((await fs.readFile('build/feedback/Translations.gs','utf8'))+';({copy:SURVEY_COPY,names:LANGUAGE_NAMES})');
-  const state={locale:'en',locales:translations.copy,names:translations.names,id:'test-page',expires:Date.now()+3600000,token:'test',version:'1.2.0',browser:'Edge',os:'Windows'};
-  const template=(await fs.readFile('feedback/Index.html','utf8')).replace('<?!= bootstrap ?>',JSON.stringify(state));
-  await page.route('https://survey.test/**',route=>route.fulfill({body:template,contentType:'text/html; charset=utf-8'}));
-  await page.addInitScript(()=>{
-    window.saved=[];window.failNext=true;
-    const runner={withSuccessHandler(fn){this.success=fn;return this;},withFailureHandler(fn){this.failure=fn;return this;},submitFeedback(value){if(window.failNext){window.failNext=false;setTimeout(()=>this.failure(new Error('test failure')),20);}else{window.saved.push(value);setTimeout(()=>this.success({saved:true}),20);}}};
-    window.google={script:{run:runner}};
-  });
-  await page.goto('https://survey.test/');
-  expect(await page.locator('input[type=radio]:checked').count()).toBe(0);
-  await page.getByRole('button',{name:'Send feedback',exact:true}).click();await expect(page.locator('#error')).toHaveText('Choose one reason to send feedback.');
-  await page.getByLabel('Something else.',{exact:true}).check();await page.getByRole('button',{name:'Send feedback',exact:true}).click();await expect(page.locator('#error')).toContainText('wasn’t confirmed');
-  await expect(page.getByLabel('Something else.',{exact:true})).toBeChecked();await expect(page.locator('#note')).toHaveValue('');
-  await page.getByRole('button',{name:'Send feedback',exact:true}).click();await expect(page.locator('#confirmation')).toHaveText('Thank you for helping us improve. You’re always welcome back.');
-  const rows=await page.evaluate(()=>window.saved);expect(rows).toHaveLength(1);expect(rows[0].comment).toBe('');expect(rows[0].reason).toBe('other');
-  await page.reload();await page.locator('#language').selectOption('ja');await expect(page.locator('html')).toHaveAttribute('lang','ja');await page.getByRole('button',{name:translations.copy.ja.skip,exact:true}).click();expect(await page.evaluate(()=>window.saved.length)).toBe(0);
-  await page.reload();await page.locator('#language').selectOption('vi');await page.screenshot({path:'build/browser-results/survey-vi.png',fullPage:true});
 });
 
 test('hierarchical navigation and discovery artifacts cover every localized page', async ({page, context}) => {

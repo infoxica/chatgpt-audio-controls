@@ -611,3 +611,6 @@ input:checked + .slider-toggle:before {
 .secondary-links a:hover {
   color: var(--accent);
 }
+
+.footer-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.feedback-link { color: var(--accent); display: inline-block; padding: 8px 0; }

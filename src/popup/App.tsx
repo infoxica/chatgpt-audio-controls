@@ -1,3 +1,5 @@
+import config from "../../config/release.json";
+import { resolveLanguage } from "../shared/i18n/core";
 import { QuickStart } from "../shared/QuickStart";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
@@ -122,6 +124,7 @@ export const App: React.FC = () => {
         </button>
         <div className="secondary-links">
           <span>{t.common.version}{EXTENSION_VERSION}</span>
+          <div className="footer-links"><a href={`${config.siteUrl}${resolveLanguage(settings.language) === "en" ? "" : resolveLanguage(settings.language) + "/"}#help`} target="_blank" rel="noreferrer">{getReleaseCopy(settings.language).help}</a>
           <button
             onClick={handleOpenOptions}
             style={{
@@ -136,7 +139,7 @@ export const App: React.FC = () => {
             }}
           >
             {t.common.dashboard} <ExternalLink size={10} />
-          </button>
+          </button></div>
         </div>
       </footer>
     </div>

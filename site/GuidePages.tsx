@@ -62,7 +62,6 @@ export function GuidePage({ route, home, base: b, copy: c, guide: g, userscriptN
       [b.options.general.volumeTitle, b.options.general.volumeDesc],
       [b.options.general.seekTitle, b.options.general.seekDesc],
       [b.popup.quickControls.smoothScrubbing, b.popup.quickControls.smoothScrubbingDesc],
-      [b.popup.quickControls.inlineSpeech, b.popup.quickControls.inlineSpeechDesc],
       [b.content.tooltips.download, c.sourceFormat],
     ].map(([term, definition]) => <div key={term}><dt>{term}</dt><dd>{definition}</dd></div>)}</dl></section>}
 

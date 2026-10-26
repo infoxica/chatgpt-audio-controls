@@ -1,3 +1,5 @@
+import { validFeedbackURL } from '../src/shared/feedback';
+import { EXTENSION_VERSION } from '../src/shared/constants';
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { acceptanceComplete } from './release-acceptance';
@@ -36,13 +38,14 @@ if (!/^v\d+\.\d+\.\d+$/.test(releaseTag)) {
 }
 
 const expectedVersion = releaseTag.slice(1);
-if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(services.feedbackUrl || '')) throw new Error('A verified production feedback URL is required.');
+if (!validFeedbackURL(services.feedbackUrl || '')) throw new Error('A verified production feedback URL is required.');
 if (!/^G-[A-Z0-9]+$/.test(services.websiteGa4Id || '')) throw new Error('Configure the real website GA4 measurement ID.');
-if (!acceptanceComplete(acceptance, expectedVersion)) throw new Error('Required release acceptance checks remain open. See docs/RELEASE-1.2.0-STATUS.md.');
+if (!acceptanceComplete(acceptance, expectedVersion)) throw new Error('Required release acceptance checks remain open. See docs/RELEASE-1.3.0-STATUS.md.');
 const userScriptVersion = userscript.match(/@version\s+([^\s]+)/)?.[1];
 
 const mismatches = [
   ["package.json", packageJson.version],
+  ["UI version", EXTENSION_VERSION],
   ["public/manifest.json", manifest.version],
   ["userscript metadata", userScriptVersion],
 ].filter(([, version]) => version !== expectedVersion);

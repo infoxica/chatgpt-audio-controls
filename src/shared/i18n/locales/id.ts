@@ -27,8 +27,6 @@ export const id: TranslationSchema = {
       "mute": "Bisukan",
       "unmute": "Aktifkan suara",
       "smartIntegrations": "Fitur praktis",
-      "inlineSpeech": "Tombol baca jawaban",
-      "inlineSpeechDesc": "Tambahkan baca nyaring di samping tombol Salin",
       "globalShortcuts": "Pintasan keyboard",
       "globalShortcutsDesc": "Aktifkan Spasi/K, Alt+P, Alt+panah, dan tombol kecepatan",
       "smoothScrubbing": "Pencarian posisi mulus",
@@ -38,10 +36,8 @@ export const id: TranslationSchema = {
       "title": "Pintasan keyboard",
       "gesturesTitle": "Gestur mouse dan sentuh",
       "smoothAudioScrub": "Pencarian posisi audio mulus",
-      "instantResponseRead": "Langsung baca jawaban",
       "directDownload": "Unduh langsung",
       "holdScrubKey": "Tahan ◀10 / 10▶",
-      "clickSpeechKey": "Klik tombol 🔈",
       "clickDownloadKey": "Klik tombol 📥"
     },
     "about": {
@@ -127,7 +123,6 @@ export const id: TranslationSchema = {
       "collapse": "Ciutkan pemutar",
       "expand": "Perluas ChatGPT Audio Controls",
       "readAloud": "Baca nyaring",
-      "stopReadAloud": "Hentikan baca nyaring"
     },
     "shortcutsPopover": {
       "title": "Pintasan baca nyaring",
