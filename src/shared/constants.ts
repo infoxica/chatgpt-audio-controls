@@ -1,6 +1,6 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
-export const EXTENSION_VERSION = "1.2.0";
+export const EXTENSION_VERSION = "1.3.0";
 
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
