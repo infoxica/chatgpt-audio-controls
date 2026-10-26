@@ -26,6 +26,10 @@ The owner confirmed testing the current candidate in Chrome and Tampermonkey, th
 
 Subsequent PR review found direct HTTP audio recovery was cancelled by MediaSource cleanup. A regression fixture reproduced the failure in both distributions. Session-owned direct retention now bypasses the streaming interceptor, keeps its own cancellation/60-second timeout, and passes resume-position, duration and exact-download checks. All 18 extension/userscript browser tests and 22 unit tests passed after the fix. Updated ZIP SHA-256: `30eb7621dc7a8abbb6f64729a3feffcfcfd4ba93360593607fd66ea57e7aa90a`. Owner confirmations above predate this narrow fix and are not relabeled as tests of the new archive.
 
+### Seek-during-resume review fix — 26 October 2026
+
+A P2 review report reproduced in both distributions: resuming at 60 seconds and seeking to zero before the first advancing timeupdate left the progress anchor at 60. Both regression cases failed before the fix. Seeking now resets the anchor to the media element's resulting position. The shared cases exercise the TypeScript controller and the independently maintained userscript controller, assert seek-only updates do not count as progress (including a forward seek), and verify playback remains active without a recovery error beyond the 15-second deadline. This narrow change is part of unreleased v1.3.0; earlier owner acceptance is not relabeled as testing this revision.
+
 ## Feedback and automated verification
 
 - [x] Staging then production deployed in the confirmed Cloudflare account; real Turnstile submissions persisted to D1.

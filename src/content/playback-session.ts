@@ -80,7 +80,11 @@ export class PlaybackSession {
 
   seek(time: number): void {
     this.savedTime = time;
-    if (this.media && (!this.owned || this.ready)) this.media.currentTime = time;
+    if (this.media && (!this.owned || this.ready)) {
+      this.media.currentTime = time;
+      // Measure playback progress from the seek destination, not the old position.
+      this.playAnchor = this.media.currentTime;
+    }
   }
 
   toggle(): void {

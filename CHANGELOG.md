@@ -7,6 +7,7 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 ## [1.3.0] - 2026-10-26
 
 - Preserve playback position, speed and volume across destructive host pauses with a session-specific retained source and an owned audio element. Ignore stale loads and play results, show loading/recovery state, and prevent overlapping sessions.
+- Reset the playback progress anchor after seeking so a backward seek during resume cannot cause a false loading timeout; seeking alone does not count as advancing playback.
 - Recognize ChatGPT's updated composer. Restore two separate rounded capsules beside it when space permits and above it on narrow screens.
 - Remove injected response Read Aloud buttons, toolbar/menu automation and the obsolete setting from both extension and userscript. Start with ChatGPT's native button.
 - Move Help beside Dashboard and add localized Send feedback links in About and settings.
