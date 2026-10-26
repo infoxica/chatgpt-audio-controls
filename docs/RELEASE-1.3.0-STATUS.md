@@ -36,11 +36,11 @@ Feedback copy and README follow-up (26 October): simplified the shared privacy m
 
 ### Still required
 
-- Fresh installed Chrome and Edge on Windows: live ChatGPT pause/resume, immediate pause, long responses, new response, navigation, seeking, speed, volume/download, themes, sidebars and actual 100%/125%/150% zoom. Record browser versions, artifact hash and results.
-- Actual Tampermonkey installation and live ChatGPT checks; injected userscript fixtures do not establish manager integration.
+- Chrome, Edge and actual Tampermonkey acceptance were confirmed by the owner on 26 October for candidate `14254cb`. Browser versions and per-scenario results were not supplied; the acceptance record distinguishes these owner confirmations from directly observed tests. The three live acceptance flags are now true. Native Mac remains waived for 1.3.0 only.
 - Fresh store screenshots showing the new capsules and native response action. Existing store images are historical until replaced; fixture screenshots must not be represented as live ChatGPT captures.
-- Reviewed feature → develop PR, website deployment and live verification, then final version-bump commit and develop → master PR. Respect required review and checks.
+- PR #20 is ready for review. CI run `40318614229` and website build run `40318614223` passed for `14254cb`. Both protected branches require one approving review and approval after the latest push; no approval is recorded. Complete feature → develop review, website deployment and live verification, then final version-bump commit and develop → master review.
 - Verified GitHub assets, independent Chrome and Edge submissions, then separate public-availability checks. Neither store has been submitted for v1.3.0.
+- Release notes and authorized replies for GitHub #18/#19 and the identified Chrome one-star review are prepared in `RELEASE-NOTES-1.3.0.md` and `RELEASE-COMMUNICATIONS-1.3.0.md`. No replies have been posted. Browser automation denies access to store reviews/developer-console pages; the Chrome reply may require owner posting after public availability.
 
 ## Test environment note
 

@@ -20,23 +20,27 @@ Build with `bun install --frozen-lockfile`, `bun run build`, and `bun run packag
 
 Native Mac testing: **waived for v1.3.0 by owner; not tested/passed**.
 
+### Owner acceptance — 26 October 2026
+
+The owner confirmed testing the current candidate in Chrome and Tampermonkey, then explicitly confirmed Edge also passed. These confirmations satisfy the three live acceptance flags. Candidate commit: `14254cb`; ZIP SHA-256: `25c54dea7ba4619737667891108b3db12f9756b89b66ba9214c71992b64683b3`. Browser versions and individual scenario results were not supplied, so the granular checklist above is not marked as independently witnessed. Earlier agent-observed Edge playback evidence remains in the release status document.
+
 ## Feedback and automated verification
 
 - [x] Staging then production deployed in the confirmed Cloudflare account; real Turnstile submissions persisted to D1.
 - [x] Existing Google URL serves the transition; no further spreadsheet writes.
 - [x] Controlled tests cover no default selection, both modes, 17 locales, note limit, Skip/no-write, validation/origin/body limits, challenge rejection, concurrent duplicate persistence, changed-ID conflict, lost reply retry and database outage.
-- [ ] Complete typecheck, unit, extension/userscript browser fixtures, website checks, Worker dry run, release-policy tests and ZIP validation on the final candidate.
+- [x] Complete typecheck, unit, extension/userscript browser fixtures, website checks, Worker dry run, release-policy tests and ZIP validation on candidate `14254cb`: CI run `40318614229` passed; website run `40318614223` passed its build/checks. Recheck after any release changes.
 - [ ] Deploy reviewed GitHub Pages content and verify help/privacy, links, localization and consent behavior live.
 
 ## Publication record
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
-| Feature → develop review | Pending | |
-| Final candidate hash | Pending | |
-| Chrome live acceptance | Pending | |
-| Edge live acceptance | Pending | |
-| Tampermonkey live acceptance | Pending | |
+| Feature → develop review | Ready; approval required | PR #20, one approving review required by branch protection |
+| Tested candidate hash | Recorded | SHA-256 above; final publication artifact must also be verified |
+| Chrome live acceptance | Owner confirmed | 26 October 2026, current candidate |
+| Edge live acceptance | Owner confirmed | 26 October 2026, current candidate |
+| Tampermonkey live acceptance | Owner confirmed | 26 October 2026, current candidate |
 | Website deployment | Pending | |
 | Develop → master review | Pending | |
 | GitHub assets | Not published | |
