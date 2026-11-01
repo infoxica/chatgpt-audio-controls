@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Reproduir / Pausa"
+  },
+  "command_seek_back": {
+    "message": "Busca enrere"
+  },
+  "command_seek_forward": {
+    "message": "Busca endavant"
+  },
+  "command_speed_decrease": {
+    "message": "Disminuir la velocitat"
+  },
+  "command_speed_increase": {
+    "message": "Augmenta la velocitat"
+  },
+  "command_speed_reset": {
+    "message": "Restableix la velocitat a 1×"
+  },
+  "command_volume_increase": {
+    "message": "Augmentar el volum"
+  },
+  "command_volume_decrease": {
+    "message": "Disminuir el volum"
+  },
+  "command_toggle_mute": {
+    "message": "Silenciar / activar el silenci"
+  },
+  "command_download_audio": {
+    "message": "Descarregar àudio"
+  },
+  "command_toggle_collapse": {
+    "message": "Redueix el jugador / Amplieu els controls d'àudio ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "Restableix el disseny"
+  },
+  "command_open_help": {
+    "message": "Dreceres i gestos del teclat"
+  },
+  "command_open_settings": {
+    "message": "Obriu Tauler i configuració"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Llegeix en veu alta"
+  },
+  "extensionDescription": {
+    "message": "Controls d'àudio ChatGPT: pausa, cerca, velocitat, volum, descàrregues i dreceres."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Mostra/amaga els controls flotants"
+  }
+}

@@ -40,7 +40,7 @@ export const ShortcutsDrawer: React.FC<ShortcutsDrawerProps> = ({ t, language })
 
   return (
     <div className="popup-body">
-      <CommandShortcut language={language} />
+      <CommandShortcut language={language} surface="popup" />
       <div className="section-card">
         <div className="section-title">
           <span style={{ display: "flex", alignItems: "center", gap: 5 }}>

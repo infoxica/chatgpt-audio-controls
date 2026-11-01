@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "再生 / 一時停止"
+  },
+  "command_seek_back": {
+    "message": "巻き戻す"
+  },
+  "command_seek_forward": {
+    "message": "早送りする"
+  },
+  "command_speed_decrease": {
+    "message": "速度を下げる"
+  },
+  "command_speed_increase": {
+    "message": "速度を上げる"
+  },
+  "command_speed_reset": {
+    "message": "速度を1×に戻す"
+  },
+  "command_volume_increase": {
+    "message": "音量を上げる"
+  },
+  "command_volume_decrease": {
+    "message": "音量を下げる"
+  },
+  "command_toggle_mute": {
+    "message": "ミュート切替"
+  },
+  "command_download_audio": {
+    "message": "音声をダウンロード"
+  },
+  "command_toggle_collapse": {
+    "message": "プレーヤーを折りたたむ / ChatGPT Audio Controlsを展開"
+  },
+  "command_reset_layout": {
+    "message": "配置をリセット"
+  },
+  "command_open_help": {
+    "message": "ショートカットと操作"
+  },
+  "command_open_settings": {
+    "message": "ダッシュボードと設定を開く"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls — 読み上げ"
   },

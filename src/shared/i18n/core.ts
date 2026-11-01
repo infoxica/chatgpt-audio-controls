@@ -1,3 +1,6 @@
+import { directionForLocale } from './direction';
+import audienceLocales from './locales/audience.json';
+import { expandedLocales } from './locales/expanded';
 import { hi } from "./locales/hi";
 import { fr } from "./locales/fr";
 import { de } from "./locales/de";
@@ -24,6 +27,8 @@ export { en, zhCN, zhTW, vi, th, es, ptBR, ptPT, ru };
 export type ResolvedLanguage = Exclude<SupportedLanguage, "auto">;
 
 export const LOCALES: Record<ResolvedLanguage, TranslationSchema> = {
+  ...audienceLocales,
+  ...expandedLocales,
   en,
   "zh-CN": zhCN,
   "zh-TW": zhTW,
@@ -43,9 +48,22 @@ export const LOCALES: Record<ResolvedLanguage, TranslationSchema> = {
   tr,
 };
 
-/**
- * Detects the user's browser language with accurate regional variant matching.
- */
+/** Match both browser tags and Chrome catalog codes without changing stored preferences. */
+function matchLocale(raw: string | undefined): ResolvedLanguage | undefined {
+  if (typeof raw !== 'string') return undefined;
+  const [base, ...subtags] = raw.trim().replaceAll('_', '-').toLowerCase().split('-');
+  if (base === 'zh') {
+    // An explicit script takes precedence over region (e.g. zh-Hans-HK).
+    if (subtags.includes('hant')) return 'zh-TW';
+    if (subtags.includes('hans')) return 'zh-CN';
+    return subtags.some(tag => ['tw', 'hk', 'mo'].includes(tag)) ? 'zh-TW' : 'zh-CN';
+  }
+  if (base === 'pt') return subtags.includes('pt') ? 'pt-PT' : 'pt-BR';
+  if (base === 'no') return 'nb';
+  return Object.hasOwn(LOCALES, base) ? base as ResolvedLanguage : undefined;
+}
+
+/** Detect the browser UI language, then supported preferred languages, then English. */
 export function detectBrowserLanguage(): ResolvedLanguage {
   const candidates: string[] = [];
 
@@ -66,63 +84,8 @@ export function detectBrowserLanguage(): ResolvedLanguage {
   }
 
   for (const raw of candidates) {
-    if (!raw || typeof raw !== "string") continue;
-    const tag = raw.toLowerCase().trim();
-
-    const base = tag.split("-")[0];
-    if (["hi", "fr", "de", "ja", "ko", "id", "it", "tr"].includes(base)) return base as ResolvedLanguage;
-
-    // Traditional Chinese variants (Taiwan, Hong Kong, Macau, Hant)
-    if (
-      tag === "zh-tw" ||
-      tag === "zh-hk" ||
-      tag === "zh-mo" ||
-      tag.includes("zh-hant") ||
-      tag.startsWith("zh-tw-") ||
-      tag.startsWith("zh-hk-")
-    ) {
-      return "zh-TW";
-    }
-
-    // Simplified Chinese variants (Mainland China, Singapore, Hans) or generic Chinese
-    if (tag.startsWith("zh")) {
-      return "zh-CN";
-    }
-
-    // European Portuguese
-    if (tag === "pt-pt" || tag.startsWith("pt-pt-")) {
-      return "pt-PT";
-    }
-
-    // Brazilian / Generic Portuguese
-    if (tag.startsWith("pt")) {
-      return "pt-BR";
-    }
-
-    // Vietnamese
-    if (tag.startsWith("vi")) {
-      return "vi";
-    }
-
-    // Thai
-    if (tag.startsWith("th")) {
-      return "th";
-    }
-
-    // Spanish
-    if (tag.startsWith("es")) {
-      return "es";
-    }
-
-    // Russian
-    if (tag.startsWith("ru")) {
-      return "ru";
-    }
-
-    // English
-    if (tag.startsWith("en")) {
-      return "en";
-    }
+    const matched = matchLocale(raw);
+    if (matched) return matched;
   }
 
   return "en";
@@ -132,10 +95,7 @@ export function detectBrowserLanguage(): ResolvedLanguage {
  * Resolves the active language based on user settings ("auto" or explicit language code).
  */
 export function resolveLanguage(lang?: SupportedLanguage | string): ResolvedLanguage {
-  if (!lang || lang === "auto" || !Object.hasOwn(LOCALES, lang)) {
-    return detectBrowserLanguage();
-  }
-  return lang as ResolvedLanguage;
+  return matchLocale(lang) || detectBrowserLanguage();
 }
 
 /**
@@ -145,3 +105,5 @@ export function getTranslations(lang?: SupportedLanguage | string): TranslationS
   const resolved = resolveLanguage(lang);
   return LOCALES[resolved] || en;
 }
+
+export function languageDirection(language?: string): 'ltr' | 'rtl' { return directionForLocale(resolveLanguage(language)); }

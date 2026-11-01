@@ -114,7 +114,7 @@ export const es: TranslationSchema = {
   },
   content: {
     tooltips: {
-      back: "Retroceder {s} segundos — mantener para avanzar rápido",
+      back: "Retroceder {s} segundos — mantén pulsado para seguir retrocediendo",
       playPause: "Reproducir / Pausar (Espacio o K; Alt+P)",
       forward: "Avanzar {s} segundos — mantener para avanzar rápido",
       speed: "Velocidad de reproducción",

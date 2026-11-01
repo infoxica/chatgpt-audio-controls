@@ -48,7 +48,7 @@ class SiteHTTP(unittest.TestCase):
         with self.get('/sitemap.xml') as response:
             self.assertEqual(response.headers.get_content_type(), 'application/xml')
             urls = ET.fromstring(response.read()).findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url')
-            self.assertEqual(len(urls), 85)
+            self.assertEqual(len(urls), 165)
             for url in urls:
                 canonical = url.find('{http://www.sitemaps.org/schemas/sitemap/0.9}loc').text
                 self.assertTrue(canonical.startswith(preview.CANONICAL))
@@ -108,16 +108,16 @@ class SiteHTTP(unittest.TestCase):
                     self.assertIn('rel="canonical"', response.headers['Link'])
         with self.get('/llms-full.txt') as response:
             full = response.read().decode()
-            self.assertEqual(full.count('\nSource: '), 85)
+            self.assertEqual(full.count('\nSource: '), 165)
             self.assertIn('## ja:', full)
             self.assertIn('## en: Glossary', full)
         with self.get('/sitemap.md') as response:
             sitemap = response.read().decode()
-            self.assertEqual(sitemap.count('\n## '), 17)
+            self.assertEqual(sitemap.count('\n## '), 33)
             self.assertIn('/glossary/', sitemap)
         with self.get('/sitemap.xml') as response:
             dates = ET.fromstring(response.read()).findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod')
-            self.assertEqual(len(dates), 85)
+            self.assertEqual(len(dates), 165)
             for date in dates:
                 datetime.fromisoformat(date.text.replace('Z', '+00:00'))
 

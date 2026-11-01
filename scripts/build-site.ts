@@ -1,12 +1,14 @@
+import { featureCopy } from '../src/shared/i18n/features';
+import { polishCopy } from '../src/shared/i18n/polish';
 import { mkdirSync, writeFileSync, copyFileSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { createElement, type ComponentType } from 'react';
 import { build } from 'vite';
 import { Button, SiteNavigation, HeaderControls, FaqAccordion, ConsentBanner } from '../site/components';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { CirclePlay, Gauge, Download, Volume2, Rewind, MessageCircleMore, ArrowRight, ExternalLink, type LucideIcon } from 'lucide-react';
+import { CirclePlay, Gauge, Download, Volume2, Rewind, PanelsTopLeft, CircleCheck, ArrowRight, ExternalLink, type LucideIcon } from 'lucide-react';
 import { releaseLocales } from '../src/shared/i18n/release-copy';
-import { LOCALES } from '../src/shared/i18n/core';
+import { LOCALES, languageDirection } from '../src/shared/i18n/core';
 import { SPEED_PRESETS, SUPPORTED_LANGUAGES } from '../src/shared/constants';
 import config from '../config/release.json';
 import TurndownService from 'turndown';
@@ -42,14 +44,14 @@ copyFileSync('site/site.css', 'site-dist/assets/site.css');
 copyFileSync('assets/HRs9MPufa1J1h5glNhut.png', 'site-dist/assets/chrome-store.png');
 copyFileSync('assets/English_Get it from Microsoft Edge.png', 'site-dist/assets/edge-addons.png');
 copyFileSync('public/icons/icon-128.png', 'site-dist/assets/icon.png');
-copyFileSync('assets/store/screenshots/v1.3.0-player-active.jpg', 'site-dist/assets/player.jpg');
-copyFileSync('assets/store/screenshots/v1.3.0-dashboard.png', 'site-dist/assets/popup.png');
+copyFileSync('assets/store/screenshots/v1.4.0-live-dock.png', 'site-dist/assets/player.png');
+copyFileSync('assets/store/screenshots/v1.4.0-dashboard.png', 'site-dist/assets/popup.png');
 // Render the existing Lucide components at build time; no icon runtime or CDN.
 const icon = (component: LucideIcon, className = '') => renderToStaticMarkup(createElement(component, {
   size: 20, strokeWidth: 1.6, className, 'aria-hidden': true, focusable: false,
 }));
 const playIcon = icon(CirclePlay);
-const featureIcons = [CirclePlay, Gauge, Download, Volume2, Rewind, MessageCircleMore].map(component => icon(component));
+const featureIcons = [CirclePlay, Gauge, Download, PanelsTopLeft, CircleCheck, Volume2, Rewind].map(component => icon(component));
 const externalLinkIcon = icon(ExternalLink, 'external-link-icon');
 const json = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
 function island<P extends object>(id: string, component: ComponentType<P>, props: P) {
@@ -64,7 +66,7 @@ await build({
     lib: { entry: 'site/client.tsx', formats: ['es'], fileName: () => 'site.js' } },
 });
 for (const [code, base] of Object.entries(LOCALES)) {
-  const c = releaseLocales[code];
+  const c = releaseLocales[code], f = featureCopy(code);
   const n = navigationCopy[code as keyof typeof navigationCopy];
   if (!n || Object.keys(navigationCopy.en).some(key => !n[key as keyof typeof n]?.trim())) throw new Error(`Missing navigation translation ${code}`);
   const g = guideCopy[code as keyof typeof guideCopy];
@@ -80,20 +82,20 @@ for (const [code, base] of Object.entries(LOCALES)) {
     target.search = new URLSearchParams({ utm_source: 'official_website', utm_medium: 'referral', utm_campaign: 'extension', utm_content: `${code}_${placement}` }).toString();
     return `<a class="store-badge" data-store="${store}" data-placement="${placement}" href="${escape(target.toString())}"><img src="${path}assets/${store === 'chrome' ? 'chrome-store' : 'edge-addons'}.png" alt="${escape(c[store])}" width="${store === 'chrome' ? 496 : 1178}" height="${store === 'chrome' ? 150 : 312}"></a>`;
   }).join('')}</div>`;
-  const features = [[base.content.shortcutsPopover.playPause, base.shortcuts.playPause.description], [base.content.tooltips.speed, base.options.general.speedDesc], [base.content.tooltips.download, c.sourceFormat], [base.content.shortcutsPopover.volumeScroll, base.options.faq.a1], [base.popup.quickControls.smoothScrubbing, base.popup.quickControls.smoothScrubbingDesc]];
+  const features = [[base.content.shortcutsPopover.playPause, base.shortcuts.playPause.description], [base.content.tooltips.speed, base.options.general.speedDesc], [base.content.tooltips.download, c.sourceFormat], [f.layout, polishCopy(code).layoutDescription], [f.ready, f.notify], [base.content.shortcutsPopover.volumeScroll, base.options.faq.a1], [base.popup.quickControls.smoothScrubbing, base.popup.quickControls.smoothScrubbingDesc]];
   const shortcutRows = [[base.shortcuts.playPause.action, 'Space / K · Alt+P', 'Space / K · Option ⌥+P'], [base.shortcuts.seekBack.action, 'Alt+←', 'Option ⌥+←'], [base.shortcuts.seekForward.action, 'Alt+→', 'Option ⌥+→'], [base.shortcuts.speedDecrease.action, 'Shift+,', 'Shift ⇧+,'], [base.shortcuts.speedIncrease.action, 'Shift+.', 'Shift ⇧+.']];
   const controlsFor = (slug: string) => island('site-controls', HeaderControls, {
     locale: code, languageLabel: c.language, themeLabel: base.popup.header.switchTheme,
     options: SUPPORTED_LANGUAGES.filter(item => item.code !== 'auto').map(item => ({ code: item.code, name: item.nativeName, url: localeUrl(item.code) + slug })),
   });
   const faq = island('site-faq', FaqAccordion, { items: [
-    [base.options.faq.q1,base.options.faq.a1], [base.options.faq.q2,base.options.faq.a2],
+    [base.options.faq.q1,base.options.faq.a1], [base.options.faq.q2,polishCopy(code).layoutDescription],
     [base.options.faq.q3,c.sourceFormat], [base.options.faq.q4,base.options.faq.a4],
     [base.options.faq.q6,c.privacyBody], [base.content.tooltips.readAloud,c.nativeHelp],
     [base.content.tooltips.playPause,c.playError],
   ] });
   const consent = island('site-consent', ConsentBanner, { title: c.analyticsTitle, body: c.analyticsBody, accept: c.accept, decline: c.decline });
-  const schema = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'ChatGPT Audio Controls', applicationCategory: 'BrowserApplication', operatingSystem: 'Windows, macOS, Linux, ChromeOS', isAccessibleForFree: true, url, description: c.siteIntro, image: root + 'assets/player.jpg', author: { '@type': 'Organization', name: 'Infoxica' }, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } };
+  const schema = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'ChatGPT Audio Controls', applicationCategory: 'BrowserApplication', operatingSystem: 'Windows, macOS, Linux, ChromeOS', isAccessibleForFree: true, url, description: c.siteIntro, image: root + 'assets/player.png', author: { '@type': 'Organization', name: 'Infoxica' }, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' } };
   const groups = [
     { label: n.product, links: [{ label: n.overview, href: url, description: c.siteIntro }, { label: c.features, href: url+'#features', description: c.siteTitle }, { label: c.setup, href: url+'#setup', description: c.stepInstall }, { label: base.common.dashboard, href: url+'#dashboard', description: base.options.headers.preferencesDesc }] },
     { label: n.guides, links: [{ label: base.popup.about.documentation, href: url+'guide/', description: c.quickStartBody }, { label: g.installation, href: url+'installation/', description: c.stepInstall }, { label: 'Tampermonkey', href: url+'userscript/', description: w.userscriptNote }, { label: g.glossary, href: url+'glossary/', description: g.glossaryIntro }] },
@@ -118,17 +120,17 @@ for (const [code, base] of Object.entries(LOCALES)) {
       ...(slug ? [] : [{ ...schema, '@context': undefined, '@id': root+'#software' }]),
     ] };
 
-    return `<!doctype html><html lang="${code}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.jpg"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="800"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.jpg"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, '\\u003c')}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
+    return `<!doctype html><html lang="${code}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.png"><meta property="og:image:width" content="784"><meta property="og:image:height" content="120"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.png"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, '\\u003c')}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
   <a class="skip" href="#main">${escape(c.features)}</a><header class="top"><a class="brand" href="${url}"><img src="${path}assets/icon.png" alt="" width="34" height="34"><span>ChatGPT<br>Audio Controls</span></a><div class="header-actions">${navigation}${controlsFor(slug)}</div></header>
   ${content}
   <footer>${footerNavigation}<p>${escape(c.independent)}</p><p class="copyright-disclaimer">${escape(n.disclaimer)}</p><div class="links"><a href="${root}sitemap.xml">${escape(n.sitemap)}</a><a href="${root}llms.txt">llms.txt</a><a href="https://github.com/infoxica/chatgpt-audio-controls">${escape(base.popup.about.githubRepo)}</a><a href="${url}#privacy">${escape(c.privacy)}</a>${renderToStaticMarkup(createElement(Button, { id: 'analytics-preferences', variant: 'link' }, c.preferences))}</div></footer>
   ${consent}</body></html>`;
   };
-  const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls</div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p>${install('hero')}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
-  <figure class="player-preview"><img src="${path}assets/player.jpg" alt="${escape(c.screenshot)}" width="1280" height="800" fetchpriority="high"><figcaption class="small">${escape(c.screenshot)}</figcaption></figure>
-  <section class="section feature-section" id="features"><h2>${escape(c.features)}</h2><div class="features">${features.map(([title, body], index) => `<article><span class="feature-icon">${featureIcons[index]}</span><div><h3>${escape(title)}</h3><p>${escape(body)}</p>${index === 1 ? `<div class="speed-presets" aria-label="${escape(base.content.tooltips.speed)}">${SPEED_PRESETS.map(speed=>`<span>${speed}×</span>`).join('')}</div>` : ''}</div></article>`).join('')}</div></section>
+  const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls</div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p><p class="small">${escape(c.quickStartBody)}</p>${install('hero')}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
+  <figure class="player-preview"><img src="${path}assets/player.png" alt="${escape(c.screenshot)}" width="784" height="120" fetchpriority="high"><figcaption class="small">${escape(c.screenshot)}</figcaption></figure>
+  <section class="section feature-section" id="features"><h2>${escape(c.features)}</h2><div class="features">${features.map(([title, body], index) => `<article><span class="feature-icon">${featureIcons[index % featureIcons.length]}</span><div><h3>${escape(title)}</h3><p>${escape(body)}</p>${index === 1 ? `<div class="speed-presets" aria-label="${escape(base.content.tooltips.speed)}">${SPEED_PRESETS.map(speed=>`<span>${speed}×</span>`).join('')}</div>` : ''}</div></article>`).join('')}</div></section>
   <section class="section setup-section" id="setup"><div><h2>${escape(c.setup)}</h2><ol><li>${escape(c.stepInstall)}${install('setup')}</li><li>${escape(c.stepRead)}<p class="step-action">${linkButton('https://chatgpt.com/',base.common.openChatGPT,true)}</p></li><li>${escape(c.stepControl)}</li></ol></div><div class="shortcuts-panel"><h3>${escape(base.popup.shortcuts.title)}</h3><table><thead><tr><th scope="col">${escape(base.popup.tabs.controls)}</th><th scope="col">Windows / Linux</th><th scope="col">macOS</th></tr></thead><tbody>${shortcutRows.map(([label, windows, mac])=>`<tr><td>${escape(label)}</td><td><kbd>${escape(windows)}</kbd></td><td><kbd>${escape(mac)}</kbd></td></tr>`).join('')}</tbody></table></div></section>
-  <section class="section settings-story" id="dashboard"><div><h2>${escape(base.common.dashboard)}</h2><p>${escape(base.options.headers.preferencesDesc)}</p><h3>${escape(base.options.general.languageTitle)}</h3><p>${escape(base.options.general.languageDesc)}</p><h3>${escape(base.options.general.seekTitle)}</h3><p>${escape(base.options.general.seekDesc)}</p><h3>${escape(base.options.nav.darkMode)} / ${escape(base.options.nav.lightMode)}</h3></div><figure><img src="${path}assets/popup.png" alt="${escape(base.options.headers.preferencesTitle)}" width="1280" height="800" loading="lazy"><figcaption class="small">${escape(base.options.headers.preferencesTitle)}</figcaption></figure></section>
+  <section class="section settings-story" id="dashboard"><div><h2>${escape(base.common.dashboard)}</h2><p>${escape(base.options.headers.preferencesDesc)}</p><h3>${escape(base.options.general.languageTitle)}</h3><p>${escape(base.options.general.languageDesc)}</p><h3>${escape(base.options.general.seekTitle)}</h3><p>${escape(base.options.general.seekDesc)}</p><h3>${escape(base.options.nav.darkMode)} / ${escape(base.options.nav.lightMode)}</h3></div><figure><img src="${path}assets/popup.png" alt="${escape(base.options.headers.preferencesTitle)}" width="1280" height="900" loading="lazy"><figcaption class="small">${escape(base.options.headers.preferencesTitle)}</figcaption></figure></section>
   <section class="section reading" id="help"><h2>${escape(c.help)}</h2>${faq}<p><a href="https://github.com/infoxica/chatgpt-audio-controls/issues">${escape(base.popup.about.reportIssue)} ${externalLinkIcon}</a></p></section>
   <section class="section reading" id="guides"><h2>${escape(base.popup.about.documentation)}</h2><p>${escape(g.intro)}</p><div class="links">${linkButton(url+'guide/',base.popup.about.documentation)}${linkButton(url+'installation/',g.installation)}${linkButton(url+'userscript/','Tampermonkey')}${linkButton(url+'glossary/',g.glossary)}</div><p class="small guide-note">${escape(w.userscriptNote)}</p></section>
   <section class="section reading review-section" id="reviews"><h2>${escape(w.reviewTitle)}</h2><p>${escape(w.reviewBody)}</p><div class="links">${[[chromeReviewUrl,'Chrome Web Store'],[edgeReviewUrl,'Microsoft Edge Add-ons']].map(([href,store])=>linkButton(href,w.reviewLink.replace('{store}',store),true)).join('')}</div><p class="small guide-note">${escape(w.reviewHint)}</p></section>
@@ -161,15 +163,15 @@ writeFileSync('site-dist/robots.txt', '# Public website pages, guides, and asset
   + crawlers.map(agent => `User-agent: ${agent}\nAllow: /\nDisallow:\nContent-Signal: search=yes, ai-input=yes, ai-train=yes\n`).join('\n')
   + `\nSitemap: ${root}sitemap.xml\n`);
 writeFileSync('site-dist/.nojekyll', '');
-console.log('Generated 85 static pages: home and four guides in all 17 locales.');
+console.log(`Generated ${Object.keys(LOCALES).length * 5} static pages in ${Object.keys(LOCALES).length} locales.`);
 
 writeFileSync('site-dist/llms.txt', `# ChatGPT Audio Controls
 
 > An independent, free, open-source browser extension by Infoxica that adds playback controls to ChatGPT Read Aloud.
 
-The desktop extension offers playback speed, seeking, volume, downloads, and a settings dashboard. Store listings determine the version currently available; repository development does not establish store availability. A standalone Tampermonkey userscript is also available, with its own feature set.
+The desktop extension offers playback speed, seeking, volume, downloads, and a settings dashboard. Store listings determine the version currently available; repository development does not establish store availability. The standalone Tampermonkey userscript is generated from the same player source. Browser command assignment requires the desktop extension.
 
-This website supports 17 languages. The extension does not include analytics. Website analytics are optional and consent-gated. Uninstall feedback is voluntary and separate from website analytics.
+This website supports ${Object.keys(LOCALES).length} languages. The extension does not include analytics. Website analytics are optional and consent-gated. Uninstall feedback is voluntary and separate from website analytics.
 
 ChatGPT and OpenAI are trademarks of OpenAI. This project is not affiliated with or endorsed by OpenAI and claims no ownership of OpenAI's trademarks or copyrighted materials.
 
@@ -196,6 +198,6 @@ ChatGPT and OpenAI are trademarks of OpenAI. This project is not affiliated with
 ${SUPPORTED_LANGUAGES.filter(item => item.code !== 'auto').map(item => `- [${item.nativeName}](${localeUrl(item.code)}index.md): ${item.code} overview; guide, installation, and userscript pages are available under the same locale path.`).join('\n')}
 `);
 
-writeFileSync('site-dist/llms-full.txt', `# ChatGPT Audio Controls — Complete website context\n\n${pages.length} pages in 17 languages. Source content last modified: ${lastModified}.\n\n` + pages.map(page => `## ${page.locale}: ${page.title}\n\n${page.markdown}`).join('\n---\n\n'));
+writeFileSync('site-dist/llms-full.txt', `# ChatGPT Audio Controls — Complete website context\n\n${pages.length} pages in ${Object.keys(LOCALES).length} languages. Source content last modified: ${lastModified}.\n\n` + pages.map(page => `## ${page.locale}: ${page.title}\n\n${page.markdown}`).join('\n---\n\n'));
 writeFileSync('site-dist/sitemap.md', '# ChatGPT Audio Controls — Documentation sitemap\n\n[Complete context](' + root + 'llms-full.txt) · [XML sitemap](' + root + 'sitemap.xml)\n\n'
   + SUPPORTED_LANGUAGES.filter(item => item.code !== 'auto').map(item => `## ${item.nativeName} (${item.code})\n\n` + pages.filter(page => page.locale === item.code).map(page => `- [${page.title}](${page.url}) · [Markdown](${page.url}index.md)`).join('\n')).join('\n\n') + '\n');

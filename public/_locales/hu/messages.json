@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Lejátszás / Szünet"
+  },
+  "command_seek_back": {
+    "message": "Keress visszafelé"
+  },
+  "command_seek_forward": {
+    "message": "Keress előre"
+  },
+  "command_speed_decrease": {
+    "message": "Sebesség csökkentése"
+  },
+  "command_speed_increase": {
+    "message": "Sebesség növelése"
+  },
+  "command_speed_reset": {
+    "message": "Állítsa vissza a sebességet 1×-re"
+  },
+  "command_volume_increase": {
+    "message": "Hangerő növelése"
+  },
+  "command_volume_decrease": {
+    "message": "Hangerő csökkentése"
+  },
+  "command_toggle_mute": {
+    "message": "Némítás / némítás feloldása"
+  },
+  "command_download_audio": {
+    "message": "Hang letöltése"
+  },
+  "command_toggle_collapse": {
+    "message": "A lejátszó összecsukása / Bontsa ki a ChatGPT audiovezérlőket"
+  },
+  "command_reset_layout": {
+    "message": "Elrendezés visszaállítása"
+  },
+  "command_open_help": {
+    "message": "Billentyűparancsok és kézmozdulatok"
+  },
+  "command_open_settings": {
+    "message": "Nyissa meg az Irányítópult és a beállításokat"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Olvass fel hangosan"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT hangvezérlők: szünet, keresés, sebesség, hangerő, letöltések és parancsikonok."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Lebegő vezérlők megjelenítése/elrejtése"
+  }
+}

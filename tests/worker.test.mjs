@@ -6,6 +6,8 @@ let mf, db;
 let origin;
 const answer = () => ({ id: randomUUID(), source:'installed',reason:'bug',comment:'',locale:'ja',version:'1.3.0',browser:'Edge',os:'Windows',token:'valid' });
 const submit = (input, headers={}) => mf.dispatchFetch(origin+'/api/feedback',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,...headers},body:JSON.stringify(input)});
+// Starting local workerd/D1 can exceed Bun's 5s hook default on a cold or busy
+// Windows host. Request assertions retain their normal timeout.
 beforeAll(async()=>{
   const built=await Bun.build({entrypoints:['feedback/worker/src/index.ts'],target:'browser',format:'esm'});
   if(!built.success)throw Error('Worker build failed');
@@ -13,8 +15,8 @@ beforeAll(async()=>{
   origin=(await mf.ready).origin;
   db=await mf.getD1Database('DB');
   await db.exec((await fs.readFile('feedback/worker/migrations/0001_feedback.sql','utf8')).replace(/\n/g,' '));
-});
-afterAll(async()=>{await mf?.dispose();});
+}, 30000);
+afterAll(async()=>{await mf?.dispose();}, 10000);
 test('real D1 persistence and concurrent retry yield one row',async()=>{
   const input=answer();input.comment='=IMPORTXML("x") <script>alert(1)</script>';
   const results=await Promise.all(Array.from({length:5},()=>submit(input)));

@@ -1,5 +1,6 @@
 import { platformKeys } from "../../shared/shortcuts";
 import { CommandShortcut } from "../../shared/CommandShortcut";
+import { polishCopy } from "../../shared/i18n/polish";
 import React from "react";
 import { Keyboard, MousePointer } from "lucide-react";
 import { TranslationSchema } from "../../shared/i18n";
@@ -63,10 +64,10 @@ export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t, language }) =
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "12px 16px",
-                background: "var(--bg-card)",
-                borderRadius: "var(--radius-sm)",
-                border: "1px solid var(--border-color)",
+                padding: "8px 0",
+                gap: 12,
+                flexWrap: "wrap",
+                borderBottom: "1px solid var(--border-color)",
               }}
             >
               <div>
@@ -75,7 +76,7 @@ export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t, language }) =
                   {platformKeys(s.description)}
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 4 }}>
+              <div dir="ltr" style={{ display: "flex", gap: 4 }}>
                 {s.keys.map((k, i) => (
                   <span key={i} className="kbd" style={{ padding: "4px 8px", fontSize: 11 }}>
                     {platformKeys(k)}
@@ -96,11 +97,11 @@ export const ShortcutsGuide: React.FC<ShortcutsGuideProps> = ({ t, language }) =
           {t.options.shortcutsGuide.gesturesDesc}
         </p>
 
-        <ul style={{ paddingLeft: 20, display: "flex", flexDirection: "column", gap: 6, fontSize: 13, color: "var(--text-secondary)" }}>
-          <li><strong>0.3s:</strong> {t.options.shortcutsGuide.gestureHold03}</li>
-          <li><strong>1.5s:</strong> {t.options.shortcutsGuide.gestureHold15}</li>
-          <li><strong>3.0s:</strong> {t.options.shortcutsGuide.gestureHold30}</li>
-          <li><strong>Release:</strong> {t.options.shortcutsGuide.gestureRelease}</li>
+        <ul style={{ paddingInlineStart: 20, display: "flex", flexDirection: "column", gap: 6, fontSize: 13, color: "var(--text-secondary)" }}>
+          <li><strong><bdi>0.3</bdi> {t.options.general.secondsUnit}:</strong> {t.options.shortcutsGuide.gestureHold03}</li>
+          <li><strong><bdi>1.5</bdi> {t.options.general.secondsUnit}:</strong> {t.options.shortcutsGuide.gestureHold15}</li>
+          <li><strong><bdi>3.0</bdi> {t.options.general.secondsUnit}:</strong> {t.options.shortcutsGuide.gestureHold30}</li>
+          <li><strong>{polishCopy(language).gestureReleaseLabel}:</strong> {t.options.shortcutsGuide.gestureRelease}</li>
         </ul>
       </div>
     </div>

@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "נגינה / השהיה"
+  },
+  "command_seek_back": {
+    "message": "דילוג אחורה"
+  },
+  "command_seek_forward": {
+    "message": "דילוג קדימה"
+  },
+  "command_speed_decrease": {
+    "message": "האטת מהירות"
+  },
+  "command_speed_increase": {
+    "message": "הגברת מהירות"
+  },
+  "command_speed_reset": {
+    "message": "איפוס מהירות ל־1×"
+  },
+  "command_volume_increase": {
+    "message": "הגברת עוצמה"
+  },
+  "command_volume_decrease": {
+    "message": "הנמכת עוצמה"
+  },
+  "command_toggle_mute": {
+    "message": "השתקה / ביטול השתקה"
+  },
+  "command_download_audio": {
+    "message": "הורדת שמע"
+  },
+  "command_toggle_collapse": {
+    "message": "צמצום הנגן / הרחבת בקרת שמע ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "איפוס פריסה"
+  },
+  "command_open_help": {
+    "message": "קיצורי מקשים ומחוות"
+  },
+  "command_open_settings": {
+    "message": "פתיחת לוח הבקרה וההגדרות"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — הקראה"
+  },
+  "extensionDescription": {
+    "message": "בקרת שמע ChatGPT: השהיה, דילוג, מהירות, עוצמת קול, הורדה וקיצורים."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "הצגה / הסתרה של הבקרות הצפות"
+  }
+}

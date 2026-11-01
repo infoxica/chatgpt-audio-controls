@@ -15,7 +15,7 @@
   </a>
 </p>
 
-[![Source version](https://img.shields.io/badge/source-v1.3.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Source version](https://img.shields.io/badge/source-v1.4.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
@@ -72,24 +72,40 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 ### 🌐 Multi-Language & Internationalization (i18n)
 - **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
 - **Customizable in Settings**: Switch your preferred interface language anytime from the Dashboard.
-- **Supported Languages & Regional Variants**:
-  - 🇺🇸 **English** (`en`)
-  - 🇨🇳 **Chinese (Simplified)** — 简体中文 (`zh-CN`)
-  - 🇹🇼 / 🇭🇰 **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
-  - 🇻🇳 **Vietnamese** — Tiếng Việt (`vi`)
-  - 🇹🇭 **Thai** — ไทย (`th`)
-  - 🇪🇸 **Spanish** — Español (`es`)
-  - 🇧🇷 **Portuguese (Brazil)** — Português do Brasil (`pt-BR`)
-  - 🇵🇹 **Portuguese (Portugal)** — Português de Portugal (`pt-PT`)
-  - 🇷🇺 **Russian** — Русский (`ru`)
-  - 🇯🇵 **Japanese** — 日本語 (`ja`)
-  - 🇰🇷 **Korean** — 한국어 (`ko`)
-  - 🇮🇳 **Hindi** — हिन्दी (`hi`)
-  - 🇫🇷 **French** — Français (`fr`)
-  - 🇩🇪 **German** — Deutsch (`de`)
-  - 🇮🇹 **Italian** — Italiano (`it`)
-  - 🇮🇩 **Indonesian** — Bahasa Indonesia (`id`)
-  - 🇹🇷 **Turkish** — Türkçe (`tr`)
+- **Supported interface languages in the v1.4.0 candidate (33)**:
+  - **Arabic** — العربية (`ar`)
+  - **Bengali** — বাংলা (`bn`)
+  - **Catalan** — Català (`ca`)
+  - **Chinese (Simplified)** — 简体中文 (`zh-CN`)
+  - **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
+  - **Czech** — Čeština (`cs`)
+  - **English** — English (`en`)
+  - **French** — Français (`fr`)
+  - **German** — Deutsch (`de`)
+  - **Greek** — Ελληνικά (`el`)
+  - **Hebrew** — עברית (`he`)
+  - **Hindi** — हिन्दी (`hi`)
+  - **Hungarian** — Magyar (`hu`)
+  - **Indonesian** — Bahasa Indonesia (`id`)
+  - **Italian** — Italiano (`it`)
+  - **Japanese** — 日本語 (`ja`)
+  - **Korean** — 한국어 (`ko`)
+  - **Marathi** — मराठी (`mr`)
+  - **Norwegian Bokmål** — Norsk bokmål (`nb`)
+  - **Persian** — فارسی (`fa`)
+  - **Polish** — Polski (`pl`)
+  - **Portuguese (Brazil)** — Português (Brasil) (`pt-BR`)
+  - **Portuguese (Portugal)** — Português (Portugal) (`pt-PT`)
+  - **Romanian** — Română (`ro`)
+  - **Russian** — Русский (`ru`)
+  - **Spanish** — Español (`es`)
+  - **Swedish** — Svenska (`sv`)
+  - **Tamil** — தமிழ் (`ta`)
+  - **Telugu** — తెలుగు (`te`)
+  - **Thai** — ไทย (`th`)
+  - **Turkish** — Türkçe (`tr`)
+  - **Ukrainian** — Українська (`uk`)
+  - **Vietnamese** — Tiếng Việt (`vi`)
 
 ---
 
@@ -174,12 +190,12 @@ When Read Aloud is playing, click the download icon (📥) on the right rail. Th
 
 <details>
 <summary><strong>What happens when no audio is playing?</strong></summary>
-The full player capsules collapse into a small floating logo button on the right side. You can click it anytime to open the player, or it will automatically open when you start Read Aloud.
+The player collapses into a small circular expand button. Click it to open the player, or start ChatGPT's native Read Aloud to open it automatically.
 </details>
 
 <details>
 <summary><strong>Will this work on compact laptop screens?</strong></summary>
-The player measures available space. Two separate rounded capsules sit beside the composer when they fit, or above it with a gap on narrower screens.
+The player measures available space. Original desktop placement uses two separate capsules beside or above the composer. Below 768 CSS pixels, a shared two-row dock joins the composer; secondary controls open from its compact controls button. If space is insufficient, an expandable circle stays inside the visible viewport without replacing your saved layout.
 </details>
 
 <details>
@@ -196,6 +212,22 @@ Playback, retained audio, seeking, and downloads run locally in your browser. Th
 Your feedback is optional and private, even after uninstalling. No name or email is required. Please don’t include personal details or conversations. Use **Send feedback** in About or the settings dashboard; the same form opens after uninstalling. Only submitting the form saves feedback. Opening, skipping, or closing it saves nothing. See [PRIVACY.md](PRIVACY.md) for full details.
 
 ---
+
+## v1.4.0 — Native player and magnetic docking (release candidate)
+
+Drag the circular collapse/expand control to reveal fitting destinations: original placement, four corner L layouts, two vertical side-center layouts, or the composer dock. Targets match the real controls and attract the dragged player within 24 CSS pixels. A pill's subtle grip swaps it with the other slot in the current layout.
+
+The composer dock shares the input's width and surface, with one desktop row or two mobile rows. Collapse slides it away, leaving an expand circle on the right for LTR languages or left for RTL. Placement, pill order and reset are also keyboard-accessible in settings. Versioned desktop/mobile profiles stay on this device; compatible earlier preferences migrate automatically. Drops settle in about 220ms, reset takes 280ms, and collapse/expand takes 200ms. Reduced-motion preferences remove animated travel and magnetic movement.
+
+This candidate supports 33 interface languages, including Polish, Hungarian, Swedish, Czech, Ukrainian, Catalan, Greek, Romanian and Norwegian Bokmål. Auto stays first; language choices follow English-name alphabetical order. Arabic, Persian and Hebrew use RTL. Audio languages and voices still come from ChatGPT. New translations await native-speaker review.
+
+Open settings sections, four support actions, individual shortcut-edit guidance and a five-second optional download-ready toast complement the refined player. Fifteen desktop commands are assignable through browser shortcut settings; mobile commands APIs are optional. Responsive testing has passed locally, but real Edge Android acceptance remains pending.
+
+The dock preserves the native composer's border, radius and shadow. Its small branded tab clears the corner curve; L-layout seek tracks adapt to the free side span and avoid native top-right actions. See the [current acceptance record](docs/ACCEPTANCE-1.4.0.md), [audience baseline](docs/AUDIENCE-2026-10-30.md) and [signing assessment](docs/PACKAGE-SIGNING-ASSESSMENT.md). Website/listing changes are prepared locally; publishing and signing enrollment are separate.
+
+Extension and userscript players are built from the same source. Use one distribution at a time. The userscript’s help menu opens local settings; browser-level shortcut assignment requires the extension.
+
+Real Edge desktop/Android acceptance and publication remain pending. See [release status](docs/RELEASE-1.4.0-STATUS.md).
 
 ## v1.3.0
 

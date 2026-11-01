@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "ప్లే / విరామం"
+  },
+  "command_seek_back": {
+    "message": "వెనక్కి వెళ్లండి"
+  },
+  "command_seek_forward": {
+    "message": "ముందుకు వెళ్లండి"
+  },
+  "command_speed_decrease": {
+    "message": "వేగం తగ్గించండి"
+  },
+  "command_speed_increase": {
+    "message": "వేగం పెంచండి"
+  },
+  "command_speed_reset": {
+    "message": "వేగాన్ని 1× చేయండి"
+  },
+  "command_volume_increase": {
+    "message": "శబ్దాన్ని పెంచండి"
+  },
+  "command_volume_decrease": {
+    "message": "శబ్దాన్ని తగ్గించండి"
+  },
+  "command_toggle_mute": {
+    "message": "మ్యూట్ / అన్‌మ్యూట్"
+  },
+  "command_download_audio": {
+    "message": "ఆడియో డౌన్‌లోడ్"
+  },
+  "command_toggle_collapse": {
+    "message": "ప్లేయర్‌ను ముడుచండి / ChatGPT ఆడియో నియంత్రణలను విస్తరించండి"
+  },
+  "command_reset_layout": {
+    "message": "అమరికను రీసెట్ చేయండి"
+  },
+  "command_open_help": {
+    "message": "కీబోర్డ్ షార్ట్‌కట్‌లు మరియు సంజ్ఞలు"
+  },
+  "command_open_settings": {
+    "message": "డ్యాష్‌బోర్డ్ మరియు సెట్టింగ్‌లు తెరవండి"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — చదివి వినిపించు"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT ఆడియో: విరామం, సీకింగ్, వేగం, శబ్దం, డౌన్‌లోడ్, షార్ట్‌కట్‌లు."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "తేలియాడే నియంత్రణలను చూపు / దాచు"
+  }
+}

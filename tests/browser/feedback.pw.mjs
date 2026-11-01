@@ -20,6 +20,15 @@ async function open(page, source = 'installed', firstToken = 'valid') {
 }
 const count = async () => (await db.prepare('SELECT COUNT(*) AS n FROM feedback').first()).n;
 
+test('all added locales switch direction and fit narrow feedback screens',async({page})=>{
+  await open(page);
+  for(const language of ['bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb']) {
+    await page.locator('#language').selectOption(language);
+    await expect(page.locator('html')).toHaveAttribute('dir',['ar','fa','he'].includes(language)?'rtl':'ltr');
+    for(const width of [320,390,768]) {await page.setViewportSize({width,height:800});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth ? [] : [...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.right>innerWidth+1||r.left < -1;}).map(e=>({tag:e.tagName,name:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))),`${language} ${width}`).toEqual([]);}
+  }
+});
+
 test('theme follows system changes, remembers overrides and preserves answers', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' }); await open(page);
   await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
@@ -49,12 +58,12 @@ test('theme follows system changes, remembers overrides and preserves answers', 
   await expect(page.locator('#language')).toHaveAttribute('title', /Deutsch/);
   await expect(page.locator('#theme')).toHaveAccessibleName(/.+/);
 });
-test('both modes, no default choice, 17 languages and Skip create no record', async ({ page }) => {
+test('both modes, no default choice, 33 languages and Skip create no record', async ({ page }) => {
   const before = await count();
   for (const [mode, total] of [['installed', 3], ['uninstall', 8]]) {
     await open(page, mode); await expect(page.locator('input[name=reason]')).toHaveCount(total);
     await expect(page.locator('input:checked')).toHaveCount(0);
-    await expect(page.locator('#language option')).toHaveCount(17);
+    await expect(page.locator('#language option')).toHaveCount(33);
     await page.getByRole('button', { name: 'Send feedback', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Choose one reason');
     await page.getByRole('button', { name: 'Skip feedback', exact: true }).click();
@@ -86,4 +95,15 @@ test('lost response retry persists exactly once and failures never show success'
   await expect(page.locator('#done')).toBeHidden(); expect(await count()).toBe(before + 1);
   await page.locator('#send').click(); await expect(page.locator('#done')).toBeVisible();
   expect(requests).toBe(2); expect(await count()).toBe(before + 1);
+});
+
+test('feedback intent validates and preselects without submitting',async({page})=>{
+  await open(page);const initial=await count();
+  for(const intent of ['bug','suggestion','invalid']) {
+    await page.goto(`${origin}/feedback?source=installed&lang=pl&theme=dark&intent=${intent}`);
+    const selected=page.locator('input[name="reason"]:checked');
+    if(intent==='invalid')await expect(selected).toHaveCount(0);
+    else await expect(selected).toHaveValue(intent);
+    expect(await count()).toBe(initial);
+  }
 });

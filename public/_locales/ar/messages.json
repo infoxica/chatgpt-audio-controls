@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "تشغيل / إيقاف مؤقت"
+  },
+  "command_seek_back": {
+    "message": "الرجوع للخلف"
+  },
+  "command_seek_forward": {
+    "message": "التقدم للأمام"
+  },
+  "command_speed_decrease": {
+    "message": "خفض السرعة"
+  },
+  "command_speed_increase": {
+    "message": "رفع السرعة"
+  },
+  "command_speed_reset": {
+    "message": "إعادة السرعة إلى 1×"
+  },
+  "command_volume_increase": {
+    "message": "رفع الصوت"
+  },
+  "command_volume_decrease": {
+    "message": "خفض الصوت"
+  },
+  "command_toggle_mute": {
+    "message": "كتم / إلغاء الكتم"
+  },
+  "command_download_audio": {
+    "message": "تنزيل الصوت"
+  },
+  "command_toggle_collapse": {
+    "message": "طيّ المشغّل / توسيع أدوات صوت ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "إعادة ضبط التخطيط"
+  },
+  "command_open_help": {
+    "message": "اختصارات لوحة المفاتيح والإيماءات"
+  },
+  "command_open_settings": {
+    "message": "فتح لوحة التحكم والإعدادات"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — قراءة بصوت عالٍ"
+  },
+  "extensionDescription": {
+    "message": "تحكم بصوت ChatGPT: إيقاف مؤقت، تنقل، سرعة، مستوى الصوت، تنزيل واختصارات."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "إظهار / إخفاء أدوات التحكم العائمة"
+  }
+}

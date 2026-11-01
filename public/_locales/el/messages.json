@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Αναπαραγωγή / Παύση"
+  },
+  "command_seek_back": {
+    "message": "Αναζητήστε προς τα πίσω"
+  },
+  "command_seek_forward": {
+    "message": "Αναζητήστε μπροστά"
+  },
+  "command_speed_decrease": {
+    "message": "Μειώστε την ταχύτητα"
+  },
+  "command_speed_increase": {
+    "message": "Αύξηση Ταχύτητας"
+  },
+  "command_speed_reset": {
+    "message": "Επαναφέρετε την ταχύτητα στο 1×"
+  },
+  "command_volume_increase": {
+    "message": "Αυξήστε την ένταση"
+  },
+  "command_volume_decrease": {
+    "message": "Μειώστε την ένταση"
+  },
+  "command_toggle_mute": {
+    "message": "Σίγαση / κατάργηση σίγασης"
+  },
+  "command_download_audio": {
+    "message": "Λήψη ήχου"
+  },
+  "command_toggle_collapse": {
+    "message": "Σύμπτυξη προγράμματος αναπαραγωγής / Αναπτύξτε τα στοιχεία ελέγχου ήχου ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "Επαναφορά διάταξης"
+  },
+  "command_open_help": {
+    "message": "Συντομεύσεις και χειρονομίες πληκτρολογίου"
+  },
+  "command_open_settings": {
+    "message": "Ανοίξτε το Dashboard & Settings"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Διαβάστε δυνατά"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT χειριστήρια ήχου: παύση, αναζήτηση, ταχύτητα, ένταση, λήψεις και συντομεύσεις."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Εμφάνιση / απόκρυψη αιωρούμενων στοιχείων ελέγχου"
+  }
+}

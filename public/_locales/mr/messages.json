@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "चालवा / विराम"
+  },
+  "command_seek_back": {
+    "message": "मागे जा"
+  },
+  "command_seek_forward": {
+    "message": "पुढे जा"
+  },
+  "command_speed_decrease": {
+    "message": "वेग कमी करा"
+  },
+  "command_speed_increase": {
+    "message": "वेग वाढवा"
+  },
+  "command_speed_reset": {
+    "message": "वेग 1× करा"
+  },
+  "command_volume_increase": {
+    "message": "आवाज वाढवा"
+  },
+  "command_volume_decrease": {
+    "message": "आवाज कमी करा"
+  },
+  "command_toggle_mute": {
+    "message": "आवाज बंद / सुरू"
+  },
+  "command_download_audio": {
+    "message": "ऑडिओ डाउनलोड"
+  },
+  "command_toggle_collapse": {
+    "message": "प्लेयर लहान करा / ChatGPT ऑडिओ नियंत्रणे मोठी करा"
+  },
+  "command_reset_layout": {
+    "message": "मांडणी रीसेट करा"
+  },
+  "command_open_help": {
+    "message": "कीबोर्ड शॉर्टकट व हावभाव"
+  },
+  "command_open_settings": {
+    "message": "डॅशबोर्ड व सेटिंग्ज उघडा"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — वाचून दाखवा"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT ऑडिओ नियंत्रणे: विराम, सीकिंग, वेग, आवाज, डाउनलोड व शॉर्टकट."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "तरंगती नियंत्रणे दाखवा / लपवा"
+  }
+}

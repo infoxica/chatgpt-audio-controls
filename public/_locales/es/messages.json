@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "Reproducir / Pausar"
+  },
+  "command_seek_back": {
+    "message": "Retroceder"
+  },
+  "command_seek_forward": {
+    "message": "Avanzar"
+  },
+  "command_speed_decrease": {
+    "message": "Disminuir Velocidad"
+  },
+  "command_speed_increase": {
+    "message": "Aumentar Velocidad"
+  },
+  "command_speed_reset": {
+    "message": "Restablecer velocidad a 1×"
+  },
+  "command_volume_increase": {
+    "message": "Subir volumen"
+  },
+  "command_volume_decrease": {
+    "message": "Bajar volumen"
+  },
+  "command_toggle_mute": {
+    "message": "Silenciar / activar sonido"
+  },
+  "command_download_audio": {
+    "message": "Descargar audio"
+  },
+  "command_toggle_collapse": {
+    "message": "Ocultar reproductor / Expandir controles de audio de ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "Restablecer diseño"
+  },
+  "command_open_help": {
+    "message": "Atajos de teclado y gestos"
+  },
+  "command_open_settings": {
+    "message": "Abrir Panel y Ajustes"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls & Read Aloud"
   },

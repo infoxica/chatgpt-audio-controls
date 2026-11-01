@@ -5,7 +5,7 @@ async function serveSite(context,tracking=[]) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
     if(url.startsWith(base)){
-      const relative=url.slice(base.length) || 'index.html';
+      const relative=url.split('?')[0].slice(base.length) || 'index.html';
       const file=relative.endsWith('/')?relative+'index.html':relative;
       const content=await fs.readFile('site-dist/'+file);
       const body=file.endsWith('.html')?content.toString().replace(/data-ga4="[^"]*"/,'data-ga4="G-TEST123"'):content;
@@ -20,7 +20,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   page.on('pageerror',error=>errors.push(error.message));
   page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
   await serveSite(context,tracking);
-  await page.goto(base);await expect(page.getByRole('button',{name:'No thanks',exact:true})).toBeVisible();
+  await page.goto(base+'?utm_source=extension&utm_medium=referral&utm_campaign=v1.4.0&email=private%40example.test&search=private');await expect(page.getByRole('button',{name:'No thanks',exact:true})).toBeVisible();
   expect(tracking).toEqual([]);await page.getByRole('button',{name:'No thanks',exact:true}).click();await page.reload();expect(tracking).toEqual([]);
   const firstQuestion=page.locator('.faq-trigger').first();
   await firstQuestion.click();
@@ -41,6 +41,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   await expect(page.locator('#locale')).toBeFocused();
   await page.getByRole('button',{name:'Analytics preferences'}).click();await page.getByRole('button',{name:'Allow analytics',exact:true}).click();
   await expect.poll(()=>tracking.filter(url=>url.includes('googletagmanager')).length).toBe(1);
+  expect(await page.evaluate(()=>window.dataLayer.map(a=>Array.from(a)).find(a=>a[0]==='config')[2].page_location)).toBe(base+'?utm_source=extension&utm_medium=referral&utm_campaign=v1.4.0');
   expect(await page.evaluate(()=>window.dataLayer.every(command=>Object.prototype.toString.call(command)==='[object Arguments]'))).toBe(true);
   await page.locator('a[data-store=chrome][data-placement=hero]').click({modifiers:['Control']});
   const event=await page.evaluate(()=>window.dataLayer.map(args=>Array.from(args)).find(args=>args[0]==='event'));
@@ -78,7 +79,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({path:'build/browser-results/website-mobile-ja.png',fullPage:true});
   await page.setViewportSize({width:320,height:740});
-  for (const locale of ['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr']) {
+  for (const locale of ['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb']) {
     await page.goto(base+(locale==='en'?'':locale+'/'));
     await expect(page.locator('#locale-mobile')).toHaveAttribute('role','combobox');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),locale).toBe(true);
@@ -86,6 +87,9 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   expect(errors).toEqual([]);
 });
 test('guide pages stay local, align with the homepage, and preserve locale-specific metadata',async({page,context})=>{
+  // This exhaustive pass navigates 132 localized pages, not a single UI flow.
+  // Keep every locale assertion while allowing the expanded catalog to finish.
+  test.setTimeout(120000);
   await serveSite(context);
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);await page.getByRole('button',{name:'No thanks',exact:true}).click();
@@ -105,9 +109,9 @@ test('guide pages stay local, align with the homepage, and preserve locale-speci
   await expect(page.locator('main a[href$=".user.js"]')).toHaveCount(1);
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'build/browser-results/website-userscript-ja.png',fullPage:true});
-  const codes=['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr'];
+  const codes=['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb'];
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(85);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
   await page.setViewportSize({width:320,height:740});
   for(const code of codes) for(const route of ['guide','installation','userscript','glossary']) {
     const relative=(code==='en'?'':code+'/')+route+'/';
@@ -152,8 +156,8 @@ test('hierarchical navigation and discovery artifacts cover every localized page
   await expect(page).toHaveURL(base+'#dashboard');
   const navigation=JSON.parse(await fs.readFile('site/navigation-copy.json','utf8'));
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(85);
-  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(85*18);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
+  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(165*34);
   for(const locale of Object.keys(navigation)) {
     const prefix=locale==='en'?'':locale+'/';
     for(const slug of ['', 'guide/', 'installation/', 'userscript/', 'glossary/']) {
@@ -161,7 +165,7 @@ test('hierarchical navigation and discovery artifacts cover every localized page
       const html=await fs.readFile('site-dist/'+prefix+slug+'index.html','utf8');
       const md=await fs.readFile('site-dist/'+prefix+slug+'index.md','utf8');
       expect(html).toContain(`type="text/markdown" href="${canonical}index.md"`);
-      expect(html).toContain(navigation[locale].disclaimer);
+      expect(html).toContain(navigation[locale].disclaimer.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
       expect(html).toContain('class="footer-navigation"');
       expect(md).toContain('Source: '+canonical);
       expect(md).not.toContain('<svg');
@@ -224,11 +228,15 @@ test('desktop language grid and Support descriptions stay consistent', async ({p
   await page.goto(base+'guide/');
   await page.getByRole('button',{name:'No thanks',exact:true}).click();
   await page.locator('#locale').hover();
-  await expect(page.locator('.language-grid-link')).toHaveCount(17);
+  await expect(page.locator('.language-grid-link')).toHaveCount(33);
   await expect(page.locator('.language-grid-link[aria-current=page]')).toHaveText('English');
   expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(4);
   await page.screenshot({path:'build/browser-results/website-language-grid.png',animations:'disabled'});
   await page.setViewportSize({width:1100,height:850});
+  // Resizing moves the trigger away from the pointer; re-enter the language
+  // menu instead of leaving the pointer over a different navigation trigger.
+  await page.locator('#locale').hover();
+  await expect(page.locator('.language-grid')).toBeVisible();
   expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(3);
   await page.locator('.language-grid').getByRole('link',{name:'日本語',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/guide/');

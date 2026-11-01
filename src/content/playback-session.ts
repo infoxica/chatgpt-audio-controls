@@ -23,6 +23,7 @@ export class PlaybackSession {
     private retain: (source: string, signal: AbortSignal) => Promise<Blob>,
     private changed: (media: HTMLMediaElement | null) => void,
     private failed: () => void,
+    private retained: (ready: boolean) => void = () => {},
   ) {}
 
   isOwned(media: HTMLMediaElement): boolean { return media === this.owned; }
@@ -46,7 +47,10 @@ export class PlaybackSession {
     this.watch(media);
     this.payload = this.retain(source, this.controller.signal);
     // Retention failure is surfaced when recovery/download actually needs it.
-    void this.payload.catch(() => {});
+    const generation = this.generation;
+    void this.payload.then(blob => {
+      if (generation === this.generation && !this.controller?.signal.aborted && blob.size > 0) this.retained(true);
+    }).catch(() => {});
   }
 
   private watch(media: HTMLMediaElement): void {
@@ -207,6 +211,7 @@ export class PlaybackSession {
 
   dispose(next?: HTMLMediaElement): void {
     this.generation++;
+    this.retained(false);
     this.playAttempt++;
     clearTimeout(this.playTimer);
     this.controller?.abort();

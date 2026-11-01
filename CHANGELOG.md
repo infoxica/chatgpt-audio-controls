@@ -4,6 +4,31 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.4.0] — Unreleased
+
+- Restore floating controls if ChatGPT replaces their DOM during hydration or navigation, retaining playback, saved layouts and intentional hide/collapse settings. Keep early audio capture while deferring UI insertion until the document is parsed; restore removed standalone userscript styles as well.
+
+- Align left-side layouts and drag destinations with the visible sidebar rail, ignoring transparent navigation panels and clipping hidden overflow. Follow sidebar expansion/collapse without changing saved layouts.
+
+- Replace popup/dashboard theme dropdowns with compact Light, Dark and System icon buttons, retaining localized labels, keyboard access and saved preferences.
+
+- Close the visual dock/input gap with a non-interactive fill outside the native composer's rounded top corners, preserving its original border and input behavior.
+
+- Native 48px player pills, icon-only circle, four corner L presets, two vertical side-center presets and original automatic placement.
+- Composer dock joins the input without a seam: one desktop row, two mobile rows, and a compact menu for secondary controls on small screens.
+- Exact-shape drag previews, 24px magnetic capture with at most 12px attraction, 220ms drop/swap settling, 280ms reset and 200ms collapse. Reduced-motion support and smooth cancellation.
+- Pill grips swap only within the selected layout. Keyboard layout settings and version-2 per-device desktop/mobile profiles migrate compatible earlier preferences; mobile uses composer docking only.
+- Responsive popup and dashboard, touch-accessible controls, viewport-aware docking, and LTR/RTL interfaces.
+- Bengali, Marathi, Telugu, Tamil, Arabic, Persian, Hebrew, Polish, Hungarian, Swedish, Czech, Ukrainian, Catalan, Greek, Romanian and Norwegian Bokmål across the player, extension, website, feedback and supported listing resources (33 interface languages total; new translation review pending).
+- Collision-aware L-layout seek widths, native top-action clearance and corner-aware dock tabs. Composer borders, radii and shadows remain untouched.
+- Compact open settings sections, alphabetical language choices, shortcut-edit guidance and suggestion/bug/Chrome-review/Edge-review actions with localized feedback intent.
+- Benefit-led website/listing copy, updated screenshots, consent-gated campaign allowlisting and a dated audience baseline. No extension telemetry added. Package signing assessed without enrollment or publishing.
+- Optional full-audio-ready notification tied to the current retained playback session.
+- Fifteen assignable desktop commands, with optional commands API support on mobile.
+- Standalone userscript generated from the shared player source and styles.
+- Refined composer docking with a small branded tab, native surface treatment, menu-safe layering and stable placement around response/email headers. Adaptive seek tracks and interior-facing volume popovers keep controls clear.
+- Fixed desktop toolbar popup sizing, aligned settings cards, added danger styling for resets and localized suggestion/review cards in all 24 languages. Download-ready notifications use a compact success treatment and dismiss after five active seconds.
+
 ## [1.3.0] - 2026-10-26
 
 - Preserve playback position, speed and volume across destructive host pauses with a session-specific retained source and an owned audio element. Ignore stale loads and play results, show loading/recovery state, and prevent overlapping sessions.

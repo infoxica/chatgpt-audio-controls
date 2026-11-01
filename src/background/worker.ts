@@ -1,6 +1,6 @@
 import { feedbackURL } from '../shared/feedback';
 import { getSettings } from '../shared/storage';
-import { VISIBILITY_COMMAND } from '../shared/shortcuts';
+import { VISIBILITY_COMMAND, isPlayerCommand } from '../shared/shortcuts';
 import config from '../../config/release.json';
 
 async function registerUninstall(): Promise<void> {
@@ -15,16 +15,19 @@ const register = () => { void registerUninstall().catch(error => console.warn('C
 chrome.runtime.onInstalled.addListener(register);
 chrome.runtime.onStartup.addListener(register);
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
-  if (sender.id !== chrome.runtime.id || message?.type !== 'get-visibility-shortcut') return;
-  void chrome.commands.getAll().then(commands => reply({ shortcut: commands.find(c => c.name === VISIBILITY_COMMAND)?.shortcut || '' })).catch(() => reply({ shortcut: '' }));
+  if (sender.id !== chrome.runtime.id) return;
+  if (message?.type === 'open-settings') { void chrome.runtime.openOptionsPage(); return; }
+  if (message?.type !== 'get-visibility-shortcut') return;
+  if (!chrome.commands?.getAll) { reply({ shortcut: '', commands: {} }); return; }
+  void chrome.commands.getAll().then(commands => reply({ shortcut: commands.find(c => c.name === VISIBILITY_COMMAND)?.shortcut || '', commands: Object.fromEntries(commands.filter(c => isPlayerCommand(c.name)).map(c => [c.name, c.shortcut || ''])) })).catch(() => reply({ shortcut: '', commands: {} }));
   return true;
 });
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && (changes['cgpt-ra-settings.language'] || changes['cgpt-ra-settings.theme'] || changes['cgpt-ra-settings'])) register();
 });
-chrome.commands.onCommand.addListener(command => {
-  if (command !== VISIBILITY_COMMAND) return;
+chrome.commands?.onCommand?.addListener(command => {
+  if (!isPlayerCommand(command)) return;
   void chrome.tabs.query({ active: true, lastFocusedWindow: true }).then(async tabs => {
-    if (tabs[0]?.id !== undefined) await chrome.tabs.sendMessage(tabs[0].id, { type: VISIBILITY_COMMAND }, { frameId: 0 });
+    if (tabs[0]?.id !== undefined) await chrome.tabs.sendMessage(tabs[0].id, { type: command }, { frameId: 0 });
   }).catch(() => { /* No ChatGPT bridge in the active tab. */ });
 });
