@@ -9879,6 +9879,13 @@
     function getSavedSpeed() {
       if (sessionSpeed !== null)
         return sessionSpeed;
+      if (standalone3) {
+        try {
+          const saved = parseFloat(localStorage.getItem(CONFIG.speedStorage) || "");
+          if (Number.isFinite(saved) && saved >= 0.25 && saved <= 4)
+            return saved;
+        } catch (_) {}
+      }
       const configuredSpeed = Number(settingsCache?.defaultSpeed);
       if (Number.isFinite(configuredSpeed) && configuredSpeed >= 0.25 && configuredSpeed <= 4) {
         return configuredSpeed;
@@ -9889,6 +9896,13 @@
     function getSavedVolume() {
       if (sessionVolume !== null)
         return sessionVolume;
+      if (standalone3) {
+        try {
+          const saved = parseFloat(localStorage.getItem(CONFIG.volumeStorage) || "");
+          if (Number.isFinite(saved) && saved >= 0 && saved <= 1)
+            return saved;
+        } catch (_) {}
+      }
       const configuredVolume = Number(settingsCache?.defaultVolume);
       if (Number.isFinite(configuredVolume) && configuredVolume >= 0 && configuredVolume <= 1) {
         return configuredVolume;
@@ -11023,7 +11037,7 @@
       if (command === "open-help") {
         userForcedExpand = true;
         userForcedCollapsed = false;
-        rightRail?.querySelector(".cgpt-ra-help-wrap")?.classList.toggle("cgpt-open");
+        rightRail?.querySelectorAll(".cgpt-ra-extras, .cgpt-ra-help-wrap").forEach((el) => el.classList.add("cgpt-open"));
         scheduleLayoutSync();
         return;
       }

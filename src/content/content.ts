@@ -165,6 +165,14 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
   function getSavedSpeed(): number {
     if (sessionSpeed !== null) return sessionSpeed;
 
+    // Standalone playback restores the last player choice before settings defaults.
+    if (standalone) {
+      try {
+        const saved = parseFloat(localStorage.getItem(CONFIG.speedStorage) || "");
+        if (Number.isFinite(saved) && saved >= 0.25 && saved <= 4) return saved;
+      } catch (_) {}
+    }
+
     const configuredSpeed = Number(settingsCache?.defaultSpeed);
     if (Number.isFinite(configuredSpeed) && configuredSpeed >= 0.25 && configuredSpeed <= 4) {
       return configuredSpeed;
@@ -176,6 +184,13 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 
   function getSavedVolume(): number {
     if (sessionVolume !== null) return sessionVolume;
+
+    if (standalone) {
+      try {
+        const saved = parseFloat(localStorage.getItem(CONFIG.volumeStorage) || "");
+        if (Number.isFinite(saved) && saved >= 0 && saved <= 1) return saved;
+      } catch (_) {}
+    }
 
     const configuredVolume = Number(settingsCache?.defaultVolume);
     if (Number.isFinite(configuredVolume) && configuredVolume >= 0 && configuredVolume <= 1) {
@@ -1474,7 +1489,12 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     const step = getSavedSettings().tapSeekSeconds || CONFIG.tapSeekSeconds;
     if (command === 'toggle-collapse') return toggleCollapsed();
     if (command === 'reset-layout') { void playerLayout?.reset(); return; }
-    if (command === 'open-help') { userForcedExpand = true; userForcedCollapsed = false; rightRail?.querySelector('.cgpt-ra-help-wrap')?.classList.toggle('cgpt-open'); scheduleLayoutSync(); return; }
+    if (command === 'open-help') {
+      userForcedExpand = true; userForcedCollapsed = false;
+      // Compact docks hide Help inside the overflow menu; reveal both ancestors.
+      rightRail?.querySelectorAll('.cgpt-ra-extras, .cgpt-ra-help-wrap').forEach(el => el.classList.add('cgpt-open'));
+      scheduleLayoutSync(); return;
+    }
     if (command === 'open-settings') { window.postMessage({ source: 'chatgpt-audio-controls-settings-bridge', type: 'CGPT_RA_OPEN_SETTINGS' }, '*'); if (standalone) openStandaloneSettings(settingsCache || DEFAULT_SETTINGS, value => { settingsCache = value; readyToast.clear(); applyI18nLabels(); scheduleLayoutSync(); }); return; }
     if (!activeMedia) return;
     if (command === 'play-pause') togglePlayback();

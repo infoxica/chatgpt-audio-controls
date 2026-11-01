@@ -40,3 +40,9 @@ After explicit owner approval, the enabled unpacked 1.4.0 extension was reloaded
 The real Edge toolbar popup opened at its stable width. About displayed the header, donation amounts and review section with normal wrapping and spacing. This English smoke check complements, but does not replace, the isolated multilingual popup checks or the remaining live acceptance matrix.
 
 Remote browser testing exposed two timing failures, corrected by waiting for the rendered preset before dragging and persisted checkbox state after clicking. A third failure was genuine German heading overflow at 320px with a wider system font. The heading now shrinks and wraps long words; regression coverage waits for locale loading and deliberately exercises the wider Arial fallback on every platform. Exact-commit remote CI remains the promotion check.
+
+## PR #24 review corrections
+
+Standalone playback now restores valid saved speed and volume choices before settings defaults, including zero volume. Invalid saved values fall back to the configured defaults; extension settings precedence is unchanged. The Help command opens both its help wrapper and compact overflow container, remains open on repeated invocation, and can still be dismissed with Escape.
+
+The four focused browser cases passed: userscript preference restoration (including reload, zero volume, and invalid-value fallback), compact Help in both distributions, and the existing full browser-command regression. All 60 unit/integration tests passed (29,207 assertions), including playback recovery and exact generated-userscript parity. Type checking/builds, version consistency, and the rebuilt 77-entry ZIP passed. Full-suite and promotion status remain tracked by the PR checks; these fixes do not change the outstanding live acceptance requirements.

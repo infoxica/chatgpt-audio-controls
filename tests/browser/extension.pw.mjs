@@ -623,6 +623,47 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect(page.locator('[role=status]')).toContainText('browser');
     await page.close();
   });
+  if(distribution==='userscript') test('restores saved player speed and volume after reload',async()=>{
+    const page=await open();await layout(page);
+    await page.evaluate(()=>{localStorage.removeItem('cgpt-ra-v4-speed');localStorage.removeItem('cgpt-ra-v4-volume');});
+    await setting(page,{language:'en',notifyDownloadReady:false,defaultSpeed:1.25,defaultVolume:0.8});
+    await page.reload();await page.locator('#native-read').click();
+    await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.25×');
+    await page.locator('.cgpt-ra-speed-btn').click();await page.locator('[data-speed="1.75"]').click();
+    await page.locator('.cgpt-ra-volume-btn').click();
+    await expect(page.locator('.cgpt-ra-volume-slider')).toBeVisible();
+    await page.locator('.cgpt-ra-volume-slider').press('Home');await page.locator('.cgpt-ra-volume-slider').press('ArrowRight');
+    await expect(page.locator('.cgpt-ra-volume-value')).toHaveText('1%');
+    await page.reload();await page.locator('#native-read').click();
+    await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.75×');
+    await expect.poll(()=>page.locator('#host').evaluate(audio=>({speed:audio.playbackRate,volume:audio.volume}))).toEqual({speed:1.75,volume:0.01});
+    await page.locator('.cgpt-ra-volume-btn').click();await expect(page.locator('.cgpt-ra-volume-slider')).toBeVisible();
+    await page.locator('.cgpt-ra-volume-slider').press('Home');await expect(page.locator('.cgpt-ra-volume-value')).toHaveText('0%');
+    await page.reload();await page.locator('#native-read').click();
+    await expect.poll(()=>page.locator('#host').evaluate(audio=>audio.volume)).toBe(0);
+    // Corrupt legacy values must fall back to the configured defaults.
+    await page.evaluate(()=>{localStorage.setItem('cgpt-ra-v4-speed','invalid');localStorage.setItem('cgpt-ra-v4-volume','2');});
+    await page.reload();await page.locator('#native-read').click();
+    await expect.poll(()=>page.locator('#host').evaluate(audio=>({speed:audio.playbackRate,volume:audio.volume}))).toEqual({speed:1.25,volume:0.8});
+    await page.evaluate(()=>{localStorage.removeItem('cgpt-ra-v4-speed');localStorage.removeItem('cgpt-ra-v4-volume');});
+    await setting(page,{language:'en'});await page.close();
+  });
+  test('help command opens compact composer overflow',async()=>{
+    const page=await open();await setting(page,{language:'en',enableShortcuts:true});
+    await page.locator('form').evaluate(form=>form.style.width='560px');
+    await layout(page,profile({preset:'composer'}));
+    await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset','composer');
+    const help=()=>page.evaluate(()=>window.postMessage({source:'chatgpt-audio-controls-settings-bridge',type:'CGPT_RA_COMMAND',command:'open-help'},'*'));
+    await help();await expect(page.locator('#cgpt-ra-right')).toHaveClass(/cgpt-ra-compact-dock/);
+    await expect(page.locator('.cgpt-ra-help')).toBeVisible();
+    await expect(page.locator('.cgpt-ra-more')).toHaveAttribute('aria-expanded','true');
+    await help();await expect(page.locator('.cgpt-ra-help')).toBeVisible();
+    await page.locator('.cgpt-ra-more').press('Escape');
+    await expect(page.locator('.cgpt-ra-help')).toBeHidden();
+    await expect(page.locator('.cgpt-ra-more')).toHaveAttribute('aria-expanded','false');
+    await help();await expect(page.locator('.cgpt-ra-help')).toBeVisible();
+    await layout(page);await page.close();
+  });
   if(distribution==='extension') test('every browser command dispatches, respects disable, and ignores other tabs',async()=>{
     const page=await open();await worker.evaluate(()=>chrome.storage.sync.clear());await setting(page,{language:'en',notifyDownloadReady:false,tapSeekSeconds:5});await page.locator('#native-read').click();
     await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(1);
