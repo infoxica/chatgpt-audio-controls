@@ -22,7 +22,7 @@
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 [![Agent Ready](https://agent-ready.dev/api/badge/item-loaded-partial-complexity.trycloudflare.com)](https://agent-ready.dev)
 
-[Why I Created This](#why-i-created-this) • [Features](#features) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
+[Why I Created This](#why-i-created-this) • [Features](#features) • [Video & Screenshots](#video--screenshots) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
 <br />
 
@@ -44,11 +44,23 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 
 ---
 
-## ✨ Features
+## Video & Screenshots
 
-<div align="center">
-  <img src="assets/store/screenshots/v1.3.0-player-active.jpg" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
-</div>
+A 23-second walkthrough of playback, speed, seeking, download, collapse and docking. The video and screenshots are **1920 × 1080 (16:9)**, recorded in an isolated browser using a fictional conversation—no personal chats, account details or recorded microphone audio.
+
+[![Watch the ChatGPT Audio Controls walkthrough](assets/demo/composer-dock.png)](assets/demo/walkthrough.mp4)
+
+[▶ Watch the video (MP4)](assets/demo/walkthrough.mp4) · [Read the walkthrough transcript](assets/demo/chapters.json)
+
+### Corner layout
+
+![Corner layout with the seekbar and playback controls](assets/demo/corner-layout.png)
+
+### Original layout
+
+![Original split player layout beside the composer](assets/demo/original-layout.png)
+
+## ✨ Features
 
 ### 🎛️ Integrated Floating Player
 - **Sleek Seeker & Scrubbing**: Precise 2px→4px progress bar with live timers (`0:00 / 0:00`).
@@ -62,7 +74,7 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 ### ⚛️ Extension Popup & Dashboard
 
 <div align="center">
-  <img src="assets/store/screenshots/v1.3.0-dashboard.png" alt="Version 1.3.0 settings dashboard" width="85%" />
+  <img src="assets/demo/settings.png" alt="ChatGPT Audio Controls settings dashboard" width="85%" />
 </div>
 
 - **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.

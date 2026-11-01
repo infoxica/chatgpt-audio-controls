@@ -1,3 +1,4 @@
+import type { ListeningActivity } from './listening-use';
 // A native pause can destroy ChatGPT's audio element. Own the paused session
 // before dispatching that event; never reuse a payload from another response.
 export class PlaybackSession {
@@ -24,7 +25,13 @@ export class PlaybackSession {
     private changed: (media: HTMLMediaElement | null) => void,
     private failed: () => void,
     private retained: (ready: boolean) => void = () => {},
+    private activity: (activity: ListeningActivity) => void = () => {},
   ) {}
+
+  private report(event: ListeningActivity['event'], media = this.media): void {
+    // Observers must never interfere with playback or recovery.
+    try { this.activity({ session: this.generation, event, position: this.time, duration: this.duration, rate: media?.playbackRate || 1, advancing: Boolean(media && !media.paused && !media.ended && !media.seeking && media.readyState >= 2), now: performance.now() }); } catch {}
+  }
 
   isOwned(media: HTMLMediaElement): boolean { return media === this.owned; }
   get url(): string { return this.source; }
@@ -43,6 +50,7 @@ export class PlaybackSession {
     this.host = this.media = media;
     this.source = source;
     this.wantsPlay = true;
+    this.report('start');
     this.controller = new AbortController();
     this.watch(media);
     this.payload = this.retain(source, this.controller.signal);
@@ -57,9 +65,11 @@ export class PlaybackSession {
     const generation = this.generation;
     const current = () => generation === this.generation && media === this.media;
     const signal = this.controller?.signal;
-    for (const name of ['play', 'pause', 'ended', 'waiting', 'timeupdate']) {
+    for (const name of ['play', 'playing', 'pause', 'ended', 'waiting', 'timeupdate', 'seeking', 'seeked', 'ratechange']) {
       media.addEventListener(name, () => {
         if (!current()) return;
+        this.report(name === 'timeupdate' ? 'progress' : name === 'pause' ? 'pause' : name === 'ended' ? 'ended' : name === 'seeking' ? 'seek' : 'boundary', media);
+        if (['playing', 'seeking', 'seeked', 'ratechange'].includes(name)) return;
         if (name === 'play' || name === 'waiting') {
           if (media.paused) return;
           this.advancing = false;
@@ -83,12 +93,14 @@ export class PlaybackSession {
   }
 
   seek(time: number): void {
+    this.report('seek');
     this.savedTime = time;
     if (this.media && (!this.owned || this.ready)) {
       this.media.currentTime = time;
       // Measure playback progress from the seek destination, not the old position.
       this.playAnchor = this.media.currentTime;
     }
+    this.report('boundary');
   }
 
   toggle(): void {
@@ -114,6 +126,7 @@ export class PlaybackSession {
       return;
     }
     const host = this.media;
+    this.report('pause');
     this.savedTime = host.currentTime || 0;
     this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
     if (!this.savedDuration && host.buffered?.length) this.savedDuration = host.buffered.end(host.buffered.length - 1);
@@ -127,6 +140,7 @@ export class PlaybackSession {
     this.media = owned;
     this.wantsPlay = false;
     this.advancing = false;
+    this.report('boundary');
     this.watch(owned);
     this.changed(owned);
     // Retain the source and switch active media BEFORE the host's pause handler.
@@ -210,6 +224,7 @@ export class PlaybackSession {
   }
 
   dispose(next?: HTMLMediaElement): void {
+    this.report('dispose');
     this.generation++;
     this.retained(false);
     this.playAttempt++;

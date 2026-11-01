@@ -17,9 +17,8 @@ interface AboutTabProps {
 
 export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
   return (
-    <div className="popup-body">
-      <SupportCard language={language} theme={theme} surface="popup" />
-      <div className="section-card" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
+    <div className="popup-body popup-about">
+      <div className="section-card about-intro" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
         <div
           style={{
             width: 44,
@@ -36,14 +35,16 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
         >
           <Sparkles size={22} />
         </div>
-        <h2 style={{ fontSize: 14, fontWeight: 700 }}>{t.popup.about.title}</h2>
-        <span style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
+        <h2 style={{ fontSize: 19, fontWeight: 400 }}>{t.popup.about.title}</h2>
+        <span style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>
           {t.common.version}{EXTENSION_VERSION} • {t.popup.about.byInfoxica}
         </span>
-        <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.4 }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.55 }}>
           {getReleaseCopy(language).siteIntro}
         </p>
       </div>
+
+      <SupportCard language={language} theme={theme} surface="popup" />
 
       <div className="section-card">
         <div className="toggle-row">

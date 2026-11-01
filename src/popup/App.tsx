@@ -93,7 +93,7 @@ export const App: React.FC = () => {
         t={t}
       />
 
-      <QuickStart language={settings.language} />
+      {activeTab === "controls" && <QuickStart language={settings.language} />}
       <TabNav activeTab={activeTab} onSelectTab={setActiveTab} t={t} />
 
       {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}

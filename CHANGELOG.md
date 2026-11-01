@@ -6,6 +6,9 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ## [1.4.0] — Unreleased
 
+- Optional GitHub Sponsors support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 33 languages. Privacy and features remain unconditional.
+- Device-local meaningful-listening count, review invitation after four uses, and support invitation after ten. Non-modal cards wait until playback pauses/ends, respect hidden controls and typing, and allow permanent dismissal or one reminder after both 14 days and ten further uses. No telemetry or additional permissions.
+
 - Restore floating controls if ChatGPT replaces their DOM during hydration or navigation, retaining playback, saved layouts and intentional hide/collapse settings. Keep early audio capture while deferring UI insertion until the document is parsed; restore removed standalone userscript styles as well.
 
 - Align left-side layouts and drag destinations with the visible sidebar rail, ignoring transparent navigation panels and clipping hidden overflow. Follow sidebar expansion/collapse without changing saved layouts.

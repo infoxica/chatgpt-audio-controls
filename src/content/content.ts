@@ -1,6 +1,7 @@
 import { openStandaloneSettings } from './standalone-settings';
 import { PlayerLayout } from './player-layout';
 import { ReadyToast } from './ready-toast';
+import { SupportPrompts } from './support-prompts';
 import { featureCopy, commandLabels } from '../shared/i18n/features';
 import { polishCopy } from '../shared/i18n/polish';
 import { languageDirection, resolveLanguage } from '../shared/i18n/core';
@@ -522,6 +523,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     if (!response.ok) throw new Error('Audio unavailable');
     return readAudio(response);
   }
+  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
   const playback = new PlaybackSession(retainAudio, media => {
     activeMedia = media;
     if (media) installMediaListeners(media);
@@ -531,7 +533,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
   }, () => showStatus(recoveryCopy().playError, true), ready => {
     readyToast.clear();
     if (ready && getSavedSettings().notifyDownloadReady !== false) readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
-  });
+  }, activity => supportPrompts.observe(activity));
   window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; streamingAudio.clearExcept(); });
 
   function installObjectURLInterceptor(): void {

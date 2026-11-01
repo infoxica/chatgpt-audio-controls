@@ -1,5 +1,9 @@
 # v1.4.0 release candidate
 
+## Optional support and reminders — 2026-11-01
+
+Implemented localized GitHub Sponsors sections and private usage-based review/support requests in the extension and userscript. [Support acceptance notes](SUPPORT-ACCEPTANCE-1.4.0.md) record tests, verified one-time checkout amounts, screenshots and remaining live acceptance. The package and website are rebuilt locally at 1.4.0. Historical hashes below do not describe these updated artifacts; publication and acceptance flags remain unchanged.
+
 ## Subsequent localization audit — 2026-11-01
 
 All 19 requested languages already existed among 33 catalogs. The [localization audit](LOCALIZATION-AUDIT-1.4.0.md) records corrected UI labels/audio terminology, locale aliases, and RTL accessibility, with rebuilt extension/userscript artifacts and current test evidence. The preparation results and hashes below are retained as historical evidence for the earlier snapshot, not the newly modified source. Version and live acceptance flags are unchanged.

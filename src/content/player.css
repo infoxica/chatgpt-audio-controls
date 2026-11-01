@@ -3,6 +3,7 @@
  * Extension-owned player styles. Native composer styling is never overridden.
  */
 
+#cgpt-ra-support-prompt,
 #cgpt-ra-left,
 #cgpt-ra-right,
 #cgpt-ra-floating-toggle {
@@ -18,6 +19,8 @@
     --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));
 }
 
+html.light #cgpt-ra-support-prompt,
+[data-theme='light'] #cgpt-ra-support-prompt,
 html.light #cgpt-ra-left,
 html.light #cgpt-ra-right,
 html.light #cgpt-ra-floating-toggle,
@@ -707,3 +710,24 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
 #cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }
 #cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }
 #cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }
+
+/* Optional, non-modal support requests. No page or composer styles are changed. */
+#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }
+#cgpt-ra-support-prompt * { box-sizing:border-box; }
+#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }
+#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }
+#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }
+#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }
+#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }
+#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }
+#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }
+#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }
+#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }
+#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }
+.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }
+#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }
+#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }

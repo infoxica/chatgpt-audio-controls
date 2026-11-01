@@ -7176,6 +7176,601 @@
     return { "play-pause": t.content.shortcutsPopover.playPause, "seek-back": step === undefined ? seekCommands[resolveLanguage(language)].split("|")[0] : t.content.shortcutsPopover.back.replace("{s}", String(step)), "seek-forward": step === undefined ? seekCommands[resolveLanguage(language)].split("|")[1] : t.content.shortcutsPopover.forward.replace("{s}", String(step)), "speed-decrease": t.shortcuts.speedDecrease.action, "speed-increase": t.shortcuts.speedIncrease.action, "speed-reset": c.speedReset, "volume-increase": c.volumeUp, "volume-decrease": c.volumeDown, "toggle-mute": c.mute, "download-audio": t.content.tooltips.download, "toggle-collapse": `${t.content.tooltips.collapse} / ${t.content.tooltips.expand}`, "toggle-floating-ui": r.visibilityShortcut, "reset-layout": c.reset, "open-help": t.content.tooltips.shortcuts, "open-settings": t.popup.header.openOptions };
   }
 
+  // src/shared/i18n/donations.ts
+  var keys = ["title", "value", "costs", "optional", "privacy", "once", "donate", "later", "never", "reminders"];
+  var donationCatalogs = {
+    bn: [
+      "উন্নয়ন চালিয়ে যেতে পাশে থাকুন",
+      "ChatGPT Audio Controls কি আপনার দিন সহজ করেছে, সময় বাঁচিয়েছে বা আরও কাজ করতে সাহায্য করেছে? এটি আপনার জীবনে কাজে লাগলে এবং গোপনীয়তাকে সম্মান করা টুল পছন্দ করলে, এর উন্নয়নে সহায়তা করার কথা ভাবুন।",
+      "এক্সটেনশন তৈরি ও উন্নত করতে আমি যে AI সাবস্ক্রিপশন ব্যবহার করি, তার বাড়তে থাকা খরচ মেটাতে আপনার অবদান সাহায্য করে। এটি আমাকে কাজ চালিয়ে যাওয়ার অনুপ্রেরণাও দেয়।",
+      "অনুদান দিতে পারছেন না? কোনো সমস্যা নেই। আপনার সৎ অভিজ্ঞতা—কাজে কী সাহায্য করেছে এবং কী আরও ভালো হতে পারে—জানানোও অনেক মূল্যবান। পাশে থাকার জন্য ধন্যবাদ। \uD83D\uDE4F",
+      "অনুদান দিন বা না দিন, গোপনীয়তার সুরক্ষা ও সব সুবিধা সবার জন্য উপলব্ধ।",
+      "GitHub Sponsors-এর মাধ্যমে এককালীন সহায়তা · মার্কিন ডলার",
+      "অনুদান দিন",
+      "পরে মনে করিয়ে দিন",
+      "আর জিজ্ঞাসা করবেন না",
+      "পর্যালোচনা ও সহায়তার অনুস্মারক দেখান"
+    ],
+    mr: [
+      "विकास सुरू ठेवण्यासाठी साथ द्या",
+      "ChatGPT Audio Controls मुळे तुमचा दिवस सोपा झाला, वेळ वाचला किंवा अधिक काम करता आले का? ते तुमच्यासाठी उपयोगी ठरले असेल आणि गोपनीयतेचा आदर करणारी साधने तुम्हाला महत्त्वाची वाटत असतील, तर विकासाला हातभार लावण्याचा विचार करा.",
+      "एक्सटेंशन तयार करण्यासाठी आणि सुधारण्यासाठी मी वापरत असलेल्या AI सदस्यतांचा वाढता खर्च भागवायला तुमचे योगदान मदत करते. पुढे काम करण्याची प्रेरणाही मिळते.",
+      "योगदान देणे शक्य नाही? काहीच हरकत नाही. तुमचा प्रामाणिक अनुभव—कामात कशी मदत झाली आणि काय सुधारता येईल—सांगणेही मोलाचे आहे. सोबत असल्याबद्दल धन्यवाद. \uD83D\uDE4F",
+      "योगदान दिले किंवा नाही तरी गोपनीयतेचे संरक्षण आणि सर्व सुविधा प्रत्येकासाठी उपलब्ध आहेत.",
+      "GitHub Sponsors द्वारे एकदाच योगदान · अमेरिकी डॉलर",
+      "योगदान द्या",
+      "नंतर आठवण करून द्या",
+      "पुन्हा विचारू नका",
+      "अभिप्राय आणि सहकार्याची स्मरणपत्रे दाखवा"
+    ],
+    te: [
+      "అభివృద్ధిని కొనసాగించడానికి తోడ్పడండి",
+      "ChatGPT Audio Controls మీ రోజును సులభం చేసిందా, సమయం ఆదా చేసిందా లేదా ఎక్కువ పని చేయడానికి సహాయపడిందా? ఇది మీకు ఉపయోగపడి, గోప్యతను గౌరవించే సాధనాలను మీరు విలువైనవిగా భావిస్తే, దీని అభివృద్ధికి తోడ్పడాలని ఆలోచించండి.",
+      "ఎక్స్‌టెన్షన్‌ను రూపొందించి మెరుగుపరచడానికి నేను ఉపయోగించే AI చందాల పెరుగుతున్న ఖర్చును భరించడానికి మీ సహాయం ఉపయోగపడుతుంది. ముందుకు సాగడానికి నాకు ప్రేరణ కూడా ఇస్తుంది.",
+      "విరాళం ఇవ్వలేకపోతున్నారా? పరవాలేదు. మీ పనిలో ఎలా సహాయపడింది, ఏమి మెరుగుపరచవచ్చు అనే నిజాయితీగల అనుభవాన్ని పంచుకోవడం కూడా ఎంతో విలువైనది. తోడుగా ఉన్నందుకు ధన్యవాదాలు. \uD83D\uDE4F",
+      "విరాళం ఇచ్చినా ఇవ్వకపోయినా గోప్యత రక్షణ, అన్ని సదుపాయాలు అందరికీ అందుబాటులో ఉంటాయి.",
+      "GitHub Sponsors ద్వారా ఒకసారి సహాయం · అమెరికన్ డాలర్లు",
+      "విరాళం ఇవ్వండి",
+      "తర్వాత గుర్తు చేయండి",
+      "మళ్లీ అడగవద్దు",
+      "సమీక్ష, సహాయం రిమైండర్‌లను చూపించు"
+    ],
+    ta: [
+      "தொடர்ந்து உருவாக்க உதவுங்கள்",
+      "ChatGPT Audio Controls உங்கள் நாளை எளிதாக்கியதா, நேரத்தைச் சேமித்ததா அல்லது மேலும் வேலை செய்ய உதவியதா? உங்கள் வாழ்வில் பயனளித்திருந்தால், தனியுரிமையை மதிக்கும் கருவிகளை நீங்கள் விரும்பினால், இதன் மேம்பாட்டிற்கு ஆதரவு அளிக்கலாம்.",
+      "நீட்சியை உருவாக்கவும் மேம்படுத்தவும் நான் பயன்படுத்தும் AI சந்தாக்களின் அதிகரிக்கும் செலவைச் சமாளிக்க உங்கள் பங்களிப்பு உதவும். தொடர்ந்து பணியாற்ற ஊக்கமும் தரும்.",
+      "நன்கொடை அளிக்க இயலவில்லையா? பரவாயில்லை. உங்கள் வேலைத்திறனுக்கு எது உதவியது, எதை மேம்படுத்தலாம் என்ற நேர்மையான அனுபவத்தைப் பகிர்வதும் மதிப்புமிக்கது. உடனிருப்பதற்கு நன்றி. \uD83D\uDE4F",
+      "நன்கொடை அளித்தாலும் அளிக்காவிட்டாலும் தனியுரிமைப் பாதுகாப்பும் அனைத்து அம்சங்களும் அனைவருக்கும் கிடைக்கும்.",
+      "GitHub Sponsors வழியாக ஒருமுறை ஆதரவு · அமெரிக்க டாலர்கள்",
+      "நன்கொடை அளிக்கவும்",
+      "பிறகு நினைவூட்டவும்",
+      "மீண்டும் கேட்க வேண்டாம்",
+      "மதிப்புரை மற்றும் ஆதரவு நினைவூட்டல்களைக் காட்டு"
+    ],
+    he: [
+      "עזרו לי להמשיך לפתח",
+      "האם ChatGPT Audio Controls הקל על היום שלכם, חסך לכם זמן או עזר לכם להספיק יותר? אם הוא הוסיף ערך לחייכם ואתם מעריכים כלים שמכבדים את הפרטיות שלכם, שקלו לתמוך בפיתוח.",
+      "התרומה שלכם עוזרת לכסות את העלות הגדלה של מנויי הבינה המלאכותית שבהם אני משתמש לפיתוח התוסף ולשיפורו. היא גם נותנת לי עוד מוטיבציה להמשיך.",
+      "לא יכולים לתרום? זה לגמרי בסדר. גם שיתוף החוויה הכנה שלכם—מה עזר לכם לעבוד ביעילות ומה אפשר לשפר—חשוב מאוד. תודה שאתם כאן. \uD83D\uDE4F",
+      "הפרטיות וכל התכונות זמינות לכולם, עם תרומה או בלעדיה.",
+      "תמיכה חד־פעמית דרך GitHub Sponsors · דולר אמריקאי",
+      "תרומה",
+      "להזכיר לי בהמשך",
+      "לא לשאול שוב",
+      "הצגת תזכורות לביקורות ולתמיכה"
+    ],
+    th: [
+      "ช่วยให้ฉันพัฒนาต่อไปได้",
+      "ChatGPT Audio Controls ทำให้วันของคุณง่ายขึ้น ประหยัดเวลา หรือช่วยให้ทำงานได้มากขึ้นไหม? หากส่วนขยายนี้มีประโยชน์ต่อชีวิตคุณ และคุณให้ความสำคัญกับเครื่องมือที่เคารพความเป็นส่วนตัว ลองพิจารณาสนับสนุนการพัฒนาได้เลย",
+      "เงินสนับสนุนช่วยแบ่งเบาค่าสมัคร AI ที่เพิ่มขึ้น ซึ่งฉันใช้สร้างและปรับปรุงส่วนขยาย และยังเป็นกำลังใจให้ทำต่อไปด้วย",
+      "ยังบริจาคไม่ได้ก็ไม่เป็นไรเลย การแบ่งปันประสบการณ์จริงว่าช่วยให้ทำงานดีขึ้นอย่างไรและควรปรับปรุงอะไร ก็มีความหมายมากเช่นกัน ขอบคุณที่อยู่ด้วยกันนะ \uD83D\uDE4F",
+      "ทุกคนได้รับการคุ้มครองความเป็นส่วนตัวและใช้ทุกฟีเจอร์ได้ ไม่ว่าจะบริจาคหรือไม่",
+      "สนับสนุนครั้งเดียวผ่าน GitHub Sponsors · ดอลลาร์สหรัฐ",
+      "บริจาค",
+      "เตือนฉันภายหลัง",
+      "ไม่ต้องถามอีก",
+      "แสดงการเตือนให้รีวิวและสนับสนุน"
+    ],
+    id: [
+      "Bantu saya terus mengembangkan",
+      "Apakah ChatGPT Audio Controls memudahkan hari Anda, menghemat waktu, atau membantu menyelesaikan lebih banyak pekerjaan? Jika bermanfaat bagi hidup Anda dan Anda menghargai alat yang menghormati privasi, pertimbangkan untuk mendukung pengembangannya.",
+      "Kontribusi Anda membantu menutup biaya langganan AI yang terus meningkat, yang saya gunakan untuk membuat dan menyempurnakan ekstensi. Dukungan ini juga memberi saya semangat untuk terus berkarya.",
+      "Belum bisa berdonasi? Tidak apa-apa. Berbagi pengalaman jujur—apa yang membantu produktivitas Anda dan apa yang bisa diperbaiki—juga sangat berarti. Terima kasih sudah hadir. \uD83D\uDE4F",
+      "Privasi dan semua fitur tetap tersedia untuk semua orang, dengan atau tanpa donasi.",
+      "Dukungan satu kali melalui GitHub Sponsors · Dolar AS",
+      "Donasi",
+      "Ingatkan nanti",
+      "Jangan tanya lagi",
+      "Tampilkan pengingat ulasan dan dukungan"
+    ],
+    hu: [
+      "Segíts, hogy folytathassam a fejlesztést",
+      "A ChatGPT Audio Controls megkönnyíti a napodat, időt takarít meg, vagy segít többet elvégezni? Ha hasznos számodra, és fontosnak tartod a magánszférádat tiszteletben tartó eszközöket, fontold meg a fejlesztés támogatását.",
+      "A hozzájárulásod segít fedezni a bővítmény készítéséhez és javításához használt AI-előfizetéseim növekvő költségét. Emellett motivációt ad a folytatáshoz.",
+      "Most nem tudsz adományozni? Semmi gond. Őszinte tapasztalatod megosztása—mi segítette a munkádat, és min lehetne javítani—szintén sokat jelent. Köszönöm, hogy itt vagy. \uD83D\uDE4F",
+      "Az adatvédelem és minden funkció mindenkinek elérhető, adománytól függetlenül.",
+      "Egyszeri támogatás a GitHub Sponsors felületén · Amerikai dollár",
+      "Támogatás",
+      "Emlékeztess később",
+      "Ne kérdezd újra",
+      "Értékelési és támogatási emlékeztetők megjelenítése"
+    ],
+    cs: [
+      "Pomozte mi pokračovat ve vývoji",
+      "Usnadňuje vám ChatGPT Audio Controls den, šetří čas nebo pomáhá zvládnout víc? Pokud vám přináší užitek a vážíte si nástrojů, které respektují vaše soukromí, zvažte podporu jeho vývoje.",
+      "Váš příspěvek pomáhá pokrýt rostoucí náklady na předplatná AI, která používám k tvorbě a vylepšování rozšíření. Dodává mi také motivaci pokračovat.",
+      "Nemůžete přispět? To je úplně v pořádku. Hodně znamená i upřímná zkušenost—co vám pomohlo při práci a co by se dalo zlepšit. Děkuji, že jste tu. \uD83D\uDE4F",
+      "Ochrana soukromí a všechny funkce zůstávají dostupné všem, bez ohledu na příspěvek.",
+      "Jednorázová podpora přes GitHub Sponsors · Americké dolary",
+      "Přispět",
+      "Připomenout později",
+      "Už se neptat",
+      "Zobrazovat připomínky hodnocení a podpory"
+    ],
+    uk: [
+      "Допоможіть мені продовжувати розробку",
+      "ChatGPT Audio Controls спрощує ваш день, заощаджує час або допомагає встигати більше? Якщо розширення корисне для вас і ви цінуєте інструменти, що поважають вашу приватність, підтримайте його розвиток.",
+      "Ваш внесок допомагає оплачувати підписки на ШІ, вартість яких зростає і які я використовую для створення та вдосконалення розширення. А ще він додає мотивації працювати далі.",
+      "Не можете допомогти фінансово? Усе гаразд. Щиро розповісти, як розширення допомагає працювати й що можна покращити, теж дуже цінно. Дякую, що ви з нами. \uD83D\uDE4F",
+      "Захист приватності й усі функції доступні кожному незалежно від пожертв.",
+      "Разова підтримка через GitHub Sponsors · Долари США",
+      "Підтримати",
+      "Нагадати пізніше",
+      "Більше не запитувати",
+      "Показувати нагадування про відгуки та підтримку"
+    ],
+    ca: [
+      "Ajuda’m a continuar creant",
+      "ChatGPT Audio Controls t’ha fet el dia més fàcil, t’ha estalviat temps o t’ha ajudat a fer més coses? Si aporta valor a la teva vida i aprecies les eines que respecten la privadesa, considera donar suport al seu desenvolupament.",
+      "La teva aportació ajuda a cobrir el cost creixent de les subscripcions d’IA que faig servir per crear i millorar l’extensió. També em dona una mica més de motivació per continuar.",
+      "No pots fer un donatiu? No passa res. Compartir la teva experiència sincera—què ha millorat la teva productivitat i què podria millorar—també significa molt. Gràcies per ser aquí. \uD83D\uDE4F",
+      "La privadesa i totes les funcions continuen disponibles per a tothom, amb donatius o sense.",
+      "Aportació única a través de GitHub Sponsors · Dòlars estatunidencs",
+      "Fes un donatiu",
+      "Recorda-m’ho més tard",
+      "No ho tornis a preguntar",
+      "Mostra recordatoris de ressenyes i suport"
+    ],
+    el: [
+      "Βοηθήστε με να συνεχίσω την ανάπτυξη",
+      "Το ChatGPT Audio Controls έκανε τη μέρα σας πιο εύκολη, σας εξοικονόμησε χρόνο ή σας βοήθησε να κάνετε περισσότερα; Αν προσφέρει αξία στη ζωή σας και εκτιμάτε εργαλεία που σέβονται το απόρρητό σας, σκεφτείτε να στηρίξετε την ανάπτυξή του.",
+      "Η συνεισφορά σας βοηθά να καλυφθεί το αυξανόμενο κόστος των συνδρομών AI που χρησιμοποιώ για τη δημιουργία και βελτίωση της επέκτασης. Μου δίνει και επιπλέον κίνητρο να συνεχίσω.",
+      "Δεν μπορείτε να κάνετε δωρεά; Κανένα πρόβλημα. Μια ειλικρινής εμπειρία—τι σας βοήθησε να είστε πιο παραγωγικοί και τι θα μπορούσε να βελτιωθεί—σημαίνει επίσης πολλά. Ευχαριστώ που είστε εδώ. \uD83D\uDE4F",
+      "Το απόρρητο και όλες οι λειτουργίες παραμένουν διαθέσιμα σε όλους, με ή χωρίς δωρεά.",
+      "Εφάπαξ στήριξη μέσω GitHub Sponsors · Δολάρια ΗΠΑ",
+      "Δωρεά",
+      "Υπενθύμιση αργότερα",
+      "Να μη ρωτηθώ ξανά",
+      "Εμφάνιση υπενθυμίσεων αξιολόγησης και στήριξης"
+    ],
+    nb: [
+      "Hjelp meg å fortsette utviklingen",
+      "Har ChatGPT Audio Controls gjort dagen din enklere, spart tid eller hjulpet deg å få mer gjort? Hvis det har gitt deg noe nyttig og du verdsetter verktøy som respekterer personvernet ditt, vurder å støtte utviklingen.",
+      "Bidraget ditt hjelper med å dekke de økende kostnadene til KI-abonnementene jeg bruker for å lage og forbedre utvidelsen. Det gir meg også ekstra motivasjon til å fortsette.",
+      "Kan du ikke bidra økonomisk? Det er helt greit. Å dele din ærlige erfaring—hva som har hjulpet deg å jobbe mer effektivt, og hva som kan bli bedre—betyr også mye. Takk for at du er her. \uD83D\uDE4F",
+      "Personvern og alle funksjoner er tilgjengelige for alle, uansett om de gir et bidrag.",
+      "Engangsbidrag via GitHub Sponsors · Amerikanske dollar",
+      "Gi et bidrag",
+      "Minn meg på det senere",
+      "Ikke spør igjen",
+      "Vis påminnelser om omtaler og støtte"
+    ],
+    en: [
+      "Help me keep building",
+      "Has ChatGPT Audio Controls made your day a little easier, saved you time, or helped you get more done? If it has added value to your life—and you value tools that respect your privacy—please consider supporting its development.",
+      "Your contribution helps cover the rising cost of the AI subscriptions I use to build and improve the extension. It also gives me a little extra motivation to keep going.",
+      "Can’t donate? That’s completely okay. Sharing your honest experience—what helped your productivity and what could be better—means a lot too. Thank you for being here. \uD83D\uDE4F",
+      "Privacy and all features remain available to everyone, whether or not you donate.",
+      "One-time support through GitHub Sponsors · US dollars",
+      "Donate",
+      "Remind me later",
+      "Don’t ask again",
+      "Show review and support reminders"
+    ],
+    "pt-BR": [
+      "Ajude-me a continuar criando",
+      "O ChatGPT Audio Controls facilitou seu dia, economizou tempo ou ajudou você a fazer mais? Se ele faz diferença na sua vida e você valoriza ferramentas que respeitam sua privacidade, considere apoiar seu desenvolvimento.",
+      "Sua contribuição ajuda a pagar o custo crescente das assinaturas de IA que uso para criar e melhorar a extensão. Também me dá uma motivação extra para continuar.",
+      "Não pode doar? Tudo bem! Compartilhar sua experiência sincera — o que ajudou sua produtividade e o que pode melhorar — também significa muito. Obrigado por estar aqui. \uD83D\uDE4F",
+      "A privacidade e todos os recursos continuam disponíveis para todos, com ou sem doação.",
+      "Apoio único pelo GitHub Sponsors · Dólares americanos",
+      "Doar",
+      "Lembrar mais tarde",
+      "Não perguntar novamente",
+      "Mostrar lembretes de avaliação e apoio"
+    ],
+    "pt-PT": [
+      "Ajude-me a continuar a desenvolver",
+      "O ChatGPT Audio Controls tornou o seu dia mais fácil, poupou-lhe tempo ou ajudou-o a fazer mais? Se acrescentou valor à sua vida e valoriza ferramentas que respeitam a sua privacidade, considere apoiar o desenvolvimento.",
+      "O seu contributo ajuda a pagar o custo crescente das subscrições de IA que uso para criar e melhorar a extensão. Também me dá uma motivação extra para continuar.",
+      "Não pode contribuir? Não há problema. Partilhar a sua experiência sincera — o que ajudou a sua produtividade e o que pode melhorar — também significa muito. Obrigado por estar aqui. \uD83D\uDE4F",
+      "A privacidade e todas as funcionalidades continuam disponíveis para todos, com ou sem donativo.",
+      "Contributo único através do GitHub Sponsors · Dólares americanos",
+      "Contribuir",
+      "Lembrar mais tarde",
+      "Não voltar a perguntar",
+      "Mostrar lembretes de avaliação e apoio"
+    ],
+    ja: [
+      "開発を続ける力をください",
+      "ChatGPT Audio Controls で日々の作業が少し楽になったり、時間を節約できたりしましたか？暮らしに役立ち、プライバシーを大切にするツールを応援したいと感じたら、開発へのご支援をご検討ください。",
+      "ご支援は、拡張機能の開発や改善に使う AI サブスクリプションの増え続ける費用を補う助けになります。開発を続ける励みにもなります。",
+      "寄付できなくても、もちろん大丈夫です。作業効率がどう変わったか、何を改善できるかなど、率直な感想も大きな力になります。使ってくださってありがとうございます。\uD83D\uDE4F",
+      "寄付の有無にかかわらず、プライバシー保護とすべての機能を利用できます。",
+      "GitHub Sponsors での一回限りの支援 · 米ドル",
+      "寄付する",
+      "後で通知する",
+      "今後表示しない",
+      "レビューと支援のお願いを表示する"
+    ],
+    es: [
+      "Ayúdame a seguir creando",
+      "¿ChatGPT Audio Controls te ha facilitado el día, ahorrado tiempo o ayudado a hacer más? Si aporta valor a tu vida y aprecias las herramientas que respetan tu privacidad, considera apoyar su desarrollo.",
+      "Tu aportación ayuda a cubrir el coste creciente de las suscripciones de IA que uso para crear y mejorar la extensión. También me da un poco más de motivación para seguir.",
+      "¿No puedes donar? No pasa nada. Compartir tu experiencia sincera —qué ha mejorado tu productividad y qué podría mejorar— también significa mucho. Gracias por estar aquí. \uD83D\uDE4F",
+      "La privacidad y todas las funciones siguen disponibles para todos, donen o no.",
+      "Aportación única mediante GitHub Sponsors · Dólares estadounidenses",
+      "Donar",
+      "Recordármelo más tarde",
+      "No volver a preguntar",
+      "Mostrar recordatorios de reseñas y apoyo"
+    ],
+    de: [
+      "Hilf mir, weiterzuentwickeln",
+      "Macht ChatGPT Audio Controls deinen Alltag leichter, spart es dir Zeit oder hilft es dir, mehr zu schaffen? Wenn es dir etwas bringt und du Werkzeuge schätzt, die deine Privatsphäre respektieren, unterstütze gerne die Entwicklung.",
+      "Dein Beitrag hilft, die steigenden Kosten der KI-Abos zu decken, die ich für die Entwicklung und Verbesserung der Erweiterung nutze. Er motiviert mich auch, weiterzumachen.",
+      "Du kannst nicht spenden? Das ist völlig in Ordnung. Auch deine ehrliche Erfahrung —was dir bei der Arbeit hilft und was besser sein könnte— bedeutet mir viel. Danke, dass du dabei bist. \uD83D\uDE4F",
+      "Datenschutz und alle Funktionen stehen allen zur Verfügung, unabhängig von einer Spende.",
+      "Einmalige Unterstützung über GitHub Sponsors · US-Dollar",
+      "Spenden",
+      "Später erinnern",
+      "Nicht erneut fragen",
+      "Erinnerungen an Bewertungen und Unterstützung anzeigen"
+    ],
+    vi: [
+      "Giúp tôi tiếp tục phát triển",
+      "ChatGPT Audio Controls có giúp ngày của bạn nhẹ nhàng hơn, tiết kiệm thời gian hoặc làm được nhiều việc hơn không? Nếu tiện ích mang lại giá trị và bạn trân trọng các công cụ tôn trọng quyền riêng tư, hãy cân nhắc ủng hộ việc phát triển.",
+      "Đóng góp của bạn giúp trang trải chi phí ngày càng tăng của các gói AI tôi dùng để xây dựng và cải thiện tiện ích. Đó cũng là động lực để tôi tiếp tục.",
+      "Chưa thể đóng góp? Hoàn toàn không sao. Chia sẻ trải nghiệm thật —điều gì giúp bạn làm việc hiệu quả hơn và điều gì cần cải thiện— cũng rất đáng quý. Cảm ơn bạn đã đồng hành. \uD83D\uDE4F",
+      "Quyền riêng tư và mọi tính năng luôn dành cho tất cả mọi người, dù có đóng góp hay không.",
+      "Ủng hộ một lần qua GitHub Sponsors · Đô la Mỹ",
+      "Ủng hộ",
+      "Nhắc tôi sau",
+      "Không hỏi lại",
+      "Hiện lời nhắc đánh giá và ủng hộ"
+    ],
+    fr: [
+      "Aidez-moi à continuer à créer",
+      "ChatGPT Audio Controls vous facilite la vie, vous fait gagner du temps ou vous aide à en faire plus ? Si cette extension vous est utile et que vous appréciez les outils qui respectent votre vie privée, pensez à soutenir son développement.",
+      "Votre contribution aide à couvrir le coût croissant des abonnements à l’IA que j’utilise pour créer et améliorer l’extension. Elle me donne aussi un peu plus de motivation pour continuer.",
+      "Vous ne pouvez pas faire de don ? Aucun souci. Partager votre expérience sincère —ce qui a amélioré votre productivité et ce qui pourrait être mieux— compte aussi beaucoup. Merci d’être là. \uD83D\uDE4F",
+      "La confidentialité et toutes les fonctionnalités restent accessibles à tous, avec ou sans don.",
+      "Soutien ponctuel via GitHub Sponsors · Dollars américains",
+      "Faire un don",
+      "Me le rappeler plus tard",
+      "Ne plus demander",
+      "Afficher les rappels d’avis et de soutien"
+    ],
+    hi: [
+      "विकास जारी रखने में मेरा साथ दें",
+      "क्या ChatGPT Audio Controls ने आपका दिन आसान बनाया, समय बचाया या अधिक काम करने में मदद की? अगर इससे आपके जीवन में कुछ अच्छा बदलाव आया है और आप निजता का सम्मान करने वाले टूल पसंद करते हैं, तो इसके विकास में योगदान देने पर विचार करें।",
+      "आपका योगदान उन AI सदस्यताओं की बढ़ती लागत में मदद करता है जिनसे मैं एक्सटेंशन बनाता और बेहतर करता हूँ। इससे मुझे आगे काम करने की प्रेरणा भी मिलती है।",
+      "योगदान नहीं दे सकते? बिल्कुल ठीक है। अपना सच्चा अनुभव साझा करें—काम में क्या मदद मिली और क्या बेहतर हो सकता है। यह भी बहुत मायने रखता है। साथ देने के लिए धन्यवाद। \uD83D\uDE4F",
+      "योगदान दें या न दें, निजता की सुरक्षा और सभी सुविधाएँ सबके लिए उपलब्ध हैं।",
+      "GitHub Sponsors के ज़रिए एक बार का योगदान · अमेरिकी डॉलर",
+      "योगदान दें",
+      "बाद में याद दिलाएँ",
+      "दोबारा न पूछें",
+      "समीक्षा और सहयोग के रिमाइंडर दिखाएँ"
+    ],
+    "zh-CN": [
+      "支持我继续开发",
+      "ChatGPT Audio Controls 是否让你的日常更轻松、节省了时间，或提高了效率？如果它为你的生活带来了价值，而你也重视尊重隐私的工具，欢迎支持它的开发。",
+      "你的支持将帮助支付我用于开发和改进扩展的 AI 订阅费用，这些费用正在不断上涨。它也会给我继续开发的动力。",
+      "暂时无法捐助？完全没关系。分享真实的使用体验——它如何提高了你的效率，还有哪些地方需要改进——也很有意义。感谢你的陪伴。\uD83D\uDE4F",
+      "无论是否捐助，所有人都能获得同样的隐私保护和全部功能。",
+      "通过 GitHub Sponsors 一次性支持 · 美元",
+      "捐助",
+      "稍后提醒我",
+      "不再询问",
+      "显示评价与支持提醒"
+    ],
+    "zh-TW": [
+      "支持我繼續開發",
+      "ChatGPT Audio Controls 是否讓你的日常更輕鬆、節省了時間，或提高了效率？如果它為你的生活帶來了價值，而你也重視尊重隱私的工具，歡迎支持它的開發。",
+      "你的支持將幫助支付我用於開發和改善擴充功能的 AI 訂閱費用，這些費用正持續增加。也會給我繼續開發的動力。",
+      "暫時無法捐助？完全沒關係。分享真實的使用體驗——它如何提升你的工作效率，還有哪些地方需要改善——也很有意義。感謝你的陪伴。\uD83D\uDE4F",
+      "無論是否捐助，所有人都能享有相同的隱私保護和完整功能。",
+      "透過 GitHub Sponsors 單次支持 · 美元",
+      "捐助",
+      "稍後提醒我",
+      "不再詢問",
+      "顯示評價與支持提醒"
+    ],
+    ru: [
+      "Помогите мне продолжать разработку",
+      "ChatGPT Audio Controls делает ваш день проще, экономит время или помогает успевать больше? Если расширение приносит вам пользу и вы цените инструменты, уважающие вашу приватность, поддержите его развитие.",
+      "Ваш вклад помогает оплачивать дорожающие подписки на ИИ, которые я использую для разработки и улучшения расширения. А ещё это дополнительная мотивация продолжать работу.",
+      "Не можете помочь деньгами? Всё в порядке. Честный рассказ о том, как расширение помогает вам работать и что можно улучшить, тоже очень важен. Спасибо, что вы с нами. \uD83D\uDE4F",
+      "Защита приватности и все функции доступны всем независимо от пожертвований.",
+      "Разовый взнос через GitHub Sponsors · Доллары США",
+      "Поддержать",
+      "Напомнить позже",
+      "Больше не спрашивать",
+      "Показывать напоминания об отзывах и поддержке"
+    ],
+    pl: [
+      "Pomóż mi dalej rozwijać rozszerzenie",
+      "Czy ChatGPT Audio Controls ułatwia Ci dzień, oszczędza czas lub pomaga zrobić więcej? Jeśli wnosi coś dobrego do Twojego życia i cenisz narzędzia szanujące prywatność, rozważ wsparcie jego rozwoju.",
+      "Twoja wpłata pomaga pokryć rosnące koszty subskrypcji AI, których używam do tworzenia i ulepszania rozszerzenia. Daje mi też dodatkową motywację do dalszej pracy.",
+      "Nie możesz wpłacić? Nic nie szkodzi. Szczera opinia o tym, co pomaga Ci w pracy i co można poprawić, też wiele znaczy. Dziękuję, że tu jesteś. \uD83D\uDE4F",
+      "Prywatność i wszystkie funkcje są dostępne dla każdego, niezależnie od wpłat.",
+      "Jednorazowe wsparcie przez GitHub Sponsors · Dolary amerykańskie",
+      "Wesprzyj",
+      "Przypomnij później",
+      "Nie pytaj ponownie",
+      "Pokaż przypomnienia o opinii i wsparciu"
+    ],
+    tr: [
+      "Geliştirmeye devam etmeme destek olun",
+      "ChatGPT Audio Controls gününüzü kolaylaştırdı, zaman kazandırdı veya daha çok iş yapmanıza yardımcı oldu mu? Hayatınıza değer kattıysa ve gizliliğe saygılı araçları önemsiyorsanız geliştirilmesine destek olmayı düşünün.",
+      "Katkınız, uzantıyı geliştirmek için kullandığım yapay zekâ aboneliklerinin artan maliyetlerini karşılamaya yardımcı olur. Ayrıca devam etmek için bana motivasyon verir.",
+      "Bağış yapamıyor musunuz? Hiç sorun değil. Verimliliğinize nasıl katkı sağladığını ve nelerin iyileştirilebileceğini dürüstçe paylaşmanız da çok değerli. Burada olduğunuz için teşekkürler. \uD83D\uDE4F",
+      "Bağış yapılsa da yapılmasa da gizlilik koruması ve tüm özellikler herkese açıktır.",
+      "GitHub Sponsors üzerinden tek seferlik destek · ABD doları",
+      "Bağış yap",
+      "Daha sonra hatırlat",
+      "Bir daha sorma",
+      "Değerlendirme ve destek hatırlatmalarını göster"
+    ],
+    ko: [
+      "계속 개발할 수 있도록 응원해 주세요",
+      "ChatGPT Audio Controls 덕분에 일상이 조금 편해졌거나 시간을 아끼고 더 많은 일을 할 수 있었나요? 삶에 도움이 되었고 개인정보를 존중하는 도구를 중요하게 생각한다면 개발 후원을 고려해 주세요.",
+      "후원금은 확장 프로그램을 개발하고 개선하는 데 사용하는 AI 구독 비용을 충당하는 데 도움이 됩니다. 계속 개발할 힘도 됩니다.",
+      "후원이 어려워도 괜찮습니다. 생산성에 어떤 도움이 되었는지, 무엇을 개선하면 좋을지 솔직한 경험을 나눠 주시는 것도 큰 힘이 됩니다. 함께해 주셔서 감사합니다. \uD83D\uDE4F",
+      "후원 여부와 관계없이 모든 분께 동일한 개인정보 보호와 모든 기능을 제공합니다.",
+      "GitHub Sponsors를 통한 일회성 후원 · 미국 달러",
+      "후원하기",
+      "나중에 알림",
+      "다시 묻지 않기",
+      "리뷰 및 후원 알림 표시"
+    ],
+    fa: [
+      "کمک کنید توسعه را ادامه بدهم",
+      "آیا ChatGPT Audio Controls روزتان را آسان‌تر کرده، در وقتتان صرفه‌جویی کرده یا کمک کرده کار بیشتری انجام دهید؟ اگر برایتان مفید بوده و ابزارهای حامی حریم خصوصی را ارزشمند می‌دانید، حمایت از توسعهٔ آن را در نظر بگیرید.",
+      "کمک شما بخشی از هزینهٔ رو‌به‌رشد اشتراک‌های هوش مصنوعی را تأمین می‌کند که برای ساخت و بهبود افزونه استفاده می‌کنم. همچنین به من انگیزه می‌دهد که ادامه بدهم.",
+      "امکان کمک مالی ندارید؟ کاملاً قابل درک است. بیان صادقانهٔ تجربه‌تان—اینکه چه کمکی به بهره‌وری‌تان کرده و چه چیزی بهتر می‌شود—هم بسیار ارزشمند است. ممنون که همراهید. \uD83D\uDE4F",
+      "حریم خصوصی و همهٔ امکانات، چه کمک مالی کنید چه نکنید، برای همه فراهم است.",
+      "حمایت یک‌باره از طریق GitHub Sponsors · دلار آمریکا",
+      "حمایت مالی",
+      "بعداً یادآوری کن",
+      "دیگر نپرس",
+      "نمایش یادآورهای نظر دادن و حمایت"
+    ],
+    ar: [
+      "ساعدني على مواصلة التطوير",
+      "هل جعلت ChatGPT Audio Controls يومك أسهل، أو وفرت وقتك، أو ساعدتك على إنجاز المزيد؟ إذا أضافت قيمة إلى حياتك وتقدّر الأدوات التي تحترم خصوصيتك، ففكّر في دعم تطويرها.",
+      "تساعد مساهمتك في تغطية التكلفة المتزايدة لاشتراكات الذكاء الاصطناعي التي أستخدمها لبناء الإضافة وتحسينها. كما تمنحني دافعًا إضافيًا للاستمرار.",
+      "لا يمكنك التبرع؟ لا بأس إطلاقًا. مشاركة تجربتك الصادقة—كيف ساعدتك على الإنتاجية وما الذي يمكن تحسينه—تعني لي الكثير أيضًا. شكرًا لوجودك هنا. \uD83D\uDE4F",
+      "الخصوصية وجميع الميزات متاحة للجميع، سواء تبرعت أم لا.",
+      "دعم لمرة واحدة عبر GitHub Sponsors · بالدولار الأمريكي",
+      "تبرّع",
+      "ذكّرني لاحقًا",
+      "لا تسأل مرة أخرى",
+      "إظهار تذكيرات التقييم والدعم"
+    ],
+    it: [
+      "Aiutami a continuare a sviluppare",
+      "ChatGPT Audio Controls ti ha semplificato la giornata, fatto risparmiare tempo o aiutato a fare di più? Se ha portato valore alla tua vita e apprezzi gli strumenti che rispettano la privacy, considera di sostenerne lo sviluppo.",
+      "Il tuo contributo aiuta a coprire i costi crescenti degli abbonamenti IA che uso per creare e migliorare l’estensione. Mi dà anche una motivazione in più per continuare.",
+      "Non puoi donare? Va benissimo. Condividere la tua esperienza sincera—cosa ha migliorato la tua produttività e cosa potrebbe funzionare meglio—conta molto. Grazie di esserci. \uD83D\uDE4F",
+      "La privacy e tutte le funzioni restano disponibili per tutti, con o senza donazioni.",
+      "Contributo una tantum tramite GitHub Sponsors · Dollari statunitensi",
+      "Dona",
+      "Ricordamelo più tardi",
+      "Non chiedere più",
+      "Mostra promemoria per recensioni e sostegno"
+    ],
+    sv: [
+      "Hjälp mig att fortsätta utveckla",
+      "Har ChatGPT Audio Controls gjort din dag enklare, sparat tid eller hjälpt dig att få mer gjort? Om det gör nytta i ditt liv och du uppskattar verktyg som respekterar din integritet, överväg att stödja utvecklingen.",
+      "Ditt bidrag hjälper till att täcka de ökande kostnaderna för AI-abonnemangen jag använder för att bygga och förbättra tillägget. Det ger mig också extra motivation att fortsätta.",
+      "Kan du inte bidra ekonomiskt? Det är helt okej. Att dela din ärliga upplevelse—vad som hjälpt din produktivitet och vad som kan bli bättre—betyder också mycket. Tack för att du är här. \uD83D\uDE4F",
+      "Integritetsskydd och alla funktioner är tillgängliga för alla, oavsett bidrag.",
+      "Engångsbidrag via GitHub Sponsors · Amerikanska dollar",
+      "Donera",
+      "Påminn mig senare",
+      "Fråga inte igen",
+      "Visa påminnelser om omdömen och stöd"
+    ],
+    ro: [
+      "Ajută-mă să continui dezvoltarea",
+      "ChatGPT Audio Controls ți-a ușurat ziua, ți-a economisit timp sau te-a ajutat să faci mai multe? Dacă îți este util și apreciezi instrumentele care îți respectă confidențialitatea, ia în considerare susținerea dezvoltării.",
+      "Contribuția ta ajută la acoperirea costurilor tot mai mari ale abonamentelor AI pe care le folosesc pentru a crea și îmbunătăți extensia. Îmi oferă și un plus de motivație să continui.",
+      "Nu poți dona? Este absolut în regulă. Contează mult și să împărtășești sincer ce te-a ajutat să fii mai productiv și ce ar putea fi îmbunătățit. Mulțumesc că ești aici. \uD83D\uDE4F",
+      "Confidențialitatea și toate funcțiile rămân disponibile tuturor, indiferent de donații.",
+      "Contribuție unică prin GitHub Sponsors · Dolari americani",
+      "Donează",
+      "Amintește-mi mai târziu",
+      "Nu mai întreba",
+      "Arată mementouri pentru recenzii și susținere"
+    ]
+  };
+  function donationCopy(language) {
+    const values = donationCatalogs[resolveLanguage(language)] || donationCatalogs.en;
+    return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
+  }
+
+  // src/shared/i18n/support.ts
+  var supportCatalogs = {
+    en: ["Help shape ChatGPT Audio Controls", "Have an idea? Share a suggestion or leave an honest review to support the extension.", "Share a suggestion", "Write a review"],
+    hi: ["ChatGPT Audio Controls को बेहतर बनाएँ", "कोई सुझाव है? अपना सुझाव साझा करें या समीक्षा लिखकर एक्सटेंशन का समर्थन करें।", "सुझाव साझा करें", "समीक्षा लिखें"],
+    bn: ["ChatGPT Audio Controls আরও ভালো করুন", "কোনো ধারণা আছে? পরামর্শ দিন বা সৎ পর্যালোচনা লিখে এক্সটেনশনকে সমর্থন করুন।", "পরামর্শ দিন", "পর্যালোচনা লিখুন"],
+    mr: ["ChatGPT Audio Controls अधिक चांगले बनवा", "काही कल्पना आहे? सूचना द्या किंवा प्रामाणिक अभिप्राय लिहून विस्ताराला पाठिंबा द्या.", "सूचना द्या", "अभिप्राय लिहा"],
+    te: ["ChatGPT Audio Controls మెరుగుదలకు తోడ్పడండి", "ఏదైనా ఆలోచన ఉందా? సూచన పంచుకోండి లేదా నిజాయితీగా సమీక్ష రాసి ఎక్స్‌టెన్షన్‌కు మద్దతివ్వండి.", "సూచన పంచుకోండి", "సమీక్ష రాయండి"],
+    ta: ["ChatGPT Audio Controls மேம்பட உதவுங்கள்", "யோசனை உள்ளதா? ஆலோசனையைப் பகிருங்கள் அல்லது நேர்மையான மதிப்புரையை எழுதி நீட்சியை ஆதரியுங்கள்.", "ஆலோசனையைப் பகிரவும்", "மதிப்புரை எழுதவும்"],
+    ar: ["ساهم في تحسين ChatGPT Audio Controls", "لديك فكرة؟ شارك اقتراحًا أو اكتب مراجعة صادقة لدعم الإضافة.", "شارك اقتراحًا", "اكتب مراجعة"],
+    fa: ["به بهبود ChatGPT Audio Controls کمک کنید", "ایده‌ای دارید؟ پیشنهاد خود را به اشتراک بگذارید یا با نوشتن یک نقد صادقانه از افزونه حمایت کنید.", "ارسال پیشنهاد", "نوشتن نقد"],
+    he: ["עזרו לשפר את ChatGPT Audio Controls", "יש לכם רעיון? שתפו הצעה או כתבו ביקורת כנה כדי לתמוך בתוסף.", "שיתוף הצעה", "כתיבת ביקורת"],
+    "zh-CN": ["一起改进 ChatGPT Audio Controls", "有想法吗？分享建议或留下真实评价，支持这个扩展。", "分享建议", "撰写评价"],
+    "zh-TW": ["一起改進 ChatGPT Audio Controls", "有想法嗎？分享建議或留下真實評價，支持這個擴充功能。", "分享建議", "撰寫評價"],
+    vi: ["Cùng cải thiện ChatGPT Audio Controls", "Bạn có ý tưởng? Gửi đề xuất hoặc viết đánh giá chân thực để ủng hộ tiện ích.", "Gửi đề xuất", "Viết đánh giá"],
+    th: ["ช่วยพัฒนา ChatGPT Audio Controls", "มีไอเดียไหม? ส่งข้อเสนอแนะหรือเขียนรีวิวอย่างตรงไปตรงมาเพื่อสนับสนุนส่วนขยาย", "ส่งข้อเสนอแนะ", "เขียนรีวิว"],
+    es: ["Ayuda a mejorar ChatGPT Audio Controls", "¿Tienes una idea? Comparte una sugerencia o deja una reseña sincera para apoyar la extensión.", "Comparte una sugerencia", "Escribe una reseña"],
+    "pt-BR": ["Ajude a melhorar o ChatGPT Audio Controls", "Tem uma ideia? Envie uma sugestão ou deixe uma avaliação sincera para apoiar a extensão.", "Enviar sugestão", "Escrever avaliação"],
+    "pt-PT": ["Ajude a melhorar o ChatGPT Audio Controls", "Tem uma ideia? Partilhe uma sugestão ou deixe uma avaliação sincera para apoiar a extensão.", "Partilhar sugestão", "Escrever avaliação"],
+    ru: ["Помогите улучшить ChatGPT Audio Controls", "Есть идея? Поделитесь предложением или оставьте честный отзыв в поддержку расширения.", "Предложить идею", "Написать отзыв"],
+    fr: ["Améliorons ChatGPT Audio Controls", "Une idée ? Partagez une suggestion ou laissez un avis sincère pour soutenir l’extension.", "Partager une suggestion", "Rédiger un avis"],
+    de: ["ChatGPT Audio Controls mitgestalten", "Eine Idee? Teile einen Vorschlag oder unterstütze die Erweiterung mit einer ehrlichen Bewertung.", "Vorschlag teilen", "Bewertung schreiben"],
+    ja: ["ChatGPT Audio Controls の改善にご協力ください", "アイデアはありますか？提案や率直なレビューで拡張機能を応援してください。", "提案を送る", "レビューを書く"],
+    ko: ["ChatGPT Audio Controls 개선에 참여하세요", "아이디어가 있나요? 제안을 보내거나 솔직한 리뷰로 확장 프로그램을 응원해 주세요.", "제안 보내기", "리뷰 작성"],
+    id: ["Bantu tingkatkan ChatGPT Audio Controls", "Punya ide? Bagikan saran atau tulis ulasan jujur untuk mendukung ekstensi.", "Bagikan saran", "Tulis ulasan"],
+    it: ["Aiuta a migliorare ChatGPT Audio Controls", "Hai un’idea? Condividi un suggerimento o lascia una recensione sincera per sostenere l’estensione.", "Invia un suggerimento", "Scrivi una recensione"],
+    tr: ["ChatGPT Audio Controls’u geliştirmeye yardımcı olun", "Bir fikriniz mi var? Önerinizi paylaşın veya uzantıyı desteklemek için dürüst bir değerlendirme yazın.", "Öneri paylaş", "Değerlendirme yaz"]
+  };
+  Object.assign(supportCatalogs, Object.fromEntries(Object.entries(audience_features_default).map(([code, copy]) => [code, copy.support])));
+  var supportCopy = (language) => supportCatalogs[resolveLanguage(language)];
+
+  // src/shared/support.ts
+  var SPONSOR_AMOUNTS = [1, 3, 5, 10];
+  var SPONSOR_URL = "https://github.com/sponsors/infoxica";
+  function sponsorURL(amount) {
+    if (!SPONSOR_AMOUNTS.includes(amount))
+      throw new Error("Unsupported contribution");
+    return `${SPONSOR_URL}/sponsorships?frequency=one-time&amount=${amount}`;
+  }
+  var REVIEW_URLS = {
+    chrome: "https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/reviews",
+    edge: "https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf#review-section"
+  };
+  function reviewStores(agent) {
+    if (/Edg(A|iOS)?\//.test(agent))
+      return ["edge"];
+    if (/Chrome\//.test(agent) && !/OPR\//.test(agent))
+      return ["chrome"];
+    return ["chrome", "edge"];
+  }
+
+  // src/shared/engagement.ts
+  var ENGAGEMENT_KEY = "cgpt-ra-engagement-v1";
+  var DAY = 86400000;
+  var freshRequest = () => ({ status: "new", displays: 0, shownAt: 0, afterTime: 0, afterUses: 0 });
+  var defaultEngagement = () => ({ version: 1, uses: 0, enabled: true, lastShown: 0, review: freshRequest(), donation: freshRequest() });
+  var integer = (n) => Number.isSafeInteger(n) && Number(n) >= 0;
+  function validateEngagement(value) {
+    if (value === undefined || value === null)
+      return defaultEngagement();
+    const s = value;
+    if (s.version !== 1 || !integer(s.uses) || typeof s.enabled !== "boolean" || !integer(s.lastShown) || !["review", "donation"].every((k) => {
+      const r = s[k];
+      return r && ["new", "shown", "later", "done"].includes(r.status) && integer(r.displays) && r.displays <= 2 && integer(r.shownAt) && integer(r.afterTime) && integer(r.afterUses);
+    }))
+      throw new Error("Invalid engagement state");
+    return structuredClone(s);
+  }
+  function eligibleRequest(s, now) {
+    if (!s.enabled || s.lastShown > 0 && now - s.lastShown < DAY)
+      return;
+    for (const kind of ["donation", "review"])
+      if (s[kind].status === "new" && s.uses >= (kind === "donation" ? 10 : 4))
+        return kind;
+    for (const kind of ["review", "donation"]) {
+      const r = s[kind];
+      if (r.status === "later" && r.displays === 1 && now >= r.afterTime && s.uses >= r.afterUses)
+        return kind;
+    }
+  }
+  function reduceEngagement(value, action, now = Date.now()) {
+    const state = validateEngagement(value);
+    if (action.type === "qualify")
+      state.uses = Math.min(Number.MAX_SAFE_INTEGER, state.uses + 1);
+    if (action.type === "enable") {
+      state.enabled = action.enabled;
+      if (!state.enabled)
+        for (const kind of ["review", "donation"]) {
+          if (state[kind].status === "shown" || state[kind].status === "later")
+            state[kind].status = "done";
+        }
+    }
+    if (action.type === "opened")
+      state[action.kind].status = "done";
+    if (action.type === "respond") {
+      const r = state[action.kind];
+      if (r.status === "shown" && r.shownAt === action.display) {
+        r.status = action.response === "later" && r.displays === 1 ? "later" : "done";
+        r.afterTime = now + 14 * DAY;
+        r.afterUses = state.uses + 10;
+      }
+    }
+    if (action.type === "claim") {
+      const kind = eligibleRequest(state, now);
+      if (kind) {
+        const r = state[kind];
+        r.displays++;
+        r.status = "shown";
+        r.shownAt = state.lastShown = now;
+        return { state, prompt: { kind, reminder: r.displays === 2, display: now } };
+      }
+    }
+    return { state };
+  }
+
+  // src/shared/engagement-client.ts
+  var standalone = true;
+  var SOURCE = "chatgpt-audio-controls-engagement";
+  var lastSession = 0;
+  async function engagementRequest(action) {
+    if (standalone) {
+      if (!navigator.locks)
+        throw new Error("Local coordination unavailable");
+      return navigator.locks.request(ENGAGEMENT_KEY, () => {
+        const value = JSON.parse(localStorage.getItem(ENGAGEMENT_KEY) || "null");
+        if (action.type === "qualify") {
+          if (action.session <= lastSession)
+            return { state: validateEngagement(value) };
+          lastSession = action.session;
+        }
+        const result = reduceEngagement(value, action);
+        if (action.type !== "read") {
+          localStorage.setItem(ENGAGEMENT_KEY, JSON.stringify(result.state));
+          window.dispatchEvent(new Event("cgpt-ra-engagement-change"));
+        }
+        return result;
+      });
+    }
+    if (typeof chrome !== "undefined" && chrome.runtime?.id) {
+      const reply = await chrome.runtime.sendMessage({ type: "engagement", action });
+      if (!reply?.ok)
+        throw new Error("Could not save support preferences");
+      return reply.result;
+    }
+    return new Promise((resolve, reject) => {
+      const id = crypto.randomUUID();
+      const finish = () => {
+        clearTimeout(timer);
+        window.removeEventListener("message", listener);
+      };
+      const listener = (event) => {
+        if (event.source !== window || event.data?.source !== SOURCE || event.data.type !== "result" || event.data.id !== id)
+          return;
+        finish();
+        event.data.ok ? resolve(event.data.result) : reject(new Error("Support storage unavailable"));
+      };
+      const timer = setTimeout(() => {
+        finish();
+        reject(new Error("Support bridge unavailable"));
+      }, 4000);
+      window.addEventListener("message", listener);
+      window.postMessage({ source: SOURCE, type: "request", id, action }, "*");
+    });
+  }
+  function watchEngagement(changed) {
+    const message = (event) => {
+      if (event.source === window && event.data?.source === SOURCE && event.data.type === "changed")
+        changed();
+    };
+    const storage = (event) => {
+      if (event.key === ENGAGEMENT_KEY)
+        changed();
+    };
+    const chromeStorage = (changes, area) => {
+      if (area === "local" && changes[ENGAGEMENT_KEY])
+        changed();
+    };
+    window.addEventListener("message", message);
+    window.addEventListener("storage", storage);
+    window.addEventListener("cgpt-ra-engagement-change", changed);
+    if (!standalone && typeof chrome !== "undefined")
+      chrome.storage?.onChanged?.addListener(chromeStorage);
+    return () => {
+      window.removeEventListener("message", message);
+      window.removeEventListener("storage", storage);
+      window.removeEventListener("cgpt-ra-engagement-change", changed);
+      if (!standalone && typeof chrome !== "undefined")
+        chrome.storage?.onChanged?.removeListener(chromeStorage);
+    };
+  }
+
   // src/content/standalone-settings.ts
   async function openStandaloneSettings(settings, changed) {
     document.getElementById("cgpt-ra-settings-dialog")?.remove();
@@ -7188,6 +7783,65 @@
     dialog.dir = languageDirection(settings.language);
     dialog.lang = resolveLanguage(settings.language);
     const c = featureCopy(settings.language), r = getReleaseCopy(settings.language);
+    const d = donationCopy(settings.language), support = supportCopy(settings.language);
+    const section = document.createElement("section");
+    section.className = "cgpt-ra-standalone-support";
+    const title = document.createElement("h2");
+    title.textContent = d.title;
+    section.append(title);
+    for (const text of [d.value, d.costs, d.once, d.privacy, d.optional]) {
+      const p = document.createElement("p");
+      p.textContent = text;
+      section.append(p);
+    }
+    const links = document.createElement("div");
+    links.className = "cgpt-ra-support-links";
+    const link = (href, text, kind) => {
+      const a = document.createElement("a");
+      a.href = href;
+      a.textContent = text;
+      a.target = "_blank";
+      a.rel = "noreferrer";
+      a.onclick = () => {
+        engagementRequest({ type: "opened", kind }).catch(showError);
+      };
+      links.append(a);
+    };
+    for (const amount of SPONSOR_AMOUNTS)
+      link(sponsorURL(amount), `US$${amount}`, "donation");
+    for (const store of ["chrome", "edge"])
+      link(REVIEW_URLS[store], `${support[3]} · ${store === "chrome" ? "Chrome" : "Edge"}`, "review");
+    section.append(links);
+    const reminderRow = document.createElement("label"), reminder = document.createElement("input");
+    reminder.type = "checkbox";
+    reminder.disabled = true;
+    reminderRow.textContent = d.reminders;
+    reminderRow.append(reminder);
+    section.append(reminderRow);
+    const error = document.createElement("p");
+    error.setAttribute("role", "alert");
+    section.append(error);
+    function showError() {
+      error.textContent = r.savedError;
+    }
+    const refresh = () => {
+      engagementRequest({ type: "read" }).then(({ state }) => {
+        reminder.checked = state.enabled;
+        reminder.disabled = false;
+      }).catch(showError);
+    };
+    reminder.onchange = () => {
+      const enabled = reminder.checked;
+      reminder.disabled = true;
+      engagementRequest({ type: "enable", enabled }).then(refresh).catch(() => {
+        showError();
+        refresh();
+      });
+    };
+    refresh();
+    const stop = watchEngagement(refresh);
+    dialog.addEventListener("close", stop, { once: true });
+    dialog.append(section);
     const heading = document.createElement("h2");
     heading.textContent = c.layout;
     dialog.append(heading);
@@ -7464,7 +8118,7 @@
   }
 
   // src/content/player-layout.ts
-  var standalone = true;
+  var standalone2 = true;
   var source = "chatgpt-audio-controls-settings-bridge";
   var bounds = (el) => {
     const r = el.getBoundingClientRect();
@@ -7536,7 +8190,7 @@
       this.join.setAttribute("aria-hidden", "true");
       this.join.hidden = true;
       this.layer.prepend(this.join);
-      if (standalone) {
+      if (standalone2) {
         try {
           this.preferences = migrateLayout(JSON.parse(localStorage.getItem(LAYOUT_KEY) || "null"));
         } catch {}
@@ -7562,7 +8216,7 @@
         }
       });
       window.addEventListener("storage", (event) => {
-        if (!standalone || event.key !== LAYOUT_KEY)
+        if (!standalone2 || event.key !== LAYOUT_KEY)
           return;
         this.cancelDrag?.();
         try {
@@ -7613,7 +8267,7 @@
     }
     async save(value) {
       try {
-        if (standalone)
+        if (standalone2)
           localStorage.setItem(LAYOUT_KEY, JSON.stringify(value));
         else
           await new Promise((resolve, reject) => {
@@ -8066,6 +8720,300 @@
       resume();
     }
   }
+
+  // src/content/listening-use.ts
+  class ListeningUse {
+    session = 0;
+    previous = null;
+    seconds = 0;
+    covered = 0;
+    whole = false;
+    counted = false;
+    observe(a) {
+      if (a.event === "start" || a.session !== this.session) {
+        this.session = a.session;
+        this.seconds = this.covered = 0;
+        this.counted = false;
+        this.whole = a.position <= 0.05;
+        this.previous = a;
+        return false;
+      }
+      const p = this.previous;
+      if (a.event === "seek")
+        this.whole = false;
+      if (p && ["progress", "pause", "ended"].includes(a.event) && p.advancing) {
+        const elapsed = (a.now - p.now) / 1000, delta = a.position - p.position;
+        if (elapsed > 0 && elapsed <= 2 && delta > 0 && delta <= elapsed * p.rate + 0.15) {
+          this.seconds += Math.min(elapsed, delta / p.rate);
+          this.covered += delta;
+        } else if (delta < -0.05 || delta > elapsed * p.rate + 0.15)
+          this.whole = false;
+      }
+      this.previous = a;
+      const completeShort = a.event === "ended" && a.duration > 0 && a.duration < 20 && this.whole && this.covered >= a.duration - 0.1;
+      if (!this.counted && (this.seconds >= 20 || completeShort)) {
+        this.counted = true;
+        return true;
+      }
+      return false;
+    }
+  }
+
+  // src/content/support-prompts.ts
+  function promptPosition(view, size, anchor, obstacles) {
+    const pad = 12, gap = 12, { width, height } = size;
+    if (width > view.width - pad * 2 || height > view.height - pad * 2)
+      return;
+    const clampX = (x) => Math.max(view.x + pad, Math.min(x, view.x + view.width - width - pad));
+    const positions = [
+      { x: clampX(anchor.x + anchor.width - width), y: anchor.y - height - gap },
+      { x: clampX(anchor.x), y: anchor.y + anchor.height + gap },
+      { x: anchor.x - width - gap, y: anchor.y },
+      { x: anchor.x + anchor.width + gap, y: anchor.y },
+      { x: view.x + pad, y: view.y + pad },
+      { x: view.x + view.width - width - pad, y: view.y + pad }
+    ];
+    return positions.find((p) => p.x >= view.x + pad && p.y >= view.y + pad && p.x + width <= view.x + view.width - pad && p.y + height <= view.y + view.height - pad && obstacles.every((r) => p.x + width + 8 <= r.x || r.x + r.width + 8 <= p.x || p.y + height + 8 <= r.y || r.y + r.height + 8 <= p.y));
+  }
+  var visible = (el) => {
+    const style = getComputedStyle(el), r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0 && style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+  };
+
+  class SupportPrompts {
+    context;
+    listening = new ListeningUse;
+    pausedAt = 0;
+    hasSession = false;
+    session = 0;
+    epoch = 0;
+    element = null;
+    current;
+    busy = false;
+    broken = false;
+    path = location.pathname;
+    lastTyping = 0;
+    state = null;
+    constructor(context) {
+      this.context = context;
+      setInterval(() => void this.tick(), 750);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && this.element) {
+          event.preventDefault();
+          this.respond("dismiss");
+          return;
+        }
+        const el = event.target;
+        if (el?.closest('input,textarea,[contenteditable="true"],[role="textbox"]') && !this.element?.contains(el))
+          this.lastTyping = Date.now();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && this.element)
+          this.element.style.visibility = "hidden";
+      });
+      const refresh = () => {
+        engagementRequest({ type: "read" }).then(({ state }) => {
+          this.state = state;
+          if (!state.enabled || this.current && state[this.current.kind].status !== "shown")
+            this.clear();
+        }).catch(() => this.fail());
+      };
+      watchEngagement(refresh);
+      refresh();
+    }
+    observe(activity) {
+      if (activity.event === "dispose") {
+        this.hasSession = false;
+        this.pausedAt = 0;
+        this.clear();
+        return;
+      }
+      if (activity.event === "start" || activity.session !== this.session) {
+        this.session = activity.session;
+        this.hasSession = true;
+        this.pausedAt = 0;
+        this.clear();
+      }
+      if (this.listening.observe(activity))
+        engagementRequest({ type: "qualify", session: activity.session }).then(({ state }) => {
+          this.state = state;
+        }).catch(() => this.fail());
+      if (activity.event === "pause" || activity.event === "ended") {
+        if (!this.pausedAt)
+          this.pausedAt = Date.now();
+      } else if (activity.advancing) {
+        this.pausedAt = 0;
+        this.clear();
+      }
+    }
+    fail() {
+      this.broken = true;
+      this.clear();
+    }
+    clear() {
+      this.epoch++;
+      this.element?.remove();
+      this.element = null;
+      this.current = undefined;
+    }
+    unsafe() {
+      const context = this.context();
+      return document.hidden || context.hidden || Date.now() - this.lastTyping < 3000 || Boolean(document.querySelector(".cgpt-ra-dragging")) || Array.from(document.querySelectorAll('dialog[open],[role="dialog"],[role="menu"],[role="listbox"],[popover]:popover-open,.cgpt-open,#cgpt-ra-ready-toast')).some(visible);
+    }
+    position(el) {
+      const viewport = window.visualViewport;
+      const view = { x: viewport?.offsetLeft || 0, y: viewport?.offsetTop || 0, width: viewport?.width || innerWidth, height: viewport?.height || innerHeight };
+      el.style.width = `${Math.min(380, view.width - 24)}px`;
+      const controls = Array.from(document.querySelectorAll("#cgpt-ra-left,#cgpt-ra-right,#cgpt-ra-floating-toggle")).filter(visible);
+      if (!controls.length)
+        return false;
+      const composer = this.context().composer;
+      const native = Array.from(document.querySelectorAll('header,nav,[role="navigation"]')).filter((e) => !e.closest("article,[data-message-author-role],[data-writing-block]") && visible(e));
+      const obstacles = [...controls, ...native, ...composer ? [composer] : []].map((el) => el.getBoundingClientRect());
+      const anchor = controls[0].getBoundingClientRect();
+      const position = promptPosition(view, el.getBoundingClientRect(), anchor, obstacles);
+      if (!position)
+        return false;
+      el.style.left = `${position.x}px`;
+      el.style.top = `${position.y}px`;
+      return true;
+    }
+    async tick() {
+      if (location.pathname !== this.path) {
+        this.path = location.pathname;
+        this.hasSession = false;
+        this.clear();
+      }
+      if (this.element) {
+        if (this.context().hidden) {
+          this.clear();
+          return;
+        }
+        if (this.current && this.element.lang !== resolveLanguage(this.context().language)) {
+          this.element.remove();
+          this.element = this.build(this.current.kind, this.current.reminder);
+          document.body.append(this.element);
+        }
+        this.element.style.visibility = this.unsafe() || !this.position(this.element) ? "hidden" : "visible";
+        return;
+      }
+      if (this.busy || this.broken || !this.hasSession || !this.pausedAt || !this.state || !eligibleRequest(this.state, Date.now()) || Date.now() - this.pausedAt < 3000 || this.unsafe())
+        return;
+      this.busy = true;
+      const epoch = this.epoch;
+      let preview;
+      try {
+        const { state } = await engagementRequest({ type: "read" });
+        const kind = eligibleRequest(state, Date.now());
+        if (!kind || epoch !== this.epoch || this.unsafe())
+          return;
+        preview = this.build(kind, state[kind].displays === 1);
+        preview.style.visibility = "hidden";
+        document.body.append(preview);
+        if (!this.position(preview))
+          return;
+        const result = await engagementRequest({ type: "claim" });
+        this.state = result.state;
+        if (!result.prompt || epoch !== this.epoch || this.unsafe())
+          return;
+        preview.remove();
+        preview = this.build(result.prompt.kind, result.prompt.reminder);
+        preview.style.visibility = "hidden";
+        document.body.append(preview);
+        if (!this.position(preview))
+          return;
+        this.current = result.prompt;
+        this.element = preview;
+        preview = undefined;
+        this.element.style.visibility = "visible";
+        const status = this.element.querySelector('[role="status"]');
+        status.textContent = this.element.querySelector("h2").textContent;
+      } catch {
+        this.fail();
+      } finally {
+        preview?.remove();
+        this.busy = false;
+      }
+    }
+    async respond(response) {
+      const current = this.current;
+      this.clear();
+      if (current)
+        try {
+          await engagementRequest({ type: "respond", kind: current.kind, display: current.display, response });
+        } catch {
+          this.fail();
+        }
+    }
+    build(kind, reminder) {
+      const language = this.context().language, d = donationCopy(language), s = supportCopy(language || "auto");
+      const el = document.createElement("section");
+      el.id = "cgpt-ra-support-prompt";
+      el.dir = languageDirection(language);
+      el.lang = resolveLanguage(language);
+      el.setAttribute("aria-labelledby", "cgpt-ra-support-title");
+      const status = document.createElement("span");
+      status.className = "cgpt-ra-support-announcement";
+      status.setAttribute("role", "status");
+      el.append(status);
+      const heading = document.createElement("h2");
+      heading.id = "cgpt-ra-support-title";
+      heading.textContent = kind === "donation" ? d.title : s[0];
+      const close = document.createElement("button");
+      close.type = "button";
+      close.className = "cgpt-ra-support-close";
+      close.innerHTML = getLucideSvg("x");
+      close.setAttribute("aria-label", d.never);
+      close.title = d.never;
+      close.onclick = () => void this.respond("dismiss");
+      el.append(heading, close);
+      const paragraph = (text) => {
+        const p = document.createElement("p");
+        p.textContent = text;
+        el.append(p);
+      };
+      paragraph(kind === "donation" ? d.value : s[1]);
+      const links = document.createElement("div");
+      links.className = "cgpt-ra-support-actions";
+      const link = (href, text, action, label = text) => {
+        const a = document.createElement("a");
+        a.href = href;
+        a.target = "_blank";
+        a.rel = "noreferrer";
+        a.textContent = text;
+        a.setAttribute("aria-label", label);
+        a.onclick = () => {
+          this.clear();
+          engagementRequest({ type: "opened", kind: action }).catch(() => this.fail());
+        };
+        links.append(a);
+      };
+      if (kind === "donation") {
+        paragraph(d.costs);
+        paragraph(d.once);
+        for (const amount of SPONSOR_AMOUNTS)
+          link(sponsorURL(amount), `US$${amount}`, "donation", `${d.donate} · US$${amount} · GitHub Sponsors`);
+      }
+      for (const store of reviewStores(navigator.userAgent))
+        link(REVIEW_URLS[store], `${s[3]} · ${store === "edge" ? "Edge" : "Chrome"}`, "review");
+      el.append(links);
+      if (kind === "donation")
+        paragraph(d.privacy);
+      const actions = document.createElement("div");
+      actions.className = "cgpt-ra-support-actions secondary";
+      for (const [text, response] of [[d.later, "later"], [d.never, "dismiss"]]) {
+        if (reminder && response === "later")
+          continue;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = text;
+        button.onclick = () => void this.respond(response);
+        actions.append(button);
+      }
+      el.append(actions);
+      return el;
+    }
+  }
   // src/shared/i18n/polish.json
   var polish_default = {
     en: {
@@ -8349,6 +9297,7 @@
     changed;
     failed;
     retained;
+    activity;
     media = null;
     host = null;
     owned = null;
@@ -8366,11 +9315,17 @@
     playAnchor = 0;
     playTimer;
     playAttempt = 0;
-    constructor(retain, changed, failed, retained = () => {}) {
+    constructor(retain, changed, failed, retained = () => {}, activity = () => {}) {
       this.retain = retain;
       this.changed = changed;
       this.failed = failed;
       this.retained = retained;
+      this.activity = activity;
+    }
+    report(event, media = this.media) {
+      try {
+        this.activity({ session: this.generation, event, position: this.time, duration: this.duration, rate: media?.playbackRate || 1, advancing: Boolean(media && !media.paused && !media.ended && !media.seeking && media.readyState >= 2), now: performance.now() });
+      } catch {}
     }
     isOwned(media) {
       return media === this.owned;
@@ -8403,6 +9358,7 @@
       this.host = this.media = media;
       this.source = source;
       this.wantsPlay = true;
+      this.report("start");
       this.controller = new AbortController;
       this.watch(media);
       this.payload = this.retain(source, this.controller.signal);
@@ -8416,9 +9372,12 @@
       const generation = this.generation;
       const current = () => generation === this.generation && media === this.media;
       const signal = this.controller?.signal;
-      for (const name of ["play", "pause", "ended", "waiting", "timeupdate"]) {
+      for (const name of ["play", "playing", "pause", "ended", "waiting", "timeupdate", "seeking", "seeked", "ratechange"]) {
         media.addEventListener(name, () => {
           if (!current())
+            return;
+          this.report(name === "timeupdate" ? "progress" : name === "pause" ? "pause" : name === "ended" ? "ended" : name === "seeking" ? "seek" : "boundary", media);
+          if (["playing", "seeking", "seeked", "ratechange"].includes(name))
             return;
           if (name === "play" || name === "waiting") {
             if (media.paused)
@@ -8443,11 +9402,13 @@
       return this.payload;
     }
     seek(time) {
+      this.report("seek");
       this.savedTime = time;
       if (this.media && (!this.owned || this.ready)) {
         this.media.currentTime = time;
         this.playAnchor = this.media.currentTime;
       }
+      this.report("boundary");
     }
     toggle() {
       if (!this.media)
@@ -8480,6 +9441,7 @@
         return;
       }
       const host = this.media;
+      this.report("pause");
       this.savedTime = host.currentTime || 0;
       this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
       if (!this.savedDuration && host.buffered?.length)
@@ -8494,6 +9456,7 @@
       this.media = owned;
       this.wantsPlay = false;
       this.advancing = false;
+      this.report("boundary");
       this.watch(owned);
       this.changed(owned);
       host.pause();
@@ -8586,6 +9549,7 @@
       });
     }
     dispose(next) {
+      this.report("dispose");
       this.generation++;
       this.retained(false);
       this.playAttempt++;
@@ -8778,7 +9742,7 @@
   }
 
   // src/content/content.ts
-  var standalone2 = true;
+  var standalone3 = true;
   (function() {
     const PAGE = typeof window !== "undefined" ? window : globalThis;
     const CONFIG = {
@@ -8797,7 +9761,7 @@
     let commandBindings = {};
     let playerLayout = null;
     const readyToast = new ReadyToast;
-    if (standalone2) {
+    if (standalone3) {
       try {
         settingsCache = { ...DEFAULT_SETTINGS, ...JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS) || "{}") };
       } catch {
@@ -9242,6 +10206,7 @@
         throw new Error("Audio unavailable");
       return readAudio(response);
     }
+    const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
     const playback = new PlaybackSession(retainAudio, (media) => {
       activeMedia = media;
       if (media)
@@ -9253,7 +10218,7 @@
       readyToast.clear();
       if (ready && getSavedSettings().notifyDownloadReady !== false)
         readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
-    });
+    }, (activity) => supportPrompts.observe(activity));
     window.addEventListener("pagehide", () => {
       playback.dispose();
       activeMedia = null;
@@ -10064,7 +11029,7 @@
       }
       if (command === "open-settings") {
         window.postMessage({ source: "chatgpt-audio-controls-settings-bridge", type: "CGPT_RA_OPEN_SETTINGS" }, "*");
-        if (standalone2)
+        if (standalone3)
           openStandaloneSettings(settingsCache || DEFAULT_SETTINGS, (value) => {
             settingsCache = value;
             readyToast.clear();
@@ -10190,4 +11155,4 @@
   })();
 })();
 
-(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n#cgpt-ra-right.cgpt-ra-wrap { flex-wrap: wrap; justify-content: center; align-content: center; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-extras { display: none; position: fixed; width: 192px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();
+(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-support-prompt,\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-support-prompt,\r\n[data-theme='light'] #cgpt-ra-support-prompt,\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n#cgpt-ra-right.cgpt-ra-wrap { flex-wrap: wrap; justify-content: center; align-content: center; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-extras { display: none; position: fixed; width: 192px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-dock .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n\n/* Optional, non-modal support requests. No page or composer styles are changed. */\n#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\n#cgpt-ra-support-prompt * { box-sizing:border-box; }\n#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\n#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\n#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\n#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\n#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\n#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\n#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\n#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\n#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\n#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\n.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\n#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();

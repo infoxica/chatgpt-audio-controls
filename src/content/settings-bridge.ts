@@ -3,6 +3,7 @@ import { getSettings, saveSettings } from "../shared/storage";
 import { VISIBILITY_COMMAND, isPlayerCommand } from "../shared/shortcuts";
 import { DEFAULT_SETTINGS, SETTING_STORAGE_KEYS, STORAGE_KEYS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
+import { ENGAGEMENT_KEY, isEngagementAction } from '../shared/engagement';
 
 const BRIDGE_SOURCE = "chatgpt-audio-controls-settings-bridge";
 const REQUEST_TYPE = "CGPT_RA_SETTINGS_REQUEST";
@@ -51,6 +52,12 @@ async function readSettings(): Promise<void> {
 }
 
 window.addEventListener("message", (event: MessageEvent) => {
+  if (event.source === window && event.data?.source === 'chatgpt-audio-controls-engagement' && event.data.type === 'request' && typeof event.data.id === 'string' && event.data.id.length <= 64 && isEngagementAction(event.data.action)) {
+    const { id, action } = event.data;
+    const result = (reply: any) => window.postMessage({ source: 'chatgpt-audio-controls-engagement', type: 'result', id, ...reply }, '*');
+    if (action.type === 'claim' && document.visibilityState !== 'visible') result({ ok: false });
+    else void chrome.runtime.sendMessage({ type: 'engagement', action }).then(result).catch(() => result({ ok: false }));
+  }
   if (event.source === window && event.data?.source === BRIDGE_SOURCE) {
     if (event.data.type === 'CGPT_RA_LAYOUT_REQUEST') void publishLayout();
     if (event.data.type === 'CGPT_RA_LAYOUT_SAVE' && typeof event.data.id === 'string' && event.data.id.length < 100) {
@@ -85,6 +92,7 @@ window.addEventListener("message", (event: MessageEvent) => {
 });
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'local' && changes[ENGAGEMENT_KEY]) window.postMessage({ source: 'chatgpt-audio-controls-engagement', type: 'changed' }, '*');
   if (areaName === 'local' && changes[LAYOUT_KEY]) void publishLayout();
   if (areaName !== "sync") return;
 
