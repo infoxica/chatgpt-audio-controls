@@ -9,11 +9,26 @@ async function serveSite(context,tracking=[]) {
       const file=relative.endsWith('/')?relative+'index.html':relative;
       const content=await fs.readFile('site-dist/'+file);
       const body=file.endsWith('.html')?content.toString().replace(/data-ga4="[^"]*"/,'data-ga4="G-TEST123"'):content;
-      return route.fulfill({body,contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':file.endsWith('.png')?'image/png':'text/html; charset=utf-8'});
+      return route.fulfill({body,contentType:file.endsWith('.mp4')?'video/mp4':file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':file.endsWith('.png')?'image/png':'text/html; charset=utf-8'});
     }
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
+for(const [width,locale] of [[1280,''],[360,''],[390,'ar/']])test(`private demo plays without overflow or autoplay at ${width} ${locale}`,async({page,context})=>{
+  await serveSite(context);await page.setViewportSize({width,height:900});
+  const mediaRequests=[];page.on('request',r=>{if(r.url().endsWith('.mp4'))mediaRequests.push(r.url());});
+  await page.goto(base+locale);const video=page.locator('#demo video');
+  await expect(video).toHaveAttribute('preload','none');expect(mediaRequests).toEqual([]);
+  expect(await video.evaluate(el=>el.autoplay)).toBe(false);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await video.scrollIntoViewIfNeeded();await video.evaluate(el=>el.play());
+  await expect.poll(()=>video.evaluate(el=>el.currentTime)).toBeGreaterThan(0.2);
+  expect(await video.evaluate(el=>[el.videoWidth,el.videoHeight])).toEqual([1920,1080]);
+  await video.evaluate(el=>el.pause());
+  await expect(page.locator('.demo-gallery img')).toHaveCount(2);
+  await page.locator('.demo-transcript summary').click();await expect(page.locator('.demo-transcript li')).toHaveCount(7);
+  await page.screenshot({path:`build/browser-results/demo-site-${width}.png`});
+});
 test('static routes and consent keep analytics opt-in and store clicks distinct',async({page,context})=>{
   const tracking=[];
   const errors=[];

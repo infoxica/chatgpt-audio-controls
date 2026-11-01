@@ -37,3 +37,7 @@
 [dir=rtl] .external-link-icon { margin-inline-start: .25em; }
 [dir=rtl] .site-nav, [dir=rtl] .footer-navigation { text-align: start; }
 [dir=rtl] pre, [dir=rtl] code, [dir=rtl] kbd { direction: ltr; unicode-bidi: isolate; }
+
+.demo-section video{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--border,#5555);background:#212121;margin-top:24px}
+.demo-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}.demo-gallery figure{margin:0;min-width:0}.demo-gallery img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid #8883}.demo-gallery figcaption{font-size:14px;margin-top:10px;color:var(--muted,#888)}.demo-gallery a:focus-visible{outline:2px solid #6aa8ff;outline-offset:5px;display:block;border-radius:12px}@media(max-width:640px){.demo-gallery{grid-template-columns:1fr}.demo-section video{border-radius:12px}}
+.demo-transcript{margin-block:16px;font-size:14px;color:var(--muted,#888)}.demo-transcript summary{cursor:pointer;padding-block:10px}.demo-transcript li{margin-block:8px}

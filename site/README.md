@@ -1,5 +1,9 @@
 # Official website
 
+The homepage includes a self-hosted demonstration video, two player screenshots,
+and a fresh settings screenshot. All media uses a disposable profile and fictional
+content; see [demo provenance and regeneration](../assets/demo/README.md).
+
 For an interactive preview, run `bun run build:site` then `bun run dev:site`.
 The server listens at `http://127.0.0.1:4178/` and supports
 root discovery files, Link response headers, and Markdown content negotiation.
