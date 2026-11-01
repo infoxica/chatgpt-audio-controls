@@ -79,6 +79,9 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
    await worker.evaluate(language=>chrome.storage.sync.set({'cgpt-ra-settings.language':language}),language);
    for(const surface of ['options','popup']){
     const page=await context.newPage();await page.goto(`chrome-extension://${id}/src/${surface}/index.html`);
+    await expect(page.locator('html')).toHaveAttribute('lang',language);
+    // Exercise the wider fallback font that exposed the German heading overflow in Linux CI.
+    if(surface==='options'&&language==='de')await page.addStyleTag({content:'.header-title-block {font-family:Arial,sans-serif}'});
     if(surface==='popup')await page.locator('.tab-btn').nth(2).click();
     await expect(page.locator('.donation-amounts a')).toHaveCount(4);
     for(const width of [320,360,390,768,1366]){

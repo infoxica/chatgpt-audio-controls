@@ -276,6 +276,11 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--border-color);
 }
 
+.header-title-block {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .header-title-block h1 {
   font-size: 24px;
   font-weight: 800;
