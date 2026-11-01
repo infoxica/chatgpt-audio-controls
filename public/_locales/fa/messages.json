@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "پخش / مکث"
+  },
+  "command_seek_back": {
+    "message": "رفتن به عقب"
+  },
+  "command_seek_forward": {
+    "message": "رفتن به جلو"
+  },
+  "command_speed_decrease": {
+    "message": "کاهش سرعت"
+  },
+  "command_speed_increase": {
+    "message": "افزایش سرعت"
+  },
+  "command_speed_reset": {
+    "message": "بازنشانی سرعت به 1×"
+  },
+  "command_volume_increase": {
+    "message": "افزایش صدا"
+  },
+  "command_volume_decrease": {
+    "message": "کاهش صدا"
+  },
+  "command_toggle_mute": {
+    "message": "بی‌صدا / باصدا"
+  },
+  "command_download_audio": {
+    "message": "دانلود صدا"
+  },
+  "command_toggle_collapse": {
+    "message": "جمع کردن پخش‌کننده / باز کردن کنترل‌های صدای ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "بازنشانی چیدمان"
+  },
+  "command_open_help": {
+    "message": "میان‌برهای صفحه‌کلید و حرکات"
+  },
+  "command_open_settings": {
+    "message": "باز کردن داشبورد و تنظیمات"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — بلندخوانی"
+  },
+  "extensionDescription": {
+    "message": "کنترل صدای ChatGPT: مکث، جابه‌جایی، سرعت، بلندی صدا، دانلود و میان‌برها."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "نمایش / پنهان کردن کنترل‌های شناور"
+  }
+}

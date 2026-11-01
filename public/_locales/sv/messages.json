@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Spela / Pausa"
+  },
+  "command_seek_back": {
+    "message": "Spola bakåt"
+  },
+  "command_seek_forward": {
+    "message": "Spola framåt"
+  },
+  "command_speed_decrease": {
+    "message": "Minska hastigheten"
+  },
+  "command_speed_increase": {
+    "message": "Öka hastigheten"
+  },
+  "command_speed_reset": {
+    "message": "Återställ hastigheten till 1×"
+  },
+  "command_volume_increase": {
+    "message": "Öka volymen"
+  },
+  "command_volume_decrease": {
+    "message": "Minska volymen"
+  },
+  "command_toggle_mute": {
+    "message": "Stäng av / slå på ljudet"
+  },
+  "command_download_audio": {
+    "message": "Ladda ner ljud"
+  },
+  "command_toggle_collapse": {
+    "message": "Fäll ihop spelaren / Visa ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Återställ layout"
+  },
+  "command_open_help": {
+    "message": "Kortkommandon och gester"
+  },
+  "command_open_settings": {
+    "message": "Öppna kontrollpanelen och inställningarna"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Läs högt"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT ljudkontroller: pausa, spola, ändra hastighet och volym, ladda ner ljud och använd kortkommandon."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Visa / dölj flytande kontroller"
+  }
+}

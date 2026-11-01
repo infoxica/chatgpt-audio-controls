@@ -1,3 +1,4 @@
+import { LayoutSettings, DownloadNotificationSettings } from '../../shared/LayoutSettings';
 import { VisibilitySettings } from "../../shared/VisibilitySettings";
 import { platformKeys } from '../../shared/shortcuts';
 import React from "react";
@@ -37,6 +38,8 @@ export const QuickControls: React.FC<QuickControlsProps> = ({
   return (
     <div className="popup-body">
       <VisibilitySettings settings={settings} onUpdateSettings={onUpdateSettings} />
+      <DownloadNotificationSettings settings={settings} onUpdateSettings={onUpdateSettings} />
+      <LayoutSettings language={settings.language} />
       {/* Speed Presets */}
       <div className="section-card">
         <div className="section-title">

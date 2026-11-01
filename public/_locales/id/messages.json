@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "Putar / Jeda"
+  },
+  "command_seek_back": {
+    "message": "Mundur"
+  },
+  "command_seek_forward": {
+    "message": "Maju"
+  },
+  "command_speed_decrease": {
+    "message": "Kurangi kecepatan"
+  },
+  "command_speed_increase": {
+    "message": "Tambah kecepatan"
+  },
+  "command_speed_reset": {
+    "message": "Atur ulang kecepatan ke 1×"
+  },
+  "command_volume_increase": {
+    "message": "Naikkan volume"
+  },
+  "command_volume_decrease": {
+    "message": "Turunkan volume"
+  },
+  "command_toggle_mute": {
+    "message": "Bisukan / aktifkan suara"
+  },
+  "command_download_audio": {
+    "message": "Unduh audio"
+  },
+  "command_toggle_collapse": {
+    "message": "Ciutkan pemutar / Perluas ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Atur ulang tata letak"
+  },
+  "command_open_help": {
+    "message": "Pintasan dan gestur"
+  },
+  "command_open_settings": {
+    "message": "Buka dasbor dan pengaturan"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls — Baca nyaring"
   },

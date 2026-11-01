@@ -1,0 +1,1478 @@
+{
+  "pl": {
+    "common": {
+      "extensionName": "ChatGPT Audio",
+      "extensionSubtitle": "Sterowanie i czytanie na głos",
+      "version": "v",
+      "openChatGPT": "Otwórz ChatGPT",
+      "dashboard": "Pulpit nawigacyjny",
+      "seconds": "sekundy",
+      "star": "★ Gwiazda",
+      "docs": "Dokumentacja",
+      "issues": "Problemy"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Zmień motyw",
+        "openOptions": "Otwórz Panel i Ustawienia"
+      },
+      "tabs": {
+        "controls": "Sterowanie",
+        "shortcuts": "Skróty",
+        "about": "Informacje"
+      },
+      "quickControls": {
+        "playbackSpeed": "Domyślna prędkość odtwarzania",
+        "defaultVolume": "Domyślna głośność",
+        "mute": "Wycisz",
+        "unmute": "Wyłącz wyciszenie",
+        "smartIntegrations": "Inteligentne integracje",
+        "globalShortcuts": "Globalne skróty",
+        "globalShortcutsDesc": "Włącz Space/K, Alt+P, Alt+Arrows i klawisze prędkości",
+        "smoothScrubbing": "Płynne przewijanie",
+        "smoothScrubbingDesc": "Przytrzymaj ◀10 lub 10▶, aby przewijać coraz szybciej"
+      },
+      "shortcuts": {
+        "title": "Skróty klawiaturowe",
+        "gesturesTitle": "Gesty myszy i dotyku",
+        "smoothAudioScrub": "Płynne przewijanie dźwięku",
+        "directDownload": "Bezpośrednie pobieranie",
+        "holdScrubKey": "Przytrzymaj ◀10 / 10▶",
+        "clickDownloadKey": "Kliknij przycisk 📥"
+      },
+      "about": {
+        "title": "ChatGPT Audio Controls",
+        "byInfoxica": "Otwarte oprogramowanie autorstwa Infoxica",
+        "description": "Wstrzymuj, przewijaj do tyłu, zmieniaj prędkość odtwarzania i pobieraj dźwięk. Pozostań w rozmowie, słuchając.",
+        "privacyTitle": "Skoncentrowany w 100% na prywatności",
+        "privacyDesc": "Żadnych trackerów, żadnej telemetrii. Wszystko działa na Twojej maszynie.",
+        "githubRepo": "Repozytorium GitHuba",
+        "documentation": "Dokumentacja",
+        "reportIssue": "Zgłoś problem"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Audio",
+        "dashboardSubtitle": "Panel i konfiguracja",
+        "preferences": "Preferencje",
+        "shortcuts": "Skróty i gesty",
+        "faq": "Często zadawane pytania i rozwiązywanie problemów",
+        "darkMode": "Tryb ciemny",
+        "lightMode": "Tryb jasny",
+        "githubRepo": "Repozytorium GitHuba"
+      },
+      "headers": {
+        "preferencesTitle": "Preferencje audio i odtwarzania",
+        "preferencesDesc": "Skonfiguruj język, ustawienia prędkości odtwarzania, domyślną głośność i funkcje.",
+        "shortcutsTitle": "Skróty klawiaturowe i gesty",
+        "shortcutsDesc": "Opanuj szybkie klawisze skrótu, aby łatwo manipulować odtwarzaniem.",
+        "faqTitle": "Często zadawane pytania i rozwiązywanie problemów",
+        "faqDesc": "Szczegółowy przewodnik techniczny, odpowiedzi na temat bezpieczeństwa i pomocy technicznej."
+      },
+      "general": {
+        "languageTitle": "Język i lokalizacja",
+        "languageDesc": "Wybierz preferowany język interfejsu lub pozwól rozszerzeniu automatycznie wykryć język Twojej przeglądarki.",
+        "languageAuto": "Automatyczne wykrywanie (język przeglądarki)",
+        "languageDetected": "Wykryto",
+        "speedTitle": "Preferencje prędkości odtwarzania",
+        "speedDesc": "Wybierz domyślną szybkość odtwarzania podczas otwierania ChatGPT lub uruchamiania Czytaj na głos.",
+        "volumeTitle": "Domyślny poziom głośności",
+        "volumeDesc": "Zaprogramowana głośność strumieni mowy Czytaj na głos.",
+        "seekTitle": "Krok przewijania",
+        "seekDesc": "Liczba sekund do pominięcia po pojedynczym dotknięciu przycisków -10s / +10s lub Alt + Lewo / Alt + Prawo.",
+        "secondsUnit": "sekundy"
+      },
+      "shortcutsGuide": {
+        "title": "Informacje o skrótach klawiaturowych",
+        "desc": "Przyspiesz swoją pracę dzięki ergonomicznym klawiszom skrótu do odtwarzania jedną ręką i standardowym klawiszom skrótu YouTube.",
+        "gesturesTitle": "Przewijanie przez przytrzymanie przycisku",
+        "gesturesDesc": "Przytrzymaj ◀10s lub 10s▶, aby płynnie przewijać długie odpowiedzi głosowe z rosnącą prędkością:",
+        "gestureHold03": "Rozpoczyna płynne przewijanie z prędkością 4×.",
+        "gestureHold15": "Zwiększa prędkość przewijania do 10×.",
+        "gestureHold30": "Zwiększa prędkość przewijania do 25×.",
+        "gestureRelease": "Zatrzymuje przewijanie w wybranym miejscu."
+      },
+      "faq": {
+        "title": "Często zadawane pytania i podręcznik użytkownika",
+        "subtitle": "Szybkie odpowiedzi, które pomogą Ci w pełni wykorzystać sterowanie audio ChatGPT.",
+        "q1": "Jak dostosować głośność, przewijając myszką?",
+        "a1": "Po prostu umieść wskaźnik myszy nad ikoną głośnika głośności na pasku odtwarzacza i przewiń kółkiem myszy w górę lub w dół. Głośność będzie płynnie dostosowywana w krokach co 5% bez konieczności otwierania suwaka!",
+        "q2": "Gdzie pojawia się odtwarzacz na ChatGPT?",
+        "a2": "Zachowaj oryginalne położenie, wybierz róg lub bok ekranu albo umieść odtwarzacz nad polem wiadomości. Przeciągaj i zamieniaj paski — rozszerzenie zapamięta układ.",
+        "q3": "Jak pobrać dźwięk syntezowanej mowy?",
+        "a3": "Pobierane pliki korzystają z formatu audio udostępnianego przez ChatGPT. Rozszerzenie nie konwertuje dźwięku. Otwórz ChatGPT i rozpocznij czytanie na głos po ukończeniu odpowiedzi. Użyj odtwarzacza, aby wstrzymywać, szukać, zmieniać prędkość lub pobierać.",
+        "q4": "Czy to działa na małych ekranach laptopów?",
+        "a4": "Tak! Odtwarzacz automatycznie wykrywa dostępną szerokość ekranu i dynamicznie skaluje pasek wyszukiwania, aby wygodnie dopasować go do ekranu laptopa. Jeśli przestrzeń jest bardzo mała, pływający przycisk pozostaje dostępny, dzięki czemu możesz rozwijać i zwijać odtwarzacz, kiedy tylko tego potrzebujesz.",
+        "q5": "Jak zainstalować to poprzez Tampermonkey z automatycznymi aktualizacjami?",
+        "a5": "Jeśli używasz Tampermonkey, Violentmonkey lub Greasemonkey, możesz zainstalować samodzielny skrypt bezpośrednio z naszego repozytorium. Tampermonkey automatycznie sprawdzi GitHub pod kątem aktualizacji i powiadomi Cię o wydaniu nowej wersji.",
+        "q6": "Czy moje rozmowy lub podpowiedzi są prywatne?",
+        "a6": "100% prywatności. Rozszerzenie działa całkowicie na urządzeniu lokalnym. Żadne monity, odpowiedzi, strumienie audio ani osobiste dane telemetryczne nie są nigdy wysyłane do żadnego serwera zewnętrznego."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Wstecz o {s} s — przytrzymaj, aby przewijać",
+        "playPause": "Odtwórz / Wstrzymaj (Space lub K; Alt+P nadal działa)",
+        "forward": "Dalej o {s} s — przytrzymaj, aby przewijać",
+        "speed": "Szybkość odtwarzania",
+        "volume": "Głośność (przewiń, aby dostosować)",
+        "volumeSlider": "Suwak głośności",
+        "download": "Pobierz dźwięk",
+        "shortcuts": "Skróty klawiaturowe i gesty",
+        "collapse": "Zwiń odtwarzacz",
+        "expand": "Rozwiń ChatGPT Audio Controls",
+        "readAloud": "Przeczytaj na głos"
+      },
+      "shortcutsPopover": {
+        "title": "Skróty odczytywania na głos",
+        "playPause": "Odtwórz/Wstrzymaj",
+        "back": "Powrót {s} sek",
+        "forward": "Do przodu {s} sek",
+        "slower": "Wolniejsze ustawienie wstępne",
+        "faster": "Szybsze ustawienie wstępne",
+        "volumeScroll": "Przewijanie głośności",
+        "smoothScrub": "Płynne przewijanie",
+        "volumeScrollKey": "Przewiń 🔈",
+        "smoothScrubKey": "Przytrzymaj ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Nie można pobrać strumienia audio. Upewnij się, że dźwięk jest aktywnie ładowany."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Odtwórz/Wstrzymaj",
+        "description": "Przełącz odtwarzanie, dopasowując popularne odtwarzacze internetowe i stacjonarne (Alt+P pozostaje obsługiwany)"
+      },
+      "seekBack": {
+        "action": "Cofnij się o 10 sekund",
+        "description": "Cofnij o 10 s (przytrzymaj, aby płynnie przewijać)"
+      },
+      "seekForward": {
+        "action": "Do przodu o 10 sekund",
+        "description": "Przewiń do przodu o 10 s (przytrzymaj, aby płynnie przewijać)"
+      },
+      "speedDecrease": {
+        "action": "Zmniejsz prędkość",
+        "description": "Zejdź do poprzedniego ustawienia prędkości"
+      },
+      "speedIncrease": {
+        "action": "Zwiększ prędkość",
+        "description": "Przejdź do następnego ustawienia prędkości"
+      }
+    }
+  },
+  "hu": {
+    "common": {
+      "extensionName": "ChatGPT Audio",
+      "extensionSubtitle": "Vezérlők és hangos olvasás",
+      "version": "v",
+      "openChatGPT": "Nyissa meg a ChatGPT-t",
+      "dashboard": "Irányítópult",
+      "seconds": "másodpercig",
+      "star": "★ Csillag",
+      "docs": "Dokumentumok",
+      "issues": "Kérdések"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Téma váltása",
+        "openOptions": "Nyissa meg az Irányítópult és a beállításokat"
+      },
+      "tabs": {
+        "controls": "Vezérlők",
+        "shortcuts": "Kulcsok",
+        "about": "Körülbelül"
+      },
+      "quickControls": {
+        "playbackSpeed": "Alapértelmezett lejátszási sebesség",
+        "defaultVolume": "Alapértelmezett hangerő",
+        "mute": "Némítás",
+        "unmute": "Némítás feloldása",
+        "smartIntegrations": "Intelligens integrációk",
+        "globalShortcuts": "Globális gyorsbillentyűk",
+        "globalShortcutsDesc": "Space/K, Alt+P, Alt+Arrows és gyorsbillentyűk engedélyezése",
+        "smoothScrubbing": "Sima súrolás",
+        "smoothScrubbingDesc": "Gyorsítsa fel a keresést a ◀10 vagy 10▶ gomb lenyomva tartásával"
+      },
+      "shortcuts": {
+        "title": "Billentyűparancsok",
+        "gesturesTitle": "Egér- és érintésmozdulatok",
+        "smoothAudioScrub": "Smooth Audio Scrub",
+        "directDownload": "Közvetlen letöltés",
+        "holdScrubKey": "Tartsa lenyomva a ◀10 / 10▶ gombot",
+        "clickDownloadKey": "Kattintson a 📥 gombra"
+      },
+      "about": {
+        "title": "ChatGPT hangvezérlők",
+        "byInfoxica": "Nyílt forráskód: Infoxica",
+        "description": "Szünet, visszatekerés, lejátszási sebesség módosítása és hang letöltése. Maradjon a beszélgetésben, miközben hallgat.",
+        "privacyTitle": "100%-ban az adatvédelemre összpontosít",
+        "privacyDesc": "Nincs nyomkövető, nincs telemetria. Minden fut a gépeden.",
+        "githubRepo": "GitHub Repository",
+        "documentation": "Dokumentáció",
+        "reportIssue": "Probléma bejelentése"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Audio",
+        "dashboardSubtitle": "Irányítópult és beállítás",
+        "preferences": "Preferences",
+        "shortcuts": "Parancsikonok és gesztusok",
+        "faq": "GYIK és hibaelhárítás",
+        "darkMode": "Sötét mód",
+        "lightMode": "Fény mód",
+        "githubRepo": "GitHub Repo"
+      },
+      "headers": {
+        "preferencesTitle": "Hang- és lejátszási beállítások",
+        "preferencesDesc": "Konfigurálja a nyelvet, a lejátszási sebesség előre beállított beállításait, az alapértelmezett hangerőt és a funkciókat.",
+        "shortcutsTitle": "Billentyűparancsok és mozdulatok",
+        "shortcutsDesc": "A gyors gyorsbillentyűk elsajátítása a könnyű lejátszási manipuláció érdekében.",
+        "faqTitle": "GYIK és hibaelhárítás",
+        "faqDesc": "Részletes műszaki útmutató, biztonsági és támogatási válaszok."
+      },
+      "general": {
+        "languageTitle": "Nyelv és lokalizáció",
+        "languageDesc": "Válassza ki a kívánt kezelőfelület nyelvét, vagy hagyja, hogy a bővítmény automatikusan felismerje böngészője nyelvét.",
+        "languageAuto": "Automatikus felismerés (böngésző nyelve)",
+        "languageDetected": "Észlelve",
+        "speedTitle": "Lejátszási sebesség beállításai",
+        "speedDesc": "Válassza ki az alapértelmezett lejátszási sebességet a ChatGPT megnyitásakor vagy a Read Aloud elindításakor.",
+        "volumeTitle": "Alapértelmezett hangerőszint",
+        "volumeDesc": "Előre beállított hangerő a Felolvasás beszédfolyamokhoz.",
+        "seekTitle": "Skip & Seek lépés",
+        "seekDesc": "Az átugráshoz szükséges másodpercek száma a -10s / +10s gombok vagy az Alt + Bal / Alt + Jobb megnyomásával.",
+        "secondsUnit": "másodpercig"
+      },
+      "shortcutsGuide": {
+        "title": "Billentyűparancsok kézikönyve",
+        "desc": "Gyorsítsa fel munkafolyamatát az ergonomikus egykezes és a YouTube szabványú lejátszási gyorsbillentyűkkel.",
+        "gesturesTitle": "Mouse & Hold Scrub gesztusok",
+        "gesturesDesc": "Tartsa lenyomva a ◀10s vagy 10s▶ gombot a hosszú hangos válaszok dinamikus gyorsításával történő gördülékenységéhez:",
+        "gestureHold03": "Sima súrolás üzemmódba lép (4× normál sebesség).",
+        "gestureHold15": "10-szeres keresési sebességre gyorsul.",
+        "gestureHold30": "Nagy sebességű ugrási sebesség 25×-es sebességgel.",
+        "gestureRelease": "Zökkenőmentesen rögzül a kívánt pozícióba."
+      },
+      "faq": {
+        "title": "Gyakran Ismételt Kérdések és Felhasználói útmutató",
+        "subtitle": "Gyors válaszok, amelyek segítségével a legtöbbet hozhatja ki a ChatGPT hangvezérlőkből.",
+        "q1": "Hogyan állíthatom be a hangerőt az egér görgetésével?",
+        "a1": "Egyszerűen vigye az egérmutatót a hangerő hangszóró ikonjára a lejátszó sínjén, és görgesse az egér görgőjét felfelé vagy lefelé. A hangerő zökkenőmentesen 5%-os lépésekben állítható anélkül, hogy meg kellene nyitnia a csúszkát!",
+        "q2": "Hol jelenik meg a lejátszó a ChatGPT-n?",
+        "a2": "Tartsa meg az eredeti elhelyezést, válasszon egy sarok vagy oldal előre beállított értéket, vagy dokkoljon a csevegés bemenete fölé. Húzza a mozgatáshoz, cserélje fel a sávokat, és emlékezzen az elrendezésre.",
+        "q3": "Hogyan tölthetem le a szintetizált beszédhangot?",
+        "a3": "A letöltések a ChatGPT által biztosított hangformátumot használják. A kiterjesztés nem konvertálja a hangot. Nyissa meg a ChatGPT-t, és indítsa el a Hangos felolvasást a kész válasz esetén. Használja a lejátszót szüneteltetésre, keresésre, sebesség módosítására vagy letöltésre.",
+        "q4": "Ez működik kis laptop képernyőkön?",
+        "a4": "Igen! A lejátszó automatikusan felismeri a rendelkezésre álló képernyőszélességet, és dinamikusan skálázza a keresősávot, hogy kényelmesen illeszkedjen a laptop képernyőjéhez. Ha nagyon szűk a hely, a lebegő gomb elérhető marad, így bármikor kibonthatja és összecsukhatja a lejátszót, amikor csak szüksége van rá.",
+        "q5": "Hogyan telepíthetem ezt a Tampermonkey-n keresztül automatikus frissítéssel?",
+        "a5": "Ha Tampermonkey-t, Violentmonkey-t vagy Greasemonkey-t használ, az önálló szkriptet közvetlenül a tárhelyünkből telepítheti. A Tampermonkey automatikusan ellenőrzi a GitHub frissítéseit, és értesíti Önt, ha új verzió jelenik meg.",
+        "q6": "Privát jellegűek a beszélgetéseim vagy az üzeneteim?",
+        "a6": "100% privát. A bővítmény teljes egészében a helyi eszközön fut. Soha semmilyen külső szerverre nem küldenek felszólításokat, válaszokat, hangfolyamokat vagy személyes telemetriát."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Vissza {s} másodperc – tartsa lenyomva a súroláshoz",
+        "playPause": "Lejátszás / Szünet (szóköz vagy K; Alt+P örökölt)",
+        "forward": "Előre {s} másodperc – tartsa lenyomva a súroláshoz",
+        "speed": "Lejátszási sebesség",
+        "volume": "Hangerő (görgessen a beállításhoz)",
+        "volumeSlider": "Hangerő csúszka",
+        "download": "Hang letöltése",
+        "shortcuts": "Billentyűparancsok és kézmozdulatok",
+        "collapse": "A lejátszó összecsukása",
+        "expand": "Bontsa ki a ChatGPT audiovezérlőket",
+        "readAloud": "Olvass fel hangosan"
+      },
+      "shortcutsPopover": {
+        "title": "Olvassa el a Hangosan parancsikonokat",
+        "playPause": "Lejátszás / Szünet",
+        "back": "Vissza {s} mp",
+        "forward": "Előre {s} mp",
+        "slower": "Lassabb előbeállítás",
+        "faster": "Gyorsabb előbeállítás",
+        "volumeScroll": "Kötetgörgetés",
+        "smoothScrub": "Sima bőrradír",
+        "volumeScrollKey": "Lapozz tovább 🔈",
+        "smoothScrubKey": "Tartsa lenyomva a ◀{s} / {s}▶ gombot"
+      },
+      "alerts": {
+        "downloadError": "Nem sikerült letölteni az audio adatfolyamot. Győződjön meg arról, hogy a hang aktívan betöltődik."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Lejátszás / Szünet",
+        "description": "Lejátszás váltása, az elterjedt webes és asztali lejátszók összeegyeztetése (a Alt+P továbbra is támogatott)"
+      },
+      "seekBack": {
+        "action": "10 másodperc vissza",
+        "description": "Ugrás hátra 10 mp-et (tartsa lenyomva a sima dörzsöléshez)"
+      },
+      "seekForward": {
+        "action": "Előre 10 másodperccel",
+        "description": "Ugrás előre 10 mp-et (tartsa a sima dörzsöléshez)"
+      },
+      "speedDecrease": {
+        "action": "Sebesség csökkentése",
+        "description": "Lépjen le az előző előre beállított sebességre"
+      },
+      "speedIncrease": {
+        "action": "Sebesség növelése",
+        "description": "Lépjen a következő előre beállított sebességre"
+      }
+    }
+  },
+  "sv": {
+    "common": {
+      "extensionName": "ChatGPT Audio",
+      "extensionSubtitle": "Kontroller och högläsning",
+      "version": "v",
+      "openChatGPT": "Öppna ChatGPT",
+      "dashboard": "Kontrollpanel",
+      "seconds": "sekunder",
+      "star": "★ Stjärna",
+      "docs": "Dokumentation",
+      "issues": "Problem"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Byt tema",
+        "openOptions": "Öppna kontrollpanelen och inställningarna"
+      },
+      "tabs": {
+        "controls": "Kontroller",
+        "shortcuts": "Kortkommandon",
+        "about": "Om"
+      },
+      "quickControls": {
+        "playbackSpeed": "Standard uppspelningshastighet",
+        "defaultVolume": "Standardvolym",
+        "mute": "Ljud av",
+        "unmute": "Slå på ljudet",
+        "smartIntegrations": "Smarta integrationer",
+        "globalShortcuts": "Globala genvägar",
+        "globalShortcutsDesc": "Aktivera Space/K, Alt+P, Alt+Arrows och hastighetsknappar",
+        "smoothScrubbing": "Steglös spolning",
+        "smoothScrubbingDesc": "Håll ned ◀10 eller 10▶ för att spola allt snabbare"
+      },
+      "shortcuts": {
+        "title": "Kortkommandon",
+        "gesturesTitle": "Mus- och pekgester",
+        "smoothAudioScrub": "Steglös ljudspolning",
+        "directDownload": "Direkt nedladdning",
+        "holdScrubKey": "Håll ned ◀10 / 10▶",
+        "clickDownloadKey": "Klicka på knappen 📥"
+      },
+      "about": {
+        "title": "ChatGPT Audio Controls",
+        "byInfoxica": "Öppen källkod från Infoxica",
+        "description": "Pausa, spola tillbaka, ändra uppspelningshastighet och ladda ner ljud. Håll dig i konversationen medan du lyssnar.",
+        "privacyTitle": "100 % integritetsfokuserad",
+        "privacyDesc": "Inga spårare, ingen telemetri. Allt körs på din maskin.",
+        "githubRepo": "Källkod på GitHub",
+        "documentation": "Dokumentation",
+        "reportIssue": "Rapportera ett problem"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Audio",
+        "dashboardSubtitle": "Kontrollpanel och inställningar",
+        "preferences": "Inställningar",
+        "shortcuts": "Genvägar och gester",
+        "faq": "FAQ & felsökning",
+        "darkMode": "Mörkt läge",
+        "lightMode": "Ljusläge",
+        "githubRepo": "Källkod på GitHub"
+      },
+      "headers": {
+        "preferencesTitle": "Ljud- och uppspelningsinställningar",
+        "preferencesDesc": "Konfigurera språk, förinställningar för uppspelningshastighet, standardvolym och funktioner.",
+        "shortcutsTitle": "Kortkommandon och gester",
+        "shortcutsDesc": "Styr uppspelningen enkelt med kortkommandon.",
+        "faqTitle": "FAQ & felsökning",
+        "faqDesc": "Detaljerad teknisk guide, säkerhet och supportsvar."
+      },
+      "general": {
+        "languageTitle": "Språk & lokalisering",
+        "languageDesc": "Välj ditt föredragna gränssnittsspråk eller låt tillägget automatiskt upptäcka din webbläsares språk.",
+        "languageAuto": "Automatisk identifiering (webbläsarspråk)",
+        "languageDetected": "Upptäckt",
+        "speedTitle": "Inställningar för uppspelningshastighet",
+        "speedDesc": "Välj din standarduppspelningshastighet när du öppnar ChatGPT eller startar Läs högt.",
+        "volumeTitle": "Standardvolymnivå",
+        "volumeDesc": "Förinställd volym för uppläsning av talströmmar.",
+        "seekTitle": "Spolningssteg",
+        "seekDesc": "Antal sekunder att hoppa över vid ett enkelt tryck på knapparna -10s / +10s eller Alt + Vänster / Alt + Höger.",
+        "secondsUnit": "sekunder"
+      },
+      "shortcutsGuide": {
+        "title": "Referens för kortkommandon",
+        "desc": "Accelerera ditt arbetsflöde med ergonomiska enhands- och YouTube-standarduppspelningskommandon.",
+        "gesturesTitle": "Spola genom att hålla ned knappen",
+        "gesturesDesc": "Håll ned ◀10s eller 10s▶ för att spola genom långa upplästa svar med ökande hastighet:",
+        "gestureHold03": "Startar steglös spolning med 4× hastighet.",
+        "gestureHold15": "Ökar spolningshastigheten till 10×.",
+        "gestureHold30": "Ökar spolningshastigheten till 25×.",
+        "gestureRelease": "Stannar vid den valda positionen."
+      },
+      "faq": {
+        "title": "Vanliga frågor och användarguide",
+        "subtitle": "Snabba svar som hjälper dig att få ut det mesta av ChatGPT ljudkontroller.",
+        "q1": "Hur justerar jag volymen genom att rulla med musen?",
+        "a1": "Håll helt enkelt muspekaren över volymhögtalarikonen på spelarskenan och rulla mushjulet uppåt eller nedåt. Volymen justeras smidigt i steg om 5 % utan att behöva öppna skjutreglagets popover!",
+        "q2": "Var visas spelaren på ChatGPT?",
+        "a2": "Behåll den ursprungliga placeringen, välj ett hörn eller en sida, eller docka ovanför meddelandefältet. Dra för att flytta och byta plats på fälten. Tillägget sparar din layout.",
+        "q3": "Hur laddar jag ner det syntetiserade talljudet?",
+        "a3": "Nedladdningar använder ljudformatet som tillhandahålls av ChatGPT. Tillägget konverterar inte ljud. Öppna ChatGPT och börja läsa högt på ett färdigt svar. Använd spelaren för att pausa, söka, ändra hastighet eller ladda ner.",
+        "q4": "Fungerar detta på små bärbara skärmar?",
+        "a4": "Ja! Spelaren känner automatiskt av din tillgängliga skärmbredd och skalar dynamiskt sökfältet så att det passar din bärbara dators skärm bekvämt. Om utrymmet är extremt trångt förblir den flytande knappen tillgänglig så att du kan expandera och fälla ihop spelaren när du behöver den.",
+        "q5": "Hur installerar jag detta via Tampermonkey med automatiska uppdateringar?",
+        "a5": "Om du använder Tampermonkey, Violentmonkey eller Greasemonkey kan du installera det fristående skriptet direkt från vårt arkiv. Tampermonkey kommer automatiskt att kontrollera GitHub för uppdateringar och meddela dig när en ny version släpps.",
+        "q6": "Är mina konversationer eller uppmaningar privata?",
+        "a6": "100% privat. Tillägget körs helt på din lokala enhet. Inga uppmaningar, svar, ljudströmmar eller personlig telemetri skickas någonsin till någon extern server."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Bakåt {s} sekunder — håll ned för att spola",
+        "playPause": "Spela / Pausa (Space eller K; Alt+P fungerar fortfarande)",
+        "forward": "Framåt {s} sekunder — håll ned för att spola",
+        "speed": "Uppspelningshastighet",
+        "volume": "Volym (Bläddra för att justera)",
+        "volumeSlider": "Volymreglage",
+        "download": "Ladda ner ljud",
+        "shortcuts": "Kortkommandon och gester",
+        "collapse": "Fäll ihop spelaren",
+        "expand": "Visa ChatGPT Audio Controls",
+        "readAloud": "Läs högt"
+      },
+      "shortcutsPopover": {
+        "title": "Kortkommandon för högläsning",
+        "playPause": "Spela / Pausa",
+        "back": "Tillbaka {s} sek",
+        "forward": "Framåt {s} sek",
+        "slower": "Långsammare förinställning",
+        "faster": "Snabbare förinställning",
+        "volumeScroll": "Justera volymen med mushjulet",
+        "smoothScrub": "Steglös spolning",
+        "volumeScrollKey": "Rulla över 🔈",
+        "smoothScrubKey": "Håll ned ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Det gick inte att ladda ner ljudström. Se till att ljudet är aktivt laddat."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Spela / Pausa",
+        "description": "Växla uppspelning, matcha vanliga webb- och stationära spelare (Alt+P stöds fortfarande)"
+      },
+      "seekBack": {
+        "action": "Tillbaka 10 sekunder",
+        "description": "Hoppa bakåt 10 s (håll ned för att spola)"
+      },
+      "seekForward": {
+        "action": "Framåt 10 sekunder",
+        "description": "Hoppa framåt 10 s (håll ned för att spola)"
+      },
+      "speedDecrease": {
+        "action": "Minska hastigheten",
+        "description": "Gå ner till föregående förinställd hastighet"
+      },
+      "speedIncrease": {
+        "action": "Öka hastigheten",
+        "description": "Stega upp till nästa förinställda hastighet"
+      }
+    }
+  },
+  "cs": {
+    "common": {
+      "extensionName": "Zvuk ChatGPT",
+      "extensionSubtitle": "Ovládání a čtení nahlas",
+      "version": "v",
+      "openChatGPT": "Otevřete ChatGPT",
+      "dashboard": "Dashboard",
+      "seconds": "sekund",
+      "star": "★ Hvězda",
+      "docs": "Docs",
+      "issues": "Problémy"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Přepnout téma",
+        "openOptions": "Otevřete Dashboard & Settings"
+      },
+      "tabs": {
+        "controls": "Ovládací prvky",
+        "shortcuts": "Klíče",
+        "about": "O"
+      },
+      "quickControls": {
+        "playbackSpeed": "Výchozí rychlost přehrávání",
+        "defaultVolume": "Výchozí hlasitost",
+        "mute": "Ztlumit",
+        "unmute": "Zapnout zvuk",
+        "smartIntegrations": "Inteligentní integrace",
+        "globalShortcuts": "Globální zkratky",
+        "globalShortcutsDesc": "Povolit Space/K, Alt+P, Alt+Arrows a tlačítka rychlosti",
+        "smoothScrubbing": "Hladké drhnutí",
+        "smoothScrubbingDesc": "Vyhledávání zrychlíte podržením ◀10 nebo 10▶"
+      },
+      "shortcuts": {
+        "title": "Klávesové zkratky",
+        "gesturesTitle": "Gesta myši a dotyku",
+        "smoothAudioScrub": "Hladký zvukový peeling",
+        "directDownload": "Přímé stahování",
+        "holdScrubKey": "Podržte ◀10 / 10▶",
+        "clickDownloadKey": "Klikněte na tlačítko 📥"
+      },
+      "about": {
+        "title": "Ovládání zvuku ChatGPT",
+        "byInfoxica": "Open Source od Infoxica",
+        "description": "Pozastavit, přetočit zpět, změnit rychlost přehrávání a stáhnout zvuk. Zůstaňte v konverzaci, zatímco posloucháte.",
+        "privacyTitle": "100% zaměření na soukromí",
+        "privacyDesc": "Žádné sledovače, žádná telemetrie. Vše běží na vašem stroji.",
+        "githubRepo": "Úložiště GitHub",
+        "documentation": "Dokumentace",
+        "reportIssue": "Nahlásit problém"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "Zvuk ChatGPT",
+        "dashboardSubtitle": "Dashboard & Setup",
+        "preferences": "Předvolby",
+        "shortcuts": "Zkratky a gesta",
+        "faq": "Nejčastější dotazy a odstraňování problémů",
+        "darkMode": "Tmavý režim",
+        "lightMode": "Světelný režim",
+        "githubRepo": "GitHub Repo"
+      },
+      "headers": {
+        "preferencesTitle": "Předvolby zvuku a přehrávání",
+        "preferencesDesc": "Nakonfigurujte jazyk, předvolby rychlosti přehrávání, výchozí hlasitost a funkce.",
+        "shortcutsTitle": "Klávesové zkratky a gesta",
+        "shortcutsDesc": "Ovládněte rychlé klávesové zkratky pro snadnou manipulaci s přehráváním.",
+        "faqTitle": "Nejčastější dotazy a odstraňování problémů",
+        "faqDesc": "Podrobný technický průvodce, zabezpečení a odpovědi na podporu."
+      },
+      "general": {
+        "languageTitle": "Jazyk a lokalizace",
+        "languageDesc": "Vyberte preferovaný jazyk rozhraní nebo nechte rozšíření automaticky detekovat jazyk vašeho prohlížeče.",
+        "languageAuto": "Automatická detekce (jazyk prohlížeče)",
+        "languageDetected": "Zjištěno",
+        "speedTitle": "Předvolby rychlosti přehrávání",
+        "speedDesc": "Zvolte výchozí rychlost přehrávání při otevírání ChatGPT nebo spouštění čtení nahlas.",
+        "volumeTitle": "Výchozí úroveň hlasitosti",
+        "volumeDesc": "Přednastavená hlasitost pro hlasové proudy řeči.",
+        "seekTitle": "Krok přeskočení a hledání",
+        "seekDesc": "Počet sekund, které mají být přeskočeny jedním klepnutím na tlačítka -10s / +10s nebo Alt + Left / Alt + Right.",
+        "secondsUnit": "sekund"
+      },
+      "shortcutsGuide": {
+        "title": "Reference klávesových zkratek",
+        "desc": "Zrychlete svůj pracovní postup pomocí ergonomických klávesových zkratek pro přehrávání jednou rukou a standardních YouTube.",
+        "gesturesTitle": "Gesta mytí a držení",
+        "gesturesDesc": "Podržením tlačítek ◀10s nebo 10s▶ plynule procházejte dlouhé hlasové odpovědi s dynamickým zrychlením:",
+        "gestureHold03": "Vstoupí do režimu hladkého čištění (4× normální rychlost).",
+        "gestureHold15": "Zrychluje na 10× rychlost vyhledávání.",
+        "gestureHold30": "Rychlost skoku při vysoké rychlosti 25×.",
+        "gestureRelease": "Bezproblémově se uzamkne v požadované poloze."
+      },
+      "faq": {
+        "title": "Často kladené otázky a uživatelská příručka",
+        "subtitle": "Rychlé odpovědi, které vám pomohou co nejlépe využít ovládání zvuku ChatGPT.",
+        "q1": "Jak upravím hlasitost rolováním myší?",
+        "a1": "Jednoduše umístěte ukazatel myši na ikonu reproduktoru hlasitosti na liště přehrávače a posuňte kolečko myši nahoru nebo dolů. Hlasitost se plynule upraví v krocích po 5 %, aniž byste museli otevírat posuvný kryt!",
+        "q2": "Kde se přehrávač objeví na ChatGPT?",
+        "a2": "Ponechte původní umístění, vyberte přednastavení rohu nebo strany nebo ukotvete nad vstupem chatu. Přetažením se můžete pohybovat, vyměňovat pruhy a pamatovat si rozvržení.",
+        "q3": "Jak si stáhnu zvuk syntetizované řeči?",
+        "a3": "Stahování používá zvukový formát poskytovaný ChatGPT. Rozšíření nepřevádí zvuk. Otevřete ChatGPT a po dokončení odpovědi spusťte čtení nahlas. Použijte přehrávač k pozastavení, vyhledávání, změně rychlosti nebo stahování.",
+        "q4": "Funguje to na malých obrazovkách notebooků?",
+        "a4": "Ano! Přehrávač automaticky detekuje dostupnou šířku obrazovky a dynamicky přizpůsobuje svůj vyhledávací panel tak, aby se pohodlně vešel na obrazovku vašeho notebooku. Pokud je místo extrémně málo, plovoucí tlačítko zůstane přístupné, takže přehrávač můžete rozbalit a sbalit, kdykoli to budete potřebovat.",
+        "q5": "Jak to nainstaluji přes Tampermonkey s automatickými aktualizacemi?",
+        "a5": "Pokud používáte Tampermonkey, Violentmonkey nebo Greasemonkey, můžete si nainstalovat samostatný skript přímo z našeho úložiště. Tampermonkey automaticky zkontroluje aktualizace GitHubu a upozorní vás na vydání nové verze.",
+        "q6": "Jsou moje konverzace nebo výzvy soukromé?",
+        "a6": "100% soukromé. Rozšíření běží výhradně na vašem místním zařízení. Žádné výzvy, odpovědi, audio streamy nebo osobní telemetrie nejsou nikdy odesílány na žádný externí server."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Zpět {s} sekund – podržením vyčistíte",
+        "playPause": "Přehrát / Pozastavit (mezera nebo K; starší verze Alt+P)",
+        "forward": "Vpřed {s} sekund – podržením vyčistíte",
+        "speed": "Rychlost přehrávání",
+        "volume": "Hlasitost (upravte posunutím)",
+        "volumeSlider": "Posuvník hlasitosti",
+        "download": "Stáhnout zvuk",
+        "shortcuts": "Klávesové zkratky a gesta",
+        "collapse": "Sbalit přehrávač",
+        "expand": "Rozbalte ovládací prvky zvuku ChatGPT",
+        "readAloud": "Čtěte nahlas"
+      },
+      "shortcutsPopover": {
+        "title": "Zkratky čtení nahlas",
+        "playPause": "Přehrát / Pozastavit",
+        "back": "Zpět {s} sec",
+        "forward": "Vpřed {s} sec",
+        "slower": "Pomalejší předvolba",
+        "faster": "Rychlejší předvolba",
+        "volumeScroll": "Rolování hlasitosti",
+        "smoothScrub": "Hladký peeling",
+        "volumeScrollKey": "Přejděte na 🔈",
+        "smoothScrubKey": "Podržte ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Zvukový stream nelze stáhnout. Ujistěte se, že je zvuk aktivně načten."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Přehrát / Pozastavit",
+        "description": "Přepnout přehrávání, sladit běžné webové a stolní přehrávače (Alt+P zůstává podporováno)"
+      },
+      "seekBack": {
+        "action": "Zpět 10 sekund",
+        "description": "Skok zpět o 10 s (podržením pro hladké drhnutí)"
+      },
+      "seekForward": {
+        "action": "Vpřed o 10 sekund",
+        "description": "Skok dopředu o 10 s (podržením pro hladké drhnutí)"
+      },
+      "speedDecrease": {
+        "action": "Snížit rychlost",
+        "description": "Přejděte dolů na předchozí předvolbu rychlosti"
+      },
+      "speedIncrease": {
+        "action": "Zvyšte rychlost",
+        "description": "Přejděte na další předvolbu rychlosti"
+      }
+    }
+  },
+  "uk": {
+    "common": {
+      "extensionName": "ChatGPT Аудіо",
+      "extensionSubtitle": "Елементи керування та читання вголос",
+      "version": "v",
+      "openChatGPT": "Відкрийте ChatGPT",
+      "dashboard": "Приладова панель",
+      "seconds": "секунд",
+      "star": "★ Зірка",
+      "docs": "документи",
+      "issues": "Питання"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Змінити тему",
+        "openOptions": "Відкрийте інформаційну панель і налаштування"
+      },
+      "tabs": {
+        "controls": "Елементи керування",
+        "shortcuts": "Ключі",
+        "about": "про"
+      },
+      "quickControls": {
+        "playbackSpeed": "Швидкість відтворення за замовчуванням",
+        "defaultVolume": "Гучність за замовчуванням",
+        "mute": "Вимкнути звук",
+        "unmute": "Увімкнути звук",
+        "smartIntegrations": "Розумні інтеграції",
+        "globalShortcuts": "Глобальні ярлики",
+        "globalShortcutsDesc": "Увімкнути Space/K, Alt+P, Alt+Arrows і швидкісні клавіші",
+        "smoothScrubbing": "Гладке чищення",
+        "smoothScrubbingDesc": "Щоб прискорити пошук, утримуйте ◀10 або 10▶"
+      },
+      "shortcuts": {
+        "title": "Комбінації клавіш",
+        "gesturesTitle": "Жести миші та дотику",
+        "smoothAudioScrub": "Smooth Audio Scrub",
+        "directDownload": "Пряме завантаження",
+        "holdScrubKey": "Утримуйте ◀10 / 10▶",
+        "clickDownloadKey": "Натисніть кнопку 📥"
+      },
+      "about": {
+        "title": "ChatGPT Елементи керування звуком",
+        "byInfoxica": "Відкритий код від Infoxica",
+        "description": "Пауза, перемотування назад, зміна швидкості відтворення та завантаження аудіо. Залишайтеся в розмові, слухаючи.",
+        "privacyTitle": "На 100% зосереджено на конфіденційності",
+        "privacyDesc": "Ні трекерів, ні телеметрії. Усе працює на вашій машині.",
+        "githubRepo": "Репозиторій GitHub",
+        "documentation": "Документація",
+        "reportIssue": "Повідомити про проблему"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Аудіо",
+        "dashboardSubtitle": "Інформаційна панель і налаштування",
+        "preferences": "Уподобання",
+        "shortcuts": "Комбінації клавіш і жести",
+        "faq": "Поширені запитання та усунення несправностей",
+        "darkMode": "Темний режим",
+        "lightMode": "Світловий режим",
+        "githubRepo": "GitHub Repo"
+      },
+      "headers": {
+        "preferencesTitle": "Параметри аудіо та відтворення",
+        "preferencesDesc": "Налаштуйте мову, попередні налаштування швидкості відтворення, гучність за замовчуванням і функції.",
+        "shortcutsTitle": "Комбінації клавіш і жести",
+        "shortcutsDesc": "Опануйте швидкі гарячі клавіші для легкого керування відтворенням.",
+        "faqTitle": "Поширені запитання та усунення несправностей",
+        "faqDesc": "Детальний технічний посібник, відповіді щодо безпеки та підтримки."
+      },
+      "general": {
+        "languageTitle": "Мова та локалізація",
+        "languageDesc": "Виберіть потрібну мову інтерфейсу або дозвольте розширенню автоматично визначити мову вашого браузера.",
+        "languageAuto": "Автоматичне визначення (мова браузера)",
+        "languageDetected": "Виявлено",
+        "speedTitle": "Параметри швидкості відтворення",
+        "speedDesc": "Виберіть швидкість відтворення за умовчанням, відкриваючи ChatGPT або запускаючи Read Aloud.",
+        "volumeTitle": "Рівень гучності за замовчуванням",
+        "volumeDesc": "Попередньо встановлена гучність для читання вголос мовних потоків.",
+        "seekTitle": "Крок пропуску та пошуку",
+        "seekDesc": "Кількість секунд, які потрібно пропустити при одноразовому натисканні кнопок -10s / +10s або Alt + Left / Alt + Right.",
+        "secondsUnit": "секунд"
+      },
+      "shortcutsGuide": {
+        "title": "Довідник з комбінацій клавіш",
+        "desc": "Прискоріть свій робочий процес за допомогою ергономічних клавіш для відтворення однією рукою та стандартних YouTube.",
+        "gesturesTitle": "Жести миші й утримання",
+        "gesturesDesc": "Утримуйте кнопки ◀10s або 10s▶, щоб плавно прокручувати довгі голосові відповіді з динамічним прискоренням:",
+        "gestureHold03": "Перехід у режим плавного чищення (4× нормальна швидкість).",
+        "gestureHold15": "Швидкість пошуку прискорюється до 10 разів.",
+        "gestureHold30": "Висока швидкість стрибка зі швидкістю 25×.",
+        "gestureRelease": "Плавно фіксується в потрібному положенні."
+      },
+      "faq": {
+        "title": "Часті запитання та посібник користувача",
+        "subtitle": "Швидкі відповіді, які допоможуть отримати максимальну віддачу від засобів керування звуком ChatGPT.",
+        "q1": "Як регулювати гучність, прокручуючи мишею?",
+        "a1": "Просто наведіть вказівник миші на піктограму гучномовця на рейці плеєра та прокрутіть колесо миші вгору або вниз. Гучність буде плавно регулюватися з кроком 5% без необхідності відкривати повзунок!",
+        "q2": "Де з'являється гравець на ChatGPT?",
+        "a2": "Збережіть вихідне розташування, виберіть кут або бічні налаштування або закріпіть над введенням чату. Перетягуйте, щоб рухатися, міняйте смужки місцями та запам’ятовуйте свій макет.",
+        "q3": "Як завантажити аудіо синтезованого мовлення?",
+        "a3": "Для завантажень використовується аудіоформат, наданий ChatGPT. Розширення не конвертує звук. Відкрийте ChatGPT і почніть читати вголос після завершеної відповіді. Використовуйте плеєр для паузи, пошуку, зміни швидкості або завантаження.",
+        "q4": "Чи працює це на маленьких екранах ноутбуків?",
+        "a4": "так! Програвач автоматично визначає доступну ширину екрана та динамічно масштабує свою панель пошуку, щоб зручно підходити до екрана вашого ноутбука. Якщо місця дуже мало, плаваюча кнопка залишається доступною, тож ви можете розгортати та згортати програвач, коли вам це потрібно.",
+        "q5": "Як мені встановити це через Tampermonkey з автоматичними оновленнями?",
+        "a5": "Якщо ви використовуєте Tampermonkey, Violentmonkey або Greasemonkey, ви можете встановити окремий сценарій безпосередньо з нашого репозиторію. Tampermonkey автоматично перевірятиме GitHub на наявність оновлень і сповіщатиме вас щоразу, коли буде випущена нова версія.",
+        "q6": "Чи мої розмови чи підказки приватні?",
+        "a6": "100% приватний. Розширення повністю працює на вашому локальному пристрої. Жодні підказки, відповіді, аудіопотоки чи особиста телеметрія ніколи не надсилаються на будь-який зовнішній сервер."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Назад {s} секунд — утримуйте, щоб почистити",
+        "playPause": "Відтворення/пауза (Пробіл або K; спадщина Alt+P)",
+        "forward": "Уперед {s} секунд — утримуйте, щоб почистити",
+        "speed": "Швидкість відтворення",
+        "volume": "Гучність (прокрутіть, щоб відрегулювати)",
+        "volumeSlider": "Повзунок гучності",
+        "download": "Завантажити аудіо",
+        "shortcuts": "Комбінації клавіш і жести",
+        "collapse": "Згорнути плеєр",
+        "expand": "Розгорніть елементи керування звуком ChatGPT",
+        "readAloud": "Прочитайте вголос"
+      },
+      "shortcutsPopover": {
+        "title": "Комбінації клавіш для читання вголос",
+        "playPause": "Відтворення / Пауза",
+        "back": "Назад {s} сек",
+        "forward": "Вперед {s} сек",
+        "slower": "Повільніше налаштування",
+        "faster": "Швидший пресет",
+        "volumeScroll": "Прокручування гучності",
+        "smoothScrub": "Гладкий скраб",
+        "volumeScrollKey": "Прокрутіть далі 🔈",
+        "smoothScrubKey": "Утримуйте ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Не вдалося завантажити аудіопотік. Переконайтеся, що аудіо завантажується активно."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Відтворення / Пауза",
+        "description": "Перемкнути відтворення, зіставляючи звичайні веб-програвачі та програвачі на комп’ютері (Alt+P продовжує підтримуватися)"
+      },
+      "seekBack": {
+        "action": "Назад 10 секунд",
+        "description": "Перейти назад на 10 секунд (утримуйте для гладкого чищення)"
+      },
+      "seekForward": {
+        "action": "Уперед на 10 секунд",
+        "description": "Перейти вперед на 10 с (утримуйте для гладкого чищення)"
+      },
+      "speedDecrease": {
+        "action": "Зменшити швидкість",
+        "description": "Перейти до попереднього налаштування швидкості"
+      },
+      "speedIncrease": {
+        "action": "Збільшити швидкість",
+        "description": "Перейдіть до наступного попереднього налаштування швидкості"
+      }
+    }
+  },
+  "ca": {
+    "common": {
+      "extensionName": "ChatGPT Àudio",
+      "extensionSubtitle": "Controls i lectura en veu alta",
+      "version": "v",
+      "openChatGPT": "Obre ChatGPT",
+      "dashboard": "Tauler de control",
+      "seconds": "segons",
+      "star": "★ Estrella",
+      "docs": "Docs",
+      "issues": "Problemes"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Canvia el tema",
+        "openOptions": "Obriu Tauler i configuració"
+      },
+      "tabs": {
+        "controls": "Controls",
+        "shortcuts": "Les claus",
+        "about": "Sobre"
+      },
+      "quickControls": {
+        "playbackSpeed": "Velocitat de reproducció per defecte",
+        "defaultVolume": "Volum per defecte",
+        "mute": "Silenciar",
+        "unmute": "Activa el so",
+        "smartIntegrations": "Integracions intel·ligents",
+        "globalShortcuts": "Dreceres globals",
+        "globalShortcutsDesc": "Activa les tecles de velocitat Space/K, Alt+P, Alt+Arrows i de velocitat",
+        "smoothScrubbing": "Fregat suau",
+        "smoothScrubbingDesc": "Accelereu la cerca mantenint premut ◀10 o 10▶"
+      },
+      "shortcuts": {
+        "title": "Dreceres de teclat",
+        "gesturesTitle": "Gestos del ratolí i el tacte",
+        "smoothAudioScrub": "Smooth Audio Scrub",
+        "directDownload": "Descàrrega directa",
+        "holdScrubKey": "Manteniu premut ◀10/10▶",
+        "clickDownloadKey": "Feu clic al botó 📥"
+      },
+      "about": {
+        "title": "Controls d'àudio ChatGPT",
+        "byInfoxica": "Codi obert per Infoxica",
+        "description": "Posa en pausa, rebobina, canvia la velocitat de reproducció i baixa l'àudio. Mantingueu-vos en la conversa mentre escolteu.",
+        "privacyTitle": "100% centrat en la privadesa",
+        "privacyDesc": "Sense rastrejadors, sense telemetria. Tot funciona a la teva màquina.",
+        "githubRepo": "Repositori GitHub",
+        "documentation": "Documentació",
+        "reportIssue": "Informar d'un problema"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Àudio",
+        "dashboardSubtitle": "Tauler i configuració",
+        "preferences": "Preferències",
+        "shortcuts": "Dreceres i gestos",
+        "faq": "Preguntes freqüents i resolució de problemes",
+        "darkMode": "Mode fosc",
+        "lightMode": "Mode de llum",
+        "githubRepo": "Repositori GitHub"
+      },
+      "headers": {
+        "preferencesTitle": "Preferències d'àudio i reproducció",
+        "preferencesDesc": "Configura l'idioma, la velocitat de reproducció predeterminada, el volum predeterminat i les funcions.",
+        "shortcutsTitle": "Dreceres i gestos del teclat",
+        "shortcutsDesc": "Domineu les tecles d'accés ràpid ràpid per a una manipulació de reproducció sense esforç.",
+        "faqTitle": "Preguntes freqüents i resolució de problemes",
+        "faqDesc": "Guia tècnica detallada, seguretat i respostes de suport."
+      },
+      "general": {
+        "languageTitle": "Idioma i localització",
+        "languageDesc": "Trieu l'idioma de la vostra interfície preferit o deixeu que l'extensió detecti automàticament l'idioma del vostre navegador.",
+        "languageAuto": "Detecció automàtica (idioma del navegador)",
+        "languageDetected": "Detectat",
+        "speedTitle": "Preferències de velocitat de reproducció",
+        "speedDesc": "Trieu la vostra velocitat de reproducció predeterminada quan obriu ChatGPT o inicieu la lectura en veu alta.",
+        "volumeTitle": "Nivell de volum per defecte",
+        "volumeDesc": "Volum preestablert per a fluxos de veu de lectura en veu alta.",
+        "seekTitle": "Pas de salt i cerca",
+        "seekDesc": "Nombre de segons per saltar amb un sol toc dels botons -10s / +10s o Alt + Esquerra / Alt + Dreta.",
+        "secondsUnit": "segons"
+      },
+      "shortcutsGuide": {
+        "title": "Referència de dreceres de teclat",
+        "desc": "Accelereu el vostre flux de treball amb tecles d'accés directe ergonòmics d'una sola mà i estàndard de YouTube.",
+        "gesturesTitle": "Gestos de fregar amb el ratolí i mantenir premut",
+        "gesturesDesc": "Mantingueu premuts els botons ◀10s o 10s▶ per fregar sense problemes les respostes de veu llargues amb acceleració dinàmica:",
+        "gestureHold03": "Entra en mode de neteja suau (velocitat normal 4x).",
+        "gestureHold15": "S'accelera fins a 10 vegades la taxa de recerca.",
+        "gestureHold30": "Velocitat de salt d'alta velocitat amb una velocitat de 25 ×.",
+        "gestureRelease": "Es bloqueja perfectament a la posició desitjada."
+      },
+      "faq": {
+        "title": "Preguntes freqüents i Guia de l'usuari",
+        "subtitle": "Respostes ràpides per ajudar-vos a treure el màxim profit dels controls d'àudio ChatGPT.",
+        "q1": "Com puc ajustar el volum desplaçant-me amb el ratolí?",
+        "a1": "Simplement passeu el punter del ratolí per sobre de la icona de l'altaveu de volum del rail del reproductor i desplaceu la roda del ratolí cap amunt o cap avall. El volum s'ajustarà sense problemes en increments del 5% sense haver d'obrir el botó lliscant!",
+        "q2": "On apareix el reproductor a ChatGPT?",
+        "a2": "Manteniu la ubicació original, trieu una cantonada o un lateral preestablert, o acopleu-lo a sobre de l'entrada del xat. Arrossegueu per moure's, intercanvieu les barres i recordeu la vostra disposició.",
+        "q3": "Com puc descarregar l'àudio de veu sintetitzat?",
+        "a3": "Les baixades utilitzen el format d'àudio proporcionat per ChatGPT. L'extensió no converteix l'àudio. Obriu ChatGPT i comenceu a llegir en veu alta amb una resposta completa. Utilitzeu el reproductor per fer una pausa, cercar, canviar la velocitat o descarregar.",
+        "q4": "Funciona això en pantalles de portàtils petites?",
+        "a4": "Sí! El reproductor detecta automàticament l'amplada de pantalla disponible i escala dinàmicament la seva barra de cerca per adaptar-se còmodament a la pantalla del portàtil. Si l'espai és extremadament reduït, el botó flotant es manté accessible perquè pugueu ampliar i col·lapsar el reproductor sempre que ho necessiteu.",
+        "q5": "Com ho instal·lo mitjançant Tampermonkey amb actualitzacions automàtiques?",
+        "a5": "Si utilitzeu Tampermonkey, Violentmonkey o Greasemonkey, podeu instal·lar l'script autònom directament des del nostre dipòsit. Tampermonkey comprovarà automàticament a GitHub si hi ha actualitzacions i us notificarà cada vegada que es publiqui una versió nova.",
+        "q6": "Les meves converses o sol·licituds són privades?",
+        "a6": "100% Privat. L'extensió s'executa completament al vostre dispositiu local. No s'envia cap sol·licitud, respostes, fluxos d'àudio o telemetria personal a cap servidor extern."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Enrere {s} segons: manteniu premut per fregar",
+        "playPause": "Reproduir/Pausa (espai o K; llegat Alt+P)",
+        "forward": "Endavant {s} segons: manteniu premut per fregar",
+        "speed": "Velocitat de reproducció",
+        "volume": "Volum (desplaça't per ajustar)",
+        "volumeSlider": "Control lliscant de volum",
+        "download": "Descarregar àudio",
+        "shortcuts": "Dreceres i gestos del teclat",
+        "collapse": "Redueix el jugador",
+        "expand": "Amplieu els controls d'àudio ChatGPT",
+        "readAloud": "Llegeix en veu alta"
+      },
+      "shortcutsPopover": {
+        "title": "Llegir en veu alta Dreceres",
+        "playPause": "Reproduir / Pausa",
+        "back": "Tornar {s} sec",
+        "forward": "Endavant {s} sec",
+        "slower": "Preestablert més lent",
+        "faster": "Preajust més ràpid",
+        "volumeScroll": "Volum de desplaçament",
+        "smoothScrub": "Exfoliació llisa",
+        "volumeScrollKey": "Desplaceu-vos-hi 🔈",
+        "smoothScrubKey": "Manteniu premut ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "No s'ha pogut baixar el flux d'àudio. Assegureu-vos que l'àudio estigui carregat activament."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Reproduir / Pausa",
+        "description": "Commuta la reproducció, fent coincidir els reproductors web i d'escriptori habituals (Alt+P continua sent compatible)"
+      },
+      "seekBack": {
+        "action": "Enrere 10 segons",
+        "description": "Salta cap enrere 10 segons (manteniu premut per fregar suaument)"
+      },
+      "seekForward": {
+        "action": "Endavant 10 segons",
+        "description": "Salta cap endavant 10 segons (manteniu premut per fregar suaument)"
+      },
+      "speedDecrease": {
+        "action": "Disminuir la velocitat",
+        "description": "Baixeu a la velocitat predeterminada anterior"
+      },
+      "speedIncrease": {
+        "action": "Augmenta la velocitat",
+        "description": "Passeu a la següent velocitat predeterminada"
+      }
+    }
+  },
+  "el": {
+    "common": {
+      "extensionName": "ChatGPT Ήχος",
+      "extensionSubtitle": "Έλεγχοι & ανάγνωση δυνατά",
+      "version": "v",
+      "openChatGPT": "Ανοίξτε το ChatGPT",
+      "dashboard": "Ταμπλό",
+      "seconds": "δευτερόλεπτα",
+      "star": "★ Αστέρι",
+      "docs": "Έγγραφα",
+      "issues": "Θέματα"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Εναλλαγή θέματος",
+        "openOptions": "Ανοίξτε το Dashboard & Settings"
+      },
+      "tabs": {
+        "controls": "Έλεγχοι",
+        "shortcuts": "Κλειδιά",
+        "about": "Περίπου"
+      },
+      "quickControls": {
+        "playbackSpeed": "Προεπιλεγμένη ταχύτητα αναπαραγωγής",
+        "defaultVolume": "Προεπιλεγμένη ένταση ήχου",
+        "mute": "Σίγαση",
+        "unmute": "Κατάργηση σίγασης",
+        "smartIntegrations": "Έξυπνες ενσωματώσεις",
+        "globalShortcuts": "Καθολικές συντομεύσεις",
+        "globalShortcutsDesc": "Ενεργοποίηση Space/K, Alt+P, Alt+Arrows & πλήκτρα ταχύτητας",
+        "smoothScrubbing": "Ομαλό τρίψιμο",
+        "smoothScrubbingDesc": "Επιταχύνετε την αναζήτηση κρατώντας ◀10 ή 10▶"
+      },
+      "shortcuts": {
+        "title": "Συντομεύσεις πληκτρολογίου",
+        "gesturesTitle": "Χειρονομίες ποντικιού και αφής",
+        "smoothAudioScrub": "Smooth Audio Scrub",
+        "directDownload": "Άμεση λήψη",
+        "holdScrubKey": "Κρατήστε ◀10 / 10▶",
+        "clickDownloadKey": "Κάντε κλικ στο κουμπί 📥"
+      },
+      "about": {
+        "title": "ChatGPT Χειριστήρια ήχου",
+        "byInfoxica": "Ανοιχτός κώδικας από Infoxica",
+        "description": "Παύση, επαναφορά, αλλαγή ταχύτητας αναπαραγωγής και λήψη ήχου. Μείνετε στη συζήτηση ενώ ακούτε.",
+        "privacyTitle": "100% με επίκεντρο το απόρρητο",
+        "privacyDesc": "Χωρίς ιχνηλάτες, χωρίς τηλεμετρία. Όλα τρέχουν στο μηχάνημά σας.",
+        "githubRepo": "Αποθετήριο GitHub",
+        "documentation": "Τεκμηρίωση",
+        "reportIssue": "Αναφορά προβλήματος"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Ήχος",
+        "dashboardSubtitle": "Ταμπλό & Ρύθμιση",
+        "preferences": "Προτιμήσεις",
+        "shortcuts": "Συντομεύσεις & χειρονομίες",
+        "faq": "Συχνές ερωτήσεις και αντιμετώπιση προβλημάτων",
+        "darkMode": "Σκοτεινή λειτουργία",
+        "lightMode": "Λειτουργία φωτός",
+        "githubRepo": "GitHub Repo"
+      },
+      "headers": {
+        "preferencesTitle": "Προτιμήσεις ήχου και αναπαραγωγής",
+        "preferencesDesc": "Διαμορφώστε τη γλώσσα, τις προεπιλογές ταχύτητας αναπαραγωγής, την προεπιλεγμένη ένταση και τις δυνατότητες.",
+        "shortcutsTitle": "Συντομεύσεις και χειρονομίες πληκτρολογίου",
+        "shortcutsDesc": "Κατακτήστε τα γρήγορα πλήκτρα πρόσβασης για αβίαστο χειρισμό αναπαραγωγής.",
+        "faqTitle": "Συχνές ερωτήσεις και αντιμετώπιση προβλημάτων",
+        "faqDesc": "Λεπτομερής τεχνικός οδηγός, απαντήσεις ασφάλειας και υποστήριξης."
+      },
+      "general": {
+        "languageTitle": "Γλώσσα & Εντοπισμός",
+        "languageDesc": "Επιλέξτε τη γλώσσα διεπαφής που προτιμάτε ή αφήστε την επέκταση να εντοπίσει αυτόματα τη γλώσσα του προγράμματος περιήγησής σας.",
+        "languageAuto": "Αυτόματος εντοπισμός (Γλώσσα προγράμματος περιήγησης)",
+        "languageDetected": "Εντοπίστηκε",
+        "speedTitle": "Προτιμήσεις ταχύτητας αναπαραγωγής",
+        "speedDesc": "Επιλέξτε τον προεπιλεγμένο ρυθμό αναπαραγωγής κατά το άνοιγμα του ChatGPT ή την εκκίνηση του Read Aloud.",
+        "volumeTitle": "Προεπιλεγμένο επίπεδο έντασης ήχου",
+        "volumeDesc": "Προκαθορισμένη ένταση ήχου για ροές ομιλίας Read Aloud.",
+        "seekTitle": "Παράλειψη και αναζήτηση βήμα",
+        "seekDesc": "Αριθμός δευτερολέπτων προς παράλειψη με ένα μόνο πάτημα των κουμπιών -10s / +10s ή Alt + Left / Alt + Right.",
+        "secondsUnit": "δευτερόλεπτα"
+      },
+      "shortcutsGuide": {
+        "title": "Αναφορά συντομεύσεων πληκτρολογίου",
+        "desc": "Επιταχύνετε τη ροή εργασίας σας με τα εργονομικά πλήκτρα πρόσβασης με ένα χέρι και τα τυπικά πλήκτρα αναπαραγωγής YouTube.",
+        "gesturesTitle": "Χειρονομίες Scrub με ποντίκι και κράτημα",
+        "gesturesDesc": "Κρατήστε πατημένο είτε τα κουμπιά ◀10s είτε 10s▶ για να καθαρίσετε ομαλά τις μακροσκελείς φωνητικές απαντήσεις με δυναμική επιτάχυνση:",
+        "gestureHold03": "Εισέρχεται σε λειτουργία ομαλού καθαρισμού (4× κανονική ταχύτητα).",
+        "gestureHold15": "Επιταχύνει σε ποσοστό αναζήτησης 10×.",
+        "gestureHold30": "Ρυθμός άλματος υψηλής ταχύτητας με ρυθμό 25×.",
+        "gestureRelease": "Κλειδώνει άψογα στην επιθυμητή θέση."
+      },
+      "faq": {
+        "title": "Συχνές ερωτήσεις και οδηγός χρήσης",
+        "subtitle": "Γρήγορες απαντήσεις που θα σας βοηθήσουν να αξιοποιήσετε στο έπακρο τα χειριστήρια ήχου ChatGPT.",
+        "q1": "Πώς μπορώ να ρυθμίσω την ένταση κάνοντας κύλιση με το ποντίκι μου;",
+        "a1": "Απλώς τοποθετήστε το δείκτη του ποντικιού σας πάνω από το εικονίδιο του ηχείου έντασης ήχου στη ράγα της συσκευής αναπαραγωγής και μετακινήστε τον τροχό του ποντικιού πάνω ή κάτω. Η ένταση θα προσαρμόζεται ομαλά σε βήματα 5% χωρίς να χρειάζεται να ανοίξετε το ρυθμιστικό popover!",
+        "q2": "Πού εμφανίζεται η συσκευή αναπαραγωγής στο ChatGPT;",
+        "a2": "Διατηρήστε την αρχική τοποθέτηση, επιλέξτε μια γωνιακή ή πλευρική προεπιλογή ή συνδέστε πάνω από την είσοδο συνομιλίας. Σύρετε για να μετακινηθείτε, αλλάξτε τις γραμμές και θυμηθείτε τη διάταξή σας.",
+        "q3": "Πώς μπορώ να κατεβάσω τον συνθετικό ήχο ομιλίας;",
+        "a3": "Οι λήψεις χρησιμοποιούν τη μορφή ήχου που παρέχεται από το ChatGPT. Η επέκταση δεν μετατρέπει ήχο. Ανοίξτε το ChatGPT και ξεκινήστε το Read Aloud σε μια ολοκληρωμένη απάντηση. Χρησιμοποιήστε τη συσκευή αναπαραγωγής για παύση, αναζήτηση, αλλαγή ταχύτητας ή λήψη.",
+        "q4": "Λειτουργεί σε μικρές οθόνες φορητών υπολογιστών;",
+        "a4": "Ναί! Η συσκευή αναπαραγωγής εντοπίζει αυτόματα το διαθέσιμο πλάτος της οθόνης σας και κλιμακώνει δυναμικά τη γραμμή αναζήτησης για να ταιριάζει άνετα στην οθόνη του φορητού υπολογιστή σας. Εάν ο χώρος είναι εξαιρετικά περιορισμένος, το αιωρούμενο κουμπί παραμένει προσβάσιμο, ώστε να μπορείτε να επεκτείνετε και να συμπτύξετε τη συσκευή αναπαραγωγής όποτε τη χρειάζεστε.",
+        "q5": "Πώς μπορώ να το εγκαταστήσω μέσω του Tampermonkey με αυτόματες ενημερώσεις;",
+        "a5": "Εάν χρησιμοποιείτε Tampermonkey, Violentmonkey ή Greasemonkey, μπορείτε να εγκαταστήσετε το αυτόνομο σενάριο απευθείας από το αποθετήριο μας. Το Tampermonkey θα ελέγχει αυτόματα το GitHub για ενημερώσεις και θα σας ειδοποιεί κάθε φορά που κυκλοφορεί μια νέα έκδοση.",
+        "q6": "Είναι ιδιωτικές οι συνομιλίες ή τα μηνύματά μου;",
+        "a6": "100% Ιδιωτικό. Η επέκταση εκτελείται εξ ολοκλήρου στην τοπική συσκευή σας. Δεν αποστέλλονται ποτέ μηνύματα προτροπής, απαντήσεις, ροές ήχου ή προσωπική τηλεμετρία σε κανέναν εξωτερικό διακομιστή."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Πίσω {s} δευτερόλεπτα — κρατήστε πατημένο για τρίψιμο",
+        "playPause": "Αναπαραγωγή / Παύση (Διάστημα ή K, Alt+P παλαιού τύπου)",
+        "forward": "Προώθηση {s} δευτερόλεπτα — κρατήστε πατημένο για τρίψιμο",
+        "speed": "Ταχύτητα αναπαραγωγής",
+        "volume": "Ένταση (Κύλιση για προσαρμογή)",
+        "volumeSlider": "Ρυθμιστικό έντασης",
+        "download": "Λήψη ήχου",
+        "shortcuts": "Συντομεύσεις και χειρονομίες πληκτρολογίου",
+        "collapse": "Σύμπτυξη προγράμματος αναπαραγωγής",
+        "expand": "Αναπτύξτε τα στοιχεία ελέγχου ήχου ChatGPT",
+        "readAloud": "Διαβάστε δυνατά"
+      },
+      "shortcutsPopover": {
+        "title": "Διαβάστε δυνατά τις συντομεύσεις",
+        "playPause": "Αναπαραγωγή / Παύση",
+        "back": "Πίσω {s} δευτ",
+        "forward": "Εμπρός {s} δευτ",
+        "slower": "Πιο αργή προεπιλογή",
+        "faster": "Ταχύτερη προεπιλογή",
+        "volumeScroll": "Κύλιση τόμου",
+        "smoothScrub": "Smooth Scrub",
+        "volumeScrollKey": "Κάντε κύλιση 🔈",
+        "smoothScrubKey": "Κρατήστε πατημένο το ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Δεν ήταν δυνατή η λήψη της ροής ήχου. Βεβαιωθείτε ότι ο ήχος έχει φορτωθεί ενεργά."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Αναπαραγωγή / Παύση",
+        "description": "Εναλλαγή αναπαραγωγής, αντιστοίχιση κοινών προγραμμάτων αναπαραγωγής ιστού και επιτραπέζιων υπολογιστών (το Alt+P εξακολουθεί να υποστηρίζεται)"
+      },
+      "seekBack": {
+        "action": "Πίσω 10 δευτερόλεπτα",
+        "description": "Πήδα προς τα πίσω 10 δευτερόλεπτα (Κρατήστε το για ομαλό τρίψιμο)"
+      },
+      "seekForward": {
+        "action": "Εμπρός 10 δευτερόλεπτα",
+        "description": "Άλμα προς τα εμπρός 10 δευτερόλεπτα (κρατήστε το για ομαλό τρίψιμο)"
+      },
+      "speedDecrease": {
+        "action": "Μειώστε την ταχύτητα",
+        "description": "Κατεβείτε στην προηγούμενη προκαθορισμένη ταχύτητα"
+      },
+      "speedIncrease": {
+        "action": "Αύξηση Ταχύτητας",
+        "description": "Ανεβάστε την επόμενη προκαθορισμένη ταχύτητα"
+      }
+    }
+  },
+  "ro": {
+    "common": {
+      "extensionName": "ChatGPT Audio",
+      "extensionSubtitle": "Comenzi și citire cu voce tare",
+      "version": "v",
+      "openChatGPT": "Deschideți ChatGPT",
+      "dashboard": "Tabloul de bord",
+      "seconds": "secunde",
+      "star": "★ Steaua",
+      "docs": "Documentație",
+      "issues": "Probleme"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Comutați tema",
+        "openOptions": "Deschideți Tabloul de bord și setări"
+      },
+      "tabs": {
+        "controls": "Controale",
+        "shortcuts": "Scurtături",
+        "about": "Despre"
+      },
+      "quickControls": {
+        "playbackSpeed": "Viteza de redare implicită",
+        "defaultVolume": "Volum implicit",
+        "mute": "Dezactivați sunetul",
+        "unmute": "Activați sunetul",
+        "smartIntegrations": "Integrări inteligente",
+        "globalShortcuts": "Comenzi rapide globale",
+        "globalShortcutsDesc": "Activați Space/K, Alt+P, Alt+Arrows și tastele de viteză",
+        "smoothScrubbing": "Derulare lină",
+        "smoothScrubbingDesc": "Țineți apăsat ◀10 sau 10▶ pentru a derula tot mai rapid"
+      },
+      "shortcuts": {
+        "title": "Comenzi rapide de la tastatură",
+        "gesturesTitle": "Gesturi mouse și atingere",
+        "smoothAudioScrub": "Derulare audio lină",
+        "directDownload": "Descărcare directă",
+        "holdScrubKey": "Țineți apăsat ◀10 / 10▶",
+        "clickDownloadKey": "Faceți clic pe butonul 📥"
+      },
+      "about": {
+        "title": "ChatGPT Audio Controls",
+        "byInfoxica": "Cod sursă deschis, de Infoxica",
+        "description": "Întrerupeți, derulați înapoi, modificați viteza de redare și descărcați audio. Rămâneți în conversație în timp ce ascultați.",
+        "privacyTitle": "Concentrat 100% asupra confidențialității",
+        "privacyDesc": "Fără trackere, fără telemetrie. Totul rulează pe mașina dvs.",
+        "githubRepo": "Depozitul GitHub",
+        "documentation": "Documentație",
+        "reportIssue": "Raportați o problemă"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT Audio",
+        "dashboardSubtitle": "Tabloul de bord și configurare",
+        "preferences": "Preferințe",
+        "shortcuts": "Comenzi rapide și gesturi",
+        "faq": "Întrebări frecvente și depanare",
+        "darkMode": "Modul întunecat",
+        "lightMode": "Mod luminos",
+        "githubRepo": "Cod sursă pe GitHub"
+      },
+      "headers": {
+        "preferencesTitle": "Preferințe audio și redare",
+        "preferencesDesc": "Configurați limba, presetările vitezei de redare, volumul implicit și funcțiile.",
+        "shortcutsTitle": "Comenzi rapide de la tastatură și gesturi",
+        "shortcutsDesc": "Controlați ușor redarea folosind comenzile rapide de la tastatură.",
+        "faqTitle": "Întrebări frecvente și depanare",
+        "faqDesc": "Ghid tehnic detaliat, securitate și răspunsuri de asistență."
+      },
+      "general": {
+        "languageTitle": "Limbă și localizare",
+        "languageDesc": "Alegeți limba de interfață preferată sau lăsați extensia să detecteze automat limba browserului dvs.",
+        "languageAuto": "Detectare automată (limba browserului)",
+        "languageDetected": "Detectat",
+        "speedTitle": "Preferințe pentru viteza de redare",
+        "speedDesc": "Alegeți rata de redare implicită când deschideți ChatGPT sau lansați Citiți cu voce tare.",
+        "volumeTitle": "Nivelul implicit al volumului",
+        "volumeDesc": "Volum prestabilit pentru fluxurile de vorbire Citiți cu voce tare.",
+        "seekTitle": "Pasul de derulare",
+        "seekDesc": "Numărul de secunde derulate la apăsarea butoanelor -10s / +10s sau a tastelor Alt + Stânga / Alt + Dreapta.",
+        "secondsUnit": "secunde"
+      },
+      "shortcutsGuide": {
+        "title": "Referință pentru comenzile rapide de la tastatură",
+        "desc": "Accelerează-ți fluxul de lucru cu taste rapide de redare ergonomice cu o singură mână și standard YouTube.",
+        "gesturesTitle": "Derulare prin apăsare lungă",
+        "gesturesDesc": "Țineți apăsat ◀10s sau 10s▶ pentru a derula răspunsurile audio lungi cu viteză crescătoare:",
+        "gestureHold03": "Începe derularea lină cu viteza de 4×.",
+        "gestureHold15": "Mărește viteza de derulare la 10×.",
+        "gestureHold30": "Mărește viteza de derulare la 25×.",
+        "gestureRelease": "Oprește derularea la poziția aleasă."
+      },
+      "faq": {
+        "title": "Întrebări frecvente și ghid de utilizare",
+        "subtitle": "Răspunsuri rapide pentru a vă ajuta să profitați la maximum de controalele audio ChatGPT.",
+        "q1": "Cum reglez volumul derulând cu mouse-ul?",
+        "a1": "Pur și simplu plasați cursorul mouse-ului peste pictograma difuzorului de volum de pe șina playerului și derulați rotița mouse-ului în sus sau în jos. Volumul se va regla ușor, în trepte de 5%, fără a fi nevoie să deschideți popover-ul glisor!",
+        "q2": "Unde apare playerul în ChatGPT?",
+        "a2": "Păstrați poziția inițială, alegeți un colț sau o latură a ecranului ori andocați playerul deasupra câmpului de mesaj. Trageți pentru a muta barele sau a le schimba ordinea. Extensia reține aranjamentul.",
+        "q3": "Cum descarc sunetul vocal sintetizat?",
+        "a3": "Descărcările folosesc formatul audio oferit de ChatGPT. Extensia nu convertește audio. Deschideți ChatGPT și începeți Citiți cu voce tare la un răspuns finalizat. Utilizați playerul pentru a întrerupe, căuta, schimba viteza sau descărca.",
+        "q4": "Funcționează acest lucru pe ecrane mici de laptop?",
+        "a4": "Da! Playerul detectează automat lățimea disponibilă a ecranului și își scalează dinamic bara de căutare pentru a se potrivi confortabil cu ecranul laptopului. Dacă spațiul este extrem de îngust, butonul plutitor rămâne accesibil, astfel încât să puteți extinde și restrânge playerul oricând aveți nevoie de el.",
+        "q5": "Cum instalez acest lucru prin Tampermonkey cu actualizări automate?",
+        "a5": "Dacă utilizați Tampermonkey, Violentmonkey sau Greasemonkey, puteți instala scriptul autonom direct din depozitul nostru. Tampermonkey va verifica automat GitHub pentru actualizări și vă va anunța ori de câte ori este lansată o nouă versiune.",
+        "q6": "Conversațiile sau solicitările mele sunt private?",
+        "a6": "100% Privat. Extensia rulează în întregime pe dispozitivul dvs. local. Nicio solicitare, răspunsuri, fluxuri audio sau telemetrie personală nu sunt trimise vreodată la niciun server extern."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Înapoi cu {s} secunde — țineți apăsat pentru a derula",
+        "playPause": "Redare / Pauză (Space sau K; Alt+P funcționează în continuare)",
+        "forward": "Înainte cu {s} secunde — țineți apăsat pentru a derula",
+        "speed": "Viteza de redare",
+        "volume": "Volum (Derulați pentru a regla)",
+        "volumeSlider": "Glisor de volum",
+        "download": "Descărcați audio",
+        "shortcuts": "Comenzi rapide și gesturi de la tastatură",
+        "collapse": "Restrânge playerul",
+        "expand": "Extindeți ChatGPT Audio Controls",
+        "readAloud": "Citiți cu voce tare"
+      },
+      "shortcutsPopover": {
+        "title": "Comenzi rapide pentru citirea cu voce tare",
+        "playPause": "Redare/Pauză",
+        "back": "Înapoi {s} sec",
+        "forward": "Înainte {s} sec",
+        "slower": "Presetare mai lentă",
+        "faster": "Presetare mai rapidă",
+        "volumeScroll": "Derulare volum",
+        "smoothScrub": "Derulare lină",
+        "volumeScrollKey": "Derulează pe 🔈",
+        "smoothScrubKey": "Țineți apăsat ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Nu s-a putut descărca fluxul audio. Asigurați-vă că sunetul este încărcat activ."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Redare/Pauză",
+        "description": "Comutați redarea, potrivirea playerelor web și desktop obișnuite (Alt+P rămâne acceptat)"
+      },
+      "seekBack": {
+        "action": "Înapoi 10 secunde",
+        "description": "Înapoi cu 10 s (țineți apăsat pentru a derula lin)"
+      },
+      "seekForward": {
+        "action": "Înainte 10 secunde",
+        "description": "Înainte cu 10 s (țineți apăsat pentru a derula lin)"
+      },
+      "speedDecrease": {
+        "action": "Scade viteza",
+        "description": "Coborâți la presetarea anterioară a vitezei"
+      },
+      "speedIncrease": {
+        "action": "Măriți viteza",
+        "description": "Treceți la următoarea presetare a vitezei"
+      }
+    }
+  },
+  "nb": {
+    "common": {
+      "extensionName": "ChatGPT lyd",
+      "extensionSubtitle": "Kontroller og høytlesning",
+      "version": "v",
+      "openChatGPT": "Åpne ChatGPT",
+      "dashboard": "Dashbord",
+      "seconds": "sekunder",
+      "star": "★ Stjerne",
+      "docs": "Dokumenter",
+      "issues": "Problemer"
+    },
+    "popup": {
+      "header": {
+        "switchTheme": "Bytt tema",
+        "openOptions": "Åpne Dashboard og innstillinger"
+      },
+      "tabs": {
+        "controls": "Kontroller",
+        "shortcuts": "Nøkler",
+        "about": "Om"
+      },
+      "quickControls": {
+        "playbackSpeed": "Standard avspillingshastighet",
+        "defaultVolume": "Standardvolum",
+        "mute": "Demp",
+        "unmute": "Slå på lyden",
+        "smartIntegrations": "Smarte integrasjoner",
+        "globalShortcuts": "Globale snarveier",
+        "globalShortcutsDesc": "Aktiver Space/K, Alt+P, Alt+Arrows og hastighetstaster",
+        "smoothScrubbing": "Glatt skrubbing",
+        "smoothScrubbingDesc": "Akselerer søkingen ved å holde ◀10 eller 10▶"
+      },
+      "shortcuts": {
+        "title": "Tastatursnarveier",
+        "gesturesTitle": "Mus- og berøringsbevegelser",
+        "smoothAudioScrub": "Glatt lydskrubb",
+        "directDownload": "Direkte nedlasting",
+        "holdScrubKey": "Hold inne ◀10 / 10▶",
+        "clickDownloadKey": "Klikk på 📥-knappen"
+      },
+      "about": {
+        "title": "ChatGPT lydkontroller",
+        "byInfoxica": "Åpen kildekode av Infoxica",
+        "description": "Pause, spole tilbake, endre avspillingshastighet og last ned lyd. Hold deg i samtalen mens du lytter.",
+        "privacyTitle": "100 % personvernfokusert",
+        "privacyDesc": "Ingen sporere, ingen telemetri. Alt kjører på maskinen din.",
+        "githubRepo": "GitHub Repository",
+        "documentation": "Dokumentasjon",
+        "reportIssue": "Rapporter et problem"
+      }
+    },
+    "options": {
+      "nav": {
+        "dashboardTitle": "ChatGPT lyd",
+        "dashboardSubtitle": "Dashboard og oppsett",
+        "preferences": "Preferanser",
+        "shortcuts": "Snarveier og bevegelser",
+        "faq": "FAQ og feilsøking",
+        "darkMode": "Mørk modus",
+        "lightMode": "Lysmodus",
+        "githubRepo": "GitHub Repo"
+      },
+      "headers": {
+        "preferencesTitle": "Lyd- og avspillingsinnstillinger",
+        "preferencesDesc": "Konfigurer språk, forhåndsinnstillinger for avspillingshastighet, standardvolum og funksjoner.",
+        "shortcutsTitle": "Tastatursnarveier og bevegelser",
+        "shortcutsDesc": "Mestre raske hurtigtaster for uanstrengt avspillingsmanipulering.",
+        "faqTitle": "FAQ og feilsøking",
+        "faqDesc": "Detaljert teknisk veiledning, sikkerhet og støttesvar."
+      },
+      "general": {
+        "languageTitle": "Språk og lokalisering",
+        "languageDesc": "Velg ditt foretrukne grensesnittspråk eller la utvidelsen automatisk oppdage nettleserens språk.",
+        "languageAuto": "Automatisk gjenkjenning (nettleserspråk)",
+        "languageDetected": "Oppdaget",
+        "speedTitle": "Innstillinger for avspillingshastighet",
+        "speedDesc": "Velg standard avspillingshastighet når du åpner ChatGPT eller starter Les høyt.",
+        "volumeTitle": "Standard volumnivå",
+        "volumeDesc": "Forhåndsinnstilt volum for høytlesning av talestrømmer.",
+        "seekTitle": "Hopp over og søk trinn",
+        "seekDesc": "Antall sekunder å hoppe over ved ett enkelt trykk på -10s / +10s-knappene eller Alt + Venstre / Alt + Høyre.",
+        "secondsUnit": "sekunder"
+      },
+      "shortcutsGuide": {
+        "title": "Referanse til tastatursnarveier",
+        "desc": "Akselerer arbeidsflyten din med ergonomiske enkelthånds- og YouTube-standard avspillingstaster.",
+        "gesturesTitle": "Mus og hold skrubbebevegelser",
+        "gesturesDesc": "Hold nede enten ◀10s eller 10s▶-knappene for jevnt å skrubbe gjennom lange stemmesvar med dynamisk akselerasjon:",
+        "gestureHold03": "Går inn i jevn skrubbemodus (4× normal hastighet).",
+        "gestureHold15": "Akselererer til 10× søkehastighet.",
+        "gestureHold30": "Høyhastighets hopphastighet på 25× hastighet.",
+        "gestureRelease": "Låser sømløst til ønsket posisjon."
+      },
+      "faq": {
+        "title": "Ofte stilte spørsmål og brukerveiledning",
+        "subtitle": "Raske svar for å hjelpe deg å få mest mulig ut av ChatGPT lydkontroller.",
+        "q1": "Hvordan justerer jeg volumet ved å rulle med musen?",
+        "a1": "Bare hold musepekeren over volumhøyttalerikonet på spillerskinnen og rull musehjulet opp eller ned. Volumet justeres jevnt i trinn på 5 % uten å måtte åpne skyveknappen!",
+        "q2": "Hvor vises spilleren på ChatGPT?",
+        "a2": "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
+        "q3": "Hvordan laster jeg ned den syntetiserte talelyden?",
+        "a3": "Nedlastinger bruker lydformatet levert av ChatGPT. Utvidelsen konverterer ikke lyd. Åpne ChatGPT og start høytlesing på et fullført svar. Bruk spilleren til å sette på pause, søke, endre hastighet eller laste ned.",
+        "q4": "Fungerer dette på små bærbare skjermer?",
+        "a4": "Ja! Spilleren oppdager automatisk den tilgjengelige skjermbredden din og skalerer søkelinjen dynamisk for å passe komfortabelt med skjermen på den bærbare datamaskinen. Hvis plassen er ekstremt trang, forblir den flytende knappen tilgjengelig slik at du kan utvide og kollapse spilleren når du trenger det.",
+        "q5": "Hvordan installerer jeg dette via Tampermonkey med automatiske oppdateringer?",
+        "a5": "Hvis du bruker Tampermonkey, Violentmonkey eller Greasemonkey, kan du installere det frittstående skriptet direkte fra vårt depot. Tampermonkey vil automatisk sjekke GitHub for oppdateringer og varsle deg hver gang en ny versjon utgis.",
+        "q6": "Er samtalene eller forespørslene mine private?",
+        "a6": "100 % privat. Utvidelsen kjører utelukkende på din lokale enhet. Ingen meldinger, svar, lydstrømmer eller personlig telemetri sendes noen gang til noen ekstern server."
+      }
+    },
+    "content": {
+      "tooltips": {
+        "back": "Tilbake {s} sekunder — hold inne for å skrubbe",
+        "playPause": "Spill / Pause (mellomrom eller K; Alt+P eldre)",
+        "forward": "Fremover {s} sekunder — hold inne for å skrubbe",
+        "speed": "Avspillingshastighet",
+        "volume": "Volum (Rull for å justere)",
+        "volumeSlider": "Volumglidebryter",
+        "download": "Last ned lyd",
+        "shortcuts": "Tastatursnarveier og bevegelser",
+        "collapse": "Skjul spiller",
+        "expand": "Utvid ChatGPT lydkontroller",
+        "readAloud": "Les høyt"
+      },
+      "shortcutsPopover": {
+        "title": "Les høyt Snarveier",
+        "playPause": "Spill / Pause",
+        "back": "Tilbake {s} sek",
+        "forward": "Frem {s} sek",
+        "slower": "Langsommere forhåndsinnstilling",
+        "faster": "Raskere forhåndsinnstilling",
+        "volumeScroll": "Volumrulling",
+        "smoothScrub": "Glatt skrubb",
+        "volumeScrollKey": "Scroll videre 🔈",
+        "smoothScrubKey": "Hold inne ◀{s} / {s}▶"
+      },
+      "alerts": {
+        "downloadError": "Kunne ikke laste ned lydstrøm. Sørg for at lyden er aktivt lastet."
+      }
+    },
+    "shortcuts": {
+      "playPause": {
+        "action": "Spill / Pause",
+        "description": "Veksle avspilling, matching av vanlige nett- og skrivebordsspillere (Alt+P fortsatt støttes)"
+      },
+      "seekBack": {
+        "action": "Tilbake 10 sekunder",
+        "description": "Hopp 10 sekunder bakover (Hold for jevn skrubb)"
+      },
+      "seekForward": {
+        "action": "Fremover 10 sekunder",
+        "description": "Hopp 10 sekunder fremover (Hold for jevn skrubb)"
+      },
+      "speedDecrease": {
+        "action": "Reduser hastigheten",
+        "description": "Gå ned til forrige forhåndsinnstilte hastighet"
+      },
+      "speedIncrease": {
+        "action": "Øk hastigheten",
+        "description": "Gå opp til neste forhåndsinnstilte hastighet"
+      }
+    }
+  }
+}

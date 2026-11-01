@@ -5,22 +5,37 @@ async function serveSite(context,tracking=[]) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
     if(url.startsWith(base)){
-      const relative=url.slice(base.length) || 'index.html';
+      const relative=url.split('?')[0].slice(base.length) || 'index.html';
       const file=relative.endsWith('/')?relative+'index.html':relative;
       const content=await fs.readFile('site-dist/'+file);
       const body=file.endsWith('.html')?content.toString().replace(/data-ga4="[^"]*"/,'data-ga4="G-TEST123"'):content;
-      return route.fulfill({body,contentType:file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':file.endsWith('.png')?'image/png':'text/html; charset=utf-8'});
+      return route.fulfill({body,contentType:file.endsWith('.mp4')?'video/mp4':file.endsWith('.css')?'text/css':file.endsWith('.js')?'application/javascript':file.endsWith('.png')?'image/png':'text/html; charset=utf-8'});
     }
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
+for(const [width,locale] of [[1280,''],[360,''],[390,'ar/']])test(`private demo plays without overflow or autoplay at ${width} ${locale}`,async({page,context})=>{
+  await serveSite(context);await page.setViewportSize({width,height:900});
+  const mediaRequests=[];page.on('request',r=>{if(r.url().endsWith('.mp4'))mediaRequests.push(r.url());});
+  await page.goto(base+locale);const video=page.locator('#demo video');
+  await expect(video).toHaveAttribute('preload','none');expect(mediaRequests).toEqual([]);
+  expect(await video.evaluate(el=>el.autoplay)).toBe(false);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await video.scrollIntoViewIfNeeded();await video.evaluate(el=>el.play());
+  await expect.poll(()=>video.evaluate(el=>el.currentTime)).toBeGreaterThan(0.2);
+  expect(await video.evaluate(el=>[el.videoWidth,el.videoHeight])).toEqual([1920,1080]);
+  await video.evaluate(el=>el.pause());
+  await expect(page.locator('.demo-gallery img')).toHaveCount(2);
+  await page.locator('.demo-transcript summary').click();await expect(page.locator('.demo-transcript li')).toHaveCount(7);
+  await page.screenshot({path:`build/browser-results/demo-site-${width}.png`});
+});
 test('static routes and consent keep analytics opt-in and store clicks distinct',async({page,context})=>{
   const tracking=[];
   const errors=[];
   page.on('pageerror',error=>errors.push(error.message));
   page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
   await serveSite(context,tracking);
-  await page.goto(base);await expect(page.getByRole('button',{name:'No thanks',exact:true})).toBeVisible();
+  await page.goto(base+'?utm_source=extension&utm_medium=referral&utm_campaign=v1.4.0&email=private%40example.test&search=private');await expect(page.getByRole('button',{name:'No thanks',exact:true})).toBeVisible();
   expect(tracking).toEqual([]);await page.getByRole('button',{name:'No thanks',exact:true}).click();await page.reload();expect(tracking).toEqual([]);
   const firstQuestion=page.locator('.faq-trigger').first();
   await firstQuestion.click();
@@ -41,6 +56,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   await expect(page.locator('#locale')).toBeFocused();
   await page.getByRole('button',{name:'Analytics preferences'}).click();await page.getByRole('button',{name:'Allow analytics',exact:true}).click();
   await expect.poll(()=>tracking.filter(url=>url.includes('googletagmanager')).length).toBe(1);
+  expect(await page.evaluate(()=>window.dataLayer.map(a=>Array.from(a)).find(a=>a[0]==='config')[2].page_location)).toBe(base+'?utm_source=extension&utm_medium=referral&utm_campaign=v1.4.0');
   expect(await page.evaluate(()=>window.dataLayer.every(command=>Object.prototype.toString.call(command)==='[object Arguments]'))).toBe(true);
   await page.locator('a[data-store=chrome][data-placement=hero]').click({modifiers:['Control']});
   const event=await page.evaluate(()=>window.dataLayer.map(args=>Array.from(args)).find(args=>args[0]==='event'));
@@ -78,7 +94,7 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({path:'build/browser-results/website-mobile-ja.png',fullPage:true});
   await page.setViewportSize({width:320,height:740});
-  for (const locale of ['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr']) {
+  for (const locale of ['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb']) {
     await page.goto(base+(locale==='en'?'':locale+'/'));
     await expect(page.locator('#locale-mobile')).toHaveAttribute('role','combobox');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),locale).toBe(true);
@@ -86,10 +102,13 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   expect(errors).toEqual([]);
 });
 test('guide pages stay local, align with the homepage, and preserve locale-specific metadata',async({page,context})=>{
+  // This exhaustive pass navigates 132 localized pages, not a single UI flow.
+  // Keep every locale assertion while allowing the expanded catalog to finish.
+  test.setTimeout(120000);
   await serveSite(context);
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);await page.getByRole('button',{name:'No thanks',exact:true}).click();
-  const widths=await page.locator('.settings-story,#help,#guides,#reviews,#privacy').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().width));
+  const widths=await page.locator('.settings-story,#help,#guides,#support,#privacy').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().width));
   expect(Math.max(...widths)-Math.min(...widths)).toBeLessThan(1);
   await page.locator('#guides').getByRole('link',{name:'Installation',exact:true}).click();
   await expect(page).toHaveURL(base+'installation/');
@@ -105,9 +124,9 @@ test('guide pages stay local, align with the homepage, and preserve locale-speci
   await expect(page.locator('main a[href$=".user.js"]')).toHaveCount(1);
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'build/browser-results/website-userscript-ja.png',fullPage:true});
-  const codes=['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr'];
+  const codes=['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb'];
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(85);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
   await page.setViewportSize({width:320,height:740});
   for(const code of codes) for(const route of ['guide','installation','userscript','glossary']) {
     const relative=(code==='en'?'':code+'/')+route+'/';
@@ -152,8 +171,8 @@ test('hierarchical navigation and discovery artifacts cover every localized page
   await expect(page).toHaveURL(base+'#dashboard');
   const navigation=JSON.parse(await fs.readFile('site/navigation-copy.json','utf8'));
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(85);
-  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(85*18);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
+  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(165*34);
   for(const locale of Object.keys(navigation)) {
     const prefix=locale==='en'?'':locale+'/';
     for(const slug of ['', 'guide/', 'installation/', 'userscript/', 'glossary/']) {
@@ -161,7 +180,7 @@ test('hierarchical navigation and discovery artifacts cover every localized page
       const html=await fs.readFile('site-dist/'+prefix+slug+'index.html','utf8');
       const md=await fs.readFile('site-dist/'+prefix+slug+'index.md','utf8');
       expect(html).toContain(`type="text/markdown" href="${canonical}index.md"`);
-      expect(html).toContain(navigation[locale].disclaimer);
+      expect(html).toContain(navigation[locale].disclaimer.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])));
       expect(html).toContain('class="footer-navigation"');
       expect(md).toContain('Source: '+canonical);
       expect(md).not.toContain('<svg');
@@ -224,11 +243,15 @@ test('desktop language grid and Support descriptions stay consistent', async ({p
   await page.goto(base+'guide/');
   await page.getByRole('button',{name:'No thanks',exact:true}).click();
   await page.locator('#locale').hover();
-  await expect(page.locator('.language-grid-link')).toHaveCount(17);
+  await expect(page.locator('.language-grid-link')).toHaveCount(33);
   await expect(page.locator('.language-grid-link[aria-current=page]')).toHaveText('English');
   expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(4);
   await page.screenshot({path:'build/browser-results/website-language-grid.png',animations:'disabled'});
   await page.setViewportSize({width:1100,height:850});
+  // Resizing moves the trigger away from the pointer; re-enter the language
+  // menu instead of leaving the pointer over a different navigation trigger.
+  await page.locator('#locale').hover();
+  await expect(page.locator('.language-grid')).toBeVisible();
   expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(3);
   await page.locator('.language-grid').getByRole('link',{name:'日本語',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/guide/');
@@ -237,4 +260,41 @@ test('desktop language grid and Support descriptions stay consistent', async ({p
   await expect(page.locator('.mega-content .mega-description')).toHaveCount(4);
   expect(await page.locator('.mega-content .mega-description').evaluateAll(nodes=>nodes.every(node=>node.textContent.length>10&&node.textContent.length<100))).toBe(true);
   await page.screenshot({path:'build/browser-results/website-support-menu.png',animations:'disabled'});
+});
+
+for(const [width,locale] of [[320,''],[360,'de/'],[390,'ar/'],[768,'ja/'],[1920,'']]) test(`support links and layout at ${width} ${locale}`,async({page,context})=>{
+ const requests=[];await serveSite(context,requests);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
+ await expect(page.locator('.donate-header')).toHaveAttribute('href',base+locale+'#support');await page.locator('.donate-header').click();await expect(page.locator('#support')).toBeVisible();
+ await expect(page.locator('#support .donation-amounts a')).toHaveCount(4);
+ const amounts=[1,3,5,10];for(let i=0;i<4;i++){const a=page.locator('#support .donation-amounts a').nth(i);await expect(a).toHaveAttribute('href',`https://github.com/sponsors/infoxica/sponsorships?frequency=one-time&amount=${amounts[i]}`);const r=await a.boundingBox();expect(r.width).toBeGreaterThanOrEqual(44);expect(r.height).toBeGreaterThanOrEqual(44);}
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await expect(page.locator('#reviews a')).toHaveCount(2);expect(requests.filter(url=>url.includes('google-analytics')||url.includes('github.com/sponsors'))).toEqual([]);
+ if(width===1920){await page.locator('#support').screenshot({path:'build/support-website-dark.png'});await page.evaluate(()=>document.documentElement.dataset.theme='light');await page.locator('#support').screenshot({path:'build/support-website-light.png'});}
+});
+
+for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`screenshot viewer and separate support cards at ${width} ${locale}`,async({page,context})=>{
+ await serveSite(context);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
+ await page.locator('#analytics-decline').click();
+ const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(3);
+ for(let i=0;i<3;i++){
+  const trigger=triggers.nth(i);await trigger.scrollIntoViewIfNeeded();await trigger.focus();await trigger.press('Enter');
+  const viewer=page.getByRole('dialog');await expect(viewer).toBeVisible();await expect(viewer.locator('button')).toBeFocused();
+  await expect.poll(()=>viewer.locator('img').evaluate(el=>el.naturalWidth)).toBe(1920);
+  expect(await viewer.locator('img').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;})).toBe(true);
+  expect(await viewer.locator('button').getAttribute('aria-label')).toBeTruthy();
+  if(i===0){await page.keyboard.press('Tab');await expect(viewer.locator('button')).toBeFocused();await page.screenshot({path:`build/image-viewer-${width}.png`});await page.keyboard.press('Escape');}
+  else if(i===1)await viewer.locator('button').click();else await viewer.click({position:{x:4,y:200}});
+  await expect(viewer).not.toBeVisible();await expect(trigger).toBeFocused();expect(page.url()).toBe(base+locale);
+ }
+ await page.locator('#support').scrollIntoViewIfNeeded();
+ const cards=await page.locator('#support .support-contribution,#reviews').evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,border:getComputedStyle(el).borderTopStyle};}));
+ expect(cards).toHaveLength(2);expect(cards.every(c=>c.border==='solid')).toBe(true);
+ expect(cards[1].y-cards[0].y-cards[0].height).toBeCloseTo(24,0);
+ for(const selector of ['.support-contribution','#reviews']){
+  const box=await page.locator(selector).evaluate(el=>{const a=el.querySelector('.support-copy').getBoundingClientRect(),b=el.querySelector('.support-card-actions').getBoundingClientRect();return {a:{x:a.x,y:a.y,width:a.width,height:a.height},b:{x:b.x,y:b.y,width:b.width,height:b.height},padding:getComputedStyle(el).paddingTop};});
+  if(width>760){expect(box.b.x-box.a.x-box.a.width).toBeCloseTo(32,0);expect(box.padding).toBe('32px');}
+  else {expect(box.b.y-box.a.y-box.a.height).toBeCloseTo(24,0);expect(box.padding).toBe('24px');}
+ }
+ const dividerGap=await page.locator('#support').evaluate(el=>el.getBoundingClientRect().top-document.querySelector('#guides').getBoundingClientRect().bottom);expect(dividerGap).toBeCloseTo(32,0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.screenshot({path:`build/support-cards-${width}.png`});
 });

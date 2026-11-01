@@ -1,5 +1,9 @@
 # Official website
 
+The homepage includes a self-hosted demonstration video, two player screenshots,
+and a fresh settings screenshot. All media uses a disposable profile and fictional
+content; see [demo provenance and regeneration](../assets/demo/README.md).
+
 For an interactive preview, run `bun run build:site` then `bun run dev:site`.
 The server listens at `http://127.0.0.1:4178/` and supports
 root discovery files, Link response headers, and Markdown content negotiation.
@@ -7,7 +11,7 @@ Use `cloudflared tunnel --url http://127.0.0.1:4178` to share this preview.
 See [the discovery audit](AGENT-DISCOVERY.md) for local checks, production hosting
 requirements, and the applicability of API/agent scanner findings.
 
-Build 85 static pages across 17 locales with `bun run scripts/build-site.ts`. Output is
+Build 120 static pages across 24 locales with `bun run scripts/build-site.ts`. Output is
 written to `site-dist` and excluded from extension packages. GitHub Pages uses
 the separate website workflow.
 
@@ -86,7 +90,7 @@ The desktop header uses Radix Navigation Menu for hover-open Product, Guides,
 and Support panels, with two-column links, Lucide icons, and localized descriptions.
 The grouped mobile menu uses Radix DropdownMenu. All destinations are also ordinary
 server-rendered footer links, including when JavaScript is unavailable. Navigation
-labels and the OpenAI trademark/copyright ownership disclaimer cover all 17 locales
+labels and the OpenAI trademark/copyright ownership disclaimer cover all 24 locales
 in `site/navigation-copy.json`.
 
 The build also generates:
@@ -115,7 +119,7 @@ this sitemap. Search indexing and AI citations require separate live verificatio
 ## Expanded context and scanner follow-up
 
 `llms-full.txt` contains the complete main content of all 85 HTML pages, including
-all 17 languages. `sitemap.md` groups links by language and page hierarchy.
+all 33 languages. `sitemap.md` groups links by language and page hierarchy.
 Both are linked from `llms.txt`. Markdown pages include YAML frontmatter with
 quoted title, description, canonical URL, language, and modification time.
 Alongside directory `index.md` files, aliases such as `guide.md`, `ja.md`, and
@@ -162,3 +166,11 @@ from the same source modification timestamp. Each page includes a `## Sitemap`
 section. The preview reads the canonical HTML URL from generated frontmatter and
 returns it in a `Link` header with `rel="canonical"`, including on `.md` aliases.
 These response headers still need a supported production host/proxy.
+
+
+Screenshot figures share an in-page native-dialog viewer, initialized by
+`image-viewer.ts`. It fits the full image to the viewport, supports keyboard
+activation, Escape, the localized close button and backdrop dismissal, and
+restores focus to the thumbnail. Close labels are supplied for all 33 languages
+in `image-viewer-copy.json`. Store badges and the video retain their normal actions.
+Donation and review use separate responsive cards with space around section rules.

@@ -14,6 +14,7 @@ async function buildContentScript() {
     entrypoints: [resolve(__dirname, "../src/content/content.ts")],
     outdir: outDir,
     target: "browser",
+    define: { __USERSCRIPT__: "false" },
     naming: "content.js",
     minify: false,
   });
@@ -27,6 +28,7 @@ async function buildContentScript() {
     entrypoints: [resolve(__dirname, "../src/content/settings-bridge.ts")],
     outdir: outDir,
     target: "browser",
+    define: { __USERSCRIPT__: "false" },
     naming: "settings-bridge.js",
     minify: false,
   });

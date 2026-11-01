@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 import { TranslationSchema } from "../../shared/i18n";
 import { getReleaseCopy } from '../../shared/i18n/release-copy';
+import { polishCopy } from '../../shared/i18n/polish';
 
 interface FaqItemProps {
   question: string;
@@ -53,7 +54,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ t, language }) => {
 
           <FaqItem
             question={t.options.faq.q2}
-            answer={<p>{t.options.faq.a2}</p>}
+            answer={<p>{polishCopy(language).layoutDescription}</p>}
           />
 
           <FaqItem

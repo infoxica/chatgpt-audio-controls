@@ -1,0 +1,233 @@
+{
+  "en": {
+    "edit": "Edit in browser",
+    "editHint": "Find {action} on the browser shortcuts page. The browser does not support links to individual commands.",
+    "layoutDescription": "Keep the original placement, choose a corner or side preset, or dock above the chat input. Drag to move, swap the bars, and remember your layout.",
+    "gestureReleaseLabel": "Release the button",
+    "seekPosition": "Playback position"
+  },
+  "bn": {
+    "edit": "ব্রাউজারে সম্পাদনা করুন",
+    "editHint": "ব্রাউজার শর্টকাট পৃষ্ঠায় {action} খুঁজুন। ব্রাউজার পৃথক কমান্ডের লিঙ্ক সমর্থন করে না।",
+    "layoutDescription": "আসল প্লেসমেন্ট রাখুন, একটি কোণা বা সাইড প্রিসেট চয়ন করুন বা চ্যাট ইনপুটের উপরে ডক করুন। সরাতে টেনে আনুন, বারগুলি অদলবদল করুন এবং আপনার লেআউটটি মনে রাখুন।",
+    "gestureReleaseLabel": "বোতাম ছেড়ে দিলে",
+    "seekPosition": "প্লেব্যাকের অবস্থান"
+  },
+  "mr": {
+    "edit": "ब्राउझरमध्ये संपादित करा",
+    "editHint": "ब्राउझर शॉर्टकट पृष्ठावर {action} शोधा. ब्राउझर वैयक्तिक आदेशांच्या दुव्यांचे समर्थन करत नाही.",
+    "layoutDescription": "मूळ प्लेसमेंट ठेवा, एक कोपरा किंवा साइड प्रीसेट निवडा किंवा चॅट इनपुटच्या वर डॉक करा. हलविण्यासाठी ड्रॅग करा, बार स्वॅप करा आणि तुमचा लेआउट लक्षात ठेवा.",
+    "gestureReleaseLabel": "बटण सोडल्यावर",
+    "seekPosition": "प्लेबॅकची स्थिती"
+  },
+  "te": {
+    "edit": "బ్రౌజర్‌లో సవరించండి",
+    "editHint": "బ్రౌజర్ సత్వరమార్గాల పేజీలో {action}ని కనుగొనండి. బ్రౌజర్ వ్యక్తిగత ఆదేశాలకు లింక్‌లకు మద్దతు ఇవ్వదు.",
+    "layoutDescription": "ఒరిజినల్ ప్లేస్‌మెంట్‌ను ఉంచండి, ఒక మూలను లేదా సైడ్ ప్రీసెట్‌ను ఎంచుకోండి లేదా చాట్ ఇన్‌పుట్ పైన డాక్ చేయండి. తరలించడానికి లాగండి, బార్‌లను మార్చుకోండి మరియు మీ లేఅవుట్‌ను గుర్తుంచుకోండి.",
+    "gestureReleaseLabel": "బటన్‌ను వదిలినప్పుడు",
+    "seekPosition": "ప్లేబ్యాక్ స్థానం"
+  },
+  "ta": {
+    "edit": "உலாவியில் திருத்தவும்",
+    "editHint": "உலாவி குறுக்குவழிகள் பக்கத்தில் {action} ஐக் கண்டறியவும். தனிப்பட்ட கட்டளைகளுக்கான இணைப்புகளை உலாவி ஆதரிக்காது.",
+    "layoutDescription": "அசல் இடத்தை வைத்திருங்கள், ஒரு மூலை அல்லது பக்க முன்னமைவைத் தேர்வுசெய்யவும் அல்லது அரட்டை உள்ளீட்டிற்கு மேலே டாக் செய்யவும். நகர்த்த இழுக்கவும், பார்களை மாற்றவும் மற்றும் உங்கள் தளவமைப்பை நினைவில் கொள்ளவும்.",
+    "gestureReleaseLabel": "பொத்தானை விடும்போது",
+    "seekPosition": "இயக்க நிலை"
+  },
+  "ar": {
+    "edit": "تحرير في المتصفح",
+    "editHint": "ابحث عن {action} في صفحة اختصارات المتصفح. لا يدعم المتصفح الروابط للأوامر الفردية.",
+    "layoutDescription": "احتفظ بالموضع الأصلي، أو اختر زاوية أو إعدادًا جانبيًا مسبقًا، أو قم بالتثبيت فوق مدخلات الدردشة. اسحب للتحرك، وقم بتبديل الأشرطة، وتذكر التخطيط الخاص بك.",
+    "gestureReleaseLabel": "عند إفلات الزر",
+    "seekPosition": "موضع التشغيل"
+  },
+  "fa": {
+    "edit": "ویرایش در مرورگر",
+    "editHint": "{action} را در صفحه میانبرهای مرورگر پیدا کنید. مرورگر پیوندهایی به دستورات فردی را پشتیبانی نمی کند.",
+    "layoutDescription": "مکان اصلی را نگه دارید، یک گوشه یا کناری از پیش تنظیم شده انتخاب کنید، یا بالای ورودی چت قرار بگیرید. بکشید تا حرکت کنید، میله‌ها را عوض کنید و طرح‌بندی خود را به خاطر بسپارید.",
+    "gestureReleaseLabel": "با رها کردن دکمه",
+    "seekPosition": "موقعیت پخش"
+  },
+  "he": {
+    "edit": "ערוך בדפדפן",
+    "editHint": "מצא את {action} בדף קיצורי הדרך של הדפדפן. הדפדפן אינו תומך בקישורים לפקודות בודדות.",
+    "layoutDescription": "שמור את המיקום המקורי, בחר פינה או צד מוגדר מראש, או עגן מעל קלט הצ'אט. גרור כדי לזוז, להחליף את הפסים ולזכור את הפריסה שלך.",
+    "gestureReleaseLabel": "בשחרור הכפתור",
+    "seekPosition": "מיקום ההשמעה"
+  },
+  "zh-CN": {
+    "edit": "在浏览器中编辑",
+    "editHint": "在浏览器快捷方式页面找到{action}。浏览器不支持指向单个命令的链接。",
+    "layoutDescription": "保留原始位置，选择角落或侧面预设，或停靠在聊天输入上方。拖动移动、交换栏并记住您的布局。",
+    "gestureReleaseLabel": "松开按钮",
+    "seekPosition": "播放位置"
+  },
+  "zh-TW": {
+    "edit": "在瀏覽器中編輯",
+    "editHint": "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
+    "layoutDescription": "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
+    "gestureReleaseLabel": "放開按鈕",
+    "seekPosition": "播放位置"
+  },
+  "vi": {
+    "edit": "Chỉnh sửa trong trình duyệt",
+    "editHint": "Tìm {action} trên trang phím tắt của trình duyệt. Trình duyệt không hỗ trợ liên kết đến các lệnh riêng lẻ.",
+    "layoutDescription": "Giữ nguyên vị trí ban đầu, chọn cài đặt sẵn ở một góc hoặc một bên hoặc gắn phía trên đầu vào trò chuyện. Kéo để di chuyển, hoán đổi các thanh và ghi nhớ bố cục của bạn.",
+    "gestureReleaseLabel": "Khi thả nút",
+    "seekPosition": "Vị trí phát"
+  },
+  "th": {
+    "edit": "แก้ไขในเบราว์เซอร์",
+    "editHint": "ค้นหา {action} บนหน้าทางลัดของเบราว์เซอร์ เบราว์เซอร์ไม่รองรับลิงก์ไปยังคำสั่งแต่ละคำสั่ง",
+    "layoutDescription": "คงตำแหน่งเดิมไว้ เลือกมุมหรือด้านข้างที่กำหนดไว้ล่วงหน้า หรือวางเหนือช่องแชท ลากเพื่อย้าย สลับแถบ และจดจำเค้าโครงของคุณ",
+    "gestureReleaseLabel": "เมื่อปล่อยปุ่ม",
+    "seekPosition": "ตำแหน่งการเล่น"
+  },
+  "es": {
+    "edit": "Editar en el navegador",
+    "editHint": "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
+    "layoutDescription": "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
+    "gestureReleaseLabel": "Al soltar el botón",
+    "seekPosition": "Posición de reproducción"
+  },
+  "pt-BR": {
+    "edit": "Editar no navegador",
+    "editHint": "Encontre {action} na página de atalhos do navegador. O navegador não oferece suporte a links para comandos individuais.",
+    "layoutDescription": "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
+    "gestureReleaseLabel": "Ao soltar o botão",
+    "seekPosition": "Posição da reprodução"
+  },
+  "pt-PT": {
+    "edit": "Editar no browser",
+    "editHint": "Encontre {action} na página de atalhos do browser. O navegador não suporta links para comandos individuais.",
+    "layoutDescription": "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
+    "gestureReleaseLabel": "Ao soltar o botão",
+    "seekPosition": "Posição de reprodução"
+  },
+  "ru": {
+    "edit": "Редактировать в браузере",
+    "editHint": "Найдите {action} на странице ярлыков браузера. Браузер не поддерживает ссылки на отдельные команды.",
+    "layoutDescription": "Сохраните исходное расположение, выберите угол или боковую настройку или закрепите ее над полем ввода в чате. Перетаскивайте, меняйте местами полосы и запоминайте расположение.",
+    "gestureReleaseLabel": "При отпускании кнопки",
+    "seekPosition": "Позиция воспроизведения"
+  },
+  "hi": {
+    "edit": "ब्राउज़र में संपादित करें",
+    "editHint": "ब्राउज़र शॉर्टकट पेज पर {action} ढूंढें। ब्राउज़र अलग-अलग कमांड के लिंक का समर्थन नहीं करता है।",
+    "layoutDescription": "मूल प्लेसमेंट रखें, एक कोना या साइड प्रीसेट चुनें, या चैट इनपुट के ऊपर डॉक चुनें। स्थानांतरित करने के लिए खींचें, बारों को स्वैप करें और अपना लेआउट याद रखें।",
+    "gestureReleaseLabel": "बटन छोड़ने पर",
+    "seekPosition": "प्लेबैक की स्थिति"
+  },
+  "fr": {
+    "edit": "Modifier dans le navigateur",
+    "editHint": "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
+    "layoutDescription": "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
+    "gestureReleaseLabel": "En relâchant le bouton",
+    "seekPosition": "Position de lecture"
+  },
+  "de": {
+    "edit": "Im Browser bearbeiten",
+    "editHint": "Suchen Sie {action} auf der Seite mit den Browser-Verknüpfungen. Der Browser unterstützt keine Links zu einzelnen Befehlen.",
+    "layoutDescription": "Behalten Sie die ursprüngliche Platzierung bei, wählen Sie eine Eck- oder Seitenvoreinstellung oder docken Sie oberhalb der Chat-Eingabe an. Ziehen Sie zum Verschieben, tauschen Sie die Balken aus und merken Sie sich Ihr Layout.",
+    "gestureReleaseLabel": "Beim Loslassen",
+    "seekPosition": "Wiedergabeposition"
+  },
+  "ja": {
+    "edit": "ブラウザで編集する",
+    "editHint": "ブラウザのショートカット ページで {action} を見つけます。ブラウザは、個々のコマンドへのリンクをサポートしていません。",
+    "layoutDescription": "元の配置を維持し、コーナーまたはサイドのプリセットを選択するか、チャット入力の上にドッキングします。ドラッグして移動したり、バーを交換したりして、レイアウトを記憶します。",
+    "gestureReleaseLabel": "ボタンを離すと",
+    "seekPosition": "再生位置"
+  },
+  "ko": {
+    "edit": "브라우저에서 편집",
+    "editHint": "브라우저 바로가기 페이지에서 {action}를 찾으세요. 브라우저는 개별 명령에 대한 링크를 지원하지 않습니다.",
+    "layoutDescription": "원래 배치를 유지하고, 모서리나 측면 사전 설정을 선택하거나, 채팅 입력 위에 고정하세요. 드래그하여 이동하고, 막대를 바꾸고, 레이아웃을 기억하세요.",
+    "gestureReleaseLabel": "버튼을 놓으면",
+    "seekPosition": "재생 위치"
+  },
+  "id": {
+    "edit": "Sunting di peramban",
+    "editHint": "Temukan {action} di halaman pintasan browser. Browser tidak mendukung tautan ke perintah individual.",
+    "layoutDescription": "Pertahankan penempatan aslinya, pilih preset sudut atau samping, atau dok di atas masukan obrolan. Seret untuk memindahkan, tukar bilah, dan ingat tata letak Anda.",
+    "gestureReleaseLabel": "Saat tombol dilepas",
+    "seekPosition": "Posisi pemutaran"
+  },
+  "it": {
+    "edit": "Modifica nel browser",
+    "editHint": "Trova {action} nella pagina delle scorciatoie del browser. Il browser non supporta collegamenti a singoli comandi.",
+    "layoutDescription": "Mantieni la posizione originale, scegli un angolo o un lato preimpostato oppure aggancialo sopra l'input della chat. Trascina per spostare, scambia le barre e ricorda il layout.",
+    "gestureReleaseLabel": "Al rilascio del pulsante",
+    "seekPosition": "Posizione di riproduzione"
+  },
+  "tr": {
+    "edit": "Tarayıcıda düzenle",
+    "editHint": "Tarayıcı kısayolları sayfasında {action}'yu bulun. Tarayıcı, bireysel komutlara olan bağlantıları desteklemez.",
+    "layoutDescription": "Orijinal yerleşimi koruyun, bir köşe veya yan ön ayar seçin veya sohbet girişinin üzerine sabitleyin. Taşımak, çubukları değiştirmek ve düzeninizi hatırlamak için sürükleyin.",
+    "gestureReleaseLabel": "Düğmeyi bıraktığınızda",
+    "seekPosition": "Oynatma konumu"
+  },
+  "pl": {
+    "edit": "Edytuj w przeglądarce",
+    "editHint": "Znajdź {action} na stronie skrótów przeglądarki. Przeglądarka nie obsługuje odnośników do poszczególnych poleceń.",
+    "layoutDescription": "Zachowaj oryginalne położenie, wybierz róg lub bok ekranu albo umieść odtwarzacz nad polem wiadomości. Przeciągaj i zamieniaj paski — rozszerzenie zapamięta układ.",
+    "gestureReleaseLabel": "Po zwolnieniu przycisku",
+    "seekPosition": "Pozycja odtwarzania"
+  },
+  "hu": {
+    "edit": "Szerkesztés a böngészőben",
+    "editHint": "Keresse meg a {action} elemet a böngésző parancsikonok oldalán. A böngésző nem támogatja az egyes parancsokra mutató hivatkozásokat.",
+    "layoutDescription": "Tartsa meg az eredeti elhelyezést, válasszon egy sarok vagy oldal előre beállított értéket, vagy dokkoljon a csevegés bemenete fölé. Húzza a mozgatáshoz, cserélje fel a sávokat, és emlékezzen az elrendezésre.",
+    "gestureReleaseLabel": "A gomb felengedésekor",
+    "seekPosition": "Lejátszási pozíció"
+  },
+  "sv": {
+    "edit": "Redigera i webbläsaren",
+    "editHint": "Hitta {action} på webbläsarens genvägssida. Webbläsaren stöder inte länkar till enskilda kommandon.",
+    "layoutDescription": "Behåll den ursprungliga placeringen, välj ett hörn eller en sida, eller docka ovanför meddelandefältet. Dra för att flytta och byta plats på fälten. Tillägget sparar din layout.",
+    "gestureReleaseLabel": "När du släpper knappen",
+    "seekPosition": "Uppspelningsposition"
+  },
+  "cs": {
+    "edit": "Upravit v prohlížeči",
+    "editHint": "Najděte {action} na stránce zástupců prohlížeče. Prohlížeč nepodporuje odkazy na jednotlivé příkazy.",
+    "layoutDescription": "Ponechte původní umístění, vyberte přednastavení rohu nebo strany nebo ukotvete nad vstupem chatu. Přetažením se můžete pohybovat, vyměňovat pruhy a pamatovat si rozvržení.",
+    "gestureReleaseLabel": "Po uvolnění tlačítka",
+    "seekPosition": "Pozice přehrávání"
+  },
+  "uk": {
+    "edit": "Редагувати в браузері",
+    "editHint": "Знайдіть {action} на сторінці ярликів браузера. Браузер не підтримує посилання на окремі команди.",
+    "layoutDescription": "Збережіть вихідне розташування, виберіть кут або бічні налаштування або закріпіть над введенням чату. Перетягуйте, щоб рухатися, міняйте смужки місцями та запам’ятовуйте свій макет.",
+    "gestureReleaseLabel": "Після відпускання кнопки",
+    "seekPosition": "Позиція відтворення"
+  },
+  "ca": {
+    "edit": "Edita al navegador",
+    "editHint": "Cerqueu {action} a la pàgina de dreceres del navegador. El navegador no admet enllaços a ordres individuals.",
+    "layoutDescription": "Manteniu la ubicació original, trieu una cantonada o un lateral preestablert, o acopleu-lo a sobre de l'entrada del xat. Arrossegueu per moure's, intercanvieu les barres i recordeu la vostra disposició.",
+    "gestureReleaseLabel": "En deixar anar el botó",
+    "seekPosition": "Posició de reproducció"
+  },
+  "el": {
+    "edit": "Επεξεργασία στο πρόγραμμα περιήγησης",
+    "editHint": "Βρείτε το {action} στη σελίδα συντομεύσεων του προγράμματος περιήγησης. Το πρόγραμμα περιήγησης δεν υποστηρίζει συνδέσμους με μεμονωμένες εντολές.",
+    "layoutDescription": "Διατηρήστε την αρχική τοποθέτηση, επιλέξτε μια γωνιακή ή πλευρική προεπιλογή ή συνδέστε πάνω από την είσοδο συνομιλίας. Σύρετε για να μετακινηθείτε, αλλάξτε τις γραμμές και θυμηθείτε τη διάταξή σας.",
+    "gestureReleaseLabel": "Όταν αφήσετε το κουμπί",
+    "seekPosition": "Θέση αναπαραγωγής"
+  },
+  "ro": {
+    "edit": "Editați în browser",
+    "editHint": "Găsiți {action} pe pagina de comenzi rapide ale browserului. Browserul nu acceptă link-uri către comenzi individuale.",
+    "layoutDescription": "Păstrați poziția inițială, alegeți un colț sau o latură a ecranului ori andocați playerul deasupra câmpului de mesaj. Trageți pentru a muta barele sau a le schimba ordinea. Extensia reține aranjamentul.",
+    "gestureReleaseLabel": "La eliberarea butonului",
+    "seekPosition": "Poziția redării"
+  },
+  "nb": {
+    "edit": "Rediger i nettleseren",
+    "editHint": "Finn {action} på snarveisiden for nettleseren. Nettleseren støtter ikke lenker til individuelle kommandoer.",
+    "layoutDescription": "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
+    "gestureReleaseLabel": "Når du slipper knappen",
+    "seekPosition": "Avspillingsposisjon"
+  }
+}

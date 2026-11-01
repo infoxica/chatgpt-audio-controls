@@ -313,7 +313,7 @@ body {
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -324,13 +324,14 @@ body {
 
 /* Cards & Sections */
 .section-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  padding: 0 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .section-title {
@@ -615,6 +616,22 @@ input:checked + .slider-toggle:before {
 .footer-links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
 .feedback-link { color: var(--accent); display: inline-block; padding: 8px 0; }
 
-.theme-select { max-width: 110px; padding: 7px 5px; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); background: var(--bg-surface); font: inherit; font-size: 12px; cursor: pointer; }
-.theme-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.sidebar-footer .theme-select { max-width: none; width: 100%; }
+
+html { max-width: 100%; }
+body { width: 360px; max-width: 100vw; min-height: 0; max-height: none; }
+.popup-header, .header-actions, .popup-footer { flex-wrap: wrap; }
+.tabs-nav { flex-wrap: wrap; }
+.tab-btn { min-width: 0; white-space: normal; overflow-wrap: break-word; }
+.section-card, .toggle-info { min-width: 0; }
+.toggle-row { gap: 12px; }
+.toggle-label, .toggle-desc { overflow-wrap: break-word; }
+.switch { flex-shrink: 0; }
+@media (pointer: coarse), (max-width: 359px) {
+ button, select, .speed-chip, .icon-button { min-height: 44px; }
+ .icon-button { min-width: 44px; }
+ .speed-grid { grid-template-columns: repeat(auto-fit, minmax(52px, 1fr)); }
+ .popup-body { padding: 12px; }
+ .header-actions { gap: 4px; }
+}
+
+html[data-surface="toolbar-popup"], html[data-surface="toolbar-popup"] body { width:360px; min-width:360px; max-width:360px; }

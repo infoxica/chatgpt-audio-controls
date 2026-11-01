@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Redare/Pauză"
+  },
+  "command_seek_back": {
+    "message": "Derulați înapoi"
+  },
+  "command_seek_forward": {
+    "message": "Derulați înainte"
+  },
+  "command_speed_decrease": {
+    "message": "Scade viteza"
+  },
+  "command_speed_increase": {
+    "message": "Măriți viteza"
+  },
+  "command_speed_reset": {
+    "message": "Resetați viteza la 1×"
+  },
+  "command_volume_increase": {
+    "message": "Măriți volumul"
+  },
+  "command_volume_decrease": {
+    "message": "Scade volumul"
+  },
+  "command_toggle_mute": {
+    "message": "Dezactivați / activați sunetul"
+  },
+  "command_download_audio": {
+    "message": "Descărcați audio"
+  },
+  "command_toggle_collapse": {
+    "message": "Restrânge playerul / Extindeți ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Resetați aspectul"
+  },
+  "command_open_help": {
+    "message": "Comenzi rapide și gesturi de la tastatură"
+  },
+  "command_open_settings": {
+    "message": "Deschideți Tabloul de bord și setări"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Citiți cu voce tare"
+  },
+  "extensionDescription": {
+    "message": "Comenzi audio ChatGPT: pauză, derulare, viteză, volum, descărcări și comenzi rapide."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Afișează / ascunde comenzile plutitoare"
+  }
+}

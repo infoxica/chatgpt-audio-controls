@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Odtwórz/Wstrzymaj"
+  },
+  "command_seek_back": {
+    "message": "Przewiń wstecz"
+  },
+  "command_seek_forward": {
+    "message": "Przewiń do przodu"
+  },
+  "command_speed_decrease": {
+    "message": "Zmniejsz prędkość"
+  },
+  "command_speed_increase": {
+    "message": "Zwiększ prędkość"
+  },
+  "command_speed_reset": {
+    "message": "Zresetuj prędkość do 1×"
+  },
+  "command_volume_increase": {
+    "message": "Zwiększ głośność"
+  },
+  "command_volume_decrease": {
+    "message": "Zmniejsz głośność"
+  },
+  "command_toggle_mute": {
+    "message": "Wycisz / wyłącz wyciszenie"
+  },
+  "command_download_audio": {
+    "message": "Pobierz dźwięk"
+  },
+  "command_toggle_collapse": {
+    "message": "Zwiń odtwarzacz / Rozwiń ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Zresetuj układ"
+  },
+  "command_open_help": {
+    "message": "Skróty klawiaturowe i gesty"
+  },
+  "command_open_settings": {
+    "message": "Otwórz Panel i Ustawienia"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Przeczytaj na głos"
+  },
+  "extensionDescription": {
+    "message": "Sterowanie dźwiękiem ChatGPT: pauza, przewijanie, prędkość, głośność, pobieranie i skróty."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Pokaż/ukryj pływające elementy sterujące"
+  }
+}

@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "Воспроизведение / Пауза"
+  },
+  "command_seek_back": {
+    "message": "Перемотать назад"
+  },
+  "command_seek_forward": {
+    "message": "Перемотать вперёд"
+  },
+  "command_speed_decrease": {
+    "message": "Уменьшить скорость"
+  },
+  "command_speed_increase": {
+    "message": "Увеличить скорость"
+  },
+  "command_speed_reset": {
+    "message": "Сбросить скорость до 1×"
+  },
+  "command_volume_increase": {
+    "message": "Увеличить громкость"
+  },
+  "command_volume_decrease": {
+    "message": "Уменьшить громкость"
+  },
+  "command_toggle_mute": {
+    "message": "Выключить / включить звук"
+  },
+  "command_download_audio": {
+    "message": "Скачать аудио"
+  },
+  "command_toggle_collapse": {
+    "message": "Свернуть плеер / Развернуть ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Сбросить расположение"
+  },
+  "command_open_help": {
+    "message": "Горячие клавиши и жесты"
+  },
+  "command_open_settings": {
+    "message": "Открыть настройки и панель"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls & Read Aloud"
   },

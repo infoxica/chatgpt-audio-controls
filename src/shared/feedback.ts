@@ -10,11 +10,12 @@ export function validFeedbackURL(value: string): boolean {
       && url.pathname === '/feedback' && !url.search && !url.hash;
   } catch { return false; }
 }
-export function feedbackURL(language: string, source: 'installed' | 'uninstall', os?: string, theme: 'system' | 'light' | 'dark' = 'system'): string {
+export function feedbackURL(language: string, source: 'installed' | 'uninstall', os?: string, theme: 'system' | 'light' | 'dark' = 'system', intent?: 'bug' | 'suggestion'): string {
   if (!validFeedbackURL(config.feedbackUrl)) return '';
   const url = new URL(config.feedbackUrl);
   const ua = typeof navigator === 'undefined' ? '' : navigator.userAgent;
   url.searchParams.set('source', source);
+  if (source === 'installed' && (intent === 'bug' || intent === 'suggestion')) url.searchParams.set('intent', intent);
   url.searchParams.set('theme', theme);
   url.searchParams.set('lang', resolveLanguage(language));
   url.searchParams.set('version', EXTENSION_VERSION);

@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "Oynat / Duraklat"
+  },
+  "command_seek_back": {
+    "message": "Geri sar"
+  },
+  "command_seek_forward": {
+    "message": "İleri sar"
+  },
+  "command_speed_decrease": {
+    "message": "Hızı azalt"
+  },
+  "command_speed_increase": {
+    "message": "Hızı artır"
+  },
+  "command_speed_reset": {
+    "message": "Hızı 1× olarak sıfırla"
+  },
+  "command_volume_increase": {
+    "message": "Sesi artır"
+  },
+  "command_volume_decrease": {
+    "message": "Sesi azalt"
+  },
+  "command_toggle_mute": {
+    "message": "Sesi kapat / aç"
+  },
+  "command_download_audio": {
+    "message": "Sesi indir"
+  },
+  "command_toggle_collapse": {
+    "message": "Oynatıcıyı daralt / ChatGPT Audio Controls’ü genişlet"
+  },
+  "command_reset_layout": {
+    "message": "Düzeni sıfırla"
+  },
+  "command_open_help": {
+    "message": "Kısayollar ve hareketler"
+  },
+  "command_open_settings": {
+    "message": "Paneli ve ayarları aç"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls — Sesli oku"
   },

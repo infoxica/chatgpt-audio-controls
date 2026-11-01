@@ -276,6 +276,11 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--border-color);
 }
 
+.header-title-block {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .header-title-block h1 {
   font-size: 24px;
   font-weight: 800;
@@ -293,7 +298,7 @@ h1, h2, h3, h4, h5, h6 {
 .settings-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   animation: fadeIn 0.25s ease-out;
 }
 
@@ -303,13 +308,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 22px 24px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  padding: 0 0 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   color: var(--text-primary);
 }
 
@@ -472,6 +478,19 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffffff !important;
 }
 
-.theme-select { max-width: 110px; padding: 7px 5px; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); background: var(--bg-surface); font: inherit; font-size: 12px; cursor: pointer; }
-.theme-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.sidebar-footer .theme-select { max-width: none; width: 100%; }
+
+.dashboard-main { min-width: 0; width: 100%; }
+.dashboard-sidebar { flex-shrink: 0; border-right: 0; border-inline-end: 1px solid var(--border-color); overflow-y: auto; }
+.sidebar-link { text-align: start; }
+@media (max-width: 767px) {
+ .dashboard-layout { flex-direction: column; }
+ .dashboard-sidebar { width: 100%; height: auto; position: static; padding: 16px; border-inline-end: 0; border-bottom: 1px solid var(--border-color); overflow: visible; }
+ .sidebar-menu { flex-direction: row; flex-wrap: wrap; }
+ .sidebar-link { flex: 1 1 130px; }
+ .sidebar-footer { flex-direction: row; flex-wrap: wrap; margin-top: 16px; }
+ .sidebar-footer > * { flex: 1 1 120px; min-width: 0; }
+ .dashboard-main { padding: 20px 12px; gap: 20px; }
+ .card { padding: 0 0 24px; min-width: 0; }
+ h1 { font-size: 24px; }
+ button, select { min-height: 44px; white-space: normal; }
+}

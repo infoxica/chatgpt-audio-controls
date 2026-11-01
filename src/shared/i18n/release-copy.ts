@@ -1,3 +1,5 @@
+import { expandedRelease } from './expanded-release';
+import audienceRelease from './audience-release.json';
 import { resolveLanguage } from './core';
 import translated from './release-locales.json';
 
@@ -78,7 +80,12 @@ export const releaseEnglish = {
   website: 'Official website',
 };
 export type ReleaseCopy = { [K in keyof typeof releaseEnglish]: string };
-export const releaseLocales: Record<string, ReleaseCopy> = { en: releaseEnglish, ...translated };
+const expanded = Object.fromEntries(Object.entries(expandedRelease).map(([code, values]) => {
+  const keys = Object.keys(releaseEnglish);
+  if (values.length !== keys.length || values.some(v => !v.trim())) throw new Error(`Incomplete release locale ${code}: ${values.length}/${keys.length}`);
+  return [code, Object.fromEntries(keys.map((key, i) => [key, values[i]])) as ReleaseCopy];
+}));
+export const releaseLocales: Record<string, ReleaseCopy> = { en: releaseEnglish, ...translated, ...expanded, ...audienceRelease };
 export function getReleaseCopy(language?: string): ReleaseCopy {
   return releaseLocales[resolveLanguage(language)] || releaseEnglish;
 }

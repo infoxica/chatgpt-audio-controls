@@ -12,6 +12,14 @@ Speed, volume, shortcuts, language, theme and visibility preferences use browser
 
 The extension requests `storage` for preferences and ChatGPT site access for its player. It adds no duplicate response button.
 
+## Optional reviews and contributions
+
+The extension keeps an aggregate listening-use count and review/support reminder preferences on this device only. A use qualifies after 20 seconds of advancing playback, or natural completion of a shorter clip. The local record contains the count, whether reminders are enabled, request/dismissal status, and scheduling times and thresholds. It is not synced or sent to us. Temporary session deduplication uses in-memory browser session storage and is cleared by the browser; it is not an installation or account identifier. The userscript uses local storage and browser locks instead.
+
+You can turn off automatic requests with **Show review and support reminders**, dismiss each request permanently, or choose one later reminder. Resetting playback or layout preferences does not reset those choices. No conversation text, audio, chat addresses, browsing history, or individual listening-session history is stored for these reminders.
+
+Donation and review buttons open GitHub Sponsors or the relevant browser store only when you choose them. GitHub handles the payment and its own account/billing information; this extension does not process payments or learn whether you donated or submitted a review. Opening a link only retires the corresponding automatic request. Privacy protections and all features remain available regardless of contributions. These links add no extension telemetry or new website analytics events.
+
 ## Voluntary feedback
 
 The popup About tab and settings dashboard link to [our feedback form](https://chatgpt-audio-controls.infoxica.com/feedback), hosted on a Cloudflare Worker. Uninstall opens the same form in uninstall mode. Opening, skipping, or closing it creates no feedback record. Sending is optional and requires an explicit action. The form stores your appearance choice locally in your browser; it follows your system theme unless you choose Light or Dark.

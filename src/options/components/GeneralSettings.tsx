@@ -1,3 +1,4 @@
+import { LayoutSettings, DownloadNotificationSettings } from '../../shared/LayoutSettings';
 import { VisibilitySettings } from "../../shared/VisibilitySettings";
 import React from "react";
 import { platformKeys } from '../../shared/shortcuts';
@@ -23,7 +24,9 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
 
   return (
     <div className="settings-section">
-      <VisibilitySettings settings={settings} onUpdateSettings={onUpdateSettings} />
+      <VisibilitySettings surface="dashboard" settings={settings} onUpdateSettings={onUpdateSettings} />
+      <DownloadNotificationSettings surface="dashboard" settings={settings} onUpdateSettings={onUpdateSettings} />
+      <LayoutSettings surface="dashboard" language={settings.language} />
       {/* Language & Localization */}
       <div className="card">
         <div className="card-title">
@@ -34,7 +37,7 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
           {t.options.general.languageDesc}
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 8, marginTop: 8 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(180px, 100%), 1fr))", gap: 8, marginTop: 8 }}>
           {SUPPORTED_LANGUAGES.map((lang) => {
             const isSelected = currentLang === lang.code;
             const isAuto = lang.code === "auto";
@@ -52,7 +55,7 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
                   justifyContent: "space-between",
                   padding: "10px 12px",
                   height: "auto",
-                  textAlign: "left",
+                  textAlign: "start",
                 }}
               >
                 <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -138,7 +141,7 @@ export const GeneralSettings: React.FC<GeneralSettingsProps> = ({
           {platformKeys(t.options.general.seekDesc)}
         </p>
 
-        <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 4 }}>
           {[5, 10, 15, 30].map((sec) => (
             <button
               key={sec}

@@ -4,118 +4,230 @@
     "reviewBody": "An honest review helps others decide whether this extension is right for them—and helps us know what to improve. A few words about your experience can make a difference.",
     "reviewLink": "Review on {store}",
     "reviewHint": "Choose the store you installed from. You may need to sign in; on Microsoft Edge, open the Reviews section.",
-    "userscriptNote": "The userscript has its own feature set; new extension features may not be available there."
+    "userscriptNote": "The extension and userscript share player, layout and language features. Browser-assigned shortcuts require the desktop extension."
   },
   "zh-CN": {
     "reviewTitle": "喜欢这样的聆听体验吗？",
     "reviewBody": "真实的评价能帮助他人判断这款扩展是否适合自己，也能让我们知道该改进什么。简单分享你的使用体验，就能带来帮助。",
     "reviewLink": "在 {store} 上评价",
     "reviewHint": "请选择安装时使用的商店。可能需要登录；在 Microsoft Edge 中请打开评论区域。",
-    "userscriptNote": "用户脚本有自己的功能范围，可能尚未支持扩展中的新功能。"
+    "userscriptNote": "扩展和用户脚本共用播放器、布局和语言功能。浏览器快捷键分配需要桌面扩展。"
   },
   "zh-TW": {
     "reviewTitle": "喜歡這樣的聆聽體驗嗎？",
     "reviewBody": "真實的評價能幫助他人判斷這款擴充功能是否適合自己，也能讓我們知道該改進什麼。簡單分享你的使用體驗，就能帶來幫助。",
     "reviewLink": "在 {store} 上評價",
     "reviewHint": "請選擇安裝時使用的商店。可能需要登入；在 Microsoft Edge 中請開啟評論區域。",
-    "userscriptNote": "使用者腳本有自己的功能範圍，可能尚未支援擴充功能中的新功能。"
+    "userscriptNote": "擴充功能與使用者腳本共用播放器、配置和語言功能。瀏覽器快速鍵指派需要桌面擴充功能。"
   },
   "vi": {
     "reviewTitle": "Bạn thích trải nghiệm nghe này chứ?",
     "reviewBody": "Đánh giá chân thực giúp người khác quyết định tiện ích có phù hợp với họ không, đồng thời cho chúng tôi biết cần cải thiện gì. Vài dòng về trải nghiệm của bạn cũng rất hữu ích.",
     "reviewLink": "Đánh giá trên {store}",
     "reviewHint": "Chọn cửa hàng bạn đã cài từ đó. Bạn có thể cần đăng nhập; trên Microsoft Edge, mở phần Đánh giá.",
-    "userscriptNote": "Userscript có bộ tính năng riêng; các tính năng mới của tiện ích có thể chưa có ở đó."
+    "userscriptNote": "Tiện ích và userscript dùng chung trình phát, bố cục và ngôn ngữ. Gán phím tắt trình duyệt cần tiện ích máy tính."
   },
   "th": {
     "reviewTitle": "ชอบประสบการณ์การฟังนี้ไหม?",
     "reviewBody": "รีวิวตามจริงช่วยให้ผู้อื่นตัดสินใจว่าส่วนขยายนี้เหมาะกับตนเองหรือไม่ และช่วยให้เรารู้ว่าควรปรับปรุงอะไร การเล่าประสบการณ์สั้น ๆ ของคุณก็มีประโยชน์มาก",
     "reviewLink": "เขียนรีวิวบน {store}",
     "reviewHint": "เลือกร้านค้าที่คุณติดตั้ง อาจต้องลงชื่อเข้าใช้ สำหรับ Microsoft Edge ให้เปิดส่วนรีวิว",
-    "userscriptNote": "Userscript มีชุดฟีเจอร์ของตนเอง ฟีเจอร์ใหม่ของส่วนขยายอาจยังไม่มีในสคริปต์"
+    "userscriptNote": "ส่วนขยายและสคริปต์ใช้เครื่องเล่น เค้าโครง และภาษาร่วมกัน การกำหนดแป้นลัดเบราว์เซอร์ต้องใช้ส่วนขยายเดสก์ท็อป"
   },
   "es": {
     "reviewTitle": "¿Disfrutas de la experiencia de escucha?",
     "reviewBody": "Una reseña sincera ayuda a otros a decidir si esta extensión les conviene y nos indica qué mejorar. Unas palabras sobre tu experiencia pueden marcar la diferencia.",
     "reviewLink": "Escribir una reseña en {store}",
     "reviewHint": "Elige la tienda desde la que instalaste la extensión. Puede que debas iniciar sesión; en Microsoft Edge, abre la sección de reseñas.",
-    "userscriptNote": "El userscript tiene sus propias funciones; las novedades de la extensión pueden no estar disponibles allí."
+    "userscriptNote": "La extensión y el userscript comparten reproductor, diseño e idiomas. Los atajos asignados por el navegador requieren la extensión de escritorio."
   },
   "pt-BR": {
     "reviewTitle": "Está gostando de ouvir?",
     "reviewBody": "Uma avaliação sincera ajuda outras pessoas a decidir se a extensão é útil para elas e mostra o que podemos melhorar. Algumas palavras sobre sua experiência fazem a diferença.",
     "reviewLink": "Avaliar na {store}",
     "reviewHint": "Escolha a loja de onde instalou a extensão. Talvez seja necessário entrar na sua conta; no Microsoft Edge, abra a seção de avaliações.",
-    "userscriptNote": "O userscript tem seus próprios recursos; as novidades da extensão podem não estar disponíveis nele."
+    "userscriptNote": "A extensão e o userscript compartilham player, layout e idiomas. Atalhos atribuídos pelo navegador exigem a extensão para desktop."
   },
   "pt-PT": {
     "reviewTitle": "Está a gostar de ouvir?",
     "reviewBody": "Uma avaliação sincera ajuda outras pessoas a decidir se a extensão lhes é útil e mostra o que podemos melhorar. Algumas palavras sobre a sua experiência fazem a diferença.",
     "reviewLink": "Avaliar na {store}",
     "reviewHint": "Escolha a loja de onde instalou a extensão. Poderá ter de iniciar sessão; no Microsoft Edge, abra a secção de avaliações.",
-    "userscriptNote": "O userscript tem as suas próprias funcionalidades; as novidades da extensão podem não estar disponíveis nele."
+    "userscriptNote": "A extensão e o userscript partilham leitor, disposição e idiomas. Os atalhos atribuídos pelo navegador exigem a extensão de computador."
   },
   "ru": {
     "reviewTitle": "Нравится слушать с удобством?",
     "reviewBody": "Честный отзыв поможет другим решить, подходит ли им расширение, а нам — понять, что улучшить. Даже несколько слов о вашем опыте будут полезны.",
     "reviewLink": "Оставить отзыв в {store}",
     "reviewHint": "Выберите магазин, из которого установили расширение. Возможно, потребуется вход; в Microsoft Edge откройте раздел отзывов.",
-    "userscriptNote": "У пользовательского скрипта свой набор возможностей; новые функции расширения могут быть в нём недоступны."
+    "userscriptNote": "Расширение и userscript используют общий плеер, настройки расположения и языки. Назначение сочетаний клавиш браузера требует расширения для компьютера."
   },
   "hi": {
     "reviewTitle": "सुनने का अनुभव पसंद आ रहा है?",
     "reviewBody": "आपकी ईमानदार समीक्षा दूसरों को तय करने में मदद करती है कि यह एक्सटेंशन उनके लिए सही है या नहीं, और हमें सुधार की दिशा बताती है। अपने अनुभव के बारे में कुछ शब्द भी उपयोगी हैं।",
     "reviewLink": "{store} पर समीक्षा लिखें",
     "reviewHint": "वह स्टोर चुनें जहाँ से आपने इंस्टॉल किया था। साइन इन करना पड़ सकता है; Microsoft Edge पर समीक्षाओं वाला भाग खोलें।",
-    "userscriptNote": "Userscript की सुविधाएँ अलग हैं; एक्सटेंशन की नई सुविधाएँ उसमें उपलब्ध नहीं भी हो सकती हैं।"
+    "userscriptNote": "एक्सटेंशन और यूज़रस्क्रिप्ट में प्लेयर, विन्यास और भाषाएँ साझा हैं। ब्राउज़र शॉर्टकट तय करने के लिए डेस्कटॉप एक्सटेंशन चाहिए।"
   },
   "fr": {
     "reviewTitle": "Vous appréciez l’écoute ?",
     "reviewBody": "Un avis sincère aide les autres à savoir si cette extension leur convient et nous indique quoi améliorer. Quelques mots sur votre expérience peuvent faire la différence.",
     "reviewLink": "Donner un avis sur {store}",
     "reviewHint": "Choisissez la boutique utilisée pour l’installation. Une connexion peut être nécessaire ; sur Microsoft Edge, ouvrez la section des avis.",
-    "userscriptNote": "Le userscript possède ses propres fonctionnalités ; les nouveautés de l’extension peuvent ne pas y être disponibles."
+    "userscriptNote": "L’extension et le userscript partagent le lecteur, la disposition et les langues. Les raccourcis attribués par le navigateur nécessitent l’extension de bureau."
   },
   "de": {
     "reviewTitle": "Gefällt dir das Hörerlebnis?",
     "reviewBody": "Eine ehrliche Bewertung hilft anderen bei der Entscheidung und zeigt uns, was wir verbessern können. Ein paar Worte über deine Erfahrung können viel bewirken.",
     "reviewLink": "Auf {store} bewerten",
     "reviewHint": "Wähle den Store, aus dem du die Erweiterung installiert hast. Eine Anmeldung kann nötig sein; öffne bei Microsoft Edge den Bewertungsbereich.",
-    "userscriptNote": "Das Userscript hat einen eigenen Funktionsumfang; neue Erweiterungsfunktionen sind dort möglicherweise nicht verfügbar."
+    "userscriptNote": "Erweiterung und Userscript teilen Player, Layout und Sprachen. Vom Browser zugewiesene Tastenkürzel erfordern die Desktop-Erweiterung."
   },
   "ja": {
     "reviewTitle": "快適に聴けていますか？",
     "reviewBody": "率直なレビューは、この拡張機能が自分に合うかを判断する助けになり、私たちにも改善点を教えてくれます。短い感想でも役立ちます。",
     "reviewLink": "{store} でレビューする",
     "reviewHint": "インストールしたストアを選んでください。ログインが必要な場合があります。Microsoft Edge ではレビュー欄を開いてください。",
-    "userscriptNote": "ユーザースクリプトの機能は拡張機能と異なり、新機能が使えない場合があります。"
+    "userscriptNote": "拡張機能とユーザースクリプトはプレーヤー、配置、言語を共有します。ブラウザーのショートカット割り当てにはデスクトップ拡張機能が必要です。"
   },
   "ko": {
     "reviewTitle": "편하게 듣고 계신가요?",
     "reviewBody": "솔직한 리뷰는 다른 사람들이 이 확장 프로그램이 자신에게 맞는지 판단하고, 저희가 개선할 점을 찾는 데 도움이 됩니다. 짧은 경험담도 큰 도움이 됩니다.",
     "reviewLink": "{store}에서 리뷰 작성",
     "reviewHint": "설치한 스토어를 선택하세요. 로그인이 필요할 수 있습니다. Microsoft Edge에서는 리뷰 섹션을 열어 주세요.",
-    "userscriptNote": "사용자 스크립트는 별도의 기능을 제공하며, 확장 프로그램의 새 기능이 없을 수 있습니다."
+    "userscriptNote": "확장 프로그램과 유저스크립트는 플레이어, 배치 및 언어를 공유합니다. 브라우저 단축키 지정에는 데스크톱 확장 프로그램이 필요합니다."
   },
   "id": {
     "reviewTitle": "Menikmati pengalaman mendengarkan?",
     "reviewBody": "Ulasan jujur membantu orang lain memutuskan apakah ekstensi ini cocok untuk mereka, sekaligus memberi tahu kami apa yang perlu ditingkatkan. Beberapa kata tentang pengalaman Anda sangat berarti.",
     "reviewLink": "Beri ulasan di {store}",
     "reviewHint": "Pilih toko tempat Anda memasang ekstensi. Anda mungkin perlu masuk; di Microsoft Edge, buka bagian ulasan.",
-    "userscriptNote": "Userscript memiliki fitur tersendiri; fitur baru ekstensi mungkin belum tersedia di sana."
+    "userscriptNote": "Ekstensi dan userscript berbagi pemutar, tata letak, dan bahasa. Pintasan yang ditetapkan browser memerlukan ekstensi desktop."
   },
   "it": {
     "reviewTitle": "Ti piace ascoltare così?",
     "reviewBody": "Una recensione sincera aiuta gli altri a capire se l’estensione fa per loro e ci indica cosa migliorare. Bastano poche parole sulla tua esperienza per fare la differenza.",
     "reviewLink": "Scrivi una recensione su {store}",
     "reviewHint": "Scegli lo store da cui hai installato l’estensione. Potrebbe essere necessario accedere; su Microsoft Edge, apri la sezione delle recensioni.",
-    "userscriptNote": "Lo userscript ha funzionalità proprie; le novità dell’estensione potrebbero non essere disponibili lì."
+    "userscriptNote": "L’estensione e lo userscript condividono lettore, disposizione e lingue. Le scorciatoie assegnate dal browser richiedono l’estensione desktop."
   },
   "tr": {
     "reviewTitle": "Dinleme deneyimini beğendiniz mi?",
     "reviewBody": "Dürüst bir değerlendirme, başkalarının bu uzantının kendilerine uygun olup olmadığına karar vermesine ve bizim neleri iyileştireceğimizi öğrenmemize yardımcı olur. Deneyiminizle ilgili birkaç söz bile değerlidir.",
     "reviewLink": "{store} üzerinde değerlendirin",
     "reviewHint": "Uzantıyı yüklediğiniz mağazayı seçin. Oturum açmanız gerekebilir; Microsoft Edge’de değerlendirmeler bölümünü açın.",
-    "userscriptNote": "Kullanıcı betiğinin özellikleri ayrıdır; uzantının yeni özellikleri orada bulunmayabilir."
+    "userscriptNote": "Uzantı ve kullanıcı betiği oynatıcı, düzen ve dilleri paylaşır. Tarayıcı kısayolu atamak için masaüstü uzantısı gerekir."
+  },
+  "bn": {
+    "reviewTitle": "শুনে ভালো লাগছে?",
+    "reviewBody": "আপনার সৎ পর্যালোচনা অন্যদের সিদ্ধান্ত নিতে ও আমাদের উন্নতি করতে সাহায্য করে। অভিজ্ঞতা সম্পর্কে কয়েকটি কথা লিখুন।",
+    "reviewLink": "{store}-এ পর্যালোচনা দিন",
+    "reviewHint": "যে স্টোর থেকে ইনস্টল করেছেন সেটি বাছুন। সাইন ইন লাগতে পারে; Edge-এ Reviews খুলুন।",
+    "userscriptNote": "এক্সটেনশন ও ইউজারস্ক্রিপ্ট একই প্লেয়ার কোড ব্যবহার করে। ব্রাউজার শর্টকাট নির্ধারণের জন্য এক্সটেনশন প্রয়োজন।"
+  },
+  "mr": {
+    "reviewTitle": "ऐकताना आनंद मिळतोय?",
+    "reviewBody": "प्रामाणिक पुनरावलोकन इतरांना निर्णय घेण्यास व आम्हाला सुधारण्यास मदत करते. अनुभवाबद्दल काही शब्द लिहा.",
+    "reviewLink": "{store} वर पुनरावलोकन करा",
+    "reviewHint": "ज्या स्टोअरमधून स्थापित केले ते निवडा. साइन इन लागू शकते; Edge मध्ये Reviews उघडा.",
+    "userscriptNote": "विस्तार व यूजरस्क्रिप्ट एकच प्लेयर कोड वापरतात. ब्राउझर शॉर्टकट नेमण्यासाठी विस्तार आवश्यक आहे."
+  },
+  "te": {
+    "reviewTitle": "వినడం నచ్చిందా?",
+    "reviewBody": "మీ నిజాయితీ సమీక్ష ఇతరులు నిర్ణయించుకోవడానికి, మేము మెరుగుపరచడానికి సహాయపడుతుంది. మీ అనుభవం గురించి కొన్ని మాటలు రాయండి.",
+    "reviewLink": "{store}లో సమీక్షించండి",
+    "reviewHint": "ఇన్‌స్టాల్ చేసిన స్టోర్ ఎంచుకోండి. సైన్ ఇన్ అవసరం కావచ్చు; Edgeలో Reviews తెరవండి.",
+    "userscriptNote": "పొడిగింపు, యూజర్‌స్క్రిప్ట్ ఒకే ప్లేయర్ కోడ్ వాడతాయి. బ్రౌజర్ షార్ట్‌కట్ కేటాయింపుకు పొడిగింపు అవసరం."
+  },
+  "ta": {
+    "reviewTitle": "கேட்டு மகிழ்கிறீர்களா?",
+    "reviewBody": "உங்கள் நேர்மையான மதிப்புரை மற்றவர்கள் முடிவெடுக்கவும் நாங்கள் மேம்படுத்தவும் உதவும். உங்கள் அனுபவத்தைச் சில சொற்களில் பகிரவும்.",
+    "reviewLink": "{store}இல் மதிப்புரை எழுதவும்",
+    "reviewHint": "நிறுவிய அங்காடியைத் தேர்ந்தெடுக்கவும். உள்நுழைவு தேவைப்படலாம்; Edgeஇல் Reviews திறக்கவும்.",
+    "userscriptNote": "நீட்டிப்பும் யூசர்ஸ்கிரிப்டும் ஒரே பிளேயர் குறியீட்டைப் பயன்படுத்துகின்றன. உலாவிக் குறுக்குவழிகளை ஒதுக்க நீட்டிப்பு தேவை."
+  },
+  "ar": {
+    "reviewTitle": "هل تستمتع بالاستماع؟",
+    "reviewBody": "تساعد مراجعتك الصادقة الآخرين على الاختيار وتساعدنا على التحسين. شارك بضع كلمات عن تجربتك.",
+    "reviewLink": "راجع على {store}",
+    "reviewHint": "اختر المتجر الذي ثبّت منه. قد تحتاج لتسجيل الدخول؛ في Edge افتح Reviews.",
+    "userscriptNote": "تستخدم الإضافة والسكربت شيفرة المشغّل نفسها. يتطلب تعيين اختصارات المتصفح الإضافة."
+  },
+  "fa": {
+    "reviewTitle": "از گوش دادن لذت می‌برید؟",
+    "reviewBody": "دیدگاه صادقانه شما به انتخاب دیگران و بهبود ما کمک می‌کند. چند کلمه از تجربه خود بنویسید.",
+    "reviewLink": "دیدگاه در {store}",
+    "reviewHint": "فروشگاهی را که از آن نصب کردید انتخاب کنید. ممکن است ورود لازم باشد؛ در Edge بخش Reviews را باز کنید.",
+    "userscriptNote": "افزونه و اسکریپت از کد پخش‌کننده یکسان استفاده می‌کنند. تعیین میان‌بر مرورگر به افزونه نیاز دارد."
+  },
+  "he": {
+    "reviewTitle": "נהנים מההאזנה?",
+    "reviewBody": "ביקורת כנה עוזרת לאחרים להחליט ולנו להשתפר. כתבו כמה מילים על החוויה שלכם.",
+    "reviewLink": "כתבו ביקורת ב־{store}",
+    "reviewHint": "בחרו בחנות שממנה התקנתם. ייתכן שתידרש כניסה; ב־Edge פתחו Reviews.",
+    "userscriptNote": "התוסף והסקריפט משתמשים באותו קוד נגן. הקצאת קיצורי דפדפן דורשת את התוסף."
+  },
+  "pl": {
+    "reviewTitle": "Podoba Ci się czas słuchania?",
+    "reviewBody": "Uczciwa recenzja pomaga innym zdecydować, czy to rozszerzenie jest dla nich odpowiednie, a także pomaga nam wiedzieć, co poprawić. Kilka słów o Twoim doświadczeniu może zrobić różnicę.",
+    "reviewLink": "Recenzja {store}",
+    "reviewHint": "Wybierz sklep, z którego zainstalowałeś. Może być konieczne zalogowanie się; w Microsoft Edge otwórz sekcję Recenzje.",
+    "userscriptNote": "Rozszerzenie i skrypt użytkownika udostępniają funkcje odtwarzacza, układu i języka. Skróty przypisane do przeglądarki wymagają rozszerzenia pulpitu."
+  },
+  "hu": {
+    "reviewTitle": "Élvezed a hallgatási időt?",
+    "reviewBody": "Az őszinte áttekintés segít másoknak eldönteni, hogy ez a bővítmény megfelelő-e számukra – és segít nekünk abban, hogy mit kell javítanunk. Néhány szó a tapasztalatairól változást hozhat.",
+    "reviewLink": "Vélemény a {store}-ról",
+    "reviewHint": "Válassza ki azt a boltot, ahonnan telepítette. Lehet, hogy be kell jelentkeznie; A Microsoft Edge rendszeren nyissa meg a Vélemények részt.",
+    "userscriptNote": "A kiterjesztés és a felhasználói szkript megosztja a lejátszót, az elrendezést és a nyelvi funkciókat. A böngészőhöz rendelt parancsikonokhoz az asztali bővítmény szükséges."
+  },
+  "sv": {
+    "reviewTitle": "Njuter du av din lyssningstid?",
+    "reviewBody": "En ärlig recension hjälper andra att avgöra om det här tillägget är rätt för dem – och hjälper oss att veta vad vi ska förbättra. Några ord om din upplevelse kan göra skillnad.",
+    "reviewLink": "Recension om {store}",
+    "reviewHint": "Välj den butik du installerade från. Du kan behöva logga in; på Microsoft Edge, öppna avsnittet Recensioner.",
+    "userscriptNote": "Tillägget och användarskriptet delar spelare, layout och språkfunktioner. Webbläsartilldelade genvägar kräver skrivbordstillägget."
+  },
+  "cs": {
+    "reviewTitle": "Užíváte si čas poslechu?",
+    "reviewBody": "Poctivá recenze pomáhá ostatním rozhodnout se, zda je toto rozšíření pro ně to pravé – a pomáhá nám vědět, co zlepšit. Pár slov o vaší zkušenosti může změnit.",
+    "reviewLink": "Recenze na {store}",
+    "reviewHint": "Vyberte obchod, ze kterého jste nainstalovali. Možná se budete muset přihlásit; na Microsoft Edge otevřete sekci Recenze.",
+    "userscriptNote": "Rozšíření a uživatelský skript sdílejí funkce přehrávače, rozvržení a jazyka. Zkratky přiřazené prohlížečem vyžadují rozšíření na plochu."
+  },
+  "uk": {
+    "reviewTitle": "Вам подобається слухати?",
+    "reviewBody": "Чесний огляд допомагає іншим вирішити, чи підходить їм це розширення, і допомагає нам знати, що потрібно покращити. Кілька слів про ваш досвід можуть змінити ситуацію.",
+    "reviewLink": "Огляд на {store}",
+    "reviewHint": "Виберіть магазин, з якого ви встановили. Вам може знадобитися ввійти; у Microsoft Edge відкрийте розділ «Відгуки».",
+    "userscriptNote": "Розширення та сценарій користувача мають спільні функції програвача, макета та мови. Ярлики, призначені браузером, вимагають розширення робочого столу."
+  },
+  "ca": {
+    "reviewTitle": "Gaudeix del teu temps d'escolta?",
+    "reviewBody": "Una revisió honesta ajuda els altres a decidir si aquesta extensió és adequada per a ells i ens ajuda a saber què hem de millorar. Unes paraules sobre la vostra experiència poden marcar la diferència.",
+    "reviewLink": "Revisió de {store}",
+    "reviewHint": "Trieu la botiga des de la qual heu instal·lat. És possible que hàgiu d'iniciar la sessió; a Microsoft Edge, obriu la secció Ressenyes.",
+    "userscriptNote": "L'extensió i l'script d'usuari comparteixen funcions de reproductor, disseny i llenguatge. Les dreceres assignades pel navegador requereixen l'extensió d'escriptori."
+  },
+  "el": {
+    "reviewTitle": "Απολαμβάνετε τον χρόνο ακρόασης;",
+    "reviewBody": "Μια ειλικρινής αξιολόγηση βοηθά τους άλλους να αποφασίσουν εάν αυτή η επέκταση είναι κατάλληλη για αυτούς και μας βοηθά να γνωρίζουμε τι πρέπει να βελτιώσουμε. Λίγα λόγια για την εμπειρία σας μπορούν να κάνουν τη διαφορά.",
+    "reviewLink": "Κριτική για το {store}",
+    "reviewHint": "Επιλέξτε το κατάστημα από το οποίο εγκαταστήσατε. Ίσως χρειαστεί να συνδεθείτε. στον Microsoft Edge, ανοίξτε την ενότητα Κριτικές.",
+    "userscriptNote": "Η επέκταση και το σενάριο χρήστη μοιράζονται χαρακτηριστικά αναπαραγωγής, διάταξης και γλώσσας. Οι συντομεύσεις που έχουν εκχωρηθεί από το πρόγραμμα περιήγησης απαιτούν την επέκταση επιφάνειας εργασίας."
+  },
+  "ro": {
+    "reviewTitle": "Vă bucurați de timpul dvs. de ascultare?",
+    "reviewBody": "O recenzie sinceră îi ajută pe alții să decidă dacă această extensie este potrivită pentru ei și ne ajută să știm ce să îmbunătățim. Câteva cuvinte despre experiența ta pot face diferența.",
+    "reviewLink": "Recenzie despre {store}",
+    "reviewHint": "Alege magazinul din care ai instalat. Poate fi necesar să vă conectați; pe Microsoft Edge, deschideți secțiunea Recenzii.",
+    "userscriptNote": "Extensia și userscript partajează caracteristicile playerului, aspectului și limbii. Comenzile rapide atribuite de browser necesită extensia desktop."
+  },
+  "nb": {
+    "reviewTitle": "Nyter du lyttetiden?",
+    "reviewBody": "En ærlig anmeldelse hjelper andre med å avgjøre om denne utvidelsen er riktig for dem – og hjelper oss å vite hva vi kan forbedre. Noen få ord om opplevelsen din kan gjøre en forskjell.",
+    "reviewLink": "Anmeldelse av {store}",
+    "reviewHint": "Velg butikken du installerte fra. Du må kanskje logge på; på Microsoft Edge, åpne Anmeldelser-delen.",
+    "userscriptNote": "Utvidelsen og brukerskriptet deler spiller, layout og språkfunksjoner. Nettlesertilordnede snarveier krever skrivebordsutvidelsen."
   }
 }

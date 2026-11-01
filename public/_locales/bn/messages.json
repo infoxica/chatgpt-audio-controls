@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "চালান / বিরতি"
+  },
+  "command_seek_back": {
+    "message": "পিছনে যান"
+  },
+  "command_seek_forward": {
+    "message": "সামনে যান"
+  },
+  "command_speed_decrease": {
+    "message": "গতি কমান"
+  },
+  "command_speed_increase": {
+    "message": "গতি বাড়ান"
+  },
+  "command_speed_reset": {
+    "message": "গতি 1× করুন"
+  },
+  "command_volume_increase": {
+    "message": "শব্দ বাড়ান"
+  },
+  "command_volume_decrease": {
+    "message": "শব্দ কমান"
+  },
+  "command_toggle_mute": {
+    "message": "নিঃশব্দ / শব্দ চালু"
+  },
+  "command_download_audio": {
+    "message": "অডিও ডাউনলোড"
+  },
+  "command_toggle_collapse": {
+    "message": "প্লেয়ার সংকুচিত করুন / ChatGPT অডিও নিয়ন্ত্রণ প্রসারিত করুন"
+  },
+  "command_reset_layout": {
+    "message": "বিন্যাস রিসেট করুন"
+  },
+  "command_open_help": {
+    "message": "কীবোর্ড শর্টকাট ও অঙ্গভঙ্গি"
+  },
+  "command_open_settings": {
+    "message": "ড্যাশবোর্ড ও সেটিংস খুলুন"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — পড়ে শোনান"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT অডিও নিয়ন্ত্রণ: বিরতি, সিকিং, গতি, শব্দমাত্রা, ডাউনলোড ও শর্টকাট।"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "ভাসমান নিয়ন্ত্রণ দেখান / লুকান"
+  }
+}

@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "चलाएँ / रोकें"
+  },
+  "command_seek_back": {
+    "message": "पीछे जाएँ"
+  },
+  "command_seek_forward": {
+    "message": "आगे जाएँ"
+  },
+  "command_speed_decrease": {
+    "message": "गति घटाएँ"
+  },
+  "command_speed_increase": {
+    "message": "गति बढ़ाएँ"
+  },
+  "command_speed_reset": {
+    "message": "गति 1× पर रीसेट करें"
+  },
+  "command_volume_increase": {
+    "message": "आवाज़ बढ़ाएँ"
+  },
+  "command_volume_decrease": {
+    "message": "आवाज़ घटाएँ"
+  },
+  "command_toggle_mute": {
+    "message": "म्यूट / अनम्यूट"
+  },
+  "command_download_audio": {
+    "message": "ऑडियो डाउनलोड करें"
+  },
+  "command_toggle_collapse": {
+    "message": "प्लेयर समेटें / ChatGPT Audio Controls खोलें"
+  },
+  "command_reset_layout": {
+    "message": "विन्यास रीसेट करें"
+  },
+  "command_open_help": {
+    "message": "शॉर्टकट और जेस्चर"
+  },
+  "command_open_settings": {
+    "message": "डैशबोर्ड और सेटिंग खोलें"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls — पढ़कर सुनाएँ"
   },

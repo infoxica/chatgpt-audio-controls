@@ -3,6 +3,12 @@
  * Does not depend on external fonts or CDNs.
  */
 export const LUCIDE_ICONS: Record<string, string> = {
+  x: '<path d="m6 6 12 12M18 6 6 18"></path>',
+  check: '<path d="m5 12 4 4L19 6"></path>',
+  ellipsis: '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>',
+  "chevron-up": '<path d="m18 15-6-6-6 6"></path>',
+  "chevron-down": '<path d="m6 9 6 6 6-6"></path>',
+  "grip-vertical": '<circle cx="9" cy="5" r="1"></circle><circle cx="9" cy="12" r="1"></circle><circle cx="9" cy="19" r="1"></circle><circle cx="15" cy="5" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="15" cy="19" r="1"></circle>',
   play: '<polygon points="6 3 20 12 6 21 6 3"></polygon>',
   pause: '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>',
   square: '<rect x="5" y="5" width="14" height="14" rx="2"></rect>',

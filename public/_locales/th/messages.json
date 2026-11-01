@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "เล่น / พัก"
+  },
+  "command_seek_back": {
+    "message": "ย้อนกลับ"
+  },
+  "command_seek_forward": {
+    "message": "ข้ามไปข้างหน้า"
+  },
+  "command_speed_decrease": {
+    "message": "ลดความเร็ว"
+  },
+  "command_speed_increase": {
+    "message": "เพิ่มความเร็ว"
+  },
+  "command_speed_reset": {
+    "message": "รีเซ็ตความเร็วเป็น 1×"
+  },
+  "command_volume_increase": {
+    "message": "เพิ่มระดับเสียง"
+  },
+  "command_volume_decrease": {
+    "message": "ลดระดับเสียง"
+  },
+  "command_toggle_mute": {
+    "message": "ปิด / เปิดเสียง"
+  },
+  "command_download_audio": {
+    "message": "ดาวน์โหลดเสียง"
+  },
+  "command_toggle_collapse": {
+    "message": "ย่อแถบควบคุม / ขยายแถบควบคุมเสียง ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "รีเซ็ตเค้าโครง"
+  },
+  "command_open_help": {
+    "message": "ปุ่มลัดและท่าทาง"
+  },
+  "command_open_settings": {
+    "message": "เปิดแดชบอร์ดและการตั้งค่า"
+  },
   "extensionName": {
     "message": "ChatGPT Audio Controls & Read Aloud"
   },

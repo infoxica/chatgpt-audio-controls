@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Přehrát / Pozastavit"
+  },
+  "command_seek_back": {
+    "message": "Hledejte zpět"
+  },
+  "command_seek_forward": {
+    "message": "Hledejte dopředu"
+  },
+  "command_speed_decrease": {
+    "message": "Snížit rychlost"
+  },
+  "command_speed_increase": {
+    "message": "Zvyšte rychlost"
+  },
+  "command_speed_reset": {
+    "message": "Nastavte rychlost na 1×"
+  },
+  "command_volume_increase": {
+    "message": "Zvyšte hlasitost"
+  },
+  "command_volume_decrease": {
+    "message": "Snížit hlasitost"
+  },
+  "command_toggle_mute": {
+    "message": "Ztlumit / ztlumit"
+  },
+  "command_download_audio": {
+    "message": "Stáhnout zvuk"
+  },
+  "command_toggle_collapse": {
+    "message": "Sbalit přehrávač / Rozbalte ovládací prvky zvuku ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "Obnovit rozložení"
+  },
+  "command_open_help": {
+    "message": "Klávesové zkratky a gesta"
+  },
+  "command_open_settings": {
+    "message": "Otevřete Dashboard & Settings"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Čtěte nahlas"
+  },
+  "extensionDescription": {
+    "message": "Ovládání zvuku ChatGPT: pauza, hledání, rychlost, hlasitost, stahování a zkratky."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Zobrazit / skrýt plovoucí ovládací prvky"
+  }
+}

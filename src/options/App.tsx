@@ -1,5 +1,5 @@
 import { useTheme } from '../shared/ThemeSelect';
-import { FeedbackLink } from "../shared/FeedbackLink";
+import { SupportCard } from "../shared/SupportCard";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import React, { useEffect, useState } from "react";
 import { Navbar, DashboardSection } from "./components/Navbar";
@@ -76,7 +76,7 @@ export const App: React.FC = () => {
 
       {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}
       <main className="dashboard-main">
-          <FeedbackLink language={settings.language} theme={settings.theme} />
+
         <header className="main-header">
           <div className="header-title-block">
             <h1>
@@ -92,6 +92,7 @@ export const App: React.FC = () => {
           </div>
         </header>
 
+        {section === "settings" && <SupportCard language={settings.language} theme={settings.theme} />}
         {section === "settings" && (
           <GeneralSettings settings={settings} onUpdateSettings={handleUpdateSettings} t={t} />
         )}

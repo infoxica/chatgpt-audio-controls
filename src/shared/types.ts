@@ -1,5 +1,7 @@
 export type SupportedLanguage =
   | "auto"
+  | "pl" | "hu" | "sv" | "cs" | "uk" | "ca" | "el" | "ro" | "nb"
+  | "bn" | "mr" | "te" | "ta" | "ar" | "fa" | "he"
   | "en"
   | "zh-CN"
   | "zh-TW"
@@ -19,6 +21,7 @@ export type SupportedLanguage =
   | "tr";
 
 export interface ExtensionSettings {
+  notifyDownloadReady: boolean;
   floatingUiHidden: boolean;
   floatingUiHideMode: "idle-only" | "all";
   defaultSpeed: number;
