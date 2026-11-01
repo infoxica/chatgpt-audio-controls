@@ -85,10 +85,13 @@ export class PlayerLayout {
       this.positionPopovers();
     };
     controls.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && this.extras.classList.contains('cgpt-open')) {
+      const popover = this.extras.querySelector<HTMLElement>('.cgpt-open');
+      if (event.key === 'Escape' && (this.extras.classList.contains('cgpt-open') || popover)) {
+        event.preventDefault();
+        const trigger = this.more.getClientRects().length ? this.more : popover?.querySelector<HTMLButtonElement>('button');
         this.extras.classList.remove('cgpt-open');
         this.extras.querySelectorAll('.cgpt-open').forEach(el => el.classList.remove('cgpt-open'));
-        this.more.setAttribute('aria-expanded', 'false'); this.more.focus();
+        this.more.setAttribute('aria-expanded', 'false'); trigger?.focus();
       }
     });
     controls.append(this.more, this.extras);

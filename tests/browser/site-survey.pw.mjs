@@ -271,8 +271,9 @@ for(const [width,locale] of [[320,''],[360,'de/'],[390,'ar/'],[768,'ja/'],[1920,
  if(width===1920){await page.locator('#support').screenshot({path:'build/support-website-dark.png'});await page.evaluate(()=>document.documentElement.dataset.theme='light');await page.locator('#support').screenshot({path:'build/support-website-light.png'});}
 });
 
-for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`screenshot viewer and separate support cards at ${width} ${locale}`,async({page,context})=>{
+for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'ar/']])test(`screenshot viewer and separate support cards at ${width} ${locale}`,async({page,context})=>{
  await serveSite(context);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
+ await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar/'?'rtl':'ltr');
  await page.locator('#analytics-decline').click();
  const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(3);
  for(let i=0;i<3;i++){
@@ -291,7 +292,7 @@ for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`s
  expect(cards[1].y-cards[0].y-cards[0].height).toBeCloseTo(24,0);
  for(const selector of ['.support-contribution','#reviews']){
   const box=await page.locator(selector).evaluate(el=>{const a=el.querySelector('.support-copy').getBoundingClientRect(),b=el.querySelector('.support-card-actions').getBoundingClientRect();return {a:{x:a.x,y:a.y,width:a.width,height:a.height},b:{x:b.x,y:b.y,width:b.width,height:b.height},padding:getComputedStyle(el).paddingTop};});
-  if(width>760){expect(box.b.x-box.a.x-box.a.width).toBeCloseTo(32,0);expect(box.padding).toBe('32px');}
+  if(width>760){const gap=locale==='ar/'?box.a.x-box.b.x-box.b.width:box.b.x-box.a.x-box.a.width;expect(gap).toBeCloseTo(32,0);expect(box.padding).toBe('32px');}
   else {expect(box.b.y-box.a.y-box.a.height).toBeCloseTo(24,0);expect(box.padding).toBe('24px');}
  }
  const dividerGap=await page.locator('#support').evaluate(el=>el.getBoundingClientRect().top-document.querySelector('#guides').getBoundingClientRect().bottom);expect(dividerGap).toBeCloseTo(32,0);

@@ -648,6 +648,17 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.evaluate(()=>{localStorage.removeItem('cgpt-ra-v4-speed');localStorage.removeItem('cgpt-ra-v4-volume');});
     await setting(page,{language:'en'});await page.close();
   });
+  test('Escape closes wide player popovers and restores their visible trigger',async()=>{
+    const page=await open(1800);await setting(page,{language:'en'});await layout(page);await page.locator('#native-read').click();
+    await expect(page.locator('.cgpt-ra-more')).toBeHidden();
+    for(const selector of ['.cgpt-ra-help-wrap','.cgpt-ra-volume-wrap','.cgpt-ra-speed-wrap']) {
+      const trigger=page.locator(selector+' > button');
+      await trigger.click();await expect(page.locator(selector)).toHaveClass(/cgpt-open/);
+      await trigger.press('Escape');await expect(page.locator(selector)).not.toHaveClass(/cgpt-open/);
+      await expect(trigger).toBeFocused();
+    }
+    await page.close();
+  });
   test('help command opens compact composer overflow',async()=>{
     const page=await open();await setting(page,{language:'en',enableShortcuts:true});
     await page.locator('form').evaluate(form=>form.style.width='560px');

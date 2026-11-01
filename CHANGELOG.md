@@ -6,6 +6,8 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ## [1.4.0] — Unreleased
 
+- Apply RTL document direction throughout Arabic, Persian and Hebrew website pages. Close wide-player help, volume and speed popovers with Escape and return focus to their visible trigger, in both distributions.
+
 - Optional GitHub Sponsors support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 33 languages. Privacy and features remain unconditional.
 - Device-local meaningful-listening count, review invitation after four uses, and support invitation after ten. Non-modal cards wait until playback pauses/ends, respect hidden controls and typing, and allow permanent dismissal or one reminder after both 14 days and ten further uses. No telemetry or additional permissions.
 

@@ -76,6 +76,15 @@ class SiteHTTP(unittest.TestCase):
                 webpage = next(node for node in schema['@graph'] if node['@type'] == 'WebPage')
                 self.assertTrue(webpage['breadcrumb']['@id'].startswith(preview.CANONICAL))
 
+    def test_document_direction_for_every_generated_page(self):
+        pages = list(Path('site-dist').rglob('index.html'))
+        self.assertEqual(len(pages), 165)
+        for page in pages:
+            html = page.read_text(encoding='utf-8')
+            language = re.search(r'<html lang="([^"]+)"', html).group(1)
+            direction = 'rtl' if language in ('ar', 'fa', 'he') else 'ltr'
+            self.assertRegex(html, rf'<html[^>]*dir="{direction}"', str(page))
+
     def test_markdown_negotiation_and_head(self):
         for path in ['/', '/guide/', '/ja/guide/']:
             with self.get(path, 'text/markdown') as response:
