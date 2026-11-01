@@ -456,6 +456,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const dialog=page.locator('#cgpt-ra-settings-dialog');await expect(dialog).toBeVisible();
     await dialog.locator('select').nth(1).selectOption('top-left');await dialog.getByRole('button',{name:'Got it'}).click();
     await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');
+    await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset','top-left');
     const saved=await storedLayout(page);
     await page.evaluate(()=>{const set=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='cgpt-ra-layout-v1')throw new DOMException('Quota reached','QuotaExceededError');return set.call(this,key,value);};});
     await startDrag(page,'#cgpt-ra-floating-toggle');await drop(page,'.cgpt-ra-drop-target[data-preset="bottom-right"] [data-part="circle"]');

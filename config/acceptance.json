@@ -1,6 +1,6 @@
 {
   "version": "1.4.0",
-  "feedbackDeployment": false,
+  "feedbackDeployment": true,
   "chromeLive": false,
   "edgeLive": false,
   "userscriptLive": false,

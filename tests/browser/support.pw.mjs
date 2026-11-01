@@ -43,7 +43,7 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
   const saved=await stored(page);expect(saved.donation.afterUses).toBe(20);expect(saved.donation.afterTime-Date.now()).toBeGreaterThan(13.9*86400000);
   if(worker){
    const options=await context.newPage();await options.goto(`chrome-extension://${id}/src/options/index.html`);
-   const toggle=options.getByRole('checkbox',{name:'Show review and support reminders'});await expect(toggle).toBeChecked();await toggle.uncheck();
+   const toggle=options.getByRole('checkbox',{name:'Show review and support reminders'});await expect(toggle).toBeChecked();await toggle.click();await expect(toggle).not.toBeChecked();
    await expect.poll(async()=>(await stored(page)).enabled).toBe(false);expect((await stored(page)).donation.status).toBe('done');await options.close();
   }
   await page.close();
@@ -83,7 +83,7 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
     await expect(page.locator('.donation-amounts a')).toHaveCount(4);
     for(const width of [320,360,390,768,1366]){
      await page.setViewportSize({width,height:900});
-     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+     await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),{message:`${surface} ${language} at ${width}px must fit after responsive layout settles`}).toBe(true);
      for(const a of await page.locator('.donation-amounts a').all()){const r=await a.boundingBox();expect(r.width).toBeGreaterThanOrEqual(43.99);expect(r.height).toBeGreaterThanOrEqual(43.99);}
     }
     if(language==='en'){await page.setViewportSize({width:surface==='popup'?360:1366,height:900});await page.locator('.donation-section').scrollIntoViewIfNeeded();await page.screenshot({path:`build/support-${surface}.png`});}

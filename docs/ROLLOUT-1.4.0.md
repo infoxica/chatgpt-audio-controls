@@ -27,4 +27,8 @@ The prepared changes were committed as `4a7faaa` and pushed in PR #24 against de
 
 Feedback staging deployed as `6c13a4fb-fc51-47c7-beb1-ef0faed05e00`. Its health endpoint and all 33 locales passed installed-Edge rendering, direction, no-overflow, bug-intent and theme checks. Neither staging nor production required database migrations.
 
-The same bundle deployed to the configured production feedback domain as `7f11f9b3-4a4b-41a4-ba64-5251022a0459`. Previous production version `19b46632-5f29-4585-ba69-dc699d260943` remains the rollback reference. No database records or secrets were changed. Production live checks and end-to-end challenge/submission acceptance remain distinct from this successful deployment; the acceptance flag is not yet closed.
+The same bundle deployed to the configured production feedback domain as `7f11f9b3-4a4b-41a4-ba64-5251022a0459`. Previous production version `19b46632-5f29-4585-ba69-dc699d260943` remains the rollback reference. No secrets or schema were changed.
+
+Production passed the same 33-locale rendering/direction/theme/intent checks. Edge returned `{"ok":true}` from `/health`. After explicit owner approval, a labelled synthetic submission reached the success screen and its exact D1 row was verified. Cleanup matched both its UUID and unique test comment; exactly one row was removed and the remaining count was zero. Real feedback was untouched. `feedbackDeployment` is now true; other acceptance flags remain false.
+
+PR #24 requires one approving GitHub review, including approval after the most recent push. No branch protection or review requirement has been bypassed. Website promotion remains pending that merge.
