@@ -395,6 +395,8 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       },dark);
       const nativeStyle=await page.locator('form').getAttribute('style');
       await expect(page.locator('#cgpt-ra-layer > .cgpt-ra-dock-join')).toBeVisible();
+      // Theme sampling is scheduled independently of unchanged composer geometry.
+      await expect(page.locator('#cgpt-ra-dock')).toHaveCSS('background-color',dark?'rgb(33, 33, 33)':'rgb(238, 238, 238)');
       await expect.poll(()=>page.evaluate(()=>{
         const join=document.querySelector('#cgpt-ra-layer > .cgpt-ra-dock-join').getBoundingClientRect(), c=document.querySelector('form').getBoundingClientRect();
         return Math.abs(join.left-c.left)<.5&&Math.abs(join.top-c.top)<.5&&Math.abs(join.width-c.width)<.5;
@@ -602,7 +604,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const page=await context.newPage();await setting(page,{language:'en'});
     await page.setViewportSize({width:1280,height:900});
     await page.goto(`chrome-extension://${extensionId}/src/options/index.html`);
-    const support=page.locator('.support-card');await expect(support.locator('a')).toHaveCount(4);
+    const support=page.locator('.support-card .support-actions');await expect(support.locator('a')).toHaveCount(4);
     await expect(support.locator('a').nth(0)).toHaveAttribute('href',/intent=suggestion/);
     await expect(support.locator('a').nth(1)).toHaveAttribute('href',/intent=bug/);
     await expect(support.locator('a').nth(2)).toHaveAttribute('href',/chromewebstore.*reviews/);
