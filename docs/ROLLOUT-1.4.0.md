@@ -1,4 +1,4 @@
-# v1.4.0 rollout checkpoint — 2026-11-01
+# v1.4.0 rollout checkpoint — 2026-11-02
 
 The owner authorized committing and rolling out the prepared changes. Version remains 1.4.0. This checkpoint supersedes earlier statements that no rollout was authorized; historical validation records retain their original scope.
 
@@ -17,7 +17,7 @@ Repository rules require feature → develop promotion through a pull request, f
 
 Website deployment can run separately through the reviewed develop branch. Feedback deployment requires staging verification and then the configured production environment. Record successful deployment identifiers and live checks separately from extension store status.
 
-At this checkpoint, all flags in `config/acceptance.json` remain false. Local fixtures do not establish live ChatGPT playback in stock Chrome/Edge, a real userscript manager, real Edge Android, or native macOS acceptance. Only the macOS check permits an explicit owner waiver. No such waiver has been provided.
+At this checkpoint, `feedbackDeployment` is true; the remaining flags in `config/acceptance.json` are false. Local fixtures and the limited Edge smoke check below do not establish the complete desktop matrix, real userscript-manager, Edge Android, or native macOS acceptance. Only the macOS check permits an explicit owner waiver. No such waiver has been provided.
 
 The latest public release observed before promotion is v1.3.0. A committed candidate, passing CI, website deployment, store submission and public store availability are separate milestones.
 
@@ -32,3 +32,11 @@ The same bundle deployed to the configured production feedback domain as `7f11f9
 Production passed the same 33-locale rendering/direction/theme/intent checks. Edge returned `{"ok":true}` from `/health`. After explicit owner approval, a labelled synthetic submission reached the success screen and its exact D1 row was verified. Cleanup matched both its UUID and unique test comment; exactly one row was removed and the remaining count was zero. Real feedback was untouched. `feedbackDeployment` is now true; other acceptance flags remain false.
 
 PR #24 requires one approving GitHub review, including approval after the most recent push. No branch protection or review requirement has been bypassed. Website promotion remains pending that merge.
+
+## Live Edge smoke check
+
+After explicit owner approval, the enabled unpacked 1.4.0 extension was reloaded through Edge's Extensions page. The installed 1.3.0 store copy remained disabled. Native Read Aloud on the approved completed response produced visible advancing player time. Pause held at 24 seconds; a backward seek moved to 14 seconds and remained paused until explicit resume. Resume advanced from that position. Playback was left paused and the player collapsed. No conversation content or audio was saved or published.
+
+The real Edge toolbar popup opened at its stable width. About displayed the header, donation amounts and review section with normal wrapping and spacing. This English smoke check complements, but does not replace, the isolated multilingual popup checks or the remaining live acceptance matrix.
+
+Three remote browser-test timing failures were corrected with state-based waits: the rendered preset before dragging, persisted checkbox state after clicking, and responsive layout after resizing. The affected scenarios passed three local repetitions (12 passed, three expected userscript skips). Exact-commit remote CI remains the promotion check.
