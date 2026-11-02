@@ -313,6 +313,7 @@ test('legacy redirect preserves locale and approved campaigns without forwarding
   expect(canonical).toBe(base+'ja/guide/');
   expect(html).toContain('http-equiv="refresh"');
   expect(html).toContain('Continue to ChatGPT Audio Controls');
+  expect(await fs.readFile('build/legacy-pages/llms.txt','utf8')).toBe(await fs.readFile('site-dist/llms.txt','utf8'));
   const script=await fs.readFile('build/legacy-pages/redirect.js','utf8');
   for(const hash of ['#support','#private%20words']){
     let destination;

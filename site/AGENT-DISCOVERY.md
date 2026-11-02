@@ -76,4 +76,3 @@ fresh API compatibility check.
 - [Markdown skill](https://isitagentready.com/.well-known/agent-skills/markdown-negotiation/SKILL.md)
   and [Cloudflare Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
 - [GitHub Pages hosting](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
-

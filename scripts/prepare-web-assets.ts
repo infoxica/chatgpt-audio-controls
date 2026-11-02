@@ -12,7 +12,8 @@ writeFileSync('build/site-staging/robots.txt', 'User-agent: *\nDisallow: /\n');
 
 const destination = 'build/legacy-pages';
 mkdirSync(destination, { recursive: true });
-cpSync('site-dist/assets', join(destination, 'assets'), { recursive: true });
+// Preserve media and direct Markdown/discovery URLs as well as HTML routes.
+cpSync('site-dist', destination, { recursive: true });
 const escape = (value: string) => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 let pages = 0;
 function visit(directory: string) {
