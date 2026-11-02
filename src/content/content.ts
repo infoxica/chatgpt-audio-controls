@@ -1392,7 +1392,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     const type = String(mime || "").toLowerCase();
 
     if (type.includes("mpeg")) return "mp3";
-    if (type.includes("mp4") || type.includes("m4a") || type.includes("aac"))
+    if (type.includes("aac")) return "aac";
+    if (type.includes("mp4") || type.includes("m4a"))
       return "m4a";
     if (type.includes("wav")) return "wav";
     if (type.includes("ogg") || type.includes("opus")) return "ogg";

@@ -531,9 +531,23 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     expect(await fs.readFile(await (await downloading).path())).toEqual(wav());
     await page.close();
   });
-  test('MediaSource speech survives host abort, source removal and immediate pause',async()=>{
+  test('download filename respects retained AAC MIME without converting bytes',async()=>{
     const page=await open();
-    for(const immediate of [false,true]){
+    // The playable tone isolates MIME-to-filename selection; native AAC decoding
+    // is covered separately by real-device acceptance.
+    await page.route('**/speech.wav',route=>route.fulfill({contentType:'audio/aac',body:wav()}));
+    await page.locator('#native-read').click();
+    await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(1);
+    const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();
+    const download=await downloading;expect(download.suggestedFilename()).toMatch(/\.aac$/);
+    expect(await fs.readFile(await download.path())).toEqual(wav());await page.close();
+  });
+  test('MediaSource speech survives host abort, source removal and file-decoder rejection',async()=>{
+    const page=await open();
+    let requests=0;page.on('request',r=>{if(r.url().endsWith('/speech.mp3'))requests++;});
+    await page.evaluate(()=>{const load=HTMLMediaElement.prototype.load;HTMLMediaElement.prototype.load=function(...args){if(window.rejectRetainedFile&&this.id!=='host'&&this.src.startsWith('blob:')){window.rejectRetainedFile=false;queueMicrotask(()=>this.dispatchEvent(new Event('error')));return;}return load.apply(this,args);};});
+    for(const forcedFallback of [false,true])for(const immediate of [false,true]){
+      await page.evaluate(value=>window.rejectRetainedFile=value,forcedFallback);
       await page.evaluate(async()=>{
         const response=await fetch('/speech.mp3',{signal:(window.speechAbort=new AbortController()).signal});
         const source=new MediaSource(),host=document.getElementById('host');
@@ -557,6 +571,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect.poll(()=>time(page)).toBeGreaterThan(before);
       await expect(page.locator('.cgpt-ra-duration')).toHaveText('0:30');
     }
+    expect(requests).toBe(4);
     await page.close();
   });
   test('capsules avoid composer across viewport and content sizes',async()=>{
