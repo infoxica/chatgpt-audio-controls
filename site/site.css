@@ -81,6 +81,8 @@
 .image-viewer figure { margin:0; max-width:100%; display:flex; flex-direction:column; align-items:center; gap:12px; }
 .image-viewer img { display:block; max-width:100%; max-height:calc(100dvh - 160px); width:auto; height:auto; object-fit:contain; border-radius:8px; }
 .image-viewer figcaption { max-width:900px; max-height:64px; overflow:auto; text-align:center; font-size:14px; line-height:1.5; color:#eee; }
-.image-viewer-close { position:absolute; inset-block-start:12px; inset-inline-end:16px; min-width:44px; min-height:44px; padding:0; border:1px solid #ffffff55; border-radius:50%; background:#222; color:#fff; font:32px/1 system-ui; cursor:pointer; }
+.image-viewer-close { position:absolute; inset-block-start:12px; inset-inline-end:16px; width:44px; height:44px; min-width:44px; min-height:44px; display:grid; place-items:center; padding:0; border:1px solid #ffffff55; border-radius:50%; background:#222; color:#fff; cursor:pointer; }
 .image-viewer-close:hover { background:#444; }
 .image-viewer-close:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+
+.image-viewer-close svg { display:block; width:24px; height:24px; flex:none; }

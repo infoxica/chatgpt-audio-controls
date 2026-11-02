@@ -6,6 +6,11 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ## [1.4.0] — Unreleased
 
+- Preserve original and corner placement at constrained laptop viewport sizes by using full-size compact controls before changing arrangement. Secondary actions remain available through More; vertical compact controls open their menu toward the viewport interior.
+- Center image-viewer close icons with SVGs and consistent keyboard/touch targets.
+- Consolidate release history here and simplify README demo copy. Recording provenance and acceptance evidence remain in release documentation.
+- Prepare the official website at https://chatgpt-audio-controls.infoxica.com/ alongside the existing private feedback service. Add staged Worker static assets, legacy Pages redirects, readable validated sitemaps, and a root-domain-safe preview server.
+
 - Apply RTL document direction throughout Arabic, Persian and Hebrew website pages. Close wide-player help, volume and speed popovers with Escape and return focus to their visible trigger, in both distributions.
 
 - Optional GitHub Sponsors support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 33 languages. Privacy and features remain unconditional.
@@ -40,9 +45,9 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 - Reset the playback progress anchor after seeking so a backward seek during resume cannot cause a false loading timeout; seeking alone does not count as advancing playback.
 - Recognize ChatGPT's updated composer. Restore two separate rounded capsules beside it when space permits and above it on narrow screens.
 - Remove injected response Read Aloud buttons, toolbar/menu automation and the obsolete setting from both extension and userscript. Start with ChatGPT's native button.
-- Move Help beside Dashboard and add localized Send feedback links in About and settings.
+- Add localized feedback entry points in About and settings.
 - Add remembered System / Light / Dark preferences to popup, dashboard and feedback, with icon controls on the feedback form.
-- Keep the README source-version badge and heading synchronized with release metadata through CI and packaging checks.
+- Keep README source-version metadata synchronized through CI and packaging checks.
 - Replace the Google survey backend with a Cloudflare Worker, private D1 storage and Turnstile. Support voluntary uninstall reasons and installed-user bug/suggestion/other feedback in 17 languages, with idempotent submissions and owner query/export tools.
 - Keep the existing Google URL as a localized transition page with no spreadsheet writes. Update privacy and store disclosures.
 - Reset release acceptance; require fresh Windows Chrome, Edge and actual Tampermonkey checks. Native Mac testing is waived for v1.3.0, not passed.

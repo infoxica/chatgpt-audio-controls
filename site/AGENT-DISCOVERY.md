@@ -34,31 +34,22 @@ discovery links, preview analytics, and rejected paths against a real HTTP serve
 
 ## Production hosting boundary
 
-The chosen production target is a GitHub Pages **project** site:
-`https://infoxica.github.io/chatgpt-audio-controls/`. Publishing this repository
-puts files below that path, not at the `infoxica.github.io` origin root.
+The website targets the root of `https://chatgpt-audio-controls.infoxica.com/`
+through Cloudflare Worker static assets. `/feedback`, `/api/*`, and `/health`
+remain explicit Worker routes; private forms are never cached as public assets.
+The root robots file and sitemap cover all 165 public localized pages.
 
-- The effective production robots file must be deployed by the origin-root site
-  owner at `https://infoxica.github.io/robots.txt`. Merge this project's sitemap
-  reference and path-scoped policy into that file; do not overwrite unrelated
-  project policies with a whole-origin rule.
-- A sitemap may live under the project path. A root `/sitemap.xml` can be an index
-  referring to it if the origin-root owner chooses. The generated project sitemap
-  already lists the correct canonical URLs; it must not list tunnel URLs.
-- The Python preview's Link headers and Accept negotiation are **not deployed by
-  GitHub Pages**. Production HTTP behavior needs a host or proxy that supports it.
-  Existing HTML alternate links and direct `index.md` files remain available on
-  static hosting. Cloudflared forwarding alone does not configure a production
-  Cloudflare zone or enable Cloudflare's managed Markdown feature.
-- Public deployment, Search Console submission, and a scan of the deployed URL
-  remain separate acceptance steps. A passing local test is not a scanner result.
+The Python preview's negotiated Markdown and Link headers are local behavior.
+Production serves direct Markdown mirrors and HTML discovery links; static assets
+do not implement Accept negotiation. Do not treat preview-only checks as live
+acceptance. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
 
 ## Remaining checklist items
 
 | Finding | Disposition |
 | --- | --- |
 | AI crawler rules and Content Signals | Generated with the owner's explicit allow-search, allow-inference, allow-training policy. Local HTTP checks cover the output; production root deployment remains pending. |
-| DNS-AID and DNSSEC | No agent endpoint to advertise, and no DNS zone control for the shared `github.io` or `trycloudflare.com` domains. Requires an owned domain and a real agent service. |
+| DNS-AID and DNSSEC | No agent endpoint to advertise, no agent service is supplied by this website. An owned hostname alone does not create an agent endpoint; DNSSEC policy remains a separate domain-owner concern. |
 | API catalog | Not applicable: no public API or OpenAPI description. |
 | OAuth/OIDC discovery | Not applicable: this website is not an authorization server. |
 | OAuth protected-resource metadata | Not applicable: no protected website API. |
@@ -86,10 +77,3 @@ fresh API compatibility check.
   and [Cloudflare Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
 - [GitHub Pages hosting](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
 
-### Preview root update
-
-The preview now serves all website routes directly from `/`; old project-prefix
-URLs redirect to their short equivalent. It also serves `/llms-full.txt`,
-`/sitemap.md`, and `.md` route aliases. Production identities remain absolute in
-canonical metadata and JSON-LD. The production hosting boundary above still
-applies; the tunnel is a preview, not a changed permanent domain.

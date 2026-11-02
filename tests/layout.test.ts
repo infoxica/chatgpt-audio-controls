@@ -7,6 +7,41 @@ import { LOCALES, languageDirection, resolveLanguage } from '../src/shared/i18n/
 import { COMMANDS, isPlayerCommand } from '../src/shared/shortcuts';
 import { acceptanceComplete } from '../scripts/release-acceptance';
 
+test('MacBook CSS viewports retain split placement with full-size compact buttons', () => {
+  for (const width of [1440, 1512, 1728, 1920]) for (const seekFirst of [true, false]) {
+    const v = { x: 12, y: 12, width: width - 24, height: 858 };
+    const c = { x: (width - 760) / 2, y: 780, width: 760, height: 80 };
+    const g = dockGeometry({ preset: 'original', seekFirst }, v, true, c)!;
+    expect(g.circle.x).toBe(c.x + c.width + 6);
+    expect(g.controls.height).toBe(48);
+    expect(g.controls.width).toBeGreaterThanOrEqual(224);
+    expect(g.seek.width).toBeGreaterThanOrEqual(220);
+    for (const r of [g.seek, g.controls, g.circle]) {
+      expect(fits(r, v)).toBe(true);
+      expect(intersects(r, c)).toBe(false);
+    }
+  }
+});
+
+test('compact vertical and corner controls preserve a constrained preset', () => {
+  for (const preset of ['left', 'right'] as const) for (const seekFirst of [true, false]) {
+    const v = { x: 12, y: 12, width: 1488, height: 580 };
+    const g = dockGeometry({ preset, seekFirst }, v, true)!;
+    expect(g.compactControls).toBe(true);
+    expect(g.controls.height).toBe(224);
+    expect(g.controls.width).toBe(48);
+    for (const r of [g.seek, g.controls, g.circle]) expect(fits(r, v)).toBe(true);
+  }
+  for (const preset of ['bottom-left', 'bottom-right'] as const) {
+    const v = { x: 12, y: 12, width: 1488, height: 858 };
+    const c = { x: 376, y: 780, width: 760, height: 100 };
+    const g = dockGeometry({ preset, seekFirst: true }, v, true, c)!;
+    expect(g.compactControls).toBe(true);
+    expect(g.controls.height).toBe(48);
+    expect(intersects(g.controls, c)).toBe(false);
+  }
+});
+
 test('all 14 desktop presets have correct non-overlapping geometry', () => {
   const viewport = { x: 12, y: 80, width: 1400, height: 850 };
   const composer = { x: 400, y: 800, width: 760, height: 80 };

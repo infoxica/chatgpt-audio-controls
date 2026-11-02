@@ -1,65 +1,70 @@
-# Website launch with v1.2.0
+# Website deployment and rollback
 
-The official website is part of the v1.2.0 release. Its deployment is separate
-from extension packaging and store submission so the permanent links can be
-verified before users receive them in the extension.
+The v1.4.1 candidate targets **https://chatgpt-audio-controls.infoxica.com/**.
+The existing feedback Worker serves the website through its ASSETS binding.
+The custom hostname and TLS configuration remain unchanged. Production deployment
+is separate from a successful build or staging check.
 
-Production URL: https://infoxica.github.io/chatgpt-audio-controls/
+## Build and validate
 
-## Initial setup and publication
+Run `bun run build:site`, `bun run prepare:web-assets`, and `bun run build:feedback`.
+Run the HTTP, browser, feedback, locale and release checks before promotion.
+The public build contains 165 localized pages (33 languages, five routes), with
+34 language alternatives including x-default for each sitemap URL.
 
-1. Merge the website follow-up PR into develop after its checks and review pass.
-2. Configure repository Pages to use GitHub Actions. The github-pages environment
-   must permit the reviewed develop and master branches; preserve required
-   reviewers and any existing deployment protections.
-3. For the initial launch, ensure `.github/workflows/pages.yml` exists on the
-   default branch before using workflow_dispatch. If master does not contain it
-   yet, promote a dispatch-only copy of this workflow through a reviewed bootstrap
-   PR to master: omit its push and pull_request triggers until master contains the
-   site sources. Dispatch it against develop, where those sources exist. Keep the
-   extension version unchanged in that bootstrap PR. Do not merge the
-   unaccepted extension release just to make the website workflow available.
-4. Run the Official website workflow against develop with publish_website=true:
+`site-dist/` is the production asset source. `build/site-staging/` adds noindex
+headers and disallows crawling. `build/website-snapshot/` is a copy of the current
+candidate, **not** a backup of a previous deployment. Preserve previous deployed
+artifacts separately before promotion.
 
-   ```sh
-   gh workflow run pages.yml --ref develop -f publish_website=true
-   ```
+The Python preview accepts the new root URL and redirects the legacy project
+prefix without redirecting `/` to itself. Its Markdown Accept negotiation and
+custom Link headers are preview features; production provides explicit Markdown
+mirrors and HTML discovery links.
 
-   This builds and tests the site, then deploys only the site-dist artifact.
-   A dispatch without explicit publication only builds. Feature-branch and PR
-   jobs cannot deploy. Ordinary master website changes continue to deploy
-   automatically. This workflow never submits an extension to either store.
-5. Record the workflow run, deployed source commit, actual URL and live results.
-   A successful build or enabled Pages setting alone is not a deployment.
+## Worker routing and security
 
-## Live acceptance before store submission
+`/feedback`, `/feedback/*`, `/api`, `/api/*`, `/health`, and `/health/*` run the
+Worker first. Feedback retains its CSP, no-store policy, Turnstile verification,
+rate limits and D1 protections. Public static assets cannot shadow these routes.
+Other matching assets use Cloudflare's asset handler; missing assets remain 404.
+See [Cloudflare selective Worker routing](https://developers.cloudflare.com/workers/static-assets/routing/worker-script/).
 
-- Check all 85 HTML routes, images, mobile navigation, desktop language menus,
-  on-site guides, store/review links and the permanent privacy section.
-- Check canonical URLs, reciprocal language alternates, XML sitemap freshness,
-  Markdown mirrors, llms.txt, llms-full.txt and sitemap.md on the deployed site.
-- Verify analytics stays off after rejection and loads only after acceptance;
-  verify actual page-view/store-click receipt and withdrawal. Keep account IDs,
-  credentials and screenshots containing private account data out of the repo.
-- Complete Search Console verification and submit the production sitemap.
-- Set websiteDeployment=true only after recording real acceptance evidence.
-  All feedback, live browser and native Mac requirements still apply before
-  promoting the extension to master and submitting the stores.
-- Publish localized store website/privacy links only after their destinations
-  work. Describe features according to each store's actual available version.
+Deploy and exercise the staging environment first:
 
-## Hosting boundaries
+```sh
+node node_modules/wrangler/bin/wrangler.js deploy --config feedback/worker/wrangler.jsonc --env staging
+```
 
-GitHub Pages publishes this project below /chatgpt-audio-controls/. The local
-preview's short root URLs do not change that production address. An origin-root
-robots.txt requires the separate infoxica.github.io root site; a project-path
-robots.txt does not control crawling. A custom domain or root-site change is
-required to remove the project prefix permanently.
+Check the homepage, localized guides, image viewer, media, sitemap, robots,
+feedback form, health endpoint, API rejection behavior and unknown-route 404s.
+Use a browser if Cloudflare rejects a raw HTTP client's fingerprint; do not relax
+production security merely to make a synthetic probe pass.
 
-GitHub Pages does not run the Python preview server. Its negotiated Markdown and
-custom Link response headers require a supporting production host/proxy; static
-Markdown files and HTML discovery links remain available on Pages. Do not claim
-those preview-only HTTP checks as production acceptance.
+## Production promotion
 
-See [GitHub Pages configuration](https://docs.github.com/en/rest/pages/pages#create-a-github-pages-site)
-and [workflow dispatch requirements](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch).
+Follow repository PR/release gates before deploying. The manual
+cloudflare-website.yml workflow uses a cloudflare-production environment and
+allows production only from develop or master. Configure environment approval
+protection, CLOUDFLARE_ACCOUNT_ID and a scoped CLOUDFLARE_API_TOKEN before use.
+Use only the account/Worker permissions needed for deployment and existing
+bindings. Never copy a developer's local Wrangler OAuth credentials.
+
+After production browser acceptance, set the repository variable
+WEBSITE_CLOUDFLARE_READY=true. Only then may the Pages workflow replace the
+legacy site with build/legacy-pages/. Each old localized page supplies a static
+redirect, new canonical URL and fallback link. These are **not HTTP 301s**.
+Existing assets/media remain available. Redirect JavaScript retains only approved
+campaign values and a safe fragment, never arbitrary query parameters.
+
+## Rollback
+
+Before deployment, record the active Worker version and download the last good
+Pages deployment artifact. Keep both with release evidence. The production
+version observed before this migration was
+7f11f9b3-4a4b-41a4-ba64-5251022a0459 (2026-11-01); recheck before rollout.
+Rollback to the recorded deployed Worker version using Wrangler's rollback
+command, then verify feedback/API routes and the intended website state.
+Restore the prior Pages artifact if redirects have been activated, and clear
+WEBSITE_CLOUDFLARE_READY until production checks pass again.
+Do not roll back D1 data or rotate secrets for a static-site rollback.

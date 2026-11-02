@@ -16,7 +16,7 @@ export function analyticsLocation(href: string): string {
   const allowed: Record<string, string[]> = {
     utm_source: ['official_website', 'extension', 'ext_sidebar', 'ext_app_menu', 'github', 'chrome_web_store', 'edge_addons'],
     utm_medium: ['referral', 'extension', 'organic'],
-    utm_campaign: ['extension', 'v1.4.0'],
+    utm_campaign: ['extension', 'v1.4.0', 'v1.4.1'],
     utm_content: ['sidebar', 'app_menu', 'popup', 'options', 'listing', 'readme'],
   };
   for (const [key, values] of Object.entries(allowed)) {

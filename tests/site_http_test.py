@@ -47,12 +47,25 @@ class SiteHTTP(unittest.TestCase):
             self.assertIn('Sitemap: ' + preview.CANONICAL + 'sitemap.xml', robots)
         with self.get('/sitemap.xml') as response:
             self.assertEqual(response.headers.get_content_type(), 'application/xml')
-            urls = ET.fromstring(response.read()).findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url')
+            xml = response.read()
+            self.assertTrue(xml.endswith(b'\n'))
+            self.assertGreater(xml.count(b'\n'), 165)
+            urls = ET.fromstring(xml).findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url')
             self.assertEqual(len(urls), 165)
+            locations = [url.find('{http://www.sitemaps.org/schemas/sitemap/0.9}loc').text for url in urls]
+            self.assertEqual(len(set(locations)), 165)
             for url in urls:
                 canonical = url.find('{http://www.sitemaps.org/schemas/sitemap/0.9}loc').text
                 self.assertTrue(canonical.startswith(preview.CANONICAL))
                 self.assertNotIn('127.0.0.1', canonical)
+                alternatives = url.findall('{http://www.w3.org/1999/xhtml}link')
+                self.assertEqual(len(alternatives), 34)
+                self.assertEqual(len({link.attrib['hreflang'] for link in alternatives}), 34)
+                self.assertEqual(sum(link.attrib['hreflang'] == 'x-default' for link in alternatives), 1)
+                for link in alternatives:
+                    self.assertIn(link.attrib['href'], locations)
+                with self.get('/' + canonical.removeprefix(preview.CANONICAL)) as page:
+                    self.assertEqual(page.status, 200)
         with self.get('/llms.txt') as response:
             self.assertIn(b'# ChatGPT Audio Controls', response.read())
 
@@ -95,7 +108,7 @@ class SiteHTTP(unittest.TestCase):
                 self.assertTrue(body.startswith(b'---\ntitle: '))
                 self.assertIn(b'\nlast_updated: "', body)
                 self.assertIn(b'\n## Sitemap\n', body)
-                self.assertRegex(response.headers['Link'], r'<https://infoxica.github.io/chatgpt-audio-controls/[^>]*>; rel="canonical"')
+                self.assertRegex(response.headers['Link'], r'<https://chatgpt-audio-controls.infoxica.com/[^>]*>; rel="canonical"')
             with self.get(path, 'text/markdown', 'HEAD') as response:
                 self.assertEqual(int(response.headers['Content-Length']), len(body))
                 self.assertEqual(response.read(), b'')
@@ -106,7 +119,7 @@ class SiteHTTP(unittest.TestCase):
             self.assertEqual(response.headers.get_content_type(), 'text/markdown')
 
     def test_short_paths_full_context_and_markdown_mirrors(self):
-        with self.get(preview.PREFIX+'ja/installation/?test=1') as response:
+        with self.get(preview.LEGACY_PREFIX+'ja/installation/?test=1') as response:
             self.assertEqual(response.url, self.origin+'/ja/installation/?test=1')
         for path in ['/index.md', '/guide.md', '/ja.md', '/ja/glossary.md', '/sitemap.md']:
             with self.get(path) as response:
@@ -133,15 +146,15 @@ class SiteHTTP(unittest.TestCase):
     def test_unknown_services_and_path_escape_return_404(self):
         for path in ['/.well-known/api-catalog', '/.well-known/oauth-authorization-server',
                      '/.well-known/mcp/server-card.json', '/auth.md',
-                     preview.PREFIX+'%2e%2e/package.json', preview.PREFIX+'%00', '/build/']:
+                     preview.LEGACY_PREFIX+'%2e%2e/package.json', preview.LEGACY_PREFIX+'%00', '/build/']:
             with self.assertRaises(urllib.error.HTTPError) as error:
                 self.get(path)
             self.assertEqual(error.exception.code, 404)
 
     def test_redirects_cannot_leave_the_preview_origin(self):
         cases = {
-            preview.PREFIX + '/example.invalid/path': '/example.invalid/path',
-            preview.PREFIX + '%2f%2fexample.invalid/path': '/example.invalid/path',
+            preview.LEGACY_PREFIX + '/example.invalid/path': '/example.invalid/path',
+            preview.LEGACY_PREFIX + '%2f%2fexample.invalid/path': '/example.invalid/path',
             '/%2fguide': '/guide/',
             '/chatgpt%2daudio-controls/ja/guide/?test=1': '/ja/guide/?test=1',
         }
@@ -155,7 +168,7 @@ class SiteHTTP(unittest.TestCase):
                 response.read()
             finally:
                 connection.close()
-        for path in [preview.PREFIX + '%5cexample.invalid', preview.PREFIX + '%0d%0aX-Test:bad']:
+        for path in [preview.LEGACY_PREFIX + '%5cexample.invalid', preview.LEGACY_PREFIX + '%0d%0aX-Test:bad']:
             with self.assertRaises(urllib.error.HTTPError) as error:
                 self.get(path)
             self.assertEqual(error.exception.code, 404)

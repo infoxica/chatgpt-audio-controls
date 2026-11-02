@@ -10,6 +10,7 @@ REPO = Path(__file__).resolve().parents[1]
 ROOT = REPO / 'site-dist'
 CANONICAL = json.loads((REPO / 'config/release.json').read_text())['siteUrl']
 PREFIX = urlsplit(CANONICAL).path
+LEGACY_PREFIX = '/chatgpt-audio-controls/'
 TYPES = {'.html': 'text/html; charset=utf-8', '.md': 'text/markdown; charset=utf-8',
          '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml; charset=utf-8',
          '.css': 'text/css; charset=utf-8', '.js': 'application/javascript; charset=utf-8',
@@ -43,10 +44,11 @@ class Preview(BaseHTTPRequestHandler):
         if '\\' in route or any(ord(char) < 32 or ord(char) == 127 for char in route):
             self.send_error(404)
             return
-        if route.startswith(PREFIX):
+        redirect_prefix = next((prefix for prefix in [PREFIX, LEGACY_PREFIX] if prefix != '/' and route.startswith(prefix)), None)
+        if redirect_prefix:
             self.send_response(308)
             # A double slash would become an external network-path redirect.
-            destination = '/' + quote(route[len(PREFIX):].lstrip('/'), safe='/')
+            destination = '/' + quote(route[len(redirect_prefix):].lstrip('/'), safe='/')
             query = urlsplit(self.path).query
             self.send_header('Location', destination + ('?' + query if query else ''))
             self.end_headers()

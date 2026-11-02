@@ -145,7 +145,7 @@ export class PlayerLayout {
     const environment = { actions: this.nativeActions(), cornerLeft: radius(native?.borderTopLeftRadius), cornerRight: radius(native?.borderTopRightRadius) };
     let result = dockGeometry(p, area, expanded, c, languageDirection(this.language()) === 'rtl', layoutProfile(innerWidth) === 'narrow', environment);
     // A corner that intersects the composer can move upward, keeping its shape.
-    if (result && c && p.preset !== 'composer' && expanded && [result.seek, result.controls, result.circle].some(r => intersects(r, c)) && p.preset.startsWith('bottom')) {
+    if (c && expanded && p.preset.startsWith('bottom') && (!result || [result.seek, result.controls, result.circle].some(r => intersects(r, c)))) {
       result = dockGeometry(p, { ...area, height: c.y - area.y - 8 }, expanded, c, false, false, environment);
     }
     if (!result) return null;
@@ -213,8 +213,7 @@ export class PlayerLayout {
     }
     this.seek.classList.toggle('cgpt-ra-vertical', geometry.verticalSeek);
     this.controls.classList.toggle('cgpt-ra-vertical', geometry.verticalControls);
-    this.controls.classList.toggle('cgpt-ra-wrap', geometry.controls.width < 356 && !geometry.verticalControls);
-    this.controls.classList.toggle('cgpt-ra-compact-dock', docked && geometry.controls.width < 356);
+    this.controls.classList.toggle('cgpt-ra-compact-controls', !!geometry.compactControls);
     this.more.title = getTranslations(this.language()).popup.tabs.controls;
     this.more.setAttribute('aria-label', this.more.title);
     this.circle.dataset.preset = profile.preset;
@@ -281,9 +280,18 @@ export class PlayerLayout {
       const above = Math.max(44, trigger.top - v.y - 8), below = Math.max(44, v.y + v.height - trigger.bottom - 8), placeAbove = above >= below;
       pop.style.maxWidth = v.width + 'px'; pop.style.maxHeight = Math.min(v.height, placeAbove ? above : below) + 'px';
       const w = pop.offsetWidth || 180, h = pop.offsetHeight || 200;
+      if (pop === this.extras && this.controls.classList.contains('cgpt-ra-vertical')) {
+        const rail = bounds(this.controls);
+        const y = Math.max(v.y, Math.min(v.y + v.height - h, trigger.top));
+        const left = { x: rail.x - w - 8, y, width: w, height: h };
+        const right = { ...left, x: rail.x + rail.width + 8 };
+        const sides = rail.x < v.x + v.width / 2 ? [right, left] : [left, right];
+        const target = sides.find(r => fits(r, v));
+        if (target) { pop.style.left = target.x + 'px'; pop.style.top = target.y + 'px'; continue; }
+      }
       if (pop.classList.contains('cgpt-ra-volume-popover')) {
         let rail = bounds(this.controls); const gap = 8;
-        if (this.controls.classList.contains('cgpt-ra-compact-dock') && this.extras.classList.contains('cgpt-open')) {
+        if (this.controls.classList.contains('cgpt-ra-compact-controls') && this.extras.classList.contains('cgpt-open')) {
           const extras = bounds(this.extras);
           const right = Math.max(rail.x + rail.width, extras.x + extras.width), bottom = Math.max(rail.y + rail.height, extras.y + extras.height);
           rail = { x: Math.min(rail.x, extras.x), y: Math.min(rail.y, extras.y), width: 0, height: 0 };

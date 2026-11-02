@@ -31,6 +31,7 @@ import {
   CircleCheck,
   ArrowRight,
   ExternalLink,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { releaseLocales } from "../src/shared/i18n/release-copy";
@@ -482,7 +483,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
   <a class="skip" href="#main">${escape(c.features)}</a><header class="top"><a class="brand" href="${url}"><img src="${path}assets/icon.png" alt="" width="34" height="34"><span>ChatGPT<br>Audio Controls</span></a><div class="header-actions">${navigation}<a class="ui-button donate-header" href="${url}#support">${icon(Heart)}${escape(d.donate)}</a>${controlsFor(slug)}</div></header>
   ${content}
   <footer>${footerNavigation}<p>${escape(c.independent)}</p><p class="copyright-disclaimer">${escape(n.disclaimer)}</p><div class="links"><a href="${root}sitemap.xml">${escape(n.sitemap)}</a><a href="${root}llms.txt">llms.txt</a><a href="https://github.com/infoxica/chatgpt-audio-controls">${escape(base.popup.about.githubRepo)}</a><a href="${url}#privacy">${escape(c.privacy)}</a>${renderToStaticMarkup(createElement(Button, { id: "analytics-preferences", variant: "link" }, c.preferences))}</div></footer>
-  ${consent}<dialog class="image-viewer" dir="${languageDirection(code)}" aria-labelledby="image-viewer-caption"><button type="button" class="image-viewer-close" aria-label="${escape(closeImage)}" title="${escape(closeImage)}">×</button><figure><img alt=""><figcaption id="image-viewer-caption"></figcaption></figure></dialog></body></html>`;
+  ${consent}<dialog class="image-viewer" dir="${languageDirection(code)}" aria-labelledby="image-viewer-caption"><button type="button" class="image-viewer-close" aria-label="${escape(closeImage)}" title="${escape(closeImage)}">${renderToStaticMarkup(createElement(X, { size: 24, "aria-hidden": true }))}</button><figure><img alt=""><figcaption id="image-viewer-caption"></figcaption></figure></dialog></body></html>`;
   };
   const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls</div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p><p class="small">${escape(c.quickStartBody)}</p>${install("hero")}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
   <section class="section demo-section" id="demo" aria-labelledby="demo-title"><h2 id="demo-title">${escape(demo[0])}</h2><p class="small" id="demo-note">${escape(demo[1])}</p>
@@ -577,25 +578,12 @@ for (const [code, base] of Object.entries(LOCALES)) {
 }
 writeFileSync(
   "site-dist/sitemap.xml",
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${Object.keys(
-    LOCALES,
-  )
-    .flatMap((code) =>
-      ["", "guide/", "installation/", "userscript/", "glossary/"].map(
-        (slug) =>
-          `<url><loc>${localeUrl(code)}${slug}</loc><lastmod>${lastModified}</lastmod>${Object.keys(
-            LOCALES,
-          )
-            .map(
-              (language) =>
-                `<xhtml:link rel="alternate" hreflang="${language}" href="${localeUrl(language)}${slug}"/>`,
-            )
-            .join(
-              "",
-            )}<xhtml:link rel="alternate" hreflang="x-default" href="${root}${slug}"/></url>`,
-      ),
-    )
-    .join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${Object.keys(LOCALES)
+    .flatMap(code => ["", "guide/", "installation/", "userscript/", "glossary/"].map(slug =>
+      `  <url>\n    <loc>${escape(localeUrl(code) + slug)}</loc>\n    <lastmod>${lastModified}</lastmod>\n${Object.keys(LOCALES)
+        .map(language => `    <xhtml:link rel="alternate" hreflang="${language}" href="${escape(localeUrl(language) + slug)}"/>`)
+        .join("\n")}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(root + slug)}"/>\n  </url>`))
+    .join("\n")}\n</urlset>\n`,
 );
 // Owner-approved policy: public website content is available for search,
 // AI inference, and training. Keep current and legacy crawler names explicit.

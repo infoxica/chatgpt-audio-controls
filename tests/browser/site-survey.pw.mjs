@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
-const base='https://infoxica.github.io/chatgpt-audio-controls/';
+import vm from 'node:vm';
+const base='https://chatgpt-audio-controls.infoxica.com/';
 async function serveSite(context,tracking=[]) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
@@ -282,6 +283,12 @@ for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'a
   await expect.poll(()=>viewer.locator('img').evaluate(el=>el.naturalWidth)).toBe(1920);
   expect(await viewer.locator('img').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;})).toBe(true);
   expect(await viewer.locator('button').getAttribute('aria-label')).toBeTruthy();
+  const offset=await viewer.locator('button').evaluate(el=>{
+    const b=el.getBoundingClientRect(),s=el.querySelector('svg').getBoundingClientRect();
+    return Math.max(Math.abs((b.left+b.right-s.left-s.right)/2),Math.abs((b.top+b.bottom-s.top-s.bottom)/2));
+  });
+  expect(offset).toBeLessThanOrEqual(1);
+
   if(i===0){await page.keyboard.press('Tab');await expect(viewer.locator('button')).toBeFocused();await page.screenshot({path:`build/image-viewer-${width}.png`});await page.keyboard.press('Escape');}
   else if(i===1)await viewer.locator('button').click();else await viewer.click({position:{x:4,y:200}});
   await expect(viewer).not.toBeVisible();await expect(trigger).toBeFocused();expect(page.url()).toBe(base+locale);
@@ -298,4 +305,21 @@ for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'a
  const dividerGap=await page.locator('#support').evaluate(el=>el.getBoundingClientRect().top-document.querySelector('#guides').getBoundingClientRect().bottom);expect(dividerGap).toBeCloseTo(32,0);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.screenshot({path:`build/support-cards-${width}.png`});
+});
+
+test('legacy redirect preserves locale and approved campaigns without forwarding private data',async()=>{
+  const html=await fs.readFile('build/legacy-pages/ja/guide/index.html','utf8');
+  const canonical=html.match(/rel="canonical" href="([^"]+)"/)[1];
+  expect(canonical).toBe(base+'ja/guide/');
+  expect(html).toContain('http-equiv="refresh"');
+  expect(html).toContain('Continue to ChatGPT Audio Controls');
+  const script=await fs.readFile('build/legacy-pages/redirect.js','utf8');
+  for(const hash of ['#support','#private%20words']){
+    let destination;
+    vm.runInNewContext(script,{URL,document:{querySelector:()=>({href:canonical})},location:{href:'https://infoxica.github.io/chatgpt-audio-controls/ja/guide/?utm_source=github&utm_campaign=v1.4.1&email=private@example.test&redirect=https://evil.test',hash,replace:url=>{destination=url;}}});
+    const url=new URL(destination);expect(url.origin+url.pathname).toBe(canonical);
+    expect(url.search).toBe('?utm_source=github&utm_campaign=v1.4.1');
+    expect(url.hash).toBe(hash==='#support'?'#support':'');
+  }
+  expect(await fs.readFile('build/legacy-pages/assets/walkthrough.mp4')).toEqual(await fs.readFile('site-dist/assets/walkthrough.mp4'));
 });

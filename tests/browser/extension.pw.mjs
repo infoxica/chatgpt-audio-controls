@@ -39,6 +39,11 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.addInitScript(()=>{window.fixtureAudios=[];const Original=window.Audio;window.Audio=function(...args){const audio=new Original(...args);window.fixtureAudios.push(audio);return audio;};});
     await page.goto('https://chatgpt.com/');await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();return page;
   }
+  async function revealSecondary(page) {
+    await expect(page.locator('#cgpt-ra-right')).toBeVisible();
+    const more=page.locator('.cgpt-ra-more');
+    if(await more.isVisible() && await more.getAttribute('aria-expanded')!=='true') await more.click();
+  }
   async function time(page){return (await page.locator('.cgpt-ra-current').textContent()).split(':').reduce((total,n)=>total*60+Number(n),0);}
   const layoutKey = 'cgpt-ra-layout-v1';
   const profile = (overrides={}) => ({preset:'original',seekFirst:true,...overrides});
@@ -120,7 +125,9 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect(toast.getByRole('status')).toHaveText(f.ready);
       await expect(toast.getByRole('button',{name:t.content.tooltips.download,exact:true})).toBeVisible();
       await toast.getByRole('button',{name:r.dismiss,exact:true}).click();
+      await revealSecondary(page);
       await expect(page.locator('.cgpt-ra-download')).toHaveAccessibleName(t.content.tooltips.download);
+      await page.keyboard.press('Escape');
     }
     await page.reload();
     await expect(page.locator('#cgpt-ra-right')).toHaveAttribute('lang','ro');
@@ -173,7 +180,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect(status).toHaveAttribute('dir','rtl');await expect(status).toHaveAttribute('lang',language);
       await expect(page.locator('html')).not.toHaveAttribute('dir','rtl');
       if(distribution==='userscript') {
-        if(!await page.locator('.cgpt-ra-help-wrap').evaluate(el=>el.classList.contains('cgpt-open'))) await page.locator('.cgpt-ra-help-wrap > button').click();
+        if(!await page.locator('.cgpt-ra-help-wrap').evaluate(el=>el.classList.contains('cgpt-open'))) { await revealSecondary(page);await page.locator('.cgpt-ra-help-wrap > button').click(); }
         await page.locator('.cgpt-ra-help').getByRole('button',{name:localized[language].t.popup.header.openOptions}).click();
         const dialog=page.locator('#cgpt-ra-settings-dialog');
         await expect(dialog).toHaveAttribute('dir','rtl');await expect(dialog).toHaveAttribute('lang',language);
@@ -452,7 +459,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   });
   if(distribution==='userscript')test('standalone keyboard settings and failed layout saves are honest',async()=>{
     const page=await open();await setting(page,{language:'en',notifyDownloadReady:false});await layout(page);await page.locator('#native-read').click();
-    await page.locator('.cgpt-ra-help-wrap > button').click();await page.locator('.cgpt-ra-help').getByRole('button',{name:'Open Dashboard & Settings'}).click();
+    await revealSecondary(page);await page.locator('.cgpt-ra-help-wrap > button').click();await page.locator('.cgpt-ra-help').getByRole('button',{name:'Open Dashboard & Settings'}).click();
     const dialog=page.locator('#cgpt-ra-settings-dialog');await expect(dialog).toBeVisible();
     await dialog.locator('select').nth(1).selectOption('top-left');await dialog.getByRole('button',{name:'Got it'}).click();
     await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');
@@ -462,6 +469,25 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await startDrag(page,'#cgpt-ra-floating-toggle');await drop(page,'.cgpt-ra-drop-target[data-preset="bottom-right"] [data-part="circle"]');
     await expect(page.locator('#cgpt-ra-status')).toContainText('save');expect(await storedLayout(page)).toEqual(saved);
     await page.reload();await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();await layout(page);await page.close();
+  });
+  test('compact vertical controls expose unclipped secondary actions beside the rail',async()=>{
+    const page=await open(1200);await page.setViewportSize({width:1200,height:580});await page.locator('#native-read').click();
+    for(const preset of ['left','right'])for(const seekFirst of [true,false]){
+      await layout(page,profile({preset,seekFirst}));
+      await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset',preset);
+      await page.evaluate(()=>Promise.all(document.getAnimations().map(a=>a.finished.catch(()=>{}))));
+      await expect(page.locator('#cgpt-ra-right')).toHaveClass(/cgpt-ra-compact-controls/);
+      await expect(page.locator('#cgpt-ra-right')).toHaveClass(/cgpt-ra-vertical/);
+      await revealSecondary(page);
+      const rail=await page.locator('#cgpt-ra-right').boundingBox(), menu=await page.locator('.cgpt-ra-extras').boundingBox();
+      expect(menu.x+menu.width<=rail.x||menu.x>=rail.x+rail.width).toBe(true);
+      for(const selector of ['.cgpt-ra-speed-btn','.cgpt-ra-volume-btn','.cgpt-ra-download','.cgpt-ra-help-wrap > button']){
+        const box=await page.locator(selector).boundingBox();expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);
+        expect(box.x).toBeGreaterThanOrEqual(menu.x);expect(box.x+box.width).toBeLessThanOrEqual(menu.x+menu.width+0.5);
+      }
+      await page.keyboard.press('Escape');
+    }
+    await page.close();
   });
   test('uninterrupted native audio keeps advancing',async()=>{
     const page=await open();await page.locator('#native-read').click();
@@ -482,7 +508,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect.poll(()=>time(page)).toBeGreaterThan(before);
     }
     await page.locator('.cgpt-ra-play').click();const saved=await time(page);await page.locator('.cgpt-ra-forward').click();expect(await time(page)).toBeGreaterThanOrEqual(saved+9);
-    await page.locator('.cgpt-ra-speed-btn').click();await page.locator('[data-speed="1.5"]').click();await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.5×');
+    await revealSecondary(page);await page.locator('.cgpt-ra-speed-btn').click();await page.locator('[data-speed="1.5"]').click();await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.5×');
     await page.locator('#new-read').click();await expect.poll(()=>page.locator('#host').evaluate(a=>!a.paused&&a.readyState>=2)).toBe(true);await expect.poll(()=>time(page)).toBeLessThan(3);
     await page.evaluate(()=>history.pushState({},'', '/c/another'));await expect(page.locator('#cgpt-ra-right')).toBeHidden({timeout:7000});
     expect(errors).toEqual([]);await page.close();
@@ -501,7 +527,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.locator('.cgpt-ra-play').click();
     await expect.poll(()=>time(page)).toBeGreaterThan(before);
     await expect(page.locator('.cgpt-ra-duration')).toHaveText('2:00');
-    const downloading=page.waitForEvent('download');await page.locator('.cgpt-ra-download').click();
+    const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();
     expect(await fs.readFile(await (await downloading).path())).toEqual(wav());
     await page.close();
   });
@@ -549,7 +575,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect(page.locator('#cgpt-ra-right')).toHaveCSS('color','rgb(13, 13, 13)');
       await expect.poll(()=>time(page)).toBeGreaterThan(0);
       await fs.mkdir('assets/store/screenshots',{recursive:true});
-      await page.locator('#cgpt-ra-dock').screenshot({path:'assets/store/screenshots/v1.4.0-playback-demo.png'});
+      await page.locator('#cgpt-ra-dock').screenshot({path:'build/browser-results/v1.4.1-playback-demo.png'});
     }
     await page.close();
   });
@@ -568,7 +594,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.locator('main p').click();await page.keyboard.press('k');await expect(page.locator('.cgpt-ra-play polygon')).toHaveCount(1);
     await page.locator('.cgpt-ra-volume-slider').evaluate(input=>{input.value='0.4';input.dispatchEvent(new Event('input',{bubbles:true}));});
     await expect(page.locator('.cgpt-ra-volume-value')).toHaveText('40%');
-    const downloading=page.waitForEvent('download');await page.locator('.cgpt-ra-download').click();const download=await downloading;
+    const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();const download=await downloading;
     expect(await fs.readFile(await download.path())).toEqual(wav());
     await page.evaluate(()=>{const audio=window.fixtureAudios.at(-1);audio.play=()=>Promise.reject(new DOMException('Fixture rejection','NotAllowedError'));});
     await page.locator('.cgpt-ra-play').click();await expect(page.locator('#cgpt-ra-status')).toContainText('could not resume');
@@ -613,7 +639,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect(page.locator('.settings-section .card').first()).toHaveCSS('background-color','rgba(0, 0, 0, 0)');
     await expect(page.locator('.sidebar-footer > :first-child')).toHaveAttribute('role','radiogroup');
     await fs.mkdir('assets/store/screenshots',{recursive:true});
-    await page.screenshot({path:'assets/store/screenshots/v1.4.0-dashboard.png'});
+    await page.screenshot({path:'build/browser-results/v1.4.1-dashboard.png'});
     await page.getByRole('button',{name:'Shortcuts & Gestures'}).click();
     const edit=page.locator('.shortcut-edit').first();await expect(edit).toHaveAccessibleName(/Edit in browser:/);const command=(await edit.getAttribute('aria-label')).split(': ').slice(1).join(': ');
     const created=context.waitForEvent('page');await edit.click();const shortcuts=await created;
@@ -629,15 +655,15 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await setting(page,{language:'en',notifyDownloadReady:false,defaultSpeed:1.25,defaultVolume:0.8});
     await page.reload();await page.locator('#native-read').click();
     await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.25×');
-    await page.locator('.cgpt-ra-speed-btn').click();await page.locator('[data-speed="1.75"]').click();
-    await page.locator('.cgpt-ra-volume-btn').click();
+    await revealSecondary(page);await page.locator('.cgpt-ra-speed-btn').click();await page.locator('[data-speed="1.75"]').click();
+    await revealSecondary(page);await page.locator('.cgpt-ra-volume-btn').click();
     await expect(page.locator('.cgpt-ra-volume-slider')).toBeVisible();
     await page.locator('.cgpt-ra-volume-slider').press('Home');await page.locator('.cgpt-ra-volume-slider').press('ArrowRight');
     await expect(page.locator('.cgpt-ra-volume-value')).toHaveText('1%');
     await page.reload();await page.locator('#native-read').click();
     await expect(page.locator('.cgpt-ra-speed-btn')).toHaveText('1.75×');
     await expect.poll(()=>page.locator('#host').evaluate(audio=>({speed:audio.playbackRate,volume:audio.volume}))).toEqual({speed:1.75,volume:0.01});
-    await page.locator('.cgpt-ra-volume-btn').click();await expect(page.locator('.cgpt-ra-volume-slider')).toBeVisible();
+    await revealSecondary(page);await page.locator('.cgpt-ra-volume-btn').click();await expect(page.locator('.cgpt-ra-volume-slider')).toBeVisible();
     await page.locator('.cgpt-ra-volume-slider').press('Home');await expect(page.locator('.cgpt-ra-volume-value')).toHaveText('0%');
     await page.reload();await page.locator('#native-read').click();
     await expect.poll(()=>page.locator('#host').evaluate(audio=>audio.volume)).toBe(0);
@@ -665,7 +691,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await layout(page,profile({preset:'composer'}));
     await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset','composer');
     const help=()=>page.evaluate(()=>window.postMessage({source:'chatgpt-audio-controls-settings-bridge',type:'CGPT_RA_COMMAND',command:'open-help'},'*'));
-    await help();await expect(page.locator('#cgpt-ra-right')).toHaveClass(/cgpt-ra-compact-dock/);
+    await help();await expect(page.locator('#cgpt-ra-right')).toHaveClass(/cgpt-ra-compact-controls/);
     await expect(page.locator('.cgpt-ra-help')).toBeVisible();
     await expect(page.locator('.cgpt-ra-more')).toHaveAttribute('aria-expanded','true');
     await help();await expect(page.locator('.cgpt-ra-help')).toBeVisible();
@@ -703,7 +729,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect(page.locator('.popup-footer').getByRole('link',{name:'Help and troubleshooting'})).toBeVisible();await expect(page.getByText('Inline Speech Buttons',{exact:true})).toHaveCount(0);
     await expect(page.locator('.speed-chip.active')).toHaveText('1.5×');
     const help=page.locator('.popup-footer').getByRole('link',{name:'Help and troubleshooting'});await help.focus();await expect(help).toBeFocused();
-    await expect(help).toHaveAttribute('href',/chatgpt-audio-controls\/#help/);
+    await expect(help).toHaveAttribute('href',/chatgpt-audio-controls\.infoxica\.com\/#help/);
     await page.getByRole('button',{name:'About',exact:true}).click();await expect(page.getByRole('link',{name:/Share a suggestion/})).toHaveAttribute('href',/source=installed/);
     await page.screenshot({path:'build/browser-results/popup-v1.3.0.png'});await page.close();
   });
@@ -740,4 +766,35 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await dashboard.screenshot({path:'build/browser-results/dashboard-v1.3.0.png'});
     await popup.close(); await dashboard.close();
   });
+  test('laptop viewports retain split controls without clipping at high pixel density',async()=>{
+    test.setTimeout(120000);
+    const page=await open(1512);await setting(page,{language:'en',hideFloatingControls:false});
+    await page.emulateMedia({reducedMotion:'reduce'});
+    const cdp=await context.newCDPSession(page);
+    await page.locator('#native-read').click();
+    for(const [width,height] of [[1512,982],[1440,900],[1280,800],[1728,1117],[1920,1080],[768,800],[390,740],[360,740],[320,740]]) {
+      await cdp.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:2,mobile:false});
+      for(const seekFirst of [true,false]) {
+        await layout(page,profile({seekFirst}),profile({preset:'composer',seekFirst}));
+        await expect.poll(()=>page.evaluate(()=>{
+          const controls=document.querySelector('#cgpt-ra-right'), seek=document.querySelector('#cgpt-ra-left');
+          const rect=controls.getBoundingClientRect(), track=seek.getBoundingClientRect();
+          const buttons=[...controls.querySelectorAll('button')].filter(el=>el.getClientRects().length && !el.closest('.cgpt-ra-extras'));
+          return [rect,track].every(r=>r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight) && buttons.every(el=>{
+            const b=el.getBoundingClientRect();return b.width>=44&&b.height>=44&&b.left>=rect.left&&b.right<=rect.right&&b.top>=rect.top&&b.bottom<=rect.bottom;
+          });
+        })).toBe(true);
+        if(width>=1440) {
+          await expect.poll(()=>page.evaluate(()=>{
+            const c=document.querySelector('form').getBoundingClientRect(),b=document.querySelector('#cgpt-ra-floating-toggle').getBoundingClientRect();
+            return Math.abs(b.left-c.right-6)<1;
+          })).toBe(true);
+        }
+      }
+      if(width===1512)await page.screenshot({path:`build/browser-results/${distribution}-1512-982.png`});
+    }
+    await cdp.send('Emulation.clearDeviceMetricsOverride');
+    await layout(page);await page.close();
+  });
+
 });

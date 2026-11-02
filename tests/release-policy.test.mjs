@@ -10,7 +10,7 @@ test('README versions match the checkout and stale badges block validation', () 
   expect(() => validateReadmeVersion(readme, version)).not.toThrow();
   expect(() => validateReadmeVersion(readme.replace(`source-v${version}-`, 'source-v0.0.1-'), version)).toThrow('badge');
   expect(() => validateReadmeVersion(readme.replace('](CHANGELOG.md)', '](https://github.com/infoxica/chatgpt-audio-controls/releases/tag/v0.0.1)'), version)).toThrow('badge');
-  expect(() => validateReadmeVersion(readme.replace(`## v${version}`, '## v0.0.1'), version)).toThrow('heading');
+  expect(() => validateReadmeVersion(readme.replace('[Changelog](CHANGELOG.md)', ''), version)).toThrow('Changelog');
   expect(() => validateReadmeVersion(readme.replace(/^\[!\[Source version\].*$/m, ''), version)).toThrow('badge');
 });
 

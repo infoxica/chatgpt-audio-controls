@@ -8,9 +8,8 @@ export function validateReadmeVersion(readme: string, version: string): void {
   if (!readme.includes(badge)) {
     throw new Error(`README.md source-version badge must show v${version} and link to CHANGELOG.md.`);
   }
-  const heading = readme.match(/^## v(\d+\.\d+\.\d+)\b/m)?.[1];
-  if (heading !== version) {
-    throw new Error(`README.md current version heading must be v${version}; found ${heading || 'none'}.`);
+  if (!readme.includes('[Changelog](CHANGELOG.md)')) {
+    throw new Error('README.md must include a prominent Changelog link.');
   }
 }
 
