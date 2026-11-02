@@ -8,11 +8,16 @@ are historical evidence, not proof that this candidate passed a native platform.
 - Application type checking passed. Geometry covers 1512×982, 1440×900,
   1280×800, 1728×1117, 1920×1080 and narrow widths. Full 356px controls fall
   back to a 224px presentation with 44px buttons before changing arrangement.
-- The complete browser run and focused reruns verified 99 scenarios; one
+- The complete browser run passed 102 scenarios; one
   extension-inapplicable userscript scenario was skipped. Initial failures came
   from tests trying to click secondary controls before opening More, including
   a controls-expansion timing race, and an old website URL expectation. Updated
   tests use the actual More interaction and wait for visible controls.
+- After real Android testing exposed an AAC file-decoder failure, the complete
+  102-scenario run passed again with a retained-byte MediaSource fallback. Four
+  focused extension/userscript checks then passed, including two new AAC
+  filename checks: 104 distinct scenarios in total. The filename test isolates
+  MIME selection with a playable tone; it does not claim native AAC decoding.
 - Original/split and all preset/order fixtures, exact drag geometry, destructive
   pause and retained-source recovery, localized labels, support reminders,
   popup/settings, image-viewer SVG centering and website RTL were exercised.
@@ -52,6 +57,31 @@ Android, candidate version and actual viewport. Test portrait/landscape,
 keyboard appearance, composer growth, docking, touch targets, More/popovers,
 seek, pause/resume and downloaded audio in a fictional conversation. Restore
 normal rotation and developer-mode settings after testing.
+
+### Real-device observations — partial, not acceptance
+
+Samsung Galaxy S25 Ultra, Android 17, Edge 156.0.4314.43, unpacked 1.4.1:
+
+- Native AAC began playing, but pause/resume initially failed with
+  `DEMUXER_ERROR_NO_SUPPORTED_STREAMS` from the retained file decoder. The
+  streaming fallback resumed advancing playback and supported forward seek.
+  No speech request or format conversion was added.
+- Observed CSS viewports were 411×729 portrait, 855×329 landscape and 411×413
+  with the keyboard. Geometry snapshots had no horizontal overflow. Composer
+  growth and return from keyboard/rotation were exercised; the volume popup's
+  scroll dimensions matched its client dimensions.
+- The browser reported all 270,338 retained bytes received for a download, but
+  no completed saved file was confirmed. A prior debugger connection may affect
+  download handling; a clean-browser saved-file check remains required. The
+  recorded pending download was cancelled. Do not mark `edgeAndroidLive` true.
+- The final filename correction passed both-distribution browser tests. The
+  updated candidate was copied to the phone but left disabled. The original
+  1.3.0 store copy, developer-mode setting and rotation were restored; the test
+  tab and temporary inspection dumps were removed. No personal chat media was
+  saved or published. Local JSON evidence contains only test/geometry data.
+
+Repeat the full native checklist on the final candidate before acceptance,
+including stable touch transitions and a completed, playable saved audio file.
 
 ## Media provenance
 

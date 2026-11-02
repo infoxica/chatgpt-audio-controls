@@ -4,9 +4,12 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
-## [1.4.0] — Unreleased
+## [1.4.1] — Unreleased
+
+Includes the unpublished 1.4.0 feature work and the following corrections.
 
 - Preserve original and corner placement at constrained laptop viewport sizes by using full-size compact controls before changing arrangement. Secondary actions remain available through More; vertical compact controls open their menu toward the viewport interior.
+- Recover retained AAC playback on Edge Android through the browser's native streaming decoder when its file decoder rejects the same bytes. Pausing, resuming and seeking reuse the retained payload without another request. Raw AAC downloads use the matching `.aac` filename extension.
 - Center image-viewer close icons with SVGs and consistent keyboard/touch targets.
 - Consolidate release history here and simplify README demo copy. Recording provenance and acceptance evidence remain in release documentation.
 - Prepare the official website at https://chatgpt-audio-controls.infoxica.com/ alongside the existing private feedback service. Add staged Worker static assets, legacy Pages redirects, readable validated sitemaps, and a root-domain-safe preview server.

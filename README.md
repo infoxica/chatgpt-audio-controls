@@ -15,7 +15,7 @@
   </a>
 </p>
 
-[![Source version](https://img.shields.io/badge/source-v1.4.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Source version](https://img.shields.io/badge/source-v1.4.1-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)

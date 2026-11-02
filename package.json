@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-audio-controls",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Audio Controls for ChatGPT — Pause, Resume, Seeker, Speed, Volume, Download, and Shortcuts.",
   "type": "module",
   "scripts": {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT Read Aloud & Audio Controls
 // @namespace    https://infoxica.com/
-// @version      1.4.0
+// @version      1.4.1
 // @description  Integrated Read Aloud controls beside the ChatGPT composer: compact seek player, speed presets, volume slider with wheel scroll, instant audio download, shortcuts.
 // @author       Infoxica
 // @match        https://chatgpt.com/*
@@ -9522,24 +9522,30 @@
           if (this.objectURL)
             URL.revokeObjectURL(this.objectURL);
           this.objectURL = URL.createObjectURL(blob);
-          await new Promise((resolve, reject) => {
-            const timer = setTimeout(() => finish(new Error("Audio load timed out")), 15000);
-            const finish = (error) => {
-              clearTimeout(timer);
-              owned.removeEventListener("loadedmetadata", loaded);
-              owned.removeEventListener("error", failed);
-              signal.removeEventListener("abort", aborted);
-              error ? reject(error) : resolve();
-            };
-            const loaded = () => finish();
-            const failed = () => finish(new Error("Audio load failed"));
-            const aborted = () => finish(new Error("Session replaced"));
-            owned.addEventListener("loadedmetadata", loaded, { once: true });
-            owned.addEventListener("error", failed, { once: true });
-            signal.addEventListener("abort", aborted, { once: true });
-            owned.src = this.objectURL;
-            owned.load();
-          });
+          try {
+            await new Promise((resolve, reject) => {
+              const timer = setTimeout(() => finish(new Error("Audio load timed out")), 15000);
+              const finish = (error) => {
+                clearTimeout(timer);
+                owned.removeEventListener("loadedmetadata", loaded);
+                owned.removeEventListener("error", failed);
+                signal.removeEventListener("abort", aborted);
+                error ? reject(error) : resolve();
+              };
+              const loaded = () => finish();
+              const failed = () => finish(new Error("Audio load failed"));
+              const aborted = () => finish(new Error("Session replaced"));
+              owned.addEventListener("loadedmetadata", loaded, { once: true });
+              owned.addEventListener("error", failed, { once: true });
+              signal.addEventListener("abort", aborted, { once: true });
+              owned.src = this.objectURL;
+              owned.load();
+            });
+          } catch (error) {
+            if (!current() || signal.aborted || typeof MediaSource === "undefined" || !MediaSource.isTypeSupported(blob.type))
+              throw error;
+            await this.loadRetainedStream(owned, blob, signal);
+          }
           if (!current())
             return;
           owned.currentTime = Math.min(this.savedTime, Number.isFinite(owned.duration) ? owned.duration : this.savedTime);
@@ -9558,6 +9564,66 @@
           }
         }
       })();
+    }
+    async loadRetainedStream(owned, blob, signal) {
+      const bytes = await blob.arrayBuffer();
+      if (signal.aborted)
+        throw new Error("Session replaced");
+      const source = new MediaSource;
+      if (this.objectURL)
+        URL.revokeObjectURL(this.objectURL);
+      this.objectURL = URL.createObjectURL(source);
+      await new Promise((resolve, reject) => {
+        let buffer, appended = false, settled = false;
+        const timer = setTimeout(() => finish(new Error("Audio stream load timed out")), 15000);
+        const finish = (error) => {
+          if (settled)
+            return;
+          settled = true;
+          clearTimeout(timer);
+          source.removeEventListener("sourceopen", open);
+          buffer?.removeEventListener("updateend", updated);
+          buffer?.removeEventListener("error", failed);
+          owned.removeEventListener("loadedmetadata", loaded);
+          owned.removeEventListener("error", failed);
+          signal.removeEventListener("abort", aborted);
+          error ? reject(error) : resolve();
+        };
+        const loaded = () => {
+          if (appended && owned.readyState >= 1)
+            finish();
+        };
+        const failed = () => finish(new Error("Retained audio stream failed"));
+        const aborted = () => finish(new Error("Session replaced"));
+        const updated = () => {
+          try {
+            if (!buffer?.buffered.length)
+              throw new Error("Empty retained audio stream");
+            source.duration = buffer.buffered.end(buffer.buffered.length - 1);
+            source.endOfStream();
+            appended = true;
+            loaded();
+          } catch {
+            failed();
+          }
+        };
+        const open = () => {
+          try {
+            buffer = source.addSourceBuffer(blob.type);
+            buffer.addEventListener("updateend", updated, { once: true });
+            buffer.addEventListener("error", failed, { once: true });
+            buffer.appendBuffer(bytes);
+          } catch {
+            failed();
+          }
+        };
+        source.addEventListener("sourceopen", open, { once: true });
+        owned.addEventListener("loadedmetadata", loaded);
+        owned.addEventListener("error", failed);
+        signal.addEventListener("abort", aborted, { once: true });
+        owned.src = this.objectURL;
+        owned.load();
+      });
     }
     playOwned() {
       const owned = this.owned, generation = this.generation, attempt = this.playAttempt;
@@ -10986,7 +11052,9 @@
       const type = String(mime || "").toLowerCase();
       if (type.includes("mpeg"))
         return "mp3";
-      if (type.includes("mp4") || type.includes("m4a") || type.includes("aac"))
+      if (type.includes("aac"))
+        return "aac";
+      if (type.includes("mp4") || type.includes("m4a"))
         return "m4a";
       if (type.includes("wav"))
         return "wav";
