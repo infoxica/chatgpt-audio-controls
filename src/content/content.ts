@@ -1,13 +1,24 @@
+import { literalColor } from '../shared/accent';
+import { openStandaloneSettings } from './standalone-settings';
+import { PlayerLayout } from './player-layout';
+import { ReadyToast } from './ready-toast';
+import { SupportPrompts } from './support-prompts';
+import { featureCopy, commandLabels } from '../shared/i18n/features';
+import { polishCopy } from '../shared/i18n/polish';
+import { languageDirection, resolveLanguage } from '../shared/i18n/core';
+import { COMMANDS, isPlayerCommand, matchesShortcut, PlayerCommand } from '../shared/shortcuts';
 import { PlaybackSession } from "./playback-session";
 import { StreamingAudioCapture } from "./streaming-audio";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
 import { floatingVisibility } from "../shared/visibility";
 import { playbackAction, platformKeys } from "../shared/shortcuts";
 import { getLucideSvg, setIcon } from "./icons";
-import { SPEED_PRESETS, STORAGE_KEYS } from "../shared/constants";
+import { SPEED_PRESETS, STORAGE_KEYS, DEFAULT_SETTINGS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 import { getTranslations } from "../shared/i18n/core";
 
+declare const __USERSCRIPT__: boolean;
+const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 (function () {
   "use strict";
 
@@ -28,7 +39,10 @@ import { getTranslations } from "../shared/i18n/core";
 
   let activeMedia: HTMLMediaElement | null = null;
   let settingsCache: ExtensionSettings | null = null;
-  let visibilityShortcut = '';
+  let commandBindings: Record<string, string> = {};
+  let playerLayout: PlayerLayout | null = null;
+  const readyToast = new ReadyToast();
+  if (standalone) { try { settingsCache = { ...DEFAULT_SETTINGS, ...JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS) || '{}') }; } catch { settingsCache = { ...DEFAULT_SETTINGS }; } }
   let sessionSpeed: number | null = null;
   let sessionVolume: number | null = null;
   const mediaListenersInstalled = new WeakSet<HTMLMediaElement>();
@@ -38,7 +52,6 @@ import { getTranslations } from "../shared/i18n/core";
   let leftRail: HTMLElement | null = null;
   let rightRail: HTMLElement | null = null;
   let floatingToggle: HTMLButtonElement | null = null;
-  let collapseButton: HTMLButtonElement | null = null;
   let seekSlider: HTMLInputElement | null = null;
   let currentLabel: HTMLElement | null = null;
   let durationLabel: HTMLElement | null = null;
@@ -121,6 +134,8 @@ import { getTranslations } from "../shared/i18n/core";
   function showStatus(message: string, error = false): void {
     let status = document.getElementById('cgpt-ra-status');
     if (!status) { status = document.createElement('div'); status.id = 'cgpt-ra-status'; status.setAttribute('role', 'status'); document.body.append(status); }
+    status.dir = languageDirection(settingsCache?.language);
+    status.lang = resolveLanguage(settingsCache?.language);
     status.textContent = message;
     status.hidden = false;
     status.dataset.error = String(error);
@@ -151,6 +166,14 @@ import { getTranslations } from "../shared/i18n/core";
   function getSavedSpeed(): number {
     if (sessionSpeed !== null) return sessionSpeed;
 
+    // Standalone playback restores the last player choice before settings defaults.
+    if (standalone) {
+      try {
+        const saved = parseFloat(localStorage.getItem(CONFIG.speedStorage) || "");
+        if (Number.isFinite(saved) && saved >= 0.25 && saved <= 4) return saved;
+      } catch (_) {}
+    }
+
     const configuredSpeed = Number(settingsCache?.defaultSpeed);
     if (Number.isFinite(configuredSpeed) && configuredSpeed >= 0.25 && configuredSpeed <= 4) {
       return configuredSpeed;
@@ -162,6 +185,13 @@ import { getTranslations } from "../shared/i18n/core";
 
   function getSavedVolume(): number {
     if (sessionVolume !== null) return sessionVolume;
+
+    if (standalone) {
+      try {
+        const saved = parseFloat(localStorage.getItem(CONFIG.volumeStorage) || "");
+        if (Number.isFinite(saved) && saved >= 0 && saved <= 1) return saved;
+      } catch (_) {}
+    }
 
     const configuredVolume = Number(settingsCache?.defaultVolume);
     if (Number.isFinite(configuredVolume) && configuredVolume >= 0 && configuredVolume <= 1) {
@@ -192,6 +222,9 @@ import { getTranslations } from "../shared/i18n/core";
     const settings = getSavedSettings();
     const step = settings.tapSeekSeconds || CONFIG.tapSeekSeconds;
 
+    seekSlider?.setAttribute('aria-label', polishCopy(settingsCache?.language).seekPosition);
+
+    for (const el of [leftRail, rightRail, floatingToggle]) if (el) { el.dir = languageDirection(settingsCache?.language); el.lang = resolveLanguage(settingsCache?.language); }
     if (floatingToggle) {
       floatingToggle.title = t.common.extensionName;
       floatingToggle.setAttribute("aria-label", t.content.tooltips.expand);
@@ -255,17 +288,17 @@ import { getTranslations } from "../shared/i18n/core";
             <span class="cgpt-ra-shortcut-key">${t.content.shortcutsPopover.smoothScrubKey.replace(/{s}/g, String(step))}</span>
           </div>
         `;
-        const commandRow = document.createElement('div');
-        commandRow.className = 'cgpt-ra-shortcut-row';
-        const commandLabel = document.createElement('span');
-        commandLabel.textContent = recoveryCopy().visibilityShortcut;
-        const commandKey = document.createElement('span');
-        commandKey.className = 'cgpt-ra-shortcut-key';
-        commandKey.textContent = visibilityShortcut ? platformKeys(visibilityShortcut) : recoveryCopy().unassigned;
-        commandRow.append(commandLabel, commandKey);
+        const labels = commandLabels(settingsCache?.language, step);
+        for (const command of COMMANDS) {
+          const commandRow = document.createElement('div'); commandRow.className = 'cgpt-ra-shortcut-row';
+          const label = document.createElement('span'); label.textContent = labels[command].replace('{s}', String(step));
+          const key = document.createElement('span'); key.className = 'cgpt-ra-shortcut-key'; key.textContent = commandBindings[command] ? platformKeys(commandBindings[command]) : recoveryCopy().unassigned;
+          commandRow.append(label, key); helpPopover.append(commandRow);
+        }
         const scope = document.createElement('p');
-        scope.textContent = recoveryCopy().shortcutScope;
-        helpPopover.append(commandRow, scope);
+        scope.textContent = /Android/i.test(navigator.userAgent) ? featureCopy(settingsCache?.language).desktopShortcuts : recoveryCopy().shortcutScope;
+        helpPopover.append(scope);
+        const settingsButton = document.createElement('button'); settingsButton.type = 'button'; settingsButton.textContent = t.popup.header.openOptions; settingsButton.onclick = () => dispatchAction('open-settings'); helpPopover.append(settingsButton);
       }
 
       const collapseBtn = rightRail.querySelector<HTMLElement>(".cgpt-ra-collapse-btn");
@@ -275,6 +308,9 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   function installSettingsBridge(): void {
+    window.addEventListener('message', event => {
+      if (event.source === window && event.data?.source === 'chatgpt-audio-controls-settings-bridge' && event.data?.type === 'CGPT_RA_COMMAND' && isPlayerCommand(event.data.command) && getSavedSettings().enableShortcuts !== false) dispatchAction(event.data.command);
+    });
     window.addEventListener("message", (event: MessageEvent) => {
       if (
         event.source !== window ||
@@ -284,8 +320,9 @@ import { getTranslations } from "../shared/i18n/core";
         return;
       }
 
-      settingsCache = event.data.settings as ExtensionSettings;
-      visibilityShortcut = typeof event.data.shortcut === 'string' ? event.data.shortcut.slice(0, 80) : '';
+      settingsCache = { ...DEFAULT_SETTINGS, ...event.data.settings } as ExtensionSettings;
+      commandBindings = Object.fromEntries(COMMANDS.map(c => [c, typeof event.data.commands?.[c] === 'string' ? event.data.commands[c].slice(0, 80) : '']));
+      if (!settingsCache.notifyDownloadReady) readyToast.clear();
 
       if (activeMedia) {
         try {
@@ -315,7 +352,8 @@ import { getTranslations } from "../shared/i18n/core";
 
   function parseColorToTheme(colorStr: string): string | null {
     if (!colorStr) return null;
-    const str = colorStr.toLowerCase().trim();
+    let str = colorStr.toLowerCase().trim();
+    if (/^#[a-f0-9]{6}$/i.test(str)) str = `rgb(${parseInt(str.slice(1, 3), 16)}, ${parseInt(str.slice(3, 5), 16)}, ${parseInt(str.slice(5, 7), 16)})`;
 
     if (str.includes("green") || str === "#10a37f") return "green";
     if (str.includes("purple") || str.includes("violet") || str === "#8e55ea") return "purple";
@@ -330,6 +368,7 @@ import { getTranslations } from "../shared/i18n/core";
       const g = parseInt(rgbMatch[2], 10);
       const b = parseInt(rgbMatch[3], 10);
 
+      if (Math.max(r, g, b) - Math.min(r, g, b) < 24) return "black";
       if (g > r + 30 && g > b - 10 && g > 110) return "green";
       if (b > 140 && r > 90 && g < 130) return "purple";
       if (r > 190 && g > 70 && g < 180 && b < 80) return "orange";
@@ -341,46 +380,26 @@ import { getTranslations } from "../shared/i18n/core";
     return null;
   }
 
-  function resolveActiveChatGPTTheme(): string {
-    const attrEl = document.querySelector("[data-chat-theme]");
-    const attr =
-      document.documentElement.getAttribute("data-chat-theme") ||
-      document.body?.getAttribute("data-chat-theme") ||
-      attrEl?.getAttribute("data-chat-theme");
+  function activeThemeElements(): HTMLElement[] {
+    const elements: HTMLElement[] = [];
+    for (let el = getComposer(); el; el = el.parentElement) elements.push(el);
+    if (!elements.includes(document.documentElement)) elements.push(document.body, document.documentElement);
+    return elements.filter(Boolean);
+  }
 
-    if (attr && CHATGPT_THEME_KEYS.includes(attr.toLowerCase())) {
-      return attr.toLowerCase();
-    }
-
-    const classes = `${document.documentElement.className} ${document.body?.className || ""}`.toLowerCase();
-    for (const t of ["green", "purple", "orange", "pink", "yellow", "black", "blue"]) {
-      if (classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`) || classes.includes(`data-theme-${t}`)) {
-        return t;
-      }
-    }
-
-    const rootStyle = getComputedStyle(document.documentElement);
-    // ChatGPT's theme selector drives --theme-submit-btn-bg. The generic
-    // interactive accent remains blue even when a chat theme is selected.
-    const accentRaw =
-      rootStyle.getPropertyValue("--theme-submit-btn-bg").trim() ||
-      rootStyle.getPropertyValue("--interactive-bg-accent-secondary-default").trim();
-
-    const fromAccent = parseColorToTheme(accentRaw);
-    if (fromAccent) return fromAccent;
-
-    const submitBtn = document.querySelector(
-      'button[data-testid="send-button"], button[aria-label*="Send"], button[aria-label*="Voice"], button[data-testid*="submit"]'
-    );
-    if (submitBtn) {
-      const btnStyle = getComputedStyle(submitBtn);
-      const fromBtnBg = parseColorToTheme(btnStyle.backgroundColor);
-      if (fromBtnBg) return fromBtnBg;
-      const fromBtnColor = parseColorToTheme(btnStyle.color);
-      if (fromBtnColor) return fromBtnColor;
-    }
-
-    return "blue";
+  function resolveActiveChatGPTTheme(): { chatTheme: string; accent?: string; accentText?: string } {
+    const elements = activeThemeElements();
+    const owner = elements.find(el => CHATGPT_THEME_KEYS.includes(el.getAttribute('data-chat-theme') || ''));
+    const named = owner?.getAttribute('data-chat-theme');
+    const style = getComputedStyle(owner || elements[0]);
+    const read = (...keys: string[]) => keys.map(key => style.getPropertyValue(key).trim()).find(literalColor);
+    const palette: Record<string, string> = { blue: '#3a83f7', green: '#53b559', purple: '#8952ee', orange: '#ee7c37', pink: '#f077af', yellow: '#f6c543', black: '#000000' };
+    const accent = named ? (read('--theme-submit-btn-bg', `--${named}-theme-submit-btn-bg`) || palette[named]) :
+      read('--color-background-accent-action', '--theme-submit-btn-bg', '--app-color-icon-accent', '--interactive-bg-accent-secondary-default');
+    const accentText = read('--color-text-accent-action', '--theme-submit-btn-text') || (named === 'yellow' ? '#000000' : '#ffffff');
+    const classes = elements.map(el => el.className).join(' ').toLowerCase();
+    const classTheme = CHATGPT_THEME_KEYS.find(t => classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`));
+    return { chatTheme: named || classTheme || parseColorToTheme(accent || '') || 'blue', accent: accent || (classTheme ? palette[classTheme] : undefined), accentText };
   }
 
   function detectAndCacheChatGPTTheme(): void {
@@ -388,19 +407,25 @@ import { getTranslations } from "../shared/i18n/core";
       const isDark = document.documentElement.classList.contains("dark") ||
         !document.documentElement.classList.contains("light");
 
-      const chatTheme = resolveActiveChatGPTTheme();
-      const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}`;
+      const { chatTheme, accent, accentText } = resolveActiveChatGPTTheme();
+      // Player nodes are body children, outside ChatGPT's themed composer subtree.
+      for (const el of [leftRail, rightRail, floatingToggle]) {
+        if (!el) continue;
+        if (accent) el.style.setProperty('--cgpt-ra-accent', accent); else el.style.removeProperty('--cgpt-ra-accent');
+        if (accentText) el.style.setProperty('--cgpt-ra-accent-text', accentText);
+      }
+      const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}-${accent}-${accentText}`;
 
       if (cache.lastThemeCheck === themeKey) return;
       cache.lastThemeCheck = themeKey;
 
       const themeCache = {
         isDark,
-        chatTheme,
+        chatTheme, accent, accentText,
         updatedAt: Date.now(),
       };
 
-      localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
+      try { localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache)); } catch { /* Extension storage remains available through the bridge. */ }
       window.postMessage(
         {
           source: "chatgpt-audio-controls-settings-bridge",
@@ -502,13 +527,17 @@ import { getTranslations } from "../shared/i18n/core";
     if (!response.ok) throw new Error('Audio unavailable');
     return readAudio(response);
   }
+  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
   const playback = new PlaybackSession(retainAudio, media => {
     activeMedia = media;
     if (media) installMediaListeners(media);
     updateControls();
     broadcastLiveAudioState(true);
     scheduleLayoutSync();
-  }, () => showStatus(recoveryCopy().playError, true));
+  }, () => showStatus(recoveryCopy().playError, true), ready => {
+    readyToast.clear();
+    if (ready && getSavedSettings().notifyDownloadReady !== false) readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
+  }, activity => supportPrompts.observe(activity));
   window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; streamingAudio.clearExcept(); });
 
   function installObjectURLInterceptor(): void {
@@ -827,15 +856,11 @@ import { getTranslations } from "../shared/i18n/core";
     floatingToggle = document.createElement("button");
     floatingToggle.id = "cgpt-ra-floating-toggle";
     floatingToggle.type = "button";
-    floatingToggle.title = "ChatGPT Audio Controls";
-    floatingToggle.setAttribute("aria-label", "Expand ChatGPT Audio Controls");
-    floatingToggle.innerHTML = getLucideSvg("chatgpt-audio");
+    floatingToggle.innerHTML = getLucideSvg("chevron-up");
 
     floatingToggle.addEventListener("click", (e) => {
       e.stopPropagation();
-      userForcedExpand = true;
-      userForcedCollapsed = false;
-      scheduleLayoutSync();
+      toggleCollapsed();
     });
 
     leftRail = document.createElement("div");
@@ -861,33 +886,33 @@ import { getTranslations } from "../shared/i18n/core";
 
     rightRail.innerHTML = `
       <div class="cgpt-ra-transport-row cgpt-ra-media-control">
+        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
+                disabled>
+          ${getLucideSvg("play")}
+        </button>
+
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
-                title="Back 10 seconds — hold to scrub" disabled>
+                disabled>
           ${getLucideSvg("rotate-ccw")}
           <span class="cgpt-ra-ten">10</span>
         </button>
 
-        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
-                title="Play / Pause (Space or K; Alt+P legacy)" disabled>
-          ${getLucideSvg("play")}
-        </button>
-
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
-                title="Forward 10 seconds — hold to scrub" disabled>
+                disabled>
           ${getLucideSvg("rotate-cw")}
           <span class="cgpt-ra-ten">10</span>
         </button>
       </div>
 
       <div class="cgpt-ra-speed-wrap cgpt-ra-media-control">
-        <button class="cgpt-ra-icon-btn cgpt-ra-speed-btn" title="Playback speed" disabled>
+        <button class="cgpt-ra-icon-btn cgpt-ra-speed-btn" disabled>
           ${getSavedSpeed()}×
         </button>
         <div class="cgpt-ra-popover cgpt-ra-speed-menu"></div>
       </div>
 
       <div class="cgpt-ra-volume-wrap cgpt-ra-media-control">
-        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" title="Volume (Scroll to adjust)" disabled>
+        <button class="cgpt-ra-icon-btn cgpt-ra-volume-btn" disabled>
           ${getLucideSvg("volume-2")}
         </button>
         <div class="cgpt-ra-volume-popover">
@@ -899,62 +924,22 @@ import { getTranslations } from "../shared/i18n/core";
       </div>
 
       <button class="cgpt-ra-icon-btn cgpt-ra-download cgpt-ra-media-control"
-              title="Download audio" disabled>
+              disabled>
         ${getLucideSvg("download")}
       </button>
 
       <div class="cgpt-ra-help-wrap">
-        <button class="cgpt-ra-icon-btn" title="Keyboard shortcuts & gestures">
+        <button class="cgpt-ra-icon-btn">
           ${getLucideSvg("circle-help")}
         </button>
-        <div class="cgpt-ra-popover cgpt-ra-help">
-          <div class="cgpt-ra-help-title">Read Aloud Shortcuts</div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Play / Pause</span>
-            <span class="cgpt-ra-shortcut-key">Space / K</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Back 10 sec</span>
-            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + ←</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Forward 10 sec</span>
-            <span class="cgpt-ra-shortcut-key">${platformKeys("Alt")} + →</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Slower Preset</span>
-            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + ,</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Faster Preset</span>
-            <span class="cgpt-ra-shortcut-key">${platformKeys("Shift")} + .</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Volume Scroll</span>
-            <span class="cgpt-ra-shortcut-key">Scroll on 🔈</span>
-          </div>
-          <div class="cgpt-ra-shortcut-row">
-            <span>Smooth Scrub</span>
-            <span class="cgpt-ra-shortcut-key">Hold ◀10 / 10▶</span>
-          </div>
-        </div>
+        <div class="cgpt-ra-popover cgpt-ra-help"></div>
       </div>
 
-      <button class="cgpt-ra-icon-btn cgpt-ra-collapse-btn" title="Collapse Player">
-        ${getLucideSvg("minimize-2")}
-      </button>
     `;
 
     document.body.append(floatingToggle, leftRail, rightRail);
 
-    collapseButton = rightRail.querySelector(".cgpt-ra-collapse-btn");
-    collapseButton?.addEventListener("click", (e) => {
-      e.stopPropagation();
-      userForcedExpand = false;
-      userForcedCollapsed = Boolean(activeMedia);
-      scheduleLayoutSync();
-    });
-
+    playerLayout = new PlayerLayout(leftRail, rightRail, floatingToggle, scheduleLayoutSync, () => showStatus(recoveryCopy().savedError, true), () => settingsCache?.language);
     seekSlider = leftRail.querySelector(".cgpt-ra-seek-slider");
     currentLabel = leftRail.querySelector(".cgpt-ra-current");
     durationLabel = leftRail.querySelector(".cgpt-ra-duration");
@@ -985,11 +970,21 @@ import { getTranslations } from "../shared/i18n/core";
     speedButton?.addEventListener("click", (event) => {
       event.stopPropagation();
       rightRail?.querySelector(".cgpt-ra-speed-wrap")?.classList.toggle("cgpt-open");
+      playerLayout?.positionPopovers();
     });
 
-    document.addEventListener("click", () => {
-      rightRail?.querySelector(".cgpt-ra-speed-wrap")?.classList.remove("cgpt-open");
+    document.addEventListener('click', event => {
+      if (!(event.target instanceof Node) || !rightRail?.contains(event.target)) {
+        rightRail?.querySelectorAll('.cgpt-open').forEach(el => el.classList.remove('cgpt-open'));
+        playerLayout?.positionPopovers();
+      }
     });
+    for (const selector of ['.cgpt-ra-help-wrap', '.cgpt-ra-volume-wrap']) {
+      const wrap = rightRail.querySelector<HTMLElement>(selector);
+      wrap?.querySelector('button')?.addEventListener('click', event => { event.stopPropagation(); wrap.classList.toggle('cgpt-open'); playerLayout?.positionPopovers(); });
+    }
+    rightRail.addEventListener('click', () => playerLayout?.positionPopovers());
+
 
     playButton?.addEventListener("click", togglePlayback);
 
@@ -1048,7 +1043,7 @@ import { getTranslations } from "../shared/i18n/core";
     leftRail.classList.toggle("cgpt-ra-no-media", !enabled);
     rightRail.classList.toggle("cgpt-ra-no-media", !enabled);
 
-    leftRail.querySelectorAll<HTMLButtonElement | HTMLInputElement>("button, input").forEach((el) => {
+    leftRail.querySelectorAll<HTMLButtonElement | HTMLInputElement>("input").forEach((el) => {
       el.disabled = !enabled;
     });
 
@@ -1063,7 +1058,6 @@ import { getTranslations } from "../shared/i18n/core";
     const helpButton = rightRail.querySelector<HTMLButtonElement>(".cgpt-ra-help-wrap > button");
     if (helpButton) helpButton.disabled = false;
 
-    if (collapseButton) collapseButton.disabled = false;
   }
 
   // ---------------------------------------------------------------------
@@ -1085,9 +1079,18 @@ import { getTranslations } from "../shared/i18n/core";
   let conversationPath = location.pathname;
   function getComposer(): HTMLElement | null {
     const candidates = document.querySelectorAll<HTMLElement>('[data-chatgpt-composer], [data-type="unified-composer"]');
-    const composer = Array.from(candidates).find(el => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"]'));
+    const composer = Array.from(candidates).find(el => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"]'));
+    // Prefer the painted composer surface over a surrounding form or embedded editor.
+    const isComposerEditor = (el: HTMLElement) => !el.closest('article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]') && el.getBoundingClientRect().height > 0;
+    const editor = Array.from(document.querySelectorAll<HTMLElement>('.ProseMirror[contenteditable="true"][aria-label="Ask ChatGPT"]')).find(isComposerEditor);
+    if (editor) {
+      for (let parent = editor.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
+        const style = getComputedStyle(parent), r = parent.getBoundingClientRect();
+        if (r.width > 180 && (parent.classList.contains('cgpt-ra-composer-joined') || parseFloat(style.borderTopLeftRadius) >= 12) && style.backgroundColor !== 'rgba(0, 0, 0, 0)') return parent;
+      }
+    }
     if (composer) return composer;
-    const prompt = document.querySelector<HTMLElement>('#prompt-textarea, [data-testid="composer-text-input"], textarea[placeholder*="Ask"]');
+    const prompt = Array.from(document.querySelectorAll<HTMLElement>('#prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"], textarea[placeholder*="Ask"]')).find(isComposerEditor);
     return prompt?.closest('form') || prompt?.parentElement || null;
   }
 
@@ -1116,53 +1119,13 @@ import { getTranslations } from "../shared/i18n/core";
     const visible = floatingVisibility(Boolean(settings.floatingUiHidden), settings.floatingUiHideMode || 'idle-only', hasSession, shouldExpand);
     leftRail.classList.toggle('cgpt-ra-collapsed', !visible.player);
     rightRail.classList.toggle('cgpt-ra-collapsed', !visible.player);
-    floatingToggle.classList.toggle('cgpt-ra-hidden', !visible.launcher);
+    floatingToggle.classList.toggle('cgpt-ra-hidden', !(visible.launcher || visible.player));
+    floatingToggle.setAttribute('aria-expanded', String(visible.player));
+    floatingToggle.setAttribute('aria-label', visible.player ? getI18n().content.tooltips.collapse : getI18n().content.tooltips.expand);
     cache.isCollapsed = !visible.player;
     cache.floatingHidden = !visible.launcher;
-    const viewportWidth = window.innerWidth;
-    const rect = composer?.getBoundingClientRect() || { left: 16, right: viewportWidth - 16, top: window.innerHeight - 72, height: 48 };
-    floatingToggle.style.left = `${Math.round(Math.max(8, Math.min(viewportWidth - 52, rect.right + 12)))}px`;
-    floatingToggle.style.top = `${Math.round(Math.max(8, Math.min(window.innerHeight - 52, rect.top + rect.height / 2 - 21)))}px`;
-    floatingToggle.style.right = '';
-    floatingToggle.style.bottom = '';
-    const sideGap = 10, outerMargin = 14, minLeftWidth = 240, maxLeftWidth = 430;
-    const leftAvailable = rect.left - outerMargin - sideGap;
-    const rightAvailable = viewportWidth - rect.right - outerMargin - sideGap;
-    rightRail.style.width = '';
-    const railWidth = rightRail.scrollWidth + 2;
-    const compact = leftAvailable < minLeftWidth || rightAvailable < railWidth;
-    leftRail.classList.toggle('cgpt-ra-compact', compact);
-    rightRail.classList.toggle('cgpt-ra-compact', compact);
-    if (!visible.player) return;
-    if (compact) {
-      const width = Math.max(160, Math.min(430, viewportWidth - 24));
-      const left = Math.max(12, Math.min(viewportWidth - width - 12, (rect.left + rect.right - width) / 2));
-      rightRail.style.width = `${width}px`;
-      const rightHeight = rightRail.getBoundingClientRect().height || 48;
-      const top = Math.max(8, rect.top - rightHeight - 68);
-      leftRail.style.width = `${width}px`;
-      leftRail.style.left = rightRail.style.left = `${left}px`;
-      leftRail.style.top = `${top}px`;
-      rightRail.style.top = `${top + 56}px`;
-      return;
-    }
-    rightRail.style.width = '';
-    const computedLeftWidth = `${Math.round(clamp(leftAvailable, minLeftWidth, maxLeftWidth))}px`;
-    const leftX = `${Math.round(rect.left - sideGap - parseFloat(computedLeftWidth))}px`;
-    const leftY = `${Math.round(rect.top + rect.height / 2 - 24)}px`;
-    const rightX = `${Math.round(rect.right + sideGap)}px`;
-
-    if (leftRail.style.width !== computedLeftWidth) leftRail.style.width = computedLeftWidth;
-    if (leftRail.style.left !== leftX) leftRail.style.left = leftX;
-    if (leftRail.style.top !== leftY) leftRail.style.top = leftY;
-
-    if (rightRail.style.left !== rightX) rightRail.style.left = rightX;
-    if (rightRail.style.top !== leftY) rightRail.style.top = leftY;
+    playerLayout?.sync(composer, visible.player);
   }
-
-  // ---------------------------------------------------------------------
-  // Smooth seek on hold
-  // ---------------------------------------------------------------------
 
   function installHoldSeek(button: HTMLElement | null, direction: number): void {
     if (!button) return;
@@ -1397,7 +1360,7 @@ import { getTranslations } from "../shared/i18n/core";
       cache.isMuted = isMuted;
 
       if (volumeSlider) volumeSlider.value = String(volume);
-      if (volumeLabel) volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+      if (volumeLabel) volumeLabel.textContent = `${Math.round((isMuted ? 0 : volume) * 100)}%`;
 
       const volumeButton = rightRail.querySelector<HTMLElement>(".cgpt-ra-volume-btn");
       if (isMuted) {
@@ -1418,7 +1381,8 @@ import { getTranslations } from "../shared/i18n/core";
     const type = String(mime || "").toLowerCase();
 
     if (type.includes("mpeg")) return "mp3";
-    if (type.includes("mp4") || type.includes("m4a") || type.includes("aac"))
+    if (type.includes("aac")) return "aac";
+    if (type.includes("mp4") || type.includes("m4a"))
       return "m4a";
     if (type.includes("wav")) return "wav";
     if (type.includes("ogg") || type.includes("opus")) return "ogg";
@@ -1497,18 +1461,43 @@ import { getTranslations } from "../shared/i18n/core";
       if (!activeMedia) return;
 
       const action = playbackAction(event);
-      if (!action) return;
+      if (!action || Object.values(commandBindings).some(binding => binding && matchesShortcut(event, binding))) return;
       event.preventDefault();
       event.stopPropagation();
-      if (action === 'play') { event.stopImmediatePropagation(); if (!event.repeat) togglePlayback(); }
-      const step = settings.tapSeekSeconds || CONFIG.tapSeekSeconds;
-      if (action === 'back') seekRelative(-step);
-      if (action === 'forward') seekRelative(step);
-      if (action === 'slower') changeSpeed(-1);
-      if (action === 'faster') changeSpeed(1);
+      if (action === 'play') { event.stopImmediatePropagation(); if (event.repeat) return; }
+      const names = { play: 'play-pause', back: 'seek-back', forward: 'seek-forward', slower: 'speed-decrease', faster: 'speed-increase' } as const;
+      dispatchAction(names[action]);
     },
     true,
   );
+
+  function toggleCollapsed(): void {
+    const expanded = !cache.isCollapsed;
+    userForcedExpand = !expanded; userForcedCollapsed = expanded; scheduleLayoutSync();
+  }
+  function dispatchAction(command: PlayerCommand): void {
+    const step = getSavedSettings().tapSeekSeconds || CONFIG.tapSeekSeconds;
+    if (command === 'toggle-collapse') return toggleCollapsed();
+    if (command === 'reset-layout') { void playerLayout?.reset(); return; }
+    if (command === 'open-help') {
+      userForcedExpand = true; userForcedCollapsed = false;
+      // Compact docks hide Help inside the overflow menu; reveal both ancestors.
+      rightRail?.querySelectorAll('.cgpt-ra-extras, .cgpt-ra-help-wrap').forEach(el => el.classList.add('cgpt-open'));
+      scheduleLayoutSync(); return;
+    }
+    if (command === 'open-settings') { window.postMessage({ source: 'chatgpt-audio-controls-settings-bridge', type: 'CGPT_RA_OPEN_SETTINGS' }, '*'); if (standalone) openStandaloneSettings(settingsCache || DEFAULT_SETTINGS, value => { settingsCache = value; readyToast.clear(); applyI18nLabels(); scheduleLayoutSync(); }); return; }
+    if (!activeMedia) return;
+    if (command === 'play-pause') togglePlayback();
+    if (command === 'seek-back') seekRelative(-step);
+    if (command === 'seek-forward') seekRelative(step);
+    if (command === 'speed-decrease') changeSpeed(-1);
+    if (command === 'speed-increase') changeSpeed(1);
+    if (command === 'speed-reset') setSpeed(1);
+    if (command === 'volume-increase') setVolume(clamp(activeMedia.volume + .05, 0, 1));
+    if (command === 'volume-decrease') setVolume(clamp(activeMedia.volume - .05, 0, 1));
+    if (command === 'toggle-mute') { activeMedia.muted = !activeMedia.muted; updateControls(); }
+    if (command === 'download-audio') void downloadCurrentAudio();
+  }
 
   function changeSpeed(direction: number): void {
     const current = activeMedia?.playbackRate || getSavedSpeed();
@@ -1553,6 +1542,15 @@ import { getTranslations } from "../shared/i18n/core";
     }, 250);
   }
 
+  const themeObserver = new MutationObserver(scheduleThemeSync);
+  let observedThemeElements: HTMLElement[] = [];
+  function bindThemeObservers(): void {
+    const elements = activeThemeElements();
+    if (elements.length === observedThemeElements.length && elements.every((el, i) => el === observedThemeElements[i])) return;
+    themeObserver.disconnect(); observedThemeElements = elements;
+    for (const el of elements) themeObserver.observe(el, { attributes: true, attributeFilter: ['class', 'data-theme', 'data-chat-theme', 'style'] });
+  }
+
   function startObserver(): void {
     // Structural changes can replace the composer, but attribute
     // changes across the whole ChatGPT tree are far too noisy (hover/focus
@@ -1561,6 +1559,8 @@ import { getTranslations } from "../shared/i18n/core";
       if (observerTimeout) return;
       observerTimeout = window.setTimeout(() => {
         observerTimeout = null;
+        bindThemeObservers();
+        scheduleThemeSync();
         scheduleLayoutSync();
       }, 500);
     });
@@ -1570,21 +1570,9 @@ import { getTranslations } from "../shared/i18n/core";
       subtree: true,
     });
 
-    // Theme changes generally happen on the root/body. Watching only those
-    // nodes avoids turning every descendant class/style mutation into a
-    // synchronous computed-style pass.
-    const themeObserver = new MutationObserver(scheduleThemeSync);
-    const themeAttributes = ["class", "data-theme", "data-chat-theme", "style"];
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: themeAttributes,
-    });
-    if (document.body) {
-      themeObserver.observe(document.body, {
-        attributes: true,
-        attributeFilter: themeAttributes,
-      });
-    }
+    bindThemeObservers();
+    window.addEventListener('focus', scheduleThemeSync);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { bindThemeObservers(); scheduleThemeSync(); } });
 
     window.addEventListener("resize", scheduleLayoutSync, { passive: true });
     window.visualViewport?.addEventListener('resize', scheduleLayoutSync, { passive: true });
@@ -1624,5 +1612,10 @@ import { getTranslations } from "../shared/i18n/core";
   }
 
   installEarlyHooks();
-  initUI();
+  // Capture audio from document_start, but don't insert UI into a partial body.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initUI, { once: true });
+  } else {
+    initUI();
+  }
 })();

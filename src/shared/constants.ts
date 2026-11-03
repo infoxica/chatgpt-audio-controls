@@ -1,6 +1,6 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
-export const EXTENSION_VERSION = "1.3.0";
+export const EXTENSION_VERSION = "1.4.1";
 
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
@@ -11,6 +11,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const DEFAULT_SETTINGS: ExtensionSettings = {
+  notifyDownloadReady: true,
   floatingUiHidden: false,
   floatingUiHideMode: "idle-only",
   defaultSpeed: 1,
@@ -26,6 +27,7 @@ export const DEFAULT_SETTINGS: ExtensionSettings = {
 // Keep each preference under its own sync key so independent updates from the
 // popup and options page cannot overwrite one another.
 export const SETTING_STORAGE_KEYS: Record<keyof ExtensionSettings, string> = {
+  notifyDownloadReady: 'cgpt-ra-settings.notifyDownloadReady',
   floatingUiHidden: "cgpt-ra-settings.floatingUiHidden",
   floatingUiHideMode: "cgpt-ra-settings.floatingUiHideMode",
   defaultSpeed: "cgpt-ra-settings.defaultSpeed",
@@ -45,8 +47,28 @@ export interface LanguageOption {
   flag?: string;
 }
 
-export const SUPPORTED_LANGUAGES: LanguageOption[] = [
+export function orderLanguages(languages: LanguageOption[]): LanguageOption[] {
+  return [...languages].sort((a, b) => a.code === 'auto' ? -1 : b.code === 'auto' ? 1 : a.label.localeCompare(b.label, 'en'));
+}
+export const SUPPORTED_LANGUAGES: LanguageOption[] = orderLanguages([
+  ...additionalLanguages,
   { code: "auto", label: "Auto Detect", nativeName: "Auto (Browser Default)" },
+  { code: 'pl', label: 'Polish', nativeName: 'Polski' },
+  { code: 'hu', label: 'Hungarian', nativeName: 'Magyar' },
+  { code: 'sv', label: 'Swedish', nativeName: 'Svenska' },
+  { code: 'cs', label: 'Czech', nativeName: 'Čeština' },
+  { code: 'uk', label: 'Ukrainian', nativeName: 'Українська' },
+  { code: 'ca', label: 'Catalan', nativeName: 'Català' },
+  { code: 'el', label: 'Greek', nativeName: 'Ελληνικά' },
+  { code: 'ro', label: 'Romanian', nativeName: 'Română' },
+  { code: 'nb', label: 'Norwegian Bokmål', nativeName: 'Norsk bokmål' },
+  { code: 'bn', label: 'Bengali', nativeName: 'বাংলা' },
+  { code: 'mr', label: 'Marathi', nativeName: 'मराठी' },
+  { code: 'te', label: 'Telugu', nativeName: 'తెలుగు' },
+  { code: 'ta', label: 'Tamil', nativeName: 'தமிழ்' },
+  { code: 'ar', label: 'Arabic', nativeName: 'العربية' },
+  { code: 'fa', label: 'Persian', nativeName: 'فارسی' },
+  { code: 'he', label: 'Hebrew', nativeName: 'עברית' },
   { code: "en", label: "English", nativeName: "English" },
   { code: "zh-CN", label: "Chinese (Simplified)", nativeName: "简体中文" },
   { code: "zh-TW", label: "Chinese (Traditional)", nativeName: "繁體中文" },
@@ -65,7 +87,7 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: "it", label: "Italian", nativeName: "Italiano" },
   { code: "tr", label: "Turkish", nativeName: "Türkçe" },
 
-];
+]);
 
 export const SHORTCUTS: ShortcutItem[] = [
   {
@@ -104,3 +126,4 @@ export const SHORTCUTS: ShortcutItem[] = [
     category: "speed",
   },
 ];
+import { additionalLanguages } from './locale-registry';

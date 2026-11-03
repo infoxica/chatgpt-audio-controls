@@ -1,3 +1,4 @@
+import { useChatGPTAccent } from '../shared/useChatGPTAccent';
 import { useTheme } from '../shared/ThemeSelect';
 import config from "../../config/release.json";
 import { resolveLanguage } from "../shared/i18n/core";
@@ -20,6 +21,7 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("controls");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   useTheme(settings.theme);
+  useChatGPTAccent();
   const { t } = useTranslation(settings.language);
 
   useEffect(() => subscribeSettings(setSettings), []);
@@ -29,36 +31,6 @@ export const App: React.FC = () => {
       setSettings(loaded);
     });
 
-    try {
-      const rawTheme = localStorage.getItem("cgpt-ra-theme-cache");
-      if (rawTheme) {
-        const parsed = JSON.parse(rawTheme);
-        if (parsed.chatTheme) {
-          document.documentElement.setAttribute("data-chat-theme", parsed.chatTheme);
-        }
-      }
-      if (typeof chrome !== "undefined" && chrome.storage?.local) {
-        chrome.storage.local.get(["cgpt-ra-theme-cache"], (res) => {
-          if (res?.["cgpt-ra-theme-cache"]?.chatTheme) {
-            document.documentElement.setAttribute("data-chat-theme", res["cgpt-ra-theme-cache"].chatTheme);
-          }
-        });
-
-        const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-          if (changes["cgpt-ra-theme-cache"]?.newValue?.chatTheme) {
-            document.documentElement.setAttribute(
-              "data-chat-theme",
-              changes["cgpt-ra-theme-cache"].newValue.chatTheme
-            );
-          }
-        };
-
-        chrome.storage.onChanged.addListener(handleStorageChange);
-        return () => {
-          chrome.storage.onChanged.removeListener(handleStorageChange);
-        };
-      }
-    } catch (_) {}
   }, []);
 
   const [saveError, setSaveError] = useState(false);
@@ -93,7 +65,7 @@ export const App: React.FC = () => {
         t={t}
       />
 
-      <QuickStart language={settings.language} />
+      {activeTab === "controls" && <QuickStart language={settings.language} />}
       <TabNav activeTab={activeTab} onSelectTab={setActiveTab} t={t} />
 
       {saveError && <p role="alert" style={{ padding: 12 }}>{getReleaseCopy(settings.language).savedError}</p>}

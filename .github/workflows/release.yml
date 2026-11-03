@@ -68,9 +68,6 @@ jobs:
       - name: Typecheck feedback
         run: bun run typecheck:feedback
 
-      - name: Tests
-        run: bun test
-
       - name: Release policy
         id: policy
         run: bun scripts/release-policy.mjs
@@ -89,6 +86,9 @@ jobs:
 
       - name: Build extension and userscript
         run: bun run build
+
+      - name: Tests (including delivered userscript parity)
+        run: bun test
 
       - name: Build website and feedback fixtures
         run: |

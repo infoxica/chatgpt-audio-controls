@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Spill / Pause"
+  },
+  "command_seek_back": {
+    "message": "Søk bakover"
+  },
+  "command_seek_forward": {
+    "message": "Søk fremover"
+  },
+  "command_speed_decrease": {
+    "message": "Reduser hastigheten"
+  },
+  "command_speed_increase": {
+    "message": "Øk hastigheten"
+  },
+  "command_speed_reset": {
+    "message": "Tilbakestill hastigheten til 1×"
+  },
+  "command_volume_increase": {
+    "message": "Øk volumet"
+  },
+  "command_volume_decrease": {
+    "message": "Reduser volumet"
+  },
+  "command_toggle_mute": {
+    "message": "Slå av/på"
+  },
+  "command_download_audio": {
+    "message": "Last ned lyd"
+  },
+  "command_toggle_collapse": {
+    "message": "Skjul spiller / Utvid ChatGPT lydkontroller"
+  },
+  "command_reset_layout": {
+    "message": "Tilbakestill layout"
+  },
+  "command_open_help": {
+    "message": "Tastatursnarveier og bevegelser"
+  },
+  "command_open_settings": {
+    "message": "Åpne Dashboard og innstillinger"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Les høyt"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT lydkontroller: pause, søk, hastighet, volum, nedlastinger og snarveier."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Vis / skjul flytende kontroller"
+  }
+}

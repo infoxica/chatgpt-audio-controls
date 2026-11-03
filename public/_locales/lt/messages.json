@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Leisti garsą / pristabdyti garsą"
+  },
+  "command_seek_back": {
+    "message": "Ieškokite atgal"
+  },
+  "command_seek_forward": {
+    "message": "Ieškokite pirmyn"
+  },
+  "command_speed_decrease": {
+    "message": "Sumažinkite greitį"
+  },
+  "command_speed_increase": {
+    "message": "Padidinkite greitį"
+  },
+  "command_speed_reset": {
+    "message": "Iš naujo nustatykite greitį į 1×"
+  },
+  "command_volume_increase": {
+    "message": "Padidinkite garso garsumą"
+  },
+  "command_volume_decrease": {
+    "message": "Sumažinti garso garsumą"
+  },
+  "command_toggle_mute": {
+    "message": "Nutildyti / įjungti garsą"
+  },
+  "command_download_audio": {
+    "message": "Atsisiųsti garso įrašą"
+  },
+  "command_toggle_collapse": {
+    "message": "Sutraukti grotuvą / Išskleiskite ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Iš naujo nustatyti išdėstymą"
+  },
+  "command_open_help": {
+    "message": "Spartieji klavišai ir gestai"
+  },
+  "command_open_settings": {
+    "message": "Atidarykite prietaisų skydelį ir nustatymus"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Skaityti garsiai"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Leisti garsą / pristabdyti garsą · Atkūrimo greitis · Atsisiųsti garso įrašą"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Rodyti / slėpti slankiuosius valdiklius"
+  }
+}

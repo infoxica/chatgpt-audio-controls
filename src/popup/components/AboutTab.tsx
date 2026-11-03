@@ -1,13 +1,13 @@
 import type { ThemePreference } from '../../shared/ThemeSelect';
-import { FeedbackLink } from "../../shared/FeedbackLink";
+import { SupportCard } from "../../shared/SupportCard";
 import React from "react";
 import { Sparkles, ShieldCheck, BookOpen, Bug, Globe } from "lucide-react";
 import { GithubIcon } from "../../shared/GithubIcon";
 import { EXTENSION_VERSION } from "../../shared/constants";
 import { TranslationSchema } from "../../shared/i18n";
-import { resolveLanguage } from "../../shared/i18n/core";
+import { websiteURL } from "../../shared/website";
 import { getReleaseCopy } from "../../shared/i18n/release-copy";
-import config from "../../../config/release.json";
+
 
 interface AboutTabProps {
   t: TranslationSchema;
@@ -16,10 +16,9 @@ interface AboutTabProps {
 }
 
 export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
-  const locale = resolveLanguage(language);
   return (
-    <div className="popup-body">
-      <div className="section-card" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
+    <div className="popup-body popup-about">
+      <div className="section-card about-intro" style={{ textAlign: "center", alignItems: "center", padding: "18px 14px" }}>
         <div
           style={{
             width: 44,
@@ -36,14 +35,16 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
         >
           <Sparkles size={22} />
         </div>
-        <h2 style={{ fontSize: 14, fontWeight: 700 }}>{t.popup.about.title}</h2>
-        <span style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
+        <h2 style={{ fontSize: 19, fontWeight: 400 }}>{t.popup.about.title}</h2>
+        <span style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>
           {t.common.version}{EXTENSION_VERSION} • {t.popup.about.byInfoxica}
         </span>
-        <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.4 }}>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.55 }}>
           {getReleaseCopy(language).siteIntro}
         </p>
       </div>
+
+      <SupportCard language={language} theme={theme} surface="popup" />
 
       <div className="section-card">
         <div className="toggle-row">
@@ -58,8 +59,8 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
 
       <div className="section-card">
         <div className="shortcut-list">
-          <FeedbackLink language={language} theme={theme} />
-          <a href={`${config.siteUrl}${locale === 'en' ? '' : locale + '/'}`} target="_blank" rel="noreferrer" className="shortcut-row" style={{ textDecoration: "none", color: "inherit" }}>
+
+          <a href={websiteURL(language, 'popup')} target="_blank" rel="noreferrer" className="shortcut-row" style={{ textDecoration: "none", color: "inherit" }}>
             <span className="shortcut-name" style={{ display: "flex", alignItems: "center", gap: 6 }}><Globe size={13} /> {getReleaseCopy(language).website}</span>
             <span aria-hidden="true">↗</span>
           </a>

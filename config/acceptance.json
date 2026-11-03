@@ -1,9 +1,10 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.1",
   "feedbackDeployment": true,
   "chromeLive": true,
   "edgeLive": true,
   "userscriptLive": true,
-  "nativeMac": "waived-by-owner",
-  "websiteDeployment": true
+  "nativeMac": true,
+  "websiteDeployment": true,
+  "edgeAndroidLive": true
 }

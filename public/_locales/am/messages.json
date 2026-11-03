@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "ኦዲዮን ያጫውቱ / ኦዲዮን ለአፍታ ያቁሙ"
+  },
+  "command_seek_back": {
+    "message": "ወደ ኋላ ፈልጉ"
+  },
+  "command_seek_forward": {
+    "message": "ወደፊት ፈልጉ"
+  },
+  "command_speed_decrease": {
+    "message": "ፍጥነትን ቀንስ"
+  },
+  "command_speed_increase": {
+    "message": "ፍጥነትን ይጨምሩ"
+  },
+  "command_speed_reset": {
+    "message": "ፍጥነትን ወደ 1× ዳግም አስጀምር"
+  },
+  "command_volume_increase": {
+    "message": "የድምጽ መጠን ይጨምሩ"
+  },
+  "command_volume_decrease": {
+    "message": "የድምጽ መጠን ቀንስ"
+  },
+  "command_toggle_mute": {
+    "message": "ድምጸ-ከል አድርግ / አንሳ"
+  },
+  "command_download_audio": {
+    "message": "አውርድ ኦዲዮ"
+  },
+  "command_toggle_collapse": {
+    "message": "ተጫዋች ሰብስብ / ChatGPT Audio Controls ዘርጋ"
+  },
+  "command_reset_layout": {
+    "message": "አቀማመጥን ዳግም አስጀምር"
+  },
+  "command_open_help": {
+    "message": "የቁልፍ ሰሌዳ አቋራጮች እና ምልክቶች"
+  },
+  "command_open_settings": {
+    "message": "ዳሽቦርድ እና ቅንብሮችን ክፈት"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — ጮክ ብለህ አንብብ"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: ኦዲዮን ያጫውቱ / ኦዲዮን ለአፍታ ያቁሙ · የመልሶ ማጫወት ፍጥነት · አውርድ ኦዲዮ"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "ተንሳፋፊ መቆጣጠሪያዎችን አሳይ/ደብቅ"
+  }
+}

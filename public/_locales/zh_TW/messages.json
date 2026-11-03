@@ -1,4 +1,46 @@
 {
+  "command_play_pause": {
+    "message": "播放 / 暫停"
+  },
+  "command_seek_back": {
+    "message": "向後跳轉"
+  },
+  "command_seek_forward": {
+    "message": "向前跳轉"
+  },
+  "command_speed_decrease": {
+    "message": "降低倍速"
+  },
+  "command_speed_increase": {
+    "message": "提高倍速"
+  },
+  "command_speed_reset": {
+    "message": "重設速度為 1×"
+  },
+  "command_volume_increase": {
+    "message": "提高音量"
+  },
+  "command_volume_decrease": {
+    "message": "降低音量"
+  },
+  "command_toggle_mute": {
+    "message": "靜音 / 取消靜音"
+  },
+  "command_download_audio": {
+    "message": "下載音訊檔案"
+  },
+  "command_toggle_collapse": {
+    "message": "收起播放器 / 展開 ChatGPT 音訊控制"
+  },
+  "command_reset_layout": {
+    "message": "重設配置"
+  },
+  "command_open_help": {
+    "message": "快捷鍵與手勢指南"
+  },
+  "command_open_settings": {
+    "message": "開啟設定與面板"
+  },
   "extensionName": {
     "message": "ChatGPT 音訊控制與朗讀增強"
   },

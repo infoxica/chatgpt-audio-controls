@@ -4,15 +4,62 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
+## [1.4.1] — Unreleased
+
+Includes the unpublished 1.4.0 feature work and the following corrections.
+
+- Widen desktop language navigation and add a full-screen multi-column phone picker. Mobile headers span the viewport in a single row no taller than 72px, with navigation at the far right.
+- Group playback controls as Play/Pause, jump backward, jump forward. Follow current ChatGPT accent tokens and nested theme owners across player, popup, settings and drag previews without changing light/dark preferences.
+- Measure consented website PayPal-link clicks separately from payments; retain direct links and no extension telemetry.
+
+- Main dragging now lifts into an inert, proportionate compact preview. Fitting destinations initially show only circles; only the magnetically active destination reveals its full-size outlines. Reduced motion, cancellation, pill swapping and saved layouts remain intact.
+- Ignore hidden or clipped sidebar and navigation space when resolving laptop layouts. Test the reported 1512×982 and 1536×864 viewports and smaller browser content areas in both distributions.
+- Keep website navigation sticky, measure its height for anchor offsets, and fit the expanded language menu inside the viewport.
+- Add 34 UI locales and regional/script variants, bringing coverage to 67, with Urdu RTL and exact locale matching before language fallback. Generate browser-managed catalogs only for Chrome-supported locales.
+- Add clearly labelled PayPal coffee support alongside GitHub Sponsors, with US$1/$3/$5/$10 links. Either provider retires the same optional donation reminder without detecting payment completion.
+- Preserve original and corner placement at constrained laptop viewport sizes by using full-size compact controls before changing arrangement. Secondary actions remain available through More; vertical compact controls open their menu toward the viewport interior.
+- Recover retained AAC playback on Edge Android through the browser's native streaming decoder when its file decoder rejects the same bytes. Pausing, resuming and seeking reuse the retained payload without another request. Raw AAC downloads use the matching `.aac` filename extension.
+- Center image-viewer close icons with SVGs and consistent keyboard/touch targets.
+- Consolidate release history here and simplify README demo copy. Recording provenance and acceptance evidence remain in release documentation.
+- Prepare the official website at https://chatgpt-audio-controls.infoxica.com/ alongside the existing private feedback service. Add staged Worker static assets, legacy Pages redirects, readable validated sitemaps, and a root-domain-safe preview server.
+
+- Apply RTL document direction throughout Arabic, Persian and Hebrew website pages. Close wide-player help, volume and speed popovers with Escape and return focus to their visible trigger, in both distributions.
+
+- Optional support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 67 locales. Privacy and features remain unconditional.
+- Device-local meaningful-listening count, review invitation after four uses, and support invitation after ten. Non-modal cards wait until playback pauses/ends, respect hidden controls and typing, and allow permanent dismissal or one reminder after both 14 days and ten further uses. No telemetry or additional permissions.
+
+- Restore floating controls if ChatGPT replaces their DOM during hydration or navigation, retaining playback, saved layouts and intentional hide/collapse settings. Keep early audio capture while deferring UI insertion until the document is parsed; restore removed standalone userscript styles as well.
+
+- Align left-side layouts and drag destinations with the visible sidebar rail, ignoring transparent navigation panels and clipping hidden overflow. Follow sidebar expansion/collapse without changing saved layouts.
+
+- Replace popup/dashboard theme dropdowns with compact Light, Dark and System icon buttons, retaining localized labels, keyboard access and saved preferences.
+
+- Close the visual dock/input gap with a non-interactive fill outside the native composer's rounded top corners, preserving its original border and input behavior.
+
+- Native 48px player pills, icon-only circle, four corner L presets, two vertical side-center presets and original automatic placement.
+- Composer dock joins the input without a seam: one desktop row, two mobile rows, and a compact menu for secondary controls on small screens.
+- Exact-shape drag previews, 24px magnetic capture with at most 12px attraction, 220ms drop/swap settling, 280ms reset and 200ms collapse. Reduced-motion support and smooth cancellation.
+- Pill grips swap only within the selected layout. Keyboard layout settings and version-2 per-device desktop/mobile profiles migrate compatible earlier preferences; mobile uses composer docking only.
+- Responsive popup and dashboard, touch-accessible controls, viewport-aware docking, and LTR/RTL interfaces.
+- Bengali, Marathi, Telugu, Tamil, Arabic, Persian, Hebrew, Polish, Hungarian, Swedish, Czech, Ukrainian, Catalan, Greek, Romanian and Norwegian Bokmål across the player, extension, website, feedback and supported listing resources (33 interface languages total; new translation review pending).
+- Collision-aware L-layout seek widths, native top-action clearance and corner-aware dock tabs. Composer borders, radii and shadows remain untouched.
+- Compact open settings sections, alphabetical language choices, shortcut-edit guidance and suggestion/bug/Chrome-review/Edge-review actions with localized feedback intent.
+- Benefit-led website/listing copy, updated screenshots, consent-gated campaign allowlisting and a dated audience baseline. No extension telemetry added. Package signing assessed without enrollment or publishing.
+- Optional full-audio-ready notification tied to the current retained playback session.
+- Fifteen assignable desktop commands, with optional commands API support on mobile.
+- Standalone userscript generated from the shared player source and styles.
+- Refined composer docking with a small branded tab, native surface treatment, menu-safe layering and stable placement around response/email headers. Adaptive seek tracks and interior-facing volume popovers keep controls clear.
+- Fixed desktop toolbar popup sizing, aligned settings cards, added danger styling for resets and localized suggestion/review cards in all 24 languages. Download-ready notifications use a compact success treatment and dismiss after five active seconds.
+
 ## [1.3.0] - 2026-10-26
 
 - Preserve playback position, speed and volume across destructive host pauses with a session-specific retained source and an owned audio element. Ignore stale loads and play results, show loading/recovery state, and prevent overlapping sessions.
 - Reset the playback progress anchor after seeking so a backward seek during resume cannot cause a false loading timeout; seeking alone does not count as advancing playback.
 - Recognize ChatGPT's updated composer. Restore two separate rounded capsules beside it when space permits and above it on narrow screens.
 - Remove injected response Read Aloud buttons, toolbar/menu automation and the obsolete setting from both extension and userscript. Start with ChatGPT's native button.
-- Move Help beside Dashboard and add localized Send feedback links in About and settings.
+- Add localized feedback entry points in About and settings.
 - Add remembered System / Light / Dark preferences to popup, dashboard and feedback, with icon controls on the feedback form.
-- Keep the README source-version badge and heading synchronized with release metadata through CI and packaging checks.
+- Keep README source-version metadata synchronized through CI and packaging checks.
 - Replace the Google survey backend with a Cloudflare Worker, private D1 storage and Turnstile. Support voluntary uninstall reasons and installed-user bug/suggestion/other feedback in 17 languages, with idempotent submissions and owner query/export tools.
 - Keep the existing Google URL as a localized transition page with no spreadsheet writes. Update privacy and store disclosures.
 - Reset release acceptance; require fresh Windows Chrome, Edge and actual Tampermonkey checks. Native Mac testing is waived for v1.3.0, not passed.

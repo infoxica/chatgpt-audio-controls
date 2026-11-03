@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "I-play ang audio / I-pause ang audio"
+  },
+  "command_seek_back": {
+    "message": "Humanap sa likod"
+  },
+  "command_seek_forward": {
+    "message": "Humanap"
+  },
+  "command_speed_decrease": {
+    "message": "Bawasan ang Bilis"
+  },
+  "command_speed_increase": {
+    "message": "Dagdagan ang Bilis"
+  },
+  "command_speed_reset": {
+    "message": "I-reset ang bilis sa 1×"
+  },
+  "command_volume_increase": {
+    "message": "Dagdagan ang volume ng audio"
+  },
+  "command_volume_decrease": {
+    "message": "Bawasan ang volume ng audio"
+  },
+  "command_toggle_mute": {
+    "message": "I-mute / i-unmute"
+  },
+  "command_download_audio": {
+    "message": "Mag-download ng audio"
+  },
+  "command_toggle_collapse": {
+    "message": "I-collapse ang Manlalaro / Palawakin ang ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "I-reset ang layout"
+  },
+  "command_open_help": {
+    "message": "Mga keyboard shortcut at galaw"
+  },
+  "command_open_settings": {
+    "message": "Buksan ang Dashboard at Mga Setting"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Basahin nang malakas"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: I-play ang audio / I-pause ang audio · Bilis ng pag-playback · Mag-download ng audio"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Ipakita / itago ang mga lumulutang na kontrol"
+  }
+}

@@ -6,15 +6,25 @@ let mf, db;
 let origin;
 const answer = () => ({ id: randomUUID(), source:'installed',reason:'bug',comment:'',locale:'ja',version:'1.3.0',browser:'Edge',os:'Windows',token:'valid' });
 const submit = (input, headers={}) => mf.dispatchFetch(origin+'/api/feedback',{method:'POST',headers:{'Content-Type':'application/json',Origin:origin,...headers},body:JSON.stringify(input)});
+// Starting local workerd/D1 can exceed Bun's 5s hook default on a cold or busy
+// Windows host. Request assertions retain their normal timeout.
 beforeAll(async()=>{
   const built=await Bun.build({entrypoints:['feedback/worker/src/index.ts'],target:'browser',format:'esm'});
   if(!built.success)throw Error('Worker build failed');
-  mf=new Miniflare({modules:true,script:await built.outputs[0].text(),compatibilityDate:'2026-07-30',d1Databases:['DB'],bindings:{ENVIRONMENT:'local',TURNSTILE_SITE_KEY:'1x00000000000000000000AA',TURNSTILE_SECRET_KEY:'test-secret'},outboundService:async request=>Response.json({success:(await request.formData()).get('response')==='valid'})});
+  const config=JSON.parse(await fs.readFile('feedback/worker/wrangler.jsonc','utf8'));
+  const directory='build/worker-static-fixture';
+  await fs.mkdir(directory+'/api/feedback',{recursive:true});
+  await fs.writeFile(directory+'/index.html','<!doctype html><title>Public website</title>');
+  await fs.writeFile(directory+'/feedback.html','This must never replace the private form');
+  await fs.writeFile(directory+'/api/feedback/index.html','This must never replace the API');
+  mf=new Miniflare({modules:true,script:await built.outputs[0].text(),compatibilityDate:'2026-07-30',
+    assets:{directory,binding:'ASSETS',routerConfig:{has_user_worker:true,static_routing:{user_worker:config.assets.run_worker_first}},assetConfig:{html_handling:config.assets.html_handling,not_found_handling:config.assets.not_found_handling}},
+    d1Databases:['DB'],bindings:{ENVIRONMENT:'local',TURNSTILE_SITE_KEY:'1x00000000000000000000AA',TURNSTILE_SECRET_KEY:'test-secret'},outboundService:async request=>Response.json({success:(await request.formData()).get('response')==='valid'})});
   origin=(await mf.ready).origin;
   db=await mf.getD1Database('DB');
   await db.exec((await fs.readFile('feedback/worker/migrations/0001_feedback.sql','utf8')).replace(/\n/g,' '));
-});
-afterAll(async()=>{await mf?.dispose();});
+}, 30000);
+afterAll(async()=>{await mf?.dispose();}, 10000);
 test('real D1 persistence and concurrent retry yield one row',async()=>{
   const input=answer();input.comment='=IMPORTXML("x") <script>alert(1)</script>';
   const results=await Promise.all(Array.from({length:5},()=>submit(input)));
@@ -38,6 +48,15 @@ test('opening localized form and health creates no feedback',async()=>{
   expect(response.status).toBe(200);expect(response.headers.get('content-security-policy')).toContain("frame-ancestors 'none'");
   expect(await response.text()).toContain('送');
   expect((await db.prepare('SELECT count(*) AS n FROM feedback').first()).n).toBe(before);
+});
+test('static assets cannot shadow private feedback, API routes or unknown pages',async()=>{
+  expect(await (await mf.dispatchFetch(origin+'/')).text()).toContain('Public website');
+  const form=await mf.dispatchFetch(origin+'/feedback');
+  expect(form.headers.get('cache-control')).toBe('no-store');
+  expect(form.headers.get('content-security-policy')).toContain("frame-ancestors 'none'");
+  expect(await form.text()).not.toContain('This must never');
+  expect((await mf.dispatchFetch(origin+'/api/feedback')).status).toBe(405);
+  for(const path of ['/api/missing','/missing-page/','/health/missing']) expect((await mf.dispatchFetch(origin+path)).status).toBe(404);
 });
 test('database outage cannot acknowledge success',async()=>{
   await db.exec('DROP TABLE feedback');const response=await submit(answer());expect(response.status).toBe(503);expect((await response.json()).saved).toBe(false);

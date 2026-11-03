@@ -8,3 +8,93 @@
 .release-ui .shortcut-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .release-ui kbd{white-space:nowrap;font:11px var(--font-mono);padding:4px;border-radius:4px;background:var(--bg-surface)}
 .release-ui :is(a,button,input,select):focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.layout-settings label { display: grid; gap: 6px; margin-block: 0; }
+.layout-settings label.toggle-row { display: flex; }
+.release-ui select { max-width: 100%; min-width: 0; width: 100%; }
+.release-ui .shortcut-row { flex-wrap: wrap; gap: 8px; text-align: start; }
+.release-ui label.toggle-row { min-height: 44px; }
+.release-ui button, .release-ui select { min-height: 44px; }
+.release-ui kbd { direction: ltr; unicode-bidi: isolate; white-space: normal; }
+[dir=rtl] .sidebar-link, [dir=rtl] .card, [dir=rtl] .section-card { text-align: start; }
+.kbd, .key-combo { direction: ltr; unicode-bidi: isolate; }
+
+.release-ui .section-title, .release-ui .card-title, .settings-label { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.settings-label svg { flex-shrink: 0; }
+.release-ui input.settings-switch { appearance: none; width: 36px; height: 22px; border-radius: 20px; background: var(--border-color); position: relative; flex-shrink: 0; margin: 0; transition: background .15s; }
+.release-ui input.settings-switch::after { content: ''; position: absolute; width: 16px; height: 16px; top: 3px; left: 3px; border-radius: 50%; background: white; transition: transform .15s; }
+.release-ui input.settings-switch:checked { background: var(--accent); }
+.release-ui input.settings-switch:checked::after { transform: translateX(14px); }
+.release-ui .btn-danger { color: #cf3434; border-color: #cf343466; }
+.release-ui .btn-danger:hover { background: #cf343412; }
+.release-ui .btn-danger:focus-visible { outline-color: #cf3434; }
+.layout-settings.card label { margin-block: 0; }
+.support-card { margin-block-start: 0; }
+.support-card .support-icon { color: var(--accent); flex-shrink: 0; }
+.support-card .support-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.support-card .support-actions a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 12px; box-sizing: border-box; border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; font-weight: 600; }
+.support-card .support-actions a:first-child { background: var(--accent-light); border-color: transparent; }
+.support-card .support-actions a:hover { background: var(--bg-surface-hover); }
+.support-card.section-card { margin-block-start: 0; }
+@media(prefers-reduced-motion:reduce) { .release-ui input.settings-switch, .release-ui input.settings-switch::after { transition: none; } }
+
+.release-ui .section-title { justify-content: flex-start; }
+.settings-section-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.settings-section-header h2 { margin:0; }
+.shortcut-action { flex:1 1 140px; }
+.shortcut-binding { display:flex; align-items:center; gap:8px; margin-inline-start:auto; }
+.shortcut-edit { display:grid; place-items:center; width:44px; height:44px; border:0; border-radius:8px; color:var(--text-secondary); background:transparent; cursor:pointer; }
+.shortcut-edit:hover { color:var(--text-primary); background:var(--bg-surface-hover); }
+.command-shortcuts .shortcut-row { min-height:44px; border-bottom:1px solid var(--border-color); padding-block:4px; }
+.support-actions svg { flex-shrink:0; }
+.donation-section { padding:20px; margin-block-end:20px; border:1px solid #db709333; border-radius:16px; background:linear-gradient(135deg,#db70930d,transparent 80%); }
+.donation-section h2 { margin:0; font-size:inherit; text-transform:none; }
+.donation-section .support-icon { color:#c84c7a; }
+.donation-amounts { display:flex; flex-wrap:wrap; gap:8px; }
+.donation-amounts a { display:inline-flex; align-items:center; justify-content:center; gap:6px; min-width:56px; min-height:44px; padding:8px 12px; box-sizing:border-box; border:1px solid #db709366; border-radius:10px; background:var(--bg-card); color:var(--text-primary); text-decoration:none; font-weight:600; }
+.donation-amounts a:hover { background:#db70931a; border-color:#c84c7a; }
+.donation-amounts svg { color:#c84c7a; flex-shrink:0; }
+.donation-caption { font-weight:600; }
+.donation-privacy { margin-block-end:0; }
+.support-reminders { margin-block-start:16px; gap:12px; font-size:13px; }
+.section-card .donation-section { padding:12px; margin-block-end:16px; }
+.section-card .donation-amounts { gap:6px; }
+.section-card .donation-amounts a { flex:1; min-width:48px; padding:6px; }
+
+/* Readable support copy without heavy type; keep the popup's compact width. */
+.support-card { font-size: 16px; line-height: 1.6; }
+.support-card p, .support-card .card-desc { font-size: inherit; line-height: inherit; }
+.support-card .card-title, .support-card .section-title { font-size: 21px; font-weight: 400; text-transform: none; letter-spacing: normal; }
+.support-card .support-actions a, .support-card .donation-amounts a, .support-card .donation-caption { font-weight: 400; }
+.support-card .donation-amounts { margin-block: 14px 18px; }
+.support-card .support-actions a, .support-card .donation-amounts a { font-size: 15px; }
+.support-card.section-card { font-size: 14px; line-height: 1.6; }
+.support-card.section-card .section-title { font-size: 19px; }
+.popup-about .toggle-label, .popup-about .shortcut-name, .popup-about .kbd { font-weight: 400; font-size: 14px; }
+.popup-about .toggle-desc { font-size: 13px; line-height: 1.55; }
+
+/* Separate support cards, with clear space between their edges and section rules. */
+.support-card { padding-block:24px; }
+.support-panels { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; margin-block:8px 24px; }
+.support-panels > .donation-section, .support-panels > .review-section { min-width:0; margin:0; padding:24px; border:1px solid var(--border-color); border-radius:16px; }
+.support-panels > .donation-section { border-color:#db709344; }
+.support-panels h2 { margin-block-start:0; }
+.support-card.section-card .support-panels { grid-template-columns:1fr; gap:16px; margin-block:8px 20px; }
+.support-card.section-card .support-panels > div { padding:14px; }
+@media(max-width:760px) { .support-panels { grid-template-columns:1fr; } }
+
+/* Dashboard: full-width landscape cards, responsive to the content area beside the sidebar. */
+.support-card.card { container: support-dashboard / inline-size; }
+.support-card.card .support-panels > div { display:grid; grid-template-columns:minmax(0,1fr); gap:24px; }
+.support-panel-copy, .support-panel-actions { min-width:0; }
+.support-card.card .support-panel-copy, .support-card.card .support-panel-actions { display:grid; gap:16px; }
+.support-card.card .support-panel-copy > *, .support-card.card .support-panel-actions > * { margin:0; }
+.support-card.card .support-panel-actions { border-block-start:1px solid var(--border-color); padding-block-start:24px; }
+.support-card.card .donation-amounts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-block:4px; }
+.support-card.card .support-actions { display:grid; gap:8px; }
+.support-card.card .support-actions a { min-width:0; overflow-wrap:anywhere; }
+@container support-dashboard (min-width:720px) {
+ .support-card.card .support-panels > div { grid-template-columns:minmax(0,1.7fr) minmax(240px,1fr); gap:32px; align-items:center; padding:24px; }
+ .support-card.card .support-panel-actions { border-block-start:0; padding-block-start:0; border-inline-start:1px solid var(--border-color); padding-inline-start:32px; }
+}
+.coffee-support{margin-block-start:20px}.coffee-support>p{display:flex;align-items:center;gap:8px;margin-block-end:12px}

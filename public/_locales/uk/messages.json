@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Відтворення / Пауза"
+  },
+  "command_seek_back": {
+    "message": "Шукайте назад"
+  },
+  "command_seek_forward": {
+    "message": "Шукати вперед"
+  },
+  "command_speed_decrease": {
+    "message": "Зменшити швидкість"
+  },
+  "command_speed_increase": {
+    "message": "Збільшити швидкість"
+  },
+  "command_speed_reset": {
+    "message": "Скинути швидкість до 1×"
+  },
+  "command_volume_increase": {
+    "message": "Збільшити гучність"
+  },
+  "command_volume_decrease": {
+    "message": "Зменшити гучність"
+  },
+  "command_toggle_mute": {
+    "message": "Вимкнути / увімкнути звук"
+  },
+  "command_download_audio": {
+    "message": "Завантажити аудіо"
+  },
+  "command_toggle_collapse": {
+    "message": "Згорнути плеєр / Розгорніть елементи керування звуком ChatGPT"
+  },
+  "command_reset_layout": {
+    "message": "Скинути макет"
+  },
+  "command_open_help": {
+    "message": "Комбінації клавіш і жести"
+  },
+  "command_open_settings": {
+    "message": "Відкрийте інформаційну панель і налаштування"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Прочитайте вголос"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT керування звуком: пауза, пошук, швидкість, гучність, завантаження та ярлики."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Показати/сховати плаваючі елементи керування"
+  }
+}

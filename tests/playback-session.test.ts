@@ -94,7 +94,7 @@ test('an older rejected play promise cannot cancel a newer resume', async () => 
   expect(session.playing).toBe(true); expect(session.paused).toBe(false); expect(failures()).toBe(0);
 });
 
-// Exercise the standalone distribution directly; it is maintained separately.
+// Exercise the generated standalone distribution directly.
 const userscript = readFileSync(new URL('../userscript/chatgpt-audio-controls.user.js', import.meta.url), 'utf8');
 const userscriptSession = new Function(`${userscript.slice(userscript.indexOf('class PlaybackSession {'), userscript.indexOf('function floatingVisibility('))}; return PlaybackSession;`)() as typeof PlaybackSession;
 for (const [distribution, Session] of [['extension', PlaybackSession], ['userscript', userscriptSession]] as const) {
@@ -121,3 +121,21 @@ for (const [distribution, Session] of [['extension', PlaybackSession], ['userscr
     expect(owned.paused).toBe(false);
   }, 20000);
 }
+
+test('retention readiness is once per current session, independent of playback completion', async () => {
+  const jobs: { resolve: (blob: Blob) => void; reject: (error: Error) => void }[] = [];
+  const events: boolean[] = [];
+  const session = new PlaybackSession(() => new Promise((resolve, reject) => jobs.push({ resolve, reject })), () => {}, () => {}, value => events.push(value));
+  sessions.push(session);
+  const first = new Media(); first.src = 'first.wav'; first.paused = false;
+  session.attach(first as unknown as HTMLMediaElement);
+  const second = new Media(); second.src = 'second.wav'; second.paused = false;
+  session.attach(second as unknown as HTMLMediaElement);
+  jobs[0].resolve(new Blob(['stale'])); await flush(); expect(events.filter(Boolean)).toHaveLength(0);
+  jobs[1].resolve(new Blob(['complete'])); await flush(); expect(events.filter(Boolean)).toHaveLength(1); expect(second.ended).toBe(false);
+  session.attach(second as unknown as HTMLMediaElement); await session.blob(); await flush(); expect(events.filter(Boolean)).toHaveLength(1);
+  const third = new Media(); third.src = 'third.wav'; session.attach(third as unknown as HTMLMediaElement);
+  jobs[2].reject(new Error('aborted')); await flush(); expect(events.filter(Boolean)).toHaveLength(1);
+  const fourth = new Media(); fourth.src = 'fourth.wav'; session.attach(fourth as unknown as HTMLMediaElement); session.dispose();
+  jobs[3].resolve(new Blob(['disposed'])); await flush(); expect(events.filter(Boolean)).toHaveLength(1); expect(events.at(-1)).toBe(false);
+});

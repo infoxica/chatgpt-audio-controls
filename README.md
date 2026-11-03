@@ -15,14 +15,14 @@
   </a>
 </p>
 
-[![Source version](https://img.shields.io/badge/source-v1.3.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Source version](https://img.shields.io/badge/source-v1.4.1-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 [![Agent Ready](https://agent-ready.dev/api/badge/item-loaded-partial-complexity.trycloudflare.com)](https://agent-ready.dev)
 
-[Why I Created This](#why-i-created-this) • [Features](#features) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
+[Changelog](CHANGELOG.md) • [Official website](https://chatgpt-audio-controls.infoxica.com/) • [Why I Created This](#why-i-created-this) • [Features](#features) • [Video & Screenshots](#video--screenshots) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
 <br />
 
@@ -44,11 +44,23 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 
 ---
 
-## ✨ Features
+## Video & Screenshots
 
-<div align="center">
-  <img src="assets/store/screenshots/v1.3.0-player-active.jpg" alt="Active Read Aloud Floating Player on ChatGPT" width="100%" />
-</div>
+See playback, seeking, speed, downloads and docking in action.
+
+[![Watch the ChatGPT Audio Controls walkthrough](assets/demo/composer-dock.png)](assets/demo/walkthrough.mp4)
+
+[▶ Watch the video (MP4)](assets/demo/walkthrough.mp4) · [Read the walkthrough transcript](assets/demo/chapters.json)
+
+### Corner layout
+
+![Corner layout with the seekbar and playback controls](assets/demo/corner-layout.png)
+
+### Original layout
+
+![Original split player layout beside the composer](assets/demo/original-layout.png)
+
+## ✨ Features
 
 ### 🎛️ Integrated Floating Player
 - **Sleek Seeker & Scrubbing**: Precise 2px→4px progress bar with live timers (`0:00 / 0:00`).
@@ -62,34 +74,85 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 ### ⚛️ Extension Popup & Dashboard
 
 <div align="center">
-  <img src="assets/store/screenshots/v1.3.0-dashboard.png" alt="Version 1.3.0 settings dashboard" width="85%" />
+  <img src="assets/demo/settings.png" alt="ChatGPT Audio Controls settings dashboard" width="85%" />
 </div>
 
-- **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.
+- **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
 - **System, Light, or Dark** appearance for the popup, settings dashboard, and feedback form. System follows your device preference; your choice is remembered.
 
 ### 🌐 Multi-Language & Internationalization (i18n)
 - **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
 - **Customizable in Settings**: Switch your preferred interface language anytime from the Dashboard.
-- **Supported Languages & Regional Variants**:
-  - 🇺🇸 **English** (`en`)
-  - 🇨🇳 **Chinese (Simplified)** — 简体中文 (`zh-CN`)
-  - 🇹🇼 / 🇭🇰 **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
-  - 🇻🇳 **Vietnamese** — Tiếng Việt (`vi`)
-  - 🇹🇭 **Thai** — ไทย (`th`)
-  - 🇪🇸 **Spanish** — Español (`es`)
-  - 🇧🇷 **Portuguese (Brazil)** — Português do Brasil (`pt-BR`)
-  - 🇵🇹 **Portuguese (Portugal)** — Português de Portugal (`pt-PT`)
-  - 🇷🇺 **Russian** — Русский (`ru`)
-  - 🇯🇵 **Japanese** — 日本語 (`ja`)
-  - 🇰🇷 **Korean** — 한국어 (`ko`)
-  - 🇮🇳 **Hindi** — हिन्दी (`hi`)
-  - 🇫🇷 **French** — Français (`fr`)
-  - 🇩🇪 **German** — Deutsch (`de`)
-  - 🇮🇹 **Italian** — Italiano (`it`)
-  - 🇮🇩 **Indonesian** — Bahasa Indonesia (`id`)
-  - 🇹🇷 **Turkish** — Türkçe (`tr`)
+- **Supported interface languages (67)**:
+  - **Albanian** — Shqip (`sq`)
+  - **Amharic** — አማርኛ (`am`)
+  - **Arabic** — العربية (`ar`)
+  - **Armenian** — Հայերեն (`hy`)
+  - **Bengali** — বাংলা (`bn`)
+  - **Bosnian** — Bosanski (`bs`)
+  - **Bulgarian** — Български (`bg`)
+  - **Burmese** — မြန်မာ (`my`)
+  - **Catalan** — Català (`ca`)
+  - **Chinese (Simplified)** — 简体中文 (`zh-CN`)
+  - **Chinese (Traditional, Hong Kong)** — 繁體中文（香港） (`zh-HK`)
+  - **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
+  - **Croatian** — Hrvatski (`hr`)
+  - **Czech** — Čeština (`cs`)
+  - **Danish** — Dansk (`da`)
+  - **Dutch** — Nederlands (`nl`)
+  - **English** — English (`en`)
+  - **Estonian** — Eesti (`et`)
+  - **Filipino** — Filipino (`fil`)
+  - **Finnish** — Suomi (`fi`)
+  - **French** — Français (`fr`)
+  - **French (Canada)** — Français (Canada) (`fr-CA`)
+  - **Georgian** — ქართული (`ka`)
+  - **German** — Deutsch (`de`)
+  - **Greek** — Ελληνικά (`el`)
+  - **Gujarati** — ગુજરાતી (`gu`)
+  - **Hebrew** — עברית (`he`)
+  - **Hindi** — हिन्दी (`hi`)
+  - **Hindi (Latin)** — Hindi (Latin) (`hi-Latn`)
+  - **Hungarian** — Magyar (`hu`)
+  - **Icelandic** — Íslenska (`is`)
+  - **Indonesian** — Bahasa Indonesia (`id`)
+  - **Italian** — Italiano (`it`)
+  - **Japanese** — 日本語 (`ja`)
+  - **Kannada** — ಕನ್ನಡ (`kn`)
+  - **Kazakh** — Қазақ тілі (`kk`)
+  - **Korean** — 한국어 (`ko`)
+  - **Latvian** — Latviešu (`lv`)
+  - **Lithuanian** — Lietuvių (`lt`)
+  - **Macedonian** — Македонски (`mk`)
+  - **Malay** — Bahasa Melayu (`ms`)
+  - **Malayalam** — മലയാളം (`ml`)
+  - **Marathi** — मराठी (`mr`)
+  - **Mongolian** — Монгол (`mn`)
+  - **Norwegian Bokmål** — Norsk bokmål (`nb`)
+  - **Persian** — فارسی (`fa`)
+  - **Polish** — Polski (`pl`)
+  - **Portuguese (Brazil)** — Português (Brasil) (`pt-BR`)
+  - **Portuguese (Portugal)** — Português (Portugal) (`pt-PT`)
+  - **Punjabi** — ਪੰਜਾਬੀ (`pa`)
+  - **Romanian** — Română (`ro`)
+  - **Russian** — Русский (`ru`)
+  - **Serbian** — Српски (`sr`)
+  - **Slovak** — Slovenčina (`sk`)
+  - **Slovenian** — Slovenščina (`sl`)
+  - **Somali** — Soomaali (`so`)
+  - **Spanish** — Español (`es`)
+  - **Spanish (Latin America)** — Español (Latinoamérica) (`es-419`)
+  - **Swahili** — Kiswahili (`sw`)
+  - **Swedish** — Svenska (`sv`)
+  - **Tamil** — தமிழ் (`ta`)
+  - **Telugu** — తెలుగు (`te`)
+  - **Thai** — ไทย (`th`)
+  - **Turkish** — Türkçe (`tr`)
+  - **Ukrainian** — Українська (`uk`)
+  - **Urdu** — اردو (`ur`)
+  - **Vietnamese** — Tiếng Việt (`vi`)
+
 
 ---
 
@@ -174,12 +237,12 @@ When Read Aloud is playing, click the download icon (📥) on the right rail. Th
 
 <details>
 <summary><strong>What happens when no audio is playing?</strong></summary>
-The full player capsules collapse into a small floating logo button on the right side. You can click it anytime to open the player, or it will automatically open when you start Read Aloud.
+The player collapses into a small circular expand button. Click it to open the player, or start ChatGPT's native Read Aloud to open it automatically.
 </details>
 
 <details>
 <summary><strong>Will this work on compact laptop screens?</strong></summary>
-The player measures available space. Two separate rounded capsules sit beside the composer when they fit, or above it with a gap on narrower screens.
+The player measures available space. Original desktop placement uses two separate capsules beside or above the composer. Below 768 CSS pixels, a shared two-row dock joins the composer; secondary controls open from its compact controls button. If space is insufficient, an expandable circle stays inside the visible viewport without replacing your saved layout.
 </details>
 
 <details>
@@ -197,23 +260,13 @@ Your feedback is optional and private, even after uninstalling. No name or email
 
 ---
 
-## v1.3.0
-
-Version 1.3.0 repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
-
-Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
-
-The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
-
-See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.3.0.md). GitHub publication and availability in each browser store are tracked separately. Native Mac testing is waived for v1.3.0 only. The standalone userscript receives the playback and capsule changes; popup, dashboard, and uninstall registration are extension features.
-
 ## 🤝 Contributing
 
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
 
 Maintainers preparing a Chrome Web Store or Microsoft Edge Add-ons submission should also use the [store launch checklist](docs/STORE-LAUNCH-CHECKLIST.md).
 
-Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and current version heading to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
+Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and changelog link to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
 
 ---
 

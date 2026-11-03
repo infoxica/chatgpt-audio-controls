@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "இயக்கு / இடைநிறுத்து"
+  },
+  "command_seek_back": {
+    "message": "பின்னால் நகர்த்து"
+  },
+  "command_seek_forward": {
+    "message": "முன்னால் நகர்த்து"
+  },
+  "command_speed_decrease": {
+    "message": "வேகத்தைக் குறை"
+  },
+  "command_speed_increase": {
+    "message": "வேகத்தை அதிகரி"
+  },
+  "command_speed_reset": {
+    "message": "வேகத்தை 1× ஆக்கு"
+  },
+  "command_volume_increase": {
+    "message": "ஒலியை அதிகரி"
+  },
+  "command_volume_decrease": {
+    "message": "ஒலியைக் குறை"
+  },
+  "command_toggle_mute": {
+    "message": "ஒலி முடக்கு / இயக்கு"
+  },
+  "command_download_audio": {
+    "message": "ஒலியைப் பதிவிறக்கு"
+  },
+  "command_toggle_collapse": {
+    "message": "பிளேயரைச் சுருக்கு / ChatGPT ஒலிக் கட்டுப்பாடுகளை விரி"
+  },
+  "command_reset_layout": {
+    "message": "அமைப்பை மீட்டமை"
+  },
+  "command_open_help": {
+    "message": "விசைப்பலகைக் குறுக்குவழிகள் மற்றும் சைகைகள்"
+  },
+  "command_open_settings": {
+    "message": "முகப்பையும் அமைப்புகளையும் திற"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — உரக்க வாசி"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT ஒலி: இடைநிறுத்தம், நகர்த்தல், வேகம், ஒலியளவு, பதிவிறக்கம், குறுக்குவழிகள்."
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "மிதக்கும் கட்டுப்பாடுகளைக் காட்டு / மறை"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Predvajaj zvok / Zaustavi zvok"
+  },
+  "command_seek_back": {
+    "message": "Išči nazaj"
+  },
+  "command_seek_forward": {
+    "message": "Išči naprej"
+  },
+  "command_speed_decrease": {
+    "message": "Zmanjšajte hitrost"
+  },
+  "command_speed_increase": {
+    "message": "Povečaj hitrost"
+  },
+  "command_speed_reset": {
+    "message": "Ponastavi hitrost na 1×"
+  },
+  "command_volume_increase": {
+    "message": "Povečaj glasnost zvoka"
+  },
+  "command_volume_decrease": {
+    "message": "Zmanjšajte glasnost zvoka"
+  },
+  "command_toggle_mute": {
+    "message": "Izklop/vklop zvoka"
+  },
+  "command_download_audio": {
+    "message": "Prenos zvoka"
+  },
+  "command_toggle_collapse": {
+    "message": "Strni predvajalnik / Razširi ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Ponastavi postavitev"
+  },
+  "command_open_help": {
+    "message": "Bližnjice na tipkovnici in kretnje"
+  },
+  "command_open_settings": {
+    "message": "Odprite nadzorno ploščo in nastavitve"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Berite na glas"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Predvajaj zvok / Zaustavi zvok · Hitrost predvajanja · Prenos zvoka"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Pokaži/skrij plavajoče kontrolnike"
+  }
+}

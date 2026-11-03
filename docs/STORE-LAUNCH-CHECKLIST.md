@@ -9,6 +9,7 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 - [ ] Run `bun install --frozen-lockfile`.
 - [ ] Run `bun run typecheck`.
 - [ ] Run `bun run build`.
+- [ ] Run `bun test` after building, so generated-userscript and delivered CSS parity are checked against current artifacts. Build the website/feedback fixtures and run `bunx playwright test` plus `bun run test:site-http`.
 - [ ] Set `RELEASE_TAG` to the intended tag and run `bun run release:check`.
 - [ ] Run `bun run package`; upload only the generated `dist-zip/chatgpt-audio-controls-v<version>.zip` archive.
 - [ ] Inspect the archive: `manifest.json` must be at the archive root and the archive must not include source files, `node_modules`, or another enclosing `dist` directory.
@@ -17,7 +18,7 @@ Use this checklist for every public release of ChatGPT Audio Controls. It separa
 
 ## GitHub Actions store-publishing secrets
 
-Add these as repository **Actions secrets** before merging a version bump into `master`. Secret values are consumed only by the `publish-stores` job and are never committed to the repository.
+Add these as repository **Actions secrets** before merging a version bump into `master`. Secret values are consumed only by the `publish-chrome` and `publish-edge` jobs and are never committed to the repository.
 
 ### Chrome Web Store
 
@@ -39,7 +40,7 @@ The first Edge Add-ons product, listing metadata, privacy information, and requi
 
 Adding interface languages can introduce incomplete draft listings even for an existing published product. The Edge Update REST API explicitly does not support updating listing metadata. `ModuleStateUnPublishable` with `Invalid module : LISTING` requires completing descriptions and logos in Partner Center, not changing credentials or rebuilding the ZIP.
 
-CI publishes an `edge-store-listings-<run-id>` artifact containing a description and the extension logo for all 17 locales. Generate it locally with `bun run scripts/build-edge-listings.ts`. These are manual Partner Center inputs, not an import API payload. Complete and save every included language, then retry only Edge using the workflow's `store=edge` option. New locales or later metadata changes require another Partner Center update.
+CI prepares an `edge-store-listings-<run-id>` artifact containing descriptions and the extension logo for all 33 interface locales. Generate it locally with `bun run scripts/build-edge-listings.ts`. These are manual Partner Center inputs, not an import API payload. Apply only locales offered by the provider and record unavailable locales. Complete and save every supported listing, then retry only Edge using the workflow's `store=edge` option. New locales or later metadata changes require another Partner Center update.
 
 ## Browser smoke test
 
@@ -79,8 +80,8 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - [ ] Complete the Privacy tab with the single purpose and data-use disclosure above.
 - [ ] Set the public privacy-policy URL to the hosted `PRIVACY.md` page or an equivalent accessible policy page.
 - [ ] Provide an accurate short description, detailed description, category, language, and support URL.
-- [ ] Upload fresh screenshots of the native Read Aloud button and v1.3.0 capsules. Remove screenshots advertising the former injected button. Do not imply OpenAI endorsement.
-  Use the three images listed in `assets/store/screenshots/V1.3.0.md`; the historical numbered images are not the 1.3.0 submission set.
+- [ ] Prepare provider-sized screenshots of native Read Aloud, the current player/dock and compact settings. Remove screenshots advertising the former injected button. Do not imply OpenAI endorsement.
+  Use `assets/store/screenshots/README-v1.4.0.md` for source images and provenance. The live dock image predates the final corner-join refinement and needs recapture; fixture images do not establish live acceptance. Recheck provider size requirements before upload.
 - [ ] Submit the first listing manually. Subsequent version bumps merged into `master` are uploaded and submitted for review by GitHub Actions.
 
 ## Microsoft Edge Add-ons submission
@@ -105,7 +106,7 @@ Use clear, narrow descriptions. Do not imply affiliation with OpenAI or claim to
 - ChatGPT's DOM is not a public extension API and may change. Treat the browser smoke test as a required release gate.
 - The project is independent and not affiliated with, endorsed by, or sponsored by OpenAI. ChatGPT is a trademark of OpenAI.
 
-## Website link update (prepared; console update pending)
+## Historical website launch note (2026-09-08; not current deployment status)
 
 The permanent website is `https://infoxica.github.io/chatgpt-audio-controls/`.
 It returned HTTP 404 on 2026-09-08; publish and verify it before using it in the

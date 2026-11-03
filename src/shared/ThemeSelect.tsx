@@ -1,6 +1,8 @@
-import { useLayoutEffect } from 'react';
+import { useId, useLayoutEffect } from 'react';
+import { Sun, Moon, Monitor } from 'lucide-react';
 import { getReleaseCopy } from './i18n/release-copy';
 import type { ExtensionSettings } from './types';
+import './theme-selector.css';
 
 export type ThemePreference = ExtensionSettings['theme'];
 
@@ -20,9 +22,16 @@ export function useTheme(preference: ThemePreference): void {
 
 export function ThemeSelect({ value, onChange, language }: { value: ThemePreference; onChange: (value: ThemePreference) => void; language: string }) {
   const copy = getReleaseCopy(language);
-  return <select className="theme-select" aria-label={copy.appearance} title={copy.appearance} value={value} onChange={event => onChange(event.target.value as ThemePreference)}>
-    <option value="system">{copy.themeSystem}</option>
-    <option value="light">{copy.themeLight}</option>
-    <option value="dark">{copy.themeDark}</option>
-  </select>;
+  const name = useId();
+  const choices = [
+    { theme: 'light' as const, label: copy.themeLight, Icon: Sun },
+    { theme: 'dark' as const, label: copy.themeDark, Icon: Moon },
+    { theme: 'system' as const, label: copy.themeSystem, Icon: Monitor },
+  ];
+  return <div className="theme-selector" role="radiogroup" aria-label={copy.appearance}>
+    {choices.map(({ theme, label, Icon }) => <label key={theme} className="theme-choice" title={label}>
+      <input type="radio" name={name} value={theme} checked={value === theme} aria-label={label} onChange={() => onChange(theme)} />
+      <span><Icon size={16} strokeWidth={1.7} aria-hidden="true" /></span>
+    </label>)}
+  </div>;
 }

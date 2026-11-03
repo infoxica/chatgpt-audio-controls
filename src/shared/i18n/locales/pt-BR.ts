@@ -114,7 +114,7 @@ export const ptBR: TranslationSchema = {
   },
   content: {
     tooltips: {
-      back: "Voltar {s} segundos — segure para avançar rápido",
+      back: "Voltar {s} segundos — segure para continuar voltando",
       playPause: "Reproduzir / Pausar (Espaço ou K; Alt+P)",
       forward: "Avançar {s} segundos — segure para avançar rápido",
       speed: "Velocidade de reprodução",

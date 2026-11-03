@@ -1,3 +1,4 @@
+import type { ListeningActivity } from './listening-use';
 // A native pause can destroy ChatGPT's audio element. Own the paused session
 // before dispatching that event; never reuse a payload from another response.
 export class PlaybackSession {
@@ -23,7 +24,14 @@ export class PlaybackSession {
     private retain: (source: string, signal: AbortSignal) => Promise<Blob>,
     private changed: (media: HTMLMediaElement | null) => void,
     private failed: () => void,
+    private retained: (ready: boolean) => void = () => {},
+    private activity: (activity: ListeningActivity) => void = () => {},
   ) {}
+
+  private report(event: ListeningActivity['event'], media = this.media): void {
+    // Observers must never interfere with playback or recovery.
+    try { this.activity({ session: this.generation, event, position: this.time, duration: this.duration, rate: media?.playbackRate || 1, advancing: Boolean(media && !media.paused && !media.ended && !media.seeking && media.readyState >= 2), now: performance.now() }); } catch {}
+  }
 
   isOwned(media: HTMLMediaElement): boolean { return media === this.owned; }
   get url(): string { return this.source; }
@@ -42,20 +50,26 @@ export class PlaybackSession {
     this.host = this.media = media;
     this.source = source;
     this.wantsPlay = true;
+    this.report('start');
     this.controller = new AbortController();
     this.watch(media);
     this.payload = this.retain(source, this.controller.signal);
     // Retention failure is surfaced when recovery/download actually needs it.
-    void this.payload.catch(() => {});
+    const generation = this.generation;
+    void this.payload.then(blob => {
+      if (generation === this.generation && !this.controller?.signal.aborted && blob.size > 0) this.retained(true);
+    }).catch(() => {});
   }
 
   private watch(media: HTMLMediaElement): void {
     const generation = this.generation;
     const current = () => generation === this.generation && media === this.media;
     const signal = this.controller?.signal;
-    for (const name of ['play', 'pause', 'ended', 'waiting', 'timeupdate']) {
+    for (const name of ['play', 'playing', 'pause', 'ended', 'waiting', 'timeupdate', 'seeking', 'seeked', 'ratechange']) {
       media.addEventListener(name, () => {
         if (!current()) return;
+        this.report(name === 'timeupdate' ? 'progress' : name === 'pause' ? 'pause' : name === 'ended' ? 'ended' : name === 'seeking' ? 'seek' : 'boundary', media);
+        if (['playing', 'seeking', 'seeked', 'ratechange'].includes(name)) return;
         if (name === 'play' || name === 'waiting') {
           if (media.paused) return;
           this.advancing = false;
@@ -79,12 +93,14 @@ export class PlaybackSession {
   }
 
   seek(time: number): void {
+    this.report('seek');
     this.savedTime = time;
     if (this.media && (!this.owned || this.ready)) {
       this.media.currentTime = time;
       // Measure playback progress from the seek destination, not the old position.
       this.playAnchor = this.media.currentTime;
     }
+    this.report('boundary');
   }
 
   toggle(): void {
@@ -110,6 +126,7 @@ export class PlaybackSession {
       return;
     }
     const host = this.media;
+    this.report('pause');
     this.savedTime = host.currentTime || 0;
     this.savedDuration = Number.isFinite(host.duration) ? host.duration : 0;
     if (!this.savedDuration && host.buffered?.length) this.savedDuration = host.buffered.end(host.buffered.length - 1);
@@ -123,6 +140,7 @@ export class PlaybackSession {
     this.media = owned;
     this.wantsPlay = false;
     this.advancing = false;
+    this.report('boundary');
     this.watch(owned);
     this.changed(owned);
     // Retain the source and switch active media BEFORE the host's pause handler.
@@ -151,24 +169,31 @@ export class PlaybackSession {
         if (!current()) return;
         if (this.objectURL) URL.revokeObjectURL(this.objectURL);
         this.objectURL = URL.createObjectURL(blob);
-        await new Promise<void>((resolve, reject) => {
-          const timer = setTimeout(() => finish(new Error('Audio load timed out')), 15000);
-          const finish = (error?: Error) => {
-            clearTimeout(timer);
-            owned.removeEventListener('loadedmetadata', loaded);
-            owned.removeEventListener('error', failed);
-            signal.removeEventListener('abort', aborted);
-            error ? reject(error) : resolve();
-          };
-          const loaded = () => finish();
-          const failed = () => finish(new Error('Audio load failed'));
-          const aborted = () => finish(new Error('Session replaced'));
-          owned.addEventListener('loadedmetadata', loaded, { once: true });
-          owned.addEventListener('error', failed, { once: true });
-          signal.addEventListener('abort', aborted, { once: true });
-          owned.src = this.objectURL;
-          owned.load();
-        });
+        try {
+          await new Promise<void>((resolve, reject) => {
+            const timer = setTimeout(() => finish(new Error('Audio load timed out')), 15000);
+            const finish = (error?: Error) => {
+              clearTimeout(timer);
+              owned.removeEventListener('loadedmetadata', loaded);
+              owned.removeEventListener('error', failed);
+              signal.removeEventListener('abort', aborted);
+              error ? reject(error) : resolve();
+            };
+            const loaded = () => finish();
+            const failed = () => finish(new Error('Audio load failed'));
+            const aborted = () => finish(new Error('Session replaced'));
+            owned.addEventListener('loadedmetadata', loaded, { once: true });
+            owned.addEventListener('error', failed, { once: true });
+            signal.addEventListener('abort', aborted, { once: true });
+            owned.src = this.objectURL;
+            owned.load();
+          });
+        } catch (error) {
+          // Edge Android can stream AAC while its file demuxer rejects the same
+          // retained AAC Blob. Reuse the bytes through MSE; never fetch again.
+          if (!current() || signal.aborted || typeof MediaSource === 'undefined' || !MediaSource.isTypeSupported(blob.type)) throw error;
+          await this.loadRetainedStream(owned, blob, signal);
+        }
         if (!current()) return;
         owned.currentTime = Math.min(this.savedTime, Number.isFinite(owned.duration) ? owned.duration : this.savedTime);
         this.ready = true;
@@ -179,6 +204,53 @@ export class PlaybackSession {
         if (current()) { this.pending = null; this.changed(owned); }
       }
     })();
+  }
+
+  private async loadRetainedStream(owned: HTMLAudioElement, blob: Blob, signal: AbortSignal): Promise<void> {
+    const bytes = await blob.arrayBuffer();
+    if (signal.aborted) throw new Error('Session replaced');
+    const source = new MediaSource();
+    if (this.objectURL) URL.revokeObjectURL(this.objectURL);
+    this.objectURL = URL.createObjectURL(source);
+    await new Promise<void>((resolve, reject) => {
+      let buffer: SourceBuffer | undefined, appended = false, settled = false;
+      const timer = setTimeout(() => finish(new Error('Audio stream load timed out')), 15000);
+      const finish = (error?: Error) => {
+        if (settled) return;
+        settled = true; clearTimeout(timer);
+        source.removeEventListener('sourceopen', open);
+        buffer?.removeEventListener('updateend', updated);
+        buffer?.removeEventListener('error', failed);
+        owned.removeEventListener('loadedmetadata', loaded);
+        owned.removeEventListener('error', failed);
+        signal.removeEventListener('abort', aborted);
+        error ? reject(error) : resolve();
+      };
+      const loaded = () => { if (appended && owned.readyState >= 1) finish(); };
+      const failed = () => finish(new Error('Retained audio stream failed'));
+      const aborted = () => finish(new Error('Session replaced'));
+      const updated = () => {
+        try {
+          if (!buffer?.buffered.length) throw new Error('Empty retained audio stream');
+          source.duration = buffer.buffered.end(buffer.buffered.length - 1);
+          source.endOfStream(); appended = true; loaded();
+        } catch { failed(); }
+      };
+      const open = () => {
+        try {
+          buffer = source.addSourceBuffer(blob.type);
+          buffer.addEventListener('updateend', updated, { once: true });
+          buffer.addEventListener('error', failed, { once: true });
+          buffer.appendBuffer(bytes);
+        } catch { failed(); }
+      };
+      source.addEventListener('sourceopen', open, { once: true });
+      owned.addEventListener('loadedmetadata', loaded);
+      owned.addEventListener('error', failed);
+      signal.addEventListener('abort', aborted, { once: true });
+      owned.src = this.objectURL;
+      owned.load();
+    });
   }
 
   private playOwned(): void {
@@ -206,7 +278,9 @@ export class PlaybackSession {
   }
 
   dispose(next?: HTMLMediaElement): void {
+    this.report('dispose');
     this.generation++;
+    this.retained(false);
     this.playAttempt++;
     clearTimeout(this.playTimer);
     this.controller?.abort();

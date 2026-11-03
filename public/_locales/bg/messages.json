@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Възпроизвеждане на аудио / Пауза на аудио"
+  },
+  "command_seek_back": {
+    "message": "Търсене назад"
+  },
+  "command_seek_forward": {
+    "message": "Търсене напред"
+  },
+  "command_speed_decrease": {
+    "message": "Намалете скоростта"
+  },
+  "command_speed_increase": {
+    "message": "Увеличете скоростта"
+  },
+  "command_speed_reset": {
+    "message": "Нулирайте скоростта на 1×"
+  },
+  "command_volume_increase": {
+    "message": "Увеличете силата на звука"
+  },
+  "command_volume_decrease": {
+    "message": "Намалете силата на звука"
+  },
+  "command_toggle_mute": {
+    "message": "Изключване / включване на звука"
+  },
+  "command_download_audio": {
+    "message": "Изтегляне на аудио"
+  },
+  "command_toggle_collapse": {
+    "message": "Свиване на плейъра / Разгънете ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Нулиране на оформлението"
+  },
+  "command_open_help": {
+    "message": "Клавишни комбинации и жестове"
+  },
+  "command_open_settings": {
+    "message": "Отворете таблото за управление и настройките"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Прочетете на глас"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Възпроизвеждане на аудио / Пауза на аудио · Скорост на възпроизвеждане · Изтегляне на аудио"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Показване/скриване на плаващи контроли"
+  }
+}
