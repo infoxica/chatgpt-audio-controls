@@ -373,7 +373,7 @@ body {
 .speed-chip.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground, #ffffff);
 }
 
 /* Volume Control matching Seeker style */
@@ -579,7 +579,7 @@ input:checked + .slider-toggle:before {
   gap: 8px;
   padding: 8px 14px;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground, #ffffff);
   border: none;
   border-radius: var(--radius-sm);
   font-size: 12px;

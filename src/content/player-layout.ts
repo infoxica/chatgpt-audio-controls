@@ -5,6 +5,7 @@ import { dockGeometry, intersects, fits, distanceToRect, magneticOffset, PlayerG
 import { getLucideSvg, setIcon } from './icons';
 
 declare const __USERSCRIPT__: boolean;
+declare const __PLAYER_CSS__: string;
 const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 const source = 'chatgpt-audio-controls-settings-bridge';
 const bounds = (el: HTMLElement): Rect => { const r = el.getBoundingClientRect(); return { x: r.x, y: r.y, width: r.width, height: r.height }; };
@@ -16,7 +17,7 @@ function visibleBounds(el: HTMLElement): Rect | null {
   let left = r.x, top = r.y, right = r.x + r.width, bottom = r.y + r.height;
   for (let node: HTMLElement | null = el; node; node = node.parentElement) {
     const style = getComputedStyle(node);
-    if (style.display === 'none' || style.opacity === '0' || style.contentVisibility === 'hidden') return null;
+    if (node.hidden || node.getAttribute('aria-hidden') === 'true' || style.display === 'none' || style.opacity === '0' || style.contentVisibility === 'hidden') return null;
     if (node === el || style.display === 'contents') continue;
     const clipX = /^(hidden|clip|scroll|auto)$/.test(style.overflowX);
     const clipY = /^(hidden|clip|scroll|auto)$/.test(style.overflowY);
@@ -127,7 +128,7 @@ export class PlayerLayout {
     // and email editors must never force the player away from its saved dock.
     return Array.from(document.querySelectorAll<HTMLElement>('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]'))
       .filter(e => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]'))
-      .map(bounds).filter(r => r.width > 0 && r.height > 0);
+      .map(visibleBounds).filter((r): r is Rect => !!r);
   }
   private geometry(p: LayoutProfile, expanded: boolean): PlayerGeometry | null {
     const viewport = this.viewport(), obstacles = this.obstacles(), area = { ...viewport };
@@ -252,7 +253,7 @@ export class PlayerLayout {
       elements.forEach((el, i) => {
         const after = bounds(el), old = before[i];
         if (el.hidden || !after.width || !old.width) return;
-        let from = { transform: 'translate(' + (old.x - after.x) + 'px,' + (old.y - after.y) + 'px)' };
+        let from = { transform: 'translate(' + (old.x - after.x) + 'px,' + (old.y - after.y) + 'px) scale(' + old.width / after.width + ',' + old.height / after.height + ')', transformOrigin: '0 0' };
         if (docked && expanded !== this.lastExpanded && el !== this.circle) {
           const travel = geometry.surface!.height;
           el.animate(expanded
@@ -260,7 +261,7 @@ export class PlayerLayout {
             : [{ transform: 'translateY(0)', clipPath: 'inset(0)', visibility: 'visible' }, { transform: 'translateY(' + travel + 'px)', clipPath: 'inset(0 0 100% 0)', visibility: 'visible' }],
             { duration, easing: 'cubic-bezier(.2,.8,.2,1)' });
         } else {
-          el.animate([from, { transform: 'translate(0,0)' }], { duration, easing: 'cubic-bezier(.16,1,.3,1)' });
+          el.animate([from, { transform: 'translate(0,0) scale(1)', transformOrigin: '0 0' }], { duration, easing: 'cubic-bezier(.16,1,.3,1)' });
         }
       });
     }
@@ -342,7 +343,11 @@ export class PlayerLayout {
       const x = event.clientX, y = event.clientY;
       let dragging = false, selected: LayoutProfile | null = null, done = false;
       const offsets = new Map<HTMLElement, { x: number; y: number }>();
-      let targets: { element: HTMLElement; profile: LayoutProfile; hit: Rect }[] = [];
+      const originals = new Map<HTMLElement, Rect>();
+      let preview: HTMLElement | null = null, previewScale = 1;
+      let previewContents: HTMLElement | null = null, liftPending = false;
+      let previewBounds: Rect = { x, y, width: 0, height: 0 };
+      let targets: { element: HTMLElement; profile: LayoutProfile; hit: Rect; parts: Rect[] }[] = [];
       const moving = pill ? [pill] : [this.seek, this.controls, this.circle, this.surface, this.join].filter(el => !el.hidden && (this.expanded || el === this.circle));
       handle.setPointerCapture(event.pointerId);
       const move = (e: PointerEvent) => {
@@ -354,9 +359,36 @@ export class PlayerLayout {
           for (const el of moving) {
             const visible = bounds(el); el.getAnimations().forEach(a => a.cancel()); el.style.transform = '';
             const resting = bounds(el); offsets.set(el, { x: visible.x - resting.x, y: visible.y - resting.y });
+            originals.set(el, visible);
             el.classList.add('cgpt-ra-dragging');
           }
           this.overlay = document.createElement('div'); this.overlay.id = 'cgpt-ra-drop-targets'; this.overlay.setAttribute('aria-hidden', 'true');
+          this.overlay.classList.toggle('cgpt-ra-group-drag', !pill);
+          if (!pill) {
+            const rects = [...originals.values()];
+            const left = Math.min(...rects.map(r => r.x)), top = Math.min(...rects.map(r => r.y));
+            previewBounds = { x: left, y: top, width: Math.max(...rects.map(r => r.x + r.width)) - left, height: Math.max(...rects.map(r => r.y + r.height)) - top };
+            previewScale = Math.min(1, 240 / previewBounds.width, 120 / previewBounds.height);
+            preview = document.createElement('div'); preview.className = 'cgpt-ra-drag-preview'; preview.inert = true;
+            const shadow = preview.attachShadow({ mode: 'closed' });
+            const style = document.createElement('style'); style.textContent = typeof __PLAYER_CSS__ === 'string' ? __PLAYER_CSS__ : '';
+            previewContents = document.createElement('div');
+            Object.assign(previewContents.style, { position: 'relative', width: previewBounds.width + 'px', height: previewBounds.height + 'px', transformOrigin: '0 0' });
+            shadow.append(style, previewContents);
+            for (const el of moving) {
+              const clone = el.cloneNode(true) as HTMLElement, r = originals.get(el)!;
+              // Keep ID-based player styling inside the inert visual preview;
+              // use a shadow root so IDs never duplicate document controls.
+              clone.classList.remove('cgpt-ra-dragging');
+              this.place(clone, { ...r, x: r.x - left, y: r.y - top });
+              clone.style.position = 'absolute'; clone.style.transform = 'none'; clone.style.opacity = '1';
+              previewContents.append(clone);
+              el.classList.add('cgpt-ra-drag-source');
+            }
+            preview.style.width = previewBounds.width + 'px'; preview.style.height = previewBounds.height + 'px';
+            this.overlay.append(preview);
+            liftPending = !this.reducedMotion();
+          }
           const profiles: LayoutProfile[] = pill ? [{ ...current, seekFirst: !current.seekFirst }] : PRESETS.map(preset => ({ preset, seekFirst: current.seekFirst }));
           for (const profile of profiles) {
             const geometry = this.geometry(profile, true); if (!geometry) continue;
@@ -364,20 +396,26 @@ export class PlayerLayout {
             element.dataset.preset = profile.preset; element.dataset.seekFirst = String(profile.seekFirst);
             if (!pill && geometry.attachedToComposer && geometry.surface) {
               const join = document.createElement('div'); join.className = 'cgpt-ra-dock-join';
-              this.paintJoin(join, geometry.surface, 'var(--cgpt-drop-fill)'); element.append(join);
+              this.paintJoin(join, geometry.surface, 'var(--cgpt-drop-fill)'); join.classList.add('cgpt-ra-target-detail'); element.append(join);
             }
             const parts: [string, Rect][] = pill
               ? [[pill === this.seek ? 'seek' : 'controls', pill === this.seek ? geometry.seek : geometry.controls]]
               : geometry.surface ? [['surface', geometry.surface], ['circle', geometry.circleVisual || geometry.circle]] : [['seek', geometry.seek], ['controls', geometry.controls], ['circle', geometry.circle]];
             for (const [kind, r] of parts) {
               const outline = document.createElement('div'); outline.className = 'cgpt-ra-drop-shape'; outline.dataset.part = kind;
+              if (!pill) outline.classList.add('cgpt-ra-target-detail');
               this.place(outline, r);
               const native = this.composer && getComputedStyle(this.composer);
               outline.style.borderRadius = kind === 'surface' ? (native?.borderTopLeftRadius || '28px') + ' ' + (native?.borderTopRightRadius || '28px') + ' 0 0' : '24px';
               element.append(outline);
             }
             const hit = pill ? pill === this.seek ? geometry.seek : geometry.controls : geometry.circle;
-            this.overlay.append(element); targets.push({ element, profile, hit });
+            if (!pill) {
+              const marker = document.createElement('div'); marker.className = 'cgpt-ra-drop-shape cgpt-ra-drop-marker'; marker.dataset.part = 'marker';
+              this.place(marker, hit);
+              element.append(marker);
+            }
+            this.overlay.append(element); targets.push({ element, profile, hit, parts: parts.map(([, r]) => r) });
           }
           document.body.append(this.overlay);
         }
@@ -386,7 +424,29 @@ export class PlayerLayout {
         selected = nearest?.profile || null;
         for (const target of targets) target.element.classList.toggle('cgpt-ra-drop-active', target === nearest);
         const pull = nearest && !this.reducedMotion() ? magneticOffset(e.clientX, e.clientY, nearest.hit) : null;
-        for (const el of moving) el.style.transform = 'translate(' + (e.clientX - x + (offsets.get(el)?.x || 0) + (pull?.x || 0)) + 'px,' + (e.clientY - y + (offsets.get(el)?.y || 0) + (pull?.y || 0)) + 'px)';
+        const px = e.clientX + (pull?.x || 0), py = e.clientY + (pull?.y || 0);
+        if (preview) {
+          // Offset the thumbnail from the cursor so the active circle stays visible.
+          const v = this.viewport();
+          const width = previewBounds.width * previewScale, height = previewBounds.height * previewScale;
+          const candidates = [1, -1].flatMap(dy => [1, -1].map(dx => ({ width, height,
+            x: Math.max(v.x, Math.min(px + (dx > 0 ? 32 : -width - 32), v.x + v.width - width)),
+            y: Math.max(v.y, Math.min(py + (dy > 0 ? 32 : -height - 32), v.y + v.height - height)) })));
+          const position = candidates.find(r => !nearest?.parts.some(part => intersects(r, part))) || candidates[0];
+          const left = position.x, top = position.y;
+          preview.style.transform = `translate(${left}px,${top}px) scale(${previewScale})`;
+          if (liftPending && previewContents) {
+            // Animate inside the translated wrapper: scaling the wrapper itself
+            // would also magnify its pointer offset and fling the preview away.
+            previewContents.animate([{ transform: `translate(${(previewBounds.x - left) / previewScale}px,${(previewBounds.y - top) / previewScale}px) scale(${1 / previewScale})` }, { transform: 'none' }], { duration: 180, easing: 'cubic-bezier(.2,.8,.2,1)' });
+            liftPending = false;
+          }
+          for (const el of moving) {
+            const r = originals.get(el)!;
+            el.style.transformOrigin = '0 0';
+            el.style.transform = `translate(${left + (r.x - previewBounds.x) * previewScale - r.x}px,${top + (r.y - previewBounds.y) * previewScale - r.y}px) scale(${previewScale})`;
+          }
+        } else for (const el of moving) el.style.transform = 'translate(' + (e.clientX - x + (offsets.get(el)?.x || 0) + (pull?.x || 0)) + 'px,' + (e.clientY - y + (offsets.get(el)?.y || 0) + (pull?.y || 0)) + 'px)';
       };
       const finish = (commit: boolean) => {
         if (done) return; done = true;
@@ -395,7 +455,7 @@ export class PlayerLayout {
         window.visualViewport?.removeEventListener('resize', cancel); window.visualViewport?.removeEventListener('scroll', cancel);
         if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
         this.overlay?.remove(); this.overlay = null; this.cancelDrag = null; this.dragging = false;
-        moving.forEach(el => el.classList.remove('cgpt-ra-dragging'));
+        moving.forEach(el => el.classList.remove('cgpt-ra-dragging', 'cgpt-ra-drag-source'));
         if (dragging) {
           // Force a FLIP from the current dragged position, including invalid drops.
           this.previous = 'drag';

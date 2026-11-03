@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Esita heli / peata heli"
+  },
+  "command_seek_back": {
+    "message": "Otsige tagasi"
+  },
+  "command_seek_forward": {
+    "message": "Otsige edasi"
+  },
+  "command_speed_decrease": {
+    "message": "Vähenda kiirust"
+  },
+  "command_speed_increase": {
+    "message": "Suurendage kiirust"
+  },
+  "command_speed_reset": {
+    "message": "Lähtestage kiirus väärtusele 1×"
+  },
+  "command_volume_increase": {
+    "message": "Suurendage helitugevust"
+  },
+  "command_volume_decrease": {
+    "message": "Vähendage helitugevust"
+  },
+  "command_toggle_mute": {
+    "message": "Vaigista / lülita sisse"
+  },
+  "command_download_audio": {
+    "message": "Laadige alla heli"
+  },
+  "command_toggle_collapse": {
+    "message": "Ahenda mängija / Laiendage ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Lähtesta paigutus"
+  },
+  "command_open_help": {
+    "message": "Klaviatuuri otseteed ja žestid"
+  },
+  "command_open_settings": {
+    "message": "Avage armatuurlaud ja seaded"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Lugege ette"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Esita heli / peata heli · Taasesituse kiirus · Laadige alla heli"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Kuva/peida ujuvad juhtelemendid"
+  }
+}

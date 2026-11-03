@@ -1,4 +1,5 @@
-export type SupportedLanguage =
+import type { AdditionalLanguage } from './locale-registry';
+export type SupportedLanguage = AdditionalLanguage
   | "auto"
   | "pl" | "hu" | "sv" | "cs" | "uk" | "ca" | "el" | "ro" | "nb"
   | "bn" | "mr" | "te" | "ta" | "ar" | "fa" | "he"

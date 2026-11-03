@@ -1,9 +1,11 @@
 import { directionForLocale } from '../../../src/shared/i18n/direction';
 import locales from './locales.generated.json';
 import names from './names.generated.json';
+import release from '../../../config/release.json';
 export function renderForm(url: URL, siteKey: string, nonce: string): string {
   const p = url.searchParams;
   const state = {
+    siteUrl: release.siteUrl,
     intent: p.get('source') === 'installed' && ['bug', 'suggestion'].includes(p.get('intent') || '') ? p.get('intent') : null,
     locale: p.get('lang') && Object.hasOwn(locales, p.get('lang')!) ? p.get('lang') : 'en',
     locales, names, directions: Object.fromEntries(Object.keys(locales).map(code => [code, directionForLocale(code)])), source: p.get('source') === 'installed' ? 'installed' : 'uninstall',
@@ -55,7 +57,7 @@ for(const [value,name] of Object.entries(state.names)) $('language').add(new Opt
 $('language').value=state.locale;$('theme').value=themeChoice;
 codes.forEach((code,index)=>{const label=document.createElement('label');label.className='reason';const input=document.createElement('input');input.type='radio';input.name='reason';input.value=code;input.checked=code===state.intent;const text=document.createElement('span');text.dataset.copy=keys[index];label.append(input,text);$('reasons').append(label);});
 function preferenceLabels(){$('language').title=copy().language+': '+state.names[state.locale];$('theme').title=copy().appearance+': '+$('theme').selectedOptions[0].textContent;$('theme-control').dataset.choice=themeChoice;}
-function translate(){document.documentElement.lang=state.locale;document.documentElement.dir=state.directions[state.locale];$('privacy-link').href='https://infoxica.github.io/chatgpt-audio-controls/'+(state.locale==='en'?'':state.locale+'/')+'#privacy';document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=copy()[el.dataset.copy]);$('languageLabel').textContent=copy().language;preferenceLabels();$('error').textContent=errorKey?copy()[errorKey]:'';if(finished)$('confirmation').textContent=copy()[finished];}
+function translate(){document.documentElement.lang=state.locale;document.documentElement.dir=state.directions[state.locale];$('privacy-link').href=state.siteUrl+(state.locale==='en'?'':state.locale+'/')+'#privacy';document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=copy()[el.dataset.copy]);$('languageLabel').textContent=copy().language;preferenceLabels();$('error').textContent=errorKey?copy()[errorKey]:'';if(finished)$('confirmation').textContent=copy()[finished];}
 function done(key){finished=key;$('survey').hidden=true;$('done').hidden=false;translate();$('done').focus();}
 function busy(value){saving=value;for(const id of ['send','skip','language','theme','reasons','note'])$(id).disabled=value;$('send').textContent=copy()[value?'sending':'send'];}
 $('language').addEventListener('change',()=>{state.locale=$('language').value;translate();});

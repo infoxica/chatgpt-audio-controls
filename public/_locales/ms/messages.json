@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Mainkan audio / Jeda audio"
+  },
+  "command_seek_back": {
+    "message": "Cari ke belakang"
+  },
+  "command_seek_forward": {
+    "message": "Cari ke hadapan"
+  },
+  "command_speed_decrease": {
+    "message": "Kurangkan Kelajuan"
+  },
+  "command_speed_increase": {
+    "message": "Tingkatkan Kelajuan"
+  },
+  "command_speed_reset": {
+    "message": "Tetapkan semula kelajuan kepada 1×"
+  },
+  "command_volume_increase": {
+    "message": "Tingkatkan kelantangan audio"
+  },
+  "command_volume_decrease": {
+    "message": "Kurangkan kelantangan audio"
+  },
+  "command_toggle_mute": {
+    "message": "Redam / nyahredam"
+  },
+  "command_download_audio": {
+    "message": "Muat turun audio"
+  },
+  "command_toggle_collapse": {
+    "message": "Runtuh Pemain / Kembangkan ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Tetapkan semula reka letak"
+  },
+  "command_open_help": {
+    "message": "Pintasan papan kekunci & gerak isyarat"
+  },
+  "command_open_settings": {
+    "message": "Buka Papan Pemuka & Tetapan"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Baca dengan kuat"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Mainkan audio / Jeda audio · Kelajuan main balik · Muat turun audio"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Tunjukkan / sembunyikan kawalan terapung"
+  }
+}

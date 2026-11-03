@@ -1,5 +1,6 @@
 import { directionForLocale } from './direction';
 import audienceLocales from './locales/audience.json';
+import chatgptLocales from './locales/chatgpt.json';
 import { expandedLocales } from './locales/expanded';
 import { hi } from "./locales/hi";
 import { fr } from "./locales/fr";
@@ -27,6 +28,7 @@ export { en, zhCN, zhTW, vi, th, es, ptBR, ptPT, ru };
 export type ResolvedLanguage = Exclude<SupportedLanguage, "auto">;
 
 export const LOCALES: Record<ResolvedLanguage, TranslationSchema> = {
+  ...chatgptLocales,
   ...audienceLocales,
   ...expandedLocales,
   en,
@@ -51,15 +53,23 @@ export const LOCALES: Record<ResolvedLanguage, TranslationSchema> = {
 /** Match both browser tags and Chrome catalog codes without changing stored preferences. */
 function matchLocale(raw: string | undefined): ResolvedLanguage | undefined {
   if (typeof raw !== 'string') return undefined;
-  const [base, ...subtags] = raw.trim().replaceAll('_', '-').toLowerCase().split('-');
+  const normalized = raw.trim().replaceAll('_', '-').toLowerCase();
+  const exact = Object.keys(LOCALES).find(code => code.toLowerCase() === normalized);
+  if (exact) return exact as ResolvedLanguage;
+  const [base, ...subtags] = normalized.split('-');
   if (base === 'zh') {
     // An explicit script takes precedence over region (e.g. zh-Hans-HK).
-    if (subtags.includes('hant')) return 'zh-TW';
+    if (subtags.includes('hant')) return subtags.includes('hk') ? 'zh-HK' : 'zh-TW';
     if (subtags.includes('hans')) return 'zh-CN';
-    return subtags.some(tag => ['tw', 'hk', 'mo'].includes(tag)) ? 'zh-TW' : 'zh-CN';
+    if (subtags.includes('hk')) return 'zh-HK';
+    return subtags.some(tag => ['tw', 'mo'].includes(tag)) ? 'zh-TW' : 'zh-CN';
   }
   if (base === 'pt') return subtags.includes('pt') ? 'pt-PT' : 'pt-BR';
   if (base === 'no') return 'nb';
+  if (base === 'tl') return 'fil';
+  if (base === 'es' && subtags.some(tag => ['419','mx','ar','bo','cl','co','cr','cu','do','ec','gt','hn','ni','pa','pe','pr','py','sv','uy','ve'].includes(tag))) return 'es-419';
+  if (base === 'fr' && subtags.includes('ca')) return 'fr-CA';
+  if (base === 'hi' && subtags.includes('latn')) return 'hi-Latn';
   return Object.hasOwn(LOCALES, base) ? base as ResolvedLanguage : undefined;
 }
 

@@ -1,4 +1,5 @@
 import audience from './audience-features.json';
+import chatgptFeatures from './chatgpt-features.json';
 import { getTranslations, resolveLanguage } from './core';
 import { getReleaseCopy } from './release-copy';
 
@@ -31,9 +32,11 @@ const catalogs: Record<string, string[]> = {
   th: 'เค้าโครงเครื่องเล่น|เดสก์ท็อป|หน้าจอแคบ|อัตโนมัติ|ตำแหน่ง|การจัดวาง|แถวแนวนอน|ซ้อนแนวนอน|คอลัมน์แนวตั้ง|รูปตัว L|แถบเลื่อนก่อน|ด้านของวงกลม|ซ้าย|ขวา|รีเซ็ตเค้าโครง|ลากเพื่อจัดวาง|เสียงทั้งหมดพร้อมดาวน์โหลดแล้ว|แจ้งเมื่อเสียงทั้งหมดพร้อม|กำหนดแป้นลัดได้ในเบราว์เซอร์เดสก์ท็อป|รีเซ็ตความเร็วเป็น 1×|เพิ่มระดับเสียง|ลดระดับเสียง|ปิด / เปิดเสียง|บนซ้าย|บนกลาง|บนขวา|กลางซ้าย|กลางขวา|ล่างซ้าย|ล่างกลาง|ล่างขวา|บันทึกในอุปกรณ์นี้แล้ว|สลับแถบ'.split('|'),
 };
 Object.assign(catalogs, Object.fromEntries(Object.entries(audience).map(([code, copy]) => [code, copy.features])));
+Object.assign(catalogs, Object.fromEntries(Object.entries(chatgptFeatures).map(([code, copy]) => [code, copy.features])));
 export { catalogs as featureCatalogs };
 const dockLabels: Record<string, string> = {"en": "Composer dock", "hi": "चैट इनपुट से जुड़ा प्लेयर", "bn": "চ্যাট ইনপুটে যুক্ত প্লেয়ার", "mr": "चॅट इनपुटला जोडलेला प्लेयर", "te": "చాట్ ఇన్‌పుట్‌కు జోడించిన ప్లేయర్", "ta": "அரட்டை உள்ளீட்டுடன் இணைந்த பிளேயர்", "ar": "مشغّل مثبت بحقل الدردشة", "fa": "پخش‌کننده متصل به کادر گفتگو", "he": "נגן צמוד לתיבת הצ׳אט", "zh-CN": "输入框停靠", "zh-TW": "輸入框停靠", "vi": "Gắn vào ô nhập", "th": "ยึดกับช่องพิมพ์", "es": "Acoplado al cuadro de texto", "pt-BR": "Acoplado à caixa de texto", "pt-PT": "Acoplado à caixa de texto", "ru": "У поля ввода", "fr": "Ancré au champ de saisie", "de": "Am Eingabefeld andocken", "ja": "入力欄にドッキング", "ko": "입력창에 고정", "id": "Menempel pada kotak pesan", "it": "Agganciato al campo di testo", "tr": "Mesaj kutusuna sabitle"};
 Object.assign(dockLabels, Object.fromEntries(Object.entries(audience).map(([code, copy]) => [code, copy.dock])));
+Object.assign(dockLabels, Object.fromEntries(Object.entries(chatgptFeatures).map(([code, copy]) => [code, copy.dock])));
 export function featureCopy(language?: string) {
   const a = catalogs[resolveLanguage(language)] || english;
   return { presets: { original: a[3], composer: dockLabels[resolveLanguage(language)], 'top-left': a[23], 'top-right': a[25], left: a[26], right: a[27], 'bottom-left': a[28], 'bottom-right': a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
@@ -43,6 +46,7 @@ const seekCommands: Record<string, string> = {
   'zh-CN': '向后跳转|向前跳转', 'zh-TW': '向後跳轉|向前跳轉', vi: 'Tua lùi|Tua tới', th: 'ย้อนกลับ|ข้ามไปข้างหน้า', es: 'Retroceder|Avanzar', 'pt-BR': 'Retroceder|Avançar', 'pt-PT': 'Retroceder|Avançar', ru: 'Перемотать назад|Перемотать вперёд', fr: 'Reculer|Avancer', de: 'Zurückspulen|Vorspulen', ja: '巻き戻す|早送りする', ko: '뒤로 탐색|앞으로 탐색', id: 'Mundur|Maju', it: 'Indietro|Avanti', tr: 'Geri sar|İleri sar',
 };
 Object.assign(seekCommands, Object.fromEntries(Object.entries(audience).map(([code, copy]) => [code, copy.seekCommands.join('|')])));
+Object.assign(seekCommands, Object.fromEntries(Object.entries(chatgptFeatures).map(([code, copy]) => [code, copy.seekCommands.join('|')])));
 export function commandLabels(language?: string, step?: number): Record<string, string> {
   const t = getTranslations(language), c = featureCopy(language), r = getReleaseCopy(language);
   return { 'play-pause': t.content.shortcutsPopover.playPause, 'seek-back': step === undefined ? seekCommands[resolveLanguage(language)].split('|')[0] : t.content.shortcutsPopover.back.replace('{s}', String(step)), 'seek-forward': step === undefined ? seekCommands[resolveLanguage(language)].split('|')[1] : t.content.shortcutsPopover.forward.replace('{s}', String(step)), 'speed-decrease': t.shortcuts.speedDecrease.action, 'speed-increase': t.shortcuts.speedIncrease.action, 'speed-reset': c.speedReset, 'volume-increase': c.volumeUp, 'volume-decrease': c.volumeDown, 'toggle-mute': c.mute, 'download-audio': t.content.tooltips.download, 'toggle-collapse': `${t.content.tooltips.collapse} / ${t.content.tooltips.expand}`, 'toggle-floating-ui': r.visibilityShortcut, 'reset-layout': c.reset, 'open-help': t.content.tooltips.shortcuts, 'open-settings': t.popup.header.openOptions };

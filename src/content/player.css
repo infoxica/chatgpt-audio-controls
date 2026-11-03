@@ -730,3 +730,15 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
 #cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }
 #cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }
 #cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }
+#cgpt-ra-drop-targets .cgpt-ra-drag-preview{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none;opacity:.25;filter:drop-shadow(0 8px 12px #0003);z-index:1}
+#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-target-detail{visibility:hidden}
+#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-drop-active .cgpt-ra-target-detail{visibility:visible}
+#cgpt-ra-drop-targets .cgpt-ra-drop-marker{border-radius:50%;animation:cgpt-target-arrive 160ms cubic-bezier(.2,.8,.2,1)}
+#cgpt-ra-drop-targets .cgpt-ra-drop-active .cgpt-ra-drop-marker{visibility:hidden}
+.cgpt-ra-drag-source{opacity:0!important;pointer-events:none!important}
+@keyframes cgpt-target-arrive{from{opacity:0;transform:scale(.85)}to{opacity:.7;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){#cgpt-ra-drop-targets .cgpt-ra-drop-marker{animation:none}}
+.cgpt-ra-support-provider{flex-basis:100%;display:flex;align-items:center;gap:8px;margin:12px 0 4px!important}
+#cgpt-ra-left.cgpt-ra-drag-source,#cgpt-ra-right.cgpt-ra-drag-source,#cgpt-ra-floating-toggle.cgpt-ra-drag-source,#cgpt-ra-dock.cgpt-ra-drag-source{opacity:0!important}
+
+.cgpt-ra-dock-join.cgpt-ra-drag-source{opacity:0!important}

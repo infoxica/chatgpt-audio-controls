@@ -434,7 +434,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground, #ffffff);
   border: none;
   font-size: 13px;
   font-weight: 600;
@@ -475,7 +475,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-outline.active {
   background: var(--accent) !important;
   border-color: var(--accent) !important;
-  color: #ffffff !important;
+  color: var(--accent-foreground, #ffffff) !important;
 }
 
 

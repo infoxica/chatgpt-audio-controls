@@ -8,6 +8,15 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 Includes the unpublished 1.4.0 feature work and the following corrections.
 
+- Widen desktop language navigation and add a full-screen multi-column phone picker. Mobile headers span the viewport in a single row no taller than 72px, with navigation at the far right.
+- Group playback controls as Play/Pause, jump backward, jump forward. Follow current ChatGPT accent tokens and nested theme owners across player, popup, settings and drag previews without changing light/dark preferences.
+- Measure consented website PayPal-link clicks separately from payments; retain direct links and no extension telemetry.
+
+- Main dragging now lifts into an inert, proportionate compact preview. Fitting destinations initially show only circles; only the magnetically active destination reveals its full-size outlines. Reduced motion, cancellation, pill swapping and saved layouts remain intact.
+- Ignore hidden or clipped sidebar and navigation space when resolving laptop layouts. Test the reported 1512×982 and 1536×864 viewports and smaller browser content areas in both distributions.
+- Keep website navigation sticky, measure its height for anchor offsets, and fit the expanded language menu inside the viewport.
+- Add 34 UI locales and regional/script variants, bringing coverage to 67, with Urdu RTL and exact locale matching before language fallback. Generate browser-managed catalogs only for Chrome-supported locales.
+- Add clearly labelled PayPal coffee support alongside GitHub Sponsors, with US$1/$3/$5/$10 links. Either provider retires the same optional donation reminder without detecting payment completion.
 - Preserve original and corner placement at constrained laptop viewport sizes by using full-size compact controls before changing arrangement. Secondary actions remain available through More; vertical compact controls open their menu toward the viewport interior.
 - Recover retained AAC playback on Edge Android through the browser's native streaming decoder when its file decoder rejects the same bytes. Pausing, resuming and seeking reuse the retained payload without another request. Raw AAC downloads use the matching `.aac` filename extension.
 - Center image-viewer close icons with SVGs and consistent keyboard/touch targets.
@@ -16,7 +25,7 @@ Includes the unpublished 1.4.0 feature work and the following corrections.
 
 - Apply RTL document direction throughout Arabic, Persian and Hebrew website pages. Close wide-player help, volume and speed popovers with Escape and return focus to their visible trigger, in both distributions.
 
-- Optional GitHub Sponsors support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 33 languages. Privacy and features remain unconditional.
+- Optional support on the website, dashboard, popup About, and standalone settings, with one-time US$1/$3/$5/$10 links and copy in all 67 locales. Privacy and features remain unconditional.
 - Device-local meaningful-listening count, review invitation after four uses, and support invitation after ten. Non-modal cards wait until playback pauses/ends, respect hidden controls and typing, and allow permanent dismissal or one reminder after both 14 days and ten further uses. No telemetry or additional permissions.
 
 - Restore floating controls if ChatGPT replaces their DOM during hydration or navigation, retaining playback, saved layouts and intentional hide/collapse settings. Keep early audio capture while deferring UI insertion until the document is parsed; restore removed standalone userscript styles as well.

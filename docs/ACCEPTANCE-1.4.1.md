@@ -1,5 +1,143 @@
 # v1.4.1 acceptance — 2026-11-02
 
+## Release continuation — 2026-11-03
+
+The owner confirmed the requested real Mac checklist passed for candidate 1.4.1
+(docking, dragging, playback, seeking and download). This is owner-reported
+acceptance, not an automated macOS run. `nativeMac` is now true. Other gates
+remain unchanged until their current-candidate checks are completed.
+
+## Navigation and accent revision — 2026-11-03
+
+This is the latest local evidence and supersedes the artifact hashes and test
+counts below. Version remains **1.4.1**; nothing was deployed or published.
+
+- The mobile header is full-width, one row and 72px high, with 12px horizontal
+  padding and 44px controls. Donate is icon-only and the menu stays physically
+  rightmost in RTL. The measured header continues to set anchor clearance.
+- The desktop language panel fits all 67 entries without scrolling at
+  1512×850 and 1536×724. The mobile dialog uses two, three and four columns,
+  locks background scrolling, retains its heading/close control, traps focus,
+  closes with Escape and restores focus. Checks include 320, 360, 390, 480,
+  768 and 1000px widths, RTL and translated labels.
+- Transport order is Play/Pause, backward, forward, then the existing actions.
+  Both distributions share the same renderer, including compact and preview UI.
+- Read-only inspection of current ChatGPT in Edge found the active blue action
+  token `--color-background-accent-action: #2c67c5`, while the old
+  `--theme-submit-btn-bg` token was absent. The old extension fallback was
+  `#3a83f7`. Accent resolution now follows the composer ancestor chain, ignores
+  unrelated themed elements, rebinds after replacement and refreshes on focus.
+  Validated optional color fields extend the existing cache without changing
+  its key or System/Light/Dark behavior. Popup/settings subscribe to live changes.
+- Isolated fixtures passed seven named colors, two successive custom colors,
+  white/black foreground contrast values, nested owners, replacement, and popup
+  reopening. Automatic approval review rejected changing the live account's
+  accent preference; no preference was changed. Live color-switch acceptance
+  was therefore not performed. Fixtures do not establish native Mac acceptance.
+- PayPal links remain direct and parameter-free. Website-only
+  `support_link_click` events require consent and include only the provider,
+  predefined amount/currency, locale and controlled placement (plus GA's beacon
+  transport option). Declined/withdrawn consent suppresses events. Consent and
+  privacy disclosures now mention these clicks in all 67 languages. No extension
+  telemetry, payment detection or new permissions were added.
+
+Validation:
+
+- Application/website type checking and extension, userscript and website builds
+  passed. All **65 unit tests / 60,464 assertions** passed, including playback
+  recovery, seek anchors, locale validation and exact userscript bundle/CSS parity.
+  The Worker fixture needed loopback access outside the filesystem sandbox.
+- The broad browser run passed 98/99 checks; the locale sweep hit Chrome's
+  synchronized-storage write quota. Test-only pacing fixed that issue. The final
+  affected run passed **13/13**, including that sweep and four new width/panel
+  cases. A further **8/8** rendering check verified settled menu geometry and
+  captured screenshots. All 103 distinct current cases have passing evidence
+  across these runs; there was no second full-suite run.
+- Seven website HTTP checks, version checks and source release checks passed.
+  The release command without a tag skips publication acceptance; it is not a
+  release approval. The existing large localization-bundle warning remains.
+- Combined Worker/static assets and legacy redirects were prepared locally.
+  Real Mac acceptance, remaining Android acceptance, native browser acceptance,
+  deployment, store submission and public availability remain separate/open.
+
+Privacy-safe fixture captures are under `build/acceptance-1.4.1/`:
+`mobile-header-320.png`, `language-modal-390.png`,
+`desktop-languages-1512.png`, and `desktop-languages-1536.png`.
+
+Every one of the 96 ZIP entries matches `dist` byte-for-byte. The manifest is
+1.4.1 and includes 52 browser-supported locale catalogs.
+
+| Latest artifact | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `dist-zip/chatgpt-audio-controls-v1.4.1.zip` | 1,298,141 | `e08818288a9fbe72462627fd94f0bd993750b1845ed80b7fb1dbdb1f65a0b7a3` |
+| `userscript/chatgpt-audio-controls.user.js` | 1,636,178 | `e379bd4711ee77fa65e8b37bed1f8bf38c27dbf2ffaa528ba84107209c3f4954` |
+
+Machine-readable latest hashes: `build/acceptance-1.4.1/artifacts.json`.
+
+## Earlier local revision — 2026-11-03
+
+This section supersedes earlier local counts below. Version remains **1.4.1**.
+It does not establish native Mac/Android acceptance or public availability.
+
+- Main dragging now lifts into an inert, aspect-preserving preview within
+  240×120px. Inactive destinations show circles; only the magnetic destination
+  shows full resolved outlines. Control dragging remains a swap within the
+  current layout. Hidden/clipped sidebars no longer reserve invisible space.
+- The website header is sticky with measured anchor clearance. The expanded
+  language menu scrolls within the viewport; long translated paragraphs wrap.
+- PayPal coffee support is available beside Sponsors on all support surfaces.
+  Public `paypal.me/infoxica/{1,3,5,10}USD` destinations were opened in Edge:
+  each reached `@infoxica` and displayed the matching USD amount. No Send action
+  or payment was performed. Both providers retire the same donation request
+  when opened; this never records payment completion.
+- UI coverage is **67 locales**, including 34 additions; browser manifest
+  catalogs cover **52 supported codes**. Unsupported browser-managed locales
+  use fallback catalogs while custom UI remains available. The generated site
+  contains **335 pages**, with **68 alternatives** per sitemap URL including
+  `x-default`. Feedback privacy links now use the official hostname.
+
+### Validation and limitations
+
+- Application and feedback TypeScript checks passed. All 64 unit tests passed
+  (60,391 assertions), including playback recovery, seek anchors, engagement,
+  locale/placeholder validation and exact generated-userscript content parity.
+- Seven website HTTP tests passed. Browser checks covered all 67 player,
+  popup/settings and feedback translations, all 268 localized guide pages,
+  RTL, narrow widths, support links, reduced motion and both distributions.
+  Menu/paragraph overflow found during the broad browser run was corrected.
+  The final affected-suite rerun passed **32/32** drag/laptop/website tests;
+  the subsequent 67-locale feedback/privacy-link check also passed.
+- Laptop coverage includes 1512×982, 1536×864 and reduced CSS viewport sizes
+  such as 1512×850 and 1335×724. Responsive tests are not native macOS evidence.
+- Extension/userscript builds and version/source release checks passed.
+  Cloudflare Worker/static-assets **dry-run only** passed with 1,495 assets.
+  The publication gate was not asserted. Vite reports the large localization
+  bundle warning; no new runtime translation service or telemetry was added.
+- Existing translations were retained. New translation drafts were checked
+  for schema, variables, terminology and rendering, but have not had complete
+  native-speaker linguistic review. That remains an explicit quality follow-up.
+- Real Mac acceptance and the remaining clean-browser Android saved-file
+  acceptance remain open. Deployment, store submission and publication were
+  not performed. Existing acceptance flags remain unchanged.
+
+Privacy-safe local captures (fictional fixtures, not personal conversations):
+`build/acceptance-1.4.1/drag-1512.png`, `language-menu.png`, `support-rtl.png`.
+These are acceptance evidence, not new marketing screenshots.
+
+### Rebuilt artifacts
+
+Every ZIP entry was compared byte-for-byte against `dist`; version is 1.4.1,
+with 52 manifest catalogs and no build/debug/private files.
+
+| Artifact | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `dist-zip/chatgpt-audio-controls-v1.4.1.zip` | 1,296,980 | `66d73ed79a1fd9c6294c1a9ff4572abfee33b6fc987730f85a63d1d443f470e0` |
+| `userscript/chatgpt-audio-controls.user.js` | 1,634,703 | `7b9ddd31b71dfb37eb229834c35f3836e627c281adb9f4632766b5ad8fcdf4a8` |
+
+Machine-readable artifact details: `build/acceptance-1.4.1/artifacts.json`.
+Payment format reference: [PayPal.Me guidance](https://www.paypal.com/us/cshelp/article/paypalme-frequently-asked-questions-help432).
+Browser catalog reference: [Chrome i18n conventions](https://developer.chrome.com/docs/extensions/reference/api/i18n).
+
 This candidate includes the unpublished 1.4.0 work. Earlier acceptance documents
 are historical evidence, not proof that this candidate passed a native platform.
 

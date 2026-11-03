@@ -49,18 +49,18 @@ class SiteHTTP(unittest.TestCase):
             self.assertEqual(response.headers.get_content_type(), 'application/xml')
             xml = response.read()
             self.assertTrue(xml.endswith(b'\n'))
-            self.assertGreater(xml.count(b'\n'), 165)
+            self.assertGreater(xml.count(b'\n'), 335)
             urls = ET.fromstring(xml).findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url')
-            self.assertEqual(len(urls), 165)
+            self.assertEqual(len(urls), 335)
             locations = [url.find('{http://www.sitemaps.org/schemas/sitemap/0.9}loc').text for url in urls]
-            self.assertEqual(len(set(locations)), 165)
+            self.assertEqual(len(set(locations)), 335)
             for url in urls:
                 canonical = url.find('{http://www.sitemaps.org/schemas/sitemap/0.9}loc').text
                 self.assertTrue(canonical.startswith(preview.CANONICAL))
                 self.assertNotIn('127.0.0.1', canonical)
                 alternatives = url.findall('{http://www.w3.org/1999/xhtml}link')
-                self.assertEqual(len(alternatives), 34)
-                self.assertEqual(len({link.attrib['hreflang'] for link in alternatives}), 34)
+                self.assertEqual(len(alternatives), 68)
+                self.assertEqual(len({link.attrib['hreflang'] for link in alternatives}), 68)
                 self.assertEqual(sum(link.attrib['hreflang'] == 'x-default' for link in alternatives), 1)
                 for link in alternatives:
                     self.assertIn(link.attrib['href'], locations)
@@ -91,11 +91,11 @@ class SiteHTTP(unittest.TestCase):
 
     def test_document_direction_for_every_generated_page(self):
         pages = list(Path('site-dist').rglob('index.html'))
-        self.assertEqual(len(pages), 165)
+        self.assertEqual(len(pages), 335)
         for page in pages:
             html = page.read_text(encoding='utf-8')
             language = re.search(r'<html lang="([^"]+)"', html).group(1)
-            direction = 'rtl' if language in ('ar', 'fa', 'he') else 'ltr'
+            direction = 'rtl' if language in ('ar', 'fa', 'he', 'ur') else 'ltr'
             self.assertRegex(html, rf'<html[^>]*dir="{direction}"', str(page))
 
     def test_markdown_negotiation_and_head(self):
@@ -130,16 +130,16 @@ class SiteHTTP(unittest.TestCase):
                     self.assertIn('rel="canonical"', response.headers['Link'])
         with self.get('/llms-full.txt') as response:
             full = response.read().decode()
-            self.assertEqual(full.count('\nSource: '), 165)
+            self.assertEqual(full.count('\nSource: '), 335)
             self.assertIn('## ja:', full)
             self.assertIn('## en: Glossary', full)
         with self.get('/sitemap.md') as response:
             sitemap = response.read().decode()
-            self.assertEqual(sitemap.count('\n## '), 33)
+            self.assertEqual(sitemap.count('\n## '), 67)
             self.assertIn('/glossary/', sitemap)
         with self.get('/sitemap.xml') as response:
             dates = ET.fromstring(response.read()).findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod')
-            self.assertEqual(len(dates), 165)
+            self.assertEqual(len(dates), 335)
             for date in dates:
                 datetime.fromisoformat(date.text.replace('Z', '+00:00'))
 

@@ -229,5 +229,243 @@
     "reviewLink": "Anmeldelse av {store}",
     "reviewHint": "Velg butikken du installerte fra. Du må kanskje logge på; på Microsoft Edge, åpne Anmeldelser-delen.",
     "userscriptNote": "Utvidelsen og brukerskriptet deler spiller, layout og språkfunksjoner. Nettlesertilordnede snarveier krever skrivebordsutvidelsen."
+  },
+  "am": {
+    "reviewTitle": "በማዳመጥ ጊዜዎ እየተደሰቱ ነው?",
+    "reviewBody": "በታማኝነት መገምገም ሌሎች ይህ ቅጥያ ለእነርሱ ትክክል መሆኑን ለመወሰን ይረዳል - እና ምን ማሻሻል እንዳለብን እንድናውቅ ይረዳናል። ስለ ልምድዎ ጥቂት ቃላት ለውጥ ሊያመጡ ይችላሉ።",
+    "reviewLink": "በ {store} ላይ ግምገማ",
+    "reviewHint": "የጫኑትን መደብር ይምረጡ። በመለያ መግባት ሊኖርብዎ ይችላል; በ Microsoft Edge ላይ የግምገማዎች ክፍሉን ይክፈቱ።",
+    "userscriptNote": "ቅጥያው እና የተጠቃሚ ስክሪፕት ማጫወቻ፣ አቀማመጥ እና የቋንቋ ባህሪያት ይጋራሉ። በአሳሽ የተመደቡ አቋራጮች የዴስክቶፕ ማራዘሚያ ያስፈልጋቸዋል።"
+  },
+  "bg": {
+    "reviewTitle": "Наслаждавате се на времето си за слушане?",
+    "reviewBody": "Честният преглед помага на другите да решат дали това разширение е подходящо за тях – и ни помага да знаем какво да подобрим. Няколко думи за вашия опит могат да имат значение.",
+    "reviewLink": "Преглед на {store}",
+    "reviewHint": "Изберете магазина, от който сте инсталирали. Може да се наложи да влезете; на Microsoft Edge отворете секцията Ревюта.",
+    "userscriptNote": "Разширението и потребителският скрипт споделят характеристиките на плейъра, оформлението и езика. Присвоените от браузъра преки пътища изискват разширението на работния плот."
+  },
+  "bs": {
+    "reviewTitle": "Uživate u vremenu slušanja?",
+    "reviewBody": "Iskrena recenzija pomaže drugima da odluče da li je ovo proširenje pravo za njih—i pomaže nam da znamo šta da poboljšamo. Nekoliko riječi o vašem iskustvu može napraviti razliku.",
+    "reviewLink": "Pregled na {store}",
+    "reviewHint": "Odaberite prodavnicu iz koje ste instalirali. Možda ćete se morati prijaviti; na Microsoft Edge, otvorite odjeljak Recenzije.",
+    "userscriptNote": "Ekstenzija i korisnička skripta dijele igrače, izgled i jezičke karakteristike. Prečice dodijeljene pretraživaču zahtijevaju ekstenziju radne površine."
+  },
+  "da": {
+    "reviewTitle": "Nyder du din lyttetid?",
+    "reviewBody": "En ærlig anmeldelse hjælper andre med at beslutte, om denne udvidelse er den rigtige for dem – og hjælper os med at vide, hvad vi skal forbedre. Et par ord om din oplevelse kan gøre en forskel.",
+    "reviewLink": "Anmeldelse af {store}",
+    "reviewHint": "Vælg den butik, du installerede fra. Du skal muligvis logge ind; på Microsoft Edge skal du åbne afsnittet Anmeldelser.",
+    "userscriptNote": "Udvidelsen og brugerscript deler afspiller, layout og sprogfunktioner. Browsertildelte genveje kræver skrivebordsudvidelsen."
+  },
+  "et": {
+    "reviewTitle": "Kas teile meeldib kuulata?",
+    "reviewBody": "Aus ülevaade aitab teistel otsustada, kas see laiendus neile sobib, ja aitab meil teada, mida parandada. Mõni sõna teie kogemuse kohta võib midagi muuta.",
+    "reviewLink": "{store} ülevaade",
+    "reviewHint": "Valige pood, kust installisite. Võimalik, et peate sisse logima; Microsoft Edge puhul avage jaotis Arvustused.",
+    "userscriptNote": "Laiendus ja kasutajaskript jagavad pleierit, paigutust ja keelefunktsioone. Brauseri määratud otseteede jaoks on vaja töölaualaiendit."
+  },
+  "fil": {
+    "reviewTitle": "Nasiyahan sa iyong oras ng pakikinig?",
+    "reviewBody": "Ang isang matapat na pagsusuri ay tumutulong sa iba na magpasya kung ang extension na ito ay tama para sa kanila—at tinutulungan kaming malaman kung ano ang dapat pagbutihin. Ang ilang mga salita tungkol sa iyong karanasan ay maaaring gumawa ng pagkakaiba.",
+    "reviewLink": "Pagsusuri sa {store}",
+    "reviewHint": "Piliin ang tindahan kung saan ka nag-install. Maaaring kailanganin mong mag-sign in; sa Microsoft Edge, buksan ang seksyon ng Mga Review.",
+    "userscriptNote": "Ang extension at userscript share player, layout at mga feature ng wika. Ang mga shortcut na itinalaga ng browser ay nangangailangan ng desktop extension."
+  },
+  "fi": {
+    "reviewTitle": "Nautitko kuunteluajasta?",
+    "reviewBody": "Rehellinen arvostelu auttaa muita päättämään, sopiiko tämä laajennus heille – ja auttaa meitä tietämään, mitä pitäisi parantaa. Muutama sana kokemuksestasi voi vaikuttaa.",
+    "reviewLink": "Tarkista {store}",
+    "reviewHint": "Valitse kauppa, josta asensit. Sinun on ehkä kirjauduttava sisään; avaa Microsoft Edge:n Arvostelut-osio.",
+    "userscriptNote": "Laajennus ja käyttäjäkirjoitus jakavat soittimen, asettelun ja kieliominaisuudet. Selaimen määrittämät pikakuvakkeet vaativat työpöytälaajennuksen."
+  },
+  "gu": {
+    "reviewTitle": "તમારા સાંભળવાનો સમય માણો છો?",
+    "reviewBody": "પ્રામાણિક સમીક્ષા અન્ય લોકોને તે નક્કી કરવામાં મદદ કરે છે કે આ એક્સ્ટેંશન તેમના માટે યોગ્ય છે કે કેમ - અને અમને શું સુધારવું તે જાણવામાં મદદ કરે છે. તમારા અનુભવ વિશે થોડાક શબ્દો ફરક લાવી શકે છે.",
+    "reviewLink": "{store} પર સમીક્ષા",
+    "reviewHint": "તમે ઇન્સ્ટોલ કરેલ સ્ટોર પસંદ કરો. તમારે સાઇન ઇન કરવાની જરૂર પડી શકે છે; Microsoft Edge પર, સમીક્ષાઓ વિભાગ ખોલો.",
+    "userscriptNote": "એક્સ્ટેંશન અને યુઝરસ્ક્રિપ્ટ શેર પ્લેયર, લેઆઉટ અને ભાષા સુવિધાઓ. બ્રાઉઝર દ્વારા સોંપેલ શૉર્ટકટને ડેસ્કટૉપ એક્સ્ટેંશનની જરૂર છે."
+  },
+  "hr": {
+    "reviewTitle": "Uživate u vremenu slušanja?",
+    "reviewBody": "Iskrena recenzija pomaže drugima da odluče je li ovo proširenje pravo za njih—i pomaže nam da znamo što poboljšati. Nekoliko riječi o vašem iskustvu može učiniti razliku.",
+    "reviewLink": "Recenzija na {store}",
+    "reviewHint": "Odaberite trgovinu iz koje ste instalirali. Možda ćete se morati prijaviti; na Microsoft Edge otvorite odjeljak Recenzije.",
+    "userscriptNote": "Proširenje i korisnička skripta dijele značajke playera, izgleda i jezika. Prečaci dodijeljeni preglednikom zahtijevaju proširenje radne površine."
+  },
+  "hy": {
+    "reviewTitle": "Վայելո՞ւմ եք ձեր ունկնդրման ժամանակը:",
+    "reviewBody": "Ազնիվ ակնարկն օգնում է ուրիշներին որոշել, թե արդյոք այս ընդլայնումը ճիշտ է իրենց համար, և օգնում է մեզ իմանալ, թե ինչ բարելավել: Ձեր փորձի մասին մի քանի խոսք կարող է փոխել:",
+    "reviewLink": "Վերանայեք {store}",
+    "reviewHint": "Ընտրեք այն խանութը, որտեղից տեղադրել եք: Ձեզ կարող է անհրաժեշտ լինել մուտք գործել; Microsoft Edge-ում բացեք Կարծիքներ բաժինը:",
+    "userscriptNote": "Ընդլայնումը և օգտվողի գրագիրը կիսում են նվագարկիչը, դասավորությունը և լեզվի առանձնահատկությունները: Բրաուզերի կողմից նշանակված դյուրանցումները պահանջում են աշխատասեղանի ընդլայնում:"
+  },
+  "is": {
+    "reviewTitle": "Njóttu hlustunartímans?",
+    "reviewBody": "Heiðarleg umsögn hjálpar öðrum að ákveða hvort þessi viðbót sé rétt fyrir þá - og hjálpar okkur að vita hvað við eigum að bæta. Nokkur orð um reynslu þína geta skipt sköpum.",
+    "reviewLink": "Umsögn um {store}",
+    "reviewHint": "Veldu verslunina sem þú settir upp frá. Þú gætir þurft að skrá þig inn; á Microsoft Edge, opnaðu hlutann Umsagnir.",
+    "userscriptNote": "Viðbótin og notandaskrift deila spilara, útliti og tungumálaeiginleikum. Flýtivísar úthlutaðar í vafra krefjast skjáborðsviðbótarinnar."
+  },
+  "ka": {
+    "reviewTitle": "გსიამოვნებთ მოსმენის დრო?",
+    "reviewBody": "გულწრფელი მიმოხილვა ეხმარება სხვებს გადაწყვიტონ, არის თუ არა ეს გაფართოება მათთვის სწორი და გვეხმარება ვიცოდეთ, რა გავაუმჯობესოთ. თქვენი გამოცდილების შესახებ რამდენიმე სიტყვას შეუძლია შეცვალოს.",
+    "reviewLink": "მიმოხილვა {store}-ზე",
+    "reviewHint": "აირჩიეთ მაღაზია, საიდანაც დააინსტალირეთ. შეიძლება დაგჭირდეთ შესვლა; Microsoft Edge-ზე გახსენით მიმოხილვების განყოფილება.",
+    "userscriptNote": "გაფართოება და მომხმარებლის სკრიპტი იზიარებს პლეერს, განლაგებას და ენის ფუნქციებს. ბრაუზერის მიერ მინიჭებული მალსახმობები მოითხოვს დესკტოპის გაფართოებას."
+  },
+  "kk": {
+    "reviewTitle": "Тыңдау уақытыңызды ұнатасыз ба?",
+    "reviewBody": "Шынайы шолу басқаларға бұл кеңейтімнің өздеріне сәйкес келетінін анықтауға көмектеседі және бізге нені жақсарту керектігін білуге ​​көмектеседі. Сіздің тәжірибеңіз туралы бірнеше сөз өзгереді.",
+    "reviewLink": "{store} бойынша шолу",
+    "reviewHint": "Орнатылған дүкенді таңдаңыз. Сізге кіру қажет болуы мүмкін; Microsoft Edge құрылғысында шолулар бөлімін ашыңыз.",
+    "userscriptNote": "Кеңейтім және пайдаланушы сценарийін ортақ ойнатқыш, орналасу және тіл мүмкіндіктері. Браузер тағайындаған таңбашалар жұмыс үстелінің кеңейтімін қажет етеді."
+  },
+  "kn": {
+    "reviewTitle": "ನಿಮ್ಮ ಆಲಿಸುವ ಸಮಯವನ್ನು ಆನಂದಿಸುತ್ತಿರುವಿರಾ?",
+    "reviewBody": "ಪ್ರಾಮಾಣಿಕವಾದ ವಿಮರ್ಶೆಯು ಈ ವಿಸ್ತರಣೆಯು ಅವರಿಗೆ ಸೂಕ್ತವೇ ಎಂಬುದನ್ನು ನಿರ್ಧರಿಸಲು ಇತರರಿಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ-ಮತ್ತು ಏನನ್ನು ಸುಧಾರಿಸಬೇಕೆಂದು ತಿಳಿಯಲು ನಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ. ನಿಮ್ಮ ಅನುಭವದ ಬಗ್ಗೆ ಕೆಲವು ಪದಗಳು ವ್ಯತ್ಯಾಸವನ್ನು ಮಾಡಬಹುದು.",
+    "reviewLink": "{store} ನಲ್ಲಿ ವಿಮರ್ಶೆ",
+    "reviewHint": "ನೀವು ಸ್ಥಾಪಿಸಿದ ಅಂಗಡಿಯನ್ನು ಆರಿಸಿ. ನೀವು ಸೈನ್ ಇನ್ ಮಾಡಬೇಕಾಗಬಹುದು; Microsoft Edge ನಲ್ಲಿ, ವಿಮರ್ಶೆಗಳ ವಿಭಾಗವನ್ನು ತೆರೆಯಿರಿ.",
+    "userscriptNote": "ವಿಸ್ತರಣೆ ಮತ್ತು ಯೂಸರ್‌ಸ್ಕ್ರಿಪ್ಟ್ ಪ್ಲೇಯರ್, ಲೇಔಟ್ ಮತ್ತು ಭಾಷಾ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುತ್ತದೆ. ಬ್ರೌಸರ್-ನಿಯೋಜಿತ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳಿಗೆ ಡೆಸ್ಕ್‌ಟಾಪ್ ವಿಸ್ತರಣೆಯ ಅಗತ್ಯವಿರುತ್ತದೆ."
+  },
+  "lt": {
+    "reviewTitle": "Mėgaukitės klausymosi laiku?",
+    "reviewBody": "Sąžininga apžvalga padeda kitiems nuspręsti, ar šis plėtinys jiems tinka, ir padeda mums žinoti, ką reikia patobulinti. Keli žodžiai apie jūsų patirtį gali pakeisti.",
+    "reviewLink": "{store} apžvalga",
+    "reviewHint": "Pasirinkite parduotuvę, kurioje įdiegėte. Jums gali tekti prisijungti; Microsoft Edge atidarykite skyrių Atsiliepimai.",
+    "userscriptNote": "Plėtinys ir vartotojo scenarijus bendrina grotuvą, išdėstymą ir kalbos funkcijas. Naršyklės priskirtoms nuorodoms reikalingas darbalaukio plėtinys."
+  },
+  "lv": {
+    "reviewTitle": "Vai jums patīk klausīšanās laiks?",
+    "reviewBody": "Godīgs pārskats palīdz citiem izlemt, vai šis paplašinājums viņiem ir piemērots, un palīdz mums uzzināt, ko uzlabot. Daži vārdi par jūsu pieredzi var kaut ko mainīt.",
+    "reviewLink": "Pārskats par {store}",
+    "reviewHint": "Izvēlieties veikalu, no kura instalējāt. Jums var būt nepieciešams pierakstīties; Microsoft Edge atveriet sadaļu Atsauksmes.",
+    "userscriptNote": "Paplašinājums un lietotāja skripts koplieto atskaņotāju, izkārtojumu un valodas funkcijas. Lai izmantotu pārlūkprogrammas piešķirtos saīsnes, ir nepieciešams darbvirsmas paplašinājums."
+  },
+  "mk": {
+    "reviewTitle": "Уживате во времето за слушање?",
+    "reviewBody": "Искрениот преглед им помага на другите да одлучат дали оваа екстензија е соодветна за нив - и ни помага да знаеме што да подобриме. Неколку зборови за вашето искуство можат да направат разлика.",
+    "reviewLink": "Преглед на {store}",
+    "reviewHint": "Изберете ја продавницата од која сте инсталирале. Можеби ќе треба да се најавите; на Microsoft Edge, отворете го делот Прегледи.",
+    "userscriptNote": "Екстензијата и корисничкиот скрипт споделуваат карактеристики на плеерот, распоредот и јазикот. За кратенки доделени од прелистувачот е потребна екстензија на работната површина."
+  },
+  "ml": {
+    "reviewTitle": "നിങ്ങളുടെ ശ്രവണ സമയം ആസ്വദിക്കുകയാണോ?",
+    "reviewBody": "സത്യസന്ധമായ ഒരു അവലോകനം ഈ വിപുലീകരണം അവർക്ക് അനുയോജ്യമാണോ എന്ന് തീരുമാനിക്കാൻ മറ്റുള്ളവരെ സഹായിക്കുന്നു- കൂടാതെ എന്താണ് മെച്ചപ്പെടുത്തേണ്ടതെന്ന് അറിയാൻ ഞങ്ങളെ സഹായിക്കുന്നു. നിങ്ങളുടെ അനുഭവത്തെക്കുറിച്ചുള്ള കുറച്ച് വാക്കുകൾ ഒരു മാറ്റമുണ്ടാക്കും.",
+    "reviewLink": "{store}-ലെ അവലോകനം",
+    "reviewHint": "നിങ്ങൾ ഇൻസ്റ്റാൾ ചെയ്ത സ്റ്റോർ തിരഞ്ഞെടുക്കുക. നിങ്ങൾ സൈൻ ഇൻ ചെയ്യേണ്ടി വന്നേക്കാം; Microsoft Edge-ൽ, അവലോകന വിഭാഗം തുറക്കുക.",
+    "userscriptNote": "എക്സ്റ്റൻഷനും യൂസർസ്ക്രിപ്റ്റും പ്ലെയർ, ലേഔട്ട്, ഭാഷാ സവിശേഷതകൾ എന്നിവ പങ്കിടുന്നു. ബ്രൗസർ അസൈൻ ചെയ്‌ത കുറുക്കുവഴികൾക്ക് ഡെസ്‌ക്‌ടോപ്പ് വിപുലീകരണം ആവശ്യമാണ്."
+  },
+  "mn": {
+    "reviewTitle": "Сонсох цаг тань таатай байна уу?",
+    "reviewBody": "Шударга үнэлгээ нь бусдад энэ өргөтгөл өөрт тохирох эсэхийг шийдэхэд тусалдаг ба юуг сайжруулах талаар бидэнд тусалдаг. Таны туршлагын талаар хэдэн үг хэлэх нь өөрчлөлтийг авчрах болно.",
+    "reviewLink": "{store} дээрх тойм",
+    "reviewHint": "Өөрийн суулгасан дэлгүүрээ сонгоно уу. Та нэвтрэх шаардлагатай байж магадгүй; Microsoft Edge дээр \"Шүүмж\" хэсгийг нээнэ үү.",
+    "userscriptNote": "Өргөтгөл болон хэрэглэгчийн скрипт нь тоглуулагч, байршил, хэлний онцлогуудыг хуваалцдаг. Хөтөчөөс өгөгдсөн товчлолууд нь ширээний өргөтгөлийг шаарддаг."
+  },
+  "ms": {
+    "reviewTitle": "Menikmati masa mendengar anda?",
+    "reviewBody": "Semakan jujur ​​membantu orang lain memutuskan sama ada sambungan ini sesuai untuk mereka—dan membantu kami mengetahui perkara yang perlu diperbaiki. Beberapa perkataan tentang pengalaman anda boleh membuat perubahan.",
+    "reviewLink": "Ulasan tentang {store}",
+    "reviewHint": "Pilih kedai yang anda pasang. Anda mungkin perlu log masuk; pada Microsoft Edge, buka bahagian Ulasan.",
+    "userscriptNote": "Sambungan dan skrip pengguna berkongsi pemain, reka letak dan ciri bahasa. Pintasan yang diberikan penyemak imbas memerlukan sambungan desktop."
+  },
+  "my": {
+    "reviewTitle": "သင်၏နားထောင်ချိန်ကို နှစ်သက်ပါသလား။",
+    "reviewBody": "ရိုးရိုးသားသား ပြန်လည်သုံးသပ်ခြင်းသည် ဤတိုးချဲ့မှုသည် ၎င်းတို့အတွက် သင့်လျော်ခြင်း ရှိ၊ သင့်အတွေ့အကြုံနှင့်ပတ်သက်သော စကားလုံးအနည်းငယ်သည် ပြောင်းလဲမှုကို ဖြစ်စေနိုင်သည်။",
+    "reviewLink": "{store} အပေါ် သုံးသပ်ချက်",
+    "reviewHint": "သင်ထည့်သွင်းထားသည့် စတိုးဆိုင်ကို ရွေးပါ။ သင်သည် လက်မှတ်ထိုးဝင်ရန် လိုအပ်နိုင်သည်၊ Microsoft Edge တွင် ပြန်လည်သုံးသပ်ခြင်းကဏ္ဍကိုဖွင့်ပါ။",
+    "userscriptNote": "extension နှင့် userscript မျှဝေသည့် ပလေယာ၊ အပြင်အဆင်နှင့် ဘာသာစကားအင်္ဂါရပ်များ။ ဘရောင်ဇာမှ သတ်မှတ်ပေးထားသော ဖြတ်လမ်းများ သည် ဒက်စ်တော့ တိုးချဲ့မှု လိုအပ်သည်။"
+  },
+  "nl": {
+    "reviewTitle": "Geniet je van je luistertijd?",
+    "reviewBody": "Een eerlijke recensie helpt anderen beslissen of deze extensie geschikt voor hen is, en helpt ons te weten wat we kunnen verbeteren. Een paar woorden over uw ervaring kunnen een verschil maken.",
+    "reviewLink": "Recensie op {store}",
+    "reviewHint": "Kies de winkel van waaruit u hebt geïnstalleerd. Mogelijk moet u zich aanmelden; op Microsoft Edge opent u het gedeelte Recensies.",
+    "userscriptNote": "De extensie en het gebruikersscript delen speler-, lay-out- en taalfuncties. Voor door de browser toegewezen snelkoppelingen is de bureaubladextensie vereist."
+  },
+  "pa": {
+    "reviewTitle": "ਸੁਣਨ ਦੇ ਸਮੇਂ ਦਾ ਆਨੰਦ ਮਾਣ ਰਹੇ ਹੋ?",
+    "reviewBody": "ਇੱਕ ਇਮਾਨਦਾਰ ਸਮੀਖਿਆ ਦੂਜਿਆਂ ਨੂੰ ਇਹ ਫੈਸਲਾ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦੀ ਹੈ ਕਿ ਕੀ ਇਹ ਐਕਸਟੈਂਸ਼ਨ ਉਹਨਾਂ ਲਈ ਸਹੀ ਹੈ — ਅਤੇ ਇਹ ਜਾਣਨ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰਦੀ ਹੈ ਕਿ ਕੀ ਸੁਧਾਰ ਕਰਨਾ ਹੈ। ਤੁਹਾਡੇ ਅਨੁਭਵ ਬਾਰੇ ਕੁਝ ਸ਼ਬਦ ਫ਼ਰਕ ਲਿਆ ਸਕਦੇ ਹਨ।",
+    "reviewLink": "{store} 'ਤੇ ਸਮੀਖਿਆ ਕਰੋ",
+    "reviewHint": "ਉਹ ਸਟੋਰ ਚੁਣੋ ਜਿਸ ਤੋਂ ਤੁਸੀਂ ਸਥਾਪਿਤ ਕੀਤਾ ਹੈ। ਤੁਹਾਨੂੰ ਸਾਈਨ ਇਨ ਕਰਨ ਦੀ ਲੋੜ ਹੋ ਸਕਦੀ ਹੈ; Microsoft Edge 'ਤੇ, ਸਮੀਖਿਆਵਾਂ ਸੈਕਸ਼ਨ ਖੋਲ੍ਹੋ।",
+    "userscriptNote": "ਐਕਸਟੈਂਸ਼ਨ ਅਤੇ ਯੂਜ਼ਰਸਕ੍ਰਿਪਟ ਸ਼ੇਅਰ ਪਲੇਅਰ, ਲੇਆਉਟ ਅਤੇ ਭਾਸ਼ਾ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ। ਬ੍ਰਾਊਜ਼ਰ ਦੁਆਰਾ ਨਿਰਧਾਰਤ ਸ਼ਾਰਟਕੱਟਾਂ ਲਈ ਡੈਸਕਟੌਪ ਐਕਸਟੈਂਸ਼ਨ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ।"
+  },
+  "sk": {
+    "reviewTitle": "Užívate si čas počúvania?",
+    "reviewBody": "Úprimná recenzia pomáha ostatným rozhodnúť sa, či je toto rozšírenie pre nich vhodné – a pomáha nám vedieť, čo treba zlepšiť. Pár slov o vašej skúsenosti môže zmeniť.",
+    "reviewLink": "Recenzia na {store}",
+    "reviewHint": "Vyberte obchod, z ktorého ste nainštalovali. Možno sa budete musieť prihlásiť; na Microsoft Edge otvorte sekciu Recenzie.",
+    "userscriptNote": "Rozšírenie a používateľský skript zdieľajú funkcie prehrávača, rozloženia a jazyka. Skratky priradené prehliadačom vyžadujú rozšírenie pracovnej plochy."
+  },
+  "sl": {
+    "reviewTitle": "Uživate v poslušanju?",
+    "reviewBody": "Iskren pregled pomaga drugim pri odločitvi, ali je ta razširitev prava zanje – in nam pomaga vedeti, kaj izboljšati. Nekaj ​​besed o vaši izkušnji lahko naredi razliko.",
+    "reviewLink": "Ocena za {store}",
+    "reviewHint": "Izberite trgovino, iz katere ste namestili. Morda se boste morali prijaviti; na Microsoft Edge odprite razdelek Ocene.",
+    "userscriptNote": "Razširitev in uporabniški skript si delita funkcije predvajalnika, postavitve in jezika. Bližnjice, dodeljene brskalniku, zahtevajo razširitev namizja."
+  },
+  "so": {
+    "reviewTitle": "Miyaad ku raaxaysanaysaa wakhtiga dhegaysigaaga?",
+    "reviewBody": "Dib u eegis daacad ah ayaa ka caawisa kuwa kale inay go'aan ka gaaraan haddii kordhintani ay iyaga ku habboon tahay iyo in kale - oo waxay naga caawisaa inaan ogaano waxa la hagaajinayo. Kelmado kooban oo ku saabsan khibradaada ayaa wax ka bedeli kara.",
+    "reviewLink": "Dib u eegis ku saabsan {store}",
+    "reviewHint": "Dooro dukaanka aad ka rakibtay. Waxaa laga yaabaa inaad u baahato inaad saxiixdo; on Microsoft Edge, fur qaybta Reviews.",
+    "userscriptNote": "Kordhinta iyo qoraalka isticmaaluhu waxay wadaagaan ciyaartoyga, qaabka iyo astaamaha luqadda. Jidadka gaaban ee browser-ku qoondeeyey waxay u baahan yihiin kordhinta miiska."
+  },
+  "sq": {
+    "reviewTitle": "Të pëlqen koha e dëgjimit?",
+    "reviewBody": "Një rishikim i sinqertë i ndihmon të tjerët të vendosin nëse kjo shtesë është e duhura për ta—dhe na ndihmon të dimë se çfarë të përmirësojmë. Disa fjalë për përvojën tuaj mund të bëjnë një ndryshim.",
+    "reviewLink": "Rishikim në {store}",
+    "reviewHint": "Zgjidhni dyqanin nga e keni instaluar. Mund t'ju duhet të identifikoheni; në Microsoft Edge, hapni seksionin Shqyrtime.",
+    "userscriptNote": "Shtesa dhe shkrimi i përdoruesit ndajnë luajtësin, paraqitjen dhe veçoritë gjuhësore. Shkurtoret e caktuara nga shfletuesi kërkojnë zgjerimin e desktopit."
+  },
+  "sr": {
+    "reviewTitle": "Уживате у времену слушања?",
+    "reviewBody": "Искрена рецензија помаже другима да одлуче да ли је ово проширење право за њих — и помаже нам да знамо шта да побољшамо. Неколико речи о вашем искуству може направити разлику.",
+    "reviewLink": "Преглед на {store}",
+    "reviewHint": "Изаберите продавницу из које сте инсталирали. Можда ћете морати да се пријавите; на Microsoft Edge, отворите одељак Рецензије.",
+    "userscriptNote": "Екстензија и кориснички скрипт деле функције плејера, распореда и језика. Пречице додељене прегледачу захтевају екстензију за радну површину."
+  },
+  "sw": {
+    "reviewTitle": "Je, unafurahia wakati wako wa kusikiliza?",
+    "reviewBody": "Ukaguzi wa uaminifu huwasaidia wengine kuamua kama kiendelezi hiki kinawafaa—na hutusaidia kujua la kuboresha. Maneno machache kuhusu uzoefu wako yanaweza kuleta mabadiliko.",
+    "reviewLink": "Maoni kuhusu {store}",
+    "reviewHint": "Chagua duka ulilosakinisha kutoka. Huenda ukahitaji kuingia; kwenye Microsoft Edge, fungua sehemu ya Mapitio.",
+    "userscriptNote": "Kichezaji kiendelezi na hati ya mtumiaji, mpangilio na vipengele vya lugha. Njia za mkato zilizowekwa na kivinjari zinahitaji kiendelezi cha eneo-kazi."
+  },
+  "ur": {
+    "reviewTitle": "آپ سننے کے وقت سے لطف اندوز ہو رہے ہیں؟",
+    "reviewBody": "ایک ایماندارانہ جائزہ دوسروں کو یہ فیصلہ کرنے میں مدد کرتا ہے کہ آیا یہ توسیع ان کے لیے صحیح ہے — اور یہ جاننے میں ہماری مدد کرتا ہے کہ کیا بہتر کرنا ہے۔ آپ کے تجربے کے بارے میں چند الفاظ فرق کر سکتے ہیں۔",
+    "reviewLink": "{store} پر جائزہ لیں۔",
+    "reviewHint": "آپ نے جس اسٹور سے انسٹال کیا ہے اسے منتخب کریں۔ آپ کو سائن ان کرنے کی ضرورت پڑ سکتی ہے۔ Microsoft Edge پر، جائزہ سیکشن کھولیں۔",
+    "userscriptNote": "ایکسٹینشن اور یوزر اسکرپٹ پلیئر، ترتیب اور زبان کی خصوصیات کا اشتراک کرتے ہیں۔ براؤزر کے تفویض کردہ شارٹ کٹس کے لیے ڈیسک ٹاپ ایکسٹینشن کی ضرورت ہوتی ہے۔"
+  },
+  "es-419": {
+    "reviewTitle": "¿Disfrutas de la experiencia de escucha?",
+    "reviewBody": "Una reseña sincera ayuda a otros a decidir si esta extensión les conviene y nos indica qué mejorar. Unas palabras sobre tu experiencia pueden marcar la diferencia.",
+    "reviewLink": "Escribir una reseña en {store}",
+    "reviewHint": "Elige la tienda desde la que instalaste la extensión. Puede que debas iniciar sesión; en Microsoft Edge, abre la sección de reseñas.",
+    "userscriptNote": "La extensión y el userscript comparten reproductor, diseño e idiomas. Los atajos asignados por el navegador requieren la extensión de escritorio."
+  },
+  "fr-CA": {
+    "reviewTitle": "Vous appréciez l’écoute ?",
+    "reviewBody": "Un avis sincère aide les autres à savoir si cette extension leur convient et nous indique quoi améliorer. Quelques mots sur votre expérience peuvent faire la différence.",
+    "reviewLink": "Donner un avis sur {store}",
+    "reviewHint": "Choisissez la boutique utilisée pour l’installation. Une connexion peut être nécessaire ; sur Microsoft Edge, ouvrez la section des avis.",
+    "userscriptNote": "L’extension et le userscript partagent le lecteur, la disposition et les langues. Les raccourcis attribués par le navigateur nécessitent l’extension de bureau."
+  },
+  "hi-Latn": {
+    "reviewTitle": "sunne ke samay ka anand le rahe han?",
+    "reviewBody": "ek imandar samiksha dusron ko yah tay karne mein madad karti hai ki kya yah extension unke liye sahi hai - aur hamen yah janne mein madad karta hai ki kya sudhar karna hai. aapke anubhav ke baare mein kuch shabd fark la sakte han.",
+    "reviewLink": "{store} par samiksha",
+    "reviewHint": "wah store chunein jahan se aapne install kiya tha. aapko sign in karne ki aavashyakta ho sakti hai; Microsoft Edge par, samiksha anubhag kholen.",
+    "userscriptNote": "extension aur userscript plar, layout aur bhasha suvidhaon ko sajha karte han. browser dwara nirdisht shortcut ke liye desktop extension ki aavashyakta hoti hai."
+  },
+  "zh-HK": {
+    "reviewTitle": "喜歡這樣的聆聽體驗嗎？",
+    "reviewBody": "真實的評價能幫助他人判斷這款擴充功能是否適合自己，也能讓我們知道該改進什麼。簡單分享你的使用體驗，就能帶來幫助。",
+    "reviewLink": "在 {store} 上評價",
+    "reviewHint": "請選擇安裝時使用的商店。可能需要登入；在 Microsoft Edge 中請開啟評論區域。",
+    "userscriptNote": "擴充功能與使用者腳本共用播放器、配置和語言功能。瀏覽器快速鍵指派需要桌面擴充功能。"
   }
 }

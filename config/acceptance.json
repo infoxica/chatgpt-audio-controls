@@ -4,7 +4,7 @@
   "chromeLive": false,
   "edgeLive": false,
   "userscriptLive": false,
-  "nativeMac": false,
+  "nativeMac": true,
   "websiteDeployment": false,
   "edgeAndroidLive": false
 }

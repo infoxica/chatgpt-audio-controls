@@ -16,6 +16,50 @@
 
 // Generated from src/content/content.ts and src/content/player.css. Do not edit.
 (() => {
+  // src/shared/accent.ts
+  function literalColor(value) {
+    return typeof value === "string" && value.length <= 96 && (/^#(?:[a-f0-9]{3,4}|[a-f0-9]{6}|[a-f0-9]{8})$/i.test(value) || /^(?:rgb|rgba|hsl|hsla)\([\d.,% /+-]+\)$/i.test(value));
+  }
+
+  // src/shared/locale-registry.ts
+  var additionalLanguages = [
+    { code: "am", label: "Amharic", nativeName: "አማርኛ" },
+    { code: "bg", label: "Bulgarian", nativeName: "Български" },
+    { code: "bs", label: "Bosnian", nativeName: "Bosanski" },
+    { code: "da", label: "Danish", nativeName: "Dansk" },
+    { code: "et", label: "Estonian", nativeName: "Eesti" },
+    { code: "fil", label: "Filipino", nativeName: "Filipino" },
+    { code: "fi", label: "Finnish", nativeName: "Suomi" },
+    { code: "gu", label: "Gujarati", nativeName: "ગુજરાતી" },
+    { code: "hr", label: "Croatian", nativeName: "Hrvatski" },
+    { code: "hy", label: "Armenian", nativeName: "Հայերեն" },
+    { code: "is", label: "Icelandic", nativeName: "Íslenska" },
+    { code: "ka", label: "Georgian", nativeName: "ქართული" },
+    { code: "kk", label: "Kazakh", nativeName: "Қазақ тілі" },
+    { code: "kn", label: "Kannada", nativeName: "ಕನ್ನಡ" },
+    { code: "lt", label: "Lithuanian", nativeName: "Lietuvių" },
+    { code: "lv", label: "Latvian", nativeName: "Latviešu" },
+    { code: "mk", label: "Macedonian", nativeName: "Македонски" },
+    { code: "ml", label: "Malayalam", nativeName: "മലയാളം" },
+    { code: "mn", label: "Mongolian", nativeName: "Монгол" },
+    { code: "ms", label: "Malay", nativeName: "Bahasa Melayu" },
+    { code: "my", label: "Burmese", nativeName: "မြန်မာ" },
+    { code: "nl", label: "Dutch", nativeName: "Nederlands" },
+    { code: "pa", label: "Punjabi", nativeName: "ਪੰਜਾਬੀ" },
+    { code: "sk", label: "Slovak", nativeName: "Slovenčina" },
+    { code: "sl", label: "Slovenian", nativeName: "Slovenščina" },
+    { code: "so", label: "Somali", nativeName: "Soomaali" },
+    { code: "sq", label: "Albanian", nativeName: "Shqip" },
+    { code: "sr", label: "Serbian", nativeName: "Српски" },
+    { code: "sw", label: "Swahili", nativeName: "Kiswahili" },
+    { code: "ur", label: "Urdu", nativeName: "اردو" },
+    { code: "es-419", label: "Spanish (Latin America)", nativeName: "Español (Latinoamérica)" },
+    { code: "fr-CA", label: "French (Canada)", nativeName: "Français (Canada)" },
+    { code: "hi-Latn", label: "Hindi (Latin)", nativeName: "Hindi (Latin)" },
+    { code: "zh-HK", label: "Chinese (Traditional, Hong Kong)", nativeName: "繁體中文（香港）" }
+  ];
+  var chromeLocales = new Set("ar am bg bn ca cs da de el en es es_419 et fa fi fil fr gu he hi hr hu id it ja kn ko lt lv ml mr ms nl no pl pt_BR pt_PT ro ru sk sl sr sv sw ta te th tr uk vi zh_CN zh_TW".split(" "));
+
   // src/shared/constants.ts
   var SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
   var STORAGE_KEYS = {
@@ -40,6 +84,7 @@
     return [...languages].sort((a, b) => a.code === "auto" ? -1 : b.code === "auto" ? 1 : a.label.localeCompare(b.label, "en"));
   }
   var SUPPORTED_LANGUAGES = orderLanguages([
+    ...additionalLanguages,
     { code: "auto", label: "Auto Detect", nativeName: "Auto (Browser Default)" },
     { code: "pl", label: "Polish", nativeName: "Polski" },
     { code: "hu", label: "Hungarian", nativeName: "Magyar" },
@@ -576,10 +621,1645 @@
       summary: "ChatGPT lydkontroller: pause, søk, hastighet, volum, nedlastinger og snarveier."
     }
   };
+  // src/shared/i18n/chatgpt-features.json
+  var chatgpt_features_default = {
+    am: {
+      features: [
+        "የተጫዋች አቀማመጥ",
+        "ዴስክቶፕ",
+        "ጠባብ ማያ",
+        "ራስ-ሰር",
+        "አቀማመጥ",
+        "ዝግጅት",
+        "አግድም ረድፍ",
+        "አግድም ቁልል",
+        "ቋሚ አምድ",
+        "L ቅርጽ",
+        "መጀመሪያ የመልሶ ማጫወት ሂደት አሞሌን አሳይ",
+        "የክበብ ጎን",
+        "ግራ",
+        "ትክክል",
+        "አቀማመጥን ዳግም አስጀምር",
+        "ለመደርደር ይጎትቱ",
+        "ሙሉ ኦዲዮ ለመውረድ ዝግጁ ነው።",
+        "ሙሉ ኦዲዮ ሲዘጋጅ አሳውቅ",
+        "አቋራጭ ምደባ በዴስክቶፕ አሳሾች ላይ ይገኛል።",
+        "ፍጥነትን ወደ 1× ዳግም አስጀምር",
+        "የድምጽ መጠን ይጨምሩ",
+        "የድምጽ መጠን ቀንስ",
+        "ድምጸ-ከል አድርግ / አንሳ",
+        "ከላይ በግራ በኩል",
+        "ከፍተኛ ማዕከል",
+        "ከላይ በቀኝ በኩል",
+        "የግራ መሃል",
+        "የቀኝ ማእከል",
+        "ከታች ግራ",
+        "የታችኛው ማዕከል",
+        "ከታች በቀኝ በኩል",
+        "በዚህ መሳሪያ ላይ ተቀምጧል",
+        "የመልሶ ማጫወት እና የሂደት አሞሌዎችን ይቀይሩ"
+      ],
+      dock: "የሙዚቃ አቀናባሪ መትከያ",
+      seekCommands: [
+        "ወደ ኋላ ፈልጉ",
+        "ወደፊት ፈልጉ"
+      ],
+      support: [
+        "እገዛ ChatGPT Audio Controls",
+        "ሀሳብ አለህ? ቅጥያውን ለመደገፍ ሀሳብ ያጋሩ ወይም ሐቀኛ ግምገማ ይተዉ።",
+        "አስተያየት አጋራ",
+        "ግምገማ ይጻፉ"
+      ]
+    },
+    bg: {
+      features: [
+        "Оформление на играча",
+        "Работен плот",
+        "Тесен екран",
+        "Автоматично",
+        "Поставяне",
+        "Подреждане",
+        "Хоризонтален ред",
+        "Хоризонтален стек",
+        "Вертикална колона",
+        "L форма",
+        "Първо покажете лентата за прогрес на възпроизвеждането",
+        "Окръжна страна",
+        "Вляво",
+        "Добре",
+        "Нулиране на оформлението",
+        "Плъзнете, за да подредите",
+        "Пълното аудио е готово за изтегляне",
+        "Известяване, когато пълното аудио е готово",
+        "Присвояването на пряк път е налично в настолни браузъри.",
+        "Нулирайте скоростта на 1×",
+        "Увеличете силата на звука",
+        "Намалете силата на звука",
+        "Изключване / включване на звука",
+        "Горе вляво",
+        "Горен център",
+        "Горе вдясно",
+        "Ляв център",
+        "Десен център",
+        "Долу вляво",
+        "Долен център",
+        "Долу вдясно",
+        "Запазено на това устройство",
+        "Разменете лентите за възпроизвеждане и прогрес"
+      ],
+      dock: "Докинг станция за композитори",
+      seekCommands: [
+        "Търсене назад",
+        "Търсене напред"
+      ],
+      support: [
+        "Помощ за оформяне на ChatGPT Audio Controls",
+        "Имате идея? Споделете предложение или оставете честен преглед, за да подкрепите разширението.",
+        "Споделете предложение",
+        "Напишете отзив"
+      ]
+    },
+    bs: {
+      features: [
+        "Raspored igrača",
+        "Desktop",
+        "Uski ekran",
+        "Automatski",
+        "Položaj",
+        "Aranžman",
+        "Horizontalni red",
+        "Horizontalni stog",
+        "Vertikalni stupac",
+        "L oblik",
+        "Prvo pokažite traku toka reprodukcije",
+        "Kružna strana",
+        "Lijevo",
+        "U redu",
+        "Resetuj raspored",
+        "Prevucite da biste uredili",
+        "Cijeli audio je spreman za preuzimanje",
+        "Obavijesti kada je cijeli zvuk spreman",
+        "Dodjela prečica je dostupna na desktop pretraživačima.",
+        "Vratite brzinu na 1×",
+        "Povećajte jačinu zvuka",
+        "Smanjite jačinu zvuka",
+        "Isključi/uključi zvuk",
+        "Gore lijevo",
+        "Top centar",
+        "Gore desno",
+        "Lijevi centar",
+        "Desni centar",
+        "Dolje lijevo",
+        "Donji centar",
+        "Dolje desno",
+        "Sačuvano na ovom uređaju",
+        "Zamijenite trake za reprodukciju i napredak"
+      ],
+      dock: "Dock za kompozitor",
+      seekCommands: [
+        "Traži unazad",
+        "Traži naprijed"
+      ],
+      support: [
+        "Pomoćni oblik ChatGPT Audio Controls",
+        "Imate ideju? Podijelite prijedlog ili ostavite iskrenu recenziju kako biste podržali proširenje.",
+        "Podijelite prijedlog",
+        "Napišite recenziju"
+      ]
+    },
+    da: {
+      features: [
+        "Spillerlayout",
+        "Desktop",
+        "Smal skærm",
+        "Automatisk",
+        "Placering",
+        "Arrangement",
+        "Vandret række",
+        "Vandret stak",
+        "Lodret søjle",
+        "L-form",
+        "Vis først afspilningsstatuslinjen",
+        "Cirkelside",
+        "Venstre",
+        "Rigtigt",
+        "Nulstil layout",
+        "Træk for at arrangere",
+        "Fuld lyd er klar til download",
+        "Giv besked, når fuld lyd er klar",
+        "Genvejstildeling er tilgængelig på desktopbrowsere.",
+        "Nulstil hastigheden til 1×",
+        "Øg lydstyrken",
+        "Sænk lydstyrken",
+        "Slå lyden fra/til",
+        "Øverst til venstre",
+        "Øverst i midten",
+        "Øverst til højre",
+        "Venstre i midten",
+        "Højre i midten",
+        "Nederst til venstre",
+        "Nederst i midten",
+        "Nederst til højre",
+        "Gemt på denne enhed",
+        "Skift afspilnings- og statusbjælker"
+      ],
+      dock: "Komponistdok",
+      seekCommands: [
+        "Søg baglæns",
+        "Søg frem"
+      ],
+      support: [
+        "Hjælp med at forme ChatGPT Audio Controls",
+        "Har du en idé? Del et forslag eller giv en ærlig anmeldelse for at støtte udvidelsen.",
+        "Del et forslag",
+        "Skriv en anmeldelse"
+      ]
+    },
+    et: {
+      features: [
+        "Mängija paigutus",
+        "Töölaud",
+        "Kitsas ekraan",
+        "Automaatne",
+        "Paigutus",
+        "Paigutus",
+        "Horisontaalne rida",
+        "Horisontaalne virn",
+        "Vertikaalne veerg",
+        "L-kujuline",
+        "Esmalt kuvage taasesituse edenemisriba",
+        "Ringi külg",
+        "Vasak",
+        "Õige",
+        "Lähtesta paigutus",
+        "Lohistage korrastamiseks",
+        "Täielik heli on allalaadimiseks valmis",
+        "Teavita, kui täielik heli on valmis",
+        "Otsetee määramine on saadaval lauaarvuti brauserites.",
+        "Lähtestage kiirus väärtusele 1×",
+        "Suurendage helitugevust",
+        "Vähendage helitugevust",
+        "Vaigista / lülita sisse",
+        "Üleval vasakul",
+        "Ülemine keskel",
+        "Üleval paremal",
+        "Vasak keskel",
+        "Parem keskel",
+        "All vasakul",
+        "Alumine keskel",
+        "All paremal",
+        "Sellesse seadmesse salvestatud",
+        "Vahetage taasesituse ja edenemise ribad"
+      ],
+      dock: "Helilooja dokk",
+      seekCommands: [
+        "Otsige tagasi",
+        "Otsige edasi"
+      ],
+      support: [
+        "Aidake kujundada ChatGPT Audio Controls",
+        "Kas teil on idee? Laienduse toetamiseks jagage soovitust või jätke aus ülevaade.",
+        "Jagage soovitust",
+        "Kirjutage ülevaade"
+      ]
+    },
+    fil: {
+      features: [
+        "Layout ng player",
+        "Desktop",
+        "Makitid na screen",
+        "Awtomatiko",
+        "Paglalagay",
+        "Kaayusan",
+        "Pahalang na hilera",
+        "Pahalang na stack",
+        "Patayong column",
+        "L na hugis",
+        "Ipakita muna ang progress bar ng playback",
+        "Bilog sa gilid",
+        "Kaliwa",
+        "Tama",
+        "I-reset ang layout",
+        "I-drag para ayusin",
+        "Handa nang i-download ang buong audio",
+        "Abisuhan kapag handa na ang buong audio",
+        "Ang pagtatalaga ng shortcut ay available sa mga desktop browser.",
+        "I-reset ang bilis sa 1×",
+        "Dagdagan ang volume ng audio",
+        "Bawasan ang volume ng audio",
+        "I-mute / i-unmute",
+        "Kaliwa sa itaas",
+        "Nangungunang gitna",
+        "Kanan sa itaas",
+        "Kaliwa sa gitna",
+        "Kanang gitna",
+        "Kaliwa sa ibaba",
+        "Gitnang ibaba",
+        "Ibaba sa kanan",
+        "Naka-save sa device na ito",
+        "Palitan ang playback at progress bar"
+      ],
+      dock: "Dock ng kompositor",
+      seekCommands: [
+        "Humanap sa likod",
+        "Humanap"
+      ],
+      support: [
+        "Tumulong sa paghubog ng ChatGPT Audio Controls",
+        "May ideya? Magbahagi ng mungkahi o mag-iwan ng matapat na pagsusuri upang suportahan ang extension.",
+        "Magbahagi ng mungkahi",
+        "Sumulat ng review"
+      ]
+    },
+    fi: {
+      features: [
+        "Soittimen asettelu",
+        "Työpöytä",
+        "Kapea näyttö",
+        "Automaattinen",
+        "Sijoitus",
+        "Järjestely",
+        "Vaakasuora rivi",
+        "Vaakasuora pino",
+        "Pystypylväs",
+        "L-muoto",
+        "Näytä ensin toiston edistymispalkki",
+        "Ympyrän puoli",
+        "Vasen",
+        "Oikein",
+        "Palauta asettelu",
+        "Järjestä vetämällä",
+        "Koko ääni on valmis ladattavaksi",
+        "Ilmoita, kun täysi ääni on valmis",
+        "Pikakuvakemääritys on saatavilla työpöytäselaimissa.",
+        "Palauta nopeus arvoon 1×",
+        "Lisää äänenvoimakkuutta",
+        "Vähennä äänenvoimakkuutta",
+        "Mykistä / poista mykistys",
+        "Vasen yläkulma",
+        "Ylhäällä keskellä",
+        "Oikea yläkulma",
+        "Vasen keskellä",
+        "Oikea keskellä",
+        "Alhaalla vasen",
+        "Alhaalla keskellä",
+        "Alhaalla oikealla",
+        "Tallennettu tälle laitteelle",
+        "Vaihda toisto- ja edistymispalkkia"
+      ],
+      dock: "Säveltäjätelakka",
+      seekCommands: [
+        "Etsi taaksepäin",
+        "Etsi eteenpäin"
+      ],
+      support: [
+        "Auta muotoilemaan ChatGPT Audio Controls",
+        "Onko sinulla idea? Jaa ehdotus tai jätä rehellinen arvostelu tukeaksesi laajennusta.",
+        "Jaa ehdotus",
+        "Kirjoita arvostelu"
+      ]
+    },
+    gu: {
+      features: [
+        "પ્લેયર લેઆઉટ",
+        "ડેસ્કટોપ",
+        "સાંકડી સ્ક્રીન",
+        "આપોઆપ",
+        "પ્લેસમેન્ટ",
+        "વ્યવસ્થા",
+        "આડી પંક્તિ",
+        "આડું સ્ટેક",
+        "વર્ટિકલ કૉલમ",
+        "એલ આકાર",
+        "પહેલા પ્લેબેક પ્રોગ્રેસ બાર બતાવો",
+        "વર્તુળ બાજુ",
+        "બાકી",
+        "અધિકાર",
+        "લેઆઉટ રીસેટ કરો",
+        "ગોઠવવા માટે ખેંચો",
+        "સંપૂર્ણ ઓડિયો ડાઉનલોડ કરવા માટે તૈયાર છે",
+        "જ્યારે સંપૂર્ણ ઑડિયો તૈયાર હોય ત્યારે સૂચિત કરો",
+        "શોર્ટકટ અસાઇનમેન્ટ ડેસ્કટોપ બ્રાઉઝર પર ઉપલબ્ધ છે.",
+        "ઝડપને 1× પર રીસેટ કરો",
+        "ઓડિયો વોલ્યુમ વધારો",
+        "ઓડિયો વોલ્યુમ ઘટાડો",
+        "મ્યૂટ/અનમ્યૂટ કરો",
+        "ઉપર ડાબે",
+        "ટોચનું કેન્દ્ર",
+        "ઉપર જમણે",
+        "ડાબી કેન્દ્ર",
+        "જમણું કેન્દ્ર",
+        "નીચે ડાબે",
+        "બોટમ સેન્ટર",
+        "નીચે જમણે",
+        "આ ઉપકરણ પર સાચવેલ",
+        "પ્લેબેક અને પ્રોગ્રેસ બારને સ્વેપ કરો"
+      ],
+      dock: "સંગીતકાર ડોક",
+      seekCommands: [
+        "પાછળની તરફ શોધો",
+        "આગળ શોધો"
+      ],
+      support: [
+        "ChatGPT Audio Controls આકારમાં મદદ કરો",
+        "કોઈ વિચાર છે? એક્સ્ટેંશનને સમર્થન આપવા માટે સૂચન શેર કરો અથવા પ્રમાણિક સમીક્ષા મૂકો.",
+        "સૂચન શેર કરો",
+        "સમીક્ષા લખો"
+      ]
+    },
+    hr: {
+      features: [
+        "Raspored igrača",
+        "Radna površina",
+        "Uzak ekran",
+        "Automatski",
+        "Smještaj",
+        "Aranžman",
+        "Vodoravni red",
+        "Horizontalni niz",
+        "Okomiti stupac",
+        "L oblik",
+        "Prvo prikažite traku napretka reprodukcije",
+        "Kružna strana",
+        "Lijevo",
+        "Točno",
+        "Poništi izgled",
+        "Povucite za raspored",
+        "Cijeli audio je spreman za preuzimanje",
+        "Obavijesti kada cijeli zvuk bude spreman",
+        "Dodjeljivanje prečaca dostupno je u preglednicima stolnih računala.",
+        "Ponovno postavite brzinu na 1×",
+        "Povećajte glasnoću zvuka",
+        "Smanjite glasnoću zvuka",
+        "Isključi/uključi zvuk",
+        "Gore lijevo",
+        "Gornji centar",
+        "Gore desno",
+        "Lijevi centar",
+        "Desni centar",
+        "Dolje lijevo",
+        "Donji centar",
+        "Dolje desno",
+        "Spremljeno na ovaj uređaj",
+        "Zamijenite trake reprodukcije i napretka"
+      ],
+      dock: "Skladatelj dok",
+      seekCommands: [
+        "Traži unatrag",
+        "Traži naprijed"
+      ],
+      support: [
+        "Pomozite oblikovati ChatGPT Audio Controls",
+        "Imate ideju? Podijelite prijedlog ili ostavite iskrenu recenziju kako biste podržali proširenje.",
+        "Podijelite prijedlog",
+        "Napišite recenziju"
+      ]
+    },
+    hy: {
+      features: [
+        "Խաղացողի դասավորություն",
+        "Սեղան",
+        "Նեղ էկրան",
+        "Ավտոմատ",
+        "Տեղադրում",
+        "Պայմանավորվածություն",
+        "Հորիզոնական շարք",
+        "Հորիզոնական բուրգ",
+        "Ուղղահայաց սյունակ",
+        "L ձև",
+        "Սկզբում ցուցադրեք նվագարկման առաջընթացի գոտին",
+        "Շրջանակի կողմը",
+        "Ձախ",
+        "Ճիշտ է",
+        "Վերականգնել դասավորությունը",
+        "Քաշեք՝ դասավորելու համար",
+        "Ամբողջ ձայնը պատրաստ է ներբեռնման",
+        "Տեղեկացրեք, երբ ամբողջական աուդիոն պատրաստ լինի",
+        "Դյուրանցումների նշանակումը հասանելի է աշխատասեղանի բրաուզերներում:",
+        "Վերականգնել արագությունը 1×",
+        "Բարձրացնել ձայնի ծավալը",
+        "Նվազեցնել ձայնի ծավալը",
+        "Խլացնել / միացնել",
+        "Վերևի ձախ",
+        "Վերին կենտրոն",
+        "Վերևի աջ",
+        "Ձախ կենտրոն",
+        "Աջ կենտրոն",
+        "Ներքևի ձախ",
+        "Ներքևի կենտրոն",
+        "Ներքևում աջ",
+        "Պահված է այս սարքում",
+        "Փոխեք նվագարկման և առաջընթացի գծերը"
+      ],
+      dock: "Կոմպոզիտորական նավահանգիստ",
+      seekCommands: [
+        "Փնտրեք հետընթաց",
+        "Փնտրեք առաջ"
+      ],
+      support: [
+        "Օգնեք ձևավորել ChatGPT Audio Controls",
+        "Գաղափար ունե՞ք: Կիսվեք առաջարկով կամ թողեք անկեղծ ակնարկ՝ ընդլայնմանն աջակցելու համար:",
+        "Կիսվեք առաջարկով",
+        "Գրեք կարծիք"
+      ]
+    },
+    is: {
+      features: [
+        "Skipulag leikmanna",
+        "Skrifborð",
+        "Þröngur skjár",
+        "Sjálfskiptur",
+        "Staðsetning",
+        "Fyrirkomulag",
+        "Lárétt röð",
+        "Láréttur stafli",
+        "Lóðréttur dálkur",
+        "L lögun",
+        "Sýndu framvindustikuna fyrir spilun fyrst",
+        "Hringhlið",
+        "Vinstri",
+        "Rétt",
+        "Endurstilla skipulag",
+        "Dragðu til að raða",
+        "Allt hljóð er tilbúið til niðurhals",
+        "Látið vita þegar fullt hljóð er tilbúið",
+        "Flýtileiðaúthlutun er fáanleg í tölvuvöfrum.",
+        "Endurstilla hraða í 1×",
+        "Auka hljóðstyrk",
+        "Minnka hljóðstyrk",
+        "Þagga / slökkva á",
+        "Efst til vinstri",
+        "Efst í miðju",
+        "Efst til hægri",
+        "Vinstri fyrir miðju",
+        "Hægri miðju",
+        "Neðst til vinstri",
+        "Neðst fyrir miðju",
+        "Neðst til hægri",
+        "Vistað á þessu tæki",
+        "Skiptu um spilunar- og framvindustikur"
+      ],
+      dock: "Tónskáldabryggja",
+      seekCommands: [
+        "Leitaðu afturábak",
+        "Leitaðu áfram"
+      ],
+      support: [
+        "Hjálpaðu til við að móta ChatGPT Audio Controls",
+        "Hefurðu hugmynd? Deildu tillögu eða skildu eftir heiðarlega umsögn til að styðja viðbygginguna.",
+        "Deildu tillögu",
+        "Skrifaðu umsögn"
+      ]
+    },
+    ka: {
+      features: [
+        "მოთამაშის განლაგება",
+        "სამუშაო მაგიდა",
+        "ვიწრო ეკრანი",
+        "ავტომატური",
+        "განთავსება",
+        "მოწყობა",
+        "ჰორიზონტალური მწკრივი",
+        "ჰორიზონტალური დასტა",
+        "ვერტიკალური სვეტი",
+        "L ფორმა",
+        "ჯერ აჩვენეთ დაკვრის პროგრესის ზოლი",
+        "წრის მხარე",
+        "მარცხნივ",
+        "მართალია",
+        "განლაგების გადატვირთვა",
+        "გადაათრიეთ მოსაწყობად",
+        "სრული აუდიო მზადაა ჩამოსატვირთად",
+        "შეატყობინეთ, როცა სრული აუდიო მზად იქნება",
+        "მალსახმობების მინიჭება ხელმისაწვდომია დესკტოპის ბრაუზერებზე.",
+        "გადააყენეთ სიჩქარე 1×",
+        "აუდიოს ხმის გაზრდა",
+        "აუდიოს ხმის შემცირება",
+        "დადუმება / გამორთვა",
+        "ზედა მარცხენა",
+        "ზედა ცენტრი",
+        "ზედა მარჯვნივ",
+        "მარცხენა ცენტრი",
+        "მარჯვენა ცენტრი",
+        "ქვედა მარცხნივ",
+        "ქვედა ცენტრი",
+        "ქვემოდან მარჯვნივ",
+        "შენახულია ამ მოწყობილობაზე",
+        "შეცვალეთ დაკვრის და პროგრესის ზოლები"
+      ],
+      dock: "კომპოზიტორის დოკი",
+      seekCommands: [
+        "ეძებეთ უკან",
+        "ისწრაფე წინ"
+      ],
+      support: [
+        "დაეხმარეთ ფორმას ChatGPT Audio Controls",
+        "გაქვთ იდეა? გააზიარეთ წინადადება ან დატოვეთ გულწრფელი მიმოხილვა გაფართოების მხარდასაჭერად.",
+        "გააზიარეთ წინადადება",
+        "დაწერეთ მიმოხილვა"
+      ]
+    },
+    kk: {
+      features: [
+        "Ойыншының орналасуы",
+        "Жұмыс үстелі",
+        "Тар экран",
+        "Автоматты",
+        "Орналастыру",
+        "Аранжировка",
+        "Көлденең жол",
+        "Көлденең стек",
+        "Тік баған",
+        "L пішіні",
+        "Алдымен ойнату барысы жолағын көрсетіңіз",
+        "Шеңбер жағы",
+        "Сол жақ",
+        "Дұрыс",
+        "Орналасуды қалпына келтіру",
+        "Реттеу үшін сүйреңіз",
+        "Толық аудио жүктеп алуға дайын",
+        "Толық дыбыс дайын болғанда хабарлаңыз",
+        "Таңбаша тағайындау жұмыс үстелі браузерлерінде қолжетімді.",
+        "Жылдамдықты 1× қалпына келтіріңіз",
+        "Аудио дыбыс деңгейін арттырыңыз",
+        "Аудио дыбыс деңгейін төмендетіңіз",
+        "Дыбысты өшіру / қосу",
+        "Жоғарғы сол жақ",
+        "Жоғарғы орталық",
+        "Жоғарғы оң жақ",
+        "Сол жақ орталық",
+        "Оң жақ орталық",
+        "Төменгі сол жақта",
+        "Төменгі орталық",
+        "Төменгі оң жақта",
+        "Осы құрылғыда сақталған",
+        "Ойнату және орындалу жолақтарын ауыстырыңыз"
+      ],
+      dock: "Композитор док",
+      seekCommands: [
+        "Артқа ұмтылу",
+        "Алға ұмтылыңыз"
+      ],
+      support: [
+        "ChatGPT Audio Controls пішініне анықтама беріңіз",
+        "Ойыңыз бар ма? Кеңейтімді қолдау үшін ұсыныспен бөлісіңіз немесе шынайы пікір қалдырыңыз.",
+        "Ұсынысты бөлісіңіз",
+        "Пікір жазу"
+      ]
+    },
+    kn: {
+      features: [
+        "ಆಟಗಾರರ ವಿನ್ಯಾಸ",
+        "ಡೆಸ್ಕ್‌ಟಾಪ್",
+        "ಕಿರಿದಾದ ಪರದೆ",
+        "ಸ್ವಯಂಚಾಲಿತ",
+        "ನಿಯೋಜನೆ",
+        "ವ್ಯವಸ್ಥೆ",
+        "ಅಡ್ಡ ಸಾಲು",
+        "ಸಮತಲ ಸ್ಟಾಕ್",
+        "ಲಂಬ ಕಾಲಮ್",
+        "ಎಲ್ ಆಕಾರ",
+        "ಪ್ಲೇಬ್ಯಾಕ್ ಪ್ರಗತಿ ಪಟ್ಟಿಯನ್ನು ಮೊದಲು ತೋರಿಸಿ",
+        "ಸರ್ಕಲ್ ಸೈಡ್",
+        "ಎಡಕ್ಕೆ",
+        "ಸರಿ",
+        "ಲೇಔಟ್ ಅನ್ನು ಮರುಹೊಂದಿಸಿ",
+        "ವ್ಯವಸ್ಥೆ ಮಾಡಲು ಎಳೆಯಿರಿ",
+        "ಪೂರ್ಣ ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಸಿದ್ಧವಾಗಿದೆ",
+        "ಪೂರ್ಣ ಆಡಿಯೋ ಸಿದ್ಧವಾದಾಗ ಸೂಚಿಸಿ",
+        "ಶಾರ್ಟ್‌ಕಟ್ ನಿಯೋಜನೆಯು ಡೆಸ್ಕ್‌ಟಾಪ್ ಬ್ರೌಸರ್‌ಗಳಲ್ಲಿ ಲಭ್ಯವಿದೆ.",
+        "1× ಗೆ ವೇಗವನ್ನು ಮರುಹೊಂದಿಸಿ",
+        "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಹೆಚ್ಚಿಸಿ",
+        "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಅನ್ನು ಕಡಿಮೆ ಮಾಡಿ",
+        "ಮ್ಯೂಟ್ / ಅನ್‌ಮ್ಯೂಟ್",
+        "ಮೇಲಿನ ಎಡ",
+        "ಉನ್ನತ ಕೇಂದ್ರ",
+        "ಮೇಲಿನ ಬಲ",
+        "ಎಡ ಕೇಂದ್ರ",
+        "ಬಲ ಕೇಂದ್ರ",
+        "ಕೆಳಗೆ ಎಡ",
+        "ಕೆಳಭಾಗದ ಕೇಂದ್ರ",
+        "ಕೆಳಗಿನ ಬಲ",
+        "ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ",
+        "ಪ್ಲೇಬ್ಯಾಕ್ ಮತ್ತು ಪ್ರೋಗ್ರೆಸ್ ಬಾರ್‌ಗಳನ್ನು ಬದಲಾಯಿಸಿ"
+      ],
+      dock: "ಸಂಯೋಜಕ ಡಾಕ್",
+      seekCommands: [
+        "ಹಿಂದಕ್ಕೆ ಹುಡುಕು",
+        "ಸೀಕ್ ಫಾರ್ವರ್ಡ್"
+      ],
+      support: [
+        "ChatGPT Audio Controls ಆಕಾರಕ್ಕೆ ಸಹಾಯ ಮಾಡಿ",
+        "ಕಲ್ಪನೆ ಇದೆಯೇ? ವಿಸ್ತರಣೆಯನ್ನು ಬೆಂಬಲಿಸಲು ಸಲಹೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ ಅಥವಾ ಪ್ರಾಮಾಣಿಕ ವಿಮರ್ಶೆಯನ್ನು ಬಿಡಿ.",
+        "ಸಲಹೆಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ",
+        "ವಿಮರ್ಶೆಯನ್ನು ಬರೆಯಿರಿ"
+      ]
+    },
+    lt: {
+      features: [
+        "Grotuvo išdėstymas",
+        "Darbalaukis",
+        "Siauras ekranas",
+        "Automatinis",
+        "Įdėjimas",
+        "Išdėstymas",
+        "Horizontali eilutė",
+        "Horizontali krūva",
+        "Vertikali stulpelis",
+        "L formos",
+        "Pirmiausia parodykite atkūrimo eigos juostą",
+        "Apskritimo pusė",
+        "Kairė",
+        "Teisingai",
+        "Iš naujo nustatyti išdėstymą",
+        "Vilkite, kad sutvarkytumėte",
+        "Visas garso įrašas paruoštas atsisiųsti",
+        "Pranešti, kai bus paruoštas visas garsas",
+        "Sparčiųjų klavišų priskyrimas galimas stalinių kompiuterių naršyklėse.",
+        "Iš naujo nustatykite greitį į 1×",
+        "Padidinkite garso garsumą",
+        "Sumažinti garso garsumą",
+        "Nutildyti / įjungti garsą",
+        "Viršuje kairėje",
+        "Viršutinis centras",
+        "Viršuje dešinėje",
+        "Kairysis centras",
+        "Dešinysis centras",
+        "Apačioje kairėje",
+        "Apatinis centras",
+        "Apačioje dešinėje",
+        "Išsaugota šiame įrenginyje",
+        "Sukeiskite atkūrimo ir eigos juostas"
+      ],
+      dock: "Kompozitoriaus dokas",
+      seekCommands: [
+        "Ieškokite atgal",
+        "Ieškokite pirmyn"
+      ],
+      support: [
+        "Padėkite formuoti ChatGPT Audio Controls",
+        "Turite idėją? Pasidalykite pasiūlymu arba palikite sąžiningą atsiliepimą, kad palaikytumėte plėtinį.",
+        "Pasidalykite pasiūlymu",
+        "Parašykite atsiliepimą"
+      ]
+    },
+    lv: {
+      features: [
+        "Spēlētāja izkārtojums",
+        "Darbvirsma",
+        "Šaurs ekrāns",
+        "Automātiski",
+        "Izvietojums",
+        "Sakārtojums",
+        "Horizontālā rinda",
+        "Horizontāla kaudze",
+        "Vertikālā kolonna",
+        "L forma",
+        "Vispirms parādiet atskaņošanas progresa joslu",
+        "Apļa puse",
+        "Pa kreisi",
+        "Pareizi",
+        "Atiestatīt izkārtojumu",
+        "Velciet, lai sakārtotu",
+        "Pilns audio ir gatavs lejupielādei",
+        "Paziņot, kad pilns audio ir gatavs",
+        "Īsceļu piešķiršana ir pieejama galddatoru pārlūkprogrammās.",
+        "Atiestatiet ātrumu uz 1×",
+        "Palieliniet audio skaļumu",
+        "Samaziniet audio skaļumu",
+        "Izslēgt/ieslēgt skaņu",
+        "Augšā pa kreisi",
+        "Augšējais centrs",
+        "Augšējā labajā stūrī",
+        "Kreisais centrs",
+        "Labajā centrā",
+        "Apakšā pa kreisi",
+        "Apakšējais centrs",
+        "Apakšā pa labi",
+        "Saglabāts šajā ierīcē",
+        "Mainiet atskaņošanas un progresa joslas"
+      ],
+      dock: "Komponista doks",
+      seekCommands: [
+        "Meklējiet atpakaļ",
+        "Meklējiet uz priekšu"
+      ],
+      support: [
+        "Palīdziet veidot ChatGPT Audio Controls",
+        "Vai jums ir ideja? Kopīgojiet ieteikumu vai atstājiet godīgu atsauksmi, lai atbalstītu paplašinājumu.",
+        "Dalieties ar ieteikumu",
+        "Uzrakstiet atsauksmi"
+      ]
+    },
+    mk: {
+      features: [
+        "Распоред на плеер",
+        "Десктоп",
+        "Тесен екран",
+        "Автоматски",
+        "Поставување",
+        "Аранжман",
+        "Хоризонтален ред",
+        "Хоризонтален оџак",
+        "Вертикална колона",
+        "Облик L",
+        "Прво прикажете ја лентата за напредок на репродукцијата",
+        "Кружна страна",
+        "Лево",
+        "Право",
+        "Ресетирај распоред",
+        "Повлечете за да го организирате",
+        "Целосното аудио е подготвено за преземање",
+        "Известете кога целосното аудио е подготвено",
+        "Доделувањето кратенки е достапно на десктоп прелистувачите.",
+        "Ресетирајте ја брзината на 1×",
+        "Зголемете ја јачината на звукот",
+        "Намалете ја јачината на звукот",
+        "Исклучи/вклучи звук",
+        "Горе лево",
+        "Врвен центар",
+        "Горе десно",
+        "Левиот центар",
+        "Десен центар",
+        "Долу лево",
+        "Долниот центар",
+        "Долу десно",
+        "Зачувано на овој уред",
+        "Заменете ги лентите за репродукција и напредок"
+      ],
+      dock: "Пристаниште за композитор",
+      seekCommands: [
+        "Барајте назад",
+        "Барај напред"
+      ],
+      support: [
+        "Помогнете да го обликувате ChatGPT Audio Controls",
+        "Дали имате идеја? Споделете предлог или оставете искрен преглед за да го поддржите проширувањето.",
+        "Споделете предлог",
+        "Напишете рецензија"
+      ]
+    },
+    ml: {
+      features: [
+        "പ്ലെയർ ലേഔട്ട്",
+        "ഡെസ്ക്ടോപ്പ്",
+        "ഇടുങ്ങിയ സ്‌ക്രീൻ",
+        "ഓട്ടോമാറ്റിക്",
+        "പ്ലേസ്മെൻ്റ്",
+        "ക്രമീകരണം",
+        "തിരശ്ചീന വരി",
+        "തിരശ്ചീന സ്റ്റാക്ക്",
+        "ലംബ കോളം",
+        "L ആകൃതി",
+        "പ്ലേബാക്ക് പുരോഗതി ബാർ ആദ്യം കാണിക്കുക",
+        "സർക്കിൾ സൈഡ്",
+        "ഇടത്",
+        "ശരിയാണ്",
+        "ലേഔട്ട് പുനഃസജ്ജമാക്കുക",
+        "ക്രമീകരിക്കാൻ വലിച്ചിടുക",
+        "പൂർണ്ണ ഓഡിയോ ഡൗൺലോഡ് ചെയ്യാൻ തയ്യാറാണ്",
+        "മുഴുവൻ ഓഡിയോ തയ്യാറാകുമ്പോൾ അറിയിക്കുക",
+        "ഡെസ്ക്ടോപ്പ് ബ്രൗസറുകളിൽ കുറുക്കുവഴി അസൈൻമെൻ്റ് ലഭ്യമാണ്.",
+        "1× ലേക്ക് വേഗത പുനഃസജ്ജമാക്കുക",
+        "ഓഡിയോ വോളിയം വർദ്ധിപ്പിക്കുക",
+        "ഓഡിയോ വോളിയം കുറയ്ക്കുക",
+        "നിശബ്ദമാക്കുക / നിശബ്ദമാക്കുക",
+        "മുകളിൽ ഇടത്",
+        "മുകളിലെ കേന്ദ്രം",
+        "മുകളിൽ വലത്",
+        "ഇടത് കേന്ദ്രം",
+        "വലത് കേന്ദ്രം",
+        "താഴെ ഇടത്",
+        "താഴെയുള്ള കേന്ദ്രം",
+        "താഴെ വലത്",
+        "ഈ ഉപകരണത്തിൽ സംരക്ഷിച്ചു",
+        "പ്ലേബാക്കും പുരോഗതി ബാറുകളും മാറ്റുക"
+      ],
+      dock: "കമ്പോസർ ഡോക്ക്",
+      seekCommands: [
+        "പിന്നോട്ട് നോക്കുക",
+        "മുന്നോട്ട് നോക്കുക"
+      ],
+      support: [
+        "ChatGPT Audio Controls രൂപപ്പെടുത്താൻ സഹായിക്കുക",
+        "എന്തെങ്കിലും ആശയമുണ്ടോ? വിപുലീകരണത്തെ പിന്തുണയ്ക്കാൻ ഒരു നിർദ്ദേശം പങ്കിടുക അല്ലെങ്കിൽ സത്യസന്ധമായ ഒരു അവലോകനം നൽകുക.",
+        "ഒരു നിർദ്ദേശം പങ്കിടുക",
+        "ഒരു അവലോകനം എഴുതുക"
+      ]
+    },
+    mn: {
+      features: [
+        "Тоглогчийн байрлал",
+        "Ширээний компьютер",
+        "Нарийхан дэлгэц",
+        "Автомат",
+        "Байршил",
+        "Зохицуулалт",
+        "Хэвтээ эгнээ",
+        "Хэвтээ стек",
+        "Босоо багана",
+        "L хэлбэр",
+        "Эхлээд тоглуулах явцын мөрийг харуул",
+        "Тойрог тал",
+        "Зүүн",
+        "Зөв",
+        "Бүдүүвчийг дахин тохируулах",
+        "Зохицуулахын тулд чирнэ үү",
+        "Бүрэн аудиог татаж авахад бэлэн байна",
+        "Бүрэн аудио бэлэн болсон үед мэдэгдэнэ үү",
+        "Товчлолын хуваарилалтыг ширээний хөтөч дээр ашиглах боломжтой.",
+        "Хурдыг 1× болгож дахин тохируулна уу",
+        "Дууны хэмжээг нэмэгдүүлэх",
+        "Аудио дууны хэмжээг багасгах",
+        "Дууг хаах / нээх",
+        "Зүүн дээд",
+        "Дээд төв",
+        "Баруун дээд",
+        "Зүүн төв",
+        "Баруун төв",
+        "Зүүн доод талд",
+        "Доод төв",
+        "Баруун доод талд",
+        "Энэ төхөөрөмж дээр хадгалсан",
+        "Тоглуулах болон явцын мөрүүдийг соль"
+      ],
+      dock: "Хөгжмийн зохиолчийн зогсоол",
+      seekCommands: [
+        "Урагшаа хайх",
+        "урагш тэмүүл"
+      ],
+      support: [
+        "ChatGPT Audio Controls хэлбэрт туслаарай",
+        "Санаа байна уу? Өргөтгөлийг дэмжихийн тулд саналаа хуваалцах эсвэл шударга шүүмжээ үлдээгээрэй.",
+        "Санал хүсэлтээ хуваалцаарай",
+        "Сэтгэгдэл бичих"
+      ]
+    },
+    ms: {
+      features: [
+        "Susun atur pemain",
+        "Desktop",
+        "Skrin sempit",
+        "Automatik",
+        "Peletakan",
+        "Susunan",
+        "Baris mendatar",
+        "Tindanan mendatar",
+        "Lajur menegak",
+        "Bentuk L",
+        "Tunjukkan bar kemajuan main semula dahulu",
+        "Bahagian bulatan",
+        "Kiri",
+        "Betul",
+        "Tetapkan semula reka letak",
+        "Seret untuk mengatur",
+        "Audio penuh sedia untuk dimuat turun",
+        "Maklumkan apabila audio penuh sedia",
+        "Tugasan pintasan tersedia pada penyemak imbas desktop.",
+        "Tetapkan semula kelajuan kepada 1×",
+        "Tingkatkan kelantangan audio",
+        "Kurangkan kelantangan audio",
+        "Redam / nyahredam",
+        "Atas kiri",
+        "Tengah atas",
+        "Atas kanan",
+        "Kiri tengah",
+        "Tengah kanan",
+        "Bawah kiri",
+        "Tengah bawah",
+        "Bawah kanan",
+        "Disimpan pada peranti ini",
+        "Tukar main semula dan bar kemajuan"
+      ],
+      dock: "Dok komposer",
+      seekCommands: [
+        "Cari ke belakang",
+        "Cari ke hadapan"
+      ],
+      support: [
+        "Bantu bentuk ChatGPT Audio Controls",
+        "Ada idea? Kongsi cadangan atau tinggalkan ulasan jujur ​​untuk menyokong sambungan.",
+        "Kongsi cadangan",
+        "Tulis ulasan"
+      ]
+    },
+    my: {
+      features: [
+        "ကစားသမား အပြင်အဆင်",
+        "ဒက်စ်တော့",
+        "မျက်နှာပြင်ကျဉ်း",
+        "အလိုအလျောက်",
+        "နေရာချထားခြင်း။",
+        "စီစဉ်မှု",
+        "အလျားလိုက် အတန်း",
+        "အလျားလိုက် အတွဲ",
+        "ဒေါင်လိုက်ကော်လံ",
+        "L ပုံသဏ္ဍာန်",
+        "ပြန်ဖွင့်ခြင်းဆိုင်ရာ တိုးတက်မှုဘားကို ဦးစွာပြသပါ။",
+        "စက်ဝိုင်းခြမ်း",
+        "ဘယ်ဘက်",
+        "မှန်တယ်။",
+        "အပြင်အဆင်ကို ပြန်လည်သတ်မှတ်ပါ။",
+        "စီစဉ်ရန် ဖိဆွဲပါ။",
+        "အသံအပြည့်အစုံကို ဒေါင်းလုဒ်လုပ်ရန် အသင့်ဖြစ်ပါပြီ။",
+        "အသံအပြည့်အစုံ အဆင်သင့်ဖြစ်သောအခါ အသိပေးပါ။",
+        "ဖြတ်လမ်းတာဝန်ကို ဒက်စ်တော့ဘရောက်ဆာများတွင် ရနိုင်ပါသည်။",
+        "မြန်နှုန်းကို 1× သို့ ပြန်လည်သတ်မှတ်ပါ။",
+        "အသံပမာဏကို တိုးမြှင့်ပါ။",
+        "အသံအတိုးအကျယ်ကို လျှော့ပါ။",
+        "အသံတိတ် / အသံတိတ်",
+        "ဘယ်ဘက်ထိပ်",
+        "ထိပ်တန်းစင်တာ",
+        "အပေါ်ညာဘက်",
+        "ဘယ်ဘက်ဗဟို",
+        "ညာဘက်ဗဟို",
+        "အောက်ခြေဘယ်ဘက်",
+        "အောက်ခြေဗဟို",
+        "အောက်ခြေညာဘက်",
+        "ဤစက်ပစ္စည်းပေါ်တွင် သိမ်းဆည်းထားသည်။",
+        "ပြန်ဖွင့်ခြင်းနှင့် တိုးတက်မှုဘားများကို လဲလှယ်ပါ။"
+      ],
+      dock: "တေးရေးဆရာ အထိုင်",
+      seekCommands: [
+        "နောက်ပြန်လှည့်ပါ။",
+        "ရှေ့ကိုရှာ"
+      ],
+      support: [
+        "ChatGPT Audio Controls ပုံသွင်းရာတွင် ကူညီပေးပါ။",
+        "အကြံတစ်ခုရှိလား။ တိုးချဲ့မှုကို ပံ့ပိုးရန် အကြံပြုချက်တစ်ခုကို မျှဝေပါ သို့မဟုတ် ရိုးသားစွာ သုံးသပ်ချက် ထားခဲ့ပါ။",
+        "အကြံပြုချက်ကို မျှဝေပါ။",
+        "သုံးသပ်ချက်ရေးပါ။"
+      ]
+    },
+    nl: {
+      features: [
+        "Spelerindeling",
+        "Bureaublad",
+        "Smal scherm",
+        "Automatisch",
+        "Plaatsing",
+        "Regeling",
+        "Horizontale rij",
+        "Horizontale stapel",
+        "Verticale kolom",
+        "L-vorm",
+        "Toon eerst de voortgangsbalk voor afspelen",
+        "Cirkelzijde",
+        "Links",
+        "Juist",
+        "Lay-out opnieuw instellen",
+        "Sleep om te rangschikken",
+        "Volledige audio is klaar om te downloaden",
+        "Waarschuw wanneer volledige audio gereed is",
+        "Toewijzing van snelkoppelingen is beschikbaar in desktopbrowsers.",
+        "Snelheid resetten naar 1×",
+        "Verhoog het audiovolume",
+        "Verlaag het audiovolume",
+        "Dempen/dempen opheffen",
+        "Linksboven",
+        "Middenboven",
+        "Rechtsboven",
+        "Links midden",
+        "Rechts midden",
+        "Linksonder",
+        "Middenonder",
+        "Rechtsonder",
+        "Opgeslagen op dit apparaat",
+        "Wissel de afspeel- en voortgangsbalken om"
+      ],
+      dock: "Composerdock",
+      seekCommands: [
+        "Zoek achteruit",
+        "Zoek vooruit"
+      ],
+      support: [
+        "Help vormgeven ChatGPT Audio Controls",
+        "Heeft u een idee? Deel een suggestie of laat een eerlijke recensie achter om de extensie te ondersteunen.",
+        "Deel een suggestie",
+        "Schrijf een recensie"
+      ]
+    },
+    pa: {
+      features: [
+        "ਪਲੇਅਰ ਲੇਆਉਟ",
+        "ਡੈਸਕਟਾਪ",
+        "ਤੰਗ ਸਕ੍ਰੀਨ",
+        "ਆਟੋਮੈਟਿਕ",
+        "ਪਲੇਸਮੈਂਟ",
+        "ਪ੍ਰਬੰਧ",
+        "ਹਰੀਜ਼ੱਟਲ ਕਤਾਰ",
+        "ਹਰੀਜ਼ੱਟਲ ਸਟੈਕ",
+        "ਵਰਟੀਕਲ ਕਾਲਮ",
+        "ਐਲ ਆਕਾਰ",
+        "ਪਹਿਲਾਂ ਪਲੇਬੈਕ ਪ੍ਰਗਤੀ ਪੱਟੀ ਦਿਖਾਓ",
+        "ਸਰਕਲ ਪਾਸੇ",
+        "ਖੱਬੇ",
+        "ਸਹੀ",
+        "ਖਾਕਾ ਰੀਸੈਟ ਕਰੋ",
+        "ਪ੍ਰਬੰਧ ਕਰਨ ਲਈ ਖਿੱਚੋ",
+        "ਪੂਰੀ ਆਡੀਓ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਤਿਆਰ ਹੈ",
+        "ਪੂਰੀ ਆਡੀਓ ਤਿਆਰ ਹੋਣ 'ਤੇ ਸੂਚਿਤ ਕਰੋ",
+        "ਸ਼ਾਰਟਕੱਟ ਅਸਾਈਨਮੈਂਟ ਡੈਸਕਟਾਪ ਬ੍ਰਾਊਜ਼ਰਾਂ 'ਤੇ ਉਪਲਬਧ ਹੈ।",
+        "ਸਪੀਡ ਨੂੰ 1× 'ਤੇ ਰੀਸੈਟ ਕਰੋ",
+        "ਆਡੀਓ ਵਾਲੀਅਮ ਵਧਾਓ",
+        "ਆਡੀਓ ਵਾਲੀਅਮ ਘਟਾਓ",
+        "ਮਿਊਟ/ਅਨਮਿਊਟ ਕਰੋ",
+        "ਸਿਖਰ ਖੱਬੇ",
+        "ਸਿਖਰ ਕੇਂਦਰ",
+        "ਉੱਪਰ ਸੱਜੇ",
+        "ਖੱਬਾ ਕੇਂਦਰ",
+        "ਸੱਜਾ ਕੇਂਦਰ",
+        "ਹੇਠਾਂ ਖੱਬੇ",
+        "ਹੇਠਾਂ ਕੇਂਦਰ",
+        "ਹੇਠਾਂ ਸੱਜੇ",
+        "ਇਸ ਡਿਵਾਈਸ 'ਤੇ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ",
+        "ਪਲੇਬੈਕ ਅਤੇ ਪ੍ਰਗਤੀ ਬਾਰਾਂ ਨੂੰ ਸਵੈਪ ਕਰੋ"
+      ],
+      dock: "ਕੰਪੋਜ਼ਰ ਡੌਕ",
+      seekCommands: [
+        "ਪਿਛੇ ਭਾਲੋ",
+        "ਅੱਗੇ ਭਾਲੋ"
+      ],
+      support: [
+        "ChatGPT Audio Controls ਨੂੰ ਆਕਾਰ ਦੇਣ ਵਿੱਚ ਮਦਦ ਕਰੋ",
+        "ਕੋਈ ਵਿਚਾਰ ਹੈ? ਇੱਕ ਸੁਝਾਅ ਸਾਂਝਾ ਕਰੋ ਜਾਂ ਐਕਸਟੈਂਸ਼ਨ ਦਾ ਸਮਰਥਨ ਕਰਨ ਲਈ ਇੱਕ ਇਮਾਨਦਾਰ ਸਮੀਖਿਆ ਛੱਡੋ।",
+        "ਇੱਕ ਸੁਝਾਅ ਸਾਂਝਾ ਕਰੋ",
+        "ਇੱਕ ਸਮੀਖਿਆ ਲਿਖੋ"
+      ]
+    },
+    sk: {
+      features: [
+        "Rozloženie hráča",
+        "Desktop",
+        "Úzka obrazovka",
+        "Automaticky",
+        "Umiestnenie",
+        "Usporiadanie",
+        "Vodorovný riadok",
+        "Horizontálny zásobník",
+        "Vertikálny stĺpec",
+        "Tvar L",
+        "Najprv zobrazte lištu priebehu prehrávania",
+        "Kruhová strana",
+        "Vľavo",
+        "Správne",
+        "Obnoviť rozloženie",
+        "Usporiadajte potiahnutím",
+        "Celý zvuk je pripravený na stiahnutie",
+        "Upozorniť, keď bude pripravený úplný zvuk",
+        "Priradenie skratky je dostupné v prehliadačoch na počítači.",
+        "Obnovte rýchlosť na 1×",
+        "Zvýšte hlasitosť zvuku",
+        "Znížte hlasitosť zvuku",
+        "Stlmiť / zapnúť",
+        "Vľavo hore",
+        "V strede hore",
+        "Vpravo hore",
+        "Vľavo uprostred",
+        "Vpravo uprostred",
+        "Vľavo dole",
+        "Stred dole",
+        "Vpravo dole",
+        "Uložené v tomto zariadení",
+        "Vymeňte lišty prehrávania a priebehu"
+      ],
+      dock: "Dok pre skladateľov",
+      seekCommands: [
+        "Pohľad dozadu",
+        "Pohľad vpred"
+      ],
+      support: [
+        "Pomocník tvaru ChatGPT Audio Controls",
+        "Máte nápad? Zdieľajte návrh alebo zanechajte čestnú recenziu na podporu rozšírenia.",
+        "Zdieľajte návrh",
+        "Napísať recenziu"
+      ]
+    },
+    sl: {
+      features: [
+        "Postavitev igralca",
+        "Namizje",
+        "Ozek zaslon",
+        "Samodejno",
+        "Namestitev",
+        "Ureditev",
+        "Vodoravna vrstica",
+        "Vodoravni sklad",
+        "Navpični stolpec",
+        "Oblika L",
+        "Najprej prikažite vrstico napredka predvajanja",
+        "Krožna stran",
+        "Levo",
+        "Prav",
+        "Ponastavi postavitev",
+        "Povlecite za razporeditev",
+        "Celoten zvok je pripravljen za prenos",
+        "Obvesti, ko je pripravljen celoten zvok",
+        "Dodelitev bližnjic je na voljo v namiznih brskalnikih.",
+        "Ponastavi hitrost na 1×",
+        "Povečaj glasnost zvoka",
+        "Zmanjšajte glasnost zvoka",
+        "Izklop/vklop zvoka",
+        "Zgoraj levo",
+        "Zgoraj sredina",
+        "Zgoraj desno",
+        "Leva sredina",
+        "Desna sredina",
+        "Levo spodaj",
+        "Spodaj na sredini",
+        "Desno spodaj",
+        "Shranjeno v tej napravi",
+        "Zamenjajte vrstici predvajanja in napredka"
+      ],
+      dock: "Skladateljska postaja",
+      seekCommands: [
+        "Išči nazaj",
+        "Išči naprej"
+      ],
+      support: [
+        "Pomagajte oblikovati ChatGPT Audio Controls",
+        "Imate idejo? Delite predlog ali pustite iskreno mnenje, da podprete razširitev.",
+        "Delite predlog",
+        "Napišite oceno"
+      ]
+    },
+    so: {
+      features: [
+        "Qaabka ciyaartoyga",
+        "Desktop",
+        "Shaashad cidhiidhi ah",
+        "Toos ah",
+        "Meelaynta",
+        "Habayn",
+        "Safka toosan",
+        "Xidhmada toosan",
+        "Tiirka toosan",
+        "L qaabka",
+        "Marka hore muuji bar horusocodka dib-u-qaadista",
+        "Dhinaca goobabada",
+        "Bidix",
+        "Sax",
+        "Dib u habayn qaabaynta",
+        "Jiid si aad u habayso",
+        "Cod buuxa ayaa diyaar u ah in la soo dejiyo",
+        "Ogeysii marka cod buuxa la diyaariyo",
+        "Meelaynta gaaban ayaa laga heli karaa daalacashada desktop-ka.",
+        "Ku celi xawaaraha 1×",
+        "Kordhi codka codka",
+        "Yaree codka codka",
+        "Codka xidh / ka qaad",
+        "Bidix sare",
+        "Xarunta sare",
+        "Midig sare",
+        "Xarunta bidix",
+        "Xarunta saxda ah",
+        "Gunta bidix",
+        "Xarunta hoose",
+        "Midigta hoose",
+        "Lagu kaydiyay qalabkan",
+        "Isku beddel ciyaarista iyo baararka horumarka"
+      ],
+      dock: "Doomaha laxanka",
+      seekCommands: [
+        "Dib u raadi",
+        "Horay u raadi"
+      ],
+      support: [
+        "Caawi qaabka ChatGPT Audio Controls",
+        "fikrad ma haysaa? La wadaag talo ama ka tag dib u eegis daacad ah si aad u taageerto kordhinta.",
+        "La wadaag talo",
+        "Qor dib u eegis"
+      ]
+    },
+    sq: {
+      features: [
+        "Paraqitja e luajtësit",
+        "Desktop",
+        "Ekran i ngushtë",
+        "Automatik",
+        "Vendosja",
+        "Marrëveshje",
+        "Rreshti horizontal",
+        "Rafte horizontale",
+        "Kolona vertikale",
+        "Forma L",
+        "Shfaq shiritin e progresit të luajtjes së pari",
+        "Ana e rrethit",
+        "Majtas",
+        "E drejta",
+        "Rivendos strukturën",
+        "Zvarrit për ta rregulluar",
+        "Audioja e plotë është gati për t'u shkarkuar",
+        "Njoftoni kur audioja e plotë të jetë gati",
+        "Caktimi i shkurtoreve është i disponueshëm në shfletuesit e desktopit.",
+        "Rivendos shpejtësinë në 1×",
+        "Rrit volumin e audios",
+        "Ul volumin e audios",
+        "Hesht/aktivizo zërin",
+        "Lart majtas",
+        "Qendra e lartë",
+        "Sipër djathtas",
+        "Në qendër të majtë",
+        "Qendra e djathtë",
+        "Poshtë majtas",
+        "Qendra e poshtme",
+        "Poshtë djathtas",
+        "Ruajtur në këtë pajisje",
+        "Ndërroni shiritat e riprodhimit dhe përparimit"
+      ],
+      dock: "Dok kompozitor",
+      seekCommands: [
+        "Kërkoni prapa",
+        "Kërko përpara"
+      ],
+      support: [
+        "Ndihmoni në formë ChatGPT Audio Controls",
+        "Keni një ide? Ndani një sugjerim ose lini një rishikim të sinqertë për të mbështetur shtesën.",
+        "Ndani një sugjerim",
+        "Shkruaj një koment"
+      ]
+    },
+    sr: {
+      features: [
+        "Распоред играча",
+        "Десктоп",
+        "Уски екран",
+        "Аутоматски",
+        "Пласман",
+        "Аранжман",
+        "Хоризонтални ред",
+        "Хоризонтални стек",
+        "Вертикална колона",
+        "Л облик",
+        "Прво прикажите траку тока репродукције",
+        "Кружна страна",
+        "Лево",
+        "У реду",
+        "Ресетуј распоред",
+        "Превуците да бисте уредили",
+        "Комплетан звук је спреман за преузимање",
+        "Обавести када је комплетан звук спреман",
+        "Додељивање пречица је доступно на десктоп претраживачима.",
+        "Ресетујте брзину на 1×",
+        "Повећајте јачину звука",
+        "Смањите јачину звука",
+        "Искључи/укључи звук",
+        "Горе лево",
+        "Горњи центар",
+        "Горе десно",
+        "Леви центар",
+        "Десни центар",
+        "Доле лево",
+        "Доњи центар",
+        "Доле десно",
+        "Сачувано на овом уређају",
+        "Замените траку за репродукцију и траку напретка"
+      ],
+      dock: "Доцк за композитор",
+      seekCommands: [
+        "Тражи уназад",
+        "Тражи напред"
+      ],
+      support: [
+        "Помоћ облику ChatGPT Audio Controls",
+        "Имате идеју? Поделите предлог или оставите искрену рецензију да бисте подржали проширење.",
+        "Поделите предлог",
+        "Напишите рецензију"
+      ]
+    },
+    sw: {
+      features: [
+        "Mpangilio wa mchezaji",
+        "Kompyuta ya mezani",
+        "Skrini nyembamba",
+        "Otomatiki",
+        "Uwekaji",
+        "Mpangilio",
+        "Safu mlalo",
+        "Rafu mlalo",
+        "Safu wima",
+        "umbo la L",
+        "Onyesha upau wa maendeleo ya uchezaji kwanza",
+        "Upande wa mduara",
+        "Kushoto",
+        "Sawa",
+        "Weka upya mpangilio",
+        "Buruta ili kupanga",
+        "Sauti kamili iko tayari kupakuliwa",
+        "Arifu wakati sauti kamili iko tayari",
+        "Kazi ya njia ya mkato inapatikana kwenye vivinjari vya eneo-kazi.",
+        "Weka upya kasi hadi 1×",
+        "Ongeza sauti ya sauti",
+        "Punguza sauti ya sauti",
+        "Nyamazisha / acha kunyamazisha",
+        "Juu kushoto",
+        "Kituo cha juu",
+        "Juu kulia",
+        "Kituo cha kushoto",
+        "Kituo cha kulia",
+        "Chini kushoto",
+        "Kituo cha chini",
+        "Chini kulia",
+        "Imehifadhiwa kwenye kifaa hiki",
+        "Badilisha sehemu za uchezaji na maendeleo"
+      ],
+      dock: "Kizimbani cha mtunzi",
+      seekCommands: [
+        "Tafuta nyuma",
+        "Tafuta mbele"
+      ],
+      support: [
+        "Msaada sura ChatGPT Audio Controls",
+        "Je, una wazo? Shiriki pendekezo au utoe ukaguzi wa uaminifu ili kuunga mkono kiendelezi.",
+        "Shiriki pendekezo",
+        "Andika ukaguzi"
+      ]
+    },
+    ur: {
+      features: [
+        "پلیئر لے آؤٹ",
+        "ڈیسک ٹاپ",
+        "تنگ اسکرین",
+        "خودکار",
+        "جگہ کا تعین",
+        "بندوبست",
+        "افقی قطار",
+        "افقی اسٹیک",
+        "عمودی کالم",
+        "ایل شکل",
+        "پہلے پلے بیک پروگریس بار دکھائیں۔",
+        "حلقہ کی طرف",
+        "چھوڑ دیا",
+        "صحیح",
+        "ترتیب کو دوبارہ ترتیب دیں۔",
+        "ترتیب دینے کے لیے گھسیٹیں۔",
+        "مکمل آڈیو ڈاؤن لوڈ کے لیے تیار ہے۔",
+        "مکمل آڈیو تیار ہونے پر مطلع کریں۔",
+        "شارٹ کٹ اسائنمنٹ ڈیسک ٹاپ براؤزرز پر دستیاب ہے۔",
+        "رفتار کو 1× پر ری سیٹ کریں۔",
+        "آڈیو والیوم میں اضافہ کریں۔",
+        "آڈیو والیوم کو کم کریں۔",
+        "خاموش / خاموش",
+        "اوپر بائیں",
+        "سب سے اوپر مرکز",
+        "اوپر دائیں",
+        "بائیں مرکز",
+        "دائیں مرکز",
+        "نیچے بائیں",
+        "نیچے مرکز",
+        "نیچے دائیں طرف",
+        "اس ڈیوائس پر محفوظ کیا گیا۔",
+        "پلے بیک اور پروگریس بارز کو تبدیل کریں۔"
+      ],
+      dock: "کمپوزر گودی",
+      seekCommands: [
+        "پیچھے کی طرف تلاش کرو",
+        "آگے بڑھو"
+      ],
+      support: [
+        "ChatGPT Audio Controls کی شکل میں مدد کریں۔",
+        "ایک خیال ہے؟ ایک تجویز کا اشتراک کریں یا توسیع کی حمایت کرنے کے لیے ایک ایماندارانہ جائزہ چھوڑیں۔",
+        "ایک تجویز شیئر کریں۔",
+        "ایک جائزہ لکھیں۔"
+      ]
+    },
+    "es-419": {
+      features: [
+        "Diseño del reproductor",
+        "Escritorio",
+        "Pantalla estrecha",
+        "Automático",
+        "Posición",
+        "Disposición",
+        "Fila horizontal",
+        "Pila horizontal",
+        "Columna vertical",
+        "Forma de L",
+        "Barra de progreso primero",
+        "Lado del círculo",
+        "Izquierda",
+        "Derecha",
+        "Restablecer diseño",
+        "Arrastra para organizar",
+        "El audio completo está listo para descargar",
+        "Avisar cuando el audio completo esté listo",
+        "Los atajos se asignan en navegadores de escritorio.",
+        "Restablecer velocidad a 1×",
+        "Subir volumen",
+        "Bajar volumen",
+        "Silenciar / activar sonido",
+        "Arriba izquierda",
+        "Arriba centro",
+        "Arriba derecha",
+        "Centro izquierda",
+        "Centro derecha",
+        "Abajo izquierda",
+        "Abajo centro",
+        "Abajo derecha",
+        "Guardado en este dispositivo",
+        "Intercambiar barras"
+      ],
+      dock: "Acoplado al cuadro de texto",
+      seekCommands: [
+        "Retroceder",
+        "Avanzar"
+      ],
+      support: [
+        "Ayuda a mejorar ChatGPT Audio Controls",
+        "¿Tienes una idea? Comparte una sugerencia o deja una reseña sincera para apoyar la extensión.",
+        "Comparte una sugerencia",
+        "Escribe una reseña"
+      ]
+    },
+    "fr-CA": {
+      features: [
+        "Disposition du lecteur",
+        "Ordinateur",
+        "Écran étroit",
+        "Automatique",
+        "Position",
+        "Disposition",
+        "Rangée horizontale",
+        "Pile horizontale",
+        "Colonne verticale",
+        "Forme en L",
+        "Progression en premier",
+        "Côté du cercle",
+        "Gauche",
+        "Droite",
+        "Réinitialiser la disposition",
+        "Glisser pour organiser",
+        "Le fichier audio complet est prêt à télécharger",
+        "Notifier lorsque le fichier audio complet est prêt",
+        "Les raccourcis se configurent dans les navigateurs de bureau.",
+        "Rétablir la vitesse à 1×",
+        "Augmenter le volume",
+        "Baisser le volume",
+        "Couper / rétablir le son",
+        "En haut à gauche",
+        "En haut au centre",
+        "En haut à droite",
+        "Au milieu à gauche",
+        "Au milieu à droite",
+        "En bas à gauche",
+        "En bas au centre",
+        "En bas à droite",
+        "Enregistré sur cet appareil",
+        "Permuter les barres"
+      ],
+      dock: "Ancré au champ de saisie",
+      seekCommands: [
+        "Reculer",
+        "Avancer"
+      ],
+      support: [
+        "Améliorons ChatGPT Audio Controls",
+        "Une idée ? Partagez une suggestion ou laissez un avis sincère pour soutenir l’extension.",
+        "Partager une suggestion",
+        "Rédiger un avis"
+      ]
+    },
+    "hi-Latn": {
+      features: [
+        "player leyout",
+        "desctop",
+        "sankirna scrin",
+        "swachalit",
+        "placement",
+        "vyavastha",
+        "kshaitij pankti",
+        "kshaitij dher",
+        "lambvat stambh",
+        "el aakar",
+        "pehle playback pragati patti dikhayen",
+        "vritt paksh",
+        "wam",
+        "sahi hai",
+        "layout reset karen",
+        "vyavasthit karne ke liye khinchen",
+        "pura audio download karne ke liye taiyar hai",
+        "purna audio taiyar hone par suchit karen",
+        "shortcut assignment desktop browser par uplabdh hai.",
+        "gati ko 1× par reset karen",
+        "audio volume badhayen",
+        "audio volume kam karen",
+        "mut/anamut karen",
+        "upar baayen",
+        "sheersh kendra",
+        "upar daeen or",
+        "bayan kendra",
+        "dayan kendra",
+        "neeche baayen",
+        "nichla kendra",
+        "neeche daeen or",
+        "is device par saheja gaya",
+        "playback aur pragati pattiyon ko swap karen"
+      ],
+      dock: "sangeetkar dock",
+      seekCommands: [
+        "peeche ki or khojen",
+        "aage ki talash karen"
+      ],
+      support: [
+        "ChatGPT Audio Controls ko aakaar dene mein sahayata karen",
+        "koi vichar hai? extension ka samarthan karne ke liye ek sujhaav sajha karen ya ek imandar samiksha chhoden.",
+        "ek sujhaav sajha karen",
+        "ek samiksha likhen"
+      ]
+    },
+    "zh-HK": {
+      features: [
+        "播放器配置",
+        "桌面",
+        "窄螢幕",
+        "自動",
+        "位置",
+        "排列",
+        "水平一行",
+        "水平堆疊",
+        "垂直一列",
+        "L 形",
+        "進度列在前",
+        "圓鈕位置",
+        "左",
+        "右",
+        "重設配置",
+        "拖曳以排列",
+        "完整音訊已可下載",
+        "完整音訊就緒時通知",
+        "快速鍵指派僅適用於桌面瀏覽器。",
+        "重設速度為 1×",
+        "提高音量",
+        "降低音量",
+        "靜音 / 取消靜音",
+        "左上",
+        "頂端中央",
+        "右上",
+        "左側中央",
+        "右側中央",
+        "左下",
+        "底部中央",
+        "右下",
+        "已儲存在此裝置",
+        "交換控制項"
+      ],
+      dock: "輸入框停靠",
+      seekCommands: [
+        "向後跳轉",
+        "向前跳轉"
+      ],
+      support: [
+        "一起改進 ChatGPT Audio Controls",
+        "有想法嗎？分享建議或留下真實評價，支持這個擴充功能。",
+        "分享建議",
+        "撰寫評價"
+      ]
+    }
+  };
 
   // src/shared/i18n/direction.ts
   function directionForLocale(locale) {
-    return ["ar", "fa", "he"].includes(locale.trim().toLowerCase().split(/[-_]/)[0]) ? "rtl" : "ltr";
+    return ["ar", "fa", "he", "ur"].includes(locale.trim().toLowerCase().split(/[-_]/)[0]) ? "rtl" : "ltr";
   }
   // src/shared/i18n/locales/audience.json
   var audience_default = {
@@ -2056,6 +3736,5585 @@
         speedIncrease: {
           action: "Øk hastigheten",
           description: "Gå opp til neste forhåndsinnstilte hastighet"
+        }
+      }
+    }
+  };
+  // src/shared/i18n/locales/chatgpt.json
+  var chatgpt_default = {
+    am: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "መቆጣጠሪያዎች እና Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ክፈት",
+        dashboard: "ዳሽቦርድ",
+        seconds: "ሰከንዶች",
+        star: "★ ኮከብ",
+        docs: "ሰነዶች",
+        issues: "ጉዳዮች"
+      },
+      popup: {
+        header: {
+          switchTheme: "ገጽታ ቀይር",
+          openOptions: "ዳሽቦርድ እና ቅንብሮችን ክፈት"
+        },
+        tabs: {
+          controls: "መቆጣጠሪያዎች",
+          shortcuts: "ቁልፎች",
+          about: "ስለ"
+        },
+        quickControls: {
+          playbackSpeed: "ነባሪ የመልሶ ማጫወት ፍጥነት",
+          defaultVolume: "ነባሪ የድምጽ መጠን",
+          mute: "ድምጸ-ከል አድርግ",
+          unmute: "ድምጸ-ከል አንሳ",
+          smartIntegrations: "ስማርት ውህደቶች",
+          globalShortcuts: "ዓለም አቀፍ አቋራጮች",
+          globalShortcutsDesc: "Space/K፣ Alt+P፣ Alt+Arrows እና የፍጥነት ቁልፎችን አንቃ",
+          smoothScrubbing: "ለስላሳ ኦዲዮ መፈለግ",
+          smoothScrubbingDesc: "◀10 ወይም 10▶ በመያዝ መፈለግን ማፋጠን"
+        },
+        shortcuts: {
+          title: "የቁልፍ ሰሌዳ አቋራጮች",
+          gesturesTitle: "የመዳፊት እና የንክኪ ምልክቶች",
+          smoothAudioScrub: "ለስላሳ ኦዲዮ ኦዲዮ መፈለግ",
+          directDownload: "ቀጥታ ማውረድ",
+          holdScrubKey: "◀10/10▶ ያዝ",
+          clickDownloadKey: "📥 ቁልፍን ጠቅ ያድርጉ"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ክፍት ምንጭ በ Infoxica",
+          description: "እንከን በሌለው የድምጽ ኦዲዮ ፍለጋ፣ በተለዋዋጭ የፍጥነት ቅድመ-ቅምጦች፣ ቀጥታ የድምጽ ማውረዶች እና በአንድ ጠቅታ የንግግር ቀስቅሴዎች የ ChatGPT የድምጽ ተሞክሮን ማሳደግ።",
+          privacyTitle: "100% ግላዊነት ያተኮረ",
+          privacyDesc: "ምንም መከታተያዎች የሉም፣ ምንም ቴሌሜትሪ የለም። ሁሉም ነገር በእርስዎ ማሽን ላይ ይሰራል።",
+          githubRepo: "GitHub ማከማቻ",
+          documentation: "ሰነድ",
+          reportIssue: "ጉዳይ ሪፖርት አድርግ"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ዳሽቦርድ እና ማዋቀር",
+          preferences: "ምርጫዎች",
+          shortcuts: "አቋራጮች እና ምልክቶች",
+          faq: "ተደጋጋሚ ጥያቄዎች እና መላ መፈለግ",
+          darkMode: "ጨለማ ሁነታ",
+          lightMode: "የብርሃን ሁነታ",
+          githubRepo: "GitHub ሪፖ"
+        },
+        headers: {
+          preferencesTitle: "ኦዲዮ እና መልሶ ማጫወት ምርጫዎች",
+          preferencesDesc: "ቋንቋ፣ የመልሶ ማጫወት ፍጥነት ቅድመ-ቅምጦች፣ ነባሪ የድምጽ መጠን እና ባህሪያትን ያዋቅሩ።",
+          shortcutsTitle: "የቁልፍ ሰሌዳ አቋራጮች እና ምልክቶች",
+          shortcutsDesc: "ለችግር መልሶ ማጫወት ማስተር ፈጣን ቁልፍ።",
+          faqTitle: "ተደጋጋሚ ጥያቄዎች እና መላ መፈለግ",
+          faqDesc: "ዝርዝር የቴክኒክ መመሪያ፣ ደህንነት እና የድጋፍ መልሶች።"
+        },
+        general: {
+          languageTitle: "ቋንቋ እና አካባቢያዊነት",
+          languageDesc: "የሚመርጡትን የበይነገጽ ቋንቋ ይምረጡ ወይም ቅጥያው የአሳሽዎን ቋንቋ በራስ-ሰር እንዲያውቅ ያድርጉ።",
+          languageAuto: "ራስ-አግኝ (የአሳሽ ቋንቋ)",
+          languageDetected: "ተገኝቷል",
+          speedTitle: "የመልሶ ማጫወት ፍጥነት ምርጫዎች",
+          speedDesc: "ChatGPTን ሲከፍቱ ወይም Read Aloud ን ሲያስጀምሩ የእርስዎን ነባሪ የመልሶ ማጫወት መጠን ይምረጡ።",
+          volumeTitle: "ነባሪ የድምጽ መጠን ደረጃ",
+          volumeDesc: "የድምጽ መጠን ጮክ ብለው አንብብ የንግግር ዥረቶችን ቀድመው ያስተካክሉ።",
+          seekTitle: "ዝለል እና ደረጃን ፈልግ",
+          seekDesc: "የ -10s/+10s አዝራሮች ወይም Alt + Left/Alt + Right በአንድ ጊዜ መታ ለመዝለል የሰከንዶች ብዛት።",
+          secondsUnit: "ሰከንዶች"
+        },
+        shortcutsGuide: {
+          title: "የቁልፍ ሰሌዳ አቋራጮች ማጣቀሻ",
+          desc: "የስራ ሂደትዎን በergonomic ነጠላ-እጅ እና በዩቲዩብ ደረጃ የመልሶ ማጫዎቻ ቁልፎችን ያፋጥኑ።",
+          gesturesTitle: "የመዳፊት እና የድምጽ ፍለጋ ምልክቶችን ይያዙ",
+          gesturesDesc: "በተለዋዋጭ ፍጥነት በድምፅ በረጃጅም የድምጽ መልሶች ለመፈለግ የ◀10ዎቹ ወይም 10s▶ አዝራሮችን ይያዙ፡-",
+          gestureHold03: "ለስላሳ የድምጽ ፍለጋ ሁነታ ያስገባል (4× መደበኛ ፍጥነት)።",
+          gestureHold15: "ወደ 10× የመፈለግ ፍጥነት ያፋጥናል።",
+          gestureHold30: "የከፍተኛ ፍጥነት ዝላይ መጠን በ25× ተመን።",
+          gestureRelease: "ወደሚፈለገው ቦታ ያለችግር ይቆልፋል።"
+        },
+        faq: {
+          title: "ተዘውትረው የሚጠየቁ ጥያቄዎች እና የተጠቃሚ መመሪያ",
+          subtitle: "ፈጣን መልሶች ከChatGPT Audio Controls ምርጡን ለማግኘት ይረዱዎታል።",
+          q1: "በመዳፊት በማሸብለል የድምጽ መጠኑን እንዴት ማስተካከል እችላለሁ?",
+          a1: "በቀላሉ የመዳፊት ጠቋሚዎን በተጫዋች ሀዲድ ላይ ባለው የድምጽ ድምጽ ማጉያ አዶ ላይ ያንዣብቡ እና የመዳፊት ጎማዎን ወደ ላይ ወይም ወደ ታች ያሸብልሉ። የተንሸራታች ፖፑቨርን መክፈት ሳያስፈልገው የድምጽ መጠን በ5% ጭማሪዎች በተቀላጠፈ ሁኔታ ይስተካከላል!",
+          q2: "ተጫዋቹ በ ChatGPT ላይ የሚታየው የት ነው?",
+          a2: "ተጫዋቹ ከመልእክት አቀናባሪ ጥያቄዎ አጠገብ በቀጥታ ተጭኗል። ምንም ኦዲዮ በማይጫወትበት ጊዜ ትንሽ ተንሳፋፊ የአርማ ቁልፍ በቀኝ በኩል በጥሩ ሁኔታ እንደተሰቀለ ይቆያል። ይህን ቁልፍ ጠቅ ማድረግ ወይም ጮክ ብለህ አንብብ መጀመር የሙሉ የተጫዋች መቆጣጠሪያ አሞሌዎችን ያሰፋል።",
+          q3: "የተቀናበረውን የንግግር ድምጽ እንዴት ማውረድ እችላለሁ?",
+          a3: "ChatGPT ምላሹን ጮክ ብሎ ባነበበ ቁጥር በቀኝ ሀዲድ ላይ ያለውን የማውረድ ቁልፍ (📥) ይጫኑ። የድምጽ ዥረቱ ወዲያውኑ እንደ ከፍተኛ ጥራት ያለው የድምጽ ፋይል (.mp3፣ .m4a፣ ወይም .wav) በኮምፒውተርዎ ላይ ይቀመጣል።",
+          q4: "ይህ በትንሽ ላፕቶፕ ስክሪኖች ላይ ይሰራል?",
+          a4: "አዎ! ተጫዋቹ የሚገኘውን የስክሪን ስፋትን በራስ-ሰር ይገነዘባል እና በተለዋዋጭ የፍለጋ አሞሌውን ከላፕቶፕዎ ስክሪን ጋር በሚመች ሁኔታ እንዲገጣጠም ያደርጋል። ቦታው በጣም ጥብቅ ከሆነ፣ ተንሳፋፊው ቁልፍ ተደራሽ ሆኖ ይቆያል ስለዚህ ተጫዋቹን በፈለጉት ጊዜ ማስፋፋት እና መሰባበር ይችላሉ።",
+          q5: "ይህን በራስ-ዝማኔዎች በ Tampermonkey በኩል እንዴት መጫን እችላለሁ?",
+          a5: "Tampermonkey፣ Violentmonkey ወይም Greasemonkey የምትጠቀም ከሆነ የቆመውን ስክሪፕት በቀጥታ ከማከማቻችን መጫን ትችላለህ። Tampermonkey ለዝማኔዎች GitHubን በቀጥታ ይፈትሻል እና አዲስ ስሪት በተለቀቀ ቁጥር ያሳውቅዎታል።",
+          q6: "የእኔ ንግግሮች ወይም ጥያቄዎች የግል ናቸው?",
+          a6: "100% የግል። ቅጥያው ሙሉ በሙሉ በአካባቢዎ መሣሪያ ላይ ይሰራል። ምንም ጥያቄዎች፣ መልሶች፣ የድምጽ ዥረቶች ወይም የግል ቴሌሜትሪ ወደ ማንኛውም ውጫዊ አገልጋይ በጭራሽ አይላኩም።"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "ተመለስ {s} ሰከንዶች — በድምጽ ለመፈለግ ይያዙ",
+          playPause: "ኦዲዮን አጫውት/ኦዲዮን ለአፍታ አቁም (Space / K / Alt+P)",
+          forward: "ወደፊት {s} ሰከንዶች — በድምጽ ለመፈለግ ይያዙ",
+          speed: "የመልሶ ማጫወት ፍጥነት",
+          volume: "የድምጽ መጠን (ለመስተካከል ይሸብልሉ)",
+          volumeSlider: "የድምጽ መጠን ተንሸራታች",
+          download: "አውርድ ኦዲዮ",
+          shortcuts: "የቁልፍ ሰሌዳ አቋራጮች እና ምልክቶች",
+          collapse: "ተጫዋች ሰብስብ",
+          expand: "ChatGPT Audio Controls ዘርጋ",
+          readAloud: "ጮክ ብለህ አንብብ"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud አቋራጮች",
+          playPause: "ኦዲዮን ያጫውቱ / ኦዲዮን ለአፍታ ያቁሙ",
+          back: "ተመለስ {s} ሰከንድ",
+          forward: "ወደፊት {s} ሰከንድ",
+          slower: "ቀርፋፋ የመልሶ ማጫወት ፍጥነት",
+          faster: "ፈጣን የመልሶ ማጫወት ፍጥነት",
+          volumeScroll: "የድምጽ መጠን ሸብልል",
+          smoothScrub: "ለስላሳ ኦዲዮ መፈለግ",
+          volumeScrollKey: "ወደ 🔈 ሸብልል።",
+          smoothScrubKey: "ይያዙ ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "የኦዲዮ ዥረት ማውረድ አልተቻለም። ኦዲዮ በንቃት መጫኑን ያረጋግጡ።"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "ኦዲዮን ያጫውቱ / ኦዲዮን ለአፍታ ያቁሙ",
+          description: "መልሶ ማጫወትን ቀያይር፣ የተለመዱ የድር እና የዴስክቶፕ ተጫዋቾች (Alt+P እንደተደገፈ ይቀራል)"
+        },
+        seekBack: {
+          action: "ወደ ኋላ 10 ሰከንዶች",
+          description: "ወደ ኋላ 10 ዎች ዝለል (ለስላሳ ፍለጋ በድምጽ ይያዙ)"
+        },
+        seekForward: {
+          action: "ወደፊት 10 ሰከንዶች",
+          description: "10 ሰከንድ ወደ ፊት ይዝለሉ (ለስላሳ ፍለጋ በድምጽ ይያዙ)"
+        },
+        speedDecrease: {
+          action: "ፍጥነትን ቀንስ",
+          description: "ወደ ቀዳሚው የፍጥነት ቅድመ ዝግጅት ውረድ"
+        },
+        speedIncrease: {
+          action: "ፍጥነትን ይጨምሩ",
+          description: "ወደ ቀጣዩ የፍጥነት ቅድመ ዝግጅት ደረጃ ይድረሱ"
+        }
+      }
+    },
+    bg: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Контроли и Read Aloud",
+        version: "v",
+        openChatGPT: "Отворете ChatGPT",
+        dashboard: "Табло",
+        seconds: "секунди",
+        star: "★ Звезда",
+        docs: "Документи",
+        issues: "Проблеми"
+      },
+      popup: {
+        header: {
+          switchTheme: "Превключване на тема",
+          openOptions: "Отворете таблото за управление и настройките"
+        },
+        tabs: {
+          controls: "Контроли",
+          shortcuts: "Ключове",
+          about: "Относно"
+        },
+        quickControls: {
+          playbackSpeed: "Скорост на възпроизвеждане по подразбиране",
+          defaultVolume: "Сила на звука по подразбиране",
+          mute: "Без звук",
+          unmute: "Включване на звука",
+          smartIntegrations: "Интелигентни интеграции",
+          globalShortcuts: "Глобални преки пътища",
+          globalShortcutsDesc: "Активиране на интервал/K, Alt+P, Alt+Arrows и клавиши за скорост",
+          smoothScrubbing: "Гладко търсене на аудио",
+          smoothScrubbingDesc: "Ускорете търсенето, като задържите ◀10 или 10▶"
+        },
+        shortcuts: {
+          title: "Клавишни комбинации",
+          gesturesTitle: "Жестове с мишка и докосване",
+          smoothAudioScrub: "Плавно аудио търсене на аудио",
+          directDownload: "Директно изтегляне",
+          holdScrubKey: "Задръжте ◀10 / 10▶",
+          clickDownloadKey: "Щракнете върху бутона 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Отворен код от Infoxica",
+          description: "Подобряване на гласовото изживяване на ChatGPT с безпроблемно аудио търсене на звук, предварително зададени динамични скорости, директни аудио изтегляния и задействания за говор с едно щракване.",
+          privacyTitle: "100% фокус върху поверителността",
+          privacyDesc: "Без тракери, без телеметрия. Всичко работи на вашата машина.",
+          githubRepo: "GitHub Хранилище",
+          documentation: "Документация",
+          reportIssue: "Докладвайте за проблем"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Табло и настройка",
+          preferences: "Предпочитания",
+          shortcuts: "Преки пътища и жестове",
+          faq: "Често задавани въпроси и отстраняване на неизправности",
+          darkMode: "Тъмен режим",
+          lightMode: "Светъл режим",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Предпочитания за аудио и възпроизвеждане",
+          preferencesDesc: "Конфигурирайте език, предварително зададени скорости на възпроизвеждане, сила на звука по подразбиране и функции.",
+          shortcutsTitle: "Клавишни комбинации и жестове",
+          shortcutsDesc: "Овладейте бързи клавишни комбинации за лесно манипулиране на възпроизвеждане.",
+          faqTitle: "Често задавани въпроси и отстраняване на неизправности",
+          faqDesc: "Подробно техническо ръководство, отговори за сигурност и поддръжка."
+        },
+        general: {
+          languageTitle: "Език и локализация",
+          languageDesc: "Изберете предпочитания от вас език на интерфейса или оставете разширението автоматично да разпознава езика на вашия браузър.",
+          languageAuto: "Автоматично разпознаване (Език на браузъра)",
+          languageDetected: "Открит",
+          speedTitle: "Предпочитания за скорост на възпроизвеждане",
+          speedDesc: "Изберете вашата скорост на възпроизвеждане по подразбиране, когато отваряте ChatGPT или стартирате Read Aloud.",
+          volumeTitle: "Ниво на силата на звука по подразбиране",
+          volumeDesc: "Предварително зададена сила на звука за говорни потоци за четене на глас.",
+          seekTitle: "Стъпка за пропускане и търсене",
+          seekDesc: "Брой секунди за пропускане при едно докосване на бутоните -10s / +10s или Alt + Left / Alt + Right.",
+          secondsUnit: "секунди"
+        },
+        shortcutsGuide: {
+          title: "Справочник за клавишни комбинации",
+          desc: "Ускорете работния си процес с ергономични клавишни комбинации за възпроизвеждане с една ръка и стандартни за YouTube клавишни комбинации за възпроизвеждане.",
+          gesturesTitle: "Жестове за търсене на аудио с мишката и задържане",
+          gesturesDesc: "Задръжте натиснат бутоните ◀10s или 10s▶ за плавно търсене през аудио чрез дълги гласови отговори с динамично ускорение:",
+          gestureHold03: "Влиза в режим на гладко търсене на аудио (4 × нормална скорост).",
+          gestureHold15: "Ускорява до 10× скорост на търсене.",
+          gestureHold30: "Скорост на високоскоростен скок при скорост 25×.",
+          gestureRelease: "Безпроблемно се заключва в желаната позиция."
+        },
+        faq: {
+          title: "Често задавани въпроси и ръководство за потребителя",
+          subtitle: "Бързи отговори, които да ви помогнат да извлечете максимума от ChatGPT Audio Controls.",
+          q1: "Как да регулирам силата на звука чрез превъртане с мишката?",
+          a1: "Просто задръжте курсора на мишката върху иконата на високоговорителя за сила на звука на релсата на плейъра и превъртете колелцето на мишката нагоре или надолу. Силата на звука ще се регулира плавно на стъпки от 5%, без да се налага да отваряте изскачащия плъзгач!",
+          q2: "Къде се появява играчът на ChatGPT?",
+          a2: "Плейърът е закотвен удобно директно до подканата за съставяне на съобщения. Когато не се възпроизвежда аудио, малък плаващ бутон с лого остава спретнато закачен от дясната страна. Щракването върху този бутон или стартирането на „Четене на глас“ разширява пълните ленти за управление на плейъра.",
+          q3: "Как да изтегля звука на синтезираната реч?",
+          a3: "Всеки път, когато ChatGPT прочете на глас отговор, щракнете върху бутона за изтегляне (📥) в дясната релса. Аудио потокът незабавно се записва като висококачествен аудио файл (.mp3, .m4a или .wav) на вашия компютър.",
+          q4: "Това работи ли на малки екрани на лаптопи?",
+          a4: "Да! Плейърът автоматично открива наличната ви ширина на екрана и динамично мащабира своята лента за търсене, за да пасне удобно на екрана на вашия лаптоп. Ако мястото е изключително малко, плаващият бутон остава достъпен, така че можете да разгънете и свиете плейъра, когато имате нужда.",
+          q5: "Как да инсталирам това чрез Tampermonkey с автоматични актуализации?",
+          a5: "Ако използвате Tampermonkey, Violentmonkey или Greasemonkey, можете да инсталирате самостоятелния скрипт директно от нашето хранилище. Tampermonkey автоматично ще проверява GitHub за актуализации и ще ви уведомява всеки път, когато бъде пусната нова версия.",
+          q6: "Моите разговори или подкани лични ли са?",
+          a6: "100% лично. Разширението работи изцяло на вашето локално устройство. Никакви подкани, отговори, аудио потоци или лична телеметрия не се изпращат до външен сървър."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "{s} секунди назад — задръжте, за да търсите през аудиото",
+          playPause: "Възпроизвеждане на аудио / Пауза на аудио (Space / K / Alt+P)",
+          forward: "{s} секунди напред — задръжте, за да търсите през аудиото",
+          speed: "Скорост на възпроизвеждане",
+          volume: "Сила на звука (превъртете, за да регулирате)",
+          volumeSlider: "Плъзгач за сила на звука",
+          download: "Изтегляне на аудио",
+          shortcuts: "Клавишни комбинации и жестове",
+          collapse: "Свиване на плейъра",
+          expand: "Разгънете ChatGPT Audio Controls",
+          readAloud: "Прочетете на глас"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Преки пътища",
+          playPause: "Възпроизвеждане на аудио / Пауза на аудио",
+          back: "Назад {s} сек",
+          forward: "Напред {s} сек",
+          slower: "По-бавна скорост на възпроизвеждане",
+          faster: "По-висока скорост на възпроизвеждане",
+          volumeScroll: "Превъртане на звука на звука",
+          smoothScrub: "Гладко търсене на аудио",
+          volumeScrollKey: "Превъртете на 🔈",
+          smoothScrubKey: "Задръжте ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Не можа да се изтегли аудио поток. Уверете се, че аудиото се зарежда активно."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Възпроизвеждане на аудио / Пауза на аудио",
+          description: "Превключване на възпроизвеждане, съвпадение на обикновени уеб и настолни плейъри (Alt+P остава поддържан)"
+        },
+        seekBack: {
+          action: "Назад 10 секунди",
+          description: "Скок назад с 10 секунди (Задръжте за плавно търсене през аудио)"
+        },
+        seekForward: {
+          action: "10 секунди напред",
+          description: "Прескачане напред с 10 секунди (Задръжте за плавно търсене през аудио)"
+        },
+        speedDecrease: {
+          action: "Намалете скоростта",
+          description: "Преминете към предишната предварително зададена скорост"
+        },
+        speedIncrease: {
+          action: "Увеличете скоростта",
+          description: "Преминете към следващата предварително зададена скорост"
+        }
+      }
+    },
+    bs: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Kontrole i Read Aloud",
+        version: "v",
+        openChatGPT: "Otvori ChatGPT",
+        dashboard: "Kontrolna tabla",
+        seconds: "sekundi",
+        star: "★ Zvjezdica",
+        docs: "Docs",
+        issues: "Problemi"
+      },
+      popup: {
+        header: {
+          switchTheme: "Promijenite temu",
+          openOptions: "Otvorite Dashboard & Settings"
+        },
+        tabs: {
+          controls: "Kontrole",
+          shortcuts: "Ključevi",
+          about: "O"
+        },
+        quickControls: {
+          playbackSpeed: "Zadana brzina reprodukcije",
+          defaultVolume: "Zadana jačina zvuka",
+          mute: "Mute",
+          unmute: "Uključi zvuk",
+          smartIntegrations: "Pametne integracije",
+          globalShortcuts: "Globalne prečice",
+          globalShortcutsDesc: "Omogući Space/K, Alt+P, Alt+Arrows i tipke za brzinu",
+          smoothScrubbing: "Glatko traženje zvuka",
+          smoothScrubbingDesc: "Ubrzajte traženje držeći ◀10 ili 10▶"
+        },
+        shortcuts: {
+          title: "Prečice na tastaturi",
+          gesturesTitle: "Pokreti miša i dodira",
+          smoothAudioScrub: "Smooth Audio Audio Traženje",
+          directDownload: "Direktno preuzimanje",
+          holdScrubKey: "Držite ◀10 / 10▶",
+          clickDownloadKey: "Kliknite na dugme 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Otvoreni izvor Infoxica",
+          description: "Podizanje glasovnog iskustva ChatGPT-a uz besprijekorno traženje zvuka, dinamičke postavke brzine, direktna preuzimanja zvuka i pokretače govora jednim klikom.",
+          privacyTitle: "100% fokusiran na privatnost",
+          privacyDesc: "Nema tragača, nema telemetrije. Sve radi na vašoj mašini.",
+          githubRepo: "GitHub Spremište",
+          documentation: "Dokumentacija",
+          reportIssue: "Prijavite problem"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Kontrolna tabla i podešavanje",
+          preferences: "Preference",
+          shortcuts: "Prečice i pokreti",
+          faq: "FAQ & Rješavanje problema",
+          darkMode: "Tamni način rada",
+          lightMode: "Light Mode",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Postavke zvuka i reprodukcije",
+          preferencesDesc: "Konfigurišite jezik, unapred podešene brzine reprodukcije, podrazumevanu jačinu zvuka i funkcije.",
+          shortcutsTitle: "Prečice na tastaturi i pokreti",
+          shortcutsDesc: "Ovladajte brzim prečicama za laku manipulaciju reprodukcijom.",
+          faqTitle: "FAQ & Rješavanje problema",
+          faqDesc: "Detaljni tehnički vodič, sigurnost i odgovori podrške."
+        },
+        general: {
+          languageTitle: "Jezik i lokalizacija",
+          languageDesc: "Odaberite željeni jezik interfejsa ili pustite ekstenziju da automatski detektuje jezik vašeg pretraživača.",
+          languageAuto: "Automatsko otkrivanje (jezik preglednika)",
+          languageDetected: "Otkriveno",
+          speedTitle: "Postavke brzine reprodukcije",
+          speedDesc: "Odaberite zadanu brzinu reprodukcije kada otvarate ChatGPT ili pokrećete Read Aloud.",
+          volumeTitle: "Zadani nivo jačine zvuka",
+          volumeDesc: "Unaprijed postavljena jačina zvuka za čitanje naglas govornih tokova.",
+          seekTitle: "Preskoči i traži korak",
+          seekDesc: "Broj sekundi za preskakanje jednim dodirom na dugmad -10s / +10s ili Alt + Left / Alt + Right.",
+          secondsUnit: "sekundi"
+        },
+        shortcutsGuide: {
+          title: "Referenca za prečice na tastaturi",
+          desc: "Ubrzajte svoj radni tok pomoću ergonomskih prečica za reprodukciju jednom rukom i standardnih za YouTube.",
+          gesturesTitle: "Pokreti za traženje zvuka mišem i držanjem",
+          gesturesDesc: "Držite pritisnute ili dugmad ◀10s ili 10s▶ da glatko tražite zvuk kroz duge glasovne odgovore uz dinamičko ubrzanje:",
+          gestureHold03: "Ulazi u glatki način traženja zvuka (4× normalna brzina).",
+          gestureHold15: "Ubrzava do 10× brzine traženja.",
+          gestureHold30: "Brzi skok pri brzini od 25×.",
+          gestureRelease: "Besprekorno se zaključava u željeni položaj."
+        },
+        faq: {
+          title: "Često postavljana pitanja i korisnički vodič",
+          subtitle: "Brzi odgovori koji će vam pomoći da na najbolji način iskoristite ChatGPT Audio Controls.",
+          q1: "Kako da podesim jačinu zvuka pomicanjem miša?",
+          a1: "Jednostavno pređite pokazivačem miša preko ikone zvučnika za jačinu zvuka na nosaču plejera i pomičite kotačić miša gore ili dolje. Jačina zvuka će se glatko podešavati u koracima od 5% bez potrebe za otvaranjem skočnog klizača!",
+          q2: "Gdje se igrač pojavljuje na ChatGPT?",
+          a2: "Plejer je prikladno usidren direktno pored vašeg prompta za sastavljanje poruka. Kada se zvuk ne reproducira, mali plutajući logotip ostaje uredno postavljen na desnoj strani. Klikom na ovo dugme ili pokretanjem Čitanja naglas proširuju se pune kontrolne trake igrača.",
+          q3: "Kako da preuzmem zvuk sintetiziranog govora?",
+          a3: "Kad god ChatGPT pročita naglas odgovor, kliknite na dugme za preuzimanje (📥) na desnoj traci. Audio stream se trenutno pohranjuje kao audio datoteka visokog kvaliteta (.mp3, .m4a ili .wav) na vašem računaru.",
+          q4: "Radi li ovo na malim ekranima laptopova?",
+          a4: "Da! Plejer automatski detektuje vašu dostupnu širinu ekrana i dinamički skalira svoju traku za traženje kako bi udobno pristajao ekranu vašeg laptopa. Ako je prostora izuzetno malo, plutajuće dugme ostaje dostupno tako da možete proširiti i složiti plejer kad god vam zatreba.",
+          q5: "Kako da instaliram ovo preko Tampermonkey-a sa automatskim ažuriranjima?",
+          a5: "Ako koristite Tampermonkey, Violentmonkey ili Greasemonkey, možete instalirati samostalnu skriptu direktno iz našeg spremišta. Tampermonkey će automatski provjeriti GitHub za ažuriranja i obavijestiti vas kad god bude objavljena nova verzija.",
+          q6: "Jesu li moji razgovori ili upiti privatni?",
+          a6: "100% privatno. Ekstenzija u potpunosti radi na vašem lokalnom uređaju. Nikakvi upiti, odgovori, audio streamovi ili lična telemetrija se nikada ne šalju na bilo koji vanjski server."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Nazad {s} sekundi — držite za traženje zvuka",
+          playPause: "Reprodukcija zvuka / pauziranje zvuka (Space / K / Alt+P)",
+          forward: "Naprijed {s} sekundi — držite za traženje zvuka",
+          speed: "Brzina reprodukcije",
+          volume: "Jačina zvuka (Skrolujte za podešavanje)",
+          volumeSlider: "Klizač jačine zvuka",
+          download: "Preuzmi audio",
+          shortcuts: "Tasterske prečice i pokreti",
+          collapse: "Collaps Player",
+          expand: "Proširi ChatGPT Audio Controls",
+          readAloud: "Čitaj naglas"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Prečice",
+          playPause: "Pusti audio / pauziraj audio",
+          back: "Natrag {s} sek",
+          forward: "Naprijed {s} sek",
+          slower: "Niža brzina reprodukcije",
+          faster: "Veća brzina reprodukcije",
+          volumeScroll: "Jačina zvuka Scroll",
+          smoothScrub: "Glatko traženje zvuka",
+          volumeScrollKey: "Skrolujte na 🔈",
+          smoothScrubKey: "Držite ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Nije moguće preuzeti audio stream. Provjerite je li zvuk aktivno učitan."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Pusti audio / pauziraj audio",
+          description: "Prebacivanje reprodukcije, podudaranje uobičajenih web i desktop playera (Alt+P ostaje podržan)"
+        },
+        seekBack: {
+          action: "Nazad 10 sekundi",
+          description: "Skok unazad 10s (Zadržite za glatko traženje zvuka)"
+        },
+        seekForward: {
+          action: "Naprijed 10 sekundi",
+          description: "Skok naprijed 10s (Zadržite za glatko traženje zvuka)"
+        },
+        speedDecrease: {
+          action: "Smanjenje brzine",
+          description: "Spustite se na prethodno podešenu brzinu"
+        },
+        speedIncrease: {
+          action: "Povećaj brzinu",
+          description: "Pređite na sledeću unapred podešenu brzinu"
+        }
+      }
+    },
+    da: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Betjeningselementer & Read Aloud",
+        version: "v",
+        openChatGPT: "Åbn ChatGPT",
+        dashboard: "Dashboard",
+        seconds: "sekunder",
+        star: "★ Stjerne",
+        docs: "Docs",
+        issues: "Udgaver"
+      },
+      popup: {
+        header: {
+          switchTheme: "Skift tema",
+          openOptions: "Åbn Dashboard & Settings"
+        },
+        tabs: {
+          controls: "Styringer",
+          shortcuts: "Nøgler",
+          about: "Omtrent"
+        },
+        quickControls: {
+          playbackSpeed: "Standard afspilningshastighed",
+          defaultVolume: "Standardlydstyrke",
+          mute: "Lydløs",
+          unmute: "Slå lyden til",
+          smartIntegrations: "Smarte integrationer",
+          globalShortcuts: "Globale genveje",
+          globalShortcutsDesc: "Aktiver mellemrum/K, Alt+P, Alt+Arrows og hastighedstaster",
+          smoothScrubbing: "Jævn lydsøgning",
+          smoothScrubbingDesc: "Fremskynd søgningen ved at holde ◀10 eller 10▶ nede"
+        },
+        shortcuts: {
+          title: "Tastaturgenveje",
+          gesturesTitle: "Mus- og berøringsbevægelser",
+          smoothAudioScrub: "Glat lydsøgning efter lyd",
+          directDownload: "Direkte download",
+          holdScrubKey: "Hold ◀10 / 10▶",
+          clickDownloadKey: "Klik på knappen 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Open Source af Infoxica",
+          description: "Forøg ChatGPTs stemmeoplevelse med problemfri lydsøgning, dynamiske forudindstillinger af hastighed, direkte download af lyd og taleudløser med et enkelt klik.",
+          privacyTitle: "100 % Privatlivsfokuseret",
+          privacyDesc: "Ingen trackere, ingen telemetri. Alt kører på din maskine.",
+          githubRepo: "GitHub Repository",
+          documentation: "Dokumentation",
+          reportIssue: "Rapporter et problem"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Dashboard og opsætning",
+          preferences: "Præferencer",
+          shortcuts: "Genveje og bevægelser",
+          faq: "FAQ og fejlfinding",
+          darkMode: "Mørk tilstand",
+          lightMode: "Lystilstand",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Lyd- og afspilningspræferencer",
+          preferencesDesc: "Konfigurer sprog, forudindstillinger af afspilningshastighed, standardlydstyrke og funktioner.",
+          shortcutsTitle: "Tastaturgenveje og bevægelser",
+          shortcutsDesc: "Mestre hurtige genvejstaster til ubesværet afspilningsmanipulation.",
+          faqTitle: "FAQ og fejlfinding",
+          faqDesc: "Detaljeret teknisk vejledning, sikkerheds- og supportsvar."
+        },
+        general: {
+          languageTitle: "Sprog og lokalisering",
+          languageDesc: "Vælg dit foretrukne grænsefladesprog, eller lad udvidelsen automatisk registrere din browsers sprog.",
+          languageAuto: "Automatisk registrering (browsersprog)",
+          languageDetected: "Opdaget",
+          speedTitle: "Præferencer for afspilningshastighed",
+          speedDesc: "Vælg din standardafspilningshastighed, når du åbner ChatGPT eller starter Read Aloud.",
+          volumeTitle: "Standard lydstyrkeniveau",
+          volumeDesc: "Forudindstillet lydstyrke til højtlæsningstalestreams.",
+          seekTitle: "Spring over og søg trin",
+          seekDesc: "Antal sekunder at springe over ved et enkelt tryk på -10s / +10s knapperne eller Alt + Left / Alt + Right.",
+          secondsUnit: "sekunder"
+        },
+        shortcutsGuide: {
+          title: "Reference til tastaturgenveje",
+          desc: "Fremskynd din arbejdsgang med ergonomiske enkelthånds- og YouTube-standard genvejstaster.",
+          gesturesTitle: "Mus og hold lydsøgende bevægelser",
+          gesturesDesc: "Hold enten ◀10s eller 10s▶-knapperne nede for jævnt at søge gennem lyd gennem lange stemmesvar med dynamisk acceleration:",
+          gestureHold03: "Går ind i jævn lydsøgningstilstand (4× normal hastighed).",
+          gestureHold15: "Accelererer til 10× søgehastighed.",
+          gestureHold30: "Højhastigheds jump rate ved 25× rate.",
+          gestureRelease: "Låser problemfrit til den ønskede position."
+        },
+        faq: {
+          title: "Ofte stillede spørgsmål og brugervejledning",
+          subtitle: "Hurtige svar, der hjælper dig med at få mest muligt ud af ChatGPT Audio Controls.",
+          q1: "Hvordan justerer jeg lydstyrken ved at rulle med min mus?",
+          a1: "Hold blot musemarkøren over lydstyrkehøjttalerikonet på afspillerskinnen og rul dit musehjul op eller ned. Lydstyrken justeres jævnt i intervaller på 5 % uden at skulle åbne skyderen popover!",
+          q2: "Hvor vises afspilleren på ChatGPT?",
+          a2: "Afspilleren er bekvemt forankret direkte ved siden af ​​din beskedkomponistprompt. Når der ikke afspilles lyd, forbliver en lille svævende logoknap pænt forankret i højre side. Hvis du klikker på denne knap eller starter Læs højt, udvides alle afspillerens kontrolbjælker.",
+          q3: "Hvordan downloader jeg den syntetiserede talelyd?",
+          a3: "Når ChatGPT læser et svar højt, skal du klikke på download-knappen (📥) på den højre skinne. Lydstrømmen gemmes øjeblikkeligt som en lydfil af høj kvalitet (.mp3, .m4a eller .wav) på din computer.",
+          q4: "Virker dette på små bærbare skærme?",
+          a4: "Ja! Afspilleren registrerer automatisk din tilgængelige skærmbredde og skalerer dens søgelinje dynamisk, så den passer komfortabelt til din bærbare computers skærm. Hvis pladsen er ekstremt trang, forbliver den flydende knap tilgængelig, så du kan udvide og folde afspilleren sammen, når du har brug for det.",
+          q5: "Hvordan installerer jeg dette via Tampermonkey med automatiske opdateringer?",
+          a5: "Hvis du bruger Tampermonkey, Violentmonkey eller Greasemonkey, kan du installere det selvstændige script direkte fra vores lager. Tampermonkey vil automatisk tjekke GitHub for opdateringer og give dig besked, hver gang en ny version udgives.",
+          q6: "Er mine samtaler eller meddelelser private?",
+          a6: "100% privat. Udvidelsen kører udelukkende på din lokale enhed. Ingen meddelelser, svar, lydstreams eller personlig telemetri sendes nogensinde til nogen ekstern server."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Tilbage {s} sekunder — hold nede for at søge gennem lyd",
+          playPause: "Afspil lyd / Sæt lyd på pause (Space / K / Alt+P)",
+          forward: "Frem {s} sekunder — hold nede for at søge gennem lyd",
+          speed: "Afspilningshastighed",
+          volume: "Lydstyrke (Rul for at justere)",
+          volumeSlider: "Lydstyrkeskyder",
+          download: "Download lyd",
+          shortcuts: "Tastaturgenveje og bevægelser",
+          collapse: "Skjul afspiller",
+          expand: "Udvid ChatGPT Audio Controls",
+          readAloud: "Læs højt"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud genveje",
+          playPause: "Afspil lyd / Sæt lyd på pause",
+          back: "Tilbage {s} sek",
+          forward: "Frem {s} sek",
+          slower: "Langsommere afspilningshastighed",
+          faster: "Hurtigere afspilningshastighed",
+          volumeScroll: "Lydstyrke Rul",
+          smoothScrub: "Jævn lydsøgning",
+          volumeScrollKey: "Rul videre 🔈",
+          smoothScrubKey: "Hold ◀{s} / {s}▶ nede"
+        },
+        alerts: {
+          downloadError: "Lydstream kunne ikke downloades. Sørg for, at lyden er aktivt indlæst."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Afspil lyd / Sæt lyd på pause",
+          description: "Skift afspilning, matchende almindelige web- og desktop-afspillere (Alt+P forbliver understøttet)"
+        },
+        seekBack: {
+          action: "10 sekunder tilbage",
+          description: "Hop tilbage 10s (Hold for jævn søgning gennem lyd)"
+        },
+        seekForward: {
+          action: "Frem 10 sekunder",
+          description: "Hop 10 sekunder frem (Hold for jævn søgning gennem lyd)"
+        },
+        speedDecrease: {
+          action: "Sænk hastigheden",
+          description: "Gå ned til forrige forudindstillede hastighed"
+        },
+        speedIncrease: {
+          action: "Øg hastigheden",
+          description: "Gå op til næste forudindstillede hastighed"
+        }
+      }
+    },
+    et: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Juhtnupud ja Read Aloud",
+        version: "v",
+        openChatGPT: "Avage ChatGPT",
+        dashboard: "Armatuurlaud",
+        seconds: "sekundit",
+        star: "★ Täht",
+        docs: "Dokumendid",
+        issues: "Probleemid"
+      },
+      popup: {
+        header: {
+          switchTheme: "Vaheta teemat",
+          openOptions: "Avage armatuurlaud ja seaded"
+        },
+        tabs: {
+          controls: "Juhtelemendid",
+          shortcuts: "Võtmed",
+          about: "Umbes"
+        },
+        quickControls: {
+          playbackSpeed: "Taasesituse vaikekiirus",
+          defaultVolume: "Vaikimisi helitugevus",
+          mute: "Mute",
+          unmute: "Tühista vaigistus",
+          smartIntegrations: "Nutikad integratsioonid",
+          globalShortcuts: "Globaalsed otseteed",
+          globalShortcutsDesc: "Luba tühik/K, Alt+P, Alt+Arrows ja kiirklahvid",
+          smoothScrubbing: "Sujuv heli otsimine",
+          smoothScrubbingDesc: "Kiirendage otsimist, hoides all ◀10 või 10▶"
+        },
+        shortcuts: {
+          title: "Klaviatuuri otseteed",
+          gesturesTitle: "Hiire- ja puutežestid",
+          smoothAudioScrub: "Sujuv heli Heli otsimine",
+          directDownload: "Otsene allalaadimine",
+          holdScrubKey: "Hoidke ◀10 / 10▶",
+          clickDownloadKey: "Klõpsake nuppu 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxica avatud lähtekoodiga",
+          description: "ChatGPT häälekogemuse täiustamine sujuva heliheli otsimise, dünaamilise kiiruse eelseadistuste, heli otse allalaadimise ja ühe klõpsuga kõnekäivitajatega.",
+          privacyTitle: "100% privaatsusele keskendunud",
+          privacyDesc: "Ei jälgi ega telemeetriat. Kõik töötab teie masinas.",
+          githubRepo: "GitHub hoidla",
+          documentation: "Dokumentatsioon",
+          reportIssue: "Teatage probleemist"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Armatuurlaud ja seadistus",
+          preferences: "Eelistused",
+          shortcuts: "Otseteed ja žestid",
+          faq: "KKK ja tõrkeotsing",
+          darkMode: "Tume režiim",
+          lightMode: "Valgusrežiim",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Heli ja taasesituse eelistused",
+          preferencesDesc: "Seadistage keel, esituskiiruse eelseadistused, heli vaikehelitugevus ja funktsioonid.",
+          shortcutsTitle: "Klaviatuuri otseteed ja žestid",
+          shortcutsDesc: "Hallake kiireid kiirklahve, et taasesituse hõlpsalt manipuleerida.",
+          faqTitle: "KKK ja tõrkeotsing",
+          faqDesc: "Üksikasjalik tehniline juhend, turva- ja tugi vastused."
+        },
+        general: {
+          languageTitle: "Keel ja lokaliseerimine",
+          languageDesc: "Valige eelistatud liidese keel või laske laiendusel automaatselt teie brauseri keel tuvastada.",
+          languageAuto: "Automaatne tuvastamine (brauseri keel)",
+          languageDetected: "Tuvastatud",
+          speedTitle: "Taasesituse kiiruse eelistused",
+          speedDesc: "Valige vaikeesituse kiirus ChatGPT või Read Aloud käivitamisel.",
+          volumeTitle: "Heli helitugevuse vaiketase",
+          volumeDesc: "Eelseadistatud helitugevus kõnevoogude ettelugemiseks.",
+          seekTitle: "Jäta vahele ja otsi vahele",
+          seekDesc: "Nuppude -10s / +10s või Alt + Left / Alt + Right ühe puudutusega vahelejätmise sekundite arv.",
+          secondsUnit: "sekundit"
+        },
+        shortcutsGuide: {
+          title: "Klaviatuuri otseteede viide",
+          desc: "Kiirendage oma töövoogu ergonoomiliste ühe käega ja YouTube'i standardsete taasesituse kiirklahvidega.",
+          gesturesTitle: "Hiire ja hoidke heli otsimise žestid",
+          gesturesDesc: "Hoidke ◀10s või 10s▶ nuppe all, et pikkade häälvastustega dünaamilise kiirendusega sujuvalt läbi heli otsida:",
+          gestureHold03: "Siseneb sujuva heliotsingu režiimi (4× tavakiirus).",
+          gestureHold15: "Kiirendab 10-kordse otsimiskiiruseni.",
+          gestureHold30: "Kiire hüppe kiirus 25×.",
+          gestureRelease: "Lukustub sujuvalt soovitud asendisse."
+        },
+        faq: {
+          title: "Korduma kippuvad küsimused ja kasutusjuhend",
+          subtitle: "Kiired vastused, mis aitavad teil ChatGPT Audio Controls-st maksimumi võtta.",
+          q1: "Kuidas reguleerida helitugevust hiirega kerides?",
+          a1: "Lihtsalt hõljutage hiirekursorit helitugevuse kõlari ikooni kohal pleieri siinil ja kerige hiireratast üles või alla. Heli helitugevus reguleeritakse sujuvalt 5% sammuga, ilma et peaksite liugurit avama!",
+          q2: "Kus pleier ChatGPT-l kuvatakse?",
+          a2: "Mängija on mugavalt ankurdatud otse teie sõnumi koostaja viipa kõrvale. Kui heli ei esitata, jääb väike hõljuv logo nupp paremale küljele korralikult dokitud. Sellel nupul klõpsamine või ettelugemise käivitamine laiendab pleieri täielikke juhtribasid.",
+          q3: "Kuidas sünteesitud kõneheli alla laadida?",
+          a3: "Kui ChatGPT loeb valjusti vastuse, klõpsake parempoolsel siinil allalaadimisnupul (📥). Helivoog salvestatakse koheselt teie arvutisse kvaliteetse helifailina (.mp3, .m4a või .wav).",
+          q4: "Kas see töötab väikeste sülearvutite ekraanidel?",
+          a4: "Jah! Mängija tuvastab automaatselt teie saadaoleva ekraanilaiuse ja skaleerib dünaamiliselt otsinguriba, et see sobiks mugavalt teie sülearvuti ekraaniga. Kui ruumi on väga vähe, jääb hõljuv nupp ligipääsetavaks, nii et saate pleierit igal ajal laiendada ja kokku tõmmata.",
+          q5: "Kuidas installida seda Tampermonkey kaudu koos automaatsete värskendustega?",
+          a5: "Kui kasutate Tampermonkeyt, Violentmonkeyt või Greasemonkeyt, saate installida eraldiseisva skripti otse meie hoidlast. Tampermonkey kontrollib automaatselt GitHub värskendusi ja teavitab teid iga kord, kui uus versioon avaldatakse.",
+          q6: "Kas minu vestlused või viibad on privaatsed?",
+          a6: "100% privaatne. Laiendus töötab täielikult teie kohalikus seadmes. Välisserverisse ei saadeta kunagi viipasid, vastuseid, helivooge ega isiklikku telemeetriat."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Tagasi {s} sekundit – heli otsimiseks hoidke all",
+          playPause: "Heli esitamine / heli peatamine (Space / K / Alt+P)",
+          forward: "Edasi {s} sekundit – heli otsimiseks hoidke all",
+          speed: "Taasesituse kiirus",
+          volume: "Heli helitugevus (reguleerimiseks kerige)",
+          volumeSlider: "Heli helitugevuse liugur",
+          download: "Laadige alla heli",
+          shortcuts: "Klaviatuuri otseteed ja žestid",
+          collapse: "Ahenda mängija",
+          expand: "Laiendage ChatGPT Audio Controls",
+          readAloud: "Lugege ette"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud otseteed",
+          playPause: "Esita heli / peata heli",
+          back: "Tagasi {s} sek",
+          forward: "Edasi {s} sek",
+          slower: "Aeglasem taasesituse kiirus",
+          faster: "Kiirem taasesituse kiirus",
+          volumeScroll: "Heli helitugevus Kerige",
+          smoothScrub: "Sujuv heli otsimine",
+          volumeScrollKey: "Kerige edasi 🔈",
+          smoothScrubKey: "Hoidke ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Helivoogu ei saanud alla laadida. Veenduge, et heli oleks aktiivselt laaditud."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Esita heli / peata heli",
+          description: "Taasesituse sisse- ja väljalülitamine, tavaliste veebi- ja lauaarvutipleierite sobitamine (Alt+P jääb toetatuks)"
+        },
+        seekBack: {
+          action: "10 sekundit tagasi",
+          description: "Hüppa 10 sekundit tagasi (hoidke heli sujuvaks otsimiseks all)"
+        },
+        seekForward: {
+          action: "Edasi 10 sekundit",
+          description: "Hüppa 10 sekundit edasi (heli sujuvaks otsimiseks hoidke all)"
+        },
+        speedDecrease: {
+          action: "Vähenda kiirust",
+          description: "Vähendage eelmisele kiiruse eelseadistusele"
+        },
+        speedIncrease: {
+          action: "Suurendage kiirust",
+          description: "Liikuge järgmisele eelseadistatud kiirusele"
+        }
+      }
+    },
+    fil: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Mga Kontrol at Read Aloud",
+        version: "v",
+        openChatGPT: "Buksan ang ChatGPT",
+        dashboard: "Dashboard",
+        seconds: "segundo",
+        star: "★ Bituin",
+        docs: "Docs",
+        issues: "Mga Isyu"
+      },
+      popup: {
+        header: {
+          switchTheme: "Lumipat ng Tema",
+          openOptions: "Buksan ang Dashboard at Mga Setting"
+        },
+        tabs: {
+          controls: "Mga kontrol",
+          shortcuts: "Mga Susi",
+          about: "Tungkol sa"
+        },
+        quickControls: {
+          playbackSpeed: "Default na Bilis ng Pag-playback",
+          defaultVolume: "Default na volume ng Audio",
+          mute: "I-mute",
+          unmute: "I-unmute",
+          smartIntegrations: "Mga Smart Integration",
+          globalShortcuts: "Mga Pandaigdigang Shortcut",
+          globalShortcutsDesc: "Paganahin ang Space/K, Alt+P, Alt+Arrows at mga speed key",
+          smoothScrubbing: "Makinis na Paghahanap ng Audio",
+          smoothScrubbingDesc: "Pabilisin ang paghahanap sa pamamagitan ng pagpindot sa ◀10 o 10▶"
+        },
+        shortcuts: {
+          title: "Mga Shortcut sa Keyboard",
+          gesturesTitle: "Mouse at Touch Gestures",
+          smoothAudioScrub: "Makinis na Audio na Paghahanap ng Audio",
+          directDownload: "Direktang Pag-download",
+          holdScrubKey: "Hawakan ang ◀10 / 10▶",
+          clickDownloadKey: "I-click ang 📥 button"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Open Source ng Infoxica",
+          description: "Pinapataas ang karanasan sa boses ng ChatGPT gamit ang walang putol na paghahanap ng audio audio, mga dynamic na preset ng bilis, direktang pag-download ng audio, at isang pag-click na speech trigger.",
+          privacyTitle: "100% Nakatuon sa Privacy",
+          privacyDesc: "Walang mga tagasubaybay, walang telemetry. Lahat ay tumatakbo sa iyong makina.",
+          githubRepo: "GitHub Repository",
+          documentation: "Dokumentasyon",
+          reportIssue: "Mag-ulat ng Isyu"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Dashboard at Setup",
+          preferences: "Mga Kagustuhan",
+          shortcuts: "Mga Shortcut at Gesture",
+          faq: "FAQ at Pag-troubleshoot",
+          darkMode: "Dark Mode",
+          lightMode: "Light Mode",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Mga Kagustuhan sa Audio at Pag-playback",
+          preferencesDesc: "I-configure ang wika, mga preset ng bilis ng pag-playback, default na volume ng audio, at mga feature.",
+          shortcutsTitle: "Mga Shortcut at Gesture sa Keyboard",
+          shortcutsDesc: "Master ang mga quick hotkey para sa walang hirap na pagmamanipula ng playback.",
+          faqTitle: "FAQ at Pag-troubleshoot",
+          faqDesc: "Detalyadong teknikal na gabay, seguridad, at mga sagot sa suporta."
+        },
+        general: {
+          languageTitle: "Wika at Lokalisasyon",
+          languageDesc: "Piliin ang iyong gustong wika ng interface o hayaang awtomatikong makita ng extension ang wika ng iyong browser.",
+          languageAuto: "Auto Detect (Wika ng Browser)",
+          languageDetected: "Nakita",
+          speedTitle: "Mga Kagustuhan sa Bilis ng Pag-playback",
+          speedDesc: "Piliin ang iyong default na rate ng pag-playback kapag binubuksan ang ChatGPT o inilulunsad ang Read Aloud.",
+          volumeTitle: "Default na Antas ng volume ng Audio",
+          volumeDesc: "Preset na volume ng audio para sa Read Aloud speech stream.",
+          seekTitle: "Laktawan at Maghanap ng Hakbang",
+          seekDesc: "Bilang ng mga segundong lalaktawan sa isang pag-tap ng mga -10s / +10s na button o Alt + Left / Alt + Right.",
+          secondsUnit: "segundo"
+        },
+        shortcutsGuide: {
+          title: "Sanggunian ng Mga Shortcut sa Keyboard",
+          desc: "Pabilisin ang iyong workflow gamit ang ergonomic na single-hand at YouTube-standard na playback hotkey.",
+          gesturesTitle: "I-mouse at Pindutin ang Mga Gesture sa Paghahanap ng Audio",
+          gesturesDesc: "Pindutin nang matagal ang alinman sa ◀10s o 10s▶ na mga pindutan upang maayos na maghanap sa pamamagitan ng audio sa pamamagitan ng mahabang boses na mga sagot na may dynamic na acceleration:",
+          gestureHold03: "Pumapasok sa smooth audio seeking mode (4× normal na bilis).",
+          gestureHold15: "Bumibilis sa 10x na rate ng paghahanap.",
+          gestureHold30: "High-speed jump rate sa 25× rate.",
+          gestureRelease: "Walang putol na nakakandado sa gustong posisyon."
+        },
+        faq: {
+          title: "Mga Madalas Itanong at Gabay sa Gumagamit",
+          subtitle: "Mabilis na sagot para matulungan kang masulit ang ChatGPT Audio Controls.",
+          q1: "Paano ko isasaayos ang volume ng audio sa pamamagitan ng pag-scroll gamit ang aking mouse?",
+          a1: "I-hover lang ang iyong mouse pointer sa icon ng speaker ng volume ng audio sa player rail at i-scroll ang gulong ng iyong mouse pataas o pababa. Ang volume ng audio ay maayos na aayusin sa 5% na mga pagtaas nang hindi kinakailangang buksan ang slider popover!",
+          q2: "Saan lumilitaw ang player sa ChatGPT?",
+          a2: "Ang player ay maginhawang naka-angkla nang direkta sa tabi ng iyong message composer prompt. Kapag walang nagpe-play na audio, ang isang maliit na lumulutang na pindutan ng logo ay mananatiling maayos na naka-dock sa kanang bahagi. Ang pag-click sa button na ito o pagsisimula ng Read Aloud ay nagpapalawak ng buong control bar ng player.",
+          q3: "Paano ko ida-download ang synthesized speech audio?",
+          a3: "Sa tuwing magbabasa nang malakas ng tugon ang ChatGPT, i-click ang button sa pag-download (📥) sa kanang riles. Agad na sine-save ang audio stream bilang isang de-kalidad na audio file (.mp3, .m4a, o .wav) sa iyong computer.",
+          q4: "Gumagana ba ito sa maliliit na screen ng laptop?",
+          a4: "Oo! Awtomatikong nade-detect ng player ang iyong available na lapad ng screen at dynamic na sinusukat ang seekbar nito upang kumportableng magkasya ang screen ng iyong laptop. Kung napakahigpit ng espasyo, mananatiling naa-access ang floating button para mapalawak at ma-collapse mo ang player sa tuwing kailangan mo ito.",
+          q5: "Paano ko ito mai-install sa pamamagitan ng Tampermonkey na may mga auto-update?",
+          a5: "Kung gumagamit ka ng Tampermonkey, Violentmonkey, o Greasemonkey, maaari mong i-install ang standalone na script nang direkta mula sa aming repository. Awtomatikong susuriin ng Tampermonkey ang GitHub para sa mga update at aabisuhan ka sa tuwing may ilalabas na bagong bersyon.",
+          q6: "Pribado ba ang aking mga pag-uusap o senyas?",
+          a6: "100% Pribado. Ang extension ay ganap na gumagana sa iyong lokal na device. Walang mga prompt, sagot, audio stream, o personal na telemetry na ipinadala sa anumang panlabas na server."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Bumalik {s} (na) segundo — pindutin nang matagal upang maghanap sa pamamagitan ng audio",
+          playPause: "I-play ang audio / I-pause ang audio (Space / K / Alt+P)",
+          forward: "Ipasa ang {s} (na) segundo — pindutin nang matagal upang maghanap sa pamamagitan ng audio",
+          speed: "Bilis ng pag-playback",
+          volume: "Dami ng audio (Mag-scroll para ayusin)",
+          volumeSlider: "Slider ng dami ng audio",
+          download: "Mag-download ng audio",
+          shortcuts: "Mga keyboard shortcut at galaw",
+          collapse: "I-collapse ang Manlalaro",
+          expand: "Palawakin ang ChatGPT Audio Controls",
+          readAloud: "Basahin nang malakas"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Mga Shortcut",
+          playPause: "I-play ang audio / I-pause ang audio",
+          back: "Bumalik {s} sec",
+          forward: "Ipasa ang {s} sec",
+          slower: "Mas mabagal na bilis ng pag-playback",
+          faster: "Mas mabilis na bilis ng pag-playback",
+          volumeScroll: "Volume ng audio Scroll",
+          smoothScrub: "Makinis na Paghahanap ng Audio",
+          volumeScrollKey: "Mag-scroll sa 🔈",
+          smoothScrubKey: "Pindutin ang ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Hindi ma-download ang audio stream. Tiyaking aktibong na-load ang audio."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "I-play ang audio / I-pause ang audio",
+          description: "I-toggle ang pag-playback, tumutugma sa mga karaniwang manlalaro sa web at desktop (Alt+P ay nananatiling suportado)"
+        },
+        seekBack: {
+          action: "Bumalik 10 segundo",
+          description: "Tumalon pabalik ng 10s (Hold para sa maayos na paghahanap sa audio)"
+        },
+        seekForward: {
+          action: "Pagpasa ng 10 segundo",
+          description: "Tumalon pasulong 10s (Hold para sa maayos na paghahanap sa pamamagitan ng audio)"
+        },
+        speedDecrease: {
+          action: "Bawasan ang Bilis",
+          description: "Bumaba sa nakaraang preset ng bilis"
+        },
+        speedIncrease: {
+          action: "Dagdagan ang Bilis",
+          description: "Umakyat sa susunod na preset ng bilis"
+        }
+      }
+    },
+    fi: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Säätimet ja Read Aloud",
+        version: "v",
+        openChatGPT: "Avaa ChatGPT",
+        dashboard: "Kojelauta",
+        seconds: "sekuntia",
+        star: "★ Tähti",
+        docs: "Asiakirjat",
+        issues: "Ongelmat"
+      },
+      popup: {
+        header: {
+          switchTheme: "Vaihda teemaa",
+          openOptions: "Avaa Dashboard & Settings"
+        },
+        tabs: {
+          controls: "Säätimet",
+          shortcuts: "Avaimet",
+          about: "Noin"
+        },
+        quickControls: {
+          playbackSpeed: "Toiston oletusnopeus",
+          defaultVolume: "Äänen oletusvoimakkuus",
+          mute: "Mykistys",
+          unmute: "Poista mykistys",
+          smartIntegrations: "Älykkäät integraatiot",
+          globalShortcuts: "Yleiset pikakuvakkeet",
+          globalShortcutsDesc: "Ota käyttöön Space/K, Alt+P, Alt+Arrows ja pikanäppäimet",
+          smoothScrubbing: "Tasainen äänen haku",
+          smoothScrubbingDesc: "Nopeuta hakua pitämällä ◀10 tai 10▶ painettuna"
+        },
+        shortcuts: {
+          title: "Pikanäppäimet",
+          gesturesTitle: "Hiiri- ja kosketuseleet",
+          smoothAudioScrub: "Smooth Audio Audio Haku",
+          directDownload: "Suora lataus",
+          holdScrubKey: "Pidä ◀10 / 10▶",
+          clickDownloadKey: "Napsauta 📥-painiketta"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxican avoin lähdekoodi",
+          description: "ChatGPT:n äänikokemuksen parantaminen saumattomalla äänen äänenhakulla, dynaamisilla nopeuden esiasetuksella, suorilla äänen latauksilla ja yhdellä napsautuksella tapahtuvilla puhelaukaisuilla.",
+          privacyTitle: "100 % yksityisyyteen keskittynyt",
+          privacyDesc: "Ei seurantalaitteita, ei telemetriaa. Kaikki toimii koneellasi.",
+          githubRepo: "GitHub Arkisto",
+          documentation: "Dokumentaatio",
+          reportIssue: "Ilmoita ongelmasta"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Kojelauta ja asetukset",
+          preferences: "Asetukset",
+          shortcuts: "Pikanäppäimet ja eleet",
+          faq: "Usein kysytyt kysymykset ja vianetsintä",
+          darkMode: "Tumma tila",
+          lightMode: "Valotila",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Ääni- ja toistoasetukset",
+          preferencesDesc: "Määritä kieli, toistonopeuden esiasetukset, oletusäänenvoimakkuus ja ominaisuudet.",
+          shortcutsTitle: "Pikanäppäimet ja eleet",
+          shortcutsDesc: "Hallitse pikanäppäimet vaivattomaan toiston käsittelyyn.",
+          faqTitle: "Usein kysytyt kysymykset ja vianetsintä",
+          faqDesc: "Yksityiskohtainen tekninen opas, tietoturva- ja tukivastaukset."
+        },
+        general: {
+          languageTitle: "Kieli ja lokalisointi",
+          languageDesc: "Valitse haluamasi käyttöliittymän kieli tai anna laajennuksen tunnistaa selaimesi kieli automaattisesti.",
+          languageAuto: "Automaattinen tunnistus (selaimen kieli)",
+          languageDetected: "Havaittu",
+          speedTitle: "Toistonopeusasetukset",
+          speedDesc: "Valitse oletustoistonopeus, kun avaat ChatGPT:n tai käynnistät Read Aloud:n.",
+          volumeTitle: "Äänenvoimakkuuden oletustaso",
+          volumeDesc: "Esiasetettu äänenvoimakkuus Read Aloud -puhevirroille.",
+          seekTitle: "Ohita ja etsi -vaihe",
+          seekDesc: "Ohittavien sekuntien määrä yhdellä napautuksella -10s / +10s painikkeita tai Alt + Left / Alt + Right.",
+          secondsUnit: "sekuntia"
+        },
+        shortcutsGuide: {
+          title: "Pikanäppäimet",
+          desc: "Nopeuta työnkulkuasi ergonomisilla yhden käden ja YouTube-standardin toiston pikanäppäimillä.",
+          gesturesTitle: "Hiiren ja pidon äänihakueleet",
+          gesturesDesc: "Pidä joko ◀10s- tai 10s▶-painikkeita painettuna hakeaksesi sujuvasti ääntä pitkien äänivastausten kautta dynaamisella kiihdytyksellä:",
+          gestureHold03: "Siirtyy tasaisen äänenhakutilaan (4× normaalinopeus).",
+          gestureHold15: "Kiihtyy 10-kertaiseen hakunopeuteen.",
+          gestureHold30: "Nopea hyppynopeus 25-kertaisella nopeudella.",
+          gestureRelease: "Lukiutuu saumattomasti haluttuun asentoon."
+        },
+        faq: {
+          title: "Usein kysytyt kysymykset ja käyttöopas",
+          subtitle: "Nopeita vastauksia, joiden avulla saat kaiken irti ChatGPT Audio Controls:stä.",
+          q1: "Kuinka säädän äänenvoimakkuutta vierittämällä hiirellä?",
+          a1: "Vie hiiren osoitin soittimen kiskon äänenvoimakkuuden kaiuttimen kuvakkeen päälle ja vieritä hiiren rullaa ylös tai alas. Äänenvoimakkuus säätyy tasaisesti 5 %:n askelin ilman, että sinun tarvitsee avata liukusäädintä!",
+          q2: "Missä soitin näkyy mallissa ChatGPT?",
+          a2: "Soitin on ankkuroitu kätevästi suoraan viestin kirjoittajakehotteen viereen. Kun ääntä ei toisteta, pieni kelluva logopainike pysyy siististi kiinnitettynä oikealle puolelle. Napsauttamalla tätä painiketta tai käynnistämällä Lue ääneen kaikki soittimen ohjauspalkit laajenevat.",
+          q3: "Kuinka lataan syntetisoidun puheäänen?",
+          a3: "Aina kun ChatGPT lukee ääneen vastauksen, napsauta latauspainiketta (📥) oikeassa kiskossa. Äänivirta tallennetaan välittömästi korkealaatuisena äänitiedostona (.mp3, .m4a tai .wav) tietokoneellesi.",
+          q4: "Toimiiko tämä pienillä kannettavien näytöillä?",
+          a4: "Kyllä! Soitin tunnistaa automaattisesti käytettävissä olevan näytön leveyden ja skaalaa hakupalkin dynaamisesti sopimaan kannettavan tietokoneen näytölle mukavasti. Jos tilaa on erittäin vähän, kelluva painike pysyy käytettävissä, joten voit laajentaa ja tiivistää soitinta aina kun tarvitset sitä.",
+          q5: "Kuinka voin asentaa tämän Tampermonkeyn kautta automaattisilla päivityksillä?",
+          a5: "Jos käytät Tampermonkey-, Violentmonkey- tai Greasemonkey-ohjelmaa, voit asentaa erillisen komentosarjan suoraan arkistostamme. Tampermonkey tarkistaa automaattisesti GitHub:n päivitykset ja ilmoittaa sinulle aina, kun uusi versio julkaistaan.",
+          q6: "Ovatko keskusteluni tai kehotteeni yksityisiä?",
+          a6: "100 % yksityinen. Laajennus toimii kokonaan paikallisella laitteellasi. Mitään kehotteita, vastauksia, äänivirtaa tai henkilökohtaista telemetriaa ei lähetetä koskaan ulkoiselle palvelimelle."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Takaisin {s} sekuntia – pidä painettuna selataksesi ääntä",
+          playPause: "Toista ääni / Keskeytä ääni (Space / K / Alt+P)",
+          forward: "Eteenpäin {s} sekuntia – pidä painettuna selataksesi ääntä",
+          speed: "Toistonopeus",
+          volume: "Äänenvoimakkuus (säädä vierittämällä)",
+          volumeSlider: "Äänenvoimakkuuden liukusäädin",
+          download: "Lataa ääni",
+          shortcuts: "Pikanäppäimet ja eleet",
+          collapse: "Kutista soitin",
+          expand: "Laajenna ChatGPT Audio Controls",
+          readAloud: "Lue ääneen"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Pikanäppäimet",
+          playPause: "Toista ääni / Keskeytä ääni",
+          back: "Takaisin {s} sek",
+          forward: "Eteenpäin {s} sek",
+          slower: "Hitaampi toistonopeus",
+          faster: "Nopeampi toistonopeus",
+          volumeScroll: "Äänenvoimakkuus Vieritä",
+          smoothScrub: "Tasainen äänen haku",
+          volumeScrollKey: "Selaa 🔈",
+          smoothScrubKey: "Pidä ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Äänivirtaa ei voitu ladata. Varmista, että ääni on ladattu aktiivisesti."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Toista ääni / Keskeytä ääni",
+          description: "Toiston vaihtaminen, yleisten verkko- ja työpöytäsoittimien yhteensopivuus (Alt+P pysyy tuetuna)"
+        },
+        seekBack: {
+          action: "10 sekuntia taaksepäin",
+          description: "Hyppää taaksepäin 10 sekuntia (pidä painettuna, jos haluat sujuvan haun äänen läpi)"
+        },
+        seekForward: {
+          action: "Eteenpäin 10 sekuntia",
+          description: "Hyppää 10 sekuntia eteenpäin (pidä painettuna, jos haluat sujuvan haun äänen läpi)"
+        },
+        speedDecrease: {
+          action: "Pienennä nopeutta",
+          description: "Siirry alas edelliseen nopeuden esiasetukseen"
+        },
+        speedIncrease: {
+          action: "Lisää nopeutta",
+          description: "Siirry seuraavaan nopeuden esiasetukseen"
+        }
+      }
+    },
+    gu: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "નિયંત્રણો અને Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ખોલો",
+        dashboard: "ડેશબોર્ડ",
+        seconds: "સેકન્ડ",
+        star: "★ સ્ટાર",
+        docs: "દસ્તાવેજ",
+        issues: "મુદ્દાઓ"
+      },
+      popup: {
+        header: {
+          switchTheme: "થીમ સ્વિચ કરો",
+          openOptions: "ડેશબોર્ડ અને સેટિંગ્સ ખોલો"
+        },
+        tabs: {
+          controls: "નિયંત્રણો",
+          shortcuts: "કી",
+          about: "વિશે"
+        },
+        quickControls: {
+          playbackSpeed: "ડિફોલ્ટ પ્લેબેક ઝડપ",
+          defaultVolume: "ડિફૉલ્ટ ઑડિઓ વોલ્યુમ",
+          mute: "મ્યૂટ",
+          unmute: "અનમ્યૂટ કરો",
+          smartIntegrations: "સ્માર્ટ એકીકરણ",
+          globalShortcuts: "વૈશ્વિક શૉર્ટકટ્સ",
+          globalShortcutsDesc: "Space/K, Alt+P, Alt+Arrows અને સ્પીડ કીને સક્ષમ કરો",
+          smoothScrubbing: "સુગમ ઓડિયો સીકિંગ",
+          smoothScrubbingDesc: "◀10 અથવા 10▶ પકડીને શોધને વેગ આપો"
+        },
+        shortcuts: {
+          title: "કીબોર્ડ શોર્ટકટ્સ",
+          gesturesTitle: "માઉસ અને ટચ હાવભાવ",
+          smoothAudioScrub: "સુગમ ઓડિયો ઓડિયો સીકિંગ",
+          directDownload: "ડાયરેક્ટ ડાઉનલોડ",
+          holdScrubKey: "◀10/10▶ પકડી રાખો",
+          clickDownloadKey: "📥 બટન પર ક્લિક કરો"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ઈન્ફોક્સિકા દ્વારા ઓપન સોર્સ",
+          description: "સીમલેસ ઓડિયો ઓડિયો સીકિંગ, ડાયનેમિક સ્પીડ પ્રીસેટ્સ, ડાયરેક્ટ ઓડિયો ડાઉનલોડ્સ અને એક-ક્લિક સ્પીચ ટ્રિગર્સ સાથે ચેટજીપીટીના વૉઇસ અનુભવને વધારે છે.",
+          privacyTitle: "100% ગોપનીયતા કેન્દ્રિત",
+          privacyDesc: "કોઈ ટ્રેકર્સ નહીં, ટેલિમેટ્રી નહીં. બધું તમારા મશીન પર ચાલે છે.",
+          githubRepo: "GitHub રીપોઝીટરી",
+          documentation: "દસ્તાવેજીકરણ",
+          reportIssue: "સમસ્યાની જાણ કરો"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ડેશબોર્ડ અને સેટઅપ",
+          preferences: "પસંદગીઓ",
+          shortcuts: "શોર્ટકટ્સ અને હાવભાવ",
+          faq: "FAQ અને મુશ્કેલીનિવારણ",
+          darkMode: "ડાર્ક મોડ",
+          lightMode: "લાઇટ મોડ",
+          githubRepo: "GitHub રેપો"
+        },
+        headers: {
+          preferencesTitle: "ઓડિયો અને પ્લેબેક પસંદગીઓ",
+          preferencesDesc: "ભાષા, પ્લેબેક સ્પીડ પ્રીસેટ્સ, ડિફોલ્ટ ઓડિયો વોલ્યુમ અને સુવિધાઓ ગોઠવો.",
+          shortcutsTitle: "કીબોર્ડ શોર્ટકટ્સ અને હાવભાવ",
+          shortcutsDesc: "વિના પ્રયાસે પ્લેબેક મેનીપ્યુલેશન માટે માસ્ટર ઝડપી હોટકીઝ.",
+          faqTitle: "FAQ અને મુશ્કેલીનિવારણ",
+          faqDesc: "વિગતવાર તકનીકી માર્ગદર્શિકા, સુરક્ષા અને સમર્થન જવાબો."
+        },
+        general: {
+          languageTitle: "ભાષા અને સ્થાનિકીકરણ",
+          languageDesc: "તમારી મનપસંદ ઇન્ટરફેસ ભાષા પસંદ કરો અથવા એક્સ્ટેંશનને તમારા બ્રાઉઝરની ભાષા આપમેળે શોધવા દો.",
+          languageAuto: "સ્વતઃ શોધ (બ્રાઉઝર ભાષા)",
+          languageDetected: "શોધાયેલ",
+          speedTitle: "પ્લેબેક સ્પીડ પસંદગીઓ",
+          speedDesc: "ChatGPT ખોલતી વખતે અથવા Read Aloud લૉન્ચ કરતી વખતે તમારો ડિફૉલ્ટ પ્લેબેક રેટ પસંદ કરો.",
+          volumeTitle: "ડિફૉલ્ટ ઑડિઓ વોલ્યુમ સ્તર",
+          volumeDesc: "મોટેથી સ્પીચ સ્ટ્રીમ્સ વાંચવા માટે પ્રીસેટ ઓડિયો વોલ્યુમ.",
+          seekTitle: "અવગણો અને પગલું શોધો",
+          seekDesc: "-10s / +10s બટનો અથવા Alt + Left / Alt + Rightના સિંગલ ટૅપ પર છોડવા માટેની સેકંડની સંખ્યા.",
+          secondsUnit: "સેકન્ડ"
+        },
+        shortcutsGuide: {
+          title: "કીબોર્ડ શોર્ટકટ્સ સંદર્ભ",
+          desc: "અર્ગનોમિક સિંગલ-હેન્ડ અને યુટ્યુબ-સ્ટાન્ડર્ડ પ્લેબેક હોટકી સાથે તમારા વર્કફ્લોને વેગ આપો.",
+          gesturesTitle: "માઉસ અને હોલ્ડ ઓડિયો સીકિંગ હાવભાવ",
+          gesturesDesc: "ડાયનેમિક પ્રવેગક સાથે લાંબા અવાજના જવાબો દ્વારા ઑડિયો દ્વારા સરળતાથી શોધવા માટે ◀10s અથવા 10s▶ બટનોને દબાવી રાખો:",
+          gestureHold03: "સરળ ઓડિયો સીકિંગ મોડમાં પ્રવેશે છે (4× સામાન્ય ગતિ).",
+          gestureHold15: "10× સીકિંગ રેટ સુધી વેગ આપે છે.",
+          gestureHold30: "25× દરે હાઇ-સ્પીડ જમ્પ રેટ.",
+          gestureRelease: "એકીકૃત રીતે ઇચ્છિત સ્થાન પર તાળું મારે છે."
+        },
+        faq: {
+          title: "વારંવાર પૂછાતા પ્રશ્નો અને વપરાશકર્તા માર્ગદર્શિકા",
+          subtitle: "ChatGPT Audio Controls માંથી સૌથી વધુ મેળવવામાં મદદ કરવા માટે ઝડપી જવાબો.",
+          q1: "હું મારા માઉસ વડે સ્ક્રોલ કરીને ઓડિયો વોલ્યુમ કેવી રીતે સમાયોજિત કરી શકું?",
+          a1: "પ્લેયર રેલ પર ઓડિયો વોલ્યુમ સ્પીકર આઇકોન પર ફક્ત તમારા માઉસ પોઇન્ટરને હોવર કરો અને તમારા માઉસ વ્હીલને ઉપર અથવા નીચે સ્ક્રોલ કરો. ઓડિયો વોલ્યુમ સ્લાઇડર પોપઓવર ખોલ્યા વિના 5% ઇન્ક્રીમેન્ટમાં સરળતાથી એડજસ્ટ થશે!",
+          q2: "ChatGPT પર પ્લેયર ક્યાં દેખાય છે?",
+          a2: "પ્લેયર તમારા મેસેજ કંપોઝર પ્રોમ્પ્ટની બાજુમાં અનુકૂળ રીતે એન્કર કરવામાં આવે છે. જ્યારે કોઈ ઑડિયો વગાડતો નથી, ત્યારે એક નાનું ફ્લોટિંગ લોગો બટન જમણી બાજુએ સરસ રીતે ડોક કરેલું રહે છે. આ બટનને ક્લિક કરવાથી અથવા મોટેથી વાંચવાનું શરૂ કરવાથી સંપૂર્ણ પ્લેયર કંટ્રોલ બાર વિસ્તરે છે.",
+          q3: "હું સિન્થેસાઇઝ્ડ સ્પીચ ઑડિયો કેવી રીતે ડાઉનલોડ કરી શકું?",
+          a3: "જ્યારે પણ ChatGPT મોટેથી જવાબ વાંચે, ત્યારે જમણી રેલ પર ડાઉનલોડ બટન (📥) પર ક્લિક કરો. ઑડિયો સ્ટ્રીમ તમારા કમ્પ્યુટર પર ઉચ્ચ-ગુણવત્તાવાળી ઑડિઓ ફાઇલ (.mp3, .m4a, અથવા .wav) તરીકે તરત જ સાચવવામાં આવે છે.",
+          q4: "શું આ નાની લેપટોપ સ્ક્રીન પર કામ કરે છે?",
+          a4: "હા! પ્લેયર આપમેળે તમારી ઉપલબ્ધ સ્ક્રીનની પહોળાઈને શોધી કાઢે છે અને તમારા લેપટોપ સ્ક્રીનને આરામથી ફિટ કરવા માટે તેના સીકબારને ગતિશીલ રીતે માપે છે. જો જગ્યા અત્યંત ચુસ્ત હોય, તો ફ્લોટિંગ બટન સુલભ રહે છે જેથી જ્યારે પણ તમને જરૂર હોય ત્યારે તમે પ્લેયરને વિસ્તૃત અને સંકુચિત કરી શકો.",
+          q5: "ઓટો-અપડેટ્સ સાથે ટેમ્પરમોન્કી દ્વારા હું આને કેવી રીતે ઇન્સ્ટોલ કરી શકું?",
+          a5: "જો તમે Tampermonkey, Violentmonkey અથવા Greasemonkey નો ઉપયોગ કરો છો, તો તમે અમારી રીપોઝીટરીમાંથી સીધી એકલ સ્ક્રિપ્ટ ઇન્સ્ટોલ કરી શકો છો. Tampermonkey અપડેટ્સ માટે GitHub આપમેળે તપાસશે અને જ્યારે પણ નવું સંસ્કરણ રિલીઝ થશે ત્યારે તમને સૂચિત કરશે.",
+          q6: "શું મારી વાતચીત કે પ્રોમ્પ્ટ ખાનગી છે?",
+          a6: "100% ખાનગી. એક્સ્ટેંશન સંપૂર્ણપણે તમારા સ્થાનિક ઉપકરણ પર ચાલે છે. કોઈપણ બાહ્ય સર્વર પર કોઈ પ્રોમ્પ્ટ્સ, જવાબો, ઑડિઓ સ્ટ્રીમ્સ અથવા વ્યક્તિગત ટેલિમેટ્રી ક્યારેય મોકલવામાં આવતી નથી."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "પાછળ {s} સેકન્ડ — ઑડિયો દ્વારા શોધવા માટે પકડી રાખો",
+          playPause: "ઑડિયો ચલાવો / ઑડિયો થોભાવો (Space / K / Alt+P)",
+          forward: "{s} સેકન્ડ ફોરવર્ડ કરો — ઑડિયો દ્વારા શોધવા માટે પકડી રાખો",
+          speed: "પ્લેબેક ઝડપ",
+          volume: "ઓડિયો વોલ્યુમ (વ્યવસ્થિત કરવા માટે સ્ક્રોલ કરો)",
+          volumeSlider: "ઓડિયો વોલ્યુમ સ્લાઇડર",
+          download: "ઓડિયો ડાઉનલોડ કરો",
+          shortcuts: "કીબોર્ડ શોર્ટકટ્સ અને હાવભાવ",
+          collapse: "પ્લેયરને સંકુચિત કરો",
+          expand: "ChatGPT Audio Controls વિસ્તૃત કરો",
+          readAloud: "મોટેથી વાંચો"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud શૉર્ટકટ્સ",
+          playPause: "ઑડિયો ચલાવો / ઑડિયો થોભાવો",
+          back: "પાછળ {s} સેકન્ડ",
+          forward: "ફોરવર્ડ {s} સેકન્ડ",
+          slower: "ધીમી પ્લેબેક ઝડપ",
+          faster: "ઝડપી પ્લેબેક ઝડપ",
+          volumeScroll: "ઓડિયો વોલ્યુમ સ્ક્રોલ",
+          smoothScrub: "સુગમ ઓડિયો સીકિંગ",
+          volumeScrollKey: "🔈 પર સ્ક્રોલ કરો",
+          smoothScrubKey: "પકડી રાખો ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "ઓડિયો સ્ટ્રીમ ડાઉનલોડ કરી શકાયું નથી. ખાતરી કરો કે ઑડિઓ સક્રિય રીતે લોડ થયેલ છે."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "ઑડિયો ચલાવો / ઑડિયો થોભાવો",
+          description: "પ્લેબેકને ટૉગલ કરો, સામાન્ય વેબ અને ડેસ્કટોપ પ્લેયર્સ સાથે મેળ ખાતા (Alt+P સપોર્ટેડ રહે છે)"
+        },
+        seekBack: {
+          action: "10 સેકન્ડ પાછળ",
+          description: "10 સેકંડ પાછળ જમ્પ કરો (ઓડિયો દ્વારા સરળ શોધ માટે હોલ્ડ કરો)"
+        },
+        seekForward: {
+          action: "10 સેકન્ડ ફોરવર્ડ કરો",
+          description: "10s આગળ કૂદકો (ઓડિયો દ્વારા સરળ શોધ માટે પકડી રાખો)"
+        },
+        speedDecrease: {
+          action: "ઝડપ ઘટાડો",
+          description: "અગાઉના સ્પીડ પ્રીસેટ પર નીચે જાઓ"
+        },
+        speedIncrease: {
+          action: "ઝડપ વધારો",
+          description: "નેક્સ્ટ સ્પીડ પ્રીસેટ પર આગળ વધો"
+        }
+      }
+    },
+    hr: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Kontrole & Read Aloud",
+        version: "v",
+        openChatGPT: "Otvorite ChatGPT",
+        dashboard: "Nadzorna ploča",
+        seconds: "sekundi",
+        star: "★ Zvijezda",
+        docs: "Dokumenti",
+        issues: "Problemi"
+      },
+      popup: {
+        header: {
+          switchTheme: "Promjena teme",
+          openOptions: "Otvori nadzornu ploču i postavke"
+        },
+        tabs: {
+          controls: "Kontrole",
+          shortcuts: "Ključevi",
+          about: "O"
+        },
+        quickControls: {
+          playbackSpeed: "Zadana brzina reprodukcije",
+          defaultVolume: "Zadana glasnoća zvuka",
+          mute: "Nijemo",
+          unmute: "Uključi zvuk",
+          smartIntegrations: "Pametne integracije",
+          globalShortcuts: "Globalni prečaci",
+          globalShortcutsDesc: "Omogući razmaknicu/K, Alt+P, Alt+Arrows i tipke za brzinu",
+          smoothScrubbing: "Glatko traženje zvuka",
+          smoothScrubbingDesc: "Ubrzajte traženje držanjem ◀10 ili 10▶"
+        },
+        shortcuts: {
+          title: "Tipkovnički prečaci",
+          gesturesTitle: "Pokreti mišem i dodirom",
+          smoothAudioScrub: "Glatko traženje zvuka",
+          directDownload: "Izravno preuzimanje",
+          holdScrubKey: "Držite ◀10 / 10▶",
+          clickDownloadKey: "Kliknite gumb 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Open Source by Infoxica",
+          description: "Poboljšanje glasovnog iskustva ChatGPT-a s besprijekornim traženjem zvuka, dinamičkim unaprijed postavljenim brzinama, izravnim preuzimanjem zvuka i okidačima govora jednim klikom.",
+          privacyTitle: "100% fokus na privatnost",
+          privacyDesc: "Nema tragača, nema telemetrije. Sve radi na vašem stroju.",
+          githubRepo: "Spremište GitHub",
+          documentation: "Dokumentacija",
+          reportIssue: "Prijavite problem"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Nadzorna ploča i postavke",
+          preferences: "Postavke",
+          shortcuts: "Prečaci i geste",
+          faq: "Česta pitanja i rješavanje problema",
+          darkMode: "Tamni način rada",
+          lightMode: "Svjetlosni način rada",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Postavke zvuka i reprodukcije",
+          preferencesDesc: "Konfigurirajte jezik, unaprijed postavljene brzine reprodukcije, zadanu glasnoću zvuka i značajke.",
+          shortcutsTitle: "Tipkovnički prečaci i pokreti",
+          shortcutsDesc: "Savladajte brze tipke za lako upravljanje reprodukcijom.",
+          faqTitle: "Česta pitanja i rješavanje problema",
+          faqDesc: "Detaljan tehnički vodič, odgovori o sigurnosti i podršci."
+        },
+        general: {
+          languageTitle: "Jezik i lokalizacija",
+          languageDesc: "Odaberite željeni jezik sučelja ili pustite proširenje da automatski otkrije jezik vašeg preglednika.",
+          languageAuto: "Automatsko otkrivanje (jezik preglednika)",
+          languageDetected: "Otkriveno",
+          speedTitle: "Postavke brzine reprodukcije",
+          speedDesc: "Odaberite zadanu brzinu reprodukcije kada otvarate ChatGPT ili pokrećete Read Aloud.",
+          volumeTitle: "Zadana razina glasnoće zvuka",
+          volumeDesc: "Unaprijed postavljena glasnoća zvuka za čitanje naglas govornih tokova.",
+          seekTitle: "Korak preskakanja i traženja",
+          seekDesc: "Broj sekundi za preskakanje pri jednom dodiru gumba -10s / +10s ili Alt + Left / Alt + Right.",
+          secondsUnit: "sekundi"
+        },
+        shortcutsGuide: {
+          title: "Referenca tipkovničkih prečaca",
+          desc: "Ubrzajte svoj tijek rada pomoću ergonomskih tipki za reprodukciju za jednu ruku i YouTube standardnih tipki za reprodukciju.",
+          gesturesTitle: "Zvučne geste traženja miša i držanja",
+          gesturesDesc: "Držite pritisnute gumbe ◀10s ili 10s▶ za glatko traženje zvuka kroz duge glasovne odgovore s dinamičkim ubrzanjem:",
+          gestureHold03: "Ulazi u način glatkog traženja zvuka (4× normalna brzina).",
+          gestureHold15: "Ubrzava do 10x brzine traženja.",
+          gestureHold30: "Stopa skoka velike brzine pri brzini od 25×.",
+          gestureRelease: "Besprijekorno se zaključava u željeni položaj."
+        },
+        faq: {
+          title: "Često postavljana pitanja i korisnički priručnik",
+          subtitle: "Brzi odgovori koji će vam pomoći da izvučete najviše iz ChatGPT Audio Controls.",
+          q1: "Kako mogu podesiti glasnoću zvuka pomicanjem miša?",
+          a1: "Jednostavno prijeđite pokazivačem miša preko ikone zvučnika za glasnoću zvuka na šini playera i pomičite kotačić miša gore ili dolje. Glasnoća zvuka glatko će se prilagođavati u koracima od 5% bez potrebe za otvaranjem klizača!",
+          q2: "Gdje se pojavljuje igrač na ChatGPT?",
+          a2: "Player je prikladno usidren neposredno uz upit za sastavljanje poruke. Kada se zvuk ne reproducira, mali plutajući gumb s logotipom ostaje uredno usidren na desnoj strani. Klikom na ovaj gumb ili pokretanjem Read Aloud proširuju se pune kontrolne trake playera.",
+          q3: "Kako mogu preuzeti zvuk sintetiziranog govora?",
+          a3: "Kad god ChatGPT naglas pročita odgovor, kliknite gumb za preuzimanje (📥) na desnoj tračnici. Audio stream se odmah sprema kao audio datoteka visoke kvalitete (.mp3, .m4a ili .wav) na vaše računalo.",
+          q4: "Radi li ovo na malim zaslonima prijenosnih računala?",
+          a4: "Da! Player automatski detektira dostupnu širinu zaslona i dinamički skalira traku za traženje kako bi udobno odgovarao zaslonu vašeg prijenosnog računala. Ako je prostora jako malo, plutajući gumb ostaje dostupan tako da možete proširiti i skupiti player kad god vam zatreba.",
+          q5: "Kako mogu ovo instalirati putem Tampermonkeya s automatskim ažuriranjem?",
+          a5: "Ako koristite Tampermonkey, Violentmonkey ili Greasemonkey, možete instalirati samostalnu skriptu izravno iz našeg repozitorija. Tampermonkey će automatski provjeriti ima li GitHub ažuriranja i obavijestiti vas kad god se objavi nova verzija.",
+          q6: "Jesu li moji razgovori ili upiti privatni?",
+          a6: "100% privatno. Proširenje u potpunosti radi na vašem lokalnom uređaju. Nikakvi upiti, odgovori, audio streamovi ili osobna telemetrija nikada se ne šalju bilo kojem vanjskom poslužitelju."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Unatrag {s} sekundi — držite za pretraživanje kroz zvuk",
+          playPause: "Reprodukcija zvuka / Pauziranje zvuka (Space / K / Alt+P)",
+          forward: "{s} sekundi unaprijed — držite za pretraživanje kroz zvuk",
+          speed: "Brzina reprodukcije",
+          volume: "Glasnoća zvuka (pomaknite se za podešavanje)",
+          volumeSlider: "Klizač za glasnoću zvuka",
+          download: "Preuzmite zvuk",
+          shortcuts: "Tipkovnički prečaci i geste",
+          collapse: "Sažmi player",
+          expand: "Proširi ChatGPT Audio Controls",
+          readAloud: "Čitaj naglas"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Prečaci",
+          playPause: "Reproduciraj audio / Pauziraj audio",
+          back: "Natrag {s} sec",
+          forward: "Naprijed {s} sek",
+          slower: "Sporija brzina reprodukcije",
+          faster: "Veća brzina reprodukcije",
+          volumeScroll: "Pomicanje glasnoće zvuka",
+          smoothScrub: "Glatko traženje zvuka",
+          volumeScrollKey: "Pomaknite se na 🔈",
+          smoothScrubKey: "Držite ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Nije moguće preuzeti audio stream. Provjerite je li zvuk aktivno učitan."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Reproduciraj audio / Pauziraj audio",
+          description: "Uključivanje/isključivanje reprodukcije, podudaranje uobičajenih web i desktop playera (Alt+P ostaje podržan)"
+        },
+        seekBack: {
+          action: "Nazad 10 sekundi",
+          description: "Skok unatrag 10 s (Držite za glatko traženje kroz zvuk)"
+        },
+        seekForward: {
+          action: "10 sekundi unaprijed",
+          description: "Skok naprijed 10 s (držite za glatko traženje kroz zvuk)"
+        },
+        speedDecrease: {
+          action: "Smanjenje brzine",
+          description: "Spustite se na prethodnu unaprijed postavljenu brzinu"
+        },
+        speedIncrease: {
+          action: "Povećaj brzinu",
+          description: "Prijeđite na sljedeću unaprijed postavljenu brzinu"
+        }
+      }
+    },
+    hy: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Կառավարում և բարձրաձայն կարդալ",
+        version: "v",
+        openChatGPT: "Բացեք ChatGPT",
+        dashboard: "Վահանակ",
+        seconds: "վայրկյան",
+        star: "★ Աստղ",
+        docs: "Փաստաթղթեր",
+        issues: "Հարցեր"
+      },
+      popup: {
+        header: {
+          switchTheme: "Փոխել թեման",
+          openOptions: "Բացեք վահանակը և կարգավորումները"
+        },
+        tabs: {
+          controls: "Կառավարում",
+          shortcuts: "Բանալիներ",
+          about: "Մոտ"
+        },
+        quickControls: {
+          playbackSpeed: "Նվագարկման կանխադրված արագություն",
+          defaultVolume: "Ձայնի կանխադրված ծավալը",
+          mute: "Համր",
+          unmute: "Միացնել ձայնը",
+          smartIntegrations: "Խելացի ինտեգրումներ",
+          globalShortcuts: "Համաշխարհային դյուրանցումներ",
+          globalShortcutsDesc: "Միացնել Space/K, Alt+P, Alt+Arrows և արագության ստեղները",
+          smoothScrubbing: "Հարթ աուդիո որոնում",
+          smoothScrubbingDesc: "Արագացնել որոնումը` պահելով ◀10 կամ 10▶"
+        },
+        shortcuts: {
+          title: "Ստեղնաշարի դյուրանցումներ",
+          gesturesTitle: "Մկնիկի և հպման ժեստեր",
+          smoothAudioScrub: "Հարթ աուդիո աուդիո որոնում",
+          directDownload: "Ուղիղ ներբեռնում",
+          holdScrubKey: "Պահեք ◀10 / 10▶",
+          clickDownloadKey: "Սեղմեք 📥 կոճակը"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Բաց կոդով Infoxica-ի կողմից",
+          description: "ChatGPT-ի ձայնային փորձի բարելավում աուդիո ձայնի անխափան որոնման, դինամիկ արագության նախադրյալների, ուղղակի աուդիո ներբեռնումների և մեկ սեղմումով խոսքի գործարկիչների միջոցով:",
+          privacyTitle: "100% Գաղտնիության կենտրոնացած",
+          privacyDesc: "Ո՛չ հետագծեր, ո՛չ հեռաչափություն։ Ամեն ինչ աշխատում է ձեր մեքենայի վրա:",
+          githubRepo: "GitHub պահեստ",
+          documentation: "Փաստաթղթեր",
+          reportIssue: "Զեկուցել խնդրի մասին"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Վահանակ և կարգավորում",
+          preferences: "Նախապատվություններ",
+          shortcuts: "Դյուրանցումներ և ժեստեր",
+          faq: "FAQ & Troubleshooting",
+          darkMode: "Մութ ռեժիմ",
+          lightMode: "Լույսի ռեժիմ",
+          githubRepo: "GitHub ռեպո"
+        },
+        headers: {
+          preferencesTitle: "Աուդիո և նվագարկման նախապատվություններ",
+          preferencesDesc: "Կարգավորեք լեզուն, նվագարկման արագության նախադրյալները, ձայնի լռելյայն ծավալը և հնարավորությունները:",
+          shortcutsTitle: "Ստեղնաշարի դյուրանցումներ և ժեստեր",
+          shortcutsDesc: "Տիրապետեք արագ թեժ ստեղներին՝ հեշտ նվագարկման մանիպուլյացիայի համար:",
+          faqTitle: "FAQ & Troubleshooting",
+          faqDesc: "Մանրամասն տեխնիկական ուղեցույց, անվտանգության և աջակցության պատասխաններ:"
+        },
+        general: {
+          languageTitle: "Լեզու և տեղայնացում",
+          languageDesc: "Ընտրեք ձեր նախընտրած ինտերֆեյսի լեզուն կամ թույլ տվեք, որ ընդլայնումը ավտոմատ կերպով հայտնաբերի ձեր դիտարկիչի լեզուն:",
+          languageAuto: "Ավտոմատ հայտնաբերում (դիտարկիչի լեզու)",
+          languageDetected: "Հայտնաբերվել է",
+          speedTitle: "Նվագարկման արագության նախապատվություններ",
+          speedDesc: "ChatGPT-ը բացելիս կամ Read Aloud-ը գործարկելիս ընտրեք ձեր կանխադրված նվագարկման արագությունը:",
+          volumeTitle: "Ձայնի ձայնի կանխադրված մակարդակ",
+          volumeDesc: "Նախադրված աուդիո ձայնի ձայնը «Բարձրաձայն կարդալ» խոսքի հոսքերի համար:",
+          seekTitle: "Բաց թողնել և փնտրել քայլը",
+          seekDesc: "Վայրկյանների քանակը բաց թողնելու համար -10s / +10s կոճակների կամ Alt + Left / Alt + Right-ի մեկ հպումով:",
+          secondsUnit: "վայրկյան"
+        },
+        shortcutsGuide: {
+          title: "Ստեղնաշարի դյուրանցումների տեղեկանք",
+          desc: "Արագացրեք ձեր աշխատանքի ընթացքը էրգոնոմիկ միակողմանի և YouTube-ի ստանդարտ նվագարկման թեժ ստեղներով:",
+          gesturesTitle: "Մկնիկ և պահեք աուդիո որոնման ժեստեր",
+          gesturesDesc: "Սեղմած պահեք ◀10s կամ 10s▶ կոճակները՝ դինամիկ արագացմամբ երկար ձայնային պատասխանների միջոցով սահուն կերպով փնտրելու ձայնը.",
+          gestureHold03: "Մտնում է աուդիո որոնման հարթ ռեժիմ (4× նորմալ արագություն):",
+          gestureHold15: "Արագանում է մինչև 10× փնտրման տոկոսադրույքը:",
+          gestureHold30: "Բարձր արագությամբ ցատկման արագություն 25× արագությամբ:",
+          gestureRelease: "Անխափան կողպվում է ցանկալի դիրքում:"
+        },
+        faq: {
+          title: "Հաճախակի տրվող հարցեր և օգտագործողի ուղեցույց",
+          subtitle: "Արագ պատասխաններ, որոնք կօգնեն ձեզ առավելագույն օգուտ քաղել ChatGPT Audio Controls-ից:",
+          q1: "Ինչպե՞ս կարող եմ կարգավորել աուդիո ձայնի ձայնը մկնիկի օգնությամբ ոլորելով:",
+          a1: "Պարզապես մկնիկի ցուցիչը սահեցրեք նվագարկչի ռելսի վրա գտնվող ձայնի ձայնի բարձրախոսի պատկերակի վրա և ոլորեք մկնիկի անիվը վերև կամ վար: Ձայնի ձայնը սահուն կերպով կկարգավորվի 5% աճով, առանց սլայդերի պոպովերը բացելու:",
+          q2: "Որտե՞ղ է նվագարկիչը հայտնվում ChatGPT-ում:",
+          a2: "Նվագարկիչը հարմար կերպով խարսխված է անմիջապես ձեր հաղորդագրություն կոմպոզիտորի հուշման կողքին: Երբ աուդիո չի նվագարկվում, լողացող պատկերանշանի փոքրիկ կոճակը մնում է կոկիկորեն ամրացված աջ կողմում: Սեղմելով այս կոճակը կամ սկսելով Read Aloud-ը, ընդլայնվում են նվագարկչի կառավարման ամբողջական տողերը:",
+          q3: "Ինչպե՞ս կարող եմ ներբեռնել սինթեզված խոսքի ձայնը:",
+          a3: "Ամեն անգամ, երբ ChatGPT-ը բարձրաձայն կարդում է պատասխանը, սեղմեք ներբեռնման կոճակը (📥) աջ ռելսի վրա: Աուդիո հոսքն ակնթարթորեն պահվում է որպես բարձրորակ աուդիո ֆայլ (.mp3, .m4a կամ .wav) ձեր համակարգչում:",
+          q4: "Արդյո՞ք սա աշխատում է փոքր նոութբուքերի էկրանների վրա:",
+          a4: "Այո՛։ Նվագարկիչը ավտոմատ կերպով հայտնաբերում է ձեր հասանելի էկրանի լայնությունը և դինամիկորեն մեծացնում է իր որոնողական տողը՝ ձեր նոութբուքի էկրանին հարմարավետ տեղավորելու համար: Եթե ​​տարածությունը չափազանց սահմանափակ է, լողացող կոճակը մնում է հասանելի, որպեսզի կարողանաք ընդլայնել և փլուզել նվագարկիչը, երբ դա ձեզ անհրաժեշտ լինի:",
+          q5: "Ինչպե՞ս կարող եմ սա տեղադրել Tampermonkey-ի միջոցով՝ ավտոմատ թարմացումներով:",
+          a5: "Եթե դուք օգտագործում եք Tampermonkey, Violentmonkey կամ Greasemonkey, կարող եք տեղադրել ինքնուրույն սկրիպտը անմիջապես մեր պահոցից: Tampermonkey-ն ավտոմատ կերպով կստուգի GitHub թարմացումների համար և կտեղեկացնի ձեզ, երբ նոր տարբերակ թողարկվի:",
+          q6: "Արդյո՞ք իմ խոսակցությունները կամ հուշումները մասնավոր են:",
+          a6: "100% Անձնական: Ընդլայնումը ամբողջությամբ աշխատում է ձեր տեղական սարքի վրա: Երբևէ որևէ արտաքին սերվեր չի ուղարկվում ոչ մի հուշում, պատասխան, ձայնային հոսք կամ անձնական հեռաչափություն:"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Հետ {s} վայրկյան — պահեք՝ աուդիո փնտրելու համար",
+          playPause: "Նվագարկել աուդիո / Դադարեցնել աուդիո (Space / K / Alt+P)",
+          forward: "Փոխանցել {s} վայրկյան — պահեք՝ ձայնը փնտրելու համար",
+          speed: "Նվագարկման արագություն",
+          volume: "Ձայնի ծավալը (Ոլորեք՝ կարգավորելու համար)",
+          volumeSlider: "Ձայնի ծավալի սահիչ",
+          download: "Ներբեռնեք աուդիո",
+          shortcuts: "Ստեղնաշարի դյուրանցումներ և ժեստեր",
+          collapse: "Collapse Player",
+          expand: "Ընդլայնել ChatGPT Audio Controls",
+          readAloud: "Բարձրաձայն կարդացեք"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud դյուրանցումներ",
+          playPause: "Նվագարկել աուդիո / Դադարեցնել աուդիո",
+          back: "Հետ {s} վրկ",
+          forward: "Փոխանցել {s} վրկ",
+          slower: "Նվագարկման ավելի դանդաղ արագություն",
+          faster: "Ավելի արագ նվագարկման արագություն",
+          volumeScroll: "Ձայնի ծավալը Ոլորել",
+          smoothScrub: "Հարթ աուդիո որոնում",
+          volumeScrollKey: "Ոլորեք 🔈",
+          smoothScrubKey: "Պահեք ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Չհաջողվեց ներբեռնել աուդիո հոսքը: Համոզվեք, որ աուդիոն ակտիվորեն բեռնված է:"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Նվագարկել աուդիո / Դադարեցնել աուդիո",
+          description: "Փոխարկել նվագարկումը, համընկնել սովորական վեբ և աշխատասեղանի նվագարկիչների հետ (Alt+P-ը շարունակում է աջակցվել)"
+        },
+        seekBack: {
+          action: "Հետ 10 վայրկյան",
+          description: "Անցնել ետ 10 վրկ (Աուդիո միջոցով սահուն որոնելու համար պահեք)"
+        },
+        seekForward: {
+          action: "Փոխանցել 10 վայրկյան",
+          description: "Անցնել առաջ 10 վրկ (պահեք՝ ձայնի միջոցով սահուն որոնելու համար)"
+        },
+        speedDecrease: {
+          action: "Նվազեցնել արագությունը",
+          description: "Անցեք դեպի նախկին արագությունը"
+        },
+        speedIncrease: {
+          action: "Բարձրացնել արագությունը",
+          description: "Անցեք մինչև հաջորդ նախադրված արագությունը"
+        }
+      }
+    },
+    is: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Stjórntæki & Read Aloud",
+        version: "v",
+        openChatGPT: "Opið ChatGPT",
+        dashboard: "Mælaborð",
+        seconds: "sekúndur",
+        star: "★ Stjarna",
+        docs: "Skjöl",
+        issues: "Málefni"
+      },
+      popup: {
+        header: {
+          switchTheme: "Skiptu um þema",
+          openOptions: "Opnaðu mælaborð og stillingar"
+        },
+        tabs: {
+          controls: "Stýringar",
+          shortcuts: "Lyklar",
+          about: "Um það bil"
+        },
+        quickControls: {
+          playbackSpeed: "Sjálfgefinn spilunarhraði",
+          defaultVolume: "Sjálfgefin hljóðstyrkur",
+          mute: "Þöggun",
+          unmute: "Kveikja á hljóði",
+          smartIntegrations: "Snjallar samþættingar",
+          globalShortcuts: "Alþjóðlegar flýtileiðir",
+          globalShortcutsDesc: "Virkja bil/K, Alt+P, Alt+Arrows og hraðalykla",
+          smoothScrubbing: "Slétt hljóðleit",
+          smoothScrubbingDesc: "Flýttu leitinni með því að halda ◀10 eða 10▶ inni"
+        },
+        shortcuts: {
+          title: "Flýtivísar",
+          gesturesTitle: "Mús og snertibendingar",
+          smoothAudioScrub: "Leit að sléttu hljóði",
+          directDownload: "Beint niðurhal",
+          holdScrubKey: "Haltu ◀10 / 10▶",
+          clickDownloadKey: "Smelltu á 📥 hnappinn"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Opinn uppspretta eftir Infoxica",
+          description: "Auka raddupplifun ChatGPT með hnökralausri hljóðleit, kraftmiklum hraðaforstillingum, beinu niðurhali á hljóði og talkveikjum með einum smelli.",
+          privacyTitle: "100% einkalífsfókus",
+          privacyDesc: "Engir rekja spor einhvers, engin fjarmæling. Allt keyrir á vélinni þinni.",
+          githubRepo: "GitHub geymsla",
+          documentation: "Skjöl",
+          reportIssue: "Tilkynna um mál"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Mælaborð og uppsetning",
+          preferences: "Óskir",
+          shortcuts: "Flýtivísar og bendingar",
+          faq: "Algengar spurningar og bilanaleit",
+          darkMode: "Myrkur hamur",
+          lightMode: "Ljósstilling",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Hljóð- og spilunarvalkostir",
+          preferencesDesc: "Stilltu tungumál, forstillingar á spilunarhraða, sjálfgefið hljóðstyrk og eiginleika.",
+          shortcutsTitle: "Flýtivísar og bendingar",
+          shortcutsDesc: "Náðu tökum á hraðlyklum fyrir áreynslulausa spilun.",
+          faqTitle: "Algengar spurningar og bilanaleit",
+          faqDesc: "Ítarleg tæknileiðbeining, öryggis- og stuðningssvör."
+        },
+        general: {
+          languageTitle: "Tungumál og staðfærsla",
+          languageDesc: "Veldu valið viðmótstungumál eða láttu viðbótina sjálfkrafa greina tungumál vafrans þíns.",
+          languageAuto: "Sjálfvirk greining (tungumál vafra)",
+          languageDetected: "Greinist",
+          speedTitle: "Spilunarhraðastillingar",
+          speedDesc: "Veldu sjálfgefna spilunarhraða þegar þú opnar ChatGPT eða ræsir Read Aloud.",
+          volumeTitle: "Sjálfgefið hljóðstyrkstig",
+          volumeDesc: "Forstillt hljóðstyrk fyrir upplestur talstrauma.",
+          seekTitle: "Skip & Seek Step",
+          seekDesc: "Fjöldi sekúndna til að sleppa með einum smelli á -10s / +10s hnappana eða Alt + Left / Alt + Right.",
+          secondsUnit: "sekúndur"
+        },
+        shortcutsGuide: {
+          title: "Tilvísun í flýtivísa",
+          desc: "Flýttu fyrir vinnuflæðinu með vinnuvistfræðilegum einhendis og YouTube-stöðluðum spilunartökkum.",
+          gesturesTitle: "Mús og haltu hljóðleitarbendingum",
+          gesturesDesc: "Haltu inni annað hvort ◀10s eða 10s▶ hnappunum til að leita mjúklega í gegnum hljóð í gegnum löng raddsvör með kraftmikilli hröðun:",
+          gestureHold03: "Fer í sléttan hljóðleitarham (4× venjulegur hraði).",
+          gestureHold15: "Flýtir upp í 10× leitartíðni.",
+          gestureHold30: "Háhraða stökkhraði á 25× hraða.",
+          gestureRelease: "Læsist óaðfinnanlega í viðkomandi stöðu."
+        },
+        faq: {
+          title: "Algengar spurningar og notendahandbók",
+          subtitle: "Fljótleg svör til að hjálpa þér að fá sem mest út úr ChatGPT Audio Controls.",
+          q1: "Hvernig stilli ég hljóðstyrkinn með því að fletta með músinni?",
+          a1: "Beygðu einfaldlega músarbendilinn yfir hljóðstyrk hátalaratáknið á spilaranum og flettu músarhjólinu upp eða niður. Hljóðstyrkurinn mun stilla mjúklega í 5% þrepum án þess að þurfa að opna sleðann!",
+          q2: "Hvar birtist leikmaðurinn á ChatGPT?",
+          a2: "Spilarinn er festur á þægilegan hátt beint við hliðina á skilaboðatónskáldinu þínu. Þegar ekkert hljóð er spilað, er lítill fljótandi lógóhnappur sem er snyrtilegur í bryggju hægra megin. Með því að smella á þennan hnapp eða byrja Lesa upphátt stækkar allar stjórnstikur leikmannsins.",
+          q3: "Hvernig sæki ég niður tilbúna talhljóðið?",
+          a3: "Alltaf þegar ChatGPT les upphátt svar, smelltu á niðurhalshnappinn (📥) á hægri teinum. Hljóðstraumurinn er samstundis vistaður sem hágæða hljóðskrá (.mp3, .m4a eða .wav) á tölvunni þinni.",
+          q4: "Virkar þetta á litlum fartölvuskjáum?",
+          a4: "Já! Spilarinn greinir sjálfkrafa tiltæka skjábreidd þína og skalar leitarstikuna á kraftmikinn hátt þannig að hún passi þægilega á skjá fartölvunnar. Ef plássið er mjög þröngt, þá er fljótandi hnappurinn aðgengilegur svo þú getur stækkað og fellt spilarann ​​saman hvenær sem þú þarft á honum að halda.",
+          q5: "Hvernig set ég þetta upp í gegnum Tampermonkey með sjálfvirkum uppfærslum?",
+          a5: "Ef þú notar Tampermonkey, Violentmonkey eða Greasemonkey geturðu sett upp sjálfstæða forskriftina beint úr geymslunni okkar. Tampermonkey mun sjálfkrafa athuga GitHub fyrir uppfærslur og láta þig vita hvenær sem ný útgáfa er gefin út.",
+          q6: "Eru samtöl mín eða tilkynningar einkamál?",
+          a6: "100% Einkamál. Viðbótin keyrir algjörlega á þínu staðbundna tæki. Engar vísbendingar, svör, hljóðstraumar eða persónuleg fjarmæling eru nokkru sinni send til neins utanaðkomandi netþjóns."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Til baka {s} sekúndur — haltu inni til að leita í gegnum hljóð",
+          playPause: "Spila hljóð / Gera hlé á hljóði (Space / K / Alt+P)",
+          forward: "Fram {s} sekúndur — haltu inni til að leita í gegnum hljóð",
+          speed: "Spilunarhraði",
+          volume: "Hljóðstyrkur (Skruna til að stilla)",
+          volumeSlider: "Renna fyrir hljóðstyrk",
+          download: "Sækja hljóð",
+          shortcuts: "Flýtivísar og bendingar",
+          collapse: "Collapse Player",
+          expand: "Stækkaðu ChatGPT Audio Controls",
+          readAloud: "Lestu upphátt"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Flýtileiðir",
+          playPause: "Spila hljóð / Gera hlé á hljóði",
+          back: "Til baka {s} sek",
+          forward: "Áfram {s} sek",
+          slower: "Hægari spilunarhraði",
+          faster: "Hraðari spilunarhraði",
+          volumeScroll: "Hljóðstyrkur Skrunaðu",
+          smoothScrub: "Slétt hljóðleit",
+          volumeScrollKey: "Skrunaðu áfram 🔈",
+          smoothScrubKey: "Haltu ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Gat ekki hlaðið niður hljóðstraumi. Gakktu úr skugga um að hljóð sé virkt hlaðið."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Spila hljóð / Gera hlé á hljóði",
+          description: "Skipta um spilun, passa við algenga vef- og borðspilara (Alt+P er áfram studdur)"
+        },
+        seekBack: {
+          action: "Til baka 10 sekúndur",
+          description: "Hoppa afturábak 10 sekúndur (haltu fyrir slétta leit í gegnum hljóð)"
+        },
+        seekForward: {
+          action: "Fram 10 sekúndur",
+          description: "Hoppa fram á við 10 sekúndur (haltu fyrir slétta leit í gegnum hljóð)"
+        },
+        speedDecrease: {
+          action: "Minnka hraða",
+          description: "Farðu niður í fyrri hraðaforstillingu"
+        },
+        speedIncrease: {
+          action: "Auka hraða",
+          description: "Farðu upp í næstu forstillingu hraða"
+        }
+      }
+    },
+    ka: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "კონტროლი და Read Aloud",
+        version: "v",
+        openChatGPT: "გახსენით ChatGPT",
+        dashboard: "დაფა",
+        seconds: "წამი",
+        star: "★ ვარსკვლავი",
+        docs: "Docs",
+        issues: "საკითხები"
+      },
+      popup: {
+        header: {
+          switchTheme: "გადართვის თემა",
+          openOptions: "გახსენით Dashboard & Settings"
+        },
+        tabs: {
+          controls: "კონტროლი",
+          shortcuts: "გასაღებები",
+          about: "შესახებ"
+        },
+        quickControls: {
+          playbackSpeed: "დაკვრის ნაგულისხმევი სიჩქარე",
+          defaultVolume: "ნაგულისხმევი აუდიო ხმა",
+          mute: "მუნჯი",
+          unmute: "დადუმების მოხსნა",
+          smartIntegrations: "ჭკვიანი ინტეგრაციები",
+          globalShortcuts: "გლობალური მალსახმობები",
+          globalShortcutsDesc: "ჩართეთ Space/K, Alt+P, Alt+Arrows და სიჩქარის კლავიშები",
+          smoothScrubbing: "გლუვი აუდიო ძიება",
+          smoothScrubbingDesc: "ძიების დაჩქარება ◀10 ან 10▶ დაჭერით"
+        },
+        shortcuts: {
+          title: "კლავიატურის მალსახმობები",
+          gesturesTitle: "მაუსი და შეხების ჟესტები",
+          smoothAudioScrub: "გლუვი აუდიო აუდიოს ძიება",
+          directDownload: "პირდაპირი ჩამოტვირთვა",
+          holdScrubKey: "გააჩერეთ ◀10 / 10▶",
+          clickDownloadKey: "დააჭირეთ ღილაკს 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ღია წყარო Infoxica-ს მიერ",
+          description: "ChatGPT-ის ხმოვანი გამოცდილების ამაღლება აუდიო აუდიოს უწყვეტი ძიებით, დინამიური სიჩქარის წინასწარ დაყენებით, აუდიოს პირდაპირი ჩამოტვირთვებით და ერთი დაწკაპუნებით მეტყველების ტრიგერით.",
+          privacyTitle: "100% კონფიდენციალურობაზე ორიენტირებული",
+          privacyDesc: "არა ტრეკერები, არც ტელემეტრია. ყველაფერი მუშაობს თქვენს აპარატზე.",
+          githubRepo: "GitHub საცავი",
+          documentation: "დოკუმენტაცია",
+          reportIssue: "შეატყობინეთ პრობლემას"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "დაფა და დაყენება",
+          preferences: "პრეფერენციები",
+          shortcuts: "მალსახმობები და ჟესტები",
+          faq: "ხშირად დასმული კითხვები და პრობლემების მოგვარება",
+          darkMode: "მუქი რეჟიმი",
+          lightMode: "სინათლის რეჟიმი",
+          githubRepo: "GitHub რეპო"
+        },
+        headers: {
+          preferencesTitle: "აუდიო და დაკვრის პარამეტრები",
+          preferencesDesc: "დააკონფიგურირეთ ენა, დაკვრის სიჩქარე წინასწარ დაყენებული, ნაგულისხმევი აუდიო მოცულობა და ფუნქციები.",
+          shortcutsTitle: "კლავიატურის მალსახმობები და ჟესტები",
+          shortcutsDesc: "დაეუფლეთ სწრაფ ღილაკებს უპრობლემოდ დაკვრის მანიპულირებისთვის.",
+          faqTitle: "ხშირად დასმული კითხვები და პრობლემების მოგვარება",
+          faqDesc: "დეტალური ტექნიკური სახელმძღვანელო, უსაფრთხოებისა და დამხმარე პასუხები."
+        },
+        general: {
+          languageTitle: "ენა და ლოკალიზაცია",
+          languageDesc: "აირჩიეთ თქვენთვის სასურველი ინტერფეისის ენა ან მიეცით საშუალება გაფართოებას ავტომატურად აღმოაჩინოს თქვენი ბრაუზერის ენა.",
+          languageAuto: "ავტომატური ამოცნობა (ბრაუზერის ენა)",
+          languageDetected: "აღმოჩენილია",
+          speedTitle: "დაკვრის სიჩქარის პარამეტრები",
+          speedDesc: "აირჩიეთ თქვენი ნაგულისხმევი დაკვრის სიჩქარე ChatGPT გახსნისას ან Read Aloud გაშვებისას.",
+          volumeTitle: "აუდიოს ხმის ნაგულისხმევი დონე",
+          volumeDesc: "წინასწარ დააყენეთ აუდიო ხმამაღლა წაკითხვის მეტყველების ნაკადებისთვის.",
+          seekTitle: "ნაბიჯის გამოტოვება და ძებნა",
+          seekDesc: "წამების რაოდენობა გამოტოვებისთვის -10s / +10s ღილაკების ან Alt + Left / Alt + Right ერთი შეხებით.",
+          secondsUnit: "წამი"
+        },
+        shortcutsGuide: {
+          title: "კლავიატურის მალსახმობების მითითება",
+          desc: "დააჩქარეთ თქვენი სამუშაო პროცესი ერგონომიული ერთი ხელის და YouTube-ის სტანდარტული დაკვრის ცხელი კლავიშებით.",
+          gesturesTitle: "მაუსი და გააჩერეთ აუდიოს ძიების ჟესტები",
+          gesturesDesc: "გეჭიროთ ◀10s ან 10s▶ ღილაკები, რათა შეუფერხებლად მოძებნოთ აუდიო გრძელი ხმოვანი პასუხების მეშვეობით დინამიური აჩქარებით:",
+          gestureHold03: "შედის აუდიო ძიების გლუვ რეჟიმში (4× ნორმალური სიჩქარე).",
+          gestureHold15: "აჩქარებს 10× ძიების სიჩქარეს.",
+          gestureHold30: "მაღალსიჩქარიანი ნახტომის სიჩქარე 25× სიჩქარით.",
+          gestureRelease: "შეუფერხებლად იკეტება სასურველ პოზიციაზე."
+        },
+        faq: {
+          title: "ხშირად დასმული კითხვები და მომხმარებლის სახელმძღვანელო",
+          subtitle: "სწრაფი პასუხები, რომლებიც დაგეხმარებათ მაქსიმალურად მიიღოთ ChatGPT Audio Controls.",
+          q1: "როგორ დავარეგულირო აუდიო ხმა მაუსით გადახვევით?",
+          a1: "უბრალოდ გადაიტანეთ მაუსის ინდიკატორი აუდიო ხმის დინამიკის ხატულაზე მოთამაშის რელსზე და გადაახვიეთ მაუსის ბორბალი ზემოთ ან ქვემოთ. აუდიო ხმა შეუფერხებლად დარეგულირდება 5%-იანი მატებით, სლაიდერის პოპოვერის გახსნის გარეშე!",
+          q2: "სად ჩნდება მოთამაშე ChatGPT-ზე?",
+          a2: "პლეერი მოხერხებულად არის დამაგრებული პირდაპირ თქვენი შეტყობინების კომპოზიტორის მოთხოვნის გვერდით. როდესაც აუდიო არ უკრავს, პატარა მცურავი ლოგოს ღილაკი ლამაზად დამაგრებულია მარჯვენა მხარეს. ამ ღილაკზე დაწკაპუნება ან ხმამაღლა წაკითხვის დაწყება აფართოებს მოთამაშის მართვის ზოლებს.",
+          q3: "როგორ გადმოვწერო სინთეზირებული მეტყველების აუდიო?",
+          a3: "როდესაც ChatGPT ხმამაღლა წაიკითხავს პასუხს, დააწკაპუნეთ ჩამოტვირთვის ღილაკს (📥) მარჯვენა ლიანდაგზე. აუდიო ნაკადი მყისიერად ინახება, როგორც მაღალი ხარისხის აუდიო ფაილი (.mp3, .m4a, ან .wav) თქვენს კომპიუტერში.",
+          q4: "მუშაობს ეს პატარა ლეპტოპის ეკრანებზე?",
+          a4: "დიახ! პლეერი ავტომატურად ამოიცნობს თქვენს ხელმისაწვდომ ეკრანის სიგანეს და დინამიურად ადიდებს მის ძიებას, რათა კომფორტულად მოერგოს ლეპტოპის ეკრანს. თუ სივრცე ძალიან მცირეა, მცურავი ღილაკი რჩება ხელმისაწვდომი, ასე რომ თქვენ შეგიძლიათ გააფართოვოთ და ჩაშალოთ მოთამაშე, როცა დაგჭირდებათ.",
+          q5: "როგორ დავაინსტალირო ეს Tampermonkey-ის მეშვეობით ავტომატური განახლებით?",
+          a5: "თუ იყენებთ Tampermonkey, Violentmonkey ან Greasemonkey, შეგიძლიათ დააინსტალიროთ დამოუკიდებელი სკრიპტი პირდაპირ ჩვენი საცავიდან. Tampermonkey ავტომატურად შეამოწმებს GitHub განახლებებს და შეგატყობინებთ ახალი ვერსიის გამოქვეყნებისას.",
+          q6: "არის ჩემი საუბრები ან მოთხოვნები პირადი?",
+          a6: "100% პირადი. გაფართოება მთლიანად მუშაობს თქვენს ადგილობრივ მოწყობილობაზე. არცერთი მოთხოვნა, პასუხი, აუდიო ნაკადები ან პერსონალური ტელემეტრია არ იგზავნება არცერთ გარე სერვერზე."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "უკან {s} წამი — დააჭირე აუდიოს მოსაძებნად",
+          playPause: "აუდიოს დაკვრა / აუდიოს დაპაუზება (Space / K / Alt+P)",
+          forward: "გადამისამართება {s} წამი — ხანგრძლივად დააჭირეთ აუდიოს მოსაძებნად",
+          speed: "დაკვრის სიჩქარე",
+          volume: "აუდიოს ხმა (გადახვევა დასარეგულირებლად)",
+          volumeSlider: "აუდიო ხმის სლაიდერი",
+          download: "აუდიოს ჩამოტვირთვა",
+          shortcuts: "კლავიატურის მალსახმობები და ჟესტები",
+          collapse: "მოთამაშის ჩაკეცვა",
+          expand: "გააფართოვეთ ChatGPT Audio Controls",
+          readAloud: "წაიკითხეთ ხმამაღლა"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud მალსახმობები",
+          playPause: "აუდიოს დაკვრა / აუდიოს პაუზა",
+          back: "უკან {s} წმ",
+          forward: "წინ {s} წმ",
+          slower: "დაკვრის ნელი სიჩქარე",
+          faster: "აღწარმოების უფრო სწრაფი სიჩქარე",
+          volumeScroll: "აუდიოს ხმის გადახვევა",
+          smoothScrub: "გლუვი აუდიო ძიება",
+          volumeScrollKey: "გადაახვიეთ 🔈",
+          smoothScrubKey: "გააჩერეთ ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "აუდიო ნაკადის ჩამოტვირთვა ვერ მოხერხდა. დარწმუნდით, რომ აუდიო აქტიურად არის ჩატვირთული."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "აუდიოს დაკვრა / აუდიოს პაუზა",
+          description: "დაკვრის გადართვა, საერთო ვებ და დესკტოპ ფლეერების შესატყვისი (Alt+P რჩება მხარდაჭერილი)"
+        },
+        seekBack: {
+          action: "უკან 10 წამი",
+          description: "გადახტომა უკან 10 წმ (მოიჭირეთ აუდიოს გლუვი ძიებისთვის)"
+        },
+        seekForward: {
+          action: "წინ 10 წამი",
+          description: "წინ გადახტომა 10 წამით (მოიჭირეთ აუდიოს გლუვი ძიებისთვის)"
+        },
+        speedDecrease: {
+          action: "სიჩქარის შემცირება",
+          description: "გადადით წინა სიჩქარის წინასწარ დაყენებაზე"
+        },
+        speedIncrease: {
+          action: "სიჩქარის გაზრდა",
+          description: "გადადით შემდეგი სიჩქარის წინასწარ დაყენებამდე"
+        }
+      }
+    },
+    kk: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Басқару элементтері & Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ашыңыз",
+        dashboard: "Бақылау тақтасы",
+        seconds: "секунд",
+        star: "★ Жұлдыз",
+        docs: "Құжаттар",
+        issues: "Мәселелер"
+      },
+      popup: {
+        header: {
+          switchTheme: "Тақырыпты ауыстыру",
+          openOptions: "Бақылау тақтасы мен параметрлерді ашыңыз"
+        },
+        tabs: {
+          controls: "Басқару элементтері",
+          shortcuts: "Пернелер",
+          about: "туралы"
+        },
+        quickControls: {
+          playbackSpeed: "Әдепкі ойнату жылдамдығы",
+          defaultVolume: "Әдепкі аудио дыбыс деңгейі",
+          mute: "Дыбысты өшіру",
+          unmute: "Дыбысты қосу",
+          smartIntegrations: "Smart интеграциялар",
+          globalShortcuts: "Жаһандық таңбашалар",
+          globalShortcutsDesc: "Space/K, Alt+P, Alt+Arrows және жылдамдық пернелерін қосу",
+          smoothScrubbing: "Тегіс аудио іздеу",
+          smoothScrubbingDesc: "◀10 немесе 10▶ түймесін басып іздеуді тездетіңіз"
+        },
+        shortcuts: {
+          title: "Пернелер тіркесімдері",
+          gesturesTitle: "Тінтуір және түрту қимылдары",
+          smoothAudioScrub: "Тегіс дыбысты іздеу",
+          directDownload: "Тікелей жүктеу",
+          holdScrubKey: "◀10 / 10▶ түймесін басып тұрыңыз",
+          clickDownloadKey: "📥 түймесін басыңыз"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxica ашық көзі",
+          description: "Үздіксіз аудио іздеу, динамикалық жылдамдықты алдын ала орнату, тікелей аудио жүктеп алу және бір рет басу арқылы сөйлеу триггерлерімен ChatGPT дауыс тәжірибесін арттыру.",
+          privacyTitle: "100% құпиялылыққа бағытталған",
+          privacyDesc: "Трекерлер, телеметрия жоқ. Барлығы сіздің құрылғыңызда жұмыс істейді.",
+          githubRepo: "GitHub репозиторийі",
+          documentation: "Құжаттама",
+          reportIssue: "Мәселе туралы хабарлау"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Бақылау тақтасы және орнату",
+          preferences: "Теңшелімдер",
+          shortcuts: "Таңбашалар және қимылдар",
+          faq: "Жиі қойылатын сұрақтар және ақауларды жою",
+          darkMode: "Қараңғы режим",
+          lightMode: "Жарық режимі",
+          githubRepo: "GitHub Репо"
+        },
+        headers: {
+          preferencesTitle: "Дыбыс және ойнату теңшелімдері",
+          preferencesDesc: "Тілді, ойнату жылдамдығының алдын ала орнатуларын, әдепкі аудио дыбыс деңгейін және мүмкіндіктерді конфигурациялаңыз.",
+          shortcutsTitle: "Пернелер тіркесімдері және қимылдар",
+          shortcutsDesc: "Ойнатуды оңай басқаруға арналған жылдам пернелерді меңгеру.",
+          faqTitle: "Жиі қойылатын сұрақтар және ақауларды жою",
+          faqDesc: "Егжей-тегжейлі техникалық нұсқаулық, қауіпсіздік және қолдау жауаптары."
+        },
+        general: {
+          languageTitle: "Тіл және локализация",
+          languageDesc: "Қалаған интерфейс тілін таңдаңыз немесе кеңейтімге браузеріңіздің тілін автоматты түрде анықтауға мүмкіндік беріңіз.",
+          languageAuto: "Автоматты анықтау (шолғыш тілі)",
+          languageDetected: "Анықталды",
+          speedTitle: "Ойнату жылдамдығы теңшелімдері",
+          speedDesc: "ChatGPT ашу немесе Read Aloud іске қосу кезінде әдепкі ойнату жылдамдығын таңдаңыз.",
+          volumeTitle: "Әдепкі аудио дыбыс деңгейі",
+          volumeDesc: "Дауыстап оқу сөйлеу ағындары үшін алдын ала орнатылған дыбыс деңгейі.",
+          seekTitle: "Өткізу және іздеу қадамы",
+          seekDesc: "-10s / +10s немесе Alt + Left / Alt + Right түймелерін бір рет түрту арқылы өткізіп жіберуге болатын секундтар саны.",
+          secondsUnit: "секунд"
+        },
+        shortcutsGuide: {
+          title: "Пернелер тіркесімдері сілтемесі",
+          desc: "Бір қолмен жұмыс істейтін эргономикалық және YouTube стандартты ойнату жылдам пернелері арқылы жұмыс процесін жылдамдатыңыз.",
+          gesturesTitle: "Тінтуірді басып ұстап тұрыңыз, аудио іздеу қимылдары",
+          gesturesDesc: "Динамикалық жеделдету арқылы ұзақ дауыстық жауаптар арқылы дыбысты біркелкі іздеу үшін ◀10s немесе 10s▶ түймелерін басып тұрыңыз:",
+          gestureHold03: "Тегіс дыбысты іздеу режиміне (4× қалыпты жылдамдық) кіреді.",
+          gestureHold15: "10× іздеу жылдамдығына дейін жылдамдатады.",
+          gestureHold30: "25× жылдамдықпен жоғары жылдамдықты секіру жылдамдығы.",
+          gestureRelease: "Қажетті орынға біркелкі бекітіледі."
+        },
+        faq: {
+          title: "Жиі қойылатын сұрақтар және пайдаланушы нұсқаулығы",
+          subtitle: "ChatGPT Audio Controls мүмкіндігін барынша пайдалануға көмектесетін жылдам жауаптар.",
+          q1: "Тінтуірмен жылжыту арқылы дыбыс деңгейін қалай реттеуге болады?",
+          a1: "Тінтуір меңзерін ойнатқыш рельсіндегі дыбыс деңгейінің динамигі белгішесінің үстіне апарып, тінтуірдің дөңгелегін жоғары немесе төмен айналдырыңыз. Дыбыстың дыбыс деңгейі қалқымалы сырғытпаны ашпай-ақ 5% қадаммен біркелкі реттеледі!",
+          q2: "Ойнатқыш ChatGPT қай жерде пайда болады?",
+          a2: "Ойнатқыш тікелей хабарлама жасаушы нұсқауының жанында ыңғайлы түрде бекітілген. Ешқандай дыбыс ойнатылмаған кезде, шағын қалқымалы логотип түймесі оң жағында ұқыпты қондырылған күйде қалады. Осы түймені басу немесе дауыстап оқуды бастау ойнатқыштың толық басқару жолақтарын кеңейтеді.",
+          q3: "Синтезделген сөйлеу дыбысын қалай жүктеп алуға болады?",
+          a3: "ChatGPT жауапты дауыстап оқығанда, оң жақтағы жүктеп алу түймесін (📥) басыңыз. Аудио ағыны компьютерге жоғары сапалы аудио файл (.mp3, .m4a немесе .wav) ретінде бірден сақталады.",
+          q4: "Бұл шағын ноутбук экрандарында жұмыс істей ме?",
+          a4: "Иә! Ойнатқыш қол жетімді экран енін автоматты түрде анықтайды және ноутбук экранына ыңғайлы болу үшін іздеу жолағын динамикалық түрде масштабтайды. Кеңістік өте тар болса, қалқымалы түйме қол жетімді болып қалады, осылайша ойнатқышты қажет кезде кеңейтіп, таса аласыз.",
+          q5: "Мұны автоматты жаңартулары бар Tampermonkey арқылы қалай орнатуға болады?",
+          a5: "Tampermonkey, Violentmonkey немесе Greasemonkey пайдалансаңыз, дербес сценарийді біздің репозиторийден тікелей орнатуға болады. Tampermonkey GitHub жаңартуларын автоматты түрде тексереді және жаңа нұсқа шыққан сайын сізге хабарлайды.",
+          q6: "Менің сөйлесулерім немесе сұрауларым жеке ба?",
+          a6: "100% Жеке. Кеңейтім толығымен жергілікті құрылғыда жұмыс істейді. Ешқашан сыртқы серверге ешқандай сұраулар, жауаптар, аудио ағындар немесе жеке телеметрия жіберілмейді."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Артқа {s} секунд — аудио арқылы іздеу үшін басып тұрыңыз",
+          playPause: "Дыбысты ойнату / дыбысты кідірту (Space / K / Alt+P)",
+          forward: "{s} секунд алға — сүрту үшін басып тұрыңыз",
+          speed: "Ойнату жылдамдығы",
+          volume: "Аудио дыбыс деңгейі (Реттеу үшін айналдырыңыз)",
+          volumeSlider: "Аудио дыбыс деңгейі сырғытпасы",
+          download: "Аудио жүктеп алу",
+          shortcuts: "Пернелер тіркесімі және қимылдар",
+          collapse: "Ойыншыны жию",
+          expand: "ChatGPT Audio Controls кеңейтіңіз",
+          readAloud: "Дауыстап оқы"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud таңбашалар",
+          playPause: "Дыбысты ойнату / Дыбысты кідірту",
+          back: "Артқа {s} сек",
+          forward: "Алға {s} сек",
+          slower: "Баяу ойнату жылдамдығы",
+          faster: "Жылдам ойнату жылдамдығы",
+          volumeScroll: "Аудио дыбыс деңгейі Айналдыру",
+          smoothScrub: "Тегіс аудио іздеу",
+          volumeScrollKey: "🔈 жылжытыңыз",
+          smoothScrubKey: "◀{s} / {s}▶ түймесін басып тұрыңыз"
+        },
+        alerts: {
+          downloadError: "Аудио ағынды жүктеп алу мүмкін болмады. Дыбыс белсенді түрде жүктелгеніне көз жеткізіңіз."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Дыбысты ойнату / Дыбысты кідірту",
+          description: "Жалпы веб және жұмыс үстелі ойнатқыштарын сәйкестендіріп ойнатуды ауыстырып қосу (Alt+P қолдау көрсетіледі)"
+        },
+        seekBack: {
+          action: "10 секунд артқа",
+          description: "10 секунд артқа секіру (Дыбыс арқылы тегіс іздеу үшін басып тұрыңыз)"
+        },
+        seekForward: {
+          action: "10 секунд алға",
+          description: "10 секунд алға секіру (Дыбыс арқылы тегіс іздеу үшін басып тұрыңыз)"
+        },
+        speedDecrease: {
+          action: "Жылдамдықты азайту",
+          description: "Алдыңғы жылдамдыққа дейін төмендетіңіз"
+        },
+        speedIncrease: {
+          action: "Жылдамдықты арттыру",
+          description: "Келесі жылдамдықты алдын ала орнатуға өтіңіз"
+        }
+      }
+    },
+    kn: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "ನಿಯಂತ್ರಣಗಳು & Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ತೆರೆಯಿರಿ",
+        dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
+        seconds: "ಸೆಕೆಂಡುಗಳು",
+        star: "★ ನಕ್ಷತ್ರ",
+        docs: "ಡಾಕ್ಸ್",
+        issues: "ಸಮಸ್ಯೆಗಳು"
+      },
+      popup: {
+        header: {
+          switchTheme: "ಥೀಮ್ ಬದಲಿಸಿ",
+          openOptions: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ"
+        },
+        tabs: {
+          controls: "ನಿಯಂತ್ರಣಗಳು",
+          shortcuts: "ಕೀಗಳು",
+          about: "ಸುಮಾರು"
+        },
+        quickControls: {
+          playbackSpeed: "ಡೀಫಾಲ್ಟ್ ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ",
+          defaultVolume: "ಡೀಫಾಲ್ಟ್ ಆಡಿಯೊ ಪರಿಮಾಣ",
+          mute: "ಮ್ಯೂಟ್",
+          unmute: "ಅನ್‌ಮ್ಯೂಟ್ ಮಾಡಿ",
+          smartIntegrations: "ಸ್ಮಾರ್ಟ್ ಇಂಟಿಗ್ರೇಷನ್ಸ್",
+          globalShortcuts: "ಜಾಗತಿಕ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು",
+          globalShortcutsDesc: "ಸ್ಪೇಸ್/ಕೆ, Alt+P, Alt+Arrows ಮತ್ತು ಸ್ಪೀಡ್ ಕೀಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
+          smoothScrubbing: "ಸ್ಮೂತ್ ಆಡಿಯೋ ಸೀಕಿಂಗ್",
+          smoothScrubbingDesc: "◀10 ಅಥವಾ 10▶ ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳುವ ಮೂಲಕ ಹುಡುಕಾಟವನ್ನು ವೇಗಗೊಳಿಸಿ"
+        },
+        shortcuts: {
+          title: "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು",
+          gesturesTitle: "ಮೌಸ್ ಮತ್ತು ಟಚ್ ಗೆಸ್ಚರ್‌ಗಳು",
+          smoothAudioScrub: "ಸ್ಮೂತ್ ಆಡಿಯೋ ಆಡಿಯೋ ಸೀಕಿಂಗ್",
+          directDownload: "ನೇರ ಡೌನ್‌ಲೋಡ್",
+          holdScrubKey: "◀10 / 10▶ ಹಿಡಿದುಕೊಳ್ಳಿ",
+          clickDownloadKey: "📥 ಬಟನ್ ಕ್ಲಿಕ್ ಮಾಡಿ"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ಇನ್ಫೋಕ್ಸಿಕಾದಿಂದ ತೆರೆದ ಮೂಲ",
+          description: "ತಡೆರಹಿತ ಆಡಿಯೊ ಆಡಿಯೊ ಸೀಕಿಂಗ್, ಡೈನಾಮಿಕ್ ಸ್ಪೀಡ್ ಪ್ರಿಸೆಟ್‌ಗಳು, ಡೈರೆಕ್ಟ್ ಆಡಿಯೊ ಡೌನ್‌ಲೋಡ್‌ಗಳು ಮತ್ತು ಒಂದು-ಕ್ಲಿಕ್ ಸ್ಪೀಚ್ ಟ್ರಿಗ್ಗರ್‌ಗಳೊಂದಿಗೆ ಚಾಟ್‌ಜಿಪಿಟಿಯ ಧ್ವನಿ ಅನುಭವವನ್ನು ಹೆಚ್ಚಿಸುವುದು.",
+          privacyTitle: "100% ಗೌಪ್ಯತೆಯನ್ನು ಕೇಂದ್ರೀಕರಿಸಲಾಗಿದೆ",
+          privacyDesc: "ಟ್ರ್ಯಾಕರ್‌ಗಳಿಲ್ಲ, ಟೆಲಿಮೆಟ್ರಿ ಇಲ್ಲ. ಎಲ್ಲವೂ ನಿಮ್ಮ ಯಂತ್ರದಲ್ಲಿ ಚಲಿಸುತ್ತದೆ.",
+          githubRepo: "GitHub ರೆಪೊಸಿಟರಿ",
+          documentation: "ದಾಖಲೆ",
+          reportIssue: "ಸಮಸ್ಯೆಯನ್ನು ವರದಿ ಮಾಡಿ"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಮತ್ತು ಸೆಟಪ್",
+          preferences: "ಆದ್ಯತೆಗಳು",
+          shortcuts: "ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಗೆಸ್ಚರ್‌ಗಳು",
+          faq: "FAQ & ಟ್ರಬಲ್‌ಶೂಟಿಂಗ್",
+          darkMode: "ಡಾರ್ಕ್ ಮೋಡ್",
+          lightMode: "ಲೈಟ್ ಮೋಡ್",
+          githubRepo: "GitHub ರೆಪೊ"
+        },
+        headers: {
+          preferencesTitle: "ಆಡಿಯೋ ಮತ್ತು ಪ್ಲೇಬ್ಯಾಕ್ ಪ್ರಾಶಸ್ತ್ಯಗಳು",
+          preferencesDesc: "ಭಾಷೆ, ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ ಪೂರ್ವನಿಗದಿಗಳು, ಡೀಫಾಲ್ಟ್ ಆಡಿಯೊ ಪರಿಮಾಣ ಮತ್ತು ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಕಾನ್ಫಿಗರ್ ಮಾಡಿ.",
+          shortcutsTitle: "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಗೆಸ್ಚರ್‌ಗಳು",
+          shortcutsDesc: "ಪ್ರಯಾಸವಿಲ್ಲದ ಪ್ಲೇಬ್ಯಾಕ್ ಮ್ಯಾನಿಪ್ಯುಲೇಷನ್‌ಗಾಗಿ ತ್ವರಿತ ಹಾಟ್‌ಕೀಗಳನ್ನು ಕರಗತ ಮಾಡಿಕೊಳ್ಳಿ.",
+          faqTitle: "FAQ & ಟ್ರಬಲ್‌ಶೂಟಿಂಗ್",
+          faqDesc: "ವಿವರವಾದ ತಾಂತ್ರಿಕ ಮಾರ್ಗದರ್ಶಿ, ಭದ್ರತೆ ಮತ್ತು ಬೆಂಬಲ ಉತ್ತರಗಳು."
+        },
+        general: {
+          languageTitle: "ಭಾಷೆ ಮತ್ತು ಸ್ಥಳೀಕರಣ",
+          languageDesc: "ನಿಮ್ಮ ಆದ್ಯತೆಯ ಇಂಟರ್ಫೇಸ್ ಭಾಷೆಯನ್ನು ಆರಿಸಿ ಅಥವಾ ವಿಸ್ತರಣೆಯು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನ ಭಾಷೆಯನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪತ್ತೆಹಚ್ಚಲು ಅವಕಾಶ ಮಾಡಿಕೊಡಿ.",
+          languageAuto: "ಸ್ವಯಂ ಪತ್ತೆ (ಬ್ರೌಸರ್ ಭಾಷೆ)",
+          languageDetected: "ಪತ್ತೆಹಚ್ಚಲಾಗಿದೆ",
+          speedTitle: "ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಪೀಡ್ ಪ್ರಾಶಸ್ತ್ಯಗಳು",
+          speedDesc: "ChatGPT ತೆರೆಯುವಾಗ ಅಥವಾ Read Aloud ಅನ್ನು ಪ್ರಾರಂಭಿಸುವಾಗ ನಿಮ್ಮ ಡೀಫಾಲ್ಟ್ ಪ್ಲೇಬ್ಯಾಕ್ ದರವನ್ನು ಆರಿಸಿ.",
+          volumeTitle: "ಡೀಫಾಲ್ಟ್ ಆಡಿಯೊ ವಾಲ್ಯೂಮ್ ಮಟ್ಟ",
+          volumeDesc: "ಗಟ್ಟಿಯಾಗಿ ಓದಿ ಸ್ಟ್ರೀಮ್‌ಗಳಿಗಾಗಿ ಆಡಿಯೊ ಪರಿಮಾಣವನ್ನು ಮೊದಲೇ ಹೊಂದಿಸಿ.",
+          seekTitle: "ಸ್ಕಿಪ್ & ಸೀಕ್ ಸ್ಟೆಪ್",
+          seekDesc: "-10s / +10s ಬಟನ್‌ಗಳು ಅಥವಾ Alt + Left / Alt + Right ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ಸ್ಕಿಪ್ ಮಾಡಲು ಸೆಕೆಂಡುಗಳ ಸಂಖ್ಯೆ.",
+          secondsUnit: "ಸೆಕೆಂಡುಗಳು"
+        },
+        shortcutsGuide: {
+          title: "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳ ಉಲ್ಲೇಖ",
+          desc: "ದಕ್ಷತಾಶಾಸ್ತ್ರದ ಸಿಂಗಲ್-ಹ್ಯಾಂಡ್ ಮತ್ತು ಯೂಟ್ಯೂಬ್-ಸ್ಟ್ಯಾಂಡರ್ಡ್ ಪ್ಲೇಬ್ಯಾಕ್ ಹಾಟ್‌ಕೀಗಳೊಂದಿಗೆ ನಿಮ್ಮ ವರ್ಕ್‌ಫ್ಲೋ ಅನ್ನು ವೇಗಗೊಳಿಸಿ.",
+          gesturesTitle: "ಮೌಸ್ & ಹೋಲ್ಡ್ ಆಡಿಯೊ ಸೀಕಿಂಗ್ ಗೆಸ್ಚರ್‌ಗಳು",
+          gesturesDesc: "ಡೈನಾಮಿಕ್ ವೇಗವರ್ಧನೆಯೊಂದಿಗೆ ದೀರ್ಘ ಧ್ವನಿ ಉತ್ತರಗಳ ಮೂಲಕ ಆಡಿಯೊ ಮೂಲಕ ಸರಾಗವಾಗಿ ಹುಡುಕಲು ◀10s ಅಥವಾ 10s▶ ಬಟನ್‌ಗಳನ್ನು ಹಿಡಿದುಕೊಳ್ಳಿ:",
+          gestureHold03: "ಮೃದುವಾದ ಆಡಿಯೊ ಕೋರಿ ಮೋಡ್‌ಗೆ ಪ್ರವೇಶಿಸುತ್ತದೆ (4× ಸಾಮಾನ್ಯ ವೇಗ).",
+          gestureHold15: "10× ಹುಡುಕುವ ದರಕ್ಕೆ ವೇಗವನ್ನು ನೀಡುತ್ತದೆ.",
+          gestureHold30: "25× ದರದಲ್ಲಿ ಹೈ-ಸ್ಪೀಡ್ ಜಂಪ್ ದರ.",
+          gestureRelease: "ಅಪೇಕ್ಷಿತ ಸ್ಥಾನಕ್ಕೆ ಮನಬಂದಂತೆ ಲಾಕ್ ಮಾಡುತ್ತದೆ."
+        },
+        faq: {
+          title: "ಪದೇ ಪದೇ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಬಳಕೆದಾರ ಮಾರ್ಗದರ್ಶಿ",
+          subtitle: "ChatGPT Audio Controls ನಿಂದ ಹೆಚ್ಚಿನದನ್ನು ಪಡೆಯಲು ನಿಮಗೆ ಸಹಾಯ ಮಾಡಲು ತ್ವರಿತ ಉತ್ತರಗಳು.",
+          q1: "ನನ್ನ ಮೌಸ್‌ನೊಂದಿಗೆ ಸ್ಕ್ರೋಲಿಂಗ್ ಮಾಡುವ ಮೂಲಕ ನಾನು ಆಡಿಯೊ ವಾಲ್ಯೂಮ್ ಅನ್ನು ಹೇಗೆ ಹೊಂದಿಸುವುದು?",
+          a1: "ಪ್ಲೇಯರ್ ರೈಲಿನಲ್ಲಿರುವ ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಸ್ಪೀಕರ್ ಐಕಾನ್ ಮೇಲೆ ನಿಮ್ಮ ಮೌಸ್ ಪಾಯಿಂಟರ್ ಅನ್ನು ಸುಳಿದಾಡಿ ಮತ್ತು ನಿಮ್ಮ ಮೌಸ್ ಚಕ್ರವನ್ನು ಮೇಲಕ್ಕೆ ಅಥವಾ ಕೆಳಕ್ಕೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ. ಸ್ಲೈಡರ್ ಪಾಪೋವರ್ ಅನ್ನು ತೆರೆಯದೆಯೇ ಆಡಿಯೊ ವಾಲ್ಯೂಮ್ 5% ಏರಿಕೆಗಳಲ್ಲಿ ಸರಾಗವಾಗಿ ಸರಿಹೊಂದಿಸುತ್ತದೆ!",
+          q2: "ಆಟಗಾರನು ChatGPT ನಲ್ಲಿ ಎಲ್ಲಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತಾನೆ?",
+          a2: "ನಿಮ್ಮ ಸಂದೇಶ ಸಂಯೋಜಕ ಪ್ರಾಂಪ್ಟ್‌ನ ಪಕ್ಕದಲ್ಲಿ ಪ್ಲೇಯರ್ ಅನ್ನು ಅನುಕೂಲಕರವಾಗಿ ನೇರವಾಗಿ ಜೋಡಿಸಲಾಗಿದೆ. ಯಾವುದೇ ಆಡಿಯೋ ಪ್ಲೇ ಆಗದೇ ಇರುವಾಗ, ಒಂದು ಸಣ್ಣ ತೇಲುವ ಲೋಗೋ ಬಟನ್ ಬಲಭಾಗದಲ್ಲಿ ಅಂದವಾಗಿ ಡಾಕ್ ಆಗಿರುತ್ತದೆ. ಈ ಬಟನ್ ಅನ್ನು ಕ್ಲಿಕ್ ಮಾಡುವುದರಿಂದ ಅಥವಾ ಗಟ್ಟಿಯಾಗಿ ಓದುವುದನ್ನು ಪ್ರಾರಂಭಿಸುವುದು ಪೂರ್ಣ ಪ್ಲೇಯರ್ ನಿಯಂತ್ರಣ ಬಾರ್‌ಗಳನ್ನು ವಿಸ್ತರಿಸುತ್ತದೆ.",
+          q3: "ಸಂಶ್ಲೇಷಿತ ಭಾಷಣ ಆಡಿಯೋವನ್ನು ನಾನು ಹೇಗೆ ಡೌನ್‌ಲೋಡ್ ಮಾಡುವುದು?",
+          a3: "ChatGPT ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಗಟ್ಟಿಯಾಗಿ ಓದಿದಾಗ, ಬಲ ರೈಲಿನಲ್ಲಿರುವ ಡೌನ್‌ಲೋಡ್ ಬಟನ್ (📥) ಕ್ಲಿಕ್ ಮಾಡಿ. ಆಡಿಯೊ ಸ್ಟ್ರೀಮ್ ಅನ್ನು ತಕ್ಷಣವೇ ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಉತ್ತಮ ಗುಣಮಟ್ಟದ ಆಡಿಯೊ ಫೈಲ್ (.mp3, .m4a, ಅಥವಾ .wav) ಆಗಿ ಉಳಿಸಲಾಗುತ್ತದೆ.",
+          q4: "ಇದು ಸಣ್ಣ ಲ್ಯಾಪ್‌ಟಾಪ್ ಪರದೆಗಳಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆಯೇ?",
+          a4: "ಹೌದು! ಪ್ಲೇಯರ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ನಿಮ್ಮ ಲಭ್ಯವಿರುವ ಪರದೆಯ ಅಗಲವನ್ನು ಪತ್ತೆ ಮಾಡುತ್ತದೆ ಮತ್ತು ನಿಮ್ಮ ಲ್ಯಾಪ್‌ಟಾಪ್ ಪರದೆಯನ್ನು ಆರಾಮವಾಗಿ ಹೊಂದಿಸಲು ಅದರ ಸೀಕ್‌ಬಾರ್ ಅನ್ನು ಕ್ರಿಯಾತ್ಮಕವಾಗಿ ಅಳೆಯುತ್ತದೆ. ಸ್ಥಳವು ತುಂಬಾ ಬಿಗಿಯಾಗಿದ್ದರೆ, ಫ್ಲೋಟಿಂಗ್ ಬಟನ್ ಪ್ರವೇಶಿಸಬಹುದಾಗಿದೆ ಆದ್ದರಿಂದ ನಿಮಗೆ ಅಗತ್ಯವಿರುವಾಗ ನೀವು ಪ್ಲೇಯರ್ ಅನ್ನು ವಿಸ್ತರಿಸಬಹುದು ಮತ್ತು ಕುಗ್ಗಿಸಬಹುದು.",
+          q5: "ಸ್ವಯಂ-ನವೀಕರಣಗಳೊಂದಿಗೆ ಟ್ಯಾಂಪರ್‌ಮಂಕಿ ಮೂಲಕ ನಾನು ಇದನ್ನು ಹೇಗೆ ಸ್ಥಾಪಿಸುವುದು?",
+          a5: "ನೀವು Tampermonkey, Violentmonkey, ಅಥವಾ Greasemonkey ಅನ್ನು ಬಳಸಿದರೆ, ನೀವು ನಮ್ಮ ರೆಪೊಸಿಟರಿಯಿಂದ ನೇರವಾಗಿ ಸ್ವತಂತ್ರ ಸ್ಕ್ರಿಪ್ಟ್ ಅನ್ನು ಸ್ಥಾಪಿಸಬಹುದು. Tampermonkey ನವೀಕರಣಗಳಿಗಾಗಿ GitHub ಅನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪರಿಶೀಲಿಸುತ್ತದೆ ಮತ್ತು ಹೊಸ ಆವೃತ್ತಿಯನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿದಾಗಲೆಲ್ಲಾ ನಿಮಗೆ ತಿಳಿಸುತ್ತದೆ.",
+          q6: "ನನ್ನ ಸಂಭಾಷಣೆಗಳು ಅಥವಾ ಪ್ರಾಂಪ್ಟ್‌ಗಳು ಖಾಸಗಿಯೇ?",
+          a6: "100% ಖಾಸಗಿ. ವಿಸ್ತರಣೆಯು ನಿಮ್ಮ ಸ್ಥಳೀಯ ಸಾಧನದಲ್ಲಿ ಸಂಪೂರ್ಣವಾಗಿ ಚಲಿಸುತ್ತದೆ. ಯಾವುದೇ ಪ್ರಾಂಪ್ಟ್‌ಗಳು, ಉತ್ತರಗಳು, ಆಡಿಯೊ ಸ್ಟ್ರೀಮ್‌ಗಳು ಅಥವಾ ವೈಯಕ್ತಿಕ ಟೆಲಿಮೆಟ್ರಿಯನ್ನು ಯಾವುದೇ ಬಾಹ್ಯ ಸರ್ವರ್‌ಗೆ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "ಹಿಂದೆ {s} ಸೆಕೆಂಡುಗಳು — ಆಡಿಯೊ ಮೂಲಕ ಹುಡುಕಲು ಹಿಡಿದುಕೊಳ್ಳಿ",
+          playPause: "ಆಡಿಯೋ ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೋ ವಿರಾಮಗೊಳಿಸಿ (Space / K / Alt+P)",
+          forward: "ಫಾರ್ವರ್ಡ್ {s} ಸೆಕೆಂಡುಗಳು — ಆಡಿಯೊ ಮೂಲಕ ಹುಡುಕಲು ಹಿಡಿದುಕೊಳ್ಳಿ",
+          speed: "ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ",
+          volume: "ಆಡಿಯೊ ವಾಲ್ಯೂಮ್ (ಹೊಂದಿಸಲು ಸ್ಕ್ರಾಲ್ ಮಾಡಿ)",
+          volumeSlider: "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಸ್ಲೈಡರ್",
+          download: "ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+          shortcuts: "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಗೆಸ್ಚರ್‌ಗಳು",
+          collapse: "ಪ್ಲೇಯರ್ ಅನ್ನು ಕುಗ್ಗಿಸಿ",
+          expand: "ChatGPT Audio Controls ವಿಸ್ತರಿಸಿ",
+          readAloud: "ಗಟ್ಟಿಯಾಗಿ ಓದಿ"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು",
+          playPause: "ಆಡಿಯೊವನ್ನು ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ",
+          back: "ಹಿಂದೆ {s} ಸೆಕೆಂಡು",
+          forward: "ಫಾರ್ವರ್ಡ್ {s} ಸೆಕೆಂಡು",
+          slower: "ನಿಧಾನವಾದ ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ",
+          faster: "ವೇಗವಾದ ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ",
+          volumeScroll: "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಸ್ಕ್ರಾಲ್",
+          smoothScrub: "ಸ್ಮೂತ್ ಆಡಿಯೋ ಸೀಕಿಂಗ್",
+          volumeScrollKey: "🔈 ಮೇಲೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ",
+          smoothScrubKey: "ಹೋಲ್ಡ್ ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "ಆಡಿಯೋ ಸ್ಟ್ರೀಮ್ ಅನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಆಡಿಯೋ ಸಕ್ರಿಯವಾಗಿ ಲೋಡ್ ಆಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "ಆಡಿಯೊವನ್ನು ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ",
+          description: "ಪ್ಲೇಬ್ಯಾಕ್ ಅನ್ನು ಟಾಗಲ್ ಮಾಡಿ, ಸಾಮಾನ್ಯ ವೆಬ್ ಮತ್ತು ಡೆಸ್ಕ್‌ಟಾಪ್ ಪ್ಲೇಯರ್‌ಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುತ್ತದೆ (Alt+P ಬೆಂಬಲಿತವಾಗಿದೆ)"
+        },
+        seekBack: {
+          action: "ಹಿಂದೆ 10 ಸೆಕೆಂಡುಗಳು",
+          description: "10 ಸೆ ಹಿಂದಕ್ಕೆ ಹೋಗು (ಆಡಿಯೊ ಮೂಲಕ ಸುಗಮ ಹುಡುಕಾಟಕ್ಕಾಗಿ ಹಿಡಿದುಕೊಳ್ಳಿ)"
+        },
+        seekForward: {
+          action: "ಫಾರ್ವರ್ಡ್ 10 ಸೆಕೆಂಡುಗಳು",
+          description: "10 ಸೆಕೆಂಡು ಮುಂದಕ್ಕೆ ಹೋಗು (ಆಡಿಯೊ ಮೂಲಕ ಸುಗಮ ಹುಡುಕಾಟಕ್ಕಾಗಿ ಹಿಡಿದುಕೊಳ್ಳಿ)"
+        },
+        speedDecrease: {
+          action: "ವೇಗವನ್ನು ಕಡಿಮೆ ಮಾಡಿ",
+          description: "ಹಿಂದಿನ ವೇಗ ಪೂರ್ವನಿಗದಿಗೆ ಕೆಳಗಿಳಿ"
+        },
+        speedIncrease: {
+          action: "ವೇಗವನ್ನು ಹೆಚ್ಚಿಸಿ",
+          description: "ಮುಂದಿನ ವೇಗದ ಪೂರ್ವನಿಗದಿಗೆ ಹೆಜ್ಜೆ ಹಾಕಿ"
+        }
+      }
+    },
+    lt: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Valdikliai ir Read Aloud",
+        version: "v",
+        openChatGPT: "Atidarykite ChatGPT",
+        dashboard: "Prietaisų skydelis",
+        seconds: "sekundės",
+        star: "★ Žvaigždė",
+        docs: "Dokumentai",
+        issues: "Problemos"
+      },
+      popup: {
+        header: {
+          switchTheme: "Perjungti temą",
+          openOptions: "Atidarykite prietaisų skydelį ir nustatymus"
+        },
+        tabs: {
+          controls: "Valdikliai",
+          shortcuts: "Raktai",
+          about: "Apie"
+        },
+        quickControls: {
+          playbackSpeed: "Numatytasis atkūrimo greitis",
+          defaultVolume: "Numatytasis garso garsumas",
+          mute: "Nutildyti",
+          unmute: "Įjungti garsą",
+          smartIntegrations: "Išmaniosios integracijos",
+          globalShortcuts: "Visuotiniai spartieji klavišai",
+          globalShortcutsDesc: "Įgalinti tarpo / K, Alt+P, Alt+Arrows ir greičio klavišus",
+          smoothScrubbing: "Sklandus garso ieškojimas",
+          smoothScrubbingDesc: "Paspartinkite paiešką laikydami ◀10 arba 10▶"
+        },
+        shortcuts: {
+          title: "Spartieji klavišai",
+          gesturesTitle: "Pelės ir prisilietimo gestai",
+          smoothAudioScrub: "Sklandaus garso garso paieška",
+          directDownload: "Tiesioginis atsisiuntimas",
+          holdScrubKey: "Laikykite ◀10 / 10▶",
+          clickDownloadKey: "Spustelėkite mygtuką 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "„Infoxica“ atvirasis šaltinis",
+          description: "Patobulinkite „ChatGPT“ balso patirtį su sklandžiu garso garso paieška, dinaminiais iš anksto nustatytais greičio nustatymais, tiesioginiu garso atsisiuntimu ir vienu spustelėjimu veikiančiais kalbos paleidikliais.",
+          privacyTitle: "100 % orientuota į privatumą",
+          privacyDesc: "Nėra stebėjimo priemonių, nėra telemetrijos. Viskas veikia jūsų mašinoje.",
+          githubRepo: "GitHub saugykla",
+          documentation: "Dokumentacija",
+          reportIssue: "Pranešti apie problemą"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Prietaisų skydelis ir sąranka",
+          preferences: "Nuostatos",
+          shortcuts: "Spartieji klavišai ir gestai",
+          faq: "DUK ir trikčių šalinimas",
+          darkMode: "Tamsusis režimas",
+          lightMode: "Šviesos režimas",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Garso ir atkūrimo nuostatos",
+          preferencesDesc: "Konfigūruokite kalbą, išankstinius atkūrimo greičio nustatymus, numatytąjį garso garsumą ir funkcijas.",
+          shortcutsTitle: "Spartieji klavišai ir gestai",
+          shortcutsDesc: "Įvaldykite greituosius sparčiuosius klavišus, kad galėtumėte lengvai valdyti atkūrimą.",
+          faqTitle: "DUK ir trikčių šalinimas",
+          faqDesc: "Išsamus techninis vadovas, saugos ir pagalbos atsakymai."
+        },
+        general: {
+          languageTitle: "Kalba ir lokalizacija",
+          languageDesc: "Pasirinkite pageidaujamą sąsajos kalbą arba leiskite plėtiniui automatiškai aptikti jūsų naršyklės kalbą.",
+          languageAuto: "Automatinis aptikimas (naršyklės kalba)",
+          languageDetected: "Aptikta",
+          speedTitle: "Atkūrimo greičio nuostatos",
+          speedDesc: "Atidarydami ChatGPT arba paleiskite Read Aloud pasirinkite numatytąjį atkūrimo greitį.",
+          volumeTitle: "Numatytasis garso garsumo lygis",
+          volumeDesc: "Iš anksto nustatytas skaitymo garsiai kalbos srautų garso stiprumas.",
+          seekTitle: "Praleiskite ir ieškokite žingsnio",
+          seekDesc: "Skaičius, kiek sekundžių reikia praleisti vienu mygtukų paspaudimu -10s / +10s arba Alt + Left / Alt + Right.",
+          secondsUnit: "sekundės"
+        },
+        shortcutsGuide: {
+          title: "Spartieji klaviatūros klavišai",
+          desc: "Paspartinkite darbo eigą naudodami ergonomiškus viena ranka ir standartinius „YouTube“ atkūrimo sparčiuosius klavišus.",
+          gesturesTitle: "Pelės ir laikymo garso paieškos gestai",
+          gesturesDesc: "Laikykite nuspaudę ◀10s arba 10s▶ mygtukus, kad sklandžiai perklausytumėte garsą per ilgus atsakymus balsu su dinaminiu pagreičiu:",
+          gestureHold03: "Įjungia sklandų garso paieškos režimą (4× normalus greitis).",
+          gestureHold15: "Pagreitina iki 10 × paieškos greičio.",
+          gestureHold30: "Didelio greičio šuolio greitis 25×.",
+          gestureRelease: "Sklandžiai užsifiksuoja norimoje padėtyje."
+        },
+        faq: {
+          title: "Dažnai užduodami klausimai ir vartotojo vadovas",
+          subtitle: "Greiti atsakymai, padėsiantys išnaudoti visas ChatGPT Audio Controls galimybes.",
+          q1: "Kaip reguliuoti garso garsumą slenkant pele?",
+          a1: "Tiesiog užveskite pelės žymeklį virš garso garsumo garsiakalbio piktogramos, esančios grotuvo bėgelyje, ir slinkite pelės ratuką aukštyn arba žemyn. Garso garsumas bus sklandžiai reguliuojamas 5% žingsniais, neatidarius slankiklio iššokančiojo lango!",
+          q2: "Kur grotuvas rodomas ChatGPT?",
+          a2: "Grotuvas yra patogiai pritvirtintas prie jūsų pranešimo kūrėjo raginimo. Kai garsas negrojamas, mažas slankiojantis logotipo mygtukas lieka tvarkingai pritvirtintas dešinėje pusėje. Spustelėjus šį mygtuką arba pradėjus skaityti garsiai, išplečiamos visos grotuvo valdymo juostos.",
+          q3: "Kaip atsisiųsti sintezuotą kalbos garsą?",
+          a3: "Kai ChatGPT garsiai perskaito atsakymą, spustelėkite atsisiuntimo mygtuką (📥) dešinėje pusėje. Garso srautas akimirksniu išsaugomas kaip aukštos kokybės garso failas (.mp3, .m4a arba .wav) jūsų kompiuteryje.",
+          q4: "Ar tai veikia mažuose nešiojamųjų kompiuterių ekranuose?",
+          a4: "Taip! Grotuvas automatiškai aptinka galimą ekrano plotį ir dinamiškai keičia paieškos juostą, kad patogiai tilptų į nešiojamojo kompiuterio ekraną. Jei vietos labai mažai, slankusis mygtukas lieka pasiekiamas, kad galėtumėte išplėsti ir sutraukti grotuvą, kai tik to prireiks.",
+          q5: "Kaip tai įdiegti per Tampermonkey su automatiniais atnaujinimais?",
+          a5: "Jei naudojate Tampermonkey, Violentmonkey arba Greasemonkey, galite įdiegti atskirą scenarijų tiesiai iš mūsų saugyklos. Tampermonkey automatiškai patikrins GitHub, ar nėra naujinimų, ir praneš, kai bus išleista nauja versija.",
+          q6: "Ar mano pokalbiai ar raginimai yra privatūs?",
+          a6: "100 % privatus. Plėtinys veikia tik vietiniame įrenginyje. Jokie raginimai, atsakymai, garso srautai ar asmeninė telemetrija niekada nesiunčiami į jokį išorinį serverį."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Atgal {s} sek. – palaikykite, jei norite ieškoti garso",
+          playPause: "Leisti garsą / pristabdyti garsą (Space / K / Alt+P)",
+          forward: "Pirmyn {s} sek. – palaikykite, jei norite ieškoti garso",
+          speed: "Atkūrimo greitis",
+          volume: "Garso garsumas (slinkite, kad sureguliuotumėte)",
+          volumeSlider: "Garso garsumo slankiklis",
+          download: "Atsisiųsti garso įrašą",
+          shortcuts: "Spartieji klavišai ir gestai",
+          collapse: "Sutraukti grotuvą",
+          expand: "Išskleiskite ChatGPT Audio Controls",
+          readAloud: "Skaityti garsiai"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Spartieji klavišai",
+          playPause: "Leisti garsą / pristabdyti garsą",
+          back: "Atgal {s} sek",
+          forward: "Pirmyn {s} sek",
+          slower: "Lėtesnis atkūrimo greitis",
+          faster: "Didesnis atkūrimo greitis",
+          volumeScroll: "Garso garsumas Slinkite",
+          smoothScrub: "Sklandus garso ieškojimas",
+          volumeScrollKey: "Slinkite toliau 🔈",
+          smoothScrubKey: "Laikykite ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Nepavyko atsisiųsti garso srauto. Įsitikinkite, kad garsas yra aktyviai įkeltas."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Leisti garsą / pristabdyti garsą",
+          description: "Perjungti atkūrimą, suderinti įprastus žiniatinklio ir stalinių kompiuterių grotuvus (Alt+P išlieka palaikomas)"
+        },
+        seekBack: {
+          action: "Atgal 10 sekundžių",
+          description: "Peršokti atgal 10 s (palaikykite, jei norite sklandžiai ieškoti garso)"
+        },
+        seekForward: {
+          action: "Pirmyn 10 sekundžių",
+          description: "Peršokti 10 s į priekį (palaikykite, jei norite sklandžiai ieškoti garso)"
+        },
+        speedDecrease: {
+          action: "Sumažinkite greitį",
+          description: "Sumažinkite iki ankstesnio greičio nustatymo"
+        },
+        speedIncrease: {
+          action: "Padidinkite greitį",
+          description: "Padidinkite iki kito iš anksto nustatyto greičio"
+        }
+      }
+    },
+    lv: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Vadības ierīces un Read Aloud",
+        version: "v",
+        openChatGPT: "Atveriet ChatGPT",
+        dashboard: "Informācijas panelis",
+        seconds: "sekundes",
+        star: "★ Zvaigzne",
+        docs: "Dokumenti",
+        issues: "Problēmas"
+      },
+      popup: {
+        header: {
+          switchTheme: "Pārslēgt motīvu",
+          openOptions: "Atveriet informācijas paneli un iestatījumus"
+        },
+        tabs: {
+          controls: "Vadības ierīces",
+          shortcuts: "Taustiņi",
+          about: "Par"
+        },
+        quickControls: {
+          playbackSpeed: "Noklusētais atskaņošanas ātrums",
+          defaultVolume: "Noklusējuma audio skaļums",
+          mute: "Izslēgt",
+          unmute: "Ieslēgt skaņu",
+          smartIntegrations: "Viedās integrācijas",
+          globalShortcuts: "Globālie saīsnes",
+          globalShortcutsDesc: "Iespējot Space/K, Alt+P, Alt+Arrows un ātruma taustiņus",
+          smoothScrubbing: "Vienmērīga audio meklēšana",
+          smoothScrubbingDesc: "Paātriniet meklēšanu, turot ◀10 vai 10▶"
+        },
+        shortcuts: {
+          title: "Tastatūras īsinājumtaustiņi",
+          gesturesTitle: "Peles un pieskāriena žesti",
+          smoothAudioScrub: "Vienmērīga audio audio meklēšana",
+          directDownload: "Tiešā lejupielāde",
+          holdScrubKey: "Turiet ◀10 / 10▶",
+          clickDownloadKey: "Noklikšķiniet uz pogas 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxica atvērtais avots",
+          description: "Uzlabojiet ChatGPT balss pieredzi, izmantojot nevainojamu audio audio meklēšanu, dinamiskus ātruma iestatījumus, tiešu audio lejupielādi un runas aktivizētājus ar vienu klikšķi.",
+          privacyTitle: "100% koncentrējas uz privātumu",
+          privacyDesc: "Nav izsekotāju, nav telemetrijas. Viss darbojas jūsu mašīnā.",
+          githubRepo: "GitHub krātuve",
+          documentation: "Dokumentācija",
+          reportIssue: "Ziņot par problēmu"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Informācijas panelis un iestatīšana",
+          preferences: "Preferences",
+          shortcuts: "Īsceļi un žesti",
+          faq: "Bieži uzdotie jautājumi un traucējummeklēšana",
+          darkMode: "Tumšais režīms",
+          lightMode: "Gaismas režīms",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Audio un atskaņošanas preferences",
+          preferencesDesc: "Konfigurējiet valodu, atskaņošanas ātruma sākotnējos iestatījumus, noklusējuma audio skaļumu un funkcijas.",
+          shortcutsTitle: "Tastatūras īsinājumtaustiņi un žesti",
+          shortcutsDesc: "Apgūstiet ātros karstos taustiņus, lai bez piepūles varētu manipulēt ar atskaņošanu.",
+          faqTitle: "Bieži uzdotie jautājumi un traucējummeklēšana",
+          faqDesc: "Detalizēta tehniskā rokasgrāmata, drošības un atbalsta atbildes."
+        },
+        general: {
+          languageTitle: "Valoda un lokalizācija",
+          languageDesc: "Izvēlieties vēlamo saskarnes valodu vai ļaujiet paplašinājumam automātiski noteikt jūsu pārlūkprogrammas valodu.",
+          languageAuto: "Automātiskā noteikšana (pārlūka valoda)",
+          languageDetected: "Atklāts",
+          speedTitle: "Atskaņošanas ātruma preferences",
+          speedDesc: "Izvēlieties noklusējuma atskaņošanas ātrumu, atverot ChatGPT vai palaižot Read Aloud.",
+          volumeTitle: "Noklusējuma audio skaļuma līmenis",
+          volumeDesc: "Iepriekš iestatīts audio skaļums lasīšanas skaļi runas straumēm.",
+          seekTitle: "Izlaist un meklēt",
+          seekDesc: "Sekunžu skaits, kas jāizlaiž, pieskaroties pogām -10s/+10s vai Alt + Left / Alt + Right.",
+          secondsUnit: "sekundes"
+        },
+        shortcutsGuide: {
+          title: "Tastatūras īsinājumtaustiņu uzziņa",
+          desc: "Paātriniet savu darbplūsmu, izmantojot ergonomiskus vienas rokas un YouTube standarta atskaņošanas karstos taustiņus.",
+          gesturesTitle: "Mouse & Hold Audio meklēšanas žesti",
+          gesturesDesc: "Turiet nospiestu pogu ◀10s vai 10s▶, lai vienmērīgi meklētu audio, izmantojot garas balss atbildes ar dinamisku paātrinājumu:",
+          gestureHold03: "Ieslēdz vienmērīgu audio meklēšanas režīmu (4× normāls ātrums).",
+          gestureHold15: "Paātrina līdz 10x meklēšanas ātrumam.",
+          gestureHold30: "Liela ātruma lēciena ātrums ar 25× ātrumu.",
+          gestureRelease: "Nemanāmi nofiksējas vēlamajā pozīcijā."
+        },
+        faq: {
+          title: "Bieži uzdotie jautājumi un lietotāja rokasgrāmata",
+          subtitle: "Ātras atbildes, lai palīdzētu jums maksimāli izmantot ChatGPT Audio Controls.",
+          q1: "Kā regulēt audio skaļumu, ritinot ar peli?",
+          a1: "Vienkārši novietojiet peles rādītāju virs audio skaļuma skaļruņa ikonas uz atskaņotāja sliedes un ritiniet peles ritenīti uz augšu vai uz leju. Audio skaļums tiks vienmērīgi pielāgots ar 5% soli, neatverot slīdni!",
+          q2: "Kur atskaņotājs parādās uz ChatGPT?",
+          a2: "Atskaņotājs ir ērti noenkurots tieši blakus ziņojuma sastādītāja uzvednei. Kad netiek atskaņots audio, neliela peldoša logotipa poga paliek kārtīgi piestiprināta labajā pusē. Noklikšķinot uz šīs pogas vai sākot lasīt skaļi, tiek izvērstas pilnas atskaņotāja vadības joslas.",
+          q3: "Kā lejupielādēt sintezēto runas audio?",
+          a3: "Ikreiz, kad ChatGPT skaļi nolasa atbildi, noklikšķiniet uz lejupielādes pogas (📥) labajā sliedē. Audio straume tiek nekavējoties saglabāta kā augstas kvalitātes audio fails (.mp3, .m4a vai .wav) jūsu datorā.",
+          q4: "Vai tas darbojas uz maziem klēpjdatoru ekrāniem?",
+          a4: "Jā! Atskaņotājs automātiski nosaka jūsu pieejamo ekrāna platumu un dinamiski mērogo meklēšanas joslu, lai ērti ietilptu jūsu klēpjdatora ekrānā. Ja vietas ir ļoti maz, peldošā poga paliek pieejama, lai jūs varētu izvērst un sakļaut atskaņotāju, kad vien tas nepieciešams.",
+          q5: "Kā to instalēt, izmantojot Tampermonkey ar automātiskajiem atjauninājumiem?",
+          a5: "Ja izmantojat Tampermonkey, Violentmonkey vai Greasemonkey, varat instalēt savrupo skriptu tieši no mūsu krātuves. Tampermonkey automātiski pārbaudīs GitHub atjauninājumus un paziņos jums ikreiz, kad tiks izlaista jauna versija.",
+          q6: "Vai manas sarunas vai uzvednes ir privātas?",
+          a6: "100% privāts. Paplašinājums pilnībā darbojas jūsu vietējā ierīcē. Uzvednes, atbildes, audio straumes vai personiskā telemetrija nekad netiek sūtīti uz ārēju serveri."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Atpakaļ {s} sekundes — turiet, lai meklētu audio",
+          playPause: "Atskaņot audio / apturēt audio (Space / K / Alt+P)",
+          forward: "Pārsūtīt {s} sekundes — turiet, lai meklētu audio",
+          speed: "Atskaņošanas ātrums",
+          volume: "Audio skaļums (ritiniet, lai pielāgotu)",
+          volumeSlider: "Audio skaļuma slīdnis",
+          download: "Lejupielādēt audio",
+          shortcuts: "Tastatūras īsinājumtaustiņi un žesti",
+          collapse: "Sakļaut atskaņotāju",
+          expand: "Izvērsiet ChatGPT Audio Controls",
+          readAloud: "Lasīt skaļi"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Īsceļi",
+          playPause: "Atskaņot audio / Pauzēt audio",
+          back: "Atpakaļ {s} sek",
+          forward: "Uz priekšu {s} sek",
+          slower: "Lēnāks atskaņošanas ātrums",
+          faster: "Ātrāks atskaņošanas ātrums",
+          volumeScroll: "Audio skaļums Ritiniet",
+          smoothScrub: "Vienmērīga audio meklēšana",
+          volumeScrollKey: "Ritiniet tālāk 🔈",
+          smoothScrubKey: "Turiet ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Nevarēja lejupielādēt audio straumi. Pārliecinieties, vai audio ir aktīvi ielādēts."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Atskaņot audio / Pauzēt audio",
+          description: "Pārslēgt atskaņošanu, saskaņojot parastos tīmekļa un galddatoru atskaņotājus (Alt+P joprojām tiek atbalstīts)"
+        },
+        seekBack: {
+          action: "Atpakaļ 10 sekundes",
+          description: "Pārlēkt atpakaļ 10 s (turiet, lai vienmērīgi meklētu audio)"
+        },
+        seekForward: {
+          action: "Uz priekšu par 10 sekundēm",
+          description: "Pārlēkt uz priekšu 10 s (turiet, lai vienmērīgi meklētu audio)"
+        },
+        speedDecrease: {
+          action: "Samaziniet ātrumu",
+          description: "Samaziniet līdz iepriekšējam ātruma iestatījumam"
+        },
+        speedIncrease: {
+          action: "Palieliniet ātrumu",
+          description: "Pārejiet uz nākamo ātruma iestatījumu"
+        }
+      }
+    },
+    mk: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Контроли и Read Aloud",
+        version: "v",
+        openChatGPT: "Отворете го ChatGPT",
+        dashboard: "Контролна табла",
+        seconds: "секунди",
+        star: "★ Ѕвезда",
+        docs: "Документи",
+        issues: "Прашања"
+      },
+      popup: {
+        header: {
+          switchTheme: "Префрли тема",
+          openOptions: "Отворете Контролна табла и поставки"
+        },
+        tabs: {
+          controls: "Контроли",
+          shortcuts: "Клучеви",
+          about: "За"
+        },
+        quickControls: {
+          playbackSpeed: "Стандардна брзина на репродукција",
+          defaultVolume: "Стандардна јачина на звукот",
+          mute: "Исклучи звук",
+          unmute: "Вклучи звук",
+          smartIntegrations: "Паметни интеграции",
+          globalShortcuts: "Глобални кратенки",
+          globalShortcutsDesc: "Овозможи копчиња Space/K, Alt+P, Alt+Arrows и брзина",
+          smoothScrubbing: "Непречено барање аудио",
+          smoothScrubbingDesc: "Забрзајте го барањето држејќи ◀10 или 10▶"
+        },
+        shortcuts: {
+          title: "Кратенки на тастатурата",
+          gesturesTitle: "Гестови со глувче и допир",
+          smoothAudioScrub: "Непречено барање аудио аудио",
+          directDownload: "Директно преземање",
+          holdScrubKey: "Држете ◀10 / 10▶",
+          clickDownloadKey: "Кликнете на копчето 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Отворен код од Инфоксика",
+          description: "Зголемување на гласовното искуство на ChatGPT со беспрекорно барање аудио аудио, динамички претходно поставени брзини, директни аудио преземања и говорни активирања со еден клик.",
+          privacyTitle: "100% фокусирана на приватност",
+          privacyDesc: "Без тракери, без телеметрија. Сè работи на вашата машина.",
+          githubRepo: "GitHub складиште",
+          documentation: "Документација",
+          reportIssue: "Пријави проблем"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Контролна табла и поставување",
+          preferences: "Преференци",
+          shortcuts: "Кратенки и гестови",
+          faq: "ЧПП и решавање проблеми",
+          darkMode: "Темен режим",
+          lightMode: "Светлосен режим",
+          githubRepo: "GitHub Репо"
+        },
+        headers: {
+          preferencesTitle: "Преференци за аудио и репродукција",
+          preferencesDesc: "Конфигурирајте го јазикот, претходно поставените брзини на репродукција, стандардната јачина на звукот и функциите.",
+          shortcutsTitle: "Кратенки и гестови на тастатурата",
+          shortcutsDesc: "Усовршете ги брзите брзи копчиња за манипулација со репродукција без напор.",
+          faqTitle: "ЧПП и решавање проблеми",
+          faqDesc: "Детален технички водич, безбедносни и одговори за поддршка."
+        },
+        general: {
+          languageTitle: "Јазик и локализација",
+          languageDesc: "Изберете го претпочитаниот јазик на интерфејсот или дозволете екстензијата автоматски да го открие јазикот на вашиот прелистувач.",
+          languageAuto: "Автоматско откривање (јазик на прелистувачот)",
+          languageDetected: "Откриен",
+          speedTitle: "Поставки за брзина на репродукција",
+          speedDesc: "Изберете ја вашата стандардна стапка на репродукција кога отворате ChatGPT или стартувате Read Aloud.",
+          volumeTitle: "Стандардно ниво на јачина на звукот",
+          volumeDesc: "Претходно поставена јачина на звук за говорни преноси на глас за читање.",
+          seekTitle: "Прескокни и барај чекор",
+          seekDesc: "Број на секунди за прескокнување со едно допирање на копчињата -10s / +10s или Alt + Left / Alt + Right.",
+          secondsUnit: "секунди"
+        },
+        shortcutsGuide: {
+          title: "Референца за кратенки на тастатура",
+          desc: "Забрзајте го вашиот работен тек со ергономски копчиња за репродукција со една рака и стандардни YouTube.",
+          gesturesTitle: "Глувче и задржете гестови за барање аудио",
+          gesturesDesc: "Држете ги копчињата ◀10s или 10s▶ за непречено да пребарувате низ аудио преку долги гласовни одговори со динамично забрзување:",
+          gestureHold03: "Влегува во режим на непречено барање аудио (4× нормална брзина).",
+          gestureHold15: "Забрзува до 10× стапка на барање.",
+          gestureHold30: "Брзина на скок со голема брзина со брзина од 25×.",
+          gestureRelease: "Беспрекорно се заклучува до саканата положба."
+        },
+        faq: {
+          title: "Често поставувани прашања и упатство за употреба",
+          subtitle: "Брзи одговори кои ќе ви помогнат да го извлечете максимумот од ChatGPT Audio Controls.",
+          q1: "Како да ја прилагодам јачината на звукот со лизгање со глувчето?",
+          a1: "Едноставно поставете го покажувачот на глувчето над иконата на звучникот за јачина на звук на шината на плеерот и скролувајте го тркалцето на глувчето нагоре или надолу. Јачината на звукот непречено ќе се прилагоди во чекори од 5%, без да мора да го отворите лизгачот поповер!",
+          q2: "Каде се појавува плеерот на ChatGPT?",
+          a2: "Плеерот е прицврстен погодно директно покрај известувањето за композиторот на вашата порака. Кога не се репродуцира звук, малото копче со лого со лого останува уредно закотвено на десната страна. Со кликнување на ова копче или со вклучување на Read Aloud се прошируваат целосните контролни ленти за плеерот.",
+          q3: "Како да го преземам синтетизираното говорно аудио?",
+          a3: "Секогаш кога ChatGPT гласно чита одговор, кликнете на копчето за преземање (📥) на десната шина. Аудио преносот веднаш се зачувува како висококвалитетна аудио датотека (.mp3, .m4a или .wav) на вашиот компјутер.",
+          q4: "Дали ова работи на мали екрани на лаптоп?",
+          a4: "Да! Плеерот автоматски ја открива вашата достапна ширина на екранот и динамички ја зголемува лентата за пребарување за удобно да одговара на екранот на вашиот лаптоп. Ако просторот е екстремно тесен, пловечкото копче останува достапно за да можете да го проширите и да го склопите плеерот секогаш кога ви треба.",
+          q5: "Како да го инсталирам ова преку Tampermonkey со автоматско ажурирање?",
+          a5: "Ако користите Tampermonkey, Violentmonkey или Greasemonkey, можете да ја инсталирате самостојната скрипта директно од нашето складиште. Tampermonkey автоматски ќе го провери GitHub за ажурирања и ќе ве известува секогаш кога ќе биде објавена нова верзија.",
+          q6: "Дали моите разговори или инструкции се приватни?",
+          a6: "100% приватен. Екстензијата работи целосно на вашиот локален уред. Никогаш не се испраќаат потсетници, одговори, аудио преноси или лична телеметрија на кој било надворешен сервер."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Назад {s} секунди — држете за да барате аудио",
+          playPause: "Репродуцирајте аудио / Паузирајте аудио (Space / K / Alt+P)",
+          forward: "Напред {s} секунди — држете за да пребарувате низ аудио",
+          speed: "Брзина на репродукција",
+          volume: "Јачина на звукот (Скролувајте за прилагодување)",
+          volumeSlider: "Лизгач за јачина на звук",
+          download: "Преземете аудио",
+          shortcuts: "Кратенки и гестови на тастатурата",
+          collapse: "Колапс играч",
+          expand: "Проширете го ChatGPT Audio Controls",
+          readAloud: "Читајте гласно"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Кратенки",
+          playPause: "Репродуцирајте аудио / Паузирајте го аудиото",
+          back: "Назад {s} сек",
+          forward: "Напред {s} сек",
+          slower: "Побавна брзина на репродукција",
+          faster: "Побрза брзина на репродукција",
+          volumeScroll: "Јачина на звукот Скролувајте",
+          smoothScrub: "Непречено барање аудио",
+          volumeScrollKey: "Скролувајте на 🔈",
+          smoothScrubKey: "Држете ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Не може да се преземе аудио преносот. Проверете дали аудиото е активно вчитано."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Репродуцирајте аудио / Паузирајте го аудиото",
+          description: "Вклучете ја репродукцијата, усогласување на вообичаените веб и десктоп плеери (Alt+P останува поддржан)"
+        },
+        seekBack: {
+          action: "Назад 10 секунди",
+          description: "Скокни наназад 10 секунди (Држете за непречено пребарување низ аудио)"
+        },
+        seekForward: {
+          action: "Напред 10 секунди",
+          description: "Скокни напред 10 секунди (Држете за непречено пребарување низ аудио)"
+        },
+        speedDecrease: {
+          action: "Намалете ја брзината",
+          description: "Спуштете се на претходно поставената брзина"
+        },
+        speedIncrease: {
+          action: "Зголемете ја брзината",
+          description: "Напредете на следната претходно поставена брзина"
+        }
+      }
+    },
+    ml: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "നിയന്ത്രണങ്ങളും Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT തുറക്കുക",
+        dashboard: "ഡാഷ്ബോർഡ്",
+        seconds: "സെക്കൻഡ്",
+        star: "★ നക്ഷത്രം",
+        docs: "ഡോക്‌സ്",
+        issues: "പ്രശ്നങ്ങൾ"
+      },
+      popup: {
+        header: {
+          switchTheme: "തീം മാറുക",
+          openOptions: "ഡാഷ്‌ബോർഡും ക്രമീകരണങ്ങളും തുറക്കുക"
+        },
+        tabs: {
+          controls: "നിയന്ത്രണങ്ങൾ",
+          shortcuts: "കീകൾ",
+          about: "ഏകദേശം"
+        },
+        quickControls: {
+          playbackSpeed: "ഡിഫോൾട്ട് പ്ലേബാക്ക് സ്പീഡ്",
+          defaultVolume: "ഡിഫോൾട്ട് ഓഡിയോ വോളിയം",
+          mute: "നിശബ്ദമാക്കുക",
+          unmute: "അൺമ്യൂട്ടുചെയ്യുക",
+          smartIntegrations: "സ്മാർട്ട് ഇൻ്റഗ്രേഷനുകൾ",
+          globalShortcuts: "ആഗോള കുറുക്കുവഴികൾ",
+          globalShortcutsDesc: "Space/K, Alt+P, Alt+Arrows & സ്പീഡ് കീകൾ പ്രവർത്തനക്ഷമമാക്കുക",
+          smoothScrubbing: "സുഗമമായ ഓഡിയോ തിരയൽ",
+          smoothScrubbingDesc: "◀10 അല്ലെങ്കിൽ 10▶ അമർത്തിപ്പിടിച്ച് അന്വേഷിക്കൽ ത്വരിതപ്പെടുത്തുക"
+        },
+        shortcuts: {
+          title: "കീബോർഡ് കുറുക്കുവഴികൾ",
+          gesturesTitle: "മൗസ് & ടച്ച് ആംഗ്യങ്ങൾ",
+          smoothAudioScrub: "സുഗമമായ ഓഡിയോ ഓഡിയോ തിരയൽ",
+          directDownload: "നേരിട്ടുള്ള ഡൗൺലോഡ്",
+          holdScrubKey: "◀10 / 10▶ പിടിക്കുക",
+          clickDownloadKey: "📥 ബട്ടൺ ക്ലിക്ക് ചെയ്യുക"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ഇൻഫോക്സിക്കയുടെ ഓപ്പൺ സോഴ്സ്",
+          description: "തടസ്സങ്ങളില്ലാത്ത ഓഡിയോ ഓഡിയോ സീക്കിംഗ്, ഡൈനാമിക് സ്പീഡ് പ്രീസെറ്റുകൾ, ഡയറക്ട് ഓഡിയോ ഡൗൺലോഡുകൾ, ഒറ്റ-ക്ലിക്ക് സംഭാഷണ ട്രിഗറുകൾ എന്നിവ ഉപയോഗിച്ച് ChatGPT-യുടെ ശബ്ദ അനുഭവം ഉയർത്തുന്നു.",
+          privacyTitle: "100% സ്വകാര്യത കേന്ദ്രീകരിച്ചു",
+          privacyDesc: "ട്രാക്കറുകൾ ഇല്ല, ടെലിമെട്രി ഇല്ല. എല്ലാം നിങ്ങളുടെ മെഷീനിൽ പ്രവർത്തിക്കുന്നു.",
+          githubRepo: "GitHub ശേഖരം",
+          documentation: "ഡോക്യുമെൻ്റേഷൻ",
+          reportIssue: "ഒരു പ്രശ്നം റിപ്പോർട്ട് ചെയ്യുക"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ഡാഷ്‌ബോർഡും സജ്ജീകരണവും",
+          preferences: "മുൻഗണനകൾ",
+          shortcuts: "കുറുക്കുവഴികളും ആംഗ്യങ്ങളും",
+          faq: "പതിവുചോദ്യങ്ങളും ട്രബിൾഷൂട്ടിംഗും",
+          darkMode: "ഡാർക്ക് മോഡ്",
+          lightMode: "ലൈറ്റ് മോഡ്",
+          githubRepo: "GitHub റിപ്പോ"
+        },
+        headers: {
+          preferencesTitle: "ഓഡിയോ & പ്ലേബാക്ക് മുൻഗണനകൾ",
+          preferencesDesc: "ഭാഷ, പ്ലേബാക്ക് സ്പീഡ് പ്രീസെറ്റുകൾ, ഡിഫോൾട്ട് ഓഡിയോ വോളിയം, സവിശേഷതകൾ എന്നിവ കോൺഫിഗർ ചെയ്യുക.",
+          shortcutsTitle: "കീബോർഡ് കുറുക്കുവഴികളും ആംഗ്യങ്ങളും",
+          shortcutsDesc: "അനായാസമായ പ്ലേബാക്ക് കൃത്രിമത്വത്തിനായി ദ്രുത ഹോട്ട്കീകൾ മാസ്റ്റർ ചെയ്യുക.",
+          faqTitle: "പതിവുചോദ്യങ്ങളും ട്രബിൾഷൂട്ടിംഗും",
+          faqDesc: "വിശദമായ സാങ്കേതിക ഗൈഡ്, സുരക്ഷ, പിന്തുണ ഉത്തരങ്ങൾ."
+        },
+        general: {
+          languageTitle: "ഭാഷയും പ്രാദേശികവൽക്കരണവും",
+          languageDesc: "നിങ്ങൾ തിരഞ്ഞെടുത്ത ഇൻ്റർഫേസ് ഭാഷ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ നിങ്ങളുടെ ബ്രൗസറിൻ്റെ ഭാഷ സ്വയമേവ കണ്ടെത്തുന്നതിന് വിപുലീകരണത്തെ അനുവദിക്കുക.",
+          languageAuto: "സ്വയമേവ കണ്ടെത്തൽ (ബ്രൗസർ ഭാഷ)",
+          languageDetected: "കണ്ടെത്തി",
+          speedTitle: "പ്ലേബാക്ക് സ്പീഡ് മുൻഗണനകൾ",
+          speedDesc: "ChatGPT തുറക്കുമ്പോഴോ Read Aloud സമാരംഭിക്കുമ്പോഴോ നിങ്ങളുടെ ഡിഫോൾട്ട് പ്ലേബാക്ക് നിരക്ക് തിരഞ്ഞെടുക്കുക.",
+          volumeTitle: "ഡിഫോൾട്ട് ഓഡിയോ വോളിയം ലെവൽ",
+          volumeDesc: "ഉച്ചത്തിലുള്ള സംഭാഷണ സ്ട്രീമുകൾക്കായി പ്രീസെറ്റ് ഓഡിയോ വോളിയം.",
+          seekTitle: "സ്കിപ്പ് & സീക്ക് സ്റ്റെപ്പ്",
+          seekDesc: "-10s / +10s ബട്ടണുകൾ അല്ലെങ്കിൽ Alt + Left / Alt + Right ഒറ്റ ടാപ്പിൽ ഒഴിവാക്കാനുള്ള സെക്കൻഡുകളുടെ എണ്ണം.",
+          secondsUnit: "സെക്കൻഡ്"
+        },
+        shortcutsGuide: {
+          title: "കീബോർഡ് കുറുക്കുവഴികൾ റഫറൻസ്",
+          desc: "എർഗണോമിക് സിംഗിൾ-ഹാൻഡ്, YouTube-സ്റ്റാൻഡേർഡ് പ്ലേബാക്ക് ഹോട്ട്കീകൾ എന്നിവ ഉപയോഗിച്ച് നിങ്ങളുടെ വർക്ക്ഫ്ലോ ത്വരിതപ്പെടുത്തുക.",
+          gesturesTitle: "മൌസ് & ഹോൾഡ് ഓഡിയോ സീക്കിംഗ് ആംഗ്യങ്ങൾ",
+          gesturesDesc: "ഡൈനാമിക് ആക്സിലറേഷനോട് കൂടിയ ദൈർഘ്യമേറിയ ശബ്‌ദ ഉത്തരങ്ങളിലൂടെ ഓഡിയോ സുഗമമായി അന്വേഷിക്കാൻ ◀10s അല്ലെങ്കിൽ 10s▶ ബട്ടണുകൾ അമർത്തിപ്പിടിക്കുക:",
+          gestureHold03: "സുഗമമായ ഓഡിയോ സീക്കിംഗ് മോഡിൽ പ്രവേശിക്കുന്നു (4× സാധാരണ വേഗത).",
+          gestureHold15: "10× സീക്കിംഗ് നിരക്കിലേക്ക് ത്വരിതപ്പെടുത്തുന്നു.",
+          gestureHold30: "25× നിരക്കിൽ അതിവേഗ ജമ്പ് നിരക്ക്.",
+          gestureRelease: "തടസ്സമില്ലാതെ ആവശ്യമുള്ള സ്ഥാനത്തേക്ക് പൂട്ടുന്നു."
+        },
+        faq: {
+          title: "പതിവായി ചോദിക്കുന്ന ചോദ്യങ്ങളും ഉപയോക്തൃ ഗൈഡും",
+          subtitle: "ChatGPT Audio Controls പരമാവധി പ്രയോജനപ്പെടുത്താൻ നിങ്ങളെ സഹായിക്കുന്ന ദ്രുത ഉത്തരങ്ങൾ.",
+          q1: "എൻ്റെ മൗസ് ഉപയോഗിച്ച് സ്ക്രോൾ ചെയ്തുകൊണ്ട് ഓഡിയോ വോളിയം എങ്ങനെ ക്രമീകരിക്കാം?",
+          a1: "പ്ലേയർ റെയിലിലെ ഓഡിയോ വോളിയം സ്പീക്കർ ഐക്കണിൽ നിങ്ങളുടെ മൗസ് പോയിൻ്റർ ഹോവർ ചെയ്‌ത് നിങ്ങളുടെ മൗസ് വീൽ മുകളിലേക്കോ താഴേക്കോ സ്‌ക്രോൾ ചെയ്യുക. സ്ലൈഡർ പോപ്പോവർ തുറക്കാതെ തന്നെ ഓഡിയോ വോളിയം 5% ഇൻക്രിമെൻ്റുകളിൽ സുഗമമായി ക്രമീകരിക്കും!",
+          q2: "ChatGPT-ൽ എവിടെയാണ് പ്ലെയർ ദൃശ്യമാകുന്നത്?",
+          a2: "പ്ലെയർ നിങ്ങളുടെ സന്ദേശ കമ്പോസർ പ്രോംപ്റ്റിന് സമീപം സൗകര്യപ്രദമായി നേരിട്ട് നങ്കൂരമിട്ടിരിക്കുന്നു. ഓഡിയോ പ്ലേ ചെയ്യാത്തപ്പോൾ, ഒരു ചെറിയ ഫ്ലോട്ടിംഗ് ലോഗോ ബട്ടൺ വലതുവശത്ത് ഭംഗിയായി ഡോക്ക് ചെയ്തിരിക്കും. ഈ ബട്ടണിൽ ക്ലിക്കുചെയ്യുന്നത് അല്ലെങ്കിൽ ഉറക്കെ വായിക്കാൻ ആരംഭിക്കുന്നത് മുഴുവൻ പ്ലെയർ നിയന്ത്രണ ബാറുകളും വികസിപ്പിക്കുന്നു.",
+          q3: "സിന്തസൈസ് ചെയ്ത സംഭാഷണ ഓഡിയോ ഞാൻ എങ്ങനെ ഡൗൺലോഡ് ചെയ്യും?",
+          a3: "ChatGPT ഒരു പ്രതികരണം ഉറക്കെ വായിക്കുമ്പോഴെല്ലാം, വലത് റെയിലിലെ ഡൗൺലോഡ് ബട്ടൺ (📥) ക്ലിക്ക് ചെയ്യുക. നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ ഉയർന്ന നിലവാരമുള്ള ഓഡിയോ ഫയലായി (.mp3, .m4a, അല്ലെങ്കിൽ .wav) ഓഡിയോ സ്ട്രീം തൽക്ഷണം സംരക്ഷിക്കപ്പെടുന്നു.",
+          q4: "ചെറിയ ലാപ്‌ടോപ്പ് സ്‌ക്രീനുകളിൽ ഇത് പ്രവർത്തിക്കുമോ?",
+          a4: "അതെ! പ്ലെയർ നിങ്ങളുടെ ലഭ്യമായ സ്‌ക്രീൻ വീതി സ്വയമേവ കണ്ടെത്തുകയും നിങ്ങളുടെ ലാപ്‌ടോപ്പ് സ്‌ക്രീനിന് സുഖകരമായി യോജിപ്പിക്കുന്നതിന് അതിൻ്റെ സീക്ക്ബാറിനെ ചലനാത്മകമായി സ്കെയിൽ ചെയ്യുകയും ചെയ്യുന്നു. ഇടം വളരെ ഇറുകിയതാണെങ്കിൽ, ഫ്ലോട്ടിംഗ് ബട്ടൺ ആക്സസ് ചെയ്യാവുന്നതായിരിക്കും, അതിനാൽ നിങ്ങൾക്ക് ആവശ്യമുള്ളപ്പോഴെല്ലാം പ്ലെയറിനെ വികസിപ്പിക്കാനും ചുരുക്കാനും കഴിയും.",
+          q5: "ഓട്ടോ-അപ്‌ഡേറ്റുകൾ ഉപയോഗിച്ച് ടാംപർമോങ്കി വഴി ഇത് എങ്ങനെ ഇൻസ്റ്റാൾ ചെയ്യാം?",
+          a5: "നിങ്ങൾ Tampermonkey, Violentmonkey, അല്ലെങ്കിൽ Greasemonkey എന്നിവ ഉപയോഗിക്കുകയാണെങ്കിൽ, നിങ്ങൾക്ക് ഞങ്ങളുടെ ശേഖരത്തിൽ നിന്ന് നേരിട്ട് സ്‌ക്രിപ്റ്റ് ഇൻസ്റ്റാൾ ചെയ്യാം. അപ്‌ഡേറ്റുകൾക്കായി Tampermonkey സ്വയമേവ GitHub പരിശോധിക്കുകയും ഒരു പുതിയ പതിപ്പ് പുറത്തിറങ്ങുമ്പോഴെല്ലാം നിങ്ങളെ അറിയിക്കുകയും ചെയ്യും.",
+          q6: "എൻ്റെ സംഭാഷണങ്ങളോ നിർദ്ദേശങ്ങളോ സ്വകാര്യമാണോ?",
+          a6: "100% സ്വകാര്യം. വിപുലീകരണം പൂർണ്ണമായും നിങ്ങളുടെ പ്രാദേശിക ഉപകരണത്തിൽ പ്രവർത്തിക്കുന്നു. ഏതെങ്കിലും ബാഹ്യ സെർവറിലേക്ക് നിർദ്ദേശങ്ങളോ ഉത്തരങ്ങളോ ഓഡിയോ സ്ട്രീമുകളോ വ്യക്തിഗത ടെലിമെട്രികളോ ഒരിക്കലും അയയ്‌ക്കില്ല."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "{s} സെക്കൻഡ് പിന്നോട്ട് — ഓഡിയോയിലൂടെ തിരയാൻ പിടിക്കുക",
+          playPause: "ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക (Space / K / Alt+P)",
+          forward: "{s} സെക്കൻഡ് മുന്നോട്ട് — ഓഡിയോയിലൂടെ തിരയാൻ പിടിക്കുക",
+          speed: "പ്ലേബാക്ക് വേഗത",
+          volume: "ഓഡിയോ വോളിയം (ക്രമീകരിക്കാൻ സ്ക്രോൾ ചെയ്യുക)",
+          volumeSlider: "ഓഡിയോ വോളിയം സ്ലൈഡർ",
+          download: "ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക",
+          shortcuts: "കീബോർഡ് കുറുക്കുവഴികളും ആംഗ്യങ്ങളും",
+          collapse: "പ്ലെയർ ചുരുക്കുക",
+          expand: "ChatGPT Audio Controls വികസിപ്പിക്കുക",
+          readAloud: "ഉറക്കെ വായിക്കുക"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud കുറുക്കുവഴികൾ",
+          playPause: "ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക",
+          back: "തിരികെ {s} സെക്കൻ്റ്",
+          forward: "ഫോർവേഡ് {s} സെക്കൻ്റ്",
+          slower: "കുറഞ്ഞ പ്ലേബാക്ക് വേഗത",
+          faster: "വേഗതയേറിയ പ്ലേബാക്ക് വേഗത",
+          volumeScroll: "ഓഡിയോ വോളിയം സ്ക്രോൾ",
+          smoothScrub: "സുഗമമായ ഓഡിയോ തിരയൽ",
+          volumeScrollKey: "🔈 സ്ക്രോൾ ചെയ്യുക",
+          smoothScrubKey: "പിടിക്കുക ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "ഓഡിയോ സ്ട്രീം ഡൗൺലോഡ് ചെയ്യാനായില്ല. ഓഡിയോ സജീവമായി ലോഡ് ചെയ്തിട്ടുണ്ടെന്ന് ഉറപ്പാക്കുക."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക",
+          description: "പ്ലേബാക്ക് ടോഗിൾ ചെയ്യുക, പൊതുവായ വെബ്, ഡെസ്‌ക്‌ടോപ്പ് പ്ലെയറുകളുമായി പൊരുത്തപ്പെടുന്നു (Alt+P പിന്തുണ തുടരുന്നു)"
+        },
+        seekBack: {
+          action: "10 സെക്കൻഡ് പിന്നോട്ട്",
+          description: "10 സെക്കൻഡ് പിന്നോട്ട് പോകുക (ഓഡിയോയിലൂടെ സുഗമമായ തിരയലിനായി പിടിക്കുക)"
+        },
+        seekForward: {
+          action: "10 സെക്കൻഡ് മുന്നോട്ട്",
+          description: "10 സെക്കൻഡ് മുന്നോട്ട് കുതിക്കുക (ഓഡിയോയിലൂടെ സുഗമമായ തിരയലിനായി പിടിക്കുക)"
+        },
+        speedDecrease: {
+          action: "വേഗത കുറയ്ക്കുക",
+          description: "മുമ്പത്തെ സ്പീഡ് പ്രീസെറ്റിലേക്ക് ഇറങ്ങുക"
+        },
+        speedIncrease: {
+          action: "വേഗത വർദ്ധിപ്പിക്കുക",
+          description: "അടുത്ത സ്പീഡ് പ്രീസെറ്റിലേക്ക് കയറുക"
+        }
+      }
+    },
+    mn: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Удирдлага & Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT-г нээнэ үү",
+        dashboard: "Хяналтын самбар",
+        seconds: "секунд",
+        star: "★ Од",
+        docs: "Баримт бичиг",
+        issues: "Асуудал"
+      },
+      popup: {
+        header: {
+          switchTheme: "Загвар солих",
+          openOptions: "Хяналтын самбар ба тохиргоог нээнэ үү"
+        },
+        tabs: {
+          controls: "Хяналтууд",
+          shortcuts: "Түлхүүрүүд",
+          about: "Тухай"
+        },
+        quickControls: {
+          playbackSpeed: "Өгөгдмөл тоглуулах хурд",
+          defaultVolume: "Өгөгдмөл Аудио хэмжээ",
+          mute: "Дууг хаах",
+          unmute: "Дууг нээх",
+          smartIntegrations: "Ухаалаг интеграци",
+          globalShortcuts: "Глобал товчлолууд",
+          globalShortcutsDesc: "Space/K, Alt+P, Alt+Arrows болон хурдны товчлууруудыг идэвхжүүлэх",
+          smoothScrubbing: "Гөлгөр аудио хайлт",
+          smoothScrubbingDesc: "◀10 эсвэл 10▶-г дарж хайлтаа хурдасгана уу"
+        },
+        shortcuts: {
+          title: "Гарын товчлол",
+          gesturesTitle: "Хулгана ба хүрэх дохио",
+          smoothAudioScrub: "Гөлгөр аудио аудио хайх",
+          directDownload: "Шууд татаж авах",
+          holdScrubKey: "◀10 / 10▶ дарна уу",
+          clickDownloadKey: "📥 товчийг дарна уу"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxica-ийн нээлттэй эх сурвалж",
+          description: "Дууны аудио хайлт, динамик хурдны тохируулга, шууд аудио татаж авах, нэг товшилтоор ярианы триггер ашиглан ChatGPT-ийн дуу хоолойны туршлагыг нэмэгдүүлэх.",
+          privacyTitle: "100% нууцлалд анхаарлаа хандуулдаг",
+          privacyDesc: "Мөрдөгч байхгүй, телеметр байхгүй. Бүх зүйл таны машин дээр ажилладаг.",
+          githubRepo: "GitHub Хадгалах газар",
+          documentation: "Баримт бичиг",
+          reportIssue: "Асуудлыг мэдээлэх"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Хяналтын самбар ба тохиргоо",
+          preferences: "Сонголт",
+          shortcuts: "Товчлол ба дохио зангаа",
+          faq: "Түгээмэл асуулт, алдааг олж засварлах",
+          darkMode: "Харанхуй горим",
+          lightMode: "Гэрлийн горим",
+          githubRepo: "GitHub Репо"
+        },
+        headers: {
+          preferencesTitle: "Аудио болон тоглуулах тохиргоо",
+          preferencesDesc: "Хэл, тоглуулах хурдны тохиргоо, өгөгдмөл дууны хэмжээ болон функцуудыг тохируулна уу.",
+          shortcutsTitle: "Гарын товчлол ба дохио зангаа",
+          shortcutsDesc: "Тоглуулах ажлыг хялбархан гүйцэтгэхийн тулд хурдан шуурхай товчлууруудыг ашиглана уу.",
+          faqTitle: "Түгээмэл асуулт, алдааг олж засварлах",
+          faqDesc: "Нарийвчилсан техникийн заавар, аюулгүй байдал, тусламжийн хариулт."
+        },
+        general: {
+          languageTitle: "Хэл ба нутагшуулах",
+          languageDesc: "Өөрийн дуртай интерфэйсийн хэлийг сонгох эсвэл өргөтгөл нь таны хөтчийн хэлийг автоматаар илрүүлэх боломжийг олгоно.",
+          languageAuto: "Автомат илрүүлэх (Хөтчийн хэл)",
+          languageDetected: "Илэрсэн",
+          speedTitle: "Тоглуулах хурдны тохиргоо",
+          speedDesc: "ChatGPT-г нээх эсвэл Read Aloud-г эхлүүлэхдээ өгөгдмөл тоглуулах хурдаа сонгоно уу.",
+          volumeTitle: "Өгөгдмөл Аудио дууны түвшин",
+          volumeDesc: "Чанга унших ярианы урсгалд зориулж дууны хэмжээг урьдчилан тохируулна уу.",
+          seekTitle: "Алхам алгасах, хайх",
+          seekDesc: "-10s / +10s товчлуурууд эсвэл Alt + Left / Alt + Right дээр нэг товшилтоор алгасах секундын тоо.",
+          secondsUnit: "секунд"
+        },
+        shortcutsGuide: {
+          title: "Гарын товчлолын лавлагаа",
+          desc: "Эргономик дан гар болон YouTube-н стандарт тоглуулах товчлуурын тусламжтайгаар ажлынхаа урсгалыг хурдасгана уу.",
+          gesturesTitle: "Хулгана ба барина уу. Аудио хайх дохио зангаа",
+          gesturesDesc: "◀10s эсвэл 10s▶ товчийг удаан дарж, динамик хурдатгалтай урт дуут хариултуудаар дууг хялбархан хайх боломжтой.",
+          gestureHold03: "Аудио хайх горимд орно (хэвийн хурд 4 ×).",
+          gestureHold15: "10× эрэлхийлэх хурд хүртэл хурдасгана.",
+          gestureHold30: "25 × хурдтай өндөр хурдны үсрэлт.",
+          gestureRelease: "Хүссэн байрлалдаа саадгүй түгжигдэнэ."
+        },
+        faq: {
+          title: "Түгээмэл асуултууд ба хэрэглэгчийн гарын авлага",
+          subtitle: "ChatGPT Audio Controls-г бүрэн ашиглахад туслах шуурхай хариултууд.",
+          q1: "Би хулганаараа гүйлгэж дууны хэмжээг хэрхэн тохируулах вэ?",
+          a1: "Тоглогчийн зам дээрх аудио чанга яригчийн дүрс дээр хулганы заагчаа гүйлгэн дээш доош гүйлгэхэд л хангалттай. Дууны дууны хэмжээ нь гулсагчийг нээх шаардлагагүйгээр 5% -иар аажмаар тохируулагдах болно!",
+          q2: "Тоглогч ChatGPT дээр хаана харагдах вэ?",
+          a2: "Тоглогч нь таны мессежийн командын хажууд шууд байрладаг. Аудио тоглуулахгүй байх үед жижиг хөвөгч лого товчлуур баруун талд цэвэрхэн байрладаг. Энэ товчийг дарах эсвэл Чанга уншиж эхлэх нь тоглуулагчийн хяналтын самбарыг бүхэлд нь өргөжүүлнэ.",
+          q3: "Би хэрхэн нэгтгэсэн ярианы аудиог татаж авах вэ?",
+          a3: "ChatGPT хариултыг чангаар унших болгонд баруун талын зам дээрх татаж авах товчийг (📥) дарна уу. Аудио урсгал нь таны компьютер дээр өндөр чанартай аудио файл (.mp3, .m4a, эсвэл .wav) хэлбэрээр шууд хадгалагдана.",
+          q4: "Энэ нь жижиг зөөврийн компьютерын дэлгэц дээр ажилладаг уу?",
+          a4: "Тийм ээ! Тоглогч таны дэлгэцийн өргөнийг автоматаар илрүүлж, зөөврийн компьютерын дэлгэцэнд эвтэйхэн тааруулахын тулд хайлтын талбарыг динамикаар хэмждэг. Хэрэв зай маш нягт байвал хөвөгч товчлуурыг ашиглах боломжтой хэвээр байгаа тул та хүссэн үедээ тоглуулагчаа өргөжүүлж, буулгаж болно.",
+          q5: "Би үүнийг хэрхэн автомат шинэчлэлттэй Tampermonkey-ээр суулгах вэ?",
+          a5: "Хэрэв та Tampermonkey, Violentmonkey эсвэл Greasemonkey ашигладаг бол бие даасан скриптийг манай репозитороос шууд суулгаж болно. Tampermonkey автоматаар GitHub-г шинэчлэлтүүдийг шалгаж, шинэ хувилбар гарах бүрд танд мэдэгдэх болно.",
+          q6: "Миний яриа эсвэл сануулга нууц уу?",
+          a6: "100% хувийн. Өргөтгөл нь бүхэлдээ таны дотоод төхөөрөмж дээр ажилладаг. Ямар ч гадаад сервер рүү сануулга, хариулт, аудио урсгал эсвэл хувийн телеметрийг хэзээ ч илгээдэггүй."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Буцах {s} секунд — аудиог хайхын тулд удаан дарна уу",
+          playPause: "Аудио тоглуулах / Аудио түр зогсоох (Space / K / Alt+P)",
+          forward: "{s} секунд урагшлуулах — гуужуулахын тулд барина уу",
+          speed: "Тоглуулах хурд",
+          volume: "Аудио дууны хэмжээ (Тохируулахын тулд гүйлгэх)",
+          volumeSlider: "Аудио дууны слайдер",
+          download: "Аудио татаж авах",
+          shortcuts: "Гарын товчлол ба дохио зангаа",
+          collapse: "Тоглогчийг буулгах",
+          expand: "ChatGPT Audio Controls-г өргөтгөх",
+          readAloud: "Чанга унш"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud товчлолууд",
+          playPause: "Аудио тоглуулах / Аудио түр зогсоох",
+          back: "Буцах {s} сек",
+          forward: "Урагшаа {s} сек",
+          slower: "Удаан тоглуулах хурд",
+          faster: "Илүү хурдан тоглуулах хурд",
+          volumeScroll: "Аудио дууны хэмжээг гүйлгэх",
+          smoothScrub: "Гөлгөр аудио хайлт",
+          volumeScrollKey: "🔈 дээр гүйлгэ",
+          smoothScrubKey: "◀{s} / {s}▶ дарна уу"
+        },
+        alerts: {
+          downloadError: "Аудио дамжуулалтыг татаж чадсангүй. Аудио идэвхтэй ачаалагдсан эсэхийг шалгаарай."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Аудио тоглуулах / Аудио түр зогсоох",
+          description: "Тоглуулахыг асаах/унтраах, нийтлэг вэб болон ширээний тоглуулагчтай тааруулах (Alt+P дэмжигдсэн хэвээр байна)"
+        },
+        seekBack: {
+          action: "10 секунд буцах",
+          description: "10 секундын арагшаа үсрэх (Аудио ашиглан жигд хайхын тулд барина уу)"
+        },
+        seekForward: {
+          action: "10 секунд урагшлуулна",
+          description: "10 секунд урагш үсрэх (Аудио ашиглан жигд хайхын тулд барина уу)"
+        },
+        speedDecrease: {
+          action: "Хурд бууруулах",
+          description: "Урьдчилан тогтоосон хурд руу буцна уу"
+        },
+        speedIncrease: {
+          action: "Хурд нэмэгдүүлэх",
+          description: "Дараагийн хурдыг урьдчилан тохируулна уу"
+        }
+      }
+    },
+    ms: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Kawalan & Read Aloud",
+        version: "v",
+        openChatGPT: "Buka ChatGPT",
+        dashboard: "Papan pemuka",
+        seconds: "saat",
+        star: "★ Bintang",
+        docs: "Dokumen",
+        issues: "Isu"
+      },
+      popup: {
+        header: {
+          switchTheme: "Tukar Tema",
+          openOptions: "Buka Papan Pemuka & Tetapan"
+        },
+        tabs: {
+          controls: "Kawalan",
+          shortcuts: "Kekunci",
+          about: "Mengenai"
+        },
+        quickControls: {
+          playbackSpeed: "Kelajuan Main Balik Lalai",
+          defaultVolume: "Kelantangan Audio Lalai",
+          mute: "Bisu",
+          unmute: "Nyahredam",
+          smartIntegrations: "Integrasi Pintar",
+          globalShortcuts: "Pintasan Global",
+          globalShortcutsDesc: "Dayakan Ruang/K, Alt+P, Alt+Arrows & kekunci kelajuan",
+          smoothScrubbing: "Pencarian Audio Lancar",
+          smoothScrubbingDesc: "Percepatkan pencarian dengan memegang ◀10 atau 10▶"
+        },
+        shortcuts: {
+          title: "Pintasan Papan Kekunci",
+          gesturesTitle: "Gerak Isyarat Tetikus & Sentuh",
+          smoothAudioScrub: "Pencarian Audio Audio Lancar",
+          directDownload: "Muat Turun Terus",
+          holdScrubKey: "Tahan ◀10 / 10▶",
+          clickDownloadKey: "Klik butang 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Sumber Terbuka oleh Infoxica",
+          description: "Meningkatkan pengalaman suara ChatGPT dengan pencarian audio audio yang lancar, pratetap kelajuan dinamik, muat turun audio terus dan pencetus pertuturan satu klik.",
+          privacyTitle: "100% Privasi Fokus",
+          privacyDesc: "Tiada penjejak, tiada telemetri. Semuanya berjalan pada mesin anda.",
+          githubRepo: "Repositori GitHub",
+          documentation: "Dokumentasi",
+          reportIssue: "Laporkan Isu"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Papan Pemuka & Persediaan",
+          preferences: "Keutamaan",
+          shortcuts: "Pintasan & Gerak Isyarat",
+          faq: "Soalan Lazim & Penyelesaian Masalah",
+          darkMode: "Mod Gelap",
+          lightMode: "Mod Cahaya",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Pilihan Audio & Main Semula",
+          preferencesDesc: "Konfigurasikan bahasa, pratetap kelajuan main balik, kelantangan audio lalai dan ciri.",
+          shortcutsTitle: "Pintasan Papan Kekunci & Gerak Isyarat",
+          shortcutsDesc: "Kuasai kekunci pintas pantas untuk manipulasi main balik yang mudah.",
+          faqTitle: "Soalan Lazim & Penyelesaian Masalah",
+          faqDesc: "Panduan teknikal terperinci, keselamatan dan jawapan sokongan."
+        },
+        general: {
+          languageTitle: "Bahasa & Penyetempatan",
+          languageDesc: "Pilih bahasa antara muka pilihan anda atau biarkan sambungan mengesan bahasa penyemak imbas anda secara automatik.",
+          languageAuto: "Auto Kesan (Bahasa Penyemak Imbas)",
+          languageDetected: "Dikesan",
+          speedTitle: "Keutamaan Kelajuan Main Semula",
+          speedDesc: "Pilih kadar main balik lalai anda apabila membuka ChatGPT atau melancarkan Read Aloud.",
+          volumeTitle: "Tahap kelantangan Audio Lalai",
+          volumeDesc: "Kelantangan audio pratetap untuk strim pertuturan Baca Lantang.",
+          seekTitle: "Langkau & Cari Langkah",
+          seekDesc: "Bilangan saat untuk dilangkau dengan sekali ketik butang -10s / +10s atau Alt + Left / Alt + Right.",
+          secondsUnit: "saat"
+        },
+        shortcutsGuide: {
+          title: "Rujukan Pintasan Papan Kekunci",
+          desc: "Percepatkan aliran kerja anda dengan kekunci panas main balik ergonomik satu tangan dan standard YouTube.",
+          gesturesTitle: "Tetikus & Tahan Gerak Isyarat Mencari Audio",
+          gesturesDesc: "Tahan sama ada butang ◀10s atau 10s▶ untuk lancar mencari melalui audio melalui jawapan suara panjang dengan pecutan dinamik:",
+          gestureHold03: "Memasuki mod pencarian audio lancar (4× kelajuan normal).",
+          gestureHold15: "Mempercepat kepada 10× kadar pencarian.",
+          gestureHold30: "Kadar lompatan berkelajuan tinggi pada kadar 25×.",
+          gestureRelease: "Mengunci dengan lancar ke kedudukan yang diingini."
+        },
+        faq: {
+          title: "Soalan Lazim & Panduan Pengguna",
+          subtitle: "Jawapan pantas untuk membantu anda memanfaatkan ChatGPT Audio Controls sepenuhnya.",
+          q1: "Bagaimanakah saya boleh melaraskan kelantangan audio dengan menatal menggunakan tetikus saya?",
+          a1: "Cuma tuding penunjuk tetikus anda pada ikon pembesar suara volum audio pada rel pemain dan tatal roda tetikus anda ke atas atau ke bawah. Kelantangan audio akan diselaraskan dengan lancar dalam kenaikan 5% tanpa perlu membuka popover gelangsar!",
+          q2: "Di manakah pemain muncul pada ChatGPT?",
+          a2: "Pemain berlabuh dengan mudah terus di sebelah gesaan komposer mesej anda. Apabila tiada audio dimainkan, butang logo terapung kecil kekal terlabuh kemas di sebelah kanan. Mengklik butang ini atau memulakan Baca dengan lantang mengembangkan bar kawalan pemain penuh.",
+          q3: "Bagaimanakah saya boleh memuat turun audio pertuturan yang disintesis?",
+          a3: "Setiap kali ChatGPT membacakan jawapan dengan kuat, klik butang muat turun (📥) pada rel kanan. Strim audio disimpan serta-merta sebagai fail audio berkualiti tinggi (.mp3, .m4a atau .wav) pada komputer anda.",
+          q4: "Adakah ini berfungsi pada skrin komputer riba kecil?",
+          a4: "Ya! Pemain secara automatik mengesan lebar skrin anda yang tersedia dan menskalakan bar cariannya secara dinamik agar muat pada skrin komputer riba anda dengan selesa. Jika ruang sangat sempit, butang terapung kekal boleh diakses supaya anda boleh mengembangkan dan meruntuhkan pemain pada bila-bila masa anda memerlukannya.",
+          q5: "Bagaimanakah cara saya memasang ini melalui Tampermonkey dengan kemas kini automatik?",
+          a5: "Jika anda menggunakan Tampermonkey, Violentmonkey atau Greasemonkey, anda boleh memasang skrip kendiri terus daripada repositori kami. Tampermonkey akan menyemak GitHub secara automatik untuk kemas kini dan memberitahu anda apabila versi baharu dikeluarkan.",
+          q6: "Adakah perbualan atau gesaan saya peribadi?",
+          a6: "100% Persendirian. Sambungan berjalan sepenuhnya pada peranti tempatan anda. Tiada gesaan, jawapan, aliran audio atau telemetri peribadi yang pernah dihantar ke mana-mana pelayan luaran."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Kembali {s} saat — tahan untuk mencari melalui audio",
+          playPause: "Mainkan audio / Jeda audio (Space / K / Alt+P)",
+          forward: "Ke hadapan {s} saat — tahan untuk mencari melalui audio",
+          speed: "Kelajuan main balik",
+          volume: "Kelantangan audio (Tatal untuk melaraskan)",
+          volumeSlider: "Peluncur kelantangan audio",
+          download: "Muat turun audio",
+          shortcuts: "Pintasan papan kekunci & gerak isyarat",
+          collapse: "Runtuh Pemain",
+          expand: "Kembangkan ChatGPT Audio Controls",
+          readAloud: "Baca dengan kuat"
+        },
+        shortcutsPopover: {
+          title: "Pintasan Read Aloud",
+          playPause: "Mainkan audio / Jeda audio",
+          back: "Belakang {s} saat",
+          forward: "Ke hadapan {s} saat",
+          slower: "Kelajuan main balik yang lebih perlahan",
+          faster: "Kelajuan main balik yang lebih pantas",
+          volumeScroll: "Tatal kelantangan audio",
+          smoothScrub: "Pencarian Audio Lancar",
+          volumeScrollKey: "Tatal ke 🔈",
+          smoothScrubKey: "Tahan ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Tidak dapat memuat turun strim audio. Pastikan audio dimuatkan secara aktif."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Mainkan audio / Jeda audio",
+          description: "Togol main balik, memadankan pemain web dan desktop biasa (Alt+P kekal disokong)"
+        },
+        seekBack: {
+          action: "Kembali 10 saat",
+          description: "Lompat ke belakang 10s (Tahan untuk carian lancar melalui audio)"
+        },
+        seekForward: {
+          action: "Ke hadapan 10 saat",
+          description: "Lompat ke hadapan 10s (Tahan untuk carian lancar melalui audio)"
+        },
+        speedDecrease: {
+          action: "Kurangkan Kelajuan",
+          description: "Turun ke pratetap kelajuan sebelumnya"
+        },
+        speedIncrease: {
+          action: "Tingkatkan Kelajuan",
+          description: "Melangkah ke pratetap kelajuan seterusnya"
+        }
+      }
+    },
+    my: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "ထိန်းချုပ်မှုများ & Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ကိုဖွင့်ပါ။",
+        dashboard: "ဒက်ရှ်ဘုတ်",
+        seconds: "စက္ကန့်",
+        star: "★ ကြယ်စင်",
+        docs: "Docs",
+        issues: "ပြဿနာများ"
+      },
+      popup: {
+        header: {
+          switchTheme: "အပြင်အဆင်ပြောင်းပါ။",
+          openOptions: "ဒက်ရှ်ဘုတ်နှင့် ဆက်တင်များကို ဖွင့်ပါ။"
+        },
+        tabs: {
+          controls: "ထိန်းချုပ်မှုများ",
+          shortcuts: "သော့များ",
+          about: "အကြောင်း"
+        },
+        quickControls: {
+          playbackSpeed: "မူရင်းပြန်ဖွင့်နှုန်း",
+          defaultVolume: "မူရင်းအသံအတိုးအကျယ်",
+          mute: "အသံတိတ်",
+          unmute: "အသံဖွင့်ပါ။",
+          smartIntegrations: "စမတ်ပေါင်းစပ်မှုများ",
+          globalShortcuts: "ကမ္ဘာလုံးဆိုင်ရာ ဖြတ်လမ်းများ",
+          globalShortcutsDesc: "Space/K၊ Alt+P၊ Alt+Arrows နှင့် အမြန်နှုန်းခလုတ်များကို ဖွင့်ပါ",
+          smoothScrubbing: "ချောမွေ့သောအသံရှာဖွေခြင်း။",
+          smoothScrubbingDesc: "◀10 သို့မဟုတ် 10▶ ကို ကိုင်ထားခြင်းဖြင့် ရှာဖွေခြင်းကို အရှိန်မြှင့်ပါ။"
+        },
+        shortcuts: {
+          title: "ကီးဘုတ်ဖြတ်လမ်းများ",
+          gesturesTitle: "မောက်စ်နှင့် ထိသော လက်ဟန်များ",
+          smoothAudioScrub: "ချောမွေ့သော အသံဖြင့် အသံရှာဖွေခြင်း။",
+          directDownload: "တိုက်ရိုက်ဒေါင်းလုဒ်လုပ်ပါ။",
+          holdScrubKey: "◀10 / 10▶ ကိုင်ထားပါ။",
+          clickDownloadKey: "📥 ခလုတ်ကို နှိပ်ပါ။"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Infoxica မှဖွင့်သောရင်းမြစ်",
+          description: "ChatGPT ၏အသံအတွေ့အကြုံကို ချောမွေ့သောအသံရှာဖွေမှု၊ တက်ကြွသောအမြန်နှုန်းကြိုတင်သတ်မှတ်မှုများ၊ တိုက်ရိုက်အသံဒေါင်းလုဒ်များနှင့် တစ်ချက်နှိပ်ရုံဖြင့် စကားပြောအစပျိုးမှုများဖြင့် မြှင့်တင်ပေးခြင်း။",
+          privacyTitle: "100% ကိုယ်ရေးကိုယ်တာ အာရုံစိုက်ထားသည်။",
+          privacyDesc: "ခြေရာခံကိရိယာမရှိ၊ တယ်လီမီတာမရှိပါ။ အရာအားလုံးက မင်းစက်ပေါ်မှာ အလုပ်လုပ်တယ်။",
+          githubRepo: "GitHub Repository",
+          documentation: "စာရွက်စာတမ်း",
+          reportIssue: "ပြဿနာတစ်ခုကို သတင်းပို့ပါ။"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ဒက်ရှ်ဘုတ်နှင့် စနစ်ထည့်သွင်းမှု",
+          preferences: "ဦးစားပေးများ",
+          shortcuts: "ဖြတ်လမ်းများနှင့် လက်ဟန်များ",
+          faq: "FAQ နှင့် ပြဿနာဖြေရှင်းခြင်း",
+          darkMode: "အမှောင်မုဒ်",
+          lightMode: "အလင်းမုဒ်",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "အသံနှင့် ပြန်ဖွင့်ခြင်း ဦးစားပေးများ",
+          preferencesDesc: "ဘာသာစကား၊ ပြန်ဖွင့်နှုန်း ကြိုတင်သတ်မှတ်မှုများ၊ မူရင်းအသံအတိုးအကျယ်နှင့် အင်္ဂါရပ်များကို စီစဉ်သတ်မှတ်ပါ။",
+          shortcutsTitle: "ကီးဘုတ်ဖြတ်လမ်းများနှင့် လက်ဟန်များ",
+          shortcutsDesc: "လွယ်ကူစွာ ပြန်ဖွင့်ခြယ်လှယ်ရန်အတွက် အမြန်သော့များကို ကျွမ်းကျင်စွာ အသုံးပြုပါ။",
+          faqTitle: "FAQ နှင့် ပြဿနာဖြေရှင်းခြင်း",
+          faqDesc: "အသေးစိတ်နည်းပညာဆိုင်ရာလမ်းညွှန်၊ လုံခြုံရေးနှင့် ပံ့ပိုးမှုအဖြေများ။"
+        },
+        general: {
+          languageTitle: "ဘာသာစကားနှင့် ဒေသသတ်မှတ်မှု",
+          languageDesc: "သင်နှစ်သက်သော အင်တာဖေ့စ်ဘာသာစကားကို ရွေးချယ်ပါ သို့မဟုတ် တိုးချဲ့မှုသည် သင့်ဘရောက်ဆာ၏ဘာသာစကားကို အလိုအလျောက်သိရှိနိုင်စေပါ။",
+          languageAuto: "အလိုအလျောက် သိရှိခြင်း (ဘရောက်ဆာ ဘာသာစကား)",
+          languageDetected: "တွေ့ရှိခဲ့သည်။",
+          speedTitle: "Playback Speed ဦးစားပေးများ",
+          speedDesc: "ChatGPT ကိုဖွင့်သောအခါ သို့မဟုတ် Read Aloud ကိုဖွင့်သောအခါတွင် သင်၏မူလပြန်ဖွင့်နှုန်းကို ရွေးပါ။",
+          volumeTitle: "ပုံသေ အသံအတိုးအကျယ် အဆင့်",
+          volumeDesc: "Read Aloud speech streams အတွက် အသံအတိုးအကျယ်ကို ကြိုတင်သတ်မှတ်ပါ။",
+          seekTitle: "ကျော်ပြီး ရှာပါ အဆင့်",
+          seekDesc: "-10s / +10s ခလုတ်များ သို့မဟုတ် Alt + Left / Alt + Right ကို တစ်ချက်နှိပ်ရုံဖြင့် ကျော်ရန် စက္ကန့်အရေအတွက်။",
+          secondsUnit: "စက္ကန့်"
+        },
+        shortcutsGuide: {
+          title: "ကီးဘုတ်ဖြတ်လမ်းများ အကိုးအကား",
+          desc: "ergonomic single-hand နှင့် YouTube-standard playback hotkeys တို့ဖြင့် သင့်လုပ်ငန်းလည်ပတ်မှုကို အရှိန်မြှင့်ပါ။",
+          gesturesTitle: "အသံရှာနေသည့် လက်ဟန်များကို မောက်စ်နှင့် ဖိထားပါ။",
+          gesturesDesc: "ရှည်လျားသောအသံဖြင့် အဖြေများကို သွက်လက်သောအရှိန်ဖြင့် ချောမွေ့စွာရှာဖွေရန် ◀10s သို့မဟုတ် 10s▶ ခလုတ်များကို ဖိထားပါ-",
+          gestureHold03: "ချောမွေ့သော အသံရှာဖွေခြင်းမုဒ် (4× ပုံမှန်အမြန်နှုန်း) သို့ ၀င်သည်။",
+          gestureHold15: "10× ရှာဖွေမှုနှုန်းသို့ အရှိန်မြှင့်သည်။",
+          gestureHold30: "25× နှုန်းဖြင့် မြန်နှုန်းမြင့်ခုန်နှုန်း။",
+          gestureRelease: "အလိုရှိသော အနေအထားသို့ ချောမွေ့စွာသော့ခတ်သည်။"
+        },
+        faq: {
+          title: "အမေးများသောမေးခွန်းများနှင့် အသုံးပြုသူလမ်းညွှန်",
+          subtitle: "ChatGPT Audio Controls ကို အကောင်းဆုံးရယူရန် အမြန်အဖြေများ။",
+          q1: "ကျွန်ုပ်၏မောက်စ်ဖြင့် ရွှေ့ခြင်းဖြင့် အသံအတိုးအကျယ်ကို မည်သို့ချိန်ညှိနိုင်မည်နည်း။",
+          a1: "ပလေယာရထားလမ်းရှိ အသံအတိုးအကျယ်စပီကာအိုင်ကွန်ပေါ်တွင် သင့်မောက်စ်ညွှန်ပြချက်ကို ရွှေ့ပြီး သင့်မောက်စ်ဘီးကို အပေါ် သို့မဟုတ် အောက်သို့ ရွှေ့ပါ။ slider popover ကိုဖွင့်စရာမလိုဘဲ အသံအတိုးအကျယ်ကို 5% တိုး၍ ချောမွေ့စွာ ချိန်ညှိပေးပါမည်။",
+          q2: "ကစားသမားသည် ChatGPT တွင် မည်သည့်နေရာတွင် ပေါ်လာသနည်း။",
+          a2: "ပလေယာကို သင့်မက်ဆေ့ချ်စာရေးဆရာအမှာစာ၏ဘေးတွင် တိုက်ရိုက်ကျောက်ချရပ်နားထားသည်။ အသံမဖွင့်သည့်အခါ၊ ရေပေါ်လိုဂိုခလုတ်အသေးလေးသည် ညာဘက်ခြမ်းတွင် သပ်ရပ်စွာချိတ်ထားသည်။ ဤခလုတ်ကိုနှိပ်ခြင်း သို့မဟုတ် ကျယ်လောင်စွာဖတ်ခြင်းကို စတင်ခြင်းဖြင့် ပလေယာထိန်းချုပ်မှုဘားများ အပြည့်အစုံကို ချဲ့ထွင်သည်။",
+          q3: "ပေါင်းစပ်ထားသော စကားပြောအသံကို မည်သို့ဒေါင်းလုဒ်လုပ်ရမည်နည်း။",
+          a3: "ChatGPT တုံ့ပြန်ချက်ကို ကျယ်လောင်စွာဖတ်သည့်အခါတိုင်း၊ ညာဘက်ရထားလမ်းရှိ ဒေါင်းလုဒ်ခလုတ် (📥) ကို နှိပ်ပါ။ အော်ဒီယိုစီးကြောင်းကို အရည်အသွေးမြင့် အသံဖိုင် (.mp3, .m4a, သို့မဟုတ် .wav) သင့်ကွန်ပျူတာပေါ်တွင် ချက်ချင်း သိမ်းဆည်းထားသည်။",
+          q4: "၎င်းသည် လက်တော့ပ်စခရင်ငယ်များတွင် အလုပ်လုပ်ပါသလား။",
+          a4: "ဟုတ်ပါတယ်။ ပလေယာသည် သင်၏လက်ပ်တော့မျက်နှာပြင်ကို သက်တောင့်သက်သာရှိစေရန် သင့်လက်ပ်တော့မျက်နှာပြင်အကျယ်ကို အလိုအလျောက်သိရှိပြီး ၎င်း၏ရှာဖွေရေးဘားကို ဒိုင်နမစ်ဖြင့် ချိန်ညှိပေးပါသည်။ နေရာလွတ် အလွန်ကျဉ်းနေပါက၊ ရေပေါ်ခလုတ်သည် ဆက်လက်အသုံးပြုနိုင်သောကြောင့် ပလေယာကို လိုအပ်သည့်အခါတိုင်း ချဲ့ထွင်ကာ ပြိုကျနိုင်ပါသည်။",
+          q5: "အလိုအလျောက်မွမ်းမံမှုများဖြင့် Tampermonkey မှတစ်ဆင့် ၎င်းကို မည်သို့ထည့်သွင်းရမည်နည်း။",
+          a5: "အကယ်၍ သင်သည် Tampermonkey၊ Violentmonkey သို့မဟုတ် Greasemonkey ကို အသုံးပြုပါက၊ ကျွန်ုပ်တို့၏ သိုလှောင်ခန်းမှ တိုက်ရိုက် သီးသန့် script ကို သင် ထည့်သွင်းနိုင်သည်။ Tampermonkey သည် အပ်ဒိတ်များအတွက် GitHub အလိုအလျောက်စစ်ဆေးပြီး ဗားရှင်းအသစ်ထွက်တိုင်း သင့်အား အကြောင်းကြားပါမည်။",
+          q6: "ကျွန်ုပ်၏ စကားဝိုင်းများ သို့မဟုတ် အချက်ပြချက်များသည် သီးသန့်ဖြစ်ပါသလား။",
+          a6: "100% သီးသန့်။ တိုးချဲ့မှုသည် သင့်စက်တွင်းစက်ပစ္စည်းပေါ်တွင် လုံးလုံးလျားလျား အလုပ်လုပ်သည်။ အမှာစာများ၊ အဖြေများ၊ အသံထုတ်လွှင့်မှုများ သို့မဟုတ် ကိုယ်ရေးကိုယ်တာ တယ်လီမီတာကို ပြင်ပဆာဗာသို့ မည်သည့်အခါမျှ ပေးပို့ခြင်းမပြုပါ။"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "နောက်သို့ {s} စက္ကန့် — အသံဖြင့် ရှာရန် ဖိထားပါ။",
+          playPause: "အသံဖွင့်/ခေတ္တရပ်ပါ (Space / K / Alt+P)",
+          forward: "ရှေ့သို့ {s} စက္ကန့် — အသံဖြင့် ရှာရန် ဖိထားပါ။",
+          speed: "ပြန်ဖွင့်နှုန်း",
+          volume: "အသံအတိုးအကျယ် (ချိန်ညှိရန် ရွှေ့ရန်)",
+          volumeSlider: "အသံအတိုးအကျယ် Slider",
+          download: "အသံကို ဒေါင်းလုဒ်လုပ်ပါ။",
+          shortcuts: "ကီးဘုတ်ဖြတ်လမ်းများနှင့် လက်ဟန်များ",
+          collapse: "ချုံ့ရန်",
+          expand: "ChatGPT Audio Controls ကိုချဲ့ပါ။",
+          readAloud: "အသံထွက်ဖတ်ပါ။"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud ဖြတ်လမ်းများ",
+          playPause: "အသံဖွင့်/အသံကို ခဏရပ်ပါ။",
+          back: "နောက်သို့ {s} စက္ကန့်",
+          forward: "{s} စက္ကန့် ထပ်ဆင့်",
+          slower: "နှေးကွေးသော ပြန်ဖွင့်နှုန်း",
+          faster: "ပိုမြန်တဲ့ ပြန်ဖွင့်နှုန်း",
+          volumeScroll: "အသံအတိုးအကျယ် Scroll",
+          smoothScrub: "ချောမွေ့သောအသံရှာဖွေခြင်း။",
+          volumeScrollKey: "🔈 အပေါ်ကို ရွှေ့ပါ။",
+          smoothScrubKey: "◀{s} / {s} ▶ ကိုင်ထားပါ"
+        },
+        alerts: {
+          downloadError: "အသံစီးကြောင်းကို ဒေါင်းလုဒ်လုပ်၍မရပါ။ အသံကို တက်ကြွစွာ တင်ထားကြောင်း သေချာပါစေ။"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "အသံဖွင့်/အသံကို ခဏရပ်ပါ။",
+          description: "ဘုံဝဘ်နှင့် ဒက်စတော့နှင့် ကိုက်ညီသော ကစားကွက်များကို ဖွင့်ရန် ပြောင်းရန် (Alt+P ကို ဆက်လက်ပံ့ပိုးထားသည်)"
+        },
+        seekBack: {
+          action: "နောက်သို့ 10 စက္ကန့်",
+          description: "နောက်သို့ 10 စက္ကန့် ခုန်ပါ (အသံမှတစ်ဆင့် ချောမွေ့စွာရှာဖွေရန် ဖိထားပါ)"
+        },
+        seekForward: {
+          action: "ရှေ့သို့ 10 စက္ကန့်",
+          description: "ရှေ့သို့ခုန်၍ 10 စက္ကန့် (အသံဖြင့် ချောမွေ့စွာရှာဖွေရန် ဖိထားပါ)"
+        },
+        speedDecrease: {
+          action: "အရှိန်လျှော့ပါ။",
+          description: "ယခင်အမြန်နှုန်း ကြိုတင်သတ်မှတ်မှုသို့ ဆင်းပါ။"
+        },
+        speedIncrease: {
+          action: "အရှိန်မြှင့်ပါ။",
+          description: "နောက်အမြန်နှုန်း ကြိုတင်သတ်မှတ်မှုသို့ တက်လှမ်းပါ။"
+        }
+      }
+    },
+    nl: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Bediening en Read Aloud",
+        version: "v",
+        openChatGPT: "Open ChatGPT",
+        dashboard: "Dashboard",
+        seconds: "seconden",
+        star: "★ Ster",
+        docs: "Documenten",
+        issues: "Problemen"
+      },
+      popup: {
+        header: {
+          switchTheme: "Thema wijzigen",
+          openOptions: "Open Dashboard en instellingen"
+        },
+        tabs: {
+          controls: "Bediening",
+          shortcuts: "Sleutels",
+          about: "Over"
+        },
+        quickControls: {
+          playbackSpeed: "Standaard afspeelsnelheid",
+          defaultVolume: "Standaard audiovolume",
+          mute: "Dempen",
+          unmute: "Dempen opheffen",
+          smartIntegrations: "Slimme integraties",
+          globalShortcuts: "Algemene snelkoppelingen",
+          globalShortcutsDesc: "Spatie/K, Alt+P, Alt+Arrows en sneltoetsen inschakelen",
+          smoothScrubbing: "Vloeiend zoeken naar audio",
+          smoothScrubbingDesc: "Versnel het zoeken door ◀10 of 10▶ ingedrukt te houden"
+        },
+        shortcuts: {
+          title: "Sneltoetsen",
+          gesturesTitle: "Muis- en aanraakbewegingen",
+          smoothAudioScrub: "Vloeiende audio Audio zoeken",
+          directDownload: "Direct downloaden",
+          holdScrubKey: "Houd ◀10 / 10▶ ingedrukt",
+          clickDownloadKey: "Klik op de knop 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Open source door Infoxica",
+          description: "Verbetering van de stemervaring van ChatGPT met naadloos audio-audio zoeken, dynamische snelheidsvoorinstellingen, directe audiodownloads en spraaktriggers met één klik.",
+          privacyTitle: "100% privacygericht",
+          privacyDesc: "Geen trackers, geen telemetrie. Alles draait op uw machine.",
+          githubRepo: "GitHub-opslagplaats",
+          documentation: "Documentatie",
+          reportIssue: "Rapporteer een probleem"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Dashboard en configuratie",
+          preferences: "Voorkeuren",
+          shortcuts: "Snelkoppelingen en gebaren",
+          faq: "Veelgestelde vragen en probleemoplossing",
+          darkMode: "Donkere modus",
+          lightMode: "Lichtmodus",
+          githubRepo: "GitHub repo"
+        },
+        headers: {
+          preferencesTitle: "Voorkeuren voor audio en afspelen",
+          preferencesDesc: "Configureer de taal, voorinstellingen voor de afspeelsnelheid, het standaard audiovolume en de functies.",
+          shortcutsTitle: "Sneltoetsen en gebaren",
+          shortcutsDesc: "Beheers snelle sneltoetsen voor moeiteloze afspeelmanipulatie.",
+          faqTitle: "Veelgestelde vragen en probleemoplossing",
+          faqDesc: "Gedetailleerde technische gids, beveiligings- en ondersteuningsantwoorden."
+        },
+        general: {
+          languageTitle: "Taal en lokalisatie",
+          languageDesc: "Kies de interfacetaal van uw voorkeur of laat de extensie automatisch de taal van uw browser detecteren.",
+          languageAuto: "Automatische detectie (browsertaal)",
+          languageDetected: "Gedetecteerd",
+          speedTitle: "Voorkeuren voor afspeelsnelheid",
+          speedDesc: "Kies uw standaard afspeelsnelheid wanneer u ChatGPT opent of Read Aloud start.",
+          volumeTitle: "Standaard audiovolumeniveau",
+          volumeDesc: "Vooraf ingesteld audiovolume voor Read Aloud-spraakstreams.",
+          seekTitle: "Stap overslaan en zoeken",
+          seekDesc: "Aantal seconden dat moet worden overgeslagen bij één tik op de knoppen -10s / +10s of Alt + Left / Alt + Right.",
+          secondsUnit: "seconden"
+        },
+        shortcutsGuide: {
+          title: "Referentie voor toetsenbordsneltoetsen",
+          desc: "Versnel uw workflow met ergonomische afspeelsneltoetsen voor één hand en YouTube-standaard.",
+          gesturesTitle: "Muis en houd audiozoekende gebaren vast",
+          gesturesDesc: "Houd de knoppen ◀10s of 10s▶ ingedrukt om soepel door audio te zoeken via lange stemantwoorden met dynamische versnelling:",
+          gestureHold03: "Gaat naar de soepele audiozoekmodus (4× normale snelheid).",
+          gestureHold15: "Versnelt tot 10× zoeksnelheid.",
+          gestureHold30: "Hoge sprongsnelheid met een snelheid van 25×.",
+          gestureRelease: "Vergrendelt naadloos in de gewenste positie."
+        },
+        faq: {
+          title: "Veelgestelde vragen en gebruikershandleiding",
+          subtitle: "Snelle antwoorden om u te helpen het maximale uit ChatGPT Audio Controls te halen.",
+          q1: "Hoe pas ik het audiovolume aan door met mijn muis te scrollen?",
+          a1: "Beweeg eenvoudigweg uw muisaanwijzer over het luidsprekerpictogram voor het audiovolume op de spelerrail en scroll met uw muiswiel omhoog of omlaag. Het audiovolume wordt soepel aangepast in stappen van 5% zonder dat u de schuifregelaar hoeft te openen!",
+          q2: "Waar verschijnt de speler op ChatGPT?",
+          a2: "De speler is handig direct naast de prompt voor het opstellen van uw bericht verankerd. Als er geen audio wordt afgespeeld, blijft een kleine zwevende logoknop netjes aan de rechterkant gedockt. Als u op deze knop klikt of Voorlezen start, worden de volledige bedieningsbalken van de speler uitgevouwen.",
+          q3: "Hoe download ik de gesynthetiseerde spraakaudio?",
+          a3: "Wanneer ChatGPT een antwoord hardop voorleest, klikt u op de downloadknop (📥) aan de rechterrail. De audiostream wordt onmiddellijk opgeslagen als een audiobestand van hoge kwaliteit (.mp3, .m4a of .wav) op uw computer.",
+          q4: "Werkt dit op kleine laptopschermen?",
+          a4: "Ja! De speler detecteert automatisch uw beschikbare schermbreedte en schaalt de zoekbalk dynamisch zodat deze comfortabel op uw laptopscherm past. Als de ruimte extreem krap is, blijft de zwevende knop toegankelijk, zodat je de speler kunt uit- en inklappen wanneer je maar wilt.",
+          q5: "Hoe installeer ik dit via Tampermonkey met automatische updates?",
+          a5: "Als u Tampermonkey, Violentmonkey of Greasemonkey gebruikt, kunt u het zelfstandige script rechtstreeks vanuit onze repository installeren. Tampermonkey controleert GitHub automatisch op updates en waarschuwt u wanneer er een nieuwe versie wordt uitgebracht.",
+          q6: "Zijn mijn gesprekken of aanwijzingen privé?",
+          a6: "100% privé. De extensie draait volledig op uw lokale apparaat. Er worden nooit aanwijzingen, antwoorden, audiostreams of persoonlijke telemetrie naar een externe server verzonden."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Terug {s} seconden: houd ingedrukt om door audio te zoeken",
+          playPause: "Audio afspelen/audio pauzeren (Space / K / Alt+P)",
+          forward: "{s} seconden vooruit: houd ingedrukt om door audio te zoeken",
+          speed: "Afspeelsnelheid",
+          volume: "Audiovolume (scroll om aan te passen)",
+          volumeSlider: "Schuifregelaar voor audiovolume",
+          download: "Audio downloaden",
+          shortcuts: "Sneltoetsen en gebaren",
+          collapse: "Speler samenvouwen",
+          expand: "Vouw ChatGPT Audio Controls uit",
+          readAloud: "Lees hardop"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Snelkoppelingen",
+          playPause: "Audio afspelen / Audio pauzeren",
+          back: "Terug {s} sec",
+          forward: "Vooruit {s} sec",
+          slower: "Lagere afspeelsnelheid",
+          faster: "Hogere afspeelsnelheid",
+          volumeScroll: "Audiovolume Bladeren",
+          smoothScrub: "Vloeiend zoeken naar audio",
+          volumeScrollKey: "Scroll door 🔈",
+          smoothScrubKey: "Houd ◀{s} / {s}▶ ingedrukt"
+        },
+        alerts: {
+          downloadError: "Kan de audiostream niet downloaden. Zorg ervoor dat audio actief wordt geladen."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Audio afspelen / Audio pauzeren",
+          description: "Afspelen schakelen, overeenkomen met gewone web- en desktopspelers (Alt+P blijft ondersteund)"
+        },
+        seekBack: {
+          action: "10 seconden terug",
+          description: "Spring 10 seconden terug (ingedrukt houden voor soepel zoeken door audio)"
+        },
+        seekForward: {
+          action: "10 seconden vooruit",
+          description: "Spring 10 seconden vooruit (ingedrukt houden voor soepel zoeken door audio)"
+        },
+        speedDecrease: {
+          action: "Snelheid verlagen",
+          description: "Ga terug naar de vorige snelheidsvoorinstelling"
+        },
+        speedIncrease: {
+          action: "Snelheid verhogen",
+          description: "Ga naar de volgende snelheidsvoorinstelling"
+        }
+      }
+    },
+    pa: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "ਨਿਯੰਤਰਣ ਅਤੇ Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT ਖੋਲ੍ਹੋ",
+        dashboard: "ਡੈਸ਼ਬੋਰਡ",
+        seconds: "ਸਕਿੰਟ",
+        star: "★ ਤਾਰਾ",
+        docs: "ਡੌਕਸ",
+        issues: "ਮੁੱਦੇ"
+      },
+      popup: {
+        header: {
+          switchTheme: "ਸਵਿੱਚ ਥੀਮ",
+          openOptions: "ਡੈਸ਼ਬੋਰਡ ਅਤੇ ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ"
+        },
+        tabs: {
+          controls: "ਨਿਯੰਤਰਣ",
+          shortcuts: "ਕੁੰਜੀਆਂ",
+          about: "ਬਾਰੇ"
+        },
+        quickControls: {
+          playbackSpeed: "ਡਿਫੌਲਟ ਪਲੇਬੈਕ ਸਪੀਡ",
+          defaultVolume: "ਪੂਰਵ-ਨਿਰਧਾਰਤ ਆਡੀਓ ਵਾਲੀਅਮ",
+          mute: "ਚੁੱਪ",
+          unmute: "ਅਨਮਿਊਟ",
+          smartIntegrations: "ਸਮਾਰਟ ਏਕੀਕਰਣ",
+          globalShortcuts: "ਗਲੋਬਲ ਸ਼ਾਰਟਕੱਟ",
+          globalShortcutsDesc: "ਸਪੇਸ/ਕੇ, Alt+P, Alt+Arrows ਅਤੇ ਸਪੀਡ ਕੁੰਜੀਆਂ ਨੂੰ ਸਮਰੱਥ ਬਣਾਓ",
+          smoothScrubbing: "ਨਿਰਵਿਘਨ ਆਡੀਓ ਦੀ ਖੋਜ",
+          smoothScrubbingDesc: "◀10 ਜਾਂ 10▶ ਫੜ ਕੇ ਮੰਗ ਨੂੰ ਤੇਜ਼ ਕਰੋ"
+        },
+        shortcuts: {
+          title: "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ",
+          gesturesTitle: "ਮਾਊਸ ਅਤੇ ਟੱਚ ਸੰਕੇਤ",
+          smoothAudioScrub: "ਨਿਰਵਿਘਨ ਆਡੀਓ ਆਡੀਓ ਖੋਜ",
+          directDownload: "ਸਿੱਧਾ ਡਾਉਨਲੋਡ",
+          holdScrubKey: "◀10/10▶ ਫੜੋ",
+          clickDownloadKey: "📥 ਬਟਨ 'ਤੇ ਕਲਿੱਕ ਕਰੋ"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "ਇਨਫੌਕਸਿਕਾ ਦੁਆਰਾ ਓਪਨ ਸੋਰਸ",
+          description: "ਸਹਿਜ ਆਡੀਓ ਆਡੀਓ ਖੋਜ, ਡਾਇਨੈਮਿਕ ਸਪੀਡ ਪ੍ਰੀਸੈਟਸ, ਡਾਇਰੈਕਟ ਆਡੀਓ ਡਾਉਨਲੋਡਸ, ਅਤੇ ਇੱਕ-ਕਲਿੱਕ ਸਪੀਚ ਟ੍ਰਿਗਰਸ ਨਾਲ ਚੈਟਜੀਪੀਟੀ ਦੇ ਵੌਇਸ ਅਨੁਭਵ ਨੂੰ ਉੱਚਾ ਚੁੱਕਣਾ।",
+          privacyTitle: "100% ਗੋਪਨੀਯਤਾ ਕੇਂਦਰਿਤ",
+          privacyDesc: "ਕੋਈ ਟਰੈਕਰ ਨਹੀਂ, ਕੋਈ ਟੈਲੀਮੈਟਰੀ ਨਹੀਂ। ਸਭ ਕੁਝ ਤੁਹਾਡੀ ਮਸ਼ੀਨ 'ਤੇ ਚੱਲਦਾ ਹੈ.",
+          githubRepo: "GitHub ਰਿਪੋਜ਼ਟਰੀ",
+          documentation: "ਦਸਤਾਵੇਜ਼",
+          reportIssue: "ਇੱਕ ਮੁੱਦੇ ਦੀ ਰਿਪੋਰਟ ਕਰੋ"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ਡੈਸ਼ਬੋਰਡ ਅਤੇ ਸੈੱਟਅੱਪ",
+          preferences: "ਤਰਜੀਹਾਂ",
+          shortcuts: "ਸ਼ਾਰਟਕੱਟ ਅਤੇ ਇਸ਼ਾਰੇ",
+          faq: "ਅਕਸਰ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ ਅਤੇ ਸਮੱਸਿਆ ਨਿਪਟਾਰਾ",
+          darkMode: "ਡਾਰਕ ਮੋਡ",
+          lightMode: "ਲਾਈਟ ਮੋਡ",
+          githubRepo: "GitHub ਰੈਪੋ"
+        },
+        headers: {
+          preferencesTitle: "ਆਡੀਓ ਅਤੇ ਪਲੇਬੈਕ ਤਰਜੀਹਾਂ",
+          preferencesDesc: "ਭਾਸ਼ਾ, ਪਲੇਬੈਕ ਸਪੀਡ ਪ੍ਰੀਸੈਟਸ, ਡਿਫੌਲਟ ਆਡੀਓ ਵਾਲੀਅਮ, ਅਤੇ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਨੂੰ ਕੌਂਫਿਗਰ ਕਰੋ।",
+          shortcutsTitle: "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਅਤੇ ਸੰਕੇਤ",
+          shortcutsDesc: "ਆਸਾਨ ਪਲੇਬੈਕ ਹੇਰਾਫੇਰੀ ਲਈ ਤੇਜ਼ ਹੌਟਕੀਜ਼ ਨੂੰ ਮਾਸਟਰ ਕਰੋ।",
+          faqTitle: "ਅਕਸਰ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ ਅਤੇ ਸਮੱਸਿਆ ਨਿਪਟਾਰਾ",
+          faqDesc: "ਵਿਸਤ੍ਰਿਤ ਤਕਨੀਕੀ ਗਾਈਡ, ਸੁਰੱਖਿਆ, ਅਤੇ ਸਮਰਥਨ ਜਵਾਬ।"
+        },
+        general: {
+          languageTitle: "ਭਾਸ਼ਾ ਅਤੇ ਸਥਾਨੀਕਰਨ",
+          languageDesc: "ਆਪਣੀ ਪਸੰਦੀਦਾ ਇੰਟਰਫੇਸ ਭਾਸ਼ਾ ਚੁਣੋ ਜਾਂ ਐਕਸਟੈਂਸ਼ਨ ਨੂੰ ਆਪਣੇ ਬ੍ਰਾਉਜ਼ਰ ਦੀ ਭਾਸ਼ਾ ਦਾ ਪਤਾ ਲਗਾਉਣ ਦਿਓ।",
+          languageAuto: "ਆਟੋ ਡਿਟੈਕਟ (ਬ੍ਰਾਊਜ਼ਰ ਭਾਸ਼ਾ)",
+          languageDetected: "ਖੋਜਿਆ",
+          speedTitle: "ਪਲੇਬੈਕ ਸਪੀਡ ਤਰਜੀਹਾਂ",
+          speedDesc: "ChatGPT ਖੋਲ੍ਹਣ ਜਾਂ Read Aloud ਲਾਂਚ ਕਰਨ ਵੇਲੇ ਆਪਣੀ ਡਿਫੌਲਟ ਪਲੇਬੈਕ ਦਰ ਚੁਣੋ।",
+          volumeTitle: "ਡਿਫੌਲਟ ਆਡੀਓ ਵਾਲੀਅਮ ਪੱਧਰ",
+          volumeDesc: "ਉੱਚੀ ਆਵਾਜ਼ ਵਿੱਚ ਪੜ੍ਹੋ ਸਪੀਚ ਸਟ੍ਰੀਮ ਲਈ ਪ੍ਰੀਸੈਟ ਆਡੀਓ ਵਾਲੀਅਮ।",
+          seekTitle: "ਛੱਡੋ ਅਤੇ ਕਦਮ ਲੱਭੋ",
+          seekDesc: "-10s / +10s ਬਟਨਾਂ ਜਾਂ Alt + Left / Alt + Right ਦੀ ਸਿੰਗਲ ਟੈਪ 'ਤੇ ਛੱਡਣ ਲਈ ਸਕਿੰਟਾਂ ਦੀ ਸੰਖਿਆ।",
+          secondsUnit: "ਸਕਿੰਟ"
+        },
+        shortcutsGuide: {
+          title: "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਦਰਭ",
+          desc: "ਐਰਗੋਨੋਮਿਕ ਸਿੰਗਲ-ਹੈਂਡ ਅਤੇ YouTube-ਸਟੈਂਡਰਡ ਪਲੇਬੈਕ ਹੌਟਕੀਜ਼ ਨਾਲ ਆਪਣੇ ਵਰਕਫਲੋ ਨੂੰ ਤੇਜ਼ ਕਰੋ।",
+          gesturesTitle: "ਮਾਊਸ ਅਤੇ ਹੋਲਡ ਆਡੀਓ ਖੋਜ ਇਸ਼ਾਰੇ",
+          gesturesDesc: "ਗਤੀਸ਼ੀਲ ਪ੍ਰਵੇਗ ਦੇ ਨਾਲ ਲੰਬੇ ਵੌਇਸ ਜਵਾਬਾਂ ਰਾਹੀਂ ਆਡੀਓ ਰਾਹੀਂ ਆਸਾਨੀ ਨਾਲ ਖੋਜਣ ਲਈ ◀10s ਜਾਂ 10s▶ ਬਟਨਾਂ ਨੂੰ ਦਬਾ ਕੇ ਰੱਖੋ:",
+          gestureHold03: "ਨਿਰਵਿਘਨ ਆਡੀਓ ਖੋਜ ਮੋਡ (4× ਆਮ ਗਤੀ) ਵਿੱਚ ਦਾਖਲ ਹੁੰਦਾ ਹੈ।",
+          gestureHold15: "10× ਦੀ ਮੰਗ ਕਰਨ ਦੀ ਦਰ ਨੂੰ ਤੇਜ਼ ਕਰਦਾ ਹੈ।",
+          gestureHold30: "25× ਦੀ ਦਰ 'ਤੇ ਹਾਈ-ਸਪੀਡ ਜੰਪ ਰੇਟ।",
+          gestureRelease: "ਨਿਰਵਿਘਨ ਲੋੜੀਦੀ ਸਥਿਤੀ ਲਈ ਲਾਕ ਕਰਦਾ ਹੈ."
+        },
+        faq: {
+          title: "ਅਕਸਰ ਪੁੱਛੇ ਜਾਂਦੇ ਸਵਾਲ ਅਤੇ ਉਪਭੋਗਤਾ ਗਾਈਡ",
+          subtitle: "ChatGPT Audio Controls ਤੋਂ ਵੱਧ ਤੋਂ ਵੱਧ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿੱਚ ਤੁਹਾਡੀ ਮਦਦ ਕਰਨ ਲਈ ਤੁਰੰਤ ਜਵਾਬ।",
+          q1: "ਮੈਂ ਆਪਣੇ ਮਾਊਸ ਨਾਲ ਸਕ੍ਰੋਲ ਕਰਕੇ ਆਡੀਓ ਵਾਲੀਅਮ ਨੂੰ ਕਿਵੇਂ ਵਿਵਸਥਿਤ ਕਰਾਂ?",
+          a1: "ਬੱਸ ਆਪਣੇ ਮਾਊਸ ਪੁਆਇੰਟਰ ਨੂੰ ਪਲੇਅਰ ਰੇਲ 'ਤੇ ਆਡੀਓ ਵਾਲੀਅਮ ਸਪੀਕਰ ਆਈਕਨ 'ਤੇ ਹੋਵਰ ਕਰੋ ਅਤੇ ਆਪਣੇ ਮਾਊਸ ਵ੍ਹੀਲ ਨੂੰ ਉੱਪਰ ਜਾਂ ਹੇਠਾਂ ਸਕ੍ਰੋਲ ਕਰੋ। ਆਡੀਓ ਵਾਲੀਅਮ ਸਲਾਈਡਰ ਪੌਪਓਵਰ ਨੂੰ ਖੋਲ੍ਹਣ ਤੋਂ ਬਿਨਾਂ 5% ਵਾਧੇ ਵਿੱਚ ਆਸਾਨੀ ਨਾਲ ਐਡਜਸਟ ਹੋ ਜਾਵੇਗਾ!",
+          q2: "ChatGPT 'ਤੇ ਖਿਡਾਰੀ ਕਿੱਥੇ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ?",
+          a2: "ਪਲੇਅਰ ਨੂੰ ਤੁਹਾਡੇ ਸੰਦੇਸ਼ ਕੰਪੋਜ਼ਰ ਪ੍ਰੋਂਪਟ ਦੇ ਨਾਲ ਆਸਾਨੀ ਨਾਲ ਐਂਕਰ ਕੀਤਾ ਜਾਂਦਾ ਹੈ। ਜਦੋਂ ਕੋਈ ਆਡੀਓ ਨਹੀਂ ਚੱਲ ਰਿਹਾ ਹੁੰਦਾ ਹੈ, ਤਾਂ ਇੱਕ ਛੋਟਾ ਫਲੋਟਿੰਗ ਲੋਗੋ ਬਟਨ ਸੱਜੇ ਪਾਸੇ ਚੰਗੀ ਤਰ੍ਹਾਂ ਡੌਕ ਕੀਤਾ ਜਾਂਦਾ ਹੈ। ਇਸ ਬਟਨ 'ਤੇ ਕਲਿੱਕ ਕਰਨਾ ਜਾਂ ਉੱਚੀ ਪੜ੍ਹੋ ਸ਼ੁਰੂ ਕਰਨਾ ਪੂਰੇ ਪਲੇਅਰ ਕੰਟਰੋਲ ਬਾਰਾਂ ਦਾ ਵਿਸਤਾਰ ਕਰਦਾ ਹੈ।",
+          q3: "ਮੈਂ ਸਿੰਥੇਸਾਈਜ਼ਡ ਸਪੀਚ ਆਡੀਓ ਨੂੰ ਕਿਵੇਂ ਡਾਊਨਲੋਡ ਕਰਾਂ?",
+          a3: "ਜਦੋਂ ਵੀ ChatGPT ਉੱਚੀ ਆਵਾਜ਼ ਵਿੱਚ ਜਵਾਬ ਪੜ੍ਹਦਾ ਹੈ, ਤਾਂ ਸੱਜੇ ਰੇਲ 'ਤੇ ਡਾਊਨਲੋਡ ਬਟਨ (📥) 'ਤੇ ਕਲਿੱਕ ਕਰੋ। ਆਡੀਓ ਸਟ੍ਰੀਮ ਨੂੰ ਤੁਰੰਤ ਤੁਹਾਡੇ ਕੰਪਿਊਟਰ 'ਤੇ ਉੱਚ-ਗੁਣਵੱਤਾ ਵਾਲੀ ਆਡੀਓ ਫ਼ਾਈਲ (.mp3, .m4a, ਜਾਂ .wav) ਵਜੋਂ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।",
+          q4: "ਕੀ ਇਹ ਛੋਟੀਆਂ ਲੈਪਟਾਪ ਸਕ੍ਰੀਨਾਂ 'ਤੇ ਕੰਮ ਕਰਦਾ ਹੈ?",
+          a4: "ਹਾਂ! ਪਲੇਅਰ ਆਟੋਮੈਟਿਕਲੀ ਤੁਹਾਡੀ ਉਪਲਬਧ ਸਕ੍ਰੀਨ ਚੌੜਾਈ ਦਾ ਪਤਾ ਲਗਾਉਂਦਾ ਹੈ ਅਤੇ ਤੁਹਾਡੇ ਲੈਪਟਾਪ ਸਕ੍ਰੀਨ ਨੂੰ ਆਰਾਮ ਨਾਲ ਫਿੱਟ ਕਰਨ ਲਈ ਇਸਦੀ ਸੀਕਬਾਰ ਨੂੰ ਗਤੀਸ਼ੀਲ ਤੌਰ 'ਤੇ ਸਕੇਲ ਕਰਦਾ ਹੈ। ਜੇਕਰ ਸਪੇਸ ਬਹੁਤ ਤੰਗ ਹੈ, ਤਾਂ ਫਲੋਟਿੰਗ ਬਟਨ ਪਹੁੰਚਯੋਗ ਰਹਿੰਦਾ ਹੈ ਤਾਂ ਜੋ ਜਦੋਂ ਵੀ ਤੁਹਾਨੂੰ ਲੋੜ ਹੋਵੇ ਤਾਂ ਤੁਸੀਂ ਪਲੇਅਰ ਨੂੰ ਫੈਲਾ ਅਤੇ ਸਮੇਟ ਸਕੋ।",
+          q5: "ਮੈਂ ਇਸਨੂੰ ਟੈਂਪਰਮੋਨਕੀ ਦੁਆਰਾ ਆਟੋ-ਅੱਪਡੇਟਸ ਨਾਲ ਕਿਵੇਂ ਸਥਾਪਿਤ ਕਰਾਂ?",
+          a5: "ਜੇਕਰ ਤੁਸੀਂ ਟੈਂਪਰਮੰਕੀ, ਵਾਇਲੈਂਟਮੰਕੀ, ਜਾਂ ਗ੍ਰੀਜ਼ਮੰਕੀ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਸਾਡੀ ਰਿਪੋਜ਼ਟਰੀ ਤੋਂ ਸਿੱਧੇ ਤੌਰ 'ਤੇ ਇਕੱਲੇ ਸਕ੍ਰਿਪਟ ਨੂੰ ਸਥਾਪਿਤ ਕਰ ਸਕਦੇ ਹੋ। ਟੈਂਪਰਮੋਨਕੀ ਅਪਡੇਟਾਂ ਲਈ GitHub ਦੀ ਸਵੈਚਲਿਤ ਤੌਰ 'ਤੇ ਜਾਂਚ ਕਰੇਗਾ ਅਤੇ ਜਦੋਂ ਵੀ ਨਵਾਂ ਸੰਸਕਰਣ ਜਾਰੀ ਹੁੰਦਾ ਹੈ ਤਾਂ ਤੁਹਾਨੂੰ ਸੂਚਿਤ ਕਰੇਗਾ।",
+          q6: "ਕੀ ਮੇਰੀ ਗੱਲਬਾਤ ਜਾਂ ਪ੍ਰੋਂਪਟ ਨਿੱਜੀ ਹਨ?",
+          a6: "100% ਨਿਜੀ। ਐਕਸਟੈਂਸ਼ਨ ਪੂਰੀ ਤਰ੍ਹਾਂ ਤੁਹਾਡੀ ਸਥਾਨਕ ਡਿਵਾਈਸ 'ਤੇ ਚੱਲਦਾ ਹੈ। ਕੋਈ ਵੀ ਪ੍ਰੋਂਪਟ, ਜਵਾਬ, ਆਡੀਓ ਸਟ੍ਰੀਮ, ਜਾਂ ਨਿੱਜੀ ਟੈਲੀਮੈਟਰੀ ਕਦੇ ਵੀ ਕਿਸੇ ਬਾਹਰੀ ਸਰਵਰ ਨੂੰ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ ਹੈ।"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "ਪਿੱਛੇ {s} ਸਕਿੰਟ — ਆਡੀਓ ਰਾਹੀਂ ਖੋਜ ਕਰਨ ਲਈ ਹੋਲਡ ਕਰੋ",
+          playPause: "ਆਡੀਓ ਚਲਾਓ / ਆਡੀਓ ਰੋਕੋ (Space / K / Alt+P)",
+          forward: "ਅੱਗੇ {s} ਸਕਿੰਟ — ਆਡੀਓ ਰਾਹੀਂ ਖੋਜ ਕਰਨ ਲਈ ਹੋਲਡ ਕਰੋ",
+          speed: "ਪਲੇਬੈਕ ਗਤੀ",
+          volume: "ਆਡੀਓ ਵਾਲੀਅਮ (ਐਡਜਸਟ ਕਰਨ ਲਈ ਸਕ੍ਰੋਲ ਕਰੋ)",
+          volumeSlider: "ਆਡੀਓ ਵਾਲੀਅਮ ਸਲਾਈਡਰ",
+          download: "ਆਡੀਓ ਡਾਊਨਲੋਡ ਕਰੋ",
+          shortcuts: "ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਅਤੇ ਸੰਕੇਤ",
+          collapse: "ਪਲੇਅਰ ਨੂੰ ਸਮੇਟਣਾ",
+          expand: "ChatGPT Audio Controls ਦਾ ਵਿਸਤਾਰ ਕਰੋ",
+          readAloud: "ਉੱਚੀ ਪੜ੍ਹੋ"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud ਸ਼ਾਰਟਕੱਟ",
+          playPause: "ਆਡੀਓ ਚਲਾਓ / ਆਡੀਓ ਰੋਕੋ",
+          back: "ਪਿੱਛੇ {s} ਸਕਿੰਟ",
+          forward: "ਅੱਗੇ {s} ਸਕਿੰਟ",
+          slower: "ਹੌਲੀ ਪਲੇਬੈਕ ਗਤੀ",
+          faster: "ਤੇਜ਼ ਪਲੇਬੈਕ ਗਤੀ",
+          volumeScroll: "ਆਡੀਓ ਵਾਲੀਅਮ ਸਕਰੋਲ",
+          smoothScrub: "ਨਿਰਵਿਘਨ ਆਡੀਓ ਦੀ ਖੋਜ",
+          volumeScrollKey: "🔈 'ਤੇ ਸਕ੍ਰੋਲ ਕਰੋ",
+          smoothScrubKey: "ਹੋਲਡ ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "ਆਡੀਓ ਸਟ੍ਰੀਮ ਨੂੰ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਆਡੀਓ ਕਿਰਿਆਸ਼ੀਲ ਤੌਰ 'ਤੇ ਲੋਡ ਕੀਤਾ ਗਿਆ ਹੈ।"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "ਆਡੀਓ ਚਲਾਓ / ਆਡੀਓ ਰੋਕੋ",
+          description: "ਪਲੇਬੈਕ ਨੂੰ ਟੌਗਲ ਕਰੋ, ਆਮ ਵੈੱਬ ਅਤੇ ਡੈਸਕਟੌਪ ਪਲੇਅਰਾਂ ਨਾਲ ਮੇਲ ਖਾਂਦਾ ਹੈ (Alt+P ਸਮਰਥਿਤ ਰਹਿੰਦਾ ਹੈ)"
+        },
+        seekBack: {
+          action: "10 ਸਕਿੰਟ ਪਿੱਛੇ",
+          description: "10 ਸਕਿੰਟ ਪਿੱਛੇ ਜਾਓ (ਆਡੀਓ ਰਾਹੀਂ ਨਿਰਵਿਘਨ ਖੋਜ ਲਈ ਫੜੋ)"
+        },
+        seekForward: {
+          action: "10 ਸਕਿੰਟ ਅੱਗੇ",
+          description: "10s ਅੱਗੇ ਜਾਉ (ਆਡੀਓ ਦੁਆਰਾ ਨਿਰਵਿਘਨ ਖੋਜ ਲਈ ਫੜੋ)"
+        },
+        speedDecrease: {
+          action: "ਗਤੀ ਘਟਾਓ",
+          description: "ਪਿਛਲੀ ਸਪੀਡ ਪ੍ਰੀਸੈਟ 'ਤੇ ਹੇਠਾਂ ਜਾਓ"
+        },
+        speedIncrease: {
+          action: "ਗਤੀ ਵਧਾਓ",
+          description: "ਅਗਲੀ ਸਪੀਡ ਪ੍ਰੀਸੈਟ ਲਈ ਕਦਮ ਵਧਾਓ"
+        }
+      }
+    },
+    sk: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Ovládacie prvky a Read Aloud",
+        version: "v",
+        openChatGPT: "Otvorte ChatGPT",
+        dashboard: "Prehľad",
+        seconds: "sekúnd",
+        star: "★ Hviezda",
+        docs: "Dokumenty",
+        issues: "Problémy"
+      },
+      popup: {
+        header: {
+          switchTheme: "Prepnúť tému",
+          openOptions: "Otvorte Dashboard & Settings"
+        },
+        tabs: {
+          controls: "Kontroly",
+          shortcuts: "Klávesy",
+          about: "O"
+        },
+        quickControls: {
+          playbackSpeed: "Predvolená rýchlosť prehrávania",
+          defaultVolume: "Predvolená hlasitosť zvuku",
+          mute: "Stlmiť",
+          unmute: "Zapnúť zvuk",
+          smartIntegrations: "Inteligentné integrácie",
+          globalShortcuts: "Globálne skratky",
+          globalShortcutsDesc: "Povoliť klávesy Space/K, Alt+P, Alt+Arrows a rýchle",
+          smoothScrubbing: "Hladké vyhľadávanie zvuku",
+          smoothScrubbingDesc: "Zrýchlite vyhľadávanie podržaním ◀10 alebo 10▶"
+        },
+        shortcuts: {
+          title: "Klávesové skratky",
+          gesturesTitle: "Gestá myši a dotyku",
+          smoothAudioScrub: "Hladký zvuk Hľadanie zvuku",
+          directDownload: "Priame stiahnutie",
+          holdScrubKey: "Podržte ◀10 / 10▶",
+          clickDownloadKey: "Kliknite na tlačidlo 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Open Source od Infoxica",
+          description: "Pozdvihnutie hlasového zážitku ChatGPT s bezproblémovým vyhľadávaním zvuku, dynamickými predvoľbami rýchlosti, priamym sťahovaním zvuku a spúšťaním reči na jedno kliknutie.",
+          privacyTitle: "100% zameranie na súkromie",
+          privacyDesc: "Žiadne sledovače, žiadna telemetria. Všetko beží na vašom stroji.",
+          githubRepo: "Úložisko GitHub",
+          documentation: "Dokumentácia",
+          reportIssue: "Nahlásiť problém"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Prehľad a nastavenia",
+          preferences: "Preferencie",
+          shortcuts: "Skratky a gestá",
+          faq: "FAQ a riešenie problémov",
+          darkMode: "Tmavý režim",
+          lightMode: "Svetelný režim",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Predvoľby zvuku a prehrávania",
+          preferencesDesc: "Nakonfigurujte jazyk, predvoľby rýchlosti prehrávania, predvolenú hlasitosť zvuku a funkcie.",
+          shortcutsTitle: "Klávesové skratky a gestá",
+          shortcutsDesc: "Ovládajte rýchle klávesové skratky pre jednoduchú manipuláciu s prehrávaním.",
+          faqTitle: "FAQ a riešenie problémov",
+          faqDesc: "Podrobná technická príručka, bezpečnosť a odpovede na podporu."
+        },
+        general: {
+          languageTitle: "Jazyk a lokalizácia",
+          languageDesc: "Vyberte preferovaný jazyk rozhrania alebo nechajte rozšírenie automaticky zistiť jazyk vášho prehliadača.",
+          languageAuto: "Automatická detekcia (jazyk prehliadača)",
+          languageDetected: "Zistené",
+          speedTitle: "Predvoľby rýchlosti prehrávania",
+          speedDesc: "Vyberte predvolenú rýchlosť prehrávania pri otváraní ChatGPT alebo spúšťaní Read Aloud.",
+          volumeTitle: "Predvolená úroveň hlasitosti zvuku",
+          volumeDesc: "Prednastavená hlasitosť zvuku pre hlasové prúdy reči.",
+          seekTitle: "Krok preskočenia a hľadania",
+          seekDesc: "Počet sekúnd na preskočenie jedným klepnutím na tlačidlá -10s / +10s alebo Alt + Left / Alt + Right.",
+          secondsUnit: "sekúnd"
+        },
+        shortcutsGuide: {
+          title: "Odkaz na klávesové skratky",
+          desc: "Zrýchlite svoj pracovný postup pomocou ergonomických klávesových skratiek prehrávania jednou rukou a štandardných pre YouTube.",
+          gesturesTitle: "Gestá na vyhľadávanie zvuku myšou a podržaním",
+          gesturesDesc: "Podržaním tlačidiel ◀10s alebo 10s▶ môžete plynulo prehľadávať zvuk prostredníctvom dlhých hlasových odpovedí s dynamickým zrýchlením:",
+          gestureHold03: "Vstup do režimu plynulého vyhľadávania zvuku (4× normálna rýchlosť).",
+          gestureHold15: "Zrýchľuje na 10-násobok rýchlosti vyhľadávania.",
+          gestureHold30: "Rýchlosť skokov pri vysokej rýchlosti 25-násobnou rýchlosťou.",
+          gestureRelease: "Bezproblémové uzamknutie v požadovanej polohe."
+        },
+        faq: {
+          title: "Často kladené otázky a používateľská príručka",
+          subtitle: "Rýchle odpovede, ktoré vám pomôžu čo najlepšie využiť ChatGPT Audio Controls.",
+          q1: "Ako upravím hlasitosť zvuku posúvaním myši?",
+          a1: "Jednoducho umiestnite kurzor myši na ikonu reproduktora hlasitosti na lište prehrávača a posúvajte kolieskom myši nahor alebo nadol. Hlasitosť zvuku sa plynulo upraví v 5% prírastkoch bez toho, aby ste museli otvárať posuvný panel!",
+          q2: "Kde sa objaví prehrávač na ChatGPT?",
+          a2: "Prehrávač je pohodlne ukotvený priamo vedľa výzvy na zostavenie správy. Keď sa neprehráva žiadny zvuk, malé plávajúce tlačidlo s logom zostane úhľadne ukotvené na pravej strane. Kliknutím na toto tlačidlo alebo spustením čítania nahlas sa rozbalia všetky ovládacie lišty prehrávača.",
+          q3: "Ako stiahnem zvuk syntetizovanej reči?",
+          a3: "Vždy, keď ChatGPT prečíta nahlas odpoveď, kliknite na tlačidlo sťahovania (📥) na pravej koľajnici. Zvukový tok sa okamžite uloží ako vysokokvalitný zvukový súbor (.mp3, .m4a alebo .wav) do vášho počítača.",
+          q4: "Funguje to na malých obrazovkách notebookov?",
+          a4: "Áno! Prehrávač automaticky rozpozná vašu dostupnú šírku obrazovky a dynamicky upraví svoj vyhľadávací panel tak, aby sa pohodlne zmestil na obrazovku vášho notebooku. Ak je miesto veľmi málo, plávajúce tlačidlo zostane prístupné, takže prehrávač môžete kedykoľvek rozbaliť a zbaliť.",
+          q5: "Ako to nainštalujem cez Tampermonkey s automatickými aktualizáciami?",
+          a5: "Ak používate Tampermonkey, Violentmonkey alebo Greasemonkey, môžete si nainštalovať samostatný skript priamo z nášho úložiska. Tampermonkey automaticky skontroluje aktualizácie GitHub a upozorní vás vždy, keď bude vydaná nová verzia.",
+          q6: "Sú moje konverzácie alebo výzvy súkromné?",
+          a6: "100 % súkromné. Rozšírenie beží úplne na vašom lokálnom zariadení. Žiadne výzvy, odpovede, audio streamy ani osobná telemetria sa nikdy neposielajú na žiadny externý server."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Späť o {s} sekúnd – podržaním prejdete zvuk",
+          playPause: "Prehrať zvuk / Pozastaviť zvuk (Space / K / Alt+P)",
+          forward: "Posunúť dopredu o {s} sekúnd – podržaním prejdete zvuk",
+          speed: "Rýchlosť prehrávania",
+          volume: "Hlasitosť zvuku (upravte posúvaním)",
+          volumeSlider: "Posúvač hlasitosti zvuku",
+          download: "Stiahnite si zvuk",
+          shortcuts: "Klávesové skratky a gestá",
+          collapse: "Zbaliť prehrávač",
+          expand: "Rozbaliť ChatGPT Audio Controls",
+          readAloud: "Čítajte nahlas"
+        },
+        shortcutsPopover: {
+          title: "Skratky Read Aloud",
+          playPause: "Prehrať zvuk / Pozastaviť zvuk",
+          back: "Späť {s} sek",
+          forward: "Dopredu {s} sek",
+          slower: "Nižšia rýchlosť prehrávania",
+          faster: "Vyššia rýchlosť prehrávania",
+          volumeScroll: "Hlasitosť zvuku Rolujte",
+          smoothScrub: "Hladké vyhľadávanie zvuku",
+          volumeScrollKey: "Prejdite na 🔈",
+          smoothScrubKey: "Podržte ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Nepodarilo sa stiahnuť audio stream. Uistite sa, že zvuk je aktívne načítaný."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Prehrať zvuk / Pozastaviť zvuk",
+          description: "Prepínanie prehrávania, prispôsobenie sa bežným webovým a stolným prehrávačom (Alt+P zostáva podporované)"
+        },
+        seekBack: {
+          action: "Späť o 10 sekúnd",
+          description: "Skok o 10 s dozadu (podržaním pre plynulé vyhľadávanie zvuku)"
+        },
+        seekForward: {
+          action: "O 10 sekúnd dopredu",
+          description: "Skok dopredu o 10 s (podržaním pre plynulé vyhľadávanie zvuku)"
+        },
+        speedDecrease: {
+          action: "Znížiť rýchlosť",
+          description: "Znížte na predchádzajúcu prednastavenú rýchlosť"
+        },
+        speedIncrease: {
+          action: "Zvýšte rýchlosť",
+          description: "Prechod na ďalšiu predvoľbu rýchlosti"
+        }
+      }
+    },
+    sl: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Kontrole & Read Aloud",
+        version: "v",
+        openChatGPT: "Odprite ChatGPT",
+        dashboard: "Armaturna plošča",
+        seconds: "sekund",
+        star: "★ Zvezdica",
+        docs: "Dokumenti",
+        issues: "Težave"
+      },
+      popup: {
+        header: {
+          switchTheme: "Preklopi temo",
+          openOptions: "Odprite nadzorno ploščo in nastavitve"
+        },
+        tabs: {
+          controls: "Kontrole",
+          shortcuts: "Ključi",
+          about: "O"
+        },
+        quickControls: {
+          playbackSpeed: "Privzeta hitrost predvajanja",
+          defaultVolume: "Privzeta glasnost zvoka",
+          mute: "Nemo",
+          unmute: "Vklop zvoka",
+          smartIntegrations: "Pametne integracije",
+          globalShortcuts: "Globalne bližnjice",
+          globalShortcutsDesc: "Omogoči preslednico/K, Alt+P, Alt+Arrows in tipke za hitrost",
+          smoothScrubbing: "Gladko iskanje zvoka",
+          smoothScrubbingDesc: "Pospešite iskanje tako, da držite ◀10 ali 10▶"
+        },
+        shortcuts: {
+          title: "Bližnjice na tipkovnici",
+          gesturesTitle: "Poteze z miško in dotikom",
+          smoothAudioScrub: "Gladko iskanje zvoka",
+          directDownload: "Neposredni prenos",
+          holdScrubKey: "Držite ◀10 / 10▶",
+          clickDownloadKey: "Kliknite gumb 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Odprta koda Infoxice",
+          description: "Izboljšanje glasovne izkušnje ChatGPT z brezhibnim iskanjem zvoka, dinamičnimi prednastavitvami hitrosti, neposrednimi prenosi zvoka in sprožilci govora z enim klikom.",
+          privacyTitle: "100 % osredotočenost na zasebnost",
+          privacyDesc: "Brez sledilcev, brez telemetrije. Vse teče na vašem stroju.",
+          githubRepo: "Repozitorij GitHub",
+          documentation: "Dokumentacija",
+          reportIssue: "Prijavite težavo"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Nadzorna plošča in nastavitve",
+          preferences: "Nastavitve",
+          shortcuts: "Bližnjice in kretnje",
+          faq: "Pogosta vprašanja in odpravljanje težav",
+          darkMode: "Temni način",
+          lightMode: "Svetlobni način",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Nastavitve zvoka in predvajanja",
+          preferencesDesc: "Konfigurirajte jezik, prednastavitve hitrosti predvajanja, privzeto glasnost zvoka in funkcije.",
+          shortcutsTitle: "Bližnjice na tipkovnici in kretnje",
+          shortcutsDesc: "Obvladajte hitre bližnjične tipke za enostavno upravljanje predvajanja.",
+          faqTitle: "Pogosta vprašanja in odpravljanje težav",
+          faqDesc: "Podroben tehnični vodnik, odgovori glede varnosti in podpore."
+        },
+        general: {
+          languageTitle: "Jezik in lokalizacija",
+          languageDesc: "Izberite želeni jezik vmesnika ali pustite, da razširitev samodejno zazna jezik vašega brskalnika.",
+          languageAuto: "Samodejno zaznaj (jezik brskalnika)",
+          languageDetected: "Zaznano",
+          speedTitle: "Nastavitve hitrosti predvajanja",
+          speedDesc: "Izberite privzeto hitrost predvajanja, ko odprete ChatGPT ali zaženete Read Aloud.",
+          volumeTitle: "Privzeta raven glasnosti zvoka",
+          volumeDesc: "Prednastavljena glasnost zvoka za govorne tokove Read Aloud.",
+          seekTitle: "Preskoči in poišči korak",
+          seekDesc: "Število sekund za preskok ob enem dotiku gumbov -10s / +10s ali Alt + Left / Alt + Right.",
+          secondsUnit: "sekund"
+        },
+        shortcutsGuide: {
+          title: "Referenca bližnjic na tipkovnici",
+          desc: "Pospešite potek dela z ergonomskimi tipkami za predvajanje z eno roko in YouTubovim standardom.",
+          gesturesTitle: "Zvočne kretnje za iskanje miške in držanja",
+          gesturesDesc: "Pridržite gumb ◀10s ali 10s▶ za gladko iskanje po zvoku prek dolgih glasovnih odgovorov z dinamičnim pospeševanjem:",
+          gestureHold03: "Vstopi v način gladkega iskanja zvoka (4× običajna hitrost).",
+          gestureHold15: "Pospeši do 10-kratne stopnje iskanja.",
+          gestureHold30: "Hitrost skoka pri visoki hitrosti pri hitrosti 25×.",
+          gestureRelease: "Brezhibno se zaskoči v želeni položaj."
+        },
+        faq: {
+          title: "Pogosta vprašanja in uporabniški priročnik",
+          subtitle: "Hitri odgovori, ki vam bodo pomagali kar najbolje izkoristiti ChatGPT Audio Controls.",
+          q1: "Kako prilagodim glasnost zvoka s pomikanjem z miško?",
+          a1: "Preprosto premaknite kazalec miške nad ikono zvočnika za glasnost zvoka na tirnici predvajalnika in pomaknite kolesce miške navzgor ali navzdol. Glasnost zvoka se bo gladko prilagajala v korakih po 5 %, ne da bi morali odpreti pojavni drsnik!",
+          q2: "Kje se igralec pojavi na ChatGPT?",
+          a2: "Predvajalnik je priročno zasidran neposredno ob pozivu za sestavljanje sporočila. Ko se zvok ne predvaja, majhen lebdeči gumb z logotipom ostane lepo zasidran na desni strani. Če kliknete ta gumb ali začnete Glasno branje, razširite nadzorne vrstice predvajalnika.",
+          q3: "Kako prenesem zvok sintetiziranega govora?",
+          a3: "Kadarkoli ChatGPT na glas prebere odgovor, kliknite gumb za prenos (📥) na desnem traku. Zvočni tok se v trenutku shrani kot visokokakovostna zvočna datoteka (.mp3, .m4a ali .wav) v vaš računalnik.",
+          q4: "Ali to deluje na majhnih zaslonih prenosnikov?",
+          a4: "Da! Predvajalnik samodejno zazna razpoložljivo širino zaslona in dinamično prilagodi iskalno vrstico, da se udobno prilega zaslonu vašega prenosnika. Če je prostora zelo malo, ostane lebdeči gumb dostopen, tako da lahko razširite in strnete predvajalnik, kadar koli ga potrebujete.",
+          q5: "Kako to namestim prek Tampermonkey s samodejnimi posodobitvami?",
+          a5: "Če uporabljate Tampermonkey, Violentmonkey ali Greasemonkey, lahko samostojni skript namestite neposredno iz našega skladišča. Tampermonkey bo samodejno preveril, ali so GitHub posodobitve, in vas obvestil, ko bo izdana nova različica.",
+          q6: "Ali so moji pogovori ali pozivi zasebni?",
+          a6: "100 % zasebno. Razširitev v celoti deluje na vaši lokalni napravi. Nobeni pozivi, odgovori, zvočni tokovi ali osebna telemetrija niso nikoli poslani nobenemu zunanjemu strežniku."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "{s} sekund nazaj — držite za iskanje po zvoku",
+          playPause: "Predvajanje zvoka/zaustavitev zvoka (Space / K / Alt+P)",
+          forward: "{s} sekund naprej — držite za iskanje po zvoku",
+          speed: "Hitrost predvajanja",
+          volume: "Glasnost zvoka (pomaknite se za prilagoditev)",
+          volumeSlider: "Drsnik za glasnost zvoka",
+          download: "Prenos zvoka",
+          shortcuts: "Bližnjice na tipkovnici in kretnje",
+          collapse: "Strni predvajalnik",
+          expand: "Razširi ChatGPT Audio Controls",
+          readAloud: "Berite na glas"
+        },
+        shortcutsPopover: {
+          title: "Bližnjice za branje na glas",
+          playPause: "Predvajaj zvok / Zaustavi zvok",
+          back: "Nazaj {s} odd",
+          forward: "Naprej {s} sek",
+          slower: "Nižja hitrost predvajanja",
+          faster: "Večja hitrost predvajanja",
+          volumeScroll: "Pomik po glasnosti zvoka",
+          smoothScrub: "Gladko iskanje zvoka",
+          volumeScrollKey: "Pomaknite se na 🔈",
+          smoothScrubKey: "Držite ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Zvočnega toka ni bilo mogoče prenesti. Prepričajte se, da je zvok aktivno naložen."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Predvajaj zvok / Zaustavi zvok",
+          description: "Preklopi predvajanje, ujemaj običajne spletne in namizne predvajalnike (Alt+P ostaja podprt)"
+        },
+        seekBack: {
+          action: "Nazaj 10 sekund",
+          description: "Skok nazaj za 10 s (držite za gladko iskanje skozi zvok)"
+        },
+        seekForward: {
+          action: "10 sekund naprej",
+          description: "Skok naprej za 10 s (držite za gladko iskanje skozi zvok)"
+        },
+        speedDecrease: {
+          action: "Zmanjšajte hitrost",
+          description: "Stopite navzdol na prejšnjo prednastavitev hitrosti"
+        },
+        speedIncrease: {
+          action: "Povečaj hitrost",
+          description: "Pojdite na naslednjo prednastavitev hitrosti"
+        }
+      }
+    },
+    so: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Xakamaynta & Read Aloud",
+        version: "v",
+        openChatGPT: "Fur ChatGPT",
+        dashboard: "Dashboard",
+        seconds: "ilbiriqsi",
+        star: "★ Xidig",
+        docs: "Docs",
+        issues: "Arrimaha"
+      },
+      popup: {
+        header: {
+          switchTheme: "Bedel Mawduuca",
+          openOptions: "Fur Dashboard & Dejinta"
+        },
+        tabs: {
+          controls: "Xakamaynta",
+          shortcuts: "Furayaasha",
+          about: "Ku saabsan"
+        },
+        quickControls: {
+          playbackSpeed: "Xawaaraha dib-u-ciyaarista caadiga ah",
+          defaultVolume: "Codka caadiga ah",
+          mute: "Carrab",
+          unmute: "Codka ka qaad",
+          smartIntegrations: "Is-dhexgalka Wacan",
+          globalShortcuts: "Gaabannada Caalamiga ah",
+          globalShortcutsDesc: "Daree boos/K, Alt+P, Alt+Arrows & furayaasha xawaaraha",
+          smoothScrubbing: "Raadinta Maqal Si Wacan",
+          smoothScrubbingDesc: "Dardar geli raadinta adigoo haysta ◀10 ama 10▶"
+        },
+        shortcuts: {
+          title: "Kiiboodhka Gaaban",
+          gesturesTitle: "Jiirka & tilmaanta taabashada",
+          smoothAudioScrub: "Raadinta Maqal Maqal Si Wacan",
+          directDownload: "Soo daji toos ah",
+          holdScrubKey: "Qabo ◀10 / 10▶",
+          clickDownloadKey: "Guji badhanka 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Isha furan ee Infoxica",
+          description: "Kor u qaadida khibradda codka ee ChatGPT ee cod raadinta aan kala go 'lahayn, jaangooyooyinka xawaaraha firfircoon, soodejinta maqalka tooska ah, iyo kiciya hadalka hal-guji.",
+          privacyTitle: "100% Qarsoodinimada ayaa diirada lagu saaray",
+          privacyDesc: "Ma jiro raad-raacayaal, ma jiro telemetry. Wax walba waxay ku socdaan mashiinkaaga.",
+          githubRepo: "Kaydka GitHub",
+          documentation: "Dukumentiyada",
+          reportIssue: "Ka warbixi arrin"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Dashboard & Dejinta",
+          preferences: "Dookhyada",
+          shortcuts: "Jid-gaabyada & Tilmaamaha",
+          faq: "FAQ & xallinta dhibaatada",
+          darkMode: "Qaab Madow",
+          lightMode: "Habka Iftiinka",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Dookhyada Maqalka & Dib U Ciyaarista",
+          preferencesDesc: "Habee luqadda, dib-u-habaynta xawaaraha dib-u-ciyaarista, mugga codka caadiga ah, iyo sifooyinka",
+          shortcutsTitle: "Jid-gaabyada Kiiboodhka & Tilmaamaha",
+          shortcutsDesc: "Ustaad furayaasha degdega ah ee dib-u-habaynta dadaalla'aanta.",
+          faqTitle: "FAQ & xallinta dhibaatada",
+          faqDesc: "Tilmaamo farsamo oo faahfaahsan, amniga, iyo jawaabaha taageerada."
+        },
+        general: {
+          languageTitle: "Luuqadda & Deegaanaynta",
+          languageDesc: "Dooro luqadda is dhexgalka ee aad door bidayso ama u ogolow kordhintu inay si toos ah u ogaato luqadda biraawsarkaaga.",
+          languageAuto: "90051",
+          languageDetected: "Waa la ogaaday",
+          speedTitle: "Dookhyada Xawaaraha Ciyaarta",
+          speedDesc: "Dooro heerka dib u ciyaaristaada caadiga ah marka aad furayso ChatGPT ama aad bilaabayso Read Aloud.",
+          volumeTitle: "Heerka mugga maqalka ee caadiga ah",
+          volumeDesc: "Mugga maqalka ee hore loogu hagaajiyay qulqulka hadalka Kor u akhri.",
+          seekTitle: "Ka bood oo raadso tilaabada",
+          seekDesc: "Tirada ilbiriqsi ee lagu boodo hal tabo oo ah -10s/+10s badhamada ama Alt + Left/Alt + Right.",
+          secondsUnit: "ilbiriqsi"
+        },
+        shortcutsGuide: {
+          title: "Tixraacyada Gaaban ee Kiiboodhka",
+          desc: "Ku dar darso socodka shaqadaada hal gacan oo ergonomic ah iyo furayaasha ciyaarta heerka YouTube.",
+          gesturesTitle: "Jiirka & Qabo Tilmaamaha Raadinta Maqalka",
+          gesturesDesc: "Qabo midkood badhamada ◀10s ama 10s▶ si aad si habsami leh ugu raadiso codka jawaabaha cod dheer ee dardargelinta firfircoon:",
+          gestureHold03: "Wuxuu galaa qaab cod raadis siman (xawaaraha caadiga ah 4×).",
+          gestureHold15: "Waxay ku dedejisaa 10× heerka raadinta.",
+          gestureHold30: "Xawaaraha boodboodka ee heerka 25×.",
+          gestureRelease: "Si aan kala go 'lahayn ugu xidho booska la rabo."
+        },
+        faq: {
+          title: "Su'aalaha Inta badan La Isweydiiyo & Tilmaamaha Isticmaalaha",
+          subtitle: "Jawaabaha degdega ah si ay kaaga caawiyaan inaad ka faa'iidaysato ChatGPT Audio Controls.",
+          q1: "Sideen u hagaajiyaa mugga maqalka anigoo ku rogaaya jiirka?",
+          a1: "Keliya dul heehaaga jiirka sumadda codka dhawaaqa ee ku taal tareenka ciyaarta oo kor ama hoos u rog mouse-kaaga. Mugga maqalka ayaa si habsami leh ula qabsan doona 5% koror iyada oo aan la furin bood-boodka!",
+          q2: "Halkee ayuu ciyaartoygu ka soo muuqday ChatGPT?",
+          a2: "Ciyaartoyga waxa uu si toos ah ugu xidhan yahay fariinta laxamiistaha. Marka wax maqal ah aanu ciyaarin, badhanka summada sabbaynaya ayaa si fiican ugu xidhan dhinaca midig. Riixitaanka batoonkan ama bilaabista Kor u akhri waxay kordhinaysaa baararka kontoroolka ciyaartoyga oo buuxa.",
+          q3: "Sideen u soo dejisan karaa maqalka hadalka la sameeyay?",
+          a3: "Mar kasta oo ChatGPT uu kor u akhriyo jawaabta, dhagsii badhanka soo dejinta (📥) ee tareenka midig. Qulqulka maqalka waxa isla markiiba loo kaydiyaa sidii faylal maqal ah oo tayadiisu sarreyso (.mp3, .m4a, ama .wav) kombayutarkaaga.",
+          q4: "Tani miyay ka shaqeysaa shaashadaha laptop-yada yaryar?",
+          a4: "Haa! Ciyaaryahanka ayaa si toos ah u ogaanaya ballaca shaashaddaada oo uu si firfircoon u miisaamayo barkiisa raadinta si uu ugu habboonaado shaashadda laptop-kaaga. Haddii boosku aad u cidhiidhi yahay, badhanka sabaynaya waa la heli karaa si aad u ballaadhiso oo aad u dumiso ciyaartoyga mar kasta oo aad u baahato.",
+          q5: "Sideen ku rakibaa kan Tampermonkey oo wata cusbooneysiin toos ah?",
+          a5: "Haddii aad isticmaasho Tampermonkey, Violentmonkey, ama Greasemonkey, waxaad si toos ah uga rakiban kartaa qoraalka taagan kaydkayaga. Tampermonkey waxay si toos ah u hubin doontaa GitHub wixii cusbooneed oo ku ogeysiin doona mar kasta oo nooc cusub la soo saaro.",
+          q6: "Sheekadaydu ama soo jeedintaydu ma sir baa?",
+          a6: "100% Gaar ah. Kordhintu waxay ku socotaa gebi ahaanba qalabka deegaankaaga. Ma jiraan wax dareen ah, jawaabo, durdurro maqal ah, ama telemetry shakhsi ah weligeed looma soo diro serfarka dibadda ah."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Dambe {s} ilbiriqsi — hay si aad u raadiso maqal",
+          playPause: "Daar maqal/hakin codka (Space / K / Alt+P)",
+          forward: "Hore u {s} ilbiriqsi — hay si aad u raadiso maqal",
+          speed: "Xawaaraha ciyaarista",
+          volume: "Mugga codka (Guud si aad wax u hagaajiso)",
+          volumeSlider: "Mugga codka Slider",
+          download: "Soo deji maqal",
+          shortcuts: "Qaababka gaagaaban ee kiiboodhka iyo dhaqdhaqaaqyada",
+          collapse: "Ciyaartoyga Burburay",
+          expand: "Balaadhi ChatGPT Audio Controls",
+          readAloud: "Kor u akhri"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Gaabannada",
+          playPause: "Daar maqal/hakin codka",
+          back: "Dib u celi {s} sek",
+          forward: "Hore u socod {s} sek",
+          slower: "Xawaaraha dib u ciyaarida oo gaabis ah",
+          faster: "Xawaaraha dib-u-ciyaarista degdega ah",
+          volumeScroll: "Wareegga codka maqalka ah",
+          smoothScrub: "Raadinta Maqal Si Wacan",
+          volumeScrollKey: "Guji 🔈",
+          smoothScrubKey: "Qabo ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Waa la soo dejin waayay socodka maqalka. Hubi in codka si firfircoon loo raray."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Daar maqal/hakin codka",
+          description: "Beddel dib u ciyaarida, isbarbar dhigaya shabakada caadiga ah iyo ciyaartoyga miiska (Alt+P waa la taageeray)"
+        },
+        seekBack: {
+          action: "gadaal 10 ilbiriqsi",
+          description: "Dib u bood 10s"
+        },
+        seekForward: {
+          action: "Horey 10 ilbiriqsi",
+          description: "Hore u bood 10s"
+        },
+        speedDecrease: {
+          action: "Xawaaraha yaree",
+          description: "Hoos ugu soco xawaaraha hore ee loo dejiyay"
+        },
+        speedIncrease: {
+          action: "Kordhi Xawaaraha",
+          description: "Tilaabo ilaa hore loo dejiyay xawaaraha xiga"
+        }
+      }
+    },
+    sq: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Kontrollet dhe Read Aloud",
+        version: "v",
+        openChatGPT: "Hap ChatGPT",
+        dashboard: "Pult",
+        seconds: "sekonda",
+        star: "★ Yll",
+        docs: "Doc",
+        issues: "Çështje"
+      },
+      popup: {
+        header: {
+          switchTheme: "Ndërro temë",
+          openOptions: "Hap panelin e kontrollit dhe cilësimet"
+        },
+        tabs: {
+          controls: "Kontrollet",
+          shortcuts: "Çelësat",
+          about: "Rreth"
+        },
+        quickControls: {
+          playbackSpeed: "Shpejtësia e parazgjedhur e luajtjes",
+          defaultVolume: "Volumi i parazgjedhur i audios",
+          mute: "Hesht",
+          unmute: "Hiq zërin",
+          smartIntegrations: "Integrime inteligjente",
+          globalShortcuts: "Shkurtoret globale",
+          globalShortcutsDesc: "Aktivizo çelësat Space/K, Alt+P, Alt+Arrows dhe shpejtësisë",
+          smoothScrubbing: "Kërkim i qetë audio",
+          smoothScrubbingDesc: "Përshpejtoni kërkimin duke mbajtur ◀10 ose 10▶"
+        },
+        shortcuts: {
+          title: "Shkurtoret e tastierës",
+          gesturesTitle: "Gjestet e miut dhe prekjes",
+          smoothAudioScrub: "Kërkim i qetë audio audio",
+          directDownload: "Shkarkim direkt",
+          holdScrubKey: "Mbani ◀10 / 10▶",
+          clickDownloadKey: "Klikoni butonin 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Burim i Hapur nga Infoxica",
+          description: "Ngritja e përvojës zanore të ChatGPT me kërkimin pa probleme të audios, paracaktimet e shpejtësisë dinamike, shkarkimet e drejtpërdrejta të audios dhe aktivizuesit e të folurit me një klikim.",
+          privacyTitle: "100% e fokusuar në privatësi",
+          privacyDesc: "Pa gjurmues, pa telemetri. Gjithçka funksionon në makinën tuaj.",
+          githubRepo: "Depoja GitHub",
+          documentation: "Dokumentacioni",
+          reportIssue: "Raportoni një problem"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Paneli dhe konfigurimi",
+          preferences: "Preferenca",
+          shortcuts: "Shkurtoret dhe gjestet",
+          faq: "FAQ & Zgjidhja e problemeve",
+          darkMode: "Modaliteti i errët",
+          lightMode: "Modaliteti i dritës",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Preferencat e audios dhe luajtjes",
+          preferencesDesc: "Konfiguro gjuhën, paracaktimet e shpejtësisë së luajtjes, volumin e paracaktuar të audios dhe veçoritë.",
+          shortcutsTitle: "Shkurtoret dhe gjestet e tastierës",
+          shortcutsDesc: "Përvetësoni çelësat e shpejtë të nxehtë për manipulim të lehtë të riprodhimit.",
+          faqTitle: "FAQ & Zgjidhja e problemeve",
+          faqDesc: "Udhëzues teknik i detajuar, përgjigje të sigurisë dhe mbështetjes."
+        },
+        general: {
+          languageTitle: "Gjuha dhe lokalizimi",
+          languageDesc: "Zgjidhni gjuhën tuaj të preferuar të ndërfaqes ose lëreni shtesën të zbulojë automatikisht gjuhën e shfletuesit tuaj.",
+          languageAuto: "Zbulimi automatik (Gjuha e shfletuesit)",
+          languageDetected: "Zbuluar",
+          speedTitle: "Preferencat e shpejtësisë së luajtjes",
+          speedDesc: "Zgjidhni shpejtësinë tuaj të paracaktuar të luajtjes kur hapni ChatGPT ose lëshoni Read Aloud.",
+          volumeTitle: "Niveli i parazgjedhur i volumit të audios",
+          volumeDesc: 'Vëllimi i paracaktuar i audios për transmetimet e të folurit "Lexo me zë".',
+          seekTitle: "Kalo dhe kërko hapin",
+          seekDesc: "Numri i sekondave për t'u kapërcyer me një prekje të vetme të butonave -10s / +10s ose Alt + Left / Alt + Right.",
+          secondsUnit: "sekonda"
+        },
+        shortcutsGuide: {
+          title: "Referenca e shkurtoreve të tastierës",
+          desc: "Përshpejtoni rrjedhën tuaj të punës me çelësat kyçe ergonomike të luajtjes me një dorë dhe standarde të YouTube.",
+          gesturesTitle: "Gjestet e kërkimit të zërit të miut dhe të mbajë",
+          gesturesDesc: "Mbani të shtypur ose butonat ◀10s ose 10s▶ për të kërkuar pa probleme audion përmes përgjigjeve të gjata zanore me përshpejtim dinamik:",
+          gestureHold03: "Hyn në modalitetin e kërkimit të qetë të audios (4× shpejtësi normale).",
+          gestureHold15: "Përshpejton në normën e kërkimit 10x.",
+          gestureHold30: "Shkalla e kërcimit me shpejtësi të lartë me shpejtësi 25×.",
+          gestureRelease: "Kyçet pa probleme në pozicionin e dëshiruar."
+        },
+        faq: {
+          title: "Pyetjet e bëra më shpesh dhe udhëzues përdoruesi",
+          subtitle: "Përgjigje të shpejta për t'ju ndihmuar të përfitoni sa më shumë nga ChatGPT Audio Controls.",
+          q1: "Si mund ta rregulloj volumin e audios duke lëvizur me miun tim?",
+          a1: "Thjesht vendoseni treguesin e miut mbi ikonën e altoparlantit të volumit të audios në shiritin e luajtësit dhe lëvizni timonin e miut lart ose poshtë. Vëllimi i audios do të rregullohet pa probleme në rritje prej 5%, pa pasur nevojë të hapni rrëshqitësin popover!",
+          q2: "Ku shfaqet luajtësi në ChatGPT?",
+          a2: "Luajtësi është ankoruar në mënyrë të përshtatshme drejtpërdrejt pranë kërkesës së kompozitorit tuaj të mesazhit. Kur nuk luhet audio, një buton i vogël i logos lundruese qëndron i vendosur mirë në anën e djathtë. Klikimi i këtij butoni ose fillimi i Read Aloud zgjeron shiritat e plotë të kontrollit të luajtësit.",
+          q3: "Si mund ta shkarkoj audion e sintetizuar të të folurit?",
+          a3: "Sa herë që ChatGPT lexon me zë të lartë një përgjigje, kliko butonin e shkarkimit (📥) në hekurudhën e djathtë. Transmetimi i audios ruhet menjëherë si një skedar audio me cilësi të lartë (.mp3, .m4a ose .wav) në kompjuterin tuaj.",
+          q4: "A funksionon kjo në ekranet e vegjël të laptopëve?",
+          a4: "Po! Luajtësi zbulon automatikisht gjerësinë e disponueshme të ekranit tuaj dhe rrit në mënyrë dinamike shiritin e tij të kërkimit për t'iu përshtatur rehat ekranit të laptopit tuaj. Nëse hapësira është jashtëzakonisht e ngushtë, butoni lundrues mbetet i aksesueshëm, në mënyrë që të mund ta zgjeroni dhe rrëzoni luajtësin sa herë që ju nevojitet.",
+          q5: "Si mund ta instaloj këtë nëpërmjet Tampermonkey me përditësime automatike?",
+          a5: "Nëse përdorni Tampermonkey, Violentmonkey ose Greasemonkey, mund ta instaloni skriptin e pavarur direkt nga depoja jonë. Tampermonkey do të kontrollojë automatikisht GitHub për përditësime dhe do t'ju njoftojë sa herë që lëshohet një version i ri.",
+          q6: "A janë private bisedat apo kërkesat e mia?",
+          a6: "100% Privat. Shtesa funksionon tërësisht në pajisjen tuaj lokale. Asnjë kërkesë, përgjigje, transmetim audio ose telemetri personale nuk dërgohet në asnjë server të jashtëm."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Pas {s} sekonda — mbajeni për të kërkuar audion",
+          playPause: "Luaj audio / Ndalo audion (Space / K / Alt+P)",
+          forward: "Përpara {s} sekonda — mbajeni për të kërkuar audion",
+          speed: "Shpejtësia e luajtjes",
+          volume: "Volumi i audios (Lëviz për ta rregulluar)",
+          volumeSlider: "Rrëshqitësi i volumit të audios",
+          download: "Shkarko audio",
+          shortcuts: "Shkurtoret dhe gjestet e tastierës",
+          collapse: "Palos lojtarin",
+          expand: "Zgjero ChatGPT Audio Controls",
+          readAloud: "Lexoni me zë të lartë"
+        },
+        shortcutsPopover: {
+          title: "Shkurtoret Read Aloud",
+          playPause: "Luaj audio / Ndalo audion",
+          back: "Mbrapa {s} sek",
+          forward: "Përpara {s} sek",
+          slower: "Shpejtësi më e ulët e riprodhimit",
+          faster: "Shpejtësi më e shpejtë e riprodhimit",
+          volumeScroll: "Vëllimi i audios Lëviz",
+          smoothScrub: "Kërkim i qetë audio",
+          volumeScrollKey: "Lëvizni në 🔈",
+          smoothScrubKey: "Mbani ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Transmetimi audio nuk mund të shkarkohej. Sigurohuni që audio të jetë ngarkuar në mënyrë aktive."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Luaj audio / Ndalo audion",
+          description: "Ndrysho riprodhimin, përputhjen e luajtësve të zakonshëm të uebit dhe desktopit (Alt+P mbetet i mbështetur)"
+        },
+        seekBack: {
+          action: "10 sekonda prapa",
+          description: "Kërce prapa 10 sekonda (Mbajeni për kërkim të qetë përmes audios)"
+        },
+        seekForward: {
+          action: "Përpara 10 sekonda",
+          description: "Kërceni përpara 10 sekonda (Mbajeni për kërkim të qetë përmes audios)"
+        },
+        speedDecrease: {
+          action: "Ulja e shpejtësisë",
+          description: "Kaloni në paracaktimin e mëparshëm të shpejtësisë"
+        },
+        speedIncrease: {
+          action: "Rritja e shpejtësisë",
+          description: "Ngrihuni në paracaktimin e shpejtësisë tjetër"
+        }
+      }
+    },
+    sr: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Контроле и Read Aloud",
+        version: "v",
+        openChatGPT: "Отвори ChatGPT",
+        dashboard: "Дасхбоард",
+        seconds: "секунди",
+        star: "★ Звезда",
+        docs: "Доцс",
+        issues: "Проблеми"
+      },
+      popup: {
+        header: {
+          switchTheme: "Пребаците тему",
+          openOptions: "Отворите контролну таблу и подешавања"
+        },
+        tabs: {
+          controls: "Контроле",
+          shortcuts: "Кључеви",
+          about: "О"
+        },
+        quickControls: {
+          playbackSpeed: "Подразумевана брзина репродукције",
+          defaultVolume: "Подразумевана јачина звука",
+          mute: "Муте",
+          unmute: "Укључи звук",
+          smartIntegrations: "Паметне интеграције",
+          globalShortcuts: "Глобалне пречице",
+          globalShortcutsDesc: "Омогући размак/К, Alt+P, Alt+Arrows и тастере за брзину",
+          smoothScrubbing: "Смоотх Аудио Сеарцхинг",
+          smoothScrubbingDesc: "Убрзајте тражење држећи ◀10 или 10▶"
+        },
+        shortcuts: {
+          title: "Пречице на тастатури",
+          gesturesTitle: "Покрети мишем и додиром",
+          smoothAudioScrub: "Смоотх Аудио Аудио Тражење",
+          directDownload: "Директно преузимање",
+          holdScrubKey: "Држите ◀10 / 10▶",
+          clickDownloadKey: "Кликните на дугме 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Отворени извор Инфокица",
+          description: "Подизање гласовног искуства ЦхатГПТ-а уз беспрекорно тражење звука, динамичке унапред подешене брзине, директна преузимања звука и покретаче говора једним кликом.",
+          privacyTitle: "100% фокус на приватност",
+          privacyDesc: "Нема трагача, нема телеметрије. Све ради на вашој машини.",
+          githubRepo: "GitHub Репозиторијум",
+          documentation: "Документација",
+          reportIssue: "Пријавите проблем"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Контролна табла и подешавање",
+          preferences: "Преференцес",
+          shortcuts: "Пречице и покрети",
+          faq: "Честа питања и решавање проблема",
+          darkMode: "Тамни режим",
+          lightMode: "Светлосни режим",
+          githubRepo: "GitHub Репо"
+        },
+        headers: {
+          preferencesTitle: "Поставке звука и репродукције",
+          preferencesDesc: "Конфигуришите језик, унапред подешене брзине репродукције, подразумевану јачину звука и функције.",
+          shortcutsTitle: "Пречице на тастатури и покрети",
+          shortcutsDesc: "Савладајте брзе интервентне тастере за лаку манипулацију репродукцијом.",
+          faqTitle: "Честа питања и решавање проблема",
+          faqDesc: "Детаљан технички водич, безбедносни одговори и одговори за подршку."
+        },
+        general: {
+          languageTitle: "Језик и локализација",
+          languageDesc: "Одаберите жељени језик интерфејса или дозволите проширењу да аутоматски детектује језик вашег претраживача.",
+          languageAuto: "Аутоматско откривање (језик прегледача)",
+          languageDetected: "Откривено",
+          speedTitle: "Подешавања брзине репродукције",
+          speedDesc: "Одаберите подразумевану брзину репродукције када отварате ChatGPT или покрећете Read Aloud.",
+          volumeTitle: "Подразумевани ниво јачине звука",
+          volumeDesc: "Унапред подешена јачина звука за читање наглас говорних токова.",
+          seekTitle: "Прескочи и тражи корак",
+          seekDesc: "Број секунди за прескакање једним додиром на дугмад -10с / +10с или Alt + Left / Alt + Right.",
+          secondsUnit: "секунди"
+        },
+        shortcutsGuide: {
+          title: "Референца за пречице на тастатури",
+          desc: "Убрзајте свој радни ток помоћу ергономских пречица за репродукцију за једну руку и стандардних за ИоуТубе.",
+          gesturesTitle: "Покрети за тражење звука мишем и држањем",
+          gesturesDesc: "Држите тастере ◀10с или 10с▶ да бисте глатко претраживали звук кроз дуге гласовне одговоре уз динамичко убрзање:",
+          gestureHold03: "Улази у глатки режим тражења звука (4× нормална брзина).",
+          gestureHold15: "Убрзава до 10× брзине тражења.",
+          gestureHold30: "Брзи скок при брзини од 25×.",
+          gestureRelease: "Беспрекорно се закључава у жељени положај."
+        },
+        faq: {
+          title: "Често постављана питања и кориснички водич",
+          subtitle: "Брзи одговори који ће вам помоћи да на најбољи начин искористите ChatGPT Audio Controls.",
+          q1: "Како да подесим јачину звука померањем миша?",
+          a1: "Једноставно пређите показивачем миша преко иконе звучника за јачину звука на шини плејера и померајте точкић миша нагоре или надоле. Јачина звука ће се глатко подешавати у корацима од 5% без потребе да отварате искачући клизач!",
+          q2: "Где се плејер појављује на ChatGPT?",
+          a2: "Плејер је прикладно усидрен директно поред вашег одзивника за састављање порука. Када се звук не репродукује, мало плутајуће дугме са логотипом остаје уредно усидрено на десној страни. Кликом на ово дугме или покретањем Читања наглас проширују се пуне контролне траке плејера.",
+          q3: "Како да преузмем звук синтетизованог говора?",
+          a3: "Кад год ChatGPT прочита наглас одговор, кликните на дугме за преузимање (📥) на десној шини. Аудио ток се тренутно чува као аудио датотека високог квалитета (.mp3, .m4a или .wav) на вашем рачунару.",
+          q4: "Да ли ово ради на малим екранима лаптопова?",
+          a4: "Да! Плејер аутоматски детектује вашу доступну ширину екрана и динамички скалира своју траку за тражење како би удобно пристајао екрану вашег лаптопа. Ако је простора изузетно мало, плутајуће дугме остаје доступно тако да можете да проширите и сложите плејер кад год вам затреба.",
+          q5: "Како да инсталирам ово преко Тампермонкеи-а са аутоматским ажурирањима?",
+          a5: "Ако користите Тампермонкеи, Виолентмонкеи или Греасемонкеи, можете инсталирати самосталну скрипту директно из нашег спремишта. Тампермонкеи ће аутоматски проверити GitHub да ли има ажурирања и обавестиће вас кад год буде објављена нова верзија.",
+          q6: "Да ли су моји разговори или упити приватни?",
+          a6: "100% приватно. Екстензија у потпуности ради на вашем локалном уређају. Никакви упити, одговори, аудио стримови или лична телеметрија се никада не шаљу на било који спољни сервер."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Назад {s} секунди — држите за чишћење",
+          playPause: "Пусти/паузирај (Space / K / Alt+P)",
+          forward: "Напријед {s} секунде — држите за рибање",
+          speed: "Брзина репродукције",
+          volume: "Јачина звука (померите да бисте подесили)",
+          volumeSlider: "Клизач јачине звука",
+          download: "Преузми аудио",
+          shortcuts: "Тастерске пречице и покрети",
+          collapse: "Цоллапс Плаиер",
+          expand: "Прошири ChatGPT Audio Controls",
+          readAloud: "Читај наглас"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Пречице",
+          playPause: "Пусти аудио / паузирај аудио",
+          back: "Назад {s} сек",
+          forward: "Напред {s} сек",
+          slower: "Спорија брзина репродукције",
+          faster: "Већа брзина репродукције",
+          volumeScroll: "Јачина звука Сцролл",
+          smoothScrub: "Смоотх Аудио Сеарцхинг",
+          volumeScrollKey: "Померите се на 🔈",
+          smoothScrubKey: "Држите ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Није могуће преузети аудио стрим. Уверите се да је звук активно учитан."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Пусти аудио / паузирај аудио",
+          description: "Пребацивање репродукције, подударање уобичајених веб и десктоп плејера (Alt+P остаје подржан)"
+        },
+        seekBack: {
+          action: "Назад 10 секунди",
+          description: "Скок уназад 10 с (Задржите за глатко тражење звука)"
+        },
+        seekForward: {
+          action: "Напред 10 секунди",
+          description: "Скочите унапред 10 с (Задржите за глатко тражење звука)"
+        },
+        speedDecrease: {
+          action: "Смањење брзине",
+          description: "Спустите се на претходну унапред подешену брзину"
+        },
+        speedIncrease: {
+          action: "Повећај брзину",
+          description: "Пређите на следећу унапред подешену брзину"
+        }
+      }
+    },
+    sw: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Vidhibiti & Read Aloud",
+        version: "v",
+        openChatGPT: "Fungua ChatGPT",
+        dashboard: "Dashibodi",
+        seconds: "sekunde",
+        star: "★ Nyota",
+        docs: "Hati",
+        issues: "Masuala"
+      },
+      popup: {
+        header: {
+          switchTheme: "Badili Mandhari",
+          openOptions: "Fungua Dashibodi na Mipangilio"
+        },
+        tabs: {
+          controls: "Vidhibiti",
+          shortcuts: "Funguo",
+          about: "Kuhusu"
+        },
+        quickControls: {
+          playbackSpeed: "Kasi Chaguomsingi ya Uchezaji",
+          defaultVolume: "Sauti chaguomsingi ya sauti",
+          mute: "Nyamazisha",
+          unmute: "Rejesha",
+          smartIntegrations: "Uunganishaji Mahiri",
+          globalShortcuts: "Njia za mkato za Ulimwenguni",
+          globalShortcutsDesc: "Washa Space/K, Alt+P, Alt+Arrows & funguo za kasi",
+          smoothScrubbing: "Utafutaji wa Sauti Laini",
+          smoothScrubbingDesc: "Ongeza kasi ya kutafuta kwa kushikilia ◀10 au 10▶"
+        },
+        shortcuts: {
+          title: "Njia za Mkato za Kibodi",
+          gesturesTitle: "Ishara za Kipanya na Mguso",
+          smoothAudioScrub: "Utafutaji wa Sauti Laini wa Sauti",
+          directDownload: "Upakuaji wa Moja kwa moja",
+          holdScrubKey: "Shikilia ◀10 / 10▶",
+          clickDownloadKey: "Bofya kitufe cha 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Chanzo Huria na Infoxica",
+          description: "Kuinua hali ya matumizi ya sauti ya ChatGPT kwa kutafuta sauti bila mshono, uwekaji upya wa kasi inayobadilika, upakuaji wa sauti wa moja kwa moja, na vichochezi vya usemi vya mbofyo mmoja.",
+          privacyTitle: "Faragha Imezingatia 100%.",
+          privacyDesc: "Hakuna vifuatiliaji, hakuna telemetry. Kila kitu kinakwenda kwenye mashine yako.",
+          githubRepo: "Ghala la GitHub",
+          documentation: "Nyaraka",
+          reportIssue: "Ripoti Tatizo"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Dashibodi na Mipangilio",
+          preferences: "Mapendeleo",
+          shortcuts: "Njia za mkato na Ishara",
+          faq: "Maswali Yanayoulizwa Mara kwa Mara na Utatuzi",
+          darkMode: "Hali ya Giza",
+          lightMode: "Hali ya Mwanga",
+          githubRepo: "GitHub Repo"
+        },
+        headers: {
+          preferencesTitle: "Mapendeleo ya Sauti na Uchezaji",
+          preferencesDesc: "Sanidi lugha, mipangilio ya awali ya kasi ya uchezaji, sauti chaguomsingi ya sauti na vipengele.",
+          shortcutsTitle: "Njia za Mkato za Kibodi na Ishara",
+          shortcutsDesc: "Fanya hotkeys za haraka kwa uchezaji rahisi wa uchezaji.",
+          faqTitle: "Maswali Yanayoulizwa Mara kwa Mara na Utatuzi",
+          faqDesc: "Mwongozo wa kina wa kiufundi, usalama, na majibu ya usaidizi."
+        },
+        general: {
+          languageTitle: "Lugha na Ujanibishaji",
+          languageDesc: "Chagua lugha ya kiolesura unayopendelea au uruhusu kiendelezi kitambue lugha ya kivinjari chako kiotomatiki.",
+          languageAuto: "Gundua Kiotomatiki (Lugha ya Kivinjari)",
+          languageDetected: "Imegunduliwa",
+          speedTitle: "Mapendeleo ya Kasi ya Uchezaji",
+          speedDesc: "Chagua kiwango chako chaguomsingi cha uchezaji unapofungua ChatGPT au kuzindua Read Aloud.",
+          volumeTitle: "Kiwango chaguomsingi cha sauti ya Sauti",
+          volumeDesc: "Weka awali sauti ya sauti kwa mitiririko ya hotuba ya Soma Kwa Sauti.",
+          seekTitle: "Ruka na Utafute Hatua",
+          seekDesc: "Idadi ya sekunde za kuruka kwa kugonga mara moja kwa vitufe vya -10 / +10s au Alt + Left / Alt + Right.",
+          secondsUnit: "sekunde"
+        },
+        shortcutsGuide: {
+          title: "Marejeleo ya Njia za Mkato za Kibodi",
+          desc: "Ongeza kasi ya utendakazi wako kwa kutumia ergonomic za mkono mmoja na hotkeys za uchezaji za kawaida za YouTube.",
+          gesturesTitle: "Kipanya na Ushikilie Ishara za Kutafuta Sauti",
+          gesturesDesc: "Shikilia vitufe vya ◀10 au 10▶ ili kutafuta kwa urahisi kupitia sauti kupitia majibu marefu ya sauti yenye kuongeza kasi inayobadilika:",
+          gestureHold03: "Inaingiza hali laini ya kutafuta sauti (kasi 4× ya kawaida).",
+          gestureHold15: "Huongeza kasi hadi 10× kiwango cha kutafuta.",
+          gestureHold30: "Kiwango cha kuruka kwa kasi ya juu katika kiwango cha 25×.",
+          gestureRelease: "Hujifungia bila mshono kwa nafasi inayohitajika."
+        },
+        faq: {
+          title: "Maswali Yanayoulizwa Sana & Mwongozo wa Mtumiaji",
+          subtitle: "Majibu ya haraka ya kukusaidia kupata manufaa zaidi kutoka kwa ChatGPT Audio Controls.",
+          q1: "Je, ninawezaje kurekebisha sauti kwa kusogeza na kipanya changu?",
+          a1: "Weka kwa urahisi kiashiria chako cha kipanya juu ya ikoni ya spika ya sauti kwenye reli ya kichezaji na usogeza gurudumu la kipanya chako juu au chini. Sauti ya sauti itarekebisha vizuri katika nyongeza za 5% bila kulazimika kufungua popover ya kitelezi!",
+          q2: "Mchezaji anaonekana wapi kwenye ChatGPT?",
+          a2: "Kichezaji kimetiwa nanga kwa urahisi moja kwa moja kando ya kidokezo chako cha mtunzi wa ujumbe. Wakati hakuna sauti inayocheza, kitufe kidogo cha nembo kinachoelea husalia kikiwa kimefungwa vizuri upande wa kulia. Kubofya kitufe hiki au kuanza Kusoma kwa Sauti hupanua pau kamili za udhibiti wa kichezaji.",
+          q3: "Je, ninawezaje kupakua sauti ya hotuba iliyosanisishwa?",
+          a3: "Wakati wowote ChatGPT inasoma jibu kwa sauti, bofya kitufe cha kupakua (📥) kwenye reli ya kulia. Mtiririko wa sauti huhifadhiwa papo hapo kama faili ya sauti ya ubora wa juu (.mp3, .m4a, au .wav) kwenye kompyuta yako.",
+          q4: "Je, hii inafanya kazi kwenye skrini ndogo za kompyuta ndogo?",
+          a4: "Ndiyo! Kichezaji hutambua kiotomatiki upana wa skrini yako inayopatikana na kuongeza upau wake wa kutafuta ili kutoshea skrini ya kompyuta yako ya mbali kwa urahisi. Ikiwa nafasi ni ngumu sana, kitufe cha kuelea kitaendelea kupatikana ili uweze kupanua na kukunja kichezaji wakati wowote unapokihitaji.",
+          q5: "Je, ninawezaje kusakinisha hii kupitia Tampermonkey na masasisho ya kiotomatiki?",
+          a5: "Ikiwa unatumia Tampermonkey, Violentmonkey, au Greasemonkey, unaweza kusakinisha hati inayojitegemea moja kwa moja kutoka kwenye hazina yetu. Tampermonkey itaangalia GitHub kiotomatiki kwa masasisho na kukuarifu wakati wowote toleo jipya linapotolewa.",
+          q6: "Je, mazungumzo yangu au vidokezo vyangu ni vya faragha?",
+          a6: "100% Binafsi. Kiendelezi kinatumika kabisa kwenye kifaa chako cha ndani. Hakuna vidokezo, majibu, mitiririko ya sauti au telemetry ya kibinafsi inayowahi kutumwa kwa seva yoyote ya nje."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Sekunde {s} za nyuma — shikilia ili kutafuta sauti",
+          playPause: "Cheza sauti / Sitisha sauti (Space / K / Alt+P)",
+          forward: "Sambaza mbele sekunde {s} — shikilia ili kutafuta sauti",
+          speed: "Kasi ya uchezaji",
+          volume: "Sauti ya sauti (Sogeza ili kurekebisha)",
+          volumeSlider: "Kitelezi cha sauti ya sauti",
+          download: "Pakua sauti",
+          shortcuts: "Njia za mkato za kibodi na ishara",
+          collapse: "Kunja Mchezaji",
+          expand: "Panua ChatGPT Audio Controls",
+          readAloud: "Soma kwa sauti"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud Njia za mkato",
+          playPause: "Cheza sauti / Sitisha sauti",
+          back: "Nyuma {s} sek",
+          forward: "Mbele {s} sek",
+          slower: "Kasi ya uchezaji polepole",
+          faster: "Kasi ya uchezaji ya haraka",
+          volumeScroll: "Sogeza sauti ya sauti",
+          smoothScrub: "Utafutaji wa Sauti Laini",
+          volumeScrollKey: "Sogeza kwenye 🔈",
+          smoothScrubKey: "Shikilia ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Haikuweza kupakua mtiririko wa sauti. Hakikisha sauti imepakiwa kikamilifu."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Cheza sauti / Sitisha sauti",
+          description: "Geuza uchezaji, kulinganisha vichezaji vya kawaida vya wavuti na eneo-kazi (Alt+P inasalia kutumika)"
+        },
+        seekBack: {
+          action: "Nyuma sekunde 10",
+          description: "Rukia nyuma 10s (Shikilia ili utafute laini kupitia sauti)"
+        },
+        seekForward: {
+          action: "Mbele kwa sekunde 10",
+          description: "Sogeza mbele sekunde 10 (Shikilia ili utafute laini kupitia sauti)"
+        },
+        speedDecrease: {
+          action: "Punguza Kasi",
+          description: "Shika chini hadi uwekaji awali kasi"
+        },
+        speedIncrease: {
+          action: "Ongeza Kasi",
+          description: "Hatua ya juu hadi kwa kasi inayofuata ya kuweka mapema"
+        }
+      }
+    },
+    ur: {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "کنٹرولز اور Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT کھولیں۔",
+        dashboard: "ڈیش بورڈ",
+        seconds: "سیکنڈ",
+        star: "★ ستارہ",
+        docs: "دستاویزات",
+        issues: "مسائل"
+      },
+      popup: {
+        header: {
+          switchTheme: "تھیم سوئچ کریں۔",
+          openOptions: "ڈیش بورڈ اور سیٹنگز کھولیں۔"
+        },
+        tabs: {
+          controls: "کنٹرولز",
+          shortcuts: "چابیاں",
+          about: "کے بارے میں"
+        },
+        quickControls: {
+          playbackSpeed: "ڈیفالٹ پلے بیک اسپیڈ",
+          defaultVolume: "ڈیفالٹ آڈیو والیوم",
+          mute: "خاموش",
+          unmute: "چالو کریں۔",
+          smartIntegrations: "اسمارٹ انٹیگریشنز",
+          globalShortcuts: "عالمی شارٹ کٹس",
+          globalShortcutsDesc: "Space/K، Alt+P، Alt+Arrows اور سپیڈ کیز کو فعال کریں",
+          smoothScrubbing: "ہموار آڈیو کی تلاش",
+          smoothScrubbingDesc: "◀10 یا 10▶ پکڑ کر تلاش کو تیز کریں"
+        },
+        shortcuts: {
+          title: "کی بورڈ شارٹ کٹس",
+          gesturesTitle: "ماؤس اور ٹچ اشارے",
+          smoothAudioScrub: "ہموار آڈیو آڈیو تلاش کرنا",
+          directDownload: "براہ راست ڈاؤن لوڈ",
+          holdScrubKey: "◀10/10▶ پکڑو",
+          clickDownloadKey: "📥 بٹن پر کلک کریں۔"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "اوپن سورس بذریعہ انفوکسیکا",
+          description: "ہموار آڈیو آڈیو کی تلاش، متحرک رفتار پیش سیٹ، براہ راست آڈیو ڈاؤن لوڈ، اور ایک کلک اسپیچ ٹرگرز کے ساتھ ChatGPT کے صوتی تجربے کو بلند کرنا۔",
+          privacyTitle: "100% رازداری مرکوز",
+          privacyDesc: "کوئی ٹریکر نہیں، کوئی ٹیلی میٹری نہیں۔ سب کچھ آپ کی مشین پر چلتا ہے۔",
+          githubRepo: "GitHub ذخیرہ",
+          documentation: "دستاویزات",
+          reportIssue: "ایک مسئلہ رپورٹ کریں"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "ڈیش بورڈ اور سیٹ اپ",
+          preferences: "ترجیحات",
+          shortcuts: "شارٹ کٹ اور اشارے",
+          faq: "اکثر پوچھے گئے سوالات اور خرابیوں کا سراغ لگانا",
+          darkMode: "ڈارک موڈ",
+          lightMode: "لائٹ موڈ",
+          githubRepo: "GitHub ریپو"
+        },
+        headers: {
+          preferencesTitle: "آڈیو اور پلے بیک کی ترجیحات",
+          preferencesDesc: "زبان، پلے بیک اسپیڈ پری سیٹس، ڈیفالٹ آڈیو والیوم، اور فیچرز کنفیگر کریں۔",
+          shortcutsTitle: "کی بورڈ شارٹ کٹس اور اشارے",
+          shortcutsDesc: "آسان پلے بیک ہیرا پھیری کے لیے فوری ہاٹکیز میں مہارت حاصل کریں۔",
+          faqTitle: "اکثر پوچھے گئے سوالات اور خرابیوں کا سراغ لگانا",
+          faqDesc: "تفصیلی تکنیکی گائیڈ، سیکورٹی، اور معاون جوابات۔"
+        },
+        general: {
+          languageTitle: "زبان اور لوکلائزیشن",
+          languageDesc: "اپنی پسندیدہ انٹرفیس زبان کا انتخاب کریں یا ایکسٹینشن کو خود بخود آپ کے براؤزر کی زبان کا پتہ لگانے دیں۔",
+          languageAuto: "آٹو ڈیٹیکٹ (براؤزر کی زبان)",
+          languageDetected: "پتہ چلا",
+          speedTitle: "پلے بیک رفتار کی ترجیحات",
+          speedDesc: "ChatGPT کھولتے وقت یا Read Aloud لانچ کرتے وقت اپنا ڈیفالٹ پلے بیک ریٹ منتخب کریں۔",
+          volumeTitle: "ڈیفالٹ آڈیو والیوم لیول",
+          volumeDesc: "اونچی آواز میں اسپیچ اسٹریمز پڑھنے کے لیے پہلے سے سیٹ آڈیو والیوم۔",
+          seekTitle: "چھوڑیں اور قدم تلاش کریں۔",
+          seekDesc: "-10s / +10s بٹنوں یا Alt + Left / Alt + Right کے ایک ہی نل پر چھوڑنے کے لیے سیکنڈوں کی تعداد۔",
+          secondsUnit: "سیکنڈ"
+        },
+        shortcutsGuide: {
+          title: "کی بورڈ شارٹ کٹ حوالہ",
+          desc: "ایرگونومک سنگل ہینڈ اور یوٹیوب کے معیاری پلے بیک ہاٹکیز کے ساتھ اپنے ورک فلو کو تیز کریں۔",
+          gesturesTitle: "آڈیو تلاش کرنے والے اشاروں کو ماؤس اور ہولڈ کریں۔",
+          gesturesDesc: "متحرک سرعت کے ساتھ لمبے صوتی جوابات کے ذریعے آڈیو کے ذریعے آسانی سے تلاش کرنے کے لیے ◀10s یا 10s▶ بٹنوں کو دبائے رکھیں:",
+          gestureHold03: "ہموار آڈیو تلاش کرنے کے موڈ میں داخل ہوتا ہے (4× عام رفتار)۔",
+          gestureHold15: "تلاش کی شرح 10× تک تیز ہو جاتی ہے۔",
+          gestureHold30: "25× کی شرح پر تیز رفتار جمپ کی شرح۔",
+          gestureRelease: "بغیر کسی رکاوٹ کے مطلوبہ پوزیشن پر لاک ہوجاتا ہے۔"
+        },
+        faq: {
+          title: "اکثر پوچھے گئے سوالات اور صارف گائیڈ",
+          subtitle: "ChatGPT Audio Controls سے زیادہ سے زیادہ فائدہ اٹھانے میں آپ کی مدد کے لیے فوری جوابات۔",
+          q1: "میں اپنے ماؤس سے اسکرول کر کے آڈیو والیوم کو کیسے ایڈجسٹ کروں؟",
+          a1: "بس پلیئر ریل پر آڈیو والیوم اسپیکر کے آئیکن پر اپنے ماؤس پوائنٹر کو ہوور کریں اور اپنے ماؤس کے پہیے کو اوپر یا نیچے اسکرول کریں۔ آڈیو والیوم سلائیڈر پاپ اوور کو کھولے بغیر 5% انکریمنٹ میں آسانی سے ایڈجسٹ ہو جائے گا!",
+          q2: "ChatGPT پر کھلاڑی کہاں ظاہر ہوتا ہے؟",
+          a2: "پلیئر آسانی سے آپ کے میسج کمپوزر پرامپٹ کے ساتھ لنگر انداز ہوتا ہے۔ جب کوئی آڈیو نہیں چل رہا ہوتا ہے، تو ایک چھوٹا سا تیرتا ہوا لوگو بٹن دائیں طرف صاف ستھرا رہتا ہے۔ اس بٹن پر کلک کرنے یا بلند آواز سے پڑھنا شروع کرنے سے مکمل پلیئر کنٹرول بارز پھیل جاتے ہیں۔",
+          q3: "میں ترکیب شدہ اسپیچ آڈیو کو کیسے ڈاؤن لوڈ کروں؟",
+          a3: "جب بھی ChatGPT بلند آواز سے جواب پڑھتا ہے، دائیں ریل پر ڈاؤن لوڈ بٹن (📥) پر کلک کریں۔ آڈیو سٹریم فوری طور پر آپ کے کمپیوٹر پر ایک اعلی معیار کی آڈیو فائل (.mp3، .m4a، یا .wav) کے طور پر محفوظ ہو جاتا ہے۔",
+          q4: "کیا یہ چھوٹی لیپ ٹاپ اسکرین پر کام کرتا ہے؟",
+          a4: "ہاں! پلیئر خود بخود آپ کی دستیاب اسکرین کی چوڑائی کا پتہ لگاتا ہے اور آپ کے لیپ ٹاپ اسکرین کو آرام سے فٹ کرنے کے لیے متحرک طور پر اس کی تلاش بار کو پیمانہ کرتا ہے۔ اگر جگہ انتہائی تنگ ہے، تو تیرتا ہوا بٹن قابل رسائی رہتا ہے تاکہ جب بھی آپ کو ضرورت ہو آپ پلیئر کو بڑھا اور سمیٹ سکتے ہیں۔",
+          q5: "میں اسے ٹیمپرمونکی کے ذریعے آٹو اپ ڈیٹس کے ساتھ کیسے انسٹال کروں؟",
+          a5: "اگر آپ Tampermonkey، Violentmonkey، یا Greasemonkey استعمال کرتے ہیں، تو آپ اسٹینڈ لون اسکرپٹ کو براہ راست ہمارے ریپوزٹری سے انسٹال کر سکتے ہیں۔ Tampermonkey تازہ کاریوں کے لیے GitHub کو خود بخود چیک کرے گا اور جب بھی نیا ورژن جاری کیا جائے گا آپ کو مطلع کرے گا۔",
+          q6: "کیا میری گفتگو یا اشارے نجی ہیں؟",
+          a6: "100% نجی۔ توسیع مکمل طور پر آپ کے مقامی ڈیوائس پر چلتی ہے۔ کوئی اشارہ، جواب، آڈیو اسٹریمز، یا ذاتی ٹیلی میٹری کبھی بھی کسی بیرونی سرور کو نہیں بھیجی جاتی ہے۔"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "پیچھے {s} سیکنڈز — آڈیو کے ذریعے تلاش کرنے کے لیے دبائے رکھیں",
+          playPause: "آڈیو چلائیں / آڈیو کو روکیں (Space / K / Alt+P)",
+          forward: "آگے {s} سیکنڈز — آڈیو کے ذریعے تلاش کرنے کے لیے دبائے رکھیں",
+          speed: "پلے بیک کی رفتار",
+          volume: "آڈیو والیوم (ایڈجسٹ کرنے کے لیے اسکرول کریں)",
+          volumeSlider: "آڈیو والیوم سلائیڈر",
+          download: "آڈیو ڈاؤن لوڈ کریں۔",
+          shortcuts: "کی بورڈ شارٹ کٹس اور اشارے",
+          collapse: "پلیئر کو ختم کریں۔",
+          expand: "ChatGPT Audio Controls کو پھیلائیں۔",
+          readAloud: "بلند آواز سے پڑھیں"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud شارٹ کٹس",
+          playPause: "آڈیو چلائیں / آڈیو کو روکیں۔",
+          back: "پیچھے {s} سیکنڈ",
+          forward: "آگے {s} سیکنڈ",
+          slower: "سست پلے بیک کی رفتار",
+          faster: "تیز پلے بیک کی رفتار",
+          volumeScroll: "آڈیو والیوم اسکرول",
+          smoothScrub: "ہموار آڈیو کی تلاش",
+          volumeScrollKey: "🔈 پر سکرول کریں۔",
+          smoothScrubKey: "پکڑو ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "آڈیو سلسلہ ڈاؤن لوڈ نہیں ہو سکا۔ یقینی بنائیں کہ آڈیو فعال طور پر لوڈ ہے۔"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "آڈیو چلائیں / آڈیو کو روکیں۔",
+          description: "پلے بیک ٹوگل کریں، عام ویب اور ڈیسک ٹاپ پلیئرز سے مماثل ہوں (Alt+P تعاون یافتہ رہتا ہے)"
+        },
+        seekBack: {
+          action: "10 سیکنڈ پیچھے",
+          description: "پیچھے کی طرف 10s چھلانگ لگائیں (آڈیو کے ذریعے ہموار تلاش کے لیے پکڑو)"
+        },
+        seekForward: {
+          action: "10 سیکنڈ آگے کریں۔",
+          description: "10s آگے کودیں (آڈیو کے ذریعے ہموار تلاش کے لیے ہولڈ)"
+        },
+        speedDecrease: {
+          action: "رفتار کو کم کریں۔",
+          description: "پچھلی رفتار کے پیش سیٹ پر نیچے جائیں۔"
+        },
+        speedIncrease: {
+          action: "رفتار میں اضافہ کریں۔",
+          description: "اگلی رفتار کے پیش سیٹ پر قدم بڑھائیں۔"
+        }
+      }
+    },
+    "es-419": {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Controles y Lectura en Voz Alta",
+        version: "v",
+        openChatGPT: "Abrir ChatGPT",
+        dashboard: "Panel de Control",
+        seconds: "segundos",
+        star: "★ Dar Estrella",
+        docs: "Documentación",
+        issues: "Reportar Problema"
+      },
+      popup: {
+        header: {
+          switchTheme: "Cambiar Tema",
+          openOptions: "Abrir Panel y Ajustes"
+        },
+        tabs: {
+          controls: "Controles",
+          shortcuts: "Atajos",
+          about: "Acerca de"
+        },
+        quickControls: {
+          playbackSpeed: "Velocidad de Reproducción",
+          defaultVolume: "Volumen Predeterminado",
+          mute: "Silenciar",
+          unmute: "Activar Sonido",
+          smartIntegrations: "Integraciones Inteligentes",
+          globalShortcuts: "Atajos Globales de Teclado",
+          globalShortcutsDesc: "Activar Espacio/K, Alt+P, Alt+Flechas y teclas de velocidad",
+          smoothScrubbing: "Avance rápido fluido al mantener presionado",
+          smoothScrubbingDesc: "Acelera el desplazamiento de audio manteniendo ◀10 o 10▶"
+        },
+        shortcuts: {
+          title: "Atajos de Teclado",
+          gesturesTitle: "Gestos de Ratón y Toque",
+          smoothAudioScrub: "Desplazamiento Fluido",
+          directDownload: "Descarga Directa de Audio",
+          holdScrubKey: "Mantener ◀10 / 10▶",
+          clickDownloadKey: "Clic en botón 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Código abierto por Infoxica",
+          description: "Mejora la experiencia de voz en ChatGPT con avance fluido, velocidades dinámicas, descargas directas de audio y botones de lectura rápida.",
+          privacyTitle: "100% Enfocado en la Privacidad",
+          privacyDesc: "Sin rastreadores ni telemetría. Todo se procesa localmente en tu navegador.",
+          githubRepo: "Repositorio de GitHub",
+          documentation: "Documentación",
+          reportIssue: "Reportar un Problema"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Panel y Configuración",
+          preferences: "Preferencias",
+          shortcuts: "Atajos y Gestos",
+          faq: "Preguntas Frecuentes",
+          darkMode: "Modo Oscuro",
+          lightMode: "Modo Claro",
+          githubRepo: "Repositorio GitHub"
+        },
+        headers: {
+          preferencesTitle: "Preferencias de Audio y Reproducción",
+          preferencesDesc: "Configura el idioma de la interfaz, velocidad predeterminada, volumen e integraciones.",
+          shortcutsTitle: "Atajos de Teclado y Gestos",
+          shortcutsDesc: "Domina los atajos rápidos para controlar la reproducción sin esfuerzo.",
+          faqTitle: "Preguntas Frecuentes y Solución de Problemas",
+          faqDesc: "Guía técnica detallada, privacidad y respuestas de soporte."
+        },
+        general: {
+          languageTitle: "Idioma y Localización",
+          languageDesc: "Selecciona el idioma de la interfaz o detecta automáticamente el idioma de tu navegador.",
+          languageAuto: "Detección Automática (Idioma del Navegador)",
+          languageDetected: "Detectado",
+          speedTitle: "Velocidad de Reproducción Predeterminada",
+          speedDesc: "Elige la velocidad al abrir ChatGPT o iniciar la lectura en voz alta.",
+          volumeTitle: "Nivel de Volumen Predeterminado",
+          volumeDesc: "Volumen predefinido para la voz de lectura en voz alta.",
+          seekTitle: "Paso de Avance y Retroceso",
+          seekDesc: "Número de segundos a saltar con un toque en los botones -10s / +10s o Alt + Izquierda / Derecha.",
+          secondsUnit: "segundos"
+        },
+        shortcutsGuide: {
+          title: "Referencia de Atajos de Teclado",
+          desc: "Optimiza tu flujo de trabajo con atajos estándar de YouTube y diseño ergonómico para una sola mano.",
+          gesturesTitle: "Gestos de Ratón y Avance Fluido",
+          gesturesDesc: "Mantén presionado ◀10s o 10s▶ para desplazarte por respuestas largas con aceleración dinámica:",
+          gestureHold03: "Entra en modo de avance fluido (velocidad 4×).",
+          gestureHold15: "Acelera a velocidad de búsqueda 10×.",
+          gestureHold30: "Salto de ultra alta velocidad a 25×.",
+          gestureRelease: "Suelta para fijar inmediatamente la posición deseada."
+        },
+        faq: {
+          title: "Preguntas Frecuentes y Guía de Usuario",
+          subtitle: "Respuestas rápidas para aprovechar al máximo ChatGPT Audio Controls.",
+          q1: "¿Cómo ajusto el volumen con la rueda del ratón?",
+          a1: "Simplemente pasa el cursor sobre el icono del altavoz en la barra del reproductor y gira la rueda del ratón. El volumen se ajustará suavemente en pasos del 5% sin necesidad de abrir el control deslizante.",
+          q2: "¿Dónde aparece el reproductor en ChatGPT?",
+          a2: "El reproductor se ancla directamente junto al cuadro de entrada de mensajes. Cuando no hay audio, un botón flotante permanece en el lateral derecho; al pulsarlo o iniciar la lectura, se expande la barra completa.",
+          q3: "¿Cómo descargo el archivo de audio de la lectura?",
+          a3: "Cuando ChatGPT lea una respuesta, pulsa el botón de descarga (📥) en la barra derecha. El audio se guardará al instante en tu equipo con calidad máxima (.mp3, .m4a o .wav).",
+          q4: "¿Funciona en pantallas pequeñas de portátiles?",
+          a4: "¡Sí! El reproductor detecta automáticamente el ancho de la pantalla y ajusta la barra de progreso proporcionalmente. Si el espacio es muy reducido, el botón flotante permite expandirlo o replegarlo fácilmente.",
+          q5: "¿Cómo lo instalo con Tampermonkey con actualizaciones automáticas?",
+          a5: "Si utilizas Tampermonkey, Violentmonkey o Greasemonkey, puedes instalar el script directamente desde nuestro repositorio. Tampermonkey comprobará GitHub y te notificará cuando haya una nueva versión.",
+          q6: "¿Son privadas mis conversaciones y solicitudes?",
+          a6: "100% Privadas. La extensión se ejecuta íntegramente en tu dispositivo local. Nunca se envía texto, audio ni datos a servidores externos."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Retroceder {s} segundos — mantén pulsado para seguir retrocediendo",
+          playPause: "Reproducir / Pausar (Espacio o K; Alt+P)",
+          forward: "Avanzar {s} segundos — mantener para avanzar rápido",
+          speed: "Velocidad de reproducción",
+          volume: "Volumen (Rueda del ratón para ajustar)",
+          volumeSlider: "Control de volumen",
+          download: "Descargar audio",
+          shortcuts: "Atajos de teclado y gestos",
+          collapse: "Ocultar reproductor",
+          expand: "Expandir controles de audio de ChatGPT",
+          readAloud: "Leer respuesta"
+        },
+        shortcutsPopover: {
+          title: "Atajos de Lectura",
+          playPause: "Reproducir / Pausar",
+          back: "Retroceder {s} s",
+          forward: "Avanzar {s} s",
+          slower: "Más lento",
+          faster: "Más rápido",
+          volumeScroll: "Rueda para volumen",
+          smoothScrub: "Avance fluido",
+          volumeScrollKey: "Girar sobre 🔈",
+          smoothScrubKey: "Mantener ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "No se pudo descargar el flujo de audio. Asegúrate de que el audio esté cargado."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Reproducir / Pausar",
+          description: "Alterna la reproducción, compatible con reproductores web habituales (compatible con Alt+P)"
+        },
+        seekBack: {
+          action: "Retroceder 10 segundos",
+          description: "Salta 10s hacia atrás (mantener para desplazamiento fluido)"
+        },
+        seekForward: {
+          action: "Avanzar 10 segundos",
+          description: "Salta 10s hacia adelante (mantener para desplazamiento fluido)"
+        },
+        speedDecrease: {
+          action: "Disminuir Velocidad",
+          description: "Baja al nivel de velocidad anterior"
+        },
+        speedIncrease: {
+          action: "Aumentar Velocidad",
+          description: "Sube al siguiente nivel de velocidad"
+        }
+      }
+    },
+    "fr-CA": {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "Commandes et lecture à voix haute",
+        version: "v",
+        openChatGPT: "Ouvrir ChatGPT",
+        dashboard: "Tableau de bord",
+        seconds: "secondes",
+        star: "★ Favori",
+        docs: "Documentation",
+        issues: "Problèmes"
+      },
+      popup: {
+        header: {
+          switchTheme: "Changer de thème",
+          openOptions: "Ouvrir le tableau de bord et les réglages"
+        },
+        tabs: {
+          controls: "Commandes",
+          shortcuts: "Touches",
+          about: "À propos"
+        },
+        quickControls: {
+          playbackSpeed: "Vitesse de lecture par défaut",
+          defaultVolume: "Volume par défaut",
+          mute: "Couper le son",
+          unmute: "Rétablir le son",
+          smartIntegrations: "Fonctions pratiques",
+          globalShortcuts: "Raccourcis clavier",
+          globalShortcutsDesc: "Activer Espace/K, Alt+P, Alt+flèches et les touches de vitesse",
+          smoothScrubbing: "Navigation fluide",
+          smoothScrubbingDesc: "Maintenir ◀10 ou 10▶ pour accélérer la navigation"
+        },
+        shortcuts: {
+          title: "Raccourcis clavier",
+          gesturesTitle: "Gestes souris et tactiles",
+          smoothAudioScrub: "Navigation audio fluide",
+          directDownload: "Téléchargement direct",
+          holdScrubKey: "Maintenir ◀10 / 10▶",
+          clickDownloadKey: "Cliquer sur 📥"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "Projet open source d’Infoxica",
+          description: "Mettez en pause, naviguez, réglez la vitesse et téléchargez la lecture audio de ChatGPT.",
+          privacyTitle: "Respect de la vie privée",
+          privacyDesc: "Aucun traceur ni télémétrie. Le traitement reste dans votre navigateur.",
+          githubRepo: "Dépôt GitHub",
+          documentation: "Documentation",
+          reportIssue: "Signaler un problème"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "Tableau de bord et configuration",
+          preferences: "Préférences",
+          shortcuts: "Raccourcis et gestes",
+          faq: "Questions et dépannage",
+          darkMode: "Mode sombre",
+          lightMode: "Mode clair",
+          githubRepo: "Dépôt GitHub"
+        },
+        headers: {
+          preferencesTitle: "Préférences audio et lecture",
+          preferencesDesc: "Réglez la langue, la vitesse, le volume et les fonctions.",
+          shortcutsTitle: "Raccourcis clavier et gestes",
+          shortcutsDesc: "Contrôlez rapidement la lecture au clavier.",
+          faqTitle: "Questions et dépannage",
+          faqDesc: "Aide à l’utilisation, confidentialité et assistance."
+        },
+        general: {
+          languageTitle: "Langue",
+          languageDesc: "Choisissez la langue de l’interface ou utilisez celle du navigateur.",
+          languageAuto: "Détection automatique (langue du navigateur)",
+          languageDetected: "Langue détectée",
+          speedTitle: "Préférences de vitesse",
+          speedDesc: "Choisissez la vitesse appliquée au démarrage de ChatGPT ou de la lecture.",
+          volumeTitle: "Volume par défaut",
+          volumeDesc: "Volume initial de la lecture à voix haute.",
+          seekTitle: "Intervalle de saut",
+          seekDesc: "Nombre de secondes parcourues avec les boutons de saut ou Alt+flèches.",
+          secondsUnit: "secondes"
+        },
+        shortcutsGuide: {
+          title: "Guide des raccourcis",
+          desc: "Les raccourcis de lecture fonctionnent hors des champs de texte.",
+          gesturesTitle: "Souris et appui prolongé",
+          gesturesDesc: "Maintenez ◀10s ou 10s▶ pour parcourir l’audio de plus en plus vite.",
+          gestureHold03: "Démarre la navigation fluide à 4×.",
+          gestureHold15: "Accélère la navigation à 10×.",
+          gestureHold30: "Accélère la navigation à 25×.",
+          gestureRelease: "Relâchez pour vous arrêter à la position choisie."
+        },
+        faq: {
+          title: "Questions fréquentes et guide",
+          subtitle: "Des réponses simples pour utiliser ChatGPT Audio Controls.",
+          q1: "Comment régler le volume avec la molette ?",
+          a1: "Placez le pointeur sur l’icône de volume et faites défiler pour modifier le volume par pas de 5 %.",
+          q2: "Où apparaît le lecteur ?",
+          a2: "À côté du champ de message, ou dans un panneau compact au-dessus lorsque l’écran est étroit.",
+          q3: "Comment enregistrer l’audio ?",
+          a3: "Une fois l’audio chargé, cliquez sur Télécharger. Le fichier conserve le format fourni par ChatGPT, sans conversion.",
+          q4: "Cela fonctionne-t-il sur un petit ordinateur portable ?",
+          a4: "Oui. Si l’espace latéral manque, les commandes apparaissent dans un panneau compact au-dessus du champ de message.",
+          q5: "Comment installer avec Tampermonkey ?",
+          a5: "Installez le script utilisateur distinct depuis le dépôt. Votre gestionnaire de scripts recherche les mises à jour.",
+          q6: "Mes conversations restent-elles privées ?",
+          a6: "L’extension fonctionne dans votre navigateur et n’envoie ni conversations ni audio aux serveurs du développeur."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "Reculer de {s} secondes — maintenir pour parcourir",
+          playPause: "Lecture / Pause (Espace ou K ; Alt+P également)",
+          forward: "Avancer de {s} secondes — maintenir pour parcourir",
+          speed: "Vitesse de lecture",
+          volume: "Volume (faire défiler pour régler)",
+          volumeSlider: "Curseur de volume",
+          download: "Télécharger l’audio",
+          shortcuts: "Raccourcis et gestes",
+          collapse: "Réduire le lecteur",
+          expand: "Déployer ChatGPT Audio Controls",
+          readAloud: "Lire à voix haute"
+        },
+        shortcutsPopover: {
+          title: "Raccourcis de lecture",
+          playPause: "Lecture / Pause",
+          back: "Reculer de {s} s",
+          forward: "Avancer de {s} s",
+          slower: "Vitesse inférieure",
+          faster: "Vitesse supérieure",
+          volumeScroll: "Volume par défilement",
+          smoothScrub: "Navigation fluide",
+          volumeScrollKey: "Faire défiler sur 🔈",
+          smoothScrubKey: "Maintenir ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "Téléchargement impossible. Lancez la lecture, attendez le chargement de l’audio puis réessayez."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "Lecture / Pause",
+          description: "Basculer la lecture (Alt+P fonctionne aussi)."
+        },
+        seekBack: {
+          action: "Reculer de 10 secondes",
+          description: "Reculer de 10 secondes dans l’audio."
+        },
+        seekForward: {
+          action: "Avancer de 10 secondes",
+          description: "Avancer de 10 secondes dans l’audio."
+        },
+        speedDecrease: {
+          action: "Réduire la vitesse",
+          description: "Passer à la vitesse prédéfinie précédente."
+        },
+        speedIncrease: {
+          action: "Augmenter la vitesse",
+          description: "Passer à la vitesse prédéfinie suivante."
+        }
+      }
+    },
+    "hi-Latn": {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "niyantran aur Read Aloud",
+        version: "v",
+        openChatGPT: "ChatGPT kholen",
+        dashboard: "dashbord",
+        seconds: "second",
+        star: "★ sitara",
+        docs: "dastavez",
+        issues: "mudde"
+      },
+      popup: {
+        header: {
+          switchTheme: "theme switch karen",
+          openOptions: "dashboard aur settings kholen"
+        },
+        tabs: {
+          controls: "niyantran",
+          shortcuts: "kunjiyan",
+          about: "ke baare men"
+        },
+        quickControls: {
+          playbackSpeed: "defolt playback gati",
+          defaultVolume: "defolt audio volume",
+          mute: "mute karen",
+          unmute: "anamut",
+          smartIntegrations: "smart ekikaran",
+          globalShortcuts: "vaishvik shortakat",
+          globalShortcutsDesc: "space/K, Alt+P, Alt+Arrows aur speed kunjiyan saksham karen",
+          smoothScrubbing: "sahaj audio khoj",
+          smoothScrubbingDesc: "10 ya 10▶ pakadkar khoj mein teji laen"
+        },
+        shortcuts: {
+          title: "keyboard shortakat",
+          gesturesTitle: "mouse aur sparsh ishare",
+          smoothAudioScrub: "sahaj audio audio talash",
+          directDownload: "sidha downlod",
+          holdScrubKey: "◀10 /10▶ dabae rakhen",
+          clickDownloadKey: "📥 button par click karen"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "infoxika dwara khula srot",
+          description: "sahaj audio audio khoj, dynamic speed priset, direct audio download aur van-clik speech triggers ke saath ChatGPT ke voice anubhav ko behtar banana.",
+          privacyTitle: "100% gopniyata kendrit",
+          privacyDesc: "koi tracker nahin, koi telemetry nahin. sab kuch aapki machine par chalta hai.",
+          githubRepo: "GitHub repository",
+          documentation: "dastavezikaran",
+          reportIssue: "kisi samasya ki report karen"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "dashboard aur setup",
+          preferences: "prathmiktaen",
+          shortcuts: "shortcut aur ishare",
+          faq: "aksar poochhe jaane wale prashn aur samasya nivaran",
+          darkMode: "dark mod",
+          lightMode: "light mod",
+          githubRepo: "GitHub repo"
+        },
+        headers: {
+          preferencesTitle: "audio aur playback prathmiktaen",
+          preferencesDesc: "bhasha, playback gati priset, defolt audio volume aur suvidhaon ko configar karen.",
+          shortcutsTitle: "keyboard shortcut aur ishare",
+          shortcutsDesc: "sahaj playback herfer ke liye tvarit hotkies mein maharat haasil karen.",
+          faqTitle: "aksar poochhe jaane wale prashn aur samasya nivaran",
+          faqDesc: "vistrit takniki gid, suraksha aur samarthan uttar."
+        },
+        general: {
+          languageTitle: "bhasha aur sthaniyakaran",
+          languageDesc: "apni pasandeeda interface bhasha chunein ya extension ko swachalit roop se aapke browser ki bhasha ka pata lagane den.",
+          languageAuto: "auto detect (browser bhasha)",
+          languageDetected: "pata chala",
+          speedTitle: "playback gati prathmiktaen",
+          speedDesc: "ChatGPT kholte samay ya Read Aloud launch karte samay apni defolt playback dar chunen.",
+          volumeTitle: "defolt audio volume star",
+          volumeDesc: "jor se padhen bhashan dharaon ke liye preset audio volum.",
+          seekTitle: "skip and seek step",
+          seekDesc: "-10s / +10s button ya Alt + Left / Alt + Right ke ek tap par chhodne ke liye second ki sankhya.",
+          secondsUnit: "second"
+        },
+        shortcutsGuide: {
+          title: "keyboard shortcut sandarbh",
+          desc: "ergonomic singal-hand aur utub-manak playback hotki ke saath apne workflow ko tez karen.",
+          gesturesTitle: "ishaaron ki talash mein audio ko mouse aur hold karen",
+          gesturesDesc: "gatisheel tvaran ke saath lambi dhwani uttaron ke madhyam se audio ko aasani se dhundhne ke liye ◀10s ya 10s▶ button dabae rakhen:",
+          gestureHold03: "sucharu audio khoj mode (4× samanya gati) mein pravesh karta hai.",
+          gestureHold15: "10× mang dar tak tvarit ho jata hai.",
+          gestureHold30: "25× dar par uchch gati kood dar.",
+          gestureRelease: "nirbaadh roop se vanchhit sthiti mein lock ho jata hai."
+        },
+        faq: {
+          title: "aksar poochhe jaane wale prashn aur upyogkarta gid",
+          subtitle: "ChatGPT Audio Controls se adhiktam labh uthane mein aapki sahayata ke liye tvarit uttar.",
+          q1: "main apne mouse se scroll karke audio volume kaise samayojit karun?",
+          a1: "bus apne mouse pointer ko player rail par audio volume speaker icon par ghumaen aur apne mouse wheel ko upar ya neeche scroll karen. slider popeover khole bina audio volume 5% vriddhi mein aasani se samayojit ho jaega!",
+          q2: "player ChatGPT par kahan dikhai deta hai?",
+          a2: "player aapke sandesh composer prompt ke theek bagal mein suvidhajanak roop se anchor kiya gaya hai. jab koi audio nahin chal raha hota hai, to ek chhota floating logo button daeen or bade kareene se dock kiya jata hai. is button par click karne ya jor se padhen shuru karne se purna player niyantran baar ka vistar hota hai.",
+          q3: "main sanshleshit bhashan audio kaise download karun?",
+          a3: "jab bhi ChatGPT kisi pratikriya ko jor se padhta hai, to dahini rail par download button (📥) par click karen. audio stream turant aapke computer par uchch gunvatta wali audio file (.mp3, .m4a, ya .wav) ke roop mein saheji jaati hai.",
+          q4: "kya yah chhote laptop screen par kaam karta hai?",
+          a4: "han! player swachalit roop se aapki uplabdh screen ki chaudai ka pata lagata hai aur aapke laptop screen ko aaram se fit karne ke liye iske seqbar ko gatisheel roop se mapta hai. yadi jagah behad tang hai, to flotting button pahunch yogya rahata hai taki aap jab bhi aavashyakta ho, player ko vistarit aur sankshipt kar saken.",
+          q5: "main ise auto-update ke saath tamparmonki ke madhyam se kaise sthapit karun?",
+          a5: "yadi aap tamparmonki, violentmonki, ya grisemanki ka upyog karte han, to aap sidhe hamare repository se standalone script install kar sakte han. tamparmonki swachalit roop se update ke liye GitHub ki jaanch karega aur jab bhi koi naya sanskaran jaari hoga to aapko suchit karega.",
+          q6: "kya meri baatcheet ya sanket niji han?",
+          a6: "100% niji. extension puri tarah se aapke sthaniya device par chalta hai. kisi bahari server par kabhi bhi koi sanket, uttar, audio stream ya vyaktigat telemetry nahin bheji jaati hai."
+        }
+      },
+      content: {
+        tooltips: {
+          back: "peeche {s} second - audio ke madhyam se khojne ke liye dabae rakhen",
+          playPause: "audio chalayen / audio roken (Space / K / Alt+P)",
+          forward: "forward {s} second - audio ke madhyam se khojne ke liye dabae rakhen",
+          speed: "playback gati",
+          volume: "audio volume (samayojit karne ke liye scroll karen)",
+          volumeSlider: "audio volume slider",
+          download: "audio download karen",
+          shortcuts: "keyboard shortcut aur ishare",
+          collapse: "player ko sankshipt karen",
+          expand: "ChatGPT Audio Controls ka vistar karen",
+          readAloud: "zor se padhen"
+        },
+        shortcutsPopover: {
+          title: "Read Aloud shortakat",
+          playPause: "audio chalayen / audio roken",
+          back: "peeche {s} second",
+          forward: "forward {s} second",
+          slower: "dhimi playback gati",
+          faster: "tez playback gati",
+          volumeScroll: "audio volume scroll",
+          smoothScrub: "sahaj audio khoj",
+          volumeScrollKey: "scroll karen 🔈",
+          smoothScrubKey: "◀{s} / {s}▶ dabae rakhen"
+        },
+        alerts: {
+          downloadError: "audio stream download nahin ho saka. sunishchit karen ki audio sakriya roop se load kiya gaya hai."
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "audio chalayen / audio roken",
+          description: "samanya web aur desktop players se mail khate hue playback ko togal karen (Alt+P samarthit rahata hai)"
+        },
+        seekBack: {
+          action: "10 second pichhe",
+          description: "10s peeche ki or kuden (audio ko aasani se dhundhne ke liye dabae rakhen)"
+        },
+        seekForward: {
+          action: "10 second aage",
+          description: "10 second aage badhen (audio ko aasani se dhundhne ke liye dabae rakhen)"
+        },
+        speedDecrease: {
+          action: "gati kam karen",
+          description: "pichli gati purva nirdharit par kadam rakhen"
+        },
+        speedIncrease: {
+          action: "gati badhaen",
+          description: "agli speed preset ki or kadam badhaen"
+        }
+      }
+    },
+    "zh-HK": {
+      common: {
+        extensionName: "ChatGPT Audio",
+        extensionSubtitle: "播放控制與朗讀增強",
+        version: "v",
+        openChatGPT: "開啟 ChatGPT",
+        dashboard: "控制面板",
+        seconds: "秒",
+        star: "★ 給星 Star",
+        docs: "說明文件",
+        issues: "回報問題"
+      },
+      popup: {
+        header: {
+          switchTheme: "切換主題",
+          openOptions: "開啟設定與面板"
+        },
+        tabs: {
+          controls: "控制",
+          shortcuts: "快捷鍵",
+          about: "關於"
+        },
+        quickControls: {
+          playbackSpeed: "預設播放速度",
+          defaultVolume: "預設音量",
+          mute: "靜音",
+          unmute: "取消靜音",
+          smartIntegrations: "智慧整合",
+          globalShortcuts: "全域快捷鍵",
+          globalShortcutsDesc: "啟用 Space/K、Alt+P、Alt+方向鍵及調速快捷鍵",
+          smoothScrubbing: "平滑長按快進/快退",
+          smoothScrubbingDesc: "長按 ◀10 或 10▶ 按鈕可實現加速平滑快進/快退"
+        },
+        shortcuts: {
+          title: "鍵盤快捷鍵",
+          gesturesTitle: "滑鼠與手勢操作",
+          smoothAudioScrub: "平滑快進/快退",
+          directDownload: "直接下載音訊",
+          holdScrubKey: "長按 ◀10 / 10▶",
+          clickDownloadKey: "點擊 📥 按鈕"
+        },
+        about: {
+          title: "ChatGPT Audio Controls",
+          byInfoxica: "由 Infoxica 開源提供",
+          description: "為 ChatGPT 語音朗讀提供卓越體驗：無縫進度跳轉、動態倍速調節、音訊一鍵下載及便捷朗讀按鈕。",
+          privacyTitle: "100% 隱私安全保護",
+          privacyDesc: "無追蹤器、無遙測資料收集，所有操作均在本地瀏覽器中執行。",
+          githubRepo: "GitHub 開源儲存庫",
+          documentation: "使用說明文件",
+          reportIssue: "回報問題與建議"
+        }
+      },
+      options: {
+        nav: {
+          dashboardTitle: "ChatGPT Audio",
+          dashboardSubtitle: "控制面板與設定",
+          preferences: "偏好設定",
+          shortcuts: "快捷鍵與手勢",
+          faq: "常見問題解答",
+          darkMode: "深色模式",
+          lightMode: "淺色模式",
+          githubRepo: "GitHub 儲存庫"
+        },
+        headers: {
+          preferencesTitle: "音訊與播放偏好設定",
+          preferencesDesc: "配置介面語言、預設播放速度、預設音量以及各項智慧功能。",
+          shortcutsTitle: "鍵盤快捷鍵與手勢指南",
+          shortcutsDesc: "掌握高效快捷鍵，輕鬆掌控音訊播放與進度。",
+          faqTitle: "常見問題與疑難排解",
+          faqDesc: "詳細的技術指南、隱私安全說明與支援解答。"
+        },
+        general: {
+          languageTitle: "語言與在地化",
+          languageDesc: "選擇您偏好的介面顯示語言，或設定為自動跟隨瀏覽器語言。",
+          languageAuto: "自動偵測 (瀏覽器預設語言)",
+          languageDetected: "已偵測到",
+          speedTitle: "預設播放倍速",
+          speedDesc: "設定開啟 ChatGPT 或啟動朗讀時的預設播放速度。",
+          volumeTitle: "預設音量大小",
+          volumeDesc: "設定朗讀音訊串流啟動時的預設音量百分比。",
+          seekTitle: "快進/快退步長",
+          seekDesc: "單次點擊 -10s / +10s 按鈕或按下 Alt + 左/右箭頭時跳轉的秒數。",
+          secondsUnit: "秒"
+        },
+        shortcutsGuide: {
+          title: "鍵盤快捷鍵速查表",
+          desc: "支援符合 YouTube 標準及單手操作的常用播放熱鍵，顯著提升使用效率。",
+          gesturesTitle: "滑鼠長按快進/快退手勢",
+          gesturesDesc: "按住 ◀10s 或 10s▶ 按鈕可實現動態加速平滑拖曳與跳轉：",
+          gestureHold03: "進入平滑快進模式 (4× 正常播放速度)。",
+          gestureHold15: "加速至 10× 快速跳轉。",
+          gestureHold30: "超高速極速跳進 25× 速率。",
+          gestureRelease: "放開即可鎖定至目標播放位置。"
+        },
+        faq: {
+          title: "常見問題解答與使用指南",
+          subtitle: "快速解答協助您充分利用 ChatGPT 音訊控制擴充功能的所有功能。",
+          q1: "如何透過滑鼠滾輪調節音量？",
+          a1: "只需將滑鼠游標懸停在播放器欄的音量喇叭圖示上，向上或向下滾動滑鼠滾輪即可。音量將以 5% 的步長平滑調節，無需展開滑桿面板！",
+          q2: "播放器會顯示在 ChatGPT 的什麼位置？",
+          a2: "播放器緊鄰訊息輸入框停靠。未播放音訊時，右側會常駐一個精緻的懸浮圖示；點擊懸浮圖示或啟動朗讀時，將自動展開完整的播放控制膠囊欄。",
+          q3: "如何下載合成的語音朗讀音訊？",
+          a3: "當 ChatGPT 朗讀回答時，點擊右側欄的下載按鈕 (📥)，音訊串流將立即以高保真格式 (.mp3, .m4a, 或 .wav) 儲存到您的電腦上。",
+          q4: "在小螢幕筆記型電腦上能夠正常使用嗎？",
+          a4: "完全支援！播放器會自動偵測可用螢幕寬度，並動態縮放進度條以完美適配筆電螢幕。如果空間非常緊湊，懸浮按鈕可隨時展開或收起播放器。",
+          q5: "如何透過 Tampermonkey 油猴腳本安裝並自動更新？",
+          a5: "如果您使用 Tampermonkey、Violentmonkey 或 Greasemonkey，可直接從我們的儲存庫安裝獨立腳本。油猴會自動偵測 GitHub 並在有新版本釋出時提醒更新。",
+          q6: "我的對話內容或提示詞具有隱私保護嗎？",
+          a6: "100% 隱私安全。擴充功能完全在您的本機裝置上執行，絕不會向任何外部伺服器傳送任何提示詞、回覆文字、音訊串流或遙測資料。"
+        }
+      },
+      content: {
+        tooltips: {
+          back: "後退 {s} 秒 — 長按可加速快退",
+          playPause: "播放 / 暫停 (Space 或 K；支援 Alt+P)",
+          forward: "前進 {s} 秒 — 長按可加速快進",
+          speed: "播放倍速",
+          volume: "音量 (滾輪可直接調節)",
+          volumeSlider: "音量滑桿",
+          download: "下載音訊檔案",
+          shortcuts: "快捷鍵與手勢指南",
+          collapse: "收起播放器",
+          expand: "展開 ChatGPT 音訊控制",
+          readAloud: "朗讀回答"
+        },
+        shortcutsPopover: {
+          title: "朗讀快捷鍵",
+          playPause: "播放 / 暫停",
+          back: "後退 {s} 秒",
+          forward: "前進 {s} 秒",
+          slower: "減慢倍速",
+          faster: "加快倍速",
+          volumeScroll: "滾輪調音量",
+          smoothScrub: "平滑快進快退",
+          volumeScrollKey: "在 🔈 上滾動",
+          smoothScrubKey: "長按 ◀{s} / {s}▶"
+        },
+        alerts: {
+          downloadError: "未能下載音訊串流，請確保音訊正在正常載入與播放。"
+        }
+      },
+      shortcuts: {
+        playPause: {
+          action: "播放 / 暫停",
+          description: "切換播放狀態，相容主流網頁與桌面播放器快捷鍵 (支援 Alt+P)"
+        },
+        seekBack: {
+          action: "後退 10 秒",
+          description: "後退 10 秒 (長按可進行平滑快退)"
+        },
+        seekForward: {
+          action: "前進 10 秒",
+          description: "前進 10 秒 (長按可進行平滑快進)"
+        },
+        speedDecrease: {
+          action: "降低倍速",
+          description: "切換至上一級播放倍速預設"
+        },
+        speedIncrease: {
+          action: "提高倍速",
+          description: "切換至下一級播放倍速預設"
         }
       }
     }
@@ -5004,6 +12263,7 @@
   };
   // src/shared/i18n/core.ts
   var LOCALES = {
+    ...chatgpt_default,
     ...audience_default,
     ...expandedLocales,
     en,
@@ -5027,18 +12287,32 @@
   function matchLocale(raw) {
     if (typeof raw !== "string")
       return;
-    const [base, ...subtags] = raw.trim().replaceAll("_", "-").toLowerCase().split("-");
+    const normalized = raw.trim().replaceAll("_", "-").toLowerCase();
+    const exact = Object.keys(LOCALES).find((code) => code.toLowerCase() === normalized);
+    if (exact)
+      return exact;
+    const [base, ...subtags] = normalized.split("-");
     if (base === "zh") {
       if (subtags.includes("hant"))
-        return "zh-TW";
+        return subtags.includes("hk") ? "zh-HK" : "zh-TW";
       if (subtags.includes("hans"))
         return "zh-CN";
-      return subtags.some((tag) => ["tw", "hk", "mo"].includes(tag)) ? "zh-TW" : "zh-CN";
+      if (subtags.includes("hk"))
+        return "zh-HK";
+      return subtags.some((tag) => ["tw", "mo"].includes(tag)) ? "zh-TW" : "zh-CN";
     }
     if (base === "pt")
       return subtags.includes("pt") ? "pt-PT" : "pt-BR";
     if (base === "no")
       return "nb";
+    if (base === "tl")
+      return "fil";
+    if (base === "es" && subtags.some((tag) => ["419", "mx", "ar", "bo", "cl", "co", "cr", "cu", "do", "ec", "gt", "hn", "ni", "pa", "pe", "pr", "py", "sv", "uy", "ve"].includes(tag)))
+      return "es-419";
+    if (base === "fr" && subtags.includes("ca"))
+      return "fr-CA";
+    if (base === "hi" && subtags.includes("latn"))
+      return "hi-Latn";
     return Object.hasOwn(LOCALES, base) ? base : undefined;
   }
   function detectBrowserLanguage() {
@@ -5799,6 +13073,2593 @@
       screenshot: "ChatGPT Les høyt avspillingskontroller",
       available: "Sjekk butikken din for tilgjengelig versjon.",
       website: "Offisiell nettside"
+    }
+  };
+  // src/shared/i18n/chatgpt-release.json
+  var chatgpt_release_default = {
+    am: {
+      hide: "ተንሳፋፊ መቆጣጠሪያዎችን ደብቅ",
+      hideMode: "ሲደበቅ",
+      idleOnly: "ስራ ፈት አረፋን ብቻ ደብቅ",
+      allUi: "አረፋ እና ተጫዋች ደብቅ",
+      hideHint: "ኦዲዮ መስራቱን ቀጥሏል። መቆጣጠሪያዎችን እዚህ ወይም በአቋራጭ ወደነበሩበት ይመልሱ።",
+      visibilityShortcut: "ተንሳፋፊ መቆጣጠሪያዎችን አሳይ/ደብቅ",
+      unassigned: "አልተመደበም።",
+      customize: "አቋራጭን አብጅ",
+      shortcutScope: "የመልሶ ማጫወት ቁልፎች ከጽሑፍ መስኮች ውጭ በChatGPT ላይ ይሰራሉ። የታይነት አቋራጩ በሚተይቡበት ጊዜም ይሰራል።",
+      quickStart: "ማዳመጥ ጀምር",
+      quickStartBody: "ChatGPT ይክፈቱ እና Read Aloud በተጠናቀቀ ምላሽ ይጀምሩ። ለአፍታ ለማቆም፣ ለመፈለግ፣ ፍጥነት ለመቀየር ወይም ለማውረድ ተጫዋቹን ይጠቀሙ።",
+      dismiss: "ገባኝ።",
+      help: "እገዛ እና መላ መፈለግ",
+      pending: "ከRead Aloud ጀምሮ…",
+      nativeHelp: "ከመልሱ ጎን በChatGPT's Read Aloud አዝራር መልሶ ማጫወት ይጀምሩ።",
+      playError: "መልሶ ማጫወት ከቆመበት መቀጠል አልቻለም። የ ChatGPT የምላሽ ቁልፍን በመጠቀም Read Aloud እንደገና ይጀምሩ።",
+      downloadError: "ኦዲዮ ሊወርድ አልቻለም። Read Aloudን ጀምር፣ ኦዲዮ እስኪጫን ድረስ ጠብቅ እና እንደገና ሞክር።",
+      downloading: "ማውረድዎን በማዘጋጀት ላይ…",
+      savedError: "ቅንብሩ ሊቀመጥ አልቻለም። እባክህ እንደገና ሞክር።",
+      sourceFormat: "ማውረዶች በChatGPT የቀረበውን የድምጽ ቅርጸት ይጠቀማሉ። ቅጥያው ኦዲዮን አይቀይርም።",
+      compactHelp: "ቦታ ሲገደብ ሁለት የተጠጋጉ የመቆጣጠሪያ አሞሌዎች ከመልእክት ሳጥኑ በላይ ይታያሉ።",
+      surveyTitle: "ስትሄድ ስላየሁህ ይቅርታ 💛",
+      surveyIntro: "ChatGPT Audio Controls ስለሞከሩ እናመሰግናለን። ከዚህ የተሻለ ምን ልናደርግ እንችል ነበር?",
+      surveyHint: "አንድ ምክንያት ይምረጡ እና ይላኩ። ምንም መተየብ አያስፈልግም።",
+      reasonBroken: "በትክክል አልሰራም።",
+      reasonIntrusive: "አረፋው ወይም ተጫዋቹ መንገድ ላይ ገባ።",
+      reasonSlow: "ChatGPTን ወይም አሳሼን ቀንሷል።",
+      reasonDifficult: "ለመጠቀም አስቸጋሪ ነበር።",
+      reasonMissing: "የሚያስፈልገኝ ባህሪ ጠፍቷል።",
+      reasonLanguage: "የእኔ ቋንቋ በደንብ አልተደገፈም።",
+      reasonUnneeded: "ከእንግዲህ አያስፈልገኝም።",
+      reasonOther: "ሌላ ነገር።",
+      addNote: "ማስታወሻ ጨምር - አማራጭ",
+      noteHint: "እባክዎን ውይይቶችን ወይም የግል ዝርዝሮችን አያካትቱ። ከፍተኛው 1,000 ቁምፊዎች።",
+      send: "ግብረ መልስ ላክ",
+      feedbackIntro: "ምን የተሻለ ሊሠራ እንደሚችል ይንገሩን. ምድብ ይምረጡ እና አማራጭ ማስታወሻ ያክሉ።",
+      feedbackBug: "ስህተትን ሪፖርት ያድርጉ",
+      feedbackSuggestion: "መሻሻል ይጠቁሙ",
+      feedbackThanks: "አመሰግናለሁ። አስተያየትህ ተቀምጧል።",
+      sending: "በመላክ ላይ…",
+      skip: "አስተያየቶችን ይዝለሉ",
+      thanks: "እንድናሻሽል ስለረዱን እናመሰግናለን። ሁሌም እንኳን ደህና መጣህ።",
+      goodbye: "ስለሞከሩን እናመሰግናለን። ተጠንቀቅ!",
+      feedbackError: "አስተያየትህ አልተረጋገጠም። እባክዎ እንደገና ይሞክሩ; መልስህ አሁንም እዚህ አለ።",
+      chooseReason: "ግብረመልስ ለመላክ አንድ ምክንያት ይምረጡ።",
+      feedbackPrivacy: "ChatGPT Audio Controls የተሻለ እንድናደርግ እርዳን። የእርስዎ አስተያየት አማራጭ እና ግላዊ ነው— ምንም ስም ወይም ኢሜይል አያስፈልግም። የመሠረታዊ መተግበሪያ እና የመሣሪያ ዝርዝሮች ጉዳዮችን እንድንረዳ ያግዘናል። እባክዎን የግል ዝርዝሮችን ወይም ውይይቶችን ይተዉ።",
+      appearance: "መልክ",
+      themeSystem: "ስርዓት",
+      themeLight: "ብርሃን",
+      themeDark: "ጨለማ",
+      language: "ቋንቋ",
+      siteTitle: "ChatGPT Read Aloud፣ ከሚቀጥሉ መቆጣጠሪያዎች ጋር።",
+      siteIntro: "ለአፍታ አቁም፣ ወደኋላ መለስ፣ የመልሶ ማጫወት ፍጥነትን ቀይር እና ኦዲዮን አውርድ። በሚያዳምጡበት ጊዜ በውይይቱ ውስጥ ይቆዩ።",
+      chrome: "ለChrome ያግኙት።",
+      edge: "ለኤጅ ያግኙት።",
+      desktop: "ለዴስክቶፕ Chrome፣ Edge እና ተኳዃኝ አሳሾች። ለመጫን ይህን ገጽ በኮምፒውተርዎ ላይ ይክፈቱት።",
+      features: "መንገድህን አዳምጥ",
+      setup: "ለተሻለ ማዳመጥ ሶስት ደረጃዎች",
+      stepInstall: "ቅጥያውን ከአሳሽዎ መደብር ይጫኑት።",
+      stepRead: "ChatGPT ይክፈቱ እና Read Aloud በተጠናቀቀ ምላሽ ይጀምሩ።",
+      stepControl: "ለአፍታ ያቁሙ፣ ይፈልጉ፣ ፍጥነት ይቀይሩ ወይም ከተጫዋቹ ላይ ያለውን ድምጽ ያስቀምጡ።",
+      privacy: "ግላዊነት",
+      privacyBody: "ቅጥያው ምንም ትንታኔ ወይም ቴሌሜትሪ የለውም። የድምጽ እና የውይይት አያያዝ በአሳሽዎ ውስጥ ይቆያል። የአሳሽ ማመሳሰል ምርጫዎችን ሊያሳምር ይችላል።",
+      independent: "ራሱን የቻለ ክፍት ምንጭ ፕሮጀክት በኢንፎክሲካ። ከOpenAI ጋር ያልተቆራኘ ወይም የጸደቀ።",
+      analyticsTitle: "ይህን ድህረ ገጽ የበለጠ ጠቃሚ እንድናደርገው እርዳን",
+      analyticsBody: "የትኛዎቹ ገፆች ጠቃሚ እንደሆኑ እና ሰዎች እንዴት ቅጥያውን እንደሚያገኙ ለማወቅ እርዳን። ጉግል አናሌቲክስ የድር ጣቢያ ጉብኝቶችን እና የመደብር-አገናኝ ጠቅታዎችን እንዲለካ ይፈቀድለት? የቅጥያው እና የማራገፊያ ዳሰሳ ከትንታኔ ነጻ ሆነው ይቆያሉ። ምርጫዎን በማንኛውም ጊዜ መቀየር ይችላሉ።",
+      accept: "ትንታኔን ፍቀድ",
+      decline: "አይ አመሰግናለሁ",
+      preferences: "የትንታኔ ምርጫዎች",
+      websitePrivacy: "ይህ ድህረ ገጽ ጎግል አናሌቲክስን የሚጠቀመው ከፈቀዱ በኋላ ነው። የሚለካው ጉብኝቶችን እና የሱቅ-አገናኞችን ጠቅታዎች እንጂ የመጫኛ ወይም የኤክስቴንሽን አጠቃቀም አይደለም። የትንታኔ ምርጫዎችን በመጠቀም ፈቃድ ማንሳት ይችላሉ።",
+      feedbackPolicy: "ግብረ መልስዎ አማራጭ እና ግላዊ ነው፣ ካራገፉ በኋላም ቢሆን። ምንም ስም ወይም ኢሜይል አያስፈልግም. እባክዎን የግል ዝርዝሮችን ወይም ውይይቶችን አያካትቱ።",
+      screenshot: "ChatGPT Read Aloud መልሶ ማጫወት መቆጣጠሪያዎች",
+      available: "አሁን ላለው ስሪት ማከማቻዎን ያረጋግጡ።",
+      website: "ኦፊሴላዊ ድር ጣቢያ"
+    },
+    bg: {
+      hide: "Скриване на плаващите контроли",
+      hideMode: "Когато е скрит",
+      idleOnly: "Скриване само на празен балон",
+      allUi: "Скриване на балона и играча",
+      hideHint: "Аудиото продължава да работи. Възстановете контролите тук или с прекия път.",
+      visibilityShortcut: "Показване/скриване на плаващи контроли",
+      unassigned: "Не е присвоено",
+      customize: "Персонализиране на пряк път",
+      shortcutScope: "Клавишите за възпроизвеждане работят на ChatGPT извън текстовите полета. Прекият път за видимост също работи, докато пишете.",
+      quickStart: "Започнете да слушате",
+      quickStartBody: "Отворете ChatGPT и стартирайте Read Aloud при завършен отговор. Използвайте плейъра за пауза, търсене, промяна на скоростта или изтегляне.",
+      dismiss: "Разбрах",
+      help: "Помощ и отстраняване на проблеми",
+      pending: "Стартиране на Read Aloud...",
+      nativeHelp: "Стартирайте възпроизвеждането с бутона Read Aloud на ChatGPT до отговора.",
+      playError: "Възпроизвеждането не можа да бъде подновено. Стартирайте отново Read Aloud, като използвате бутона за отговор на ChatGPT.",
+      downloadError: "Аудиото не може да бъде изтеглено. Стартирайте Read Aloud, изчакайте аудиото да се зареди, след което опитайте отново.",
+      downloading: "Изтеглянето ви се подготвя...",
+      savedError: "Настройката не можа да бъде запазена. Моля, опитайте отново.",
+      sourceFormat: "Изтеглянията използват аудио формата, предоставен от ChatGPT. Разширението не конвертира аудио.",
+      compactHelp: "Когато пространството е ограничено, над полето за съобщения се появяват две заоблени контролни ленти.",
+      surveyTitle: "Съжалявам, че си отивате 💛",
+      surveyIntro: "Благодаря, че опитахте ChatGPT Audio Controls. Какво можехме да направим по-добре?",
+      surveyHint: "Изберете една причина и изпратете. Не е необходимо въвеждане.",
+      reasonBroken: "Не работи правилно.",
+      reasonIntrusive: "Балонът или играчът пречеха.",
+      reasonSlow: "Забави ChatGPT или моя браузър.",
+      reasonDifficult: "Беше трудно за използване.",
+      reasonMissing: "Функция, от която се нуждаех, липсваше.",
+      reasonLanguage: "Моят език не се поддържаше добре.",
+      reasonUnneeded: "Вече не ми трябва.",
+      reasonOther: "Нещо друго.",
+      addNote: "Добавете бележка — по избор",
+      noteHint: "Моля, не включвайте разговори или лични данни. Максимум 1000 знака.",
+      send: "Изпратете обратна връзка",
+      feedbackIntro: "Кажете ни какво може да работи по-добре. Изберете категория и добавете незадължителна бележка.",
+      feedbackBug: "Докладвайте за грешка",
+      feedbackSuggestion: "Предложете подобрение",
+      feedbackThanks: "Благодаря ви. Вашето мнение е запазено.",
+      sending: "Изпращане...",
+      skip: "Пропускане на обратна връзка",
+      thanks: "Благодарим ви, че ни помагате да се подобрим. Винаги си добре дошъл отново.",
+      goodbye: "Благодарим ви, че ни опитахте. пазете се!",
+      feedbackError: "Вашата обратна връзка не беше потвърдена. Моля, опитайте отново; вашият отговор е все още тук.",
+      chooseReason: "Изберете една причина да изпратите обратна връзка.",
+      feedbackPrivacy: "Помогнете ни да направим ChatGPT Audio Controls по-добър. Вашата обратна връзка не е задължителна и е лична – не са необходими име или имейл. Основните подробности за приложението и устройството ни помагат да разберем проблемите. Моля, оставете лични данни или разговори.",
+      appearance: "Външен вид",
+      themeSystem: "Система",
+      themeLight: "Светлина",
+      themeDark: "Тъмно",
+      language: "Език",
+      siteTitle: "ChatGPT Read Aloud, с контроли, които се справят.",
+      siteIntro: "Пауза, превъртане назад, промяна на скоростта на възпроизвеждане и изтегляне на аудио. Останете в разговора, докато слушате.",
+      chrome: "Вземете го за Chrome",
+      edge: "Вземете го за Edge",
+      desktop: "За десктоп Chrome, Edge и съвместими браузъри. Отворете тази страница на вашия компютър, за да инсталирате.",
+      features: "Слушай своя път",
+      setup: "Три стъпки за по-добро слушане",
+      stepInstall: "Инсталирайте разширението от магазина на вашия браузър.",
+      stepRead: "Отворете ChatGPT и стартирайте Read Aloud при завършен отговор.",
+      stepControl: "Пауза, търсене, промяна на скоростта или запазване на аудиото от плейъра.",
+      privacy: "Поверителност",
+      privacyBody: "Разширението няма анализ или телеметрия. Обработката на звука и разговора остава във вашия браузър. Синхронизирането на браузъра може да синхронизира предпочитанията.",
+      independent: "Независим проект с отворен код от Infoxica. Не е свързан с или одобрен от OpenAI.",
+      analyticsTitle: "Помогнете ни да направим този уебсайт по-полезен",
+      analyticsBody: "Помогнете ни да научим кои страници са полезни и как хората откриват разширението. Да позволите на Google Анализ да измерва посещенията на уебсайтове и кликванията върху връзки към магазини? Проучването за разширение и деинсталиране остава без анализи. Можете да промените избора си по всяко време.",
+      accept: "Разрешаване на анализи",
+      decline: "Не, благодаря",
+      preferences: "Предпочитания за анализ",
+      websitePrivacy: "Този уебсайт използва Google Analytics само след като вие го разрешите. Той измерва посещенията и кликванията върху връзките към магазина, а не инсталиранията или използването на разширения. Можете да оттеглите разрешение, като използвате предпочитанията на Google Анализ.",
+      feedbackPolicy: "Вашата обратна връзка е незадължителна и лична, дори след деинсталиране. Не се изисква име или имейл. Моля, не включвайте лични данни или разговори.",
+      screenshot: "ChatGPT Read Aloud контроли за възпроизвеждане",
+      available: "Проверете магазина си за наличната в момента версия.",
+      website: "Официален уебсайт"
+    },
+    bs: {
+      hide: "Sakrij plutajuće kontrole",
+      hideMode: "Kada je skriveno",
+      idleOnly: "Sakrij samo mehur u stanju mirovanja",
+      allUi: "Sakrij balon i igrača",
+      hideHint: "Audio i dalje radi. Vratite kontrole ovdje ili pomoću prečice.",
+      visibilityShortcut: "Prikaži/sakrij plutajuće kontrole",
+      unassigned: "Nije dodijeljeno",
+      customize: "Prilagodite prečicu",
+      shortcutScope: "Tasteri za reprodukciju rade na ChatGPT izvan tekstualnih polja. Prečica za vidljivost radi i dok kucate.",
+      quickStart: "Počnite slušati",
+      quickStartBody: "Otvorite ChatGPT i pokrenite Read Aloud nakon završenog odgovora. Koristite plejer za pauziranje, traženje, promjenu brzine ili preuzimanje.",
+      dismiss: "Shvatio sam",
+      help: "Pomoć i rješavanje problema",
+      pending: "Pokretanje Read Aloud…",
+      nativeHelp: "Započnite reprodukciju sa ChatGPT dugmetom Read Aloud pored odgovora.",
+      playError: "Reprodukcija se nije mogla nastaviti. Ponovo pokrenite Read Aloud pomoću dugmeta za odgovor ChatGPT.",
+      downloadError: "Nije moguće preuzeti audio. Pokrenite Read Aloud, pričekajte da se audio učita, a zatim pokušajte ponovo.",
+      downloading: "Priprema za preuzimanje…",
+      savedError: "Postavka nije mogla biti sačuvana. Molimo pokušajte ponovo.",
+      sourceFormat: "Preuzimanja koriste audio format koji obezbeđuje ChatGPT. Ekstenzija ne pretvara audio.",
+      compactHelp: "Kada je prostor ograničen, iznad okvira za poruke pojavljuju se dvije zaobljene kontrolne trake.",
+      surveyTitle: "Žao mi je što odlazite 💛",
+      surveyIntro: "Hvala što ste isprobali ChatGPT Audio Controls. Šta smo mogli bolje?",
+      surveyHint: "Odaberite jedan razlog i pošaljite. Nije potrebno kucanje.",
+      reasonBroken: "Nije funkcionisalo kako treba.",
+      reasonIntrusive: "Mehur ili igrač je stao na put.",
+      reasonSlow: "Usporio je ChatGPT ili moj pretraživač.",
+      reasonDifficult: "Bilo je teško koristiti.",
+      reasonMissing: "Nedostajala je funkcija koja mi je bila potrebna.",
+      reasonLanguage: "Moj jezik nije dobro podržan.",
+      reasonUnneeded: "Ne treba mi više.",
+      reasonOther: "Još nešto.",
+      addNote: "Dodajte napomenu — opciono",
+      noteHint: "Molimo nemojte uključivati razgovore ili lične podatke. Maksimalno 1000 znakova.",
+      send: "Pošalji povratnu informaciju",
+      feedbackIntro: "Recite nam šta bi moglo bolje funkcionirati. Odaberite kategoriju i dodajte opcionalnu bilješku.",
+      feedbackBug: "Prijavite grešku",
+      feedbackSuggestion: "Predložite poboljšanje",
+      feedbackThanks: "Hvala. Vaše povratne informacije su sačuvane.",
+      sending: "Slanje…",
+      skip: "Preskoči povratnu informaciju",
+      thanks: "Hvala vam što nam pomažete da se poboljšamo. Uvijek ste dobrodošli nazad.",
+      goodbye: "Hvala što ste nam pokušali. Čuvaj se!",
+      feedbackError: "Vaše povratne informacije nisu potvrđene. Molimo pokušajte ponovo; Vaš odgovor je još uvijek ovdje.",
+      chooseReason: "Odaberite jedan razlog za slanje povratnih informacija.",
+      feedbackPrivacy: "Pomozite nam da poboljšamo ChatGPT Audio Controls. Vaše povratne informacije su opcione i privatne – nije potrebno ime ili e-mail. Osnovni detalji o aplikaciji i uređaju pomažu nam da razumijemo probleme. Molimo izostavite lične podatke ili razgovore.",
+      appearance: "Izgled",
+      themeSystem: "Sistem",
+      themeLight: "Svjetlo",
+      themeDark: "Tamno",
+      language: "Jezik",
+      siteTitle: "ChatGPT Read Aloud, sa kontrolama koje idu u korak.",
+      siteIntro: "Pauzirajte, premotajte unazad, promijenite brzinu reprodukcije i preuzmite audio. Ostanite u razgovoru dok slušate.",
+      chrome: "Nabavite za Chrome",
+      edge: "Uzmi za Edge",
+      desktop: "Za desktop Chrome, Edge i kompatibilne pretraživače. Otvorite ovu stranicu na svom računaru da instalirate.",
+      features: "Slušaj na svoj način",
+      setup: "Tri koraka do boljeg slušanja",
+      stepInstall: "Instalirajte ekstenziju iz prodavnice vašeg pretraživača.",
+      stepRead: "Otvorite ChatGPT i pokrenite Read Aloud nakon završenog odgovora.",
+      stepControl: "Pauzirajte, tražite, promijenite brzinu ili sačuvajte zvuk sa plejera.",
+      privacy: "Privatnost",
+      privacyBody: "Ekstenzija nema analitiku ili telemetriju. Upravljanje zvukom i razgovorom ostaje u vašem pretraživaču. Sinhronizacija pretraživača može da sinhronizuje postavke.",
+      independent: "Nezavisni projekat otvorenog koda Infoxice. Nije povezan sa OpenAI-om niti ga podržava.",
+      analyticsTitle: "Pomozite nam da ovu web stranicu učinimo korisnijom",
+      analyticsBody: "Pomozite nam da saznamo koje su stranice korisne i kako ljudi otkrivaju ekstenziju. Dozvoliti Google Analytics-u da mjeri posjete web stranici i klikove na linkove do trgovine? Anketa o proširenju i deinstalaciji ostaje bez analitike. Svoj izbor možete promijeniti bilo kada.",
+      accept: "Dozvoli analitiku",
+      decline: "Ne hvala",
+      preferences: "Postavke analitike",
+      websitePrivacy: "Ova web stranica koristi Google Analytics samo nakon što vi to dozvolite. Mjeri posjete i klikove na linkove do trgovine, a ne instalacije ili upotrebu proširenja. Dozvolu možete povući koristeći postavke Analyticsa.",
+      feedbackPolicy: "Vaše povratne informacije su opcione i privatne, čak i nakon deinstaliranja. Nije potrebno ime ili email. Molimo nemojte uključivati ​​lične podatke ili razgovore.",
+      screenshot: "ChatGPT Read Aloud kontrole reprodukcije",
+      available: "Provjerite svoju trgovinu za trenutno dostupnu verziju.",
+      website: "Službena web stranica"
+    },
+    da: {
+      hide: "Skjul flydende kontroller",
+      hideMode: "Når skjult",
+      idleOnly: "Skjul kun inaktiv boble",
+      allUi: "Skjul boble og spiller",
+      hideHint: "Lyden bliver ved med at fungere. Gendan kontroller her eller med genvejen.",
+      visibilityShortcut: "Vis/skjul flydende kontroller",
+      unassigned: "Ikke tildelt",
+      customize: "Tilpas genvej",
+      shortcutScope: "Afspilningstaster fungerer på ChatGPT uden for tekstfelter. Synlighedsgenvejen fungerer også, mens du skriver.",
+      quickStart: "Begynd at lytte",
+      quickStartBody: "Åbn ChatGPT og start Read Aloud på et afsluttet svar. Brug afspilleren til at sætte på pause, søge, ændre hastighed eller downloade.",
+      dismiss: "Forstår det",
+      help: "Hjælp og fejlfinding",
+      pending: "Starter Read Aloud...",
+      nativeHelp: "Start afspilning med ChatGPTs Read Aloud-knap ved siden af svaret.",
+      playError: "Afspilning kunne ikke genoptages. Start Read Aloud igen ved at bruge ChatGPTs svarknap.",
+      downloadError: "Lyden kunne ikke downloades. Start Read Aloud, vent på, at lyden indlæses, og prøv derefter igen.",
+      downloading: "Forbereder din download...",
+      savedError: "Indstillingen kunne ikke gemmes. Prøv venligst igen.",
+      sourceFormat: "Downloads bruger lydformatet leveret af ChatGPT. Udvidelsen konverterer ikke lyd.",
+      compactHelp: "Når pladsen er begrænset, vises to afrundede kontrolbjælker over meddelelsesboksen.",
+      surveyTitle: "Ked af at se dig gå 💛",
+      surveyIntro: "Tak, fordi du prøvede ChatGPT Audio Controls. Hvad kunne vi have gjort bedre?",
+      surveyHint: "Vælg en årsag og send. Ingen indtastning nødvendig.",
+      reasonBroken: "Det fungerede ikke korrekt.",
+      reasonIntrusive: "Boblen eller spilleren kom i vejen.",
+      reasonSlow: "Det bremsede ChatGPT eller min browser.",
+      reasonDifficult: "Den var svær at bruge.",
+      reasonMissing: "En funktion, jeg havde brug for, manglede.",
+      reasonLanguage: "Mit sprog blev ikke understøttet godt.",
+      reasonUnneeded: "Jeg har ikke brug for det længere.",
+      reasonOther: "Noget andet.",
+      addNote: "Tilføj en note – valgfrit",
+      noteHint: "Inkluder venligst ikke samtaler eller personlige oplysninger. Maksimalt 1.000 tegn.",
+      send: "Send feedback",
+      feedbackIntro: "Fortæl os, hvad der kunne fungere bedre. Vælg en kategori, og tilføj en valgfri note.",
+      feedbackBug: "Rapporter en fejl",
+      feedbackSuggestion: "Foreslå en forbedring",
+      feedbackThanks: "Tak. Din feedback er blevet gemt.",
+      sending: "Sender...",
+      skip: "Spring feedback over",
+      thanks: "Tak, fordi du hjælper os med at forbedre os. Du er altid velkommen tilbage.",
+      goodbye: "Tak, fordi du prøvede os. Pas på!",
+      feedbackError: "Din feedback blev ikke bekræftet. Prøv venligst igen; dit svar er her stadig.",
+      chooseReason: "Vælg én grund til at sende feedback.",
+      feedbackPrivacy: "Hjælp os med at gøre ChatGPT Audio Controls bedre. Din feedback er valgfri og privat – ingen navn eller e-mail nødvendig. Grundlæggende app- og enhedsoplysninger hjælper os med at forstå problemer. Venligst udelad personlige oplysninger eller samtaler.",
+      appearance: "Udseende",
+      themeSystem: "System",
+      themeLight: "Lys",
+      themeDark: "Mørk",
+      language: "Sprog",
+      siteTitle: "ChatGPT Read Aloud, med kontroller, der følger med.",
+      siteIntro: "Sæt pause, spole tilbage, skift afspilningshastighed og download lyd. Bliv i samtalen, mens du lytter.",
+      chrome: "Få det til Chrome",
+      edge: "Få det til Edge",
+      desktop: "Til desktop Chrome, Edge og kompatible browsere. Åbn denne side på din computer for at installere.",
+      features: "Lyt på din måde",
+      setup: "Tre trin til bedre lytning",
+      stepInstall: "Installer udvidelsen fra din browsers butik.",
+      stepRead: "Åbn ChatGPT og start Read Aloud på et udfyldt svar.",
+      stepControl: "Sæt pause, søg, skift hastighed eller gem lyden fra afspilleren.",
+      privacy: "Fortrolighed",
+      privacyBody: "Udvidelsen har ingen analyser eller telemetri. Lyd- og samtalehåndtering forbliver i din browser. Browsersynkronisering kan synkronisere præferencer.",
+      independent: "Et uafhængigt open source-projekt af Infoxica. Ikke tilknyttet eller godkendt af OpenAI.",
+      analyticsTitle: "Hjælp os med at gøre denne hjemmeside mere nyttig",
+      analyticsBody: "Hjælp os med at lære, hvilke sider der er nyttige, og hvordan folk opdager udvidelsen. Vil du tillade Google Analytics at måle webstedsbesøg og klik på butikslinks? Udvidelses- og afinstallationsundersøgelsen forbliver fri for analyser. Du kan til enhver tid ændre dit valg.",
+      accept: "Tillad analyser",
+      decline: "Nej tak",
+      preferences: "Analytics-præferencer",
+      websitePrivacy: "Denne hjemmeside bruger kun Google Analytics, når du har tilladt det. Den måler besøg og klik på butikslinks, ikke installationer eller brug af udvidelser. Du kan trække tilladelsen tilbage ved at bruge Analytics-præferencer.",
+      feedbackPolicy: "Din feedback er valgfri og privat, selv efter afinstallation. Der kræves ikke navn eller e-mail. Inkluder venligst ikke personlige oplysninger eller samtaler.",
+      screenshot: "ChatGPT Read Aloud afspilningskontroller",
+      available: "Tjek din butik for den aktuelt tilgængelige version.",
+      website: "Officiel hjemmeside"
+    },
+    et: {
+      hide: "Peida ujuvad juhtnupud",
+      hideMode: "Kui peidetud",
+      idleOnly: "Peida ainult jõudeolekumull",
+      allUi: "Peida mull ja pleier",
+      hideHint: "Heli töötab edasi. Taasta juhtelemendid siin või otsetee abil.",
+      visibilityShortcut: "Kuva/peida ujuvad juhtelemendid",
+      unassigned: "Pole määratud",
+      customize: "Kohanda otsetee",
+      shortcutScope: "Taasesitusklahvid töötavad ChatGPT-ga väljaspool tekstivälju. Nähtavuse otsetee töötab ka tippimise ajal.",
+      quickStart: "Alustage kuulamist",
+      quickStartBody: "Avage ChatGPT ja käivitage lõpetatud vastuse korral Read Aloud. Kasutage pleierit peatamiseks, otsimiseks, kiiruse muutmiseks või allalaadimiseks.",
+      dismiss: "Selge",
+      help: "Abi ja veaotsing",
+      pending: "Read Aloud käivitamine…",
+      nativeHelp: "Alustage taasesitust vastuse kõrval oleva nupuga ChatGPT Read Aloud.",
+      playError: "Taasesitust ei saanud jätkata. Käivitage Read Aloud uuesti, kasutades ChatGPT vastusenuppu.",
+      downloadError: "Heli ei saanud alla laadida. Käivitage Read Aloud, oodake, kuni heli laaditakse, ja proovige uuesti.",
+      downloading: "Allalaadimise ettevalmistamine…",
+      savedError: "Sätet ei saanud salvestada. Palun proovi uuesti.",
+      sourceFormat: "Allalaadimised kasutavad ChatGPT pakutavat helivormingut. Laiendus ei teisenda heli.",
+      compactHelp: "Kui ruumi on vähe, kuvatakse teatekasti kohal kaks ümarat juhtriba.",
+      surveyTitle: "Kahju, et lahkusite 💛",
+      surveyIntro: "Täname ChatGPT Audio Controls proovimise eest. Mida oleksime saanud paremini teha?",
+      surveyHint: "Valige üks põhjus ja saatke. Tippimist pole vaja.",
+      reasonBroken: "See ei töötanud õigesti.",
+      reasonIntrusive: "Mull või mängija jäi teele.",
+      reasonSlow: "See aeglustas ChatGPT või minu brauserit.",
+      reasonDifficult: "Seda oli raske kasutada.",
+      reasonMissing: "Vajalik funktsioon puudus.",
+      reasonLanguage: "Minu keelt ei toetatud hästi.",
+      reasonUnneeded: "Ma ei vaja seda enam.",
+      reasonOther: "Midagi muud.",
+      addNote: "Lisa märkus – valikuline",
+      noteHint: "Ärge lisage vestlusi ega isikuandmeid. Maksimaalselt 1000 tähemärki.",
+      send: "Saatke tagasisidet",
+      feedbackIntro: "Rääkige meile, mis võiks paremini töötada. Valige kategooria ja lisage valikuline märge.",
+      feedbackBug: "Teatage veast",
+      feedbackSuggestion: "Soovitage parendust",
+      feedbackThanks: "Aitäh. Teie tagasiside on salvestatud.",
+      sending: "Saadan…",
+      skip: "Jäta tagasiside vahele",
+      thanks: "Täname, et aitasite meil täiustada. Olete alati tagasi oodatud.",
+      goodbye: "Täname, et proovisite. Hoolitse!",
+      feedbackError: "Teie tagasisidet ei kinnitatud. Palun proovi uuesti; teie vastus on endiselt siin.",
+      chooseReason: "Valige tagasiside saatmiseks üks põhjus.",
+      feedbackPrivacy: "Aidake meil ChatGPT Audio Controls paremaks muuta. Teie tagasiside on valikuline ja privaatne – pole vaja nime ega e-posti aadressi. Põhilised rakenduse ja seadme üksikasjad aitavad meil probleeme mõista. Jätke isikuandmed või vestlused välja.",
+      appearance: "Välimus",
+      themeSystem: "Süsteem",
+      themeLight: "Valgus",
+      themeDark: "Tume",
+      language: "Keel",
+      siteTitle: "ChatGPT Read Aloud koos juhtnuppudega, mis hoiavad sammu.",
+      siteIntro: "Peatage, kerige tagasi, muutke taasesituse kiirust ja laadige alla heli. Püsige vestluses kuulamise ajal.",
+      chrome: "Hankige see Chrome jaoks",
+      edge: "Hankige see Edge'i jaoks",
+      desktop: "Lauaarvuti Chrome, Edge ja ühilduvate brauserite jaoks. Installimiseks avage see leht oma arvutis.",
+      features: "Kuulake oma teed",
+      setup: "Kolm sammu paremaks kuulamiseks",
+      stepInstall: "Installige laiendus oma brauseri poest.",
+      stepRead: "Avage ChatGPT ja käivitage lõpetatud vastuse korral Read Aloud.",
+      stepControl: "Peatage, otsige, muutke kiirust või salvestage pleieri heli.",
+      privacy: "Privaatsus",
+      privacyBody: "Laiendusel puudub analüütika ega telemeetria. Heli ja vestluse haldamine jäävad teie brauserisse. Brauseri sünkroonimine võib eelistusi sünkroonida.",
+      independent: "Infoxica sõltumatu avatud lähtekoodiga projekt. Ei ole OpenAI-ga seotud ega kinnitatud.",
+      analyticsTitle: "Aidake meil muuta see veebisait kasulikumaks",
+      analyticsBody: "Aidake meil teada saada, millised lehed on kasulikud ja kuidas inimesed laienduse avastavad. Kas lubada Google Analyticsil mõõta veebisaidi külastusi ja poelingi klikke? Laienduse ja desinstallimise küsitlus ei sisalda analüüse. Saate oma valikut igal ajal muuta.",
+      accept: "Luba analüütika",
+      decline: "Ei aitäh",
+      preferences: "Analyticsi eelistused",
+      websitePrivacy: "See veebisait kasutab Google Analyticsit alles pärast seda, kui olete selle lubanud. See mõõdab külastusi ja poelinkide klikke, mitte installimisi ega laienduse kasutamist. Saate loa tagasi võtta, kasutades Analyticsi eelistusi.",
+      feedbackPolicy: "Teie tagasiside on valikuline ja privaatne isegi pärast desinstallimist. Nime ega e-posti pole vaja. Ärge lisage isikuandmeid ega vestlusi.",
+      screenshot: "ChatGPT Read Aloud taasesituse juhtnupud",
+      available: "Kontrollige oma poest praegu saadaolevat versiooni.",
+      website: "Ametlik veebisait"
+    },
+    fil: {
+      hide: "Itago ang mga lumulutang na kontrol",
+      hideMode: "Kapag nakatago",
+      idleOnly: "Itago lang ang idle bubble",
+      allUi: "Itago ang bubble at player",
+      hideHint: "Patuloy na gumagana ang audio. Ibalik ang mga kontrol dito o gamit ang shortcut.",
+      visibilityShortcut: "Ipakita / itago ang mga lumulutang na kontrol",
+      unassigned: "Hindi nakatalaga",
+      customize: "I-customize ang shortcut",
+      shortcutScope: "Gumagana ang mga playback key sa ChatGPT sa labas ng mga text field. Gumagana rin ang visibility shortcut habang nagta-type.",
+      quickStart: "Simulan ang pakikinig",
+      quickStartBody: "Buksan ang ChatGPT at simulan ang Read Aloud sa isang kumpletong tugon. Gamitin ang player upang i-pause, hanapin, baguhin ang bilis, o i-download.",
+      dismiss: "Naiintindihan ko",
+      help: "Tulong at pag-troubleshoot",
+      pending: "Nagsisimula sa Read Aloud…",
+      nativeHelp: "Simulan ang pag-playback gamit ang ChatGPT na Read Aloud na button sa tabi ng tugon.",
+      playError: "Hindi maipagpatuloy ang pag-playback. Simulan muli ang Read Aloud gamit ang response button ng ChatGPT.",
+      downloadError: "Hindi ma-download ang audio. Simulan ang Read Aloud, hintaying mag-load ang audio, pagkatapos ay subukang muli.",
+      downloading: "Inihahanda ang iyong pag-download...",
+      savedError: "Hindi ma-save ang setting. Pakisubukang muli.",
+      sourceFormat: "Ginagamit ng mga download ang audio format na ibinigay ng ChatGPT. Ang extension ay hindi nagko-convert ng audio.",
+      compactHelp: "Kapag limitado ang espasyo, lalabas ang dalawang bilugan na control bar sa itaas ng kahon ng mensahe.",
+      surveyTitle: "Ikinalulungkot kong makita kang umalis 💛",
+      surveyIntro: "Salamat sa pagsubok ng ChatGPT Audio Controls. Ano kaya ang mas magandang nagawa natin?",
+      surveyHint: "Pumili ng isang dahilan at ipadala. Hindi kailangan mag-type.",
+      reasonBroken: "Hindi ito gumana nang tama.",
+      reasonIntrusive: "Nakaharang ang bula o manlalaro.",
+      reasonSlow: "Binagalan nito ang ChatGPT o ang aking browser.",
+      reasonDifficult: "Mahirap itong gamitin.",
+      reasonMissing: "Nawawala ang isang feature na kailangan ko.",
+      reasonLanguage: "Ang aking wika ay hindi suportado ng mabuti.",
+      reasonUnneeded: "Hindi ko na ito kailangan.",
+      reasonOther: "Iba pa.",
+      addNote: "Magdagdag ng tala — opsyonal",
+      noteHint: "Mangyaring huwag isama ang mga pag-uusap o mga personal na detalye. Maximum na 1,000 character.",
+      send: "Magpadala ng feedback",
+      feedbackIntro: "Sabihin sa amin kung ano ang maaaring gumana nang mas mahusay. Pumili ng kategorya at magdagdag ng opsyonal na tala.",
+      feedbackBug: "Mag-ulat ng bug",
+      feedbackSuggestion: "Magmungkahi ng pagpapabuti",
+      feedbackThanks: "Salamat. Nai-save na ang iyong feedback.",
+      sending: "Ipinapadala…",
+      skip: "Laktawan ang feedback",
+      thanks: "Salamat sa pagtulong sa amin na umunlad. Lagi kang welcome back.",
+      goodbye: "Salamat sa pagsubok sa amin. Mag-ingat ka!",
+      feedbackError: "Hindi nakumpirma ang iyong feedback. Pakisubukang muli; nandito pa rin ang sagot mo.",
+      chooseReason: "Pumili ng isang dahilan para magpadala ng feedback.",
+      feedbackPrivacy: "Tulungan kaming gawing mas mahusay ang ChatGPT Audio Controls. Opsyonal at pribado ang iyong feedback—walang pangalan o email na kailangan. Nakakatulong sa amin ang mga pangunahing detalye ng app at device na maunawaan ang mga isyu. Mangyaring iwanan ang mga personal na detalye o pag-uusap.",
+      appearance: "Hitsura",
+      themeSystem: "Sistema",
+      themeLight: "Liwanag",
+      themeDark: "Madilim",
+      language: "Wika",
+      siteTitle: "ChatGPT Read Aloud, na may mga kontrol na sumusunod.",
+      siteIntro: "I-pause, i-rewind, baguhin ang bilis ng pag-playback at mag-download ng audio. Manatili sa usapan habang nakikinig ka.",
+      chrome: "Kunin ito para sa Chrome",
+      edge: "Kunin ito para sa Edge",
+      desktop: "Para sa desktop Chrome, Edge at mga katugmang browser. Buksan ang page na ito sa iyong computer para i-install.",
+      features: "Makinig sa iyong paraan",
+      setup: "Tatlong hakbang sa mas mahusay na pakikinig",
+      stepInstall: "I-install ang extension mula sa store ng iyong browser.",
+      stepRead: "Buksan ang ChatGPT at simulan ang Read Aloud sa isang kumpletong tugon.",
+      stepControl: "I-pause, hanapin, baguhin ang bilis o i-save ang audio mula sa player.",
+      privacy: "Pagkapribado",
+      privacyBody: "Ang extension ay walang analytics o telemetry. Ang paghawak ng audio at pag-uusap ay mananatili sa iyong browser. Maaaring i-synchronize ng pag-sync ng browser ang mga kagustuhan.",
+      independent: "Isang independiyenteng open-source na proyekto ng Infoxica. Hindi kaakibat o itinataguyod ng OpenAI.",
+      analyticsTitle: "Tulungan kaming gawing mas kapaki-pakinabang ang website na ito",
+      analyticsBody: "Tulungan kaming matutunan kung aling mga page ang kapaki-pakinabang at kung paano natuklasan ng mga tao ang extension. Payagan ang Google Analytics na sukatin ang mga pagbisita sa website at pag-click sa link ng store? Ang extension at uninstall na survey ay mananatiling walang analytics. Maaari mong baguhin ang iyong pinili anumang oras.",
+      accept: "Payagan ang analytics",
+      decline: "Hindi salamat",
+      preferences: "Mga kagustuhan sa Analytics",
+      websitePrivacy: "Gumagamit lang ang website na ito ng Google Analytics pagkatapos mo itong payagan. Sinusukat nito ang mga pagbisita at pag-click sa store-link, hindi mga pag-install o paggamit ng extension. Maaari kang mag-withdraw ng pahintulot gamit ang mga kagustuhan sa Analytics.",
+      feedbackPolicy: "Ang iyong feedback ay opsyonal at pribado, kahit na pagkatapos i-uninstall. Walang pangalan o email ang kailangan. Mangyaring huwag isama ang mga personal na detalye o pag-uusap.",
+      screenshot: "ChatGPT Read Aloud mga kontrol sa playback",
+      available: "Tingnan ang iyong tindahan para sa kasalukuyang magagamit na bersyon.",
+      website: "Opisyal na website"
+    },
+    fi: {
+      hide: "Piilota kelluvat säätimet",
+      hideMode: "Kun piilotettu",
+      idleOnly: "Piilota vain tyhjäkäyntikupla",
+      allUi: "Piilota kupla ja soitin",
+      hideHint: "Ääni toimii edelleen. Palauta säätimet täällä tai pikanäppäimellä.",
+      visibilityShortcut: "Näytä/piilota kelluvat säätimet",
+      unassigned: "Ei määritetty",
+      customize: "Mukauta pikakuvaketta",
+      shortcutScope: "Toistonäppäimet toimivat ChatGPT:ssa tekstikenttien ulkopuolella. Näkyvyyden pikanäppäin toimii myös kirjoitettaessa.",
+      quickStart: "Aloita kuunteleminen",
+      quickStartBody: "Avaa ChatGPT ja käynnistä Read Aloud, kun vastaus on valmis. Käytä soitinta keskeyttämiseen, etsimiseen, nopeuden muuttamiseen tai lataamiseen.",
+      dismiss: "Selvä",
+      help: "Apua ja vianetsintä",
+      pending: "Alkaen Read Aloud…",
+      nativeHelp: "Aloita toisto ChatGPT:n Read Aloud-painikkeella vastauksen vieressä.",
+      playError: "Toistoa ei voitu jatkaa. Käynnistä Read Aloud uudelleen ChatGPT:n vastauspainikkeella.",
+      downloadError: "Ääntä ei voitu ladata. Käynnistä Read Aloud, odota äänen latautumista ja yritä sitten uudelleen.",
+      downloading: "Valmistellaan latausta…",
+      savedError: "Asetusta ei voitu tallentaa. Yritä uudelleen.",
+      sourceFormat: "Lataukset käyttävät ChatGPT:n tarjoamaa äänimuotoa. Laajennus ei muunna ääntä.",
+      compactHelp: "Kun tilaa on rajoitetusti, viestiruudun yläpuolelle tulee kaksi pyöristettyä ohjauspalkkia.",
+      surveyTitle: "Ikävä, että lähdit 💛",
+      surveyIntro: "Kiitos, että yritit ChatGPT Audio Controls:tä. Mitä olisimme voineet tehdä paremmin?",
+      surveyHint: "Valitse yksi syy ja lähetä. Kirjoitusta ei tarvita.",
+      reasonBroken: "Se ei toiminut oikein.",
+      reasonIntrusive: "Kupla tai pelaaja oli tiellä.",
+      reasonSlow: "Se hidasti ChatGPT:tä tai selaintani.",
+      reasonDifficult: "Sitä oli vaikea käyttää.",
+      reasonMissing: "Tarvittava ominaisuus puuttui.",
+      reasonLanguage: "Kieltäni ei tuettu hyvin.",
+      reasonUnneeded: "En tarvitse sitä enää.",
+      reasonOther: "Jotain muuta.",
+      addNote: "Lisää huomautus – valinnainen",
+      noteHint: "Älä lisää keskusteluja tai henkilötietoja. Enintään 1 000 merkkiä.",
+      send: "Lähetä palautetta",
+      feedbackIntro: "Kerro meille, mikä voisi toimia paremmin. Valitse luokka ja lisää valinnainen huomautus.",
+      feedbackBug: "Ilmoita virheestä",
+      feedbackSuggestion: "Ehdota parannusta",
+      feedbackThanks: "Kiitos. Palautteesi on tallennettu.",
+      sending: "Lähetetään…",
+      skip: "Ohita palaute",
+      thanks: "Kiitos, että autat meitä parantamaan. Olet aina tervetullut takaisin.",
+      goodbye: "Kiitos, että yritit. Pidä huolta!",
+      feedbackError: "Palautteesi ei vahvistettu. Yritä uudelleen. vastauksesi on edelleen täällä.",
+      chooseReason: "Valitse yksi syy palautteen lähettämiseen.",
+      feedbackPrivacy: "Auta meitä parantamaan ChatGPT Audio Controls:tä. Palautteesi on valinnaista ja yksityistä – nimeä tai sähköpostiosoitetta ei tarvita. Sovelluksen ja laitteen perustiedot auttavat meitä ymmärtämään ongelmia. Jätä henkilötiedot tai keskustelut pois.",
+      appearance: "Ulkonäkö",
+      themeSystem: "Järjestelmä",
+      themeLight: "Valo",
+      themeDark: "Tumma",
+      language: "Kieli",
+      siteTitle: "ChatGPT Read Aloud, ohjaimilla, jotka pysyvät mukana.",
+      siteIntro: "Keskeytä, kelaa taaksepäin, muuta toistonopeutta ja lataa ääntä. Pysy keskustelussa samalla kun kuuntelet.",
+      chrome: "Hanki se mallille Chrome",
+      edge: "Hanki se Edgelle",
+      desktop: "Pöytätietokoneille Chrome, Edge ja yhteensopiville selaimille. Avaa tämä sivu tietokoneellasi asentaaksesi.",
+      features: "Kuuntele haluamallasi tavalla",
+      setup: "Kolme askelta parempaan kuunteluun",
+      stepInstall: "Asenna laajennus selaimesi kaupasta.",
+      stepRead: "Avaa ChatGPT ja käynnistä Read Aloud, kun vastaus on valmis.",
+      stepControl: "Keskeytä, etsi, muuta nopeutta tai tallenna soittimen ääni.",
+      privacy: "Yksityisyys",
+      privacyBody: "Laajennuksessa ei ole analytiikkaa tai telemetriaa. Äänen ja keskustelun käsittely pysyvät selaimessasi. Selaimen synkronointi voi synkronoida asetuksia.",
+      independent: "Infoxican itsenäinen avoimen lähdekoodin projekti. Ei liity OpenAI:han tai ole sen tukema.",
+      analyticsTitle: "Auta meitä tekemään tästä verkkosivustosta hyödyllisempi",
+      analyticsBody: "Auta meitä oppimaan, mitkä sivut ovat hyödyllisiä ja kuinka ihmiset löytävät laajennuksen. Saako Google Analyticsin mitata käyntejä verkkosivustolla ja kauppalinkkien napsautuksia? Laajennus- ja asennuksen poistokyselyyn ei sisälly analytiikkaa. Voit muuttaa valintaasi milloin tahansa.",
+      accept: "Salli analytiikka",
+      decline: "Ei kiitos",
+      preferences: "Analytics-asetukset",
+      websitePrivacy: "Tämä verkkosivusto käyttää Google Analyticsia vasta sen jälkeen, kun olet sallinut sen. Se mittaa käyntejä ja kauppalinkkien napsautuksia, ei asennuksia tai laajennusten käyttöä. Voit peruuttaa luvan Analytics-asetusten avulla.",
+      feedbackPolicy: "Palautteesi on valinnaista ja yksityistä, jopa asennuksen poistamisen jälkeen. Nimeä tai sähköpostiosoitetta ei vaadita. Älä lisää henkilökohtaisia ​​tietoja tai keskusteluja.",
+      screenshot: "ChatGPT Read Aloud toistosäätimet",
+      available: "Tarkista myymälästäsi tällä hetkellä saatavilla oleva versio.",
+      website: "Virallinen verkkosivusto"
+    },
+    gu: {
+      hide: "ફ્લોટિંગ નિયંત્રણો છુપાવો",
+      hideMode: "જ્યારે છુપાયેલ હોય",
+      idleOnly: "માત્ર નિષ્ક્રિય બબલ છુપાવો",
+      allUi: "બબલ અને પ્લેયર છુપાવો",
+      hideHint: "ઓડિયો કામ કરતું રહે છે. નિયંત્રણો અહીં અથવા શૉર્ટકટ સાથે પુનઃસ્થાપિત કરો.",
+      visibilityShortcut: "તરતા નિયંત્રણો બતાવો / છુપાવો",
+      unassigned: "સોંપેલ નથી",
+      customize: "શોર્ટકટ કસ્ટમાઇઝ કરો",
+      shortcutScope: "પ્લેબેક કીઝ ટેક્સ્ટ ફીલ્ડની બહાર ChatGPT પર કામ કરે છે. ટાઈપ કરતી વખતે વિઝિબિલિટી શોર્ટકટ પણ કામ કરે છે.",
+      quickStart: "સાંભળવાનું શરૂ કરો",
+      quickStartBody: "ChatGPT ખોલો અને પૂર્ણ પ્રતિસાદ પર Read Aloud શરૂ કરો. થોભાવવા, શોધવા, ઝડપ બદલવા અથવા ડાઉનલોડ કરવા માટે પ્લેયરનો ઉપયોગ કરો.",
+      dismiss: "સમજાયું",
+      help: "મદદ અને મુશ્કેલીનિવારણ",
+      pending: "Read Aloud શરૂ કરી રહ્યું છે...",
+      nativeHelp: "પ્રતિભાવની બાજુમાં ChatGPT ના Read Aloud બટન વડે પ્લેબેક શરૂ કરો.",
+      playError: "પ્લેબેક ફરી શરૂ થઈ શક્યું નથી. ChatGPT ના પ્રતિસાદ બટનનો ઉપયોગ કરીને ફરીથી Read Aloud શરૂ કરો.",
+      downloadError: "ઓડિયો ડાઉનલોડ કરી શકાયો નથી. Read Aloud શરૂ કરો, ઑડિયો લોડ થાય ત્યાં સુધી રાહ જુઓ, પછી ફરી પ્રયાસ કરો.",
+      downloading: "તમારું ડાઉનલોડ તૈયાર કરી રહ્યું છે...",
+      savedError: "સેટિંગ સાચવી શકાયું નથી. કૃપા કરીને ફરી પ્રયાસ કરો.",
+      sourceFormat: "ડાઉનલોડ ChatGPT દ્વારા પ્રદાન કરવામાં આવેલ ઓડિયો ફોર્મેટનો ઉપયોગ કરે છે. એક્સ્ટેંશન ઑડિઓને કન્વર્ટ કરતું નથી.",
+      compactHelp: "જ્યારે જગ્યા મર્યાદિત હોય, ત્યારે સંદેશ બોક્સની ઉપર બે ગોળાકાર નિયંત્રણ પટ્ટીઓ દેખાય છે.",
+      surveyTitle: "તમને જતા જોઈને માફ કરશો 💛",
+      surveyIntro: "ChatGPT Audio Controls અજમાવવા બદલ આભાર. આપણે શું સારું કરી શક્યા હોત?",
+      surveyHint: "એક કારણ પસંદ કરો અને મોકલો. ટાઇપ કરવાની જરૂર નથી.",
+      reasonBroken: "તે યોગ્ય રીતે કામ કરતું નથી.",
+      reasonIntrusive: "બબલ અથવા પ્લેયર રસ્તામાં આવી ગયા.",
+      reasonSlow: "તે ChatGPT અથવા મારા બ્રાઉઝરને ધીમું કરે છે.",
+      reasonDifficult: "તેનો ઉપયોગ કરવો મુશ્કેલ હતો.",
+      reasonMissing: "મને જોઈતું લક્ષણ ખૂટે છે.",
+      reasonLanguage: "મારી ભાષા સારી રીતે સમર્થિત ન હતી.",
+      reasonUnneeded: "મારે હવે તેની જરૂર નથી.",
+      reasonOther: "બીજું કંઈક.",
+      addNote: "એક નોંધ ઉમેરો — વૈકલ્પિક",
+      noteHint: "કૃપા કરીને વાતચીત અથવા વ્યક્તિગત વિગતો શામેલ કરશો નહીં. મહત્તમ 1,000 અક્ષરો.",
+      send: "પ્રતિસાદ મોકલો",
+      feedbackIntro: "અમને કહો કે શું વધુ સારું કામ કરી શકે છે. શ્રેણી પસંદ કરો અને વૈકલ્પિક નોંધ ઉમેરો.",
+      feedbackBug: "બગની જાણ કરો",
+      feedbackSuggestion: "સુધારો સૂચવો",
+      feedbackThanks: "આભાર. તમારો પ્રતિસાદ સાચવવામાં આવ્યો છે.",
+      sending: "મોકલી રહ્યું છે...",
+      skip: "પ્રતિસાદ છોડો",
+      thanks: "અમને સુધારવામાં મદદ કરવા બદલ આભાર. તમારું હંમેશા સ્વાગત છે.",
+      goodbye: "અમને અજમાવવા બદલ આભાર. કાળજી લો!",
+      feedbackError: "તમારા પ્રતિસાદની પુષ્ટિ થઈ નથી. કૃપા કરીને ફરી પ્રયાસ કરો; તમારો જવાબ હજુ પણ અહીં છે.",
+      chooseReason: "પ્રતિસાદ મોકલવા માટે એક કારણ પસંદ કરો.",
+      feedbackPrivacy: "ChatGPT Audio Controls બહેતર બનાવવામાં અમારી મદદ કરો. તમારો પ્રતિસાદ વૈકલ્પિક અને ખાનગી છે—કોઈ નામ કે ઈમેલની જરૂર નથી. મૂળભૂત એપ્લિકેશન અને ઉપકરણ વિગતો અમને સમસ્યાઓ સમજવામાં મદદ કરે છે. કૃપા કરીને વ્યક્તિગત વિગતો અથવા વાતચીત છોડી દો.",
+      appearance: "દેખાવ",
+      themeSystem: "સિસ્ટમ",
+      themeLight: "પ્રકાશ",
+      themeDark: "ડાર્ક",
+      language: "ભાષા",
+      siteTitle: "ChatGPT Read Aloud, નિયંત્રણો સાથે જે ચાલુ રહે છે.",
+      siteIntro: "થોભાવો, રીવાઇન્ડ કરો, પ્લેબેક ઝડપ બદલો અને ઓડિયો ડાઉનલોડ કરો. જ્યારે તમે સાંભળો ત્યારે વાતચીતમાં રહો.",
+      chrome: "તે Chrome માટે મેળવો",
+      edge: "એજ માટે મેળવો",
+      desktop: "ડેસ્કટોપ Chrome, એજ અને સુસંગત બ્રાઉઝર્સ માટે. ઇન્સ્ટોલ કરવા માટે તમારા કમ્પ્યુટર પર આ પૃષ્ઠ ખોલો.",
+      features: "તમારી રીતે સાંભળો",
+      setup: "વધુ સારી રીતે સાંભળવાના ત્રણ પગલાં",
+      stepInstall: "તમારા બ્રાઉઝરના સ્ટોરમાંથી એક્સ્ટેંશન ઇન્સ્ટોલ કરો.",
+      stepRead: "ChatGPT ખોલો અને પૂર્ણ પ્રતિસાદ પર Read Aloud શરૂ કરો.",
+      stepControl: "પ્લેયરમાંથી ઑડિયોને થોભાવો, શોધો, ઝડપ બદલો અથવા સાચવો.",
+      privacy: "ગોપનીયતા",
+      privacyBody: "એક્સ્ટેંશનમાં કોઈ એનાલિટિક્સ અથવા ટેલિમેટ્રી નથી. ઑડિયો અને વાતચીતનું સંચાલન તમારા બ્રાઉઝરમાં રહે છે. બ્રાઉઝર સિંક પસંદગીઓને સિંક્રનાઇઝ કરી શકે છે.",
+      independent: "ઇન્ફોક્સિકા દ્વારા સ્વતંત્ર ઓપન સોર્સ પ્રોજેક્ટ. OpenAI સાથે સંલગ્ન અથવા સમર્થન નથી.",
+      analyticsTitle: "આ વેબસાઇટને વધુ ઉપયોગી બનાવવામાં અમારી મદદ કરો",
+      analyticsBody: "કયા પૃષ્ઠો ઉપયોગી છે અને લોકો એક્સટેન્શન કેવી રીતે શોધે છે તે શીખવામાં અમને મદદ કરો. Google Analytics ને વેબસાઇટ મુલાકાતો અને સ્ટોર-લિંક ક્લિક્સ માપવા માટે મંજૂરી આપીએ? એક્સ્ટેંશન અને અનઇન્સ્ટોલ સર્વેક્ષણ વિશ્લેષણથી મુક્ત રહે છે. તમે ગમે ત્યારે તમારી પસંદગી બદલી શકો છો.",
+      accept: "એનાલિટિક્સને મંજૂરી આપો",
+      decline: "ના આભાર",
+      preferences: "એનાલિટિક્સ પસંદગીઓ",
+      websitePrivacy: "તમે તેને મંજૂરી આપો પછી જ આ વેબસાઇટ Google Analytics નો ઉપયોગ કરે છે. તે મુલાકાતો અને સ્ટોર-લિંક ક્લિક્સને માપે છે, ઇન્સ્ટોલેશન અથવા એક્સ્ટેંશન વપરાશને નહીં. તમે Analytics પસંદગીઓનો ઉપયોગ કરીને પરવાનગી પાછી ખેંચી શકો છો.",
+      feedbackPolicy: "અનઇન્સ્ટોલ કર્યા પછી પણ તમારો પ્રતિસાદ વૈકલ્પિક અને ખાનગી છે. કોઈ નામ કે ઈમેલની જરૂર નથી. કૃપા કરીને વ્યક્તિગત વિગતો અથવા વાતચીતો શામેલ કરશો નહીં.",
+      screenshot: "ChatGPT Read Aloud પ્લેબેક નિયંત્રણો",
+      available: "હાલમાં ઉપલબ્ધ સંસ્કરણ માટે તમારો સ્ટોર તપાસો.",
+      website: "સત્તાવાર વેબસાઇટ"
+    },
+    hr: {
+      hide: "Sakrij plutajuće kontrole",
+      hideMode: "Kada je skriven",
+      idleOnly: "Sakrij samo oblačić u mirovanju",
+      allUi: "Sakrij oblačić i igrača",
+      hideHint: "Audio nastavlja raditi. Vratite kontrole ovdje ili pomoću prečaca.",
+      visibilityShortcut: "Prikaži/sakrij plutajuće kontrole",
+      unassigned: "Nije dodijeljeno",
+      customize: "Prilagodite prečac",
+      shortcutScope: "Tipke za reprodukciju rade na ChatGPT izvan tekstualnih polja. Prečac vidljivosti također radi tijekom tipkanja.",
+      quickStart: "Počnite slušati",
+      quickStartBody: "Otvorite ChatGPT i pokrenite Read Aloud nakon završenog odgovora. Koristite player za pauziranje, traženje, promjenu brzine ili preuzimanje.",
+      dismiss: "Shvaćam",
+      help: "Pomoć i rješavanje problema",
+      pending: "Pokretanje Read Aloud…",
+      nativeHelp: "Pokrenite reprodukciju gumbom Read Aloud ChatGPT pored odgovora.",
+      playError: "Reprodukcija se nije mogla nastaviti. Ponovno pokrenite Read Aloud pomoću gumba za odgovor ChatGPT.",
+      downloadError: "Audio se ne može preuzeti. Pokrenite Read Aloud, pričekajte da se audio učita, a zatim pokušajte ponovno.",
+      downloading: "Priprema vašeg preuzimanja...",
+      savedError: "Postavka nije mogla biti spremljena. Molimo pokušajte ponovno.",
+      sourceFormat: "Preuzimanja koriste audio format koji nudi ChatGPT. Proširenje ne pretvara zvuk.",
+      compactHelp: "Kada je prostor ograničen, dvije zaobljene kontrolne trake pojavljuju se iznad okvira s porukom.",
+      surveyTitle: "Žao mi je što odlazite 💛",
+      surveyIntro: "Hvala što ste isprobali ChatGPT Audio Controls. Što smo mogli učiniti bolje?",
+      surveyHint: "Odaberite jedan razlog i pošaljite. Nema potrebe za tipkanjem.",
+      reasonBroken: "Nije radilo ispravno.",
+      reasonIntrusive: "Balon ili igrač su se ispriječili na putu.",
+      reasonSlow: "Usporio je ChatGPT ili moj preglednik.",
+      reasonDifficult: "Bilo ga je teško koristiti.",
+      reasonMissing: "Nedostajala je značajka koju sam trebao.",
+      reasonLanguage: "Moj jezik nije dobro podržan.",
+      reasonUnneeded: "Ne treba mi više.",
+      reasonOther: "Još nešto.",
+      addNote: "Dodajte bilješku — izborno",
+      noteHint: "Nemojte uključivati razgovore ili osobne podatke. Najviše 1000 znakova.",
+      send: "Pošaljite povratne informacije",
+      feedbackIntro: "Recite nam što bi moglo bolje funkcionirati. Odaberite kategoriju i dodajte neobaveznu bilješku.",
+      feedbackBug: "Prijavite bug",
+      feedbackSuggestion: "Predložite poboljšanje",
+      feedbackThanks: "Hvala. Vaše povratne informacije su spremljene.",
+      sending: "Slanje...",
+      skip: "Preskoči povratne informacije",
+      thanks: "Hvala vam što nam pomažete da se poboljšamo. Uvijek ste dobrodošli natrag.",
+      goodbye: "Hvala što ste nas isprobali. Brinuti!",
+      feedbackError: "Vaša povratna informacija nije potvrđena. Molimo pokušajte ponovo; tvoj odgovor je još uvijek ovdje.",
+      chooseReason: "Odaberite jedan razlog za slanje povratnih informacija.",
+      feedbackPrivacy: "Pomozite nam da poboljšamo ChatGPT Audio Controls. Vaše povratne informacije nisu obavezne i privatne - nije potrebno ime ni e-pošta. Osnovne pojedinosti o aplikaciji i uređaju pomažu nam razumjeti probleme. Molimo izostavite osobne podatke ili razgovore.",
+      appearance: "Izgled",
+      themeSystem: "Sustav",
+      themeLight: "Svjetlo",
+      themeDark: "Tamno",
+      language: "Jezik",
+      siteTitle: "ChatGPT Read Aloud, s kontrolama koje idu u korak.",
+      siteIntro: "Pauziraj, premotaj unatrag, promijeni brzinu reprodukcije i preuzmi zvuk. Ostanite u razgovoru dok slušate.",
+      chrome: "Nabavite za Chrome",
+      edge: "Nabavite za Edge",
+      desktop: "Za desktop Chrome, Edge i kompatibilne preglednike. Otvorite ovu stranicu na svom računalu za instalaciju.",
+      features: "Slušajte na svoj način",
+      setup: "Tri koraka do boljeg slušanja",
+      stepInstall: "Instalirajte proširenje iz trgovine vašeg preglednika.",
+      stepRead: "Otvorite ChatGPT i pokrenite Read Aloud nakon završenog odgovora.",
+      stepControl: "Pauzirajte, tražite, promijenite brzinu ili spremite zvuk s playera.",
+      privacy: "Privatnost",
+      privacyBody: "Proširenje nema analitiku ni telemetriju. Rukovanje zvukom i razgovorom ostaje u vašem pregledniku. Sinkronizacija preglednika može sinkronizirati postavke.",
+      independent: "Neovisni projekt otvorenog koda tvrtke Infoxica. Nije povezan niti podržan od strane OpenAI.",
+      analyticsTitle: "Pomozite nam da ovu web stranicu učinimo korisnijom",
+      analyticsBody: "Pomozite nam saznati koje su stranice korisne i kako ljudi otkrivaju proširenje. Dopustiti Google Analyticsu da mjeri posjete web-mjestima i klikove na veze do trgovine? Anketa o proširenju i deinstalaciji ostaje bez analitike. Svoj izbor možete promijeniti bilo kada.",
+      accept: "Dopusti analitiku",
+      decline: "Ne hvala",
+      preferences: "Postavke analitike",
+      websitePrivacy: "Ova web stranica koristi Google Analytics samo nakon što vi to dopustite. Mjeri posjete i klikove na veze trgovine, a ne instalacije ili upotrebu proširenja. Dopuštenje možete povući pomoću postavki Analyticsa.",
+      feedbackPolicy: "Vaše povratne informacije nisu obavezne i privatne, čak i nakon deinstalacije. Nije potrebno ime ili e-pošta. Nemojte uključivati ​​osobne podatke ili razgovore.",
+      screenshot: "ChatGPT Read Aloud kontrole reprodukcije",
+      available: "Provjerite svoju trgovinu za trenutno dostupnu verziju.",
+      website: "Službena stranica"
+    },
+    hy: {
+      hide: "Թաքցնել լողացող հսկիչները",
+      hideMode: "Երբ թաքնված է",
+      idleOnly: "Թաքցնել միայն անգործուն պղպջակը",
+      allUi: "Թաքցնել փուչիկը և նվագարկիչը",
+      hideHint: "Ձայնը շարունակում է աշխատել: Վերականգնել կառավարումն այստեղ կամ դյուրանցման միջոցով:",
+      visibilityShortcut: "Ցույց տալ/թաքցնել լողացող հսկիչները",
+      unassigned: "Նշանակված չէ",
+      customize: "Անհատականացրեք դյուրանցումը",
+      shortcutScope: "Նվագարկման ստեղները աշխատում են ChatGPT տեքստային դաշտերից դուրս: Տեսանելիության դյուրանցումն աշխատում է նաև մուտքագրելիս:",
+      quickStart: "Սկսեք լսել",
+      quickStartBody: "Բացեք ChatGPT և սկսեք Read Aloud ավարտված պատասխանից: Օգտագործեք նվագարկիչը՝ դադարեցնելու, որոնելու, արագությունը փոխելու կամ ներբեռնելու համար:",
+      dismiss: "Հասկացա",
+      help: "Օգնություն և անսարքությունների վերացում",
+      pending: "Սկսվում է Read Aloud…",
+      nativeHelp: "Սկսեք նվագարկումը պատասխանի կողքին ChatGPT Read Aloud կոճակով:",
+      playError: "Նվագարկումը չհաջողվեց վերսկսել: Կրկին գործարկեք Read Aloud-ը՝ օգտագործելով ChatGPT-ի պատասխան կոճակը:",
+      downloadError: "Աուդիոն հնարավոր չէ ներբեռնել: Գործարկեք Read Aloud, սպասեք ձայնի բեռնմանը, ապա նորից փորձեք:",
+      downloading: "Պատրաստվում է ձեր ներբեռնումը…",
+      savedError: "Կարգավորումը չհաջողվեց պահպանել: Խնդրում ենք կրկին փորձել:",
+      sourceFormat: "Ներբեռնումները օգտագործում են ChatGPT-ի տրամադրած ձայնային ձևաչափը: Ընդլայնումը չի փոխակերպում աուդիո:",
+      compactHelp: "Երբ տարածքը սահմանափակ է, հաղորդագրության տուփի վերևում հայտնվում են երկու կլորացված կառավարման գծեր:",
+      surveyTitle: "Կներեք, որ գնում եք 💛",
+      surveyIntro: "Շնորհակալություն ChatGPT Audio Controls փորձելու համար: Ի՞նչ կարող էինք ավելի լավ անել:",
+      surveyHint: "Ընտրեք մեկ պատճառ և ուղարկեք: Տպելու կարիք չկա:",
+      reasonBroken: "Այն ճիշտ չէր աշխատում:",
+      reasonIntrusive: "Փուչիկը կամ նվագարկիչը խանգարեց:",
+      reasonSlow: "Այն դանդաղեցրեց ChatGPT կամ իմ բրաուզերը:",
+      reasonDifficult: "Դժվար էր օգտագործել։",
+      reasonMissing: "Ինձ անհրաժեշտ հատկանիշը բացակայում էր:",
+      reasonLanguage: "Իմ լեզուն լավ չէր աջակցվում:",
+      reasonUnneeded: "Ինձ դա այլևս պետք չէ:",
+      reasonOther: "Ուրիշ բան.",
+      addNote: "Ավելացրեք նշում — կամընտիր",
+      noteHint: "Խնդրում ենք չներառել խոսակցություններ կամ անձնական տվյալներ: Առավելագույնը 1000 նիշ:",
+      send: "Ուղարկել կարծիք",
+      feedbackIntro: "Ասա մեզ, թե ինչը կարող է ավելի լավ աշխատել: Ընտրեք կատեգորիա և ավելացրեք կամընտիր նշում:",
+      feedbackBug: "Հաղորդեք սխալի մասին",
+      feedbackSuggestion: "Առաջարկեք բարելավում",
+      feedbackThanks: "Շնորհակալություն։ Ձեր կարծիքը պահպանվել է:",
+      sending: "Ուղարկում…",
+      skip: "Բաց թողնել կարծիքը",
+      thanks: "Շնորհակալություն, որ օգնում եք մեզ կատարելագործվել: Դուք միշտ բարի վերադարձ:",
+      goodbye: "Շնորհակալություն մեզ փորձելու համար: Հոգ տանել.",
+      feedbackError: "Ձեր կարծիքը չհաստատվեց: Խնդրում ենք կրկին փորձել; ձեր պատասխանը դեռ այստեղ է:",
+      chooseReason: "Ընտրեք մեկ պատճառ՝ կարծիք ուղարկելու համար:",
+      feedbackPrivacy: "Օգնեք մեզ ավելի լավը դարձնել ChatGPT Audio Controls: Ձեր կարծիքը կամընտիր է և անձնական՝ անուն կամ էլփոստի կարիք չկա: Հավելվածի և սարքի հիմնական մանրամասներն օգնում են մեզ հասկանալ խնդիրները: Խնդրում ենք բաց թողնել անձնական տվյալները կամ խոսակցությունները:",
+      appearance: "Արտաքին տեսք",
+      themeSystem: "Համակարգ",
+      themeLight: "Լույս",
+      themeDark: "Մութ",
+      language: "Լեզու",
+      siteTitle: "ChatGPT Read Aloud, կառավարումներով, որոնք պահպանում են:",
+      siteIntro: "Դադարեցնել, հետ շրջել, փոխել նվագարկման արագությունը և ներբեռնել աուդիո: Մնացեք խոսակցության մեջ, մինչ լսում եք:",
+      chrome: "Ստացեք այն Chrome-ի համար",
+      edge: "Ստացեք այն Edge-ի համար",
+      desktop: "Desktop Chrome, Edge և համատեղելի բրաուզերների համար: Տեղադրելու համար բացեք այս էջը ձեր համակարգչում:",
+      features: "Լսեք ձեր ճանապարհը",
+      setup: "Երեք քայլ ավելի լավ լսելու համար",
+      stepInstall: "Տեղադրեք ընդլայնումը ձեր բրաուզերի խանութից:",
+      stepRead: "Բացեք ChatGPT և սկսեք Read Aloud ավարտված պատասխանից:",
+      stepControl: "Դադարեցրեք, որոնեք, փոխեք արագությունը կամ պահեք ձայնը նվագարկիչից:",
+      privacy: "Գաղտնիություն",
+      privacyBody: "Ընդլայնումը չունի վերլուծություն կամ հեռաչափություն: Աուդիո և խոսակցությունների մշակումը մնում է ձեր դիտարկիչում: Բրաուզերի համաժամացումը կարող է համաժամեցնել նախապատվությունները:",
+      independent: "Անկախ բաց կոդով նախագիծ Infoxica-ի կողմից: Կապված կամ հաստատված չէ OpenAI-ի կողմից:",
+      analyticsTitle: "Օգնեք մեզ ավելի օգտակար դարձնել այս կայքը",
+      analyticsBody: "Օգնեք մեզ իմանալ, թե որ էջերն են օգտակար և ինչպես են մարդիկ հայտնաբերում ընդլայնումը: Թույլատրե՞լ Google Analytics-ին չափել կայքի այցելությունները և խանութի հղումների սեղմումները: Ընդլայնման և տեղահանման հարցումը զերծ է վերլուծությունից: Դուք կարող եք փոխել ձեր ընտրությունը ցանկացած ժամանակ:",
+      accept: "Թույլատրել վերլուծությունները",
+      decline: "Ոչ, շնորհակալություն",
+      preferences: "Վերլուծության նախապատվություններ",
+      websitePrivacy: "Այս կայքը օգտագործում է Google Analytics-ը միայն այն բանից հետո, երբ դուք դա թույլ տաք: Այն չափում է այցելությունները և խանութի հղումների սեղմումները, ոչ թե տեղադրումները կամ ընդլայնումների օգտագործումը: Դուք կարող եք հետ կանչել թույլտվությունը՝ օգտագործելով Analytics-ի նախապատվությունները:",
+      feedbackPolicy: "Ձեր կարծիքը կամընտիր է և անձնական, նույնիսկ տեղահանելուց հետո: Անուն կամ էլփոստ չի պահանջվում: Խնդրում ենք չներառել անձնական մանրամասներ կամ խոսակցություններ:",
+      screenshot: "ChatGPT Read Aloud նվագարկման կառավարներ",
+      available: "Ստուգեք ձեր խանութը ներկայումս հասանելի տարբերակի համար:",
+      website: "Պաշտոնական կայք"
+    },
+    is: {
+      hide: "Fela fljótandi stýringar",
+      hideMode: "Þegar það er falið",
+      idleOnly: "Fela aðeins aðgerðalausa kúlu",
+      allUi: "Fela kúlu og spilara",
+      hideHint: "Hljóð heldur áfram að virka. Endurheimtu stýringar hér eða með flýtileiðinni.",
+      visibilityShortcut: "Sýna / fela fljótandi stýringar",
+      unassigned: "Ekki úthlutað",
+      customize: "Sérsníða flýtileið",
+      shortcutScope: "Spilunarlyklar virka á ChatGPT utan textareita. Sýnileikaflýtileiðin virkar líka á meðan þú skrifar.",
+      quickStart: "Byrjaðu að hlusta",
+      quickStartBody: "Opnaðu ChatGPT og ræstu Read Aloud á fullbúnu svari. Notaðu spilarann ​​til að gera hlé, leita, breyta hraða eða hlaða niður.",
+      dismiss: "Skil það",
+      help: "Hjálp og bilanaleit",
+      pending: "Ræsir Read Aloud…",
+      nativeHelp: "Byrjaðu spilun með Read Aloud hnappinum frá ChatGPT við hlið svarsins.",
+      playError: "Spilun gat ekki haldið áfram. Byrjaðu Read Aloud aftur með því að nota svarhnappinn á ChatGPT.",
+      downloadError: "Ekki var hægt að hlaða niður hljóði. Ræstu Read Aloud, bíddu eftir að hljóð hleðst, reyndu svo aftur.",
+      downloading: "Undirbýr niðurhalið þitt...",
+      savedError: "Ekki var hægt að vista stillinguna. Vinsamlegast reyndu aftur.",
+      sourceFormat: "Niðurhal notar hljóðsniðið sem ChatGPT veitir. Viðbótin breytir ekki hljóði.",
+      compactHelp: "Þegar pláss er takmarkað birtast tvær ávölar stjórnstikur fyrir ofan skilaboðareitinn.",
+      surveyTitle: "Leitt að sjá þig fara 💛",
+      surveyIntro: "Takk fyrir að prófa ChatGPT Audio Controls. Hvað hefðum við getað gert betur?",
+      surveyHint: "Veldu eina ástæðu og sendu. Engin vélritun þarf.",
+      reasonBroken: "Það virkaði ekki rétt.",
+      reasonIntrusive: "Bólan eða leikmaðurinn kom í veg fyrir.",
+      reasonSlow: "Það hægði á ChatGPT eða vafranum mínum.",
+      reasonDifficult: "Það var erfitt í notkun.",
+      reasonMissing: "Það vantaði eiginleika sem ég þurfti.",
+      reasonLanguage: "Tungumálið mitt var ekki vel stutt.",
+      reasonUnneeded: "Ég þarf þess ekki lengur.",
+      reasonOther: "Eitthvað annað.",
+      addNote: "Bæta við athugasemd - valfrjálst",
+      noteHint: "Vinsamlegast láttu ekki samtöl eða persónulegar upplýsingar fylgja með. Hámark 1.000 stafir.",
+      send: "Sendu athugasemdir",
+      feedbackIntro: "Segðu okkur hvað gæti virkað betur. Veldu flokk og bættu við valkvæðri athugasemd.",
+      feedbackBug: "Tilkynna villu",
+      feedbackSuggestion: "Leggðu til úrbætur",
+      feedbackThanks: "Þakka þér fyrir. Ábendingin þín hefur verið vistuð.",
+      sending: "Sendir…",
+      skip: "Slepptu viðbrögðum",
+      thanks: "Þakka þér fyrir að hjálpa okkur að bæta okkur. Þú ert alltaf velkominn aftur.",
+      goodbye: "Takk fyrir að prófa okkur. Farðu varlega!",
+      feedbackError: "Ábending þín var ekki staðfest. Vinsamlegast reyndu aftur; svarið þitt er enn hér.",
+      chooseReason: "Veldu eina ástæðu til að senda álit.",
+      feedbackPrivacy: "Hjálpaðu okkur að gera ChatGPT Audio Controls betri. Ábending þín er valfrjáls og persónuleg - engin þörf á nafni eða tölvupósti. Grunnupplýsingar um forrit og tæki hjálpa okkur að skilja vandamál. Vinsamlega slepptu persónulegum upplýsingum eða samtölum.",
+      appearance: "Útlit",
+      themeSystem: "Kerfi",
+      themeLight: "Ljós",
+      themeDark: "Dökkt",
+      language: "Tungumál",
+      siteTitle: "ChatGPT Read Aloud, með stjórntækjum sem halda í við.",
+      siteIntro: "Gera hlé, spóla til baka, breyta spilunarhraða og hlaða niður hljóði. Vertu í samtalinu á meðan þú hlustar.",
+      chrome: "Fáðu það fyrir Chrome",
+      edge: "Fáðu það fyrir Edge",
+      desktop: "Fyrir skrifborð Chrome, Edge og samhæfa vafra. Opnaðu þessa síðu á tölvunni þinni til að setja upp.",
+      features: "Hlustaðu á þinn hátt",
+      setup: "Þrjú skref til betri hlustunar",
+      stepInstall: "Settu upp viðbótina úr verslun vafrans þíns.",
+      stepRead: "Opnaðu ChatGPT og ræstu Read Aloud á fullbúnu svari.",
+      stepControl: "Gerðu hlé, leitaðu, breyttu hraða eða vistaðu hljóðið úr spilaranum.",
+      privacy: "Persónuvernd",
+      privacyBody: "Viðbótin hefur enga greiningu eða fjarmælingu. Meðhöndlun hljóðs og samtala er áfram í vafranum þínum. Vafrasamstilling getur samstillt kjörstillingar.",
+      independent: "Sjálfstætt opinn uppspretta verkefni eftir Infoxica. Ekki tengt eða samþykkt af OpenAI.",
+      analyticsTitle: "Hjálpaðu okkur að gera þessa vefsíðu gagnlegri",
+      analyticsBody: "Hjálpaðu okkur að læra hvaða síður eru gagnlegar og hvernig fólk uppgötvar viðbótina. Leyfa Google Analytics að mæla heimsóknir á vefsíðu og smelli á verslunartengla? Viðbótar- og fjarlægðarkönnunin er laus við greiningar. Þú getur breytt vali þínu hvenær sem er.",
+      accept: "Leyfa greiningar",
+      decline: "Nei takk",
+      preferences: "Greiningarstillingar",
+      websitePrivacy: "Þessi vefsíða notar Google Analytics aðeins eftir að þú leyfir það. Það mælir heimsóknir og smelli á verslunartengla, ekki uppsetningar eða viðbætur. Þú getur afturkallað leyfi með því að nota Analytics stillingar.",
+      feedbackPolicy: "Ábending þín er valfrjáls og persónuleg, jafnvel eftir að hafa verið fjarlægð. Ekki þarf nafn eða tölvupóst. Vinsamlegast láttu ekki persónulegar upplýsingar eða samtöl fylgja með.",
+      screenshot: "ChatGPT Read Aloud spilunarstýringar",
+      available: "Athugaðu verslunina þína fyrir þá útgáfu sem er í boði.",
+      website: "Opinber vefsíða"
+    },
+    ka: {
+      hide: "მცურავი კონტროლის დამალვა",
+      hideMode: "როცა იმალება",
+      idleOnly: "მხოლოდ უმოქმედო ბუშტის დამალვა",
+      allUi: "დამალე ბუშტი და მოთამაშე",
+      hideHint: "აუდიო აგრძელებს მუშაობას. აღადგინეთ კონტროლი აქ ან მალსახმობით.",
+      visibilityShortcut: "მცურავი კონტროლის ჩვენება/დამალვა",
+      unassigned: "არ არის დანიშნული",
+      customize: "მალსახმობის მორგება",
+      shortcutScope: "დაკვრის კლავიშები მუშაობს ChatGPT ტექსტის ველების გარეთ. ხილვადობის მალსახმობი ასევე მუშაობს აკრეფის დროს.",
+      quickStart: "დაიწყე მოსმენა",
+      quickStartBody: "გახსენით ChatGPT და დაიწყეთ Read Aloud დასრულებულ პასუხზე. გამოიყენეთ პლეერი პაუზის, მოსაძიებლად, სიჩქარის შესაცვლელად ან ჩამოტვირთვისთვის.",
+      dismiss: "მივხვდი",
+      help: "დახმარება და პრობლემების მოგვარება",
+      pending: "იწყება Read Aloud…",
+      nativeHelp: "დაიწყეთ დაკვრა ChatGPT Read Aloud ღილაკით პასუხის გვერდით.",
+      playError: "დაკვრა ვერ განახლდა. კვლავ გაუშვით Read Aloud ChatGPT პასუხის ღილაკის გამოყენებით.",
+      downloadError: "აუდიო ვერ ჩამოიტვირთა. გაუშვით Read Aloud, დაელოდეთ აუდიოს ჩატვირთვას და სცადეთ ხელახლა.",
+      downloading: "მიმდინარეობს თქვენი ჩამოტვირთვის მომზადება…",
+      savedError: "პარამეტრის შენახვა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.",
+      sourceFormat: "ჩამოტვირთვები იყენებს აუდიო ფორმატს, რომელიც მოწოდებულია ChatGPT. გაფართოება არ ახდენს აუდიოს კონვერტაციას.",
+      compactHelp: "როდესაც სივრცე შეზღუდულია, ორი მომრგვალებული საკონტროლო ზოლი გამოჩნდება შეტყობინების ველის ზემოთ.",
+      surveyTitle: "ბოდიში, რომ მიდიხარ 💛",
+      surveyIntro: "გმადლობთ, რომ სცადეთ ChatGPT Audio Controls. რა შეგვეძლო უკეთესი გაგვეკეთებინა?",
+      surveyHint: "აირჩიეთ ერთი მიზეზი და გაგზავნეთ. არ არის საჭირო აკრეფა.",
+      reasonBroken: "ის სწორად არ მუშაობდა.",
+      reasonIntrusive: "ბუშტმა ან მოთამაშემ ხელი შეუშალა.",
+      reasonSlow: "მან შეანელა ChatGPT ან ჩემი ბრაუზერი.",
+      reasonDifficult: "რთული გამოსაყენებელი იყო.",
+      reasonMissing: "ფუნქცია, რომელიც მჭირდებოდა, აკლდა.",
+      reasonLanguage: "ჩემი ენა არ იყო კარგად მხარდაჭერილი.",
+      reasonUnneeded: "მე ის აღარ მჭირდება.",
+      reasonOther: "რაღაც სხვა.",
+      addNote: "შენიშვნის დამატება — სურვილისამებრ",
+      noteHint: "გთხოვთ, არ ჩართოთ საუბრები ან პირადი დეტალები. მაქსიმუმ 1000 სიმბოლო.",
+      send: "გამოხმაურების გაგზავნა",
+      feedbackIntro: "გვითხარით, რა შეიძლება უკეთესად იმუშაოს. აირჩიეთ კატეგორია და დაამატეთ სურვილისამებრ შენიშვნა.",
+      feedbackBug: "შეატყობინეთ შეცდომის შესახებ",
+      feedbackSuggestion: "შესთავაზეთ გაუმჯობესება",
+      feedbackThanks: "გმადლობთ. თქვენი გამოხმაურება შენახულია.",
+      sending: "იგზავნება…",
+      skip: "გამოტოვეთ გამოხმაურება",
+      thanks: "გმადლობთ, რომ გვეხმარებით გაუმჯობესებაში. ყოველთვის მოგესალმები უკან.",
+      goodbye: "გმადლობთ, რომ სცადეთ. გაუფრთხილდი!",
+      feedbackError: "თქვენი გამოხმაურება არ დადასტურდა. გთხოვთ სცადოთ ხელახლა; შენი პასუხი ჯერ კიდევ აქ არის.",
+      chooseReason: "აირჩიეთ ერთი მიზეზი გამოხმაურების გასაგზავნად.",
+      feedbackPrivacy: "დაგვეხმარეთ ChatGPT Audio Controls გავაუმჯობესოთ. თქვენი გამოხმაურება არჩევითი და პირადია — სახელი ან ელფოსტა არ არის საჭირო. აპისა და მოწყობილობის ძირითადი დეტალები გვეხმარება პრობლემების გაგებაში. გთხოვთ, დატოვეთ პირადი დეტალები ან საუბრები.",
+      appearance: "გარეგნობა",
+      themeSystem: "სისტემა",
+      themeLight: "სინათლე",
+      themeDark: "ბნელი",
+      language: "ენა",
+      siteTitle: "ChatGPT Read Aloud, კონტროლის მექანიზმით, რომელიც აგრძელებს.",
+      siteIntro: "პაუზა, გადახვევა, დაკვრის სიჩქარის შეცვლა და აუდიოს ჩამოტვირთვა. დარჩით საუბარში სანამ უსმენთ.",
+      chrome: "მიიღეთ ეს Chrome",
+      edge: "მიიღეთ ის Edge-სთვის",
+      desktop: "დესკტოპისთვის Chrome, Edge და თავსებადი ბრაუზერებისთვის. გახსენით ეს გვერდი თქვენს კომპიუტერში ინსტალაციისთვის.",
+      features: "მოუსმინეთ თქვენს გზას",
+      setup: "სამი ნაბიჯი უკეთესი მოსმენისთვის",
+      stepInstall: "დააინსტალირეთ გაფართოება თქვენი ბრაუზერის მაღაზიიდან.",
+      stepRead: "გახსენით ChatGPT და დაიწყეთ Read Aloud დასრულებულ პასუხზე.",
+      stepControl: "შეაჩერეთ, მოძებნეთ, შეცვალეთ სიჩქარე ან შეინახეთ აუდიო პლეერიდან.",
+      privacy: "კონფიდენციალურობა",
+      privacyBody: "გაფართოებას არ აქვს ანალიტიკა ან ტელემეტრია. აუდიო და საუბრის მართვა რჩება თქვენს ბრაუზერში. ბრაუზერის სინქრონიზაციამ შესაძლოა მოახდინოს პრეფერენციების სინქრონიზაცია.",
+      independent: "დამოუკიდებელი ღია კოდის პროექტი Infoxica-ს მიერ. არ არის დაკავშირებული ან დამტკიცებულია OpenAI-ის მიერ.",
+      analyticsTitle: "დაგვეხმარეთ, გავხადოთ ეს ვებგვერდი უფრო სასარგებლო",
+      analyticsBody: "დაგვეხმარეთ გავიგოთ რომელი გვერდებია სასარგებლო და როგორ აღმოაჩენენ ადამიანები გაფართოებას. მიეცით უფლება Google Analytics-ს, გაზომოს ვებსაიტების ვიზიტები და მაღაზიის ბმულზე დაწკაპუნებები? გაფართოება და დეინსტალაციის გამოკითხვა თავისუფალი რჩება ანალიტიკისგან. თქვენ შეგიძლიათ შეცვალოთ თქვენი არჩევანი ნებისმიერ დროს.",
+      accept: "ანალიტიკის დაშვება",
+      decline: "არა, მადლობა",
+      preferences: "ანალიტიკის პარამეტრები",
+      websitePrivacy: "ეს ვებსაიტი იყენებს Google Analytics-ს მხოლოდ მას შემდეგ, რაც მას დაუშვებთ. ის ზომავს ვიზიტებს და მაღაზიის ბმულზე დაწკაპუნებებს და არა ინსტალაციას ან გაფართოების გამოყენებას. თქვენ შეგიძლიათ გააუქმოთ ნებართვა Analytics პარამეტრების გამოყენებით.",
+      feedbackPolicy: "თქვენი გამოხმაურება არჩევითი და პირადია, დეინსტალაციის შემდეგაც კი. სახელი ან ელფოსტა არ არის საჭირო. გთხოვთ, არ ჩართოთ პირადი დეტალები ან საუბრები.",
+      screenshot: "ChatGPT Read Aloud დაკვრის კონტროლი",
+      available: "შეამოწმეთ თქვენი მაღაზია ამჟამად ხელმისაწვდომი ვერსიისთვის.",
+      website: "ოფიციალური ვებგვერდი"
+    },
+    kk: {
+      hide: "Қалқымалы басқару элементтерін жасыру",
+      hideMode: "Жасырын кезде",
+      idleOnly: "Тек бос көпіршікті жасыру",
+      allUi: "Көпіршікті және ойнатқышты жасыру",
+      hideHint: "Аудио жұмысын жалғастырады. Басқару элементтерін осы жерде немесе төте жол арқылы қалпына келтіріңіз.",
+      visibilityShortcut: "Қалқымалы басқару элементтерін көрсету / жасыру",
+      unassigned: "Тағайындалмаған",
+      customize: "Таңбашаны теңшеу",
+      shortcutScope: "Ойнату пернелері ChatGPT мәтін өрістерінің сыртында жұмыс істейді. Көріну таңбашасы теру кезінде де жұмыс істейді.",
+      quickStart: "Тыңдауды бастаңыз",
+      quickStartBody: "ChatGPT ашыңыз және аяқталған жауапта Read Aloud бастаңыз. Ойнатқышты кідірту, іздеу, жылдамдықты өзгерту немесе жүктеп алу үшін пайдаланыңыз.",
+      dismiss: "Түсіндім",
+      help: "Анықтама және ақаулықтарды жою",
+      pending: "Read Aloud басталуда…",
+      nativeHelp: "Жауаптың жанындағы ChatGPT Read Aloud түймесі арқылы ойнатуды бастаңыз.",
+      playError: "Ойнатуды жалғастыру мүмкін болмады. ChatGPT жауап түймешігін пайдаланып Read Aloud қайта іске қосыңыз.",
+      downloadError: "Аудионы жүктеп алу мүмкін емес. Read Aloud іске қосыңыз, дыбыстың жүктелуін күтіңіз, содан кейін әрекетті қайталаңыз.",
+      downloading: "Жүктеп алуыңыз дайындалуда…",
+      savedError: "Параметрді сақтау мүмкін болмады. Қайталап көріңіз.",
+      sourceFormat: "Жүктеп алулар ChatGPT ұсынған аудио пішімін пайдаланады. Кеңейтім дыбысты түрлендірмейді.",
+      compactHelp: "Кеңістік шектеулі болғанда, хабар жолағының үстінде екі дөңгелектенген басқару жолағы пайда болады.",
+      surveyTitle: "Барғаныңыз үшін өкінішті 💛",
+      surveyIntro: "ChatGPT Audio Controls пайдаланып көргеніңіз үшін рақмет. Біз не істей алар едік?",
+      surveyHint: "Бір себеп таңдап, жіберіңіз. Теру қажет емес.",
+      reasonBroken: "Ол дұрыс жұмыс істемеді.",
+      reasonIntrusive: "Көпіршік немесе ойыншы жолға кедергі келтірді.",
+      reasonSlow: "Бұл ChatGPT немесе браузерімді баяулатты.",
+      reasonDifficult: "Оны пайдалану қиын болды.",
+      reasonMissing: "Маған қажет мүмкіндік жоқ еді.",
+      reasonLanguage: "Менің тіліме жақсы қолдау көрсетілмеді.",
+      reasonUnneeded: "Маған бұл енді қажет емес.",
+      reasonOther: "Басқа нәрсе.",
+      addNote: "Жазба қосу — міндетті емес",
+      noteHint: "Сөйлесулерді немесе жеке мәліметтерді қоспаңыз. Ең көбі 1000 таңба.",
+      send: "Пікір жіберу",
+      feedbackIntro: "Бізге не жақсырақ жұмыс істейтінін айтыңыз. Санатты таңдап, қосымша жазба қосыңыз.",
+      feedbackBug: "Қате туралы хабарлау",
+      feedbackSuggestion: "Жақсартуды ұсыныңыз",
+      feedbackThanks: "Рахмет. Пікіріңіз сақталды.",
+      sending: "Жіберілуде…",
+      skip: "Пікірді өткізіп жіберу",
+      thanks: "Бізге жақсартуға көмектескеніңіз үшін рахмет. Сіз әрқашан қайта ораласыз.",
+      goodbye: "Бізді қолданып көргеніңіз үшін рақмет. Өз-өзіңді күт!",
+      feedbackError: "Пікіріңіз расталмады. Қайталап көріңіз; сіздің жауабыңыз әлі осында.",
+      chooseReason: "Пікір жіберудің бір себебін таңдаңыз.",
+      feedbackPrivacy: "ChatGPT Audio Controls-ді жақсартуға көмектесіңіз. Пікіріңіз міндетті емес және жеке болып табылады — ат немесе электрондық пошта қажет емес. Негізгі қолданба және құрылғы мәліметтері мәселелерді түсінуге көмектеседі. Жеке мәліметтерді немесе сөйлесулерді қалдырыңыз.",
+      appearance: "Сыртқы түрі",
+      themeSystem: "Жүйе",
+      themeLight: "Жарық",
+      themeDark: "Қараңғы",
+      language: "Тіл",
+      siteTitle: "ChatGPT Read Aloud, басқару элементтері бар.",
+      siteIntro: "Кідірту, кері айналдыру, ойнату жылдамдығын өзгерту және дыбысты жүктеп алу. Тыңдау кезінде әңгімеде болыңыз.",
+      chrome: "Оны Chrome үшін алыңыз",
+      edge: "Оны Edge үшін алыңыз",
+      desktop: "Жұмыс үстелі Chrome, Edge және үйлесімді браузерлер үшін. Орнату үшін компьютерде осы бетті ашыңыз.",
+      features: "Жолыңды тыңда",
+      setup: "Жақсырақ тыңдау үшін үш қадам",
+      stepInstall: "Кеңейтімді браузер дүкенінен орнатыңыз.",
+      stepRead: "ChatGPT ашыңыз және аяқталған жауапта Read Aloud бастаңыз.",
+      stepControl: "Ойнатқыштағы дыбысты кідірту, іздеу, жылдамдықты өзгерту немесе сақтау.",
+      privacy: "Құпиялық",
+      privacyBody: "Кеңейтімде аналитика немесе телеметрия жоқ. Дыбысты және сөйлесуді өңдеу браузеріңізде қалады. Браузерді синхрондау теңшелімдерді синхрондауы мүмкін.",
+      independent: "Infoxica компаниясының ашық бастапқы көзі тәуелсіз жобасы. OpenAI-мен байланысы жоқ немесе оны мақұлдамайды.",
+      analyticsTitle: "Бұл веб-сайтты пайдалырақ етуге көмектесіңіз",
+      analyticsBody: "Қай беттер пайдалы және адамдар кеңейтімді қалай анықтайтынын білуге көмектесіңіз. Google Analytics қолданбасына веб-сайтқа кіруді және дүкен сілтемесін басуды өлшеуге рұқсат бересіз бе? Кеңейтім және жою сауалнамасында аналитика жоқ. Таңдауыңызды кез келген уақытта өзгерте аласыз.",
+      accept: "Аналитикаға рұқсат беріңіз",
+      decline: "Жоқ рахмет",
+      preferences: "Analytics теңшелімдері",
+      websitePrivacy: "Бұл веб-сайт сіз рұқсат бергеннен кейін ғана Google Analytics қолданбасын пайдаланады. Ол орнатуларды немесе кеңейтімді пайдалануды емес, кірулерді және дүкен сілтемесін басуларды өлшейді. Analytics теңшелімдерін пайдаланып рұқсатты қайтарып алуға болады.",
+      feedbackPolicy: "Пікіріңіз тіпті жойылғаннан кейін де қосымша және жеке болып табылады. Ешқандай атау немесе электрондық пошта қажет емес. Жеке мәліметтерді немесе әңгімелерді қоспаңыз.",
+      screenshot: "ChatGPT Read Aloud ойнатуды басқару элементтері",
+      available: "Ағымдағы қолжетімді нұсқа үшін дүкеніңізді тексеріңіз.",
+      website: "Ресми веб-сайт"
+    },
+    kn: {
+      hide: "ತೇಲುವ ನಿಯಂತ್ರಣಗಳನ್ನು ಮರೆಮಾಡಿ",
+      hideMode: "ಮರೆಮಾಡಿದಾಗ",
+      idleOnly: "ಐಡಲ್ ಬಬಲ್ ಅನ್ನು ಮಾತ್ರ ಮರೆಮಾಡಿ",
+      allUi: "ಬಬಲ್ ಮತ್ತು ಪ್ಲೇಯರ್ ಅನ್ನು ಮರೆಮಾಡಿ",
+      hideHint: "ಆಡಿಯೋ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ. ಇಲ್ಲಿ ಅಥವಾ ಶಾರ್ಟ್‌ಕಟ್‌ನೊಂದಿಗೆ ನಿಯಂತ್ರಣಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ.",
+      visibilityShortcut: "ತೇಲುವ ನಿಯಂತ್ರಣಗಳನ್ನು ತೋರಿಸಿ / ಮರೆಮಾಡಿ",
+      unassigned: "ನಿಯೋಜಿಸಲಾಗಿಲ್ಲ",
+      customize: "ಶಾರ್ಟ್‌ಕಟ್ ಅನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ",
+      shortcutScope: "ಪಠ್ಯ ಕ್ಷೇತ್ರಗಳ ಹೊರಗಿನ ChatGPT ನಲ್ಲಿ ಪ್ಲೇಬ್ಯಾಕ್ ಕೀಗಳು ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ. ಟೈಪ್ ಮಾಡುವಾಗ ಗೋಚರತೆಯ ಶಾರ್ಟ್‌ಕಟ್ ಸಹ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ.",
+      quickStart: "ಕೇಳಲು ಪ್ರಾರಂಭಿಸಿ",
+      quickStartBody: "ChatGPT ತೆರೆಯಿರಿ ಮತ್ತು ಪೂರ್ಣಗೊಂಡ ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ Read Aloud ಪ್ರಾರಂಭಿಸಿ. ವಿರಾಮಗೊಳಿಸಲು, ಹುಡುಕಲು, ವೇಗವನ್ನು ಬದಲಾಯಿಸಲು ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಪ್ಲೇಯರ್ ಅನ್ನು ಬಳಸಿ.",
+      dismiss: "ಅರ್ಥವಾಯಿತು",
+      help: "ಸಹಾಯ ಮತ್ತು ದೋಷನಿವಾರಣೆ",
+      pending: "Read Aloud ಪ್ರಾರಂಭಿಸಲಾಗುತ್ತಿದೆ...",
+      nativeHelp: "ಪ್ರತಿಕ್ರಿಯೆಯ ಪಕ್ಕದಲ್ಲಿ ChatGPT ನ Read Aloud ಬಟನ್‌ನೊಂದಿಗೆ ಪ್ಲೇಬ್ಯಾಕ್ ಪ್ರಾರಂಭಿಸಿ.",
+      playError: "ಪ್ಲೇಬ್ಯಾಕ್ ಪುನರಾರಂಭಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ChatGPT ನ ಪ್ರತಿಕ್ರಿಯೆ ಬಟನ್ ಅನ್ನು ಬಳಸಿಕೊಂಡು Read Aloud ಅನ್ನು ಮತ್ತೆ ಪ್ರಾರಂಭಿಸಿ.",
+      downloadError: "ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ. Read Aloud ಪ್ರಾರಂಭಿಸಿ, ಆಡಿಯೊ ಲೋಡ್ ಆಗುವವರೆಗೆ ನಿರೀಕ್ಷಿಸಿ, ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+      downloading: "ನಿಮ್ಮ ಡೌನ್‌ಲೋಡ್ ಅನ್ನು ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ...",
+      savedError: "ಸೆಟ್ಟಿಂಗ್ ಅನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+      sourceFormat: "ಡೌನ್‌ಲೋಡ್‌ಗಳು ChatGPT ಒದಗಿಸಿದ ಆಡಿಯೊ ಸ್ವರೂಪವನ್ನು ಬಳಸುತ್ತವೆ. ವಿಸ್ತರಣೆಯು ಆಡಿಯೊವನ್ನು ಪರಿವರ್ತಿಸುವುದಿಲ್ಲ.",
+      compactHelp: "ಸ್ಥಳಾವಕಾಶವು ಸೀಮಿತವಾದಾಗ, ಸಂದೇಶ ಪೆಟ್ಟಿಗೆಯ ಮೇಲೆ ಎರಡು ದುಂಡಾದ ನಿಯಂತ್ರಣ ಬಾರ್‌ಗಳು ಗೋಚರಿಸುತ್ತವೆ.",
+      surveyTitle: "ನೀವು ಹೋಗುವುದನ್ನು ನೋಡಿ ಕ್ಷಮಿಸಿ 💛",
+      surveyIntro: "ChatGPT Audio Controls ಪ್ರಯತ್ನಿಸಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು. ನಾವು ಉತ್ತಮವಾಗಿ ಏನು ಮಾಡಬಹುದಿತ್ತು?",
+      surveyHint: "ಒಂದು ಕಾರಣವನ್ನು ಆರಿಸಿ ಮತ್ತು ಕಳುಹಿಸಿ. ಟೈಪಿಂಗ್ ಅಗತ್ಯವಿಲ್ಲ.",
+      reasonBroken: "ಇದು ಸರಿಯಾಗಿ ಕೆಲಸ ಮಾಡಲಿಲ್ಲ.",
+      reasonIntrusive: "ಬಬಲ್ ಅಥವಾ ಪ್ಲೇಯರ್ ದಾರಿಯಲ್ಲಿ ಸಿಕ್ಕಿತು.",
+      reasonSlow: "ಇದು ChatGPT ಅಥವಾ ನನ್ನ ಬ್ರೌಸರ್ ಅನ್ನು ನಿಧಾನಗೊಳಿಸಿದೆ.",
+      reasonDifficult: "ಇದನ್ನು ಬಳಸುವುದು ಕಷ್ಟಕರವಾಗಿತ್ತು.",
+      reasonMissing: "ನನಗೆ ಅಗತ್ಯವಿರುವ ಒಂದು ವೈಶಿಷ್ಟ್ಯವು ಕಾಣೆಯಾಗಿದೆ.",
+      reasonLanguage: "ನನ್ನ ಭಾಷೆ ಚೆನ್ನಾಗಿ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.",
+      reasonUnneeded: "ನನಗೆ ಇನ್ನು ಮುಂದೆ ಇದು ಅಗತ್ಯವಿಲ್ಲ.",
+      reasonOther: "ಬೇರೆ ಯಾವುದೋ.",
+      addNote: "ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ — ಐಚ್ಛಿಕ",
+      noteHint: "ದಯವಿಟ್ಟು ಸಂಭಾಷಣೆಗಳು ಅಥವಾ ವೈಯಕ್ತಿಕ ವಿವರಗಳನ್ನು ಸೇರಿಸಬೇಡಿ. ಗರಿಷ್ಠ 1,000 ಅಕ್ಷರಗಳು.",
+      send: "ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಕಳುಹಿಸಿ",
+      feedbackIntro: "ಯಾವುದು ಉತ್ತಮವಾಗಿ ಕೆಲಸ ಮಾಡಬಹುದೆಂದು ನಮಗೆ ತಿಳಿಸಿ. ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಐಚ್ಛಿಕ ಟಿಪ್ಪಣಿಯನ್ನು ಸೇರಿಸಿ.",
+      feedbackBug: "ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ",
+      feedbackSuggestion: "ಸುಧಾರಣೆಯನ್ನು ಸೂಚಿಸಿ",
+      feedbackThanks: "ಧನ್ಯವಾದಗಳು. ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಉಳಿಸಲಾಗಿದೆ.",
+      sending: "ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ...",
+      skip: "ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಬಿಟ್ಟುಬಿಡಿ",
+      thanks: "ಸುಧಾರಿಸಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು. ನೀವು ಯಾವಾಗಲೂ ಮರಳಿ ಸ್ವಾಗತಿಸುತ್ತೀರಿ.",
+      goodbye: "ನಮಗೆ ಪ್ರಯತ್ನಿಸಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು. ಕಾಳಜಿ ವಹಿಸಿ!",
+      feedbackError: "ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ದೃಢೀಕರಿಸಲಾಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ; ನಿಮ್ಮ ಉತ್ತರ ಇನ್ನೂ ಇಲ್ಲಿದೆ.",
+      chooseReason: "ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಕಳುಹಿಸಲು ಒಂದು ಕಾರಣವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+      feedbackPrivacy: "ChatGPT Audio Controls ಅನ್ನು ಉತ್ತಮಗೊಳಿಸಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿ. ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಐಚ್ಛಿಕ ಮತ್ತು ಖಾಸಗಿಯಾಗಿದೆ-ಯಾವುದೇ ಹೆಸರು ಅಥವಾ ಇಮೇಲ್ ಅಗತ್ಯವಿಲ್ಲ. ಮೂಲಭೂತ ಅಪ್ಲಿಕೇಶನ್ ಮತ್ತು ಸಾಧನದ ವಿವರಗಳು ಸಮಸ್ಯೆಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ನಮಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ. ದಯವಿಟ್ಟು ವೈಯಕ್ತಿಕ ವಿವರಗಳು ಅಥವಾ ಸಂಭಾಷಣೆಗಳನ್ನು ಬಿಟ್ಟುಬಿಡಿ.",
+      appearance: "ಗೋಚರತೆ",
+      themeSystem: "ವ್ಯವಸ್ಥೆ",
+      themeLight: "ಬೆಳಕು",
+      themeDark: "ಡಾರ್ಕ್",
+      language: "ಭಾಷೆ",
+      siteTitle: "ChatGPT Read Aloud, ನಿಯಂತ್ರಣಗಳೊಂದಿಗೆ.",
+      siteIntro: "ವಿರಾಮಗೊಳಿಸಿ, ರಿವೈಂಡ್ ಮಾಡಿ, ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗವನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತು ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. ನೀವು ಕೇಳುವಾಗ ಸಂಭಾಷಣೆಯಲ್ಲಿ ಇರಿ.",
+      chrome: "Chrome ಗಾಗಿ ಅದನ್ನು ಪಡೆಯಿರಿ",
+      edge: "ಎಡ್ಜ್‌ಗಾಗಿ ಅದನ್ನು ಪಡೆಯಿರಿ",
+      desktop: "ಡೆಸ್ಕ್‌ಟಾಪ್ Chrome, ಎಡ್ಜ್ ಮತ್ತು ಹೊಂದಾಣಿಕೆಯ ಬ್ರೌಸರ್‌ಗಳಿಗಾಗಿ. ಸ್ಥಾಪಿಸಲು ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಈ ಪುಟವನ್ನು ತೆರೆಯಿರಿ.",
+      features: "ನಿಮ್ಮ ಮಾರ್ಗವನ್ನು ಆಲಿಸಿ",
+      setup: "ಉತ್ತಮ ಆಲಿಸುವಿಕೆಗೆ ಮೂರು ಹಂತಗಳು",
+      stepInstall: "ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನ ಸ್ಟೋರ್‌ನಿಂದ ವಿಸ್ತರಣೆಯನ್ನು ಸ್ಥಾಪಿಸಿ.",
+      stepRead: "ChatGPT ತೆರೆಯಿರಿ ಮತ್ತು ಪೂರ್ಣಗೊಂಡ ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ Read Aloud ಪ್ರಾರಂಭಿಸಿ.",
+      stepControl: "ಪ್ಲೇಯರ್‌ನಿಂದ ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ, ಹುಡುಕಿ, ವೇಗವನ್ನು ಬದಲಾಯಿಸಿ ಅಥವಾ ಉಳಿಸಿ.",
+      privacy: "ಗೌಪ್ಯತೆ",
+      privacyBody: "ವಿಸ್ತರಣೆಯು ಯಾವುದೇ ವಿಶ್ಲೇಷಣೆ ಅಥವಾ ಟೆಲಿಮೆಟ್ರಿಯನ್ನು ಹೊಂದಿಲ್ಲ. ಆಡಿಯೋ ಮತ್ತು ಸಂಭಾಷಣೆ ನಿರ್ವಹಣೆ ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತದೆ. ಬ್ರೌಸರ್ ಸಿಂಕ್ ಪ್ರಾಶಸ್ತ್ಯಗಳನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಬಹುದು.",
+      independent: "ಇನ್ಫೋಕ್ಸಿಕಾದಿಂದ ಸ್ವತಂತ್ರ ಮುಕ್ತ-ಮೂಲ ಯೋಜನೆ. OpenAI ನೊಂದಿಗೆ ಸಂಯೋಜಿತವಾಗಿಲ್ಲ ಅಥವಾ ಅನುಮೋದಿಸಿಲ್ಲ.",
+      analyticsTitle: "ಈ ವೆಬ್‌ಸೈಟ್ ಅನ್ನು ಹೆಚ್ಚು ಉಪಯುಕ್ತವಾಗಿಸಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿ",
+      analyticsBody: "ಯಾವ ಪುಟಗಳು ಉಪಯುಕ್ತವಾಗಿವೆ ಮತ್ತು ಜನರು ವಿಸ್ತರಣೆಯನ್ನು ಹೇಗೆ ಕಂಡುಕೊಳ್ಳುತ್ತಾರೆ ಎಂಬುದನ್ನು ತಿಳಿಯಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿ. ವೆಬ್‌ಸೈಟ್ ಭೇಟಿಗಳು ಮತ್ತು ಸ್ಟೋರ್-ಲಿಂಕ್ ಕ್ಲಿಕ್‌ಗಳನ್ನು ಅಳೆಯಲು Google Analytics ಅನ್ನು ಅನುಮತಿಸುವುದೇ? ವಿಸ್ತರಣೆ ಮತ್ತು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಸಮೀಕ್ಷೆಯು ವಿಶ್ಲೇಷಣೆಗಳಿಂದ ಮುಕ್ತವಾಗಿರುತ್ತದೆ. ನಿಮ್ಮ ಆಯ್ಕೆಯನ್ನು ನೀವು ಯಾವಾಗ ಬೇಕಾದರೂ ಬದಲಾಯಿಸಬಹುದು.",
+      accept: "ವಿಶ್ಲೇಷಣೆಗಳನ್ನು ಅನುಮತಿಸಿ",
+      decline: "ಇಲ್ಲ ಧನ್ಯವಾದಗಳು",
+      preferences: "Analytics ಆದ್ಯತೆಗಳು",
+      websitePrivacy: "ನೀವು ಅನುಮತಿಸಿದ ನಂತರವೇ ಈ ವೆಬ್‌ಸೈಟ್ Google Analytics ಅನ್ನು ಬಳಸುತ್ತದೆ. ಇದು ಭೇಟಿಗಳು ಮತ್ತು ಸ್ಟೋರ್-ಲಿಂಕ್ ಕ್ಲಿಕ್‌ಗಳನ್ನು ಅಳೆಯುತ್ತದೆ, ಅನುಸ್ಥಾಪನೆಗಳು ಅಥವಾ ವಿಸ್ತರಣೆಯ ಬಳಕೆಯಲ್ಲ. ನೀವು Analytics ಆದ್ಯತೆಗಳನ್ನು ಬಳಸಿಕೊಂಡು ಅನುಮತಿಯನ್ನು ಹಿಂಪಡೆಯಬಹುದು.",
+      feedbackPolicy: "ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದ ನಂತರವೂ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಐಚ್ಛಿಕ ಮತ್ತು ಖಾಸಗಿಯಾಗಿರುತ್ತದೆ. ಯಾವುದೇ ಹೆಸರು ಅಥವಾ ಇಮೇಲ್ ಅಗತ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ವೈಯಕ್ತಿಕ ವಿವರಗಳು ಅಥವಾ ಸಂಭಾಷಣೆಗಳನ್ನು ಸೇರಿಸಬೇಡಿ.",
+      screenshot: "ChatGPT Read Aloud ಪ್ಲೇಬ್ಯಾಕ್ ನಿಯಂತ್ರಣಗಳು",
+      available: "ಪ್ರಸ್ತುತ ಲಭ್ಯವಿರುವ ಆವೃತ್ತಿಗಾಗಿ ನಿಮ್ಮ ಅಂಗಡಿಯನ್ನು ಪರಿಶೀಲಿಸಿ.",
+      website: "ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್"
+    },
+    lt: {
+      hide: "Slėpti slankiuosius valdiklius",
+      hideMode: "Kai paslėpta",
+      idleOnly: "Slėpti tik tuščiosios eigos debesėlį",
+      allUi: "Slėpti burbulą ir grotuvą",
+      hideHint: "Garsas veikia toliau. Atkurkite valdiklius čia arba naudodami spartųjį klavišą.",
+      visibilityShortcut: "Rodyti / slėpti slankiuosius valdiklius",
+      unassigned: "Nepriskirta",
+      customize: "Tinkinkite nuorodą",
+      shortcutScope: "Atkūrimo klavišai veikia ChatGPT už teksto laukų ribų. Matomumo spartusis klavišas taip pat veikia renkant tekstą.",
+      quickStart: "Pradėkite klausytis",
+      quickStartBody: "Atidarykite ChatGPT ir paleiskite Read Aloud, kai atsakymas baigtas. Naudokite grotuvą norėdami pristabdyti, ieškoti, keisti greitį arba atsisiųsti.",
+      dismiss: "Supratau",
+      help: "Pagalba ir trikčių šalinimas",
+      pending: "Paleidžiama Read Aloud…",
+      nativeHelp: "Pradėkite atkūrimą naudodami ChatGPT Read Aloud mygtuką šalia atsakymo.",
+      playError: "Atkūrimo nepavyko tęsti. Dar kartą paleiskite Read Aloud naudodami atsakymo mygtuką ChatGPT.",
+      downloadError: "Nepavyko atsisiųsti garso įrašo. Paleiskite Read Aloud, palaukite, kol bus įkeltas garsas, tada bandykite dar kartą.",
+      downloading: "Paruošiamas atsisiuntimas…",
+      savedError: "Nustatymo išsaugoti nepavyko. Bandykite dar kartą.",
+      sourceFormat: "Atsisiuntimams naudojamas ChatGPT teikiamas garso formatas. Plėtinys nekonvertuoja garso.",
+      compactHelp: "Kai vietos ribotas, virš pranešimų laukelio atsiranda dvi suapvalintos valdymo juostos.",
+      surveyTitle: "Atsiprašome, kad išvykstate 💛",
+      surveyIntro: "Dėkojame, kad išbandėte ChatGPT Audio Controls. Ką galėjome padaryti geriau?",
+      surveyHint: "Pasirinkite vieną priežastį ir išsiųskite. Nereikia spausdinti.",
+      reasonBroken: "Jis neveikė tinkamai.",
+      reasonIntrusive: "Burbulas arba grotuvas kliudė.",
+      reasonSlow: "Tai sulėtino ChatGPT arba mano naršyklę.",
+      reasonDifficult: "Buvo sunku naudoti.",
+      reasonMissing: "Trūko man reikalingos funkcijos.",
+      reasonLanguage: "Mano kalba nebuvo tinkamai palaikoma.",
+      reasonUnneeded: "Man to nebereikia.",
+      reasonOther: "Dar kažkas.",
+      addNote: "Pridėti pastabą – neprivaloma",
+      noteHint: "Neįtraukite pokalbių ar asmeninės informacijos. Daugiausia 1 000 simbolių.",
+      send: "Siųsti atsiliepimą",
+      feedbackIntro: "Pasakykite mums, kas galėtų veikti geriau. Pasirinkite kategoriją ir pridėkite pasirenkamą pastabą.",
+      feedbackBug: "Praneškite apie klaidą",
+      feedbackSuggestion: "Pasiūlykite patobulinimą",
+      feedbackThanks: "Ačiū. Jūsų atsiliepimas išsaugotas.",
+      sending: "Siunčiamas…",
+      skip: "Praleisti atsiliepimus",
+      thanks: "Dėkojame, kad padedate mums tobulėti. Jūs visada laukiami atgal.",
+      goodbye: "Dėkojame, kad išbandėte. Rūpinkitės!",
+      feedbackError: "Jūsų atsiliepimas nebuvo patvirtintas. Bandykite dar kartą; tavo atsakymas vis dar čia.",
+      chooseReason: "Pasirinkite vieną priežastį siųsti atsiliepimą.",
+      feedbackPrivacy: "Padėkite mums pagerinti ChatGPT Audio Controls. Jūsų atsiliepimai yra neprivalomi ir privatūs – nereikia vardo ar el. pašto adreso. Pagrindinė programos ir įrenginio informacija padeda suprasti problemas. Prašome nepalikti asmeninių duomenų ar pokalbių.",
+      appearance: "Išvaizda",
+      themeSystem: "Sistema",
+      themeLight: "Šviesa",
+      themeDark: "Tamsus",
+      language: "Kalba",
+      siteTitle: "ChatGPT Read Aloud su valdikliais, kurie neatsilieka.",
+      siteIntro: "Pristabdyti, atsukti atgal, pakeisti atkūrimo greitį ir atsisiųsti garso įrašą. Likite pokalbyje, kol klausotės.",
+      chrome: "Gaukite jį Chrome",
+      edge: "Gaukite jį Edge",
+      desktop: "Staliniams kompiuteriams Chrome, Edge ir suderinamoms naršyklėms. Norėdami įdiegti, atidarykite šį puslapį savo kompiuteryje.",
+      features: "Klausykitės savo būdo",
+      setup: "Trys žingsniai geresniam klausymuisi",
+      stepInstall: "Įdiekite plėtinį iš savo naršyklės parduotuvės.",
+      stepRead: "Atidarykite ChatGPT ir paleiskite Read Aloud, kai atsakymas baigtas.",
+      stepControl: "Pristabdykite, ieškokite, pakeiskite greitį arba išsaugokite grotuvo garsą.",
+      privacy: "Privatumas",
+      privacyBody: "Plėtinyje nėra analizės ar telemetrijos. Garso ir pokalbių tvarkymas lieka jūsų naršyklėje. Naršyklės sinchronizavimas gali sinchronizuoti nuostatas.",
+      independent: "Nepriklausomas „Infoxica“ atvirojo kodo projektas. Nesusijęs su „OpenAI“ arba jo nepatvirtintas.",
+      analyticsTitle: "Padėkite mums padaryti šią svetainę naudingesnę",
+      analyticsBody: "Padėkite mums sužinoti, kurie puslapiai yra naudingi ir kaip žmonės atranda plėtinį. Leisti „Google Analytics“ įvertinti apsilankymus svetainėje ir parduotuvės nuorodų paspaudimus? Išplėtimo ir pašalinimo apklausoje nenaudojama analizė. Savo pasirinkimą galite bet kada pakeisti.",
+      accept: "Leisti analizę",
+      decline: "Ne, ačiū",
+      preferences: "„Analytics“ nuostatos",
+      websitePrivacy: "Ši svetainė naudoja „Google Analytics“ tik tada, kai tai leidžiate. Matuoja apsilankymus ir parduotuvės nuorodų paspaudimus, o ne diegimus ar plėtinių naudojimą. Galite atšaukti leidimą naudodami „Analytics“ nuostatas.",
+      feedbackPolicy: "Jūsų atsiliepimai yra neprivalomi ir privatūs, net ir pašalinus. Vardo ar el. pašto adreso nereikia. Neįtraukite asmeninės informacijos ar pokalbių.",
+      screenshot: "ChatGPT Read Aloud atkūrimo valdikliai",
+      available: "Patikrinkite savo parduotuvėje šiuo metu galimą versiją.",
+      website: "Oficiali svetainė"
+    },
+    lv: {
+      hide: "Slēpt peldošās vadīklas",
+      hideMode: "Kad paslēpts",
+      idleOnly: "Slēpt tikai tukšgaitas burbuli",
+      allUi: "Paslēpt burbuli un atskaņotāju",
+      hideHint: "Audio turpina darboties. Atjaunojiet vadīklas šeit vai ar saīsni.",
+      visibilityShortcut: "Rādīt/slēpt peldošās vadīklas",
+      unassigned: "Nav piešķirts",
+      customize: "Pielāgot saīsni",
+      shortcutScope: "Atskaņošanas taustiņi darbojas uz ChatGPT ārpus teksta laukiem. Redzamības saīsne darbojas arī rakstīšanas laikā.",
+      quickStart: "Sāciet klausīties",
+      quickStartBody: "Atveriet ChatGPT un palaidiet Read Aloud, kad atbilde ir pabeigta. Izmantojiet atskaņotāju, lai apturētu, meklētu, mainītu ātrumu vai lejupielādētu.",
+      dismiss: "Sapratu",
+      help: "Palīdzība un problēmu novēršana",
+      pending: "Sākot Read Aloud…",
+      nativeHelp: "Sāciet atskaņošanu ar ChatGPT pogu Read Aloud blakus atbildei.",
+      playError: "Atskaņošanu nevarēja atsākt. Sāciet Read Aloud vēlreiz, izmantojot ChatGPT atbildes pogu.",
+      downloadError: "Audio nevarēja lejupielādēt. Palaidiet Read Aloud, pagaidiet, līdz tiek ielādēts audio, un pēc tam mēģiniet vēlreiz.",
+      downloading: "Notiek lejupielādes sagatavošana…",
+      savedError: "Iestatījumu nevarēja saglabāt. Lūdzu, mēģiniet vēlreiz.",
+      sourceFormat: "Lejupielādēs tiek izmantots ChatGPT nodrošinātais audio formāts. Paplašinājums nepārvērš audio.",
+      compactHelp: "Ja vieta ir ierobežota, virs ziņojuma lodziņa tiek parādītas divas noapaļotas vadības joslas.",
+      surveyTitle: "Žēl, ka aizbraucāt 💛",
+      surveyIntro: "Paldies, ka izmēģinājāt ChatGPT Audio Controls. Ko mēs varējām darīt labāk?",
+      surveyHint: "Izvēlieties vienu iemeslu un nosūtiet. Nav nepieciešams rakstīt.",
+      reasonBroken: "Tas nedarbojās pareizi.",
+      reasonIntrusive: "Burbulis vai atskaņotājs traucēja.",
+      reasonSlow: "Tas palēnināja ChatGPT vai manu pārlūkprogrammu.",
+      reasonDifficult: "To bija grūti izmantot.",
+      reasonMissing: "Trūka man vajadzīgās funkcijas.",
+      reasonLanguage: "Mana valoda netika labi atbalstīta.",
+      reasonUnneeded: "Man tas vairs nav vajadzīgs.",
+      reasonOther: "Kaut kas cits.",
+      addNote: "Pievienot piezīmi — nav obligāti",
+      noteHint: "Lūdzu, neiekļaujiet sarunas vai personas datus. Ne vairāk kā 1000 rakstzīmes.",
+      send: "Sūtīt atsauksmes",
+      feedbackIntro: "Pastāstiet mums, kas varētu darboties labāk. Izvēlieties kategoriju un pievienojiet papildu piezīmi.",
+      feedbackBug: "Ziņot par kļūdu",
+      feedbackSuggestion: "Ieteikt uzlabojumu",
+      feedbackThanks: "Paldies. Jūsu atsauksmes ir saglabātas.",
+      sending: "Sūta…",
+      skip: "Izlaist atsauksmes",
+      thanks: "Paldies, ka palīdzējāt mums uzlabot. Jūs vienmēr esat laipni gaidīti atpakaļ.",
+      goodbye: "Paldies, ka pamēģinājāt. Uzmanies!",
+      feedbackError: "Jūsu atsauksmes netika apstiprinātas. Lūdzu, mēģiniet vēlreiz; jūsu atbilde joprojām ir šeit.",
+      chooseReason: "Izvēlieties vienu iemeslu, lai nosūtītu atsauksmes.",
+      feedbackPrivacy: "Palīdziet mums uzlabot ChatGPT Audio Controls. Jūsu atsauksmes nav obligātas un privātas — nav nepieciešams vārds vai e-pasta adrese. Pamatinformācija par lietotnēm un ierīci palīdz mums izprast problēmas. Lūdzu, neatstājiet personas datus vai sarunas.",
+      appearance: "Izskats",
+      themeSystem: "Sistēma",
+      themeLight: "Gaisma",
+      themeDark: "Tumšs",
+      language: "Valoda",
+      siteTitle: "ChatGPT Read Aloud ar vadības ierīcēm, kas neatpaliek.",
+      siteIntro: "Pauzējiet, attiniet atpakaļ, mainiet atskaņošanas ātrumu un lejupielādējiet audio. Palieciet sarunā, kamēr klausāties.",
+      chrome: "Iegūstiet to Chrome",
+      edge: "Iegūstiet to Edge",
+      desktop: "Darbvirsmas Chrome, Edge un saderīgām pārlūkprogrammām. Atveriet šo lapu savā datorā, lai instalētu.",
+      features: "Klausieties savā veidā",
+      setup: "Trīs soļi labākai klausīšanai",
+      stepInstall: "Instalējiet paplašinājumu no savas pārlūkprogrammas veikala.",
+      stepRead: "Atveriet ChatGPT un palaidiet Read Aloud, kad atbilde ir pabeigta.",
+      stepControl: "Apturiet, meklējiet, mainiet ātrumu vai saglabājiet audio no atskaņotāja.",
+      privacy: "Privātums",
+      privacyBody: "Paplašinājumam nav analītikas vai telemetrijas. Audio un sarunu apstrāde paliek jūsu pārlūkprogrammā. Pārlūka sinhronizācija var sinhronizēt preferences.",
+      independent: "Neatkarīgs Infoxica atvērtā pirmkoda projekts. Nav saistīts ar OpenAI vai to neapstiprina.",
+      analyticsTitle: "Palīdziet mums padarīt šo vietni noderīgāku",
+      analyticsBody: "Palīdziet mums uzzināt, kuras lapas ir noderīgas un kā cilvēki atklāj paplašinājumu. Vai atļaut pakalpojumam Google Analytics izmērīt vietņu apmeklējumus un klikšķus uz veikala saitēm? Paplašinājuma un atinstalēšanas aptaujā netiek izmantota analīze. Jūs jebkurā laikā varat mainīt savu izvēli.",
+      accept: "Atļaut analīzi",
+      decline: "Nē, paldies",
+      preferences: "Analytics preferences",
+      websitePrivacy: "Šī vietne izmanto Google Analytics tikai pēc tam, kad to atļaujat. Tas mēra apmeklējumus un klikšķus uz veikala saitēm, nevis instalācijas vai paplašinājumu lietojumu. Varat atsaukt atļauju, izmantojot Analytics preferences.",
+      feedbackPolicy: "Jūsu atsauksmes nav obligātas un ir privātas pat pēc atinstalēšanas. Nav nepieciešams vārds vai e-pasts. Lūdzu, neiekļaujiet personas datus vai sarunas.",
+      screenshot: "ChatGPT Read Aloud atskaņošanas vadīklas",
+      available: "Pārbaudiet savu veikalu, lai uzzinātu pašlaik pieejamo versiju.",
+      website: "Oficiālā vietne"
+    },
+    mk: {
+      hide: "Скриј пловечки контроли",
+      hideMode: "Кога е скриен",
+      idleOnly: "Скриј само балон во мирување",
+      allUi: "Скриј балон и плеер",
+      hideHint: "Аудиото продолжува да работи. Вратете ги контролите овде или со кратенката.",
+      visibilityShortcut: "Прикажи / скриј пловечки контроли",
+      unassigned: "Не е доделен",
+      customize: "Приспособете ја кратенката",
+      shortcutScope: "Копчињата за репродукција работат на ChatGPT надвор од полињата за текст. Кратенката за видливост работи и додека пишувате.",
+      quickStart: "Почнете да слушате",
+      quickStartBody: "Отворете го ChatGPT и стартувајте го Read Aloud на завршен одговор. Користете го плеерот за паузирање, пребарување, промена на брзината или преземање.",
+      dismiss: "Разбрав",
+      help: "Помош и решавање проблеми",
+      pending: "Стартува Read Aloud…",
+      nativeHelp: "Започнете ја репродукцијата со копчето Read Aloud на ChatGPT покрај одговорот.",
+      playError: "Репродукцијата не можеше да продолжи. Стартувајте го Read Aloud повторно користејќи го копчето за одговор на ChatGPT.",
+      downloadError: "Аудиото не може да се преземе. Вклучете го Read Aloud, почекајте да се вчита звукот, па обидете се повторно.",
+      downloading: "Се подготвува вашето преземање…",
+      savedError: "Поставката не може да се зачува. Ве молиме обидете се повторно.",
+      sourceFormat: "Преземањата користат аудио формат обезбеден од ChatGPT. Наставката не конвертира аудио.",
+      compactHelp: "Кога просторот е ограничен, две заоблени контролни ленти се појавуваат над полето за пораки.",
+      surveyTitle: "Извинете што ве гледам дека одите 💛",
+      surveyIntro: "Ви благодариме што се обидевте со ChatGPT Audio Controls. Што можевме да направиме подобро?",
+      surveyHint: "Изберете една причина и испратете. Не е потребно пишување.",
+      reasonBroken: "Не функционираше правилно.",
+      reasonIntrusive: "Меурот или играчот се испречија.",
+      reasonSlow: "Го забави ChatGPT или мојот прелистувач.",
+      reasonDifficult: "Беше тешко да се користи.",
+      reasonMissing: "Недостасуваше карактеристика што ми требаше.",
+      reasonLanguage: "Мојот јазик не беше добро поддржан.",
+      reasonUnneeded: "Не ми треба повеќе.",
+      reasonOther: "Нешто друго.",
+      addNote: "Додадете белешка — изборно",
+      noteHint: "Ве молиме не вклучувајте разговори или лични детали. Најмногу 1.000 знаци.",
+      send: "Испрати повратни информации",
+      feedbackIntro: "Кажете ни што може да работи подобро. Изберете категорија и додадете изборна белешка.",
+      feedbackBug: "Пријавете грешка",
+      feedbackSuggestion: "Предложете подобрување",
+      feedbackThanks: "Ви благодариме. Вашите повратни информации се зачувани.",
+      sending: "Се испраќа…",
+      skip: "Прескокни повратни информации",
+      thanks: "Ви благодариме што ни помогнавте да се подобриме. Секогаш сте добредојдени назад.",
+      goodbye: "Ви благодариме што ни дадовте обид. Внимавајте!",
+      feedbackError: "Вашите повратни информации не беа потврдени. Ве молиме обидете се повторно; вашиот одговор е сè уште тука.",
+      chooseReason: "Изберете една причина за испраќање повратни информации.",
+      feedbackPrivacy: "Помогнете ни да го подобриме ChatGPT Audio Controls. Вашите повратни информации се опционални и приватни - не е потребно име или е-пошта. Основните детали за апликацијата и уредот ни помагаат да ги разбереме проблемите. Ве молиме изоставете лични детали или разговори.",
+      appearance: "Изглед",
+      themeSystem: "Систем",
+      themeLight: "Светлина",
+      themeDark: "Темно",
+      language: "Јазик",
+      siteTitle: "ChatGPT Read Aloud, со контроли што продолжуваат.",
+      siteIntro: "Паузирајте, премотувајте назад, променете ја брзината на репродукција и преземајте аудио. Останете во разговорот додека слушате.",
+      chrome: "Земете го за Chrome",
+      edge: "Земете го за Edge",
+      desktop: "За десктоп Chrome, Edge и компатибилни прелистувачи. Отворете ја оваа страница на вашиот компјутер за да ја инсталирате.",
+      features: "Слушајте го вашиот начин",
+      setup: "Три чекори до подобро слушање",
+      stepInstall: "Инсталирајте ја наставката од продавницата на вашиот прелистувач.",
+      stepRead: "Отворете го ChatGPT и стартувајте го Read Aloud на завршен одговор.",
+      stepControl: "Паузирајте, барајте, променете ја брзината или зачувајте го аудиото од плеерот.",
+      privacy: "Приватност",
+      privacyBody: "Наставката нема аналитика или телеметрија. Ракувањето со аудио и разговори остануваат во вашиот прелистувач. Синхронизацијата на прелистувачот може да ги синхронизира параметрите.",
+      independent: "Независен проект со отворен код од Инфоксика. Не е поврзано или одобрено од OpenAI.",
+      analyticsTitle: "Помогнете ни да ја направиме оваа веб-локација покорисна",
+      analyticsBody: "Помогнете ни да дознаеме кои страници се корисни и како луѓето ја откриваат екстензијата. Да се ​​дозволи Google Analytics да ги мери посетите на веб-локациите и кликнувањата на линкови од продавница? Анкетата за проширување и деинсталирање остануваат без аналитика. Можете да го промените вашиот избор во секое време.",
+      accept: "Дозволи аналитика",
+      decline: "Не, благодарам",
+      preferences: "Поставки за аналитика",
+      websitePrivacy: "Оваа веб-локација користи Google Analytics само откако ќе го дозволите. Ги мери посетите и кликовите на линкови од продавница, а не инсталациите или користењето на екстензии. Може да ја повлечете дозволата користејќи ги параметрите на Analytics.",
+      feedbackPolicy: "Вашите повратни информации се опционални и приватни, дури и по деинсталирањето. Не е потребно име или е-пошта. Ве молиме не вклучувајте лични податоци или разговори.",
+      screenshot: "ChatGPT Read Aloud контроли за репродукција",
+      available: "Проверете ја вашата продавница за моментално достапна верзија.",
+      website: "Официјална веб-страница"
+    },
+    ml: {
+      hide: "ഫ്ലോട്ടിംഗ് നിയന്ത്രണങ്ങൾ മറയ്ക്കുക",
+      hideMode: "മറഞ്ഞിരിക്കുമ്പോൾ",
+      idleOnly: "നിഷ്‌ക്രിയ ബബിൾ മാത്രം മറയ്ക്കുക",
+      allUi: "ബബിളും പ്ലെയറും മറയ്ക്കുക",
+      hideHint: "ഓഡിയോ പ്രവർത്തിക്കുന്നു. ഇവിടെയോ കുറുക്കുവഴിയിലൂടെയോ നിയന്ത്രണങ്ങൾ പുനഃസ്ഥാപിക്കുക.",
+      visibilityShortcut: "ഫ്ലോട്ടിംഗ് നിയന്ത്രണങ്ങൾ കാണിക്കുക / മറയ്ക്കുക",
+      unassigned: "നിയോഗിച്ചിട്ടില്ല",
+      customize: "കുറുക്കുവഴി ഇഷ്ടാനുസൃതമാക്കുക",
+      shortcutScope: "പ്ലേബാക്ക് കീകൾ ടെക്സ്റ്റ് ഫീൽഡുകൾക്ക് പുറത്ത് ChatGPT-ൽ പ്രവർത്തിക്കുന്നു. ടൈപ്പ് ചെയ്യുമ്പോൾ ദൃശ്യപരത കുറുക്കുവഴിയും പ്രവർത്തിക്കുന്നു.",
+      quickStart: "കേൾക്കാൻ തുടങ്ങുക",
+      quickStartBody: "ChatGPT തുറന്ന് പൂർത്തിയായ പ്രതികരണത്തിൽ Read Aloud ആരംഭിക്കുക. താൽക്കാലികമായി നിർത്താനോ തിരയാനോ വേഗത മാറ്റാനോ ഡൗൺലോഡ് ചെയ്യാനോ പ്ലെയർ ഉപയോഗിക്കുക.",
+      dismiss: "മനസ്സിലായി",
+      help: "സഹായവും ട്രബിൾഷൂട്ടിംഗും",
+      pending: "Read Aloud ആരംഭിക്കുന്നു...",
+      nativeHelp: "പ്രതികരണത്തിന് അരികിലുള്ള ChatGPT-ൻ്റെ Read Aloud ബട്ടൺ ഉപയോഗിച്ച് പ്ലേബാക്ക് ആരംഭിക്കുക.",
+      playError: "പ്ലേബാക്ക് പുനരാരംഭിക്കാനായില്ല. ChatGPT-ൻ്റെ പ്രതികരണ ബട്ടൺ ഉപയോഗിച്ച് വീണ്ടും Read Aloud ആരംഭിക്കുക.",
+      downloadError: "ഓഡിയോ ഡൗൺലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല. Read Aloud ആരംഭിക്കുക, ഓഡിയോ ലോഡുചെയ്യുന്നതിനായി കാത്തിരിക്കുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.",
+      downloading: "നിങ്ങളുടെ ഡൗൺലോഡ് തയ്യാറാക്കുന്നു...",
+      savedError: "ക്രമീകരണം സംരക്ഷിക്കാൻ കഴിഞ്ഞില്ല. ദയവായി വീണ്ടും ശ്രമിക്കുക.",
+      sourceFormat: "ഡൗൺലോഡുകൾ ChatGPT നൽകുന്ന ഓഡിയോ ഫോർമാറ്റ് ഉപയോഗിക്കുന്നു. വിപുലീകരണം ഓഡിയോ പരിവർത്തനം ചെയ്യുന്നില്ല.",
+      compactHelp: "ഇടം പരിമിതമാകുമ്പോൾ, സന്ദേശ ബോക്‌സിന് മുകളിൽ രണ്ട് വൃത്താകൃതിയിലുള്ള കൺട്രോൾ ബാറുകൾ ദൃശ്യമാകും.",
+      surveyTitle: "നിങ്ങൾ പോയതിൽ ഖേദിക്കുന്നു 💛",
+      surveyIntro: "ChatGPT Audio Controls പരീക്ഷിച്ചതിന് നന്ദി. ഇതിലും നന്നായി നമുക്ക് എന്തുചെയ്യാമായിരുന്നു?",
+      surveyHint: "ഒരു കാരണം തിരഞ്ഞെടുത്ത് അയയ്ക്കുക. ടൈപ്പിംഗ് ആവശ്യമില്ല.",
+      reasonBroken: "ഇത് ശരിയായി പ്രവർത്തിച്ചില്ല.",
+      reasonIntrusive: "ബബിൾ അല്ലെങ്കിൽ പ്ലെയർ വഴിയിൽ വന്നു.",
+      reasonSlow: "ഇത് ChatGPT അല്ലെങ്കിൽ എൻ്റെ ബ്രൗസറിനെ മന്ദഗതിയിലാക്കി.",
+      reasonDifficult: "ഇത് ഉപയോഗിക്കാൻ ബുദ്ധിമുട്ടായിരുന്നു.",
+      reasonMissing: "എനിക്ക് ആവശ്യമായ ഒരു ഫീച്ചർ കാണുന്നില്ല.",
+      reasonLanguage: "എൻ്റെ ഭാഷ നന്നായി പിന്തുണച്ചില്ല.",
+      reasonUnneeded: "എനിക്കിത് ഇനി ആവശ്യമില്ല.",
+      reasonOther: "മറ്റെന്തെങ്കിലും.",
+      addNote: "ഒരു കുറിപ്പ് ചേർക്കുക - ഓപ്ഷണൽ",
+      noteHint: "സംഭാഷണങ്ങളോ വ്യക്തിഗത വിശദാംശങ്ങളോ ഉൾപ്പെടുത്തരുത്. പരമാവധി 1,000 പ്രതീകങ്ങൾ.",
+      send: "ഫീഡ്‌ബാക്ക് അയയ്‌ക്കുക",
+      feedbackIntro: "നന്നായി പ്രവർത്തിക്കാൻ കഴിയുന്നത് ഞങ്ങളോട് പറയുക. ഒരു വിഭാഗം തിരഞ്ഞെടുത്ത് ഒരു ഓപ്ഷണൽ കുറിപ്പ് ചേർക്കുക.",
+      feedbackBug: "ഒരു ബഗ് റിപ്പോർട്ട് ചെയ്യുക",
+      feedbackSuggestion: "ഒരു മെച്ചപ്പെടുത്തൽ നിർദ്ദേശിക്കുക",
+      feedbackThanks: "നന്ദി. നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് സംരക്ഷിച്ചു.",
+      sending: "അയയ്‌ക്കുന്നു…",
+      skip: "ഫീഡ്‌ബാക്ക് ഒഴിവാക്കുക",
+      thanks: "മെച്ചപ്പെടുത്താൻ ഞങ്ങളെ സഹായിച്ചതിന് നന്ദി. നിങ്ങൾക്ക് എപ്പോഴും തിരികെ സ്വാഗതം.",
+      goodbye: "ഞങ്ങൾ ശ്രമിച്ചതിന് നന്ദി. ശ്രദ്ധപുലർത്തുക!",
+      feedbackError: "നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് സ്ഥിരീകരിച്ചിട്ടില്ല. ദയവായി വീണ്ടും ശ്രമിക്കുക; നിങ്ങളുടെ ഉത്തരം ഇപ്പോഴും ഇവിടെയുണ്ട്.",
+      chooseReason: "ഫീഡ്‌ബാക്ക് അയയ്‌ക്കാൻ ഒരു കാരണം തിരഞ്ഞെടുക്കുക.",
+      feedbackPrivacy: "ChatGPT Audio Controls മികച്ചതാക്കാൻ ഞങ്ങളെ സഹായിക്കൂ. നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് ഓപ്‌ഷണലും സ്വകാര്യവുമാണ്-പേരോ ഇമെയിലോ ആവശ്യമില്ല. അടിസ്ഥാന ആപ്പും ഉപകരണ വിശദാംശങ്ങളും പ്രശ്നങ്ങൾ മനസ്സിലാക്കാൻ ഞങ്ങളെ സഹായിക്കുന്നു. വ്യക്തിപരമായ വിശദാംശങ്ങളോ സംഭാഷണങ്ങളോ ഉപേക്ഷിക്കുക.",
+      appearance: "രൂപഭാവം",
+      themeSystem: "സിസ്റ്റം",
+      themeLight: "വെളിച്ചം",
+      themeDark: "ഇരുട്ട്",
+      language: "ഭാഷ",
+      siteTitle: "ChatGPT Read Aloud, തുടരുന്ന നിയന്ത്രണങ്ങൾ.",
+      siteIntro: "താൽക്കാലികമായി നിർത്തുക, റിവൈൻഡ് ചെയ്യുക, പ്ലേബാക്ക് വേഗത മാറ്റുക, ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക. നിങ്ങൾ കേൾക്കുമ്പോൾ സംഭാഷണത്തിൽ തുടരുക.",
+      chrome: "Chrome-ന് ഇത് നേടുക",
+      edge: "എഡ്ജിനായി ഇത് നേടുക",
+      desktop: "ഡെസ്ക്ടോപ്പ് Chrome, എഡ്ജ്, അനുയോജ്യമായ ബ്രൗസറുകൾക്ക്. ഇൻസ്റ്റാൾ ചെയ്യാൻ നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ ഈ പേജ് തുറക്കുക.",
+      features: "നിങ്ങളുടെ വഴി ശ്രദ്ധിക്കുക",
+      setup: "മികച്ച ശ്രവണത്തിനുള്ള മൂന്ന് ഘട്ടങ്ങൾ",
+      stepInstall: "നിങ്ങളുടെ ബ്രൗസറിൻ്റെ സ്റ്റോറിൽ നിന്ന് വിപുലീകരണം ഇൻസ്റ്റാൾ ചെയ്യുക.",
+      stepRead: "ChatGPT തുറന്ന് പൂർത്തിയായ പ്രതികരണത്തിൽ Read Aloud ആരംഭിക്കുക.",
+      stepControl: "പ്ലെയറിൽ നിന്ന് ഓഡിയോ താൽക്കാലികമായി നിർത്തുക, അന്വേഷിക്കുക, വേഗത മാറ്റുക അല്ലെങ്കിൽ സംരക്ഷിക്കുക.",
+      privacy: "സ്വകാര്യത",
+      privacyBody: "വിപുലീകരണത്തിന് അനലിറ്റിക്‌സോ ടെലിമെട്രിയോ ഇല്ല. ഓഡിയോ, സംഭാഷണം കൈകാര്യം ചെയ്യൽ നിങ്ങളുടെ ബ്രൗസറിൽ നിലനിൽക്കും. ബ്രൗസർ സമന്വയം മുൻഗണനകൾ സമന്വയിപ്പിച്ചേക്കാം.",
+      independent: "ഇൻഫോക്സിക്കയുടെ ഒരു സ്വതന്ത്ര ഓപ്പൺ സോഴ്സ് പ്രോജക്റ്റ്. OpenAI-യുമായി അഫിലിയേറ്റ് ചെയ്തിട്ടില്ല അല്ലെങ്കിൽ അംഗീകരിക്കുന്നില്ല.",
+      analyticsTitle: "ഈ വെബ്‌സൈറ്റ് കൂടുതൽ ഉപയോഗപ്രദമാക്കാൻ ഞങ്ങളെ സഹായിക്കൂ",
+      analyticsBody: "ഏതൊക്കെ പേജുകളാണ് ഉപയോഗപ്രദമായതെന്നും ആളുകൾ എങ്ങനെയാണ് വിപുലീകരണം കണ്ടെത്തുന്നതെന്നും അറിയാൻ ഞങ്ങളെ സഹായിക്കുക. വെബ്‌സൈറ്റ് സന്ദർശനങ്ങളും സ്റ്റോർ-ലിങ്ക് ക്ലിക്കുകളും അളക്കാൻ Google Analytics-നെ അനുവദിക്കണോ? വിപുലീകരണവും അൺഇൻസ്റ്റാൾ സർവേയും അനലിറ്റിക്‌സിൽ നിന്ന് മുക്തമാണ്. നിങ്ങൾക്ക് എപ്പോൾ വേണമെങ്കിലും നിങ്ങളുടെ തിരഞ്ഞെടുപ്പ് മാറ്റാം.",
+      accept: "അനലിറ്റിക്‌സ് അനുവദിക്കുക",
+      decline: "ഇല്ല നന്ദി",
+      preferences: "അനലിറ്റിക്സ് മുൻഗണനകൾ",
+      websitePrivacy: "നിങ്ങൾ അനുവദിച്ചതിന് ശേഷം മാത്രമേ ഈ വെബ്‌സൈറ്റ് Google Analytics ഉപയോഗിക്കൂ. ഇത് സന്ദർശനങ്ങളും സ്റ്റോർ-ലിങ്ക് ക്ലിക്കുകളും അളക്കുന്നു, ഇൻസ്റ്റാളേഷനുകളോ വിപുലീകരണ ഉപയോഗമോ അല്ല. Analytics മുൻഗണനകൾ ഉപയോഗിച്ച് നിങ്ങൾക്ക് അനുമതി പിൻവലിക്കാം.",
+      feedbackPolicy: "അൺഇൻസ്‌റ്റാൾ ചെയ്‌തതിന് ശേഷവും നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് ഓപ്‌ഷണലും സ്വകാര്യവുമാണ്. പേരോ ഇമെയിലോ ആവശ്യമില്ല. വ്യക്തിപരമായ വിവരങ്ങളോ സംഭാഷണങ്ങളോ ഉൾപ്പെടുത്തരുത്.",
+      screenshot: "ChatGPT Read Aloud പ്ലേബാക്ക് നിയന്ത്രണങ്ങൾ",
+      available: "നിലവിൽ ലഭ്യമായ പതിപ്പിനായി നിങ്ങളുടെ സ്റ്റോർ പരിശോധിക്കുക.",
+      website: "ഔദ്യോഗിക വെബ്സൈറ്റ്"
+    },
+    mn: {
+      hide: "Хөвөгч удирдлагыг нуух",
+      hideMode: "Нуугдсан үед",
+      idleOnly: "Зөвхөн идэвхгүй байгаа бөмбөлгийг нуу",
+      allUi: "Бөмбөлөг болон тоглуулагчийг нуу",
+      hideHint: "Аудио ажиллаж байна. Энд эсвэл товчлолоор удирдлагыг сэргээнэ үү.",
+      visibilityShortcut: "Хөвөгч удирдлагыг харуулах / нуух",
+      unassigned: "Томилогдсонгүй",
+      customize: "Товчлолыг өөрчлөх",
+      shortcutScope: "Тоглуулах товчлуурууд нь текст талбарын гаднах ChatGPT дээр ажилладаг. Харагдах байдлын товчлол нь бичих явцад бас ажилладаг.",
+      quickStart: "Сонсож эхлээрэй",
+      quickStartBody: "ChatGPT-г нээж, дууссан хариулт дээр Read Aloud-г эхлүүлнэ үү. Тоглогчийг түр зогсоох, хайх, хурдыг өөрчлөх эсвэл татаж авахдаа ашиглана уу.",
+      dismiss: "Ойлголоо",
+      help: "Тусламж ба алдааг олж засварлах",
+      pending: "Read Aloud эхэлж байна…",
+      nativeHelp: "Хариултын хажууд байгаа ChatGPT-н Read Aloud товчийг ашиглан тоглуулж эхэлнэ үү.",
+      playError: "Дахин тоглуулахыг үргэлжлүүлж чадсангүй. ChatGPT-ийн хариу товчлуурыг ашиглан Read Aloud-г дахин эхлүүлнэ үү.",
+      downloadError: "Аудиог татаж чадсангүй. Read Aloud-г эхлүүлж, дуу дуустал хүлээгээд дахин оролдоно уу.",
+      downloading: "Таны татан авалтыг бэлдэж байна...",
+      savedError: "Тохиргоог хадгалж чадсангүй. Дахин оролдоно уу.",
+      sourceFormat: "Татаж авахдаа ChatGPT-ийн өгсөн аудио форматыг ашигладаг. Өргөтгөл нь дууг хөрвүүлдэггүй.",
+      compactHelp: "Зай хязгаарлагдмал үед мессежийн хайрцагны дээр хоёр дугуй хэлбэртэй хяналтын самбар гарч ирнэ.",
+      surveyTitle: "Чамайг явж байгаад харамсаж байна 💛",
+      surveyIntro: "ChatGPT Audio Controls-г туршиж үзсэнд баярлалаа. Бид юуг илүү сайн хийж чадах байсан бэ?",
+      surveyHint: "Нэг шалтгааныг сонгоод илгээнэ үү. Бичих шаардлагагүй.",
+      reasonBroken: "Энэ нь зөв ажиллаагүй.",
+      reasonIntrusive: "Бөмбөлөг эсвэл тоглогч саад болсон.",
+      reasonSlow: "Энэ нь ChatGPT эсвэл миний хөтөчийг удаашруулсан.",
+      reasonDifficult: "Ашиглахад хэцүү байсан.",
+      reasonMissing: "Надад хэрэгтэй функц дутуу байсан.",
+      reasonLanguage: "Миний хэл сайн дэмжигдээгүй.",
+      reasonUnneeded: "Энэ надад хэрэггүй болсон.",
+      reasonOther: "Өөр зүйл.",
+      addNote: "Тэмдэглэл нэмэх — нэмэлт",
+      noteHint: "Харилцан яриа болон хувийн мэдээллийг бүү оруулаарай. Хамгийн ихдээ 1000 тэмдэгт.",
+      send: "Санал хүсэлт илгээх",
+      feedbackIntro: "Юу илүү сайн болохыг бидэнд хэлээрэй. Ангилал сонгоод нэмэлт тэмдэглэл нэмнэ үү.",
+      feedbackBug: "Алдаа мэдээлэх",
+      feedbackSuggestion: "Сайжруулахыг санал болго",
+      feedbackThanks: "Баярлалаа. Таны санал хүсэлтийг хадгаллаа.",
+      sending: "Илгээж байна...",
+      skip: "Санал хүсэлтийг алгасах",
+      thanks: "Биднийг сайжруулахад тусалсанд баярлалаа. Та үргэлж баяртай байх болно.",
+      goodbye: "Биднийг туршиж үзсэнд баярлалаа. Болгоомжтой байгаарай!",
+      feedbackError: "Таны санал хүсэлтийг баталгаажуулаагүй. Дахин оролдоно уу; Таны хариулт энд хэвээр байна.",
+      chooseReason: "Санал хүсэлт илгээх нэг шалтгааныг сонгоно уу.",
+      feedbackPrivacy: "ChatGPT Audio Controls-г илүү сайн болгоход бидэнд тусална уу. Таны санал хүсэлт нь сонголттой бөгөөд нууц бөгөөд нэр, имэйл шаардлагагүй. Апп болон төхөөрөмжийн үндсэн дэлгэрэнгүй мэдээлэл нь бидэнд асуудлыг ойлгоход тусална. Хувийн мэдээлэл эсвэл харилцан яриагаа орхино уу.",
+      appearance: "Гадаад төрх",
+      themeSystem: "Систем",
+      themeLight: "Гэрэл",
+      themeDark: "Харанхуй",
+      language: "Хэл",
+      siteTitle: "ChatGPT Read Aloud, үргэлжилдэг удирдлагатай.",
+      siteIntro: "Түр зогсоох, ухраах, тоглуулах хурдыг өөрчлөх, аудио татаж авах. Сонсох зуураа ярианд байгаарай.",
+      chrome: "Chrome-д зориулж аваарай",
+      edge: "Edge-д зориулж аваарай",
+      desktop: "Ширээний Chrome, Edge болон нийцтэй хөтчүүдэд зориулагдсан. Суулгахын тулд энэ хуудсыг компьютер дээрээ нээнэ үү.",
+      features: "Замаа сонс",
+      setup: "Илүү сайн сонсох гурван алхам",
+      stepInstall: "Хөтөчийнхөө дэлгүүрээс өргөтгөлийг суулгана уу.",
+      stepRead: "ChatGPT-г нээж, дууссан хариулт дээр Read Aloud-г эхлүүлнэ үү.",
+      stepControl: "Тоглогчоос аудиог түр зогсоох, хайх, хурдыг өөрчлөх эсвэл хадгалах.",
+      privacy: "Нууцлал",
+      privacyBody: "Өргөтгөл нь аналитик эсвэл телеметргүй. Аудио болон харилцан ярианы зохицуулалт таны хөтөч дээр үлдэнэ. Хөтөч синк хийх нь тохиргоог синхрончлох боломжтой.",
+      independent: "Infoxica-ийн бие даасан нээлттэй эхийн төсөл. OpenAI-тай холбоогүй эсвэл дэмжээгүй.",
+      analyticsTitle: "Энэ вэбсайтыг илүү хэрэгцээтэй болгоход бидэнд тусална уу",
+      analyticsBody: "Ямар хуудсууд хэрэгтэй вэ, хүмүүс өргөтгөлийг хэрхэн олж мэдэхийг мэдэхэд бидэнд тусална уу. Google Analytics-д вэб сайтад зочилсон болон дэлгүүрийн холбоос товшилтыг хэмжихийг зөвшөөрөх үү? Өргөтгөл болон устгах судалгаа нь задлан шинжилдэггүй. Та хүссэн үедээ сонголтоо өөрчилж болно.",
+      accept: "Аналитик хийхийг зөвшөөрөх",
+      decline: "Үгүй баярлалаа",
+      preferences: "Аналитик тохиргоо",
+      websitePrivacy: "Энэ вэб сайт таныг зөвшөөрсний дараа л Google Analytics ашигладаг. Энэ нь суулгац эсвэл өргөтгөлийн хэрэглээ биш харин зочлох болон дэлгүүрийн холбоос товшилтыг хэмждэг. Та Analytics тохиргоог ашиглан зөвшөөрлөө цуцалж болно.",
+      feedbackPolicy: "Таны санал хүсэлтийг устгасны дараа ч гэсэн сонголттой бөгөөд хувийн байна. Нэр, имэйл шаардлагагүй. Хувийн мэдээлэл, харилцан яриаг бүү оруулаарай.",
+      screenshot: "ChatGPT Read Aloud тоглуулах удирдлага",
+      available: "Одоо байгаа хувилбарыг дэлгүүрээсээ шалгана уу.",
+      website: "Албан ёсны вэбсайт"
+    },
+    ms: {
+      hide: "Sembunyikan kawalan terapung",
+      hideMode: "Apabila tersembunyi",
+      idleOnly: "Sembunyikan gelembung terbiar sahaja",
+      allUi: "Sembunyikan gelembung dan pemain",
+      hideHint: "Audio terus berfungsi. Pulihkan kawalan di sini atau dengan pintasan.",
+      visibilityShortcut: "Tunjukkan / sembunyikan kawalan terapung",
+      unassigned: "Tidak ditugaskan",
+      customize: "Sesuaikan pintasan",
+      shortcutScope: "Kekunci main balik berfungsi pada ChatGPT di luar medan teks. Pintasan keterlihatan juga berfungsi semasa menaip.",
+      quickStart: "Mula mendengar",
+      quickStartBody: "Buka ChatGPT dan mulakan Read Aloud pada respons yang lengkap. Gunakan pemain untuk menjeda, mencari, menukar kelajuan atau memuat turun.",
+      dismiss: "Faham",
+      help: "Bantuan dan penyelesaian masalah",
+      pending: "Memulakan Read Aloud…",
+      nativeHelp: "Mulakan main balik dengan butang ChatGPT Read Aloud di sebelah respons.",
+      playError: "Main semula tidak dapat disambung semula. Mulakan Read Aloud sekali lagi menggunakan butang respons ChatGPT.",
+      downloadError: "Audio tidak dapat dimuat turun. Mulakan Read Aloud, tunggu audio dimuatkan, kemudian cuba lagi.",
+      downloading: "Menyediakan muat turun anda…",
+      savedError: "Tetapan tidak dapat disimpan. Sila cuba lagi.",
+      sourceFormat: "Muat turun menggunakan format audio yang disediakan oleh ChatGPT. Sambungan tidak menukar audio.",
+      compactHelp: "Apabila ruang terhad, dua bar kawalan bulat muncul di atas kotak mesej.",
+      surveyTitle: "Maaf melihat anda pergi 💛",
+      surveyIntro: "Terima kasih kerana mencuba ChatGPT Audio Controls. Apa yang boleh kita lakukan dengan lebih baik?",
+      surveyHint: "Pilih satu sebab dan hantar. Tidak perlu menaip.",
+      reasonBroken: "Ia tidak berfungsi dengan betul.",
+      reasonIntrusive: "Gelembung atau pemain menghalang.",
+      reasonSlow: "Ia memperlahankan ChatGPT atau penyemak imbas saya.",
+      reasonDifficult: "Sukar untuk digunakan.",
+      reasonMissing: "Satu ciri yang saya perlukan telah tiada.",
+      reasonLanguage: "Bahasa saya tidak disokong dengan baik.",
+      reasonUnneeded: "Saya tidak memerlukannya lagi.",
+      reasonOther: "Sesuatu yang lain.",
+      addNote: "Tambah nota — pilihan",
+      noteHint: "Tolong jangan sertakan perbualan atau butiran peribadi. Maksimum 1,000 aksara.",
+      send: "Hantar maklum balas",
+      feedbackIntro: "Beritahu kami perkara yang boleh berfungsi dengan lebih baik. Pilih kategori dan tambah nota pilihan.",
+      feedbackBug: "Laporkan pepijat",
+      feedbackSuggestion: "Cadangkan penambahbaikan",
+      feedbackThanks: "Terima kasih. Maklum balas anda telah disimpan.",
+      sending: "Menghantar…",
+      skip: "Langkau maklum balas",
+      thanks: "Terima kasih kerana membantu kami bertambah baik. Anda sentiasa dialu-alukan kembali.",
+      goodbye: "Terima kasih kerana mencuba kami. Jaga diri!",
+      feedbackError: "Maklum balas anda tidak disahkan. Sila cuba lagi; jawapan anda masih di sini.",
+      chooseReason: "Pilih satu sebab untuk menghantar maklum balas.",
+      feedbackPrivacy: "Bantu kami menjadikan ChatGPT Audio Controls lebih baik. Maklum balas anda adalah pilihan dan peribadi—tiada nama atau e-mel diperlukan. Butiran apl dan peranti asas membantu kami memahami isu. Sila tinggalkan butiran peribadi atau perbualan.",
+      appearance: "Rupa",
+      themeSystem: "Sistem",
+      themeLight: "Cahaya",
+      themeDark: "Gelap",
+      language: "Bahasa",
+      siteTitle: "ChatGPT Read Aloud, dengan kawalan yang mengikutinya.",
+      siteIntro: "Jeda, putar balik, tukar kelajuan main balik dan muat turun audio. Kekal dalam perbualan semasa anda mendengar.",
+      chrome: "Dapatkannya dengan harga Chrome",
+      edge: "Dapatkannya untuk Edge",
+      desktop: "Untuk desktop Chrome, Edge dan penyemak imbas yang serasi. Buka halaman ini pada komputer anda untuk memasang.",
+      features: "Dengar cara anda",
+      setup: "Tiga langkah untuk mendengar dengan lebih baik",
+      stepInstall: "Pasang sambungan daripada kedai penyemak imbas anda.",
+      stepRead: "Buka ChatGPT dan mulakan Read Aloud pada respons yang lengkap.",
+      stepControl: "Jeda, cari, tukar kelajuan atau simpan audio daripada pemain.",
+      privacy: "Privasi",
+      privacyBody: "Sambungan tidak mempunyai analitik atau telemetri. Pengendalian audio dan perbualan kekal dalam penyemak imbas anda. Penyegerakan penyemak imbas boleh menyegerakkan pilihan.",
+      independent: "Projek sumber terbuka bebas oleh Infoxica. Tidak bergabung dengan atau disokong oleh OpenAI.",
+      analyticsTitle: "Bantu kami menjadikan tapak web ini lebih berguna",
+      analyticsBody: "Bantu kami mengetahui halaman mana yang berguna dan cara orang menemui sambungan itu. Benarkan Google Analitis mengukur lawatan tapak web dan klik pautan kedai? Tinjauan lanjutan dan nyahpasang kekal bebas daripada analitis. Anda boleh menukar pilihan anda pada bila-bila masa.",
+      accept: "Benarkan analitis",
+      decline: "Tidak, terima kasih",
+      preferences: "Pilihan analitis",
+      websitePrivacy: "Tapak web ini menggunakan Google Analitis hanya selepas anda membenarkannya. Ia mengukur lawatan dan klik pautan kedai, bukan pemasangan atau penggunaan sambungan. Anda boleh menarik balik kebenaran menggunakan pilihan Analitis.",
+      feedbackPolicy: "Maklum balas anda adalah pilihan dan peribadi, walaupun selepas menyahpasang. Tiada nama atau e-mel diperlukan. Tolong jangan sertakan butiran peribadi atau perbualan.",
+      screenshot: "ChatGPT Read Aloud kawalan main balik",
+      available: "Semak kedai anda untuk versi yang tersedia pada masa ini.",
+      website: "Laman web rasmi"
+    },
+    my: {
+      hide: "ရေပေါ်ထိန်းချုပ်မှုများကို ဝှက်ထားပါ။",
+      hideMode: "ဝှက်ထားသောအခါ",
+      idleOnly: "idle bubble ကိုသာ ဝှက်ပါ။",
+      allUi: "ပူဖောင်းနှင့် ကစားသူကို ဝှက်ပါ။",
+      hideHint: "အသံသည် ဆက်လက်အလုပ်လုပ်နေပါသည်။ ထိန်းချုပ်မှုများကို ဤနေရာတွင် သို့မဟုတ် ဖြတ်လမ်းဖြင့် ပြန်လည်ရယူပါ။",
+      visibilityShortcut: "ရေပေါ်ထိန်းချုပ်မှုများကို ပြ/ဖျောက်",
+      unassigned: "တာဝန်မပေးပါ။",
+      customize: "ဖြတ်လမ်းကို စိတ်ကြိုက်လုပ်ပါ။",
+      shortcutScope: "ပြန်ဖွင့်သောကီးများသည် စာသားအကွက်များအပြင် ChatGPT တွင် အလုပ်လုပ်သည်။ စာရိုက်နေစဉ် မြင်နိုင်မှုဖြတ်လမ်းသည်လည်း အလုပ်လုပ်သည်။",
+      quickStart: "စတင်နားဆင်ပါ။",
+      quickStartBody: "ChatGPT ကိုဖွင့်ပြီး Read Aloud ကို အပြီးသတ်တုံ့ပြန်မှုဖြင့် စတင်ပါ။ ခေတ္တရပ်ရန်၊ ရှာရန်၊ မြန်နှုန်းပြောင်းရန် သို့မဟုတ် ဒေါင်းလုဒ်လုပ်ရန် ပလေယာကို အသုံးပြုပါ။",
+      dismiss: "ရပြီ။",
+      help: "အကူအညီနှင့် ပြဿနာဖြေရှင်းခြင်း။",
+      pending: "Read Aloud စတင်နေသည်…",
+      nativeHelp: "တုံ့ပြန်မှုဘေးရှိ ChatGPT ၏ Read Aloud ခလုတ်ဖြင့် ပြန်ဖွင့်ပါ။",
+      playError: "ပြန်ဖွင့်ခြင်းကို ပြန်မလုပ်နိုင်ပါ။ ChatGPT ၏တုံ့ပြန်မှုခလုတ်ကို အသုံးပြု၍ Read Aloud ကို ထပ်မံစတင်ပါ။",
+      downloadError: "အသံကို ဒေါင်းလုဒ်လုပ်၍မရပါ။ Read Aloud ကို စတင်ပါ၊ အသံဖွင့်ရန် စောင့်ပါ၊ ထို့နောက် ထပ်စမ်းကြည့်ပါ။",
+      downloading: "သင်၏ဒေါင်းလုဒ်ကို ပြင်ဆင်နေသည်...",
+      savedError: "ဆက်တင်ကို မသိမ်းဆည်းနိုင်ပါ။ ထပ်စမ်းကြည့်ပါ။",
+      sourceFormat: "ဒေါင်းလုဒ်များသည် ChatGPT မှပေးသော အသံဖော်မတ်ကို အသုံးပြုသည်။ တိုးချဲ့မှုသည် အသံကို ပြောင်းမည်မဟုတ်ပါ။",
+      compactHelp: "နေရာကန့်သတ်ထားသောအခါ၊ မက်ဆေ့ချ်ဘောက်စ်အထက်တွင် အဝိုင်းပုံစံ ထိန်းချုပ်ဘားနှစ်ခု ပေါ်လာသည်။",
+      surveyTitle: "သွားတွေ့တာ တောင်းပန်ပါတယ် 💛",
+      surveyIntro: "ChatGPT Audio Controls ကိုကြိုးစားသည့်အတွက် ကျေးဇူးတင်ပါသည်။ ငါတို့ဘာတွေ ပိုကောင်းအောင် လုပ်နိုင်ခဲ့လဲ။",
+      surveyHint: "အကြောင်းပြချက်တစ်ခုကို ရွေးပြီး ပေးပို့ပါ။ စာရိုက်ရန်မလိုအပ်ပါ။",
+      reasonBroken: "၎င်းသည် မှန်ကန်စွာ အလုပ်မလုပ်ပါ။",
+      reasonIntrusive: "bubble သို့မဟုတ် player သည် လမ်းထဲသို့ ရောက်သွားသည်။",
+      reasonSlow: "၎င်းသည် ChatGPT သို့မဟုတ် ကျွန်ုပ်၏ဘရောက်ဆာကို နှေးကွေးစေသည်။",
+      reasonDifficult: "အသုံးပြုရန် ခက်ခဲသည်။",
+      reasonMissing: "ကျွန်ုပ်လိုအပ်သော အင်္ဂါရပ်တစ်ခု ပျောက်ဆုံးနေပါသည်။",
+      reasonLanguage: "ကျွန်ုပ်၏ဘာသာစကားကို ကောင်းမွန်စွာ ပံ့ပိုးမထားပါ။",
+      reasonUnneeded: "ငါ အဲဒါကို မလိုအပ်တော့ဘူး။",
+      reasonOther: "အခြားအရာ။",
+      addNote: "မှတ်စုတစ်ခုထည့်ပါ — စိတ်ကြိုက်ရွေးချယ်နိုင်သည်။",
+      noteHint: "စကားဝိုင်းများ သို့မဟုတ် ကိုယ်ရေးကိုယ်တာအသေးစိတ်အချက်အလက်များကို မထည့်ပါနှင့်။ အများဆုံး စာလုံးရေ 1,000",
+      send: "အကြံပြုချက် ပေးပို့ပါ။",
+      feedbackIntro: "ပိုမိုကောင်းမွန်အောင် လုပ်ဆောင်နိုင်သည့်အရာများကို ပြောပြပါ။ အမျိုးအစားတစ်ခုကို ရွေးချယ်ပြီး စိတ်ကြိုက်မှတ်စုတစ်ခု ထည့်ပါ။",
+      feedbackBug: "ချွတ်ယွင်းချက်တစ်ခု သတင်းပို့ပါ။",
+      feedbackSuggestion: "တိုးတက်မှုတစ်ခုကို အကြံပြုပါ။",
+      feedbackThanks: "ကျေးဇူးတင်ပါတယ်။ သင့်အကြံပြုချက်ကို သိမ်းဆည်းပြီးဖြစ်သည်။",
+      sending: "ပို့နေသည်...",
+      skip: "အကြံပြုချက်ကို ကျော်ပါ။",
+      thanks: "ကျွန်ုပ်တို့ကို တိုးတက်အောင် ကူညီပေးသည့်အတွက် ကျေးဇူးတင်ပါသည်။ မင်းပြန်လာတာကို အမြဲကြိုဆိုတယ်။",
+      goodbye: "ကျွန်တော်တို့ကို ကြိုးစားခွင့်ပေးတဲ့အတွက် ကျေးဇူးတင်ပါတယ်။ ဂရုစိုက်ပါ။",
+      feedbackError: "သင့်အကြံပြုချက်ကို အတည်မပြုပါ။ ထပ်စမ်းကြည့်ပါ။ မင်းရဲ့အဖြေက ဒီမှာရှိနေတုန်းပဲ။",
+      chooseReason: "တုံ့ပြန်ချက်ပေးပို့ရန် အကြောင်းပြချက်တစ်ခုကို ရွေးပါ။",
+      feedbackPrivacy: "ChatGPT Audio Controls ပိုကောင်းအောင် ကူညီပေးပါ။ သင့်အကြံပြုချက်သည် စိတ်ကြိုက်ရွေးချယ်နိုင်ပြီး သီးသန့်ဖြစ်သည်—အမည် သို့မဟုတ် အီးမေးလ် မလိုအပ်ပါ။ အခြေခံအက်ပ်နှင့် စက်အသေးစိတ်အချက်များသည် ပြဿနာများကို နားလည်ရန် ကူညီပေးသည်။ ကိုယ်ရေးကိုယ်တာအသေးစိတ်များ သို့မဟုတ် စကားဝိုင်းများကို ချန်ထားခဲ့ပါ။",
+      appearance: "အသွင်အပြင်",
+      themeSystem: "စနစ်",
+      themeLight: "အလင်း",
+      themeDark: "အမှောင်",
+      language: "ဘာသာစကား",
+      siteTitle: "ChatGPT Read Aloud၊ အဆက်မပြတ်ထိန်းချုပ်မှုများ။",
+      siteIntro: "ခဏရပ်၊ ပြန်ရစ်ပါ၊ ပြန်ဖွင့်နှုန်းကို ပြောင်းလဲပြီး အသံကို ဒေါင်းလုဒ်လုပ်ပါ။ သင်နားထောင်နေစဉ် စကားဝိုင်းတွင်နေပါ။",
+      chrome: "Chrome အတွက် ရယူပါ။",
+      edge: "Edge အတွက် ရယူပါ။",
+      desktop: "ဒက်စ်တော့ Chrome၊ Edge နှင့် တွဲဖက်သုံးနိုင်သော ဘရောက်ဆာများအတွက်။ ထည့်သွင်းရန် ဤစာမျက်နှာကို သင့်ကွန်ပျူတာပေါ်တွင် ဖွင့်ပါ။",
+      features: "သင်၏လမ်းကို နားထောင်လော့",
+      setup: "ပိုမိုကောင်းမွန်စွာ နားထောင်ရန် အဆင့်သုံးဆင့်",
+      stepInstall: "သင့်ဘရောက်ဆာ၏စတိုးမှ တိုးချဲ့မှုကို ထည့်သွင်းပါ။",
+      stepRead: "ChatGPT ကိုဖွင့်ပြီး Read Aloud ကို အပြီးသတ်တုံ့ပြန်မှုဖြင့် စတင်ပါ။",
+      stepControl: "ခေတ္တရပ်ပါ၊ ရှာပါ၊ အရှိန်ပြောင်းပါ သို့မဟုတ် ပလေယာမှ အသံကို သိမ်းဆည်းပါ။",
+      privacy: "ကိုယ်ရေးကိုယ်တာ",
+      privacyBody: "တိုးချဲ့မှုတွင် ပိုင်းခြားစိတ်ဖြာချက် သို့မဟုတ် တယ်လီမီတာ မရှိပါ။ အသံနှင့် စကားဝိုင်းကို ကိုင်တွယ်ခြင်းသည် သင့်ဘရောက်ဆာတွင် ရှိနေသည်။ ဘရောက်ဆာ စင့်ခ်လုပ်ခြင်းဖြင့် စိတ်ကြိုက်ရွေးချယ်မှုများကို ထပ်တူပြုနိုင်ပါသည်။",
+      independent: "Infoxica မှ လွတ်လပ်သော open-source ပရောဂျက်။ OpenAI နှင့် ဆက်စပ်မှု သို့မဟုတ် ထောက်ခံထားခြင်းမရှိပါ။",
+      analyticsTitle: "ဤဝဘ်ဆိုဒ်ကို ပိုမိုအသုံးဝင်အောင် ကူညီပေးပါ။",
+      analyticsBody: "မည်သည့်စာမျက်နှာများသည် အသုံးဝင်ကြောင်းနှင့် တိုးချဲ့မှုကို လူများက ရှာဖွေတွေ့ရှိပုံကို လေ့လာရန် ကျွန်ုပ်တို့အား ကူညီပေးပါ။ ဝဘ်ဆိုက်လည်ပတ်မှုများနှင့် စတိုးဆိုင်လင့်ခ်များကို တိုင်းတာရန် Google Analytics ကို ခွင့်ပြုမလား။ တိုးချဲ့မှုနှင့် စစ်တမ်းကို ဖြုတ်ပစ်ခြင်းသည် ခွဲခြမ်းစိတ်ဖြာမှု ကင်းစင်သည်။ သင့်ရွေးချယ်မှုကို အချိန်မရွေး ပြောင်းလဲနိုင်သည်။",
+      accept: "ခွဲခြမ်းစိတ်ဖြာမှုကို ခွင့်ပြုပါ။",
+      decline: "မဟုတ်ဘူး ကျေးဇူးတင်ပါတယ်။",
+      preferences: "ပိုင်းခြားစိတ်ဖြာမှု ဦးစားပေးများ",
+      websitePrivacy: "သင်ခွင့်ပြုပြီးနောက်မှသာ ဤဝဘ်ဆိုက်သည် Google Analytics ကိုအသုံးပြုသည်။ ၎င်းသည် တပ်ဆင်မှုများ သို့မဟုတ် တိုးချဲ့အသုံးပြုမှုကို မဟုတ်ဘဲ လည်ပတ်မှုများနှင့် စတိုးလင့်ခ် ကလစ်များကို တိုင်းတာသည်။ Analytics စိတ်ကြိုက်ရွေးချယ်မှုများကို အသုံးပြု၍ ခွင့်ပြုချက်ကို ရုပ်သိမ်းနိုင်သည်။",
+      feedbackPolicy: "သင်၏ အကြံပြုချက်သည် စိတ်ကြိုက်ရွေးချယ်နိုင်ပြီး သီးသန့်ဖြစ်ပြီး၊ ဖြုတ်ပြီးနောက်တွင်ပင် ဖြစ်သည်။ နာမည် သို့မဟုတ် အီးမေးလ် မလိုအပ်ပါ။ ကိုယ်ရေးကိုယ်တာအသေးစိတ်များ သို့မဟုတ် စကားဝိုင်းများ မပါဝင်ပါနှင့်။",
+      screenshot: "ChatGPT Read Aloud ပြန်ဖွင့်ခြင်း ထိန်းချုပ်မှုများ",
+      available: "လက်ရှိရရှိနိုင်သည့်ဗားရှင်းအတွက် သင့်စတိုးကို စစ်ဆေးပါ။",
+      website: "တရားဝင် ဝဘ်ဆိုဒ်"
+    },
+    nl: {
+      hide: "Zwevende bedieningselementen verbergen",
+      hideMode: "Indien verborgen",
+      idleOnly: "Alleen inactieve bel verbergen",
+      allUi: "Verberg bel en speler",
+      hideHint: "Audio blijft werken. Herstel de bedieningselementen hier of met de snelkoppeling.",
+      visibilityShortcut: "Zwevende besturingselementen tonen/verbergen",
+      unassigned: "Niet toegewezen",
+      customize: "Snelkoppeling aanpassen",
+      shortcutScope: "Afspeeltoetsen werken op ChatGPT buiten tekstvelden. De zichtbaarheidssnelkoppeling werkt ook tijdens het typen.",
+      quickStart: "Begin met luisteren",
+      quickStartBody: "Open ChatGPT en start Read Aloud op basis van een voltooid antwoord. Gebruik de speler om te pauzeren, zoeken, de snelheid te wijzigen of te downloaden.",
+      dismiss: "Ik snap het",
+      help: "Hulp en probleemoplossing",
+      pending: "Read Aloud starten…",
+      nativeHelp: "Start het afspelen met de Read Aloud-knop van ChatGPT naast het antwoord.",
+      playError: "Het afspelen kon niet worden hervat. Start Read Aloud opnieuw met behulp van de antwoordknop van ChatGPT.",
+      downloadError: "Audio kon niet worden gedownload. Start Read Aloud, wacht tot de audio is geladen en probeer het vervolgens opnieuw.",
+      downloading: "Je download voorbereiden…",
+      savedError: "De instelling kon niet worden opgeslagen. Probeer het opnieuw.",
+      sourceFormat: "Downloads gebruiken het audioformaat van ChatGPT. De extensie converteert geen audio.",
+      compactHelp: "Als de ruimte beperkt is, verschijnen er twee afgeronde bedieningsbalken boven het berichtvenster.",
+      surveyTitle: "Sorry dat je weggaat 💛",
+      surveyIntro: "Bedankt voor het proberen van ChatGPT Audio Controls. Wat hadden wij beter kunnen doen?",
+      surveyHint: "Kies één reden en verstuur. Typen is niet nodig.",
+      reasonBroken: "Het werkte niet correct.",
+      reasonIntrusive: "De bel of speler stond in de weg.",
+      reasonSlow: "Het vertraagde ChatGPT of mijn browser.",
+      reasonDifficult: "Het was moeilijk te gebruiken.",
+      reasonMissing: "Een functie die ik nodig had, ontbrak.",
+      reasonLanguage: "Mijn taal werd niet goed ondersteund.",
+      reasonUnneeded: "Ik heb het niet meer nodig.",
+      reasonOther: "Iets anders.",
+      addNote: "Een notitie toevoegen — optioneel",
+      noteHint: "Voeg geen gesprekken of persoonlijke gegevens toe. Maximaal 1.000 tekens.",
+      send: "Feedback verzenden",
+      feedbackIntro: "Vertel ons wat beter zou kunnen werken. Kies een categorie en voeg een optionele notitie toe.",
+      feedbackBug: "Rapporteer een bug",
+      feedbackSuggestion: "Stel een verbetering voor",
+      feedbackThanks: "Dank je. Uw feedback is opgeslagen.",
+      sending: "Verzenden…",
+      skip: "Feedback overslaan",
+      thanks: "Bedankt dat je ons helpt verbeteren. Je bent altijd welkom terug.",
+      goodbye: "Bedankt dat je het probeert. Groetjes!",
+      feedbackError: "Je feedback is niet bevestigd. Probeer het opnieuw; je antwoord staat er nog steeds.",
+      chooseReason: "Kies één reden om feedback te sturen.",
+      feedbackPrivacy: "Help ons ChatGPT Audio Controls beter te maken. Jouw feedback is optioneel en privé; je hebt geen naam of e-mailadres nodig. Basisapp- en apparaatgegevens helpen ons problemen te begrijpen. Laat persoonlijke gegevens of gesprekken achterwege.",
+      appearance: "Uiterlijk",
+      themeSystem: "Systeem",
+      themeLight: "Licht",
+      themeDark: "Donker",
+      language: "Taal",
+      siteTitle: "ChatGPT Read Aloud, met bedieningselementen die gelijke tred houden.",
+      siteIntro: "Pauzeren, terugspoelen, afspeelsnelheid wijzigen en audio downloaden. Blijf bij het gesprek terwijl u luistert.",
+      chrome: "Koop het voor Chrome",
+      edge: "Download het voor Edge",
+      desktop: "Voor desktop Chrome, Edge en compatibele browsers. Open deze pagina op uw computer om te installeren.",
+      features: "Luister op jouw manier",
+      setup: "Drie stappen naar beter luisteren",
+      stepInstall: "Installeer de extensie vanuit de winkel van uw browser.",
+      stepRead: "Open ChatGPT en start Read Aloud op basis van een voltooid antwoord.",
+      stepControl: "Pauzeer, zoek, verander de snelheid of sla de audio van de speler op.",
+      privacy: "Privacy",
+      privacyBody: "De extensie heeft geen analyses of telemetrie. Audio- en gespreksafhandeling blijven in uw browser. Browsersynchronisatie kan voorkeuren synchroniseren.",
+      independent: "Een onafhankelijk open-sourceproject van Infoxica. Niet aangesloten bij of goedgekeurd door OpenAI.",
+      analyticsTitle: "Help ons deze website nuttiger te maken",
+      analyticsBody: "Help ons ontdekken welke pagina's nuttig zijn en hoe mensen de extensie ontdekken. Toestaan ​​dat Google Analytics websitebezoeken en klikken op winkellinks meet? De enquête over uitbreiding en verwijdering blijft vrij van analyses. U kunt uw keuze op elk moment wijzigen.",
+      accept: "Analyses toestaan",
+      decline: "Nee bedankt",
+      preferences: "Analytics-voorkeuren",
+      websitePrivacy: "Deze website maakt alleen gebruik van Google Analytics nadat u dit heeft toegestaan. Het meet bezoeken en klikken op winkellinks, niet installaties of extensiegebruik. U kunt uw toestemming intrekken via Analytics-voorkeuren.",
+      feedbackPolicy: "Je feedback is optioneel en privé, zelfs na het verwijderen. Er is geen naam of e-mailadres vereist. Voeg geen persoonlijke gegevens of gesprekken toe.",
+      screenshot: "ChatGPT Read Aloud afspeelknoppen",
+      available: "Controleer uw winkel voor de momenteel beschikbare versie.",
+      website: "Officiële website"
+    },
+    pa: {
+      hide: "ਫਲੋਟਿੰਗ ਨਿਯੰਤਰਣ ਓਹਲੇ ਕਰੋ",
+      hideMode: "ਜਦੋਂ ਲੁਕਿਆ ਹੁੰਦਾ ਹੈ",
+      idleOnly: "ਸਿਰਫ਼ ਵਿਹਲੇ ਬੁਲਬੁਲੇ ਨੂੰ ਲੁਕਾਓ",
+      allUi: "ਬੁਲਬੁਲਾ ਅਤੇ ਪਲੇਅਰ ਓਹਲੇ ਕਰੋ",
+      hideHint: "ਆਡੀਓ ਕੰਮ ਕਰਦਾ ਰਹਿੰਦਾ ਹੈ। ਕੰਟਰੋਲਾਂ ਨੂੰ ਇੱਥੇ ਜਾਂ ਸ਼ਾਰਟਕੱਟ ਨਾਲ ਰੀਸਟੋਰ ਕਰੋ।",
+      visibilityShortcut: "ਫਲੋਟਿੰਗ ਨਿਯੰਤਰਣ ਦਿਖਾਓ / ਓਹਲੇ ਕਰੋ",
+      unassigned: "ਸਪੁਰਦ ਨਹੀਂ ਕੀਤਾ ਗਿਆ",
+      customize: "ਸ਼ਾਰਟਕੱਟ ਨੂੰ ਅਨੁਕੂਲਿਤ ਕਰੋ",
+      shortcutScope: "ਪਲੇਬੈਕ ਕੁੰਜੀਆਂ ਟੈਕਸਟ ਖੇਤਰਾਂ ਤੋਂ ਬਾਹਰ ChatGPT 'ਤੇ ਕੰਮ ਕਰਦੀਆਂ ਹਨ। ਵਿਜ਼ੀਬਿਲਟੀ ਸ਼ਾਰਟਕੱਟ ਟਾਈਪ ਕਰਨ ਵੇਲੇ ਵੀ ਕੰਮ ਕਰਦਾ ਹੈ।",
+      quickStart: "ਸੁਣਨਾ ਸ਼ੁਰੂ ਕਰੋ",
+      quickStartBody: "ChatGPT ਖੋਲ੍ਹੋ ਅਤੇ ਮੁਕੰਮਲ ਜਵਾਬ 'ਤੇ Read Aloud ਸ਼ੁਰੂ ਕਰੋ। ਪਲੇਅਰ ਨੂੰ ਰੋਕਣ, ਖੋਜਣ, ਗਤੀ ਬਦਲਣ ਜਾਂ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਵਰਤੋ।",
+      dismiss: "ਸਮਝ ਲਿਆ",
+      help: "ਮਦਦ ਅਤੇ ਸਮੱਸਿਆ ਨਿਪਟਾਰਾ",
+      pending: "Read Aloud ਸ਼ੁਰੂ ਹੋ ਰਿਹਾ ਹੈ...",
+      nativeHelp: "ਜਵਾਬ ਦੇ ਕੋਲ ChatGPT ਦੇ Read Aloud ਬਟਨ ਨਾਲ ਪਲੇਬੈਕ ਸ਼ੁਰੂ ਕਰੋ।",
+      playError: "ਪਲੇਬੈਕ ਮੁੜ ਸ਼ੁਰੂ ਨਹੀਂ ਹੋ ਸਕਿਆ। ChatGPT ਦੇ ਜਵਾਬ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰਕੇ Read Aloud ਦੁਬਾਰਾ ਸ਼ੁਰੂ ਕਰੋ।",
+      downloadError: "ਆਡੀਓ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। Read Aloud ਸ਼ੁਰੂ ਕਰੋ, ਆਡੀਓ ਲੋਡ ਹੋਣ ਦੀ ਉਡੀਕ ਕਰੋ, ਫਿਰ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+      downloading: "ਤੁਹਾਡੇ ਡਾਊਨਲੋਡ ਦੀ ਤਿਆਰੀ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+      savedError: "ਸੈਟਿੰਗ ਨੂੰ ਸੁਰੱਖਿਅਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+      sourceFormat: "ਡਾਊਨਲੋਡ ChatGPT ਦੁਆਰਾ ਪ੍ਰਦਾਨ ਕੀਤੇ ਆਡੀਓ ਫਾਰਮੈਟ ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹਨ। ਐਕਸਟੈਂਸ਼ਨ ਆਡੀਓ ਨੂੰ ਕਨਵਰਟ ਨਹੀਂ ਕਰਦੀ ਹੈ।",
+      compactHelp: "ਜਦੋਂ ਸਪੇਸ ਸੀਮਤ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਮੈਸੇਜ ਬਾਕਸ ਦੇ ਉੱਪਰ ਦੋ ਗੋਲ ਕੰਟਰੋਲ ਬਾਰ ਦਿਖਾਈ ਦਿੰਦੇ ਹਨ।",
+      surveyTitle: "ਤੁਹਾਨੂੰ ਜਾਣ ਲਈ ਅਫਸੋਸ ਹੈ 💛",
+      surveyIntro: "ChatGPT Audio Controls ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰਨ ਲਈ ਧੰਨਵਾਦ। ਅਸੀਂ ਬਿਹਤਰ ਕੀ ਕਰ ਸਕਦੇ ਸੀ?",
+      surveyHint: "ਇੱਕ ਕਾਰਨ ਚੁਣੋ ਅਤੇ ਭੇਜੋ। ਕੋਈ ਟਾਈਪਿੰਗ ਦੀ ਲੋੜ ਨਹੀਂ।",
+      reasonBroken: "ਇਹ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ ਨਹੀਂ ਕਰਦਾ।",
+      reasonIntrusive: "ਬੁਲਬੁਲਾ ਜਾਂ ਖਿਡਾਰੀ ਰਸਤੇ ਵਿੱਚ ਆ ਗਿਆ।",
+      reasonSlow: "ਇਸਨੇ ChatGPT ਜਾਂ ਮੇਰੇ ਬ੍ਰਾਉਜ਼ਰ ਨੂੰ ਹੌਲੀ ਕਰ ਦਿੱਤਾ।",
+      reasonDifficult: "ਇਸਦੀ ਵਰਤੋਂ ਕਰਨਾ ਮੁਸ਼ਕਲ ਸੀ।",
+      reasonMissing: "ਮੈਨੂੰ ਲੋੜੀਂਦੀ ਵਿਸ਼ੇਸ਼ਤਾ ਗੁੰਮ ਸੀ।",
+      reasonLanguage: "ਮੇਰੀ ਭਾਸ਼ਾ ਚੰਗੀ ਤਰ੍ਹਾਂ ਸਮਰਥਿਤ ਨਹੀਂ ਸੀ।",
+      reasonUnneeded: "ਮੈਨੂੰ ਹੁਣ ਇਸਦੀ ਲੋੜ ਨਹੀਂ ਹੈ।",
+      reasonOther: "ਕੁਝ ਹੋਰ।",
+      addNote: "ਇੱਕ ਨੋਟ ਸ਼ਾਮਲ ਕਰੋ — ਵਿਕਲਪਿਕ",
+      noteHint: "ਕਿਰਪਾ ਕਰਕੇ ਗੱਲਬਾਤ ਜਾਂ ਨਿੱਜੀ ਵੇਰਵੇ ਸ਼ਾਮਲ ਨਾ ਕਰੋ। ਅਧਿਕਤਮ 1,000 ਅੱਖਰ।",
+      send: "ਫੀਡਬੈਕ ਭੇਜੋ",
+      feedbackIntro: "ਸਾਨੂੰ ਦੱਸੋ ਕਿ ਕਿਹੜਾ ਵਧੀਆ ਕੰਮ ਕਰ ਸਕਦਾ ਹੈ। ਇੱਕ ਸ਼੍ਰੇਣੀ ਚੁਣੋ ਅਤੇ ਇੱਕ ਵਿਕਲਪਿਕ ਨੋਟ ਸ਼ਾਮਲ ਕਰੋ।",
+      feedbackBug: "ਇੱਕ ਬੱਗ ਦੀ ਰਿਪੋਰਟ ਕਰੋ",
+      feedbackSuggestion: "ਸੁਧਾਰ ਦਾ ਸੁਝਾਅ ਦਿਓ",
+      feedbackThanks: "ਧੰਨਵਾਦ। ਤੁਹਾਡਾ ਫੀਡਬੈਕ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ ਹੈ।",
+      sending: "ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ...",
+      skip: "ਫੀਡਬੈਕ ਛੱਡੋ",
+      thanks: "ਸੁਧਾਰ ਕਰਨ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਤੁਹਾਡਾ ਹਮੇਸ਼ਾ ਵਾਪਸ ਸੁਆਗਤ ਹੈ।",
+      goodbye: "ਸਾਨੂੰ ਕੋਸ਼ਿਸ਼ ਕਰਨ ਲਈ ਧੰਨਵਾਦ। ਆਪਣਾ ਖਿਆਲ ਰੱਖਣਾ!",
+      feedbackError: "ਤੁਹਾਡੇ ਫੀਡਬੈਕ ਦੀ ਪੁਸ਼ਟੀ ਨਹੀਂ ਕੀਤੀ ਗਈ ਸੀ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ; ਤੁਹਾਡਾ ਜਵਾਬ ਅਜੇ ਵੀ ਇੱਥੇ ਹੈ।",
+      chooseReason: "ਫੀਡਬੈਕ ਭੇਜਣ ਲਈ ਇੱਕ ਕਾਰਨ ਚੁਣੋ।",
+      feedbackPrivacy: "ChatGPT Audio Controls ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰੋ। ਤੁਹਾਡਾ ਫੀਡਬੈਕ ਵਿਕਲਪਿਕ ਅਤੇ ਨਿੱਜੀ ਹੈ—ਕੋਈ ਨਾਮ ਜਾਂ ਈਮੇਲ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਬੁਨਿਆਦੀ ਐਪ ਅਤੇ ਡਿਵਾਈਸ ਵੇਰਵੇ ਸਮੱਸਿਆਵਾਂ ਨੂੰ ਸਮਝਣ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰਦੇ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਨਿੱਜੀ ਵੇਰਵਿਆਂ ਜਾਂ ਗੱਲਬਾਤ ਨੂੰ ਛੱਡ ਦਿਓ।",
+      appearance: "ਦਿੱਖ",
+      themeSystem: "ਸਿਸਟਮ",
+      themeLight: "ਚਾਨਣ",
+      themeDark: "ਹਨੇਰਾ",
+      language: "ਭਾਸ਼ਾ",
+      siteTitle: "ChatGPT Read Aloud, ਨਿਯੰਤਰਣ ਦੇ ਨਾਲ ਜੋ ਜਾਰੀ ਰਹਿੰਦੇ ਹਨ।",
+      siteIntro: "ਰੋਕੋ, ਰੀਵਾਇੰਡ ਕਰੋ, ਪਲੇਬੈਕ ਸਪੀਡ ਬਦਲੋ ਅਤੇ ਆਡੀਓ ਡਾਊਨਲੋਡ ਕਰੋ। ਜਦੋਂ ਤੁਸੀਂ ਸੁਣਦੇ ਹੋ ਤਾਂ ਗੱਲਬਾਤ ਵਿੱਚ ਰਹੋ।",
+      chrome: "ਇਸਨੂੰ Chrome ਲਈ ਪ੍ਰਾਪਤ ਕਰੋ",
+      edge: "ਇਸ ਨੂੰ ਕਿਨਾਰੇ ਲਈ ਪ੍ਰਾਪਤ ਕਰੋ",
+      desktop: "ਡੈਸਕਟਾਪ Chrome, Edge ਅਤੇ ਅਨੁਕੂਲ ਬ੍ਰਾਊਜ਼ਰਾਂ ਲਈ। ਇੰਸਟਾਲ ਕਰਨ ਲਈ ਆਪਣੇ ਕੰਪਿਊਟਰ 'ਤੇ ਇਸ ਪੰਨੇ ਨੂੰ ਖੋਲ੍ਹੋ।",
+      features: "ਸੁਣੋ ਆਪਣਾ ਤਰੀਕਾ",
+      setup: "ਬਿਹਤਰ ਸੁਣਨ ਲਈ ਤਿੰਨ ਕਦਮ",
+      stepInstall: "ਆਪਣੇ ਬ੍ਰਾਊਜ਼ਰ ਦੇ ਸਟੋਰ ਤੋਂ ਐਕਸਟੈਂਸ਼ਨ ਨੂੰ ਸਥਾਪਿਤ ਕਰੋ।",
+      stepRead: "ChatGPT ਖੋਲ੍ਹੋ ਅਤੇ ਮੁਕੰਮਲ ਜਵਾਬ 'ਤੇ Read Aloud ਸ਼ੁਰੂ ਕਰੋ।",
+      stepControl: "ਪਲੇਅਰ ਤੋਂ ਆਡੀਓ ਨੂੰ ਰੋਕੋ, ਖੋਜੋ, ਸਪੀਡ ਬਦਲੋ ਜਾਂ ਸੇਵ ਕਰੋ।",
+      privacy: "ਗੋਪਨੀਯਤਾ",
+      privacyBody: "ਐਕਸਟੈਂਸ਼ਨ ਦਾ ਕੋਈ ਵਿਸ਼ਲੇਸ਼ਣ ਜਾਂ ਟੈਲੀਮੈਟਰੀ ਨਹੀਂ ਹੈ। ਆਡੀਓ ਅਤੇ ਗੱਲਬਾਤ ਦਾ ਪ੍ਰਬੰਧਨ ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਰਹਿੰਦਾ ਹੈ। ਬ੍ਰਾਊਜ਼ਰ ਸਿੰਕ ਤਰਜੀਹਾਂ ਨੂੰ ਸਮਕਾਲੀ ਕਰ ਸਕਦਾ ਹੈ।",
+      independent: "ਇਨਫੌਕਸਿਕਾ ਦੁਆਰਾ ਇੱਕ ਸੁਤੰਤਰ ਓਪਨ ਸੋਰਸ ਪ੍ਰੋਜੈਕਟ। OpenAI ਨਾਲ ਸੰਬੰਧਿਤ ਜਾਂ ਸਮਰਥਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ।",
+      analyticsTitle: "ਇਸ ਵੈੱਬਸਾਈਟ ਨੂੰ ਹੋਰ ਲਾਭਦਾਇਕ ਬਣਾਉਣ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰੋ",
+      analyticsBody: "ਇਹ ਜਾਣਨ ਵਿੱਚ ਸਾਡੀ ਮਦਦ ਕਰੋ ਕਿ ਕਿਹੜੇ ਪੰਨੇ ਉਪਯੋਗੀ ਹਨ ਅਤੇ ਲੋਕ ਐਕਸਟੈਂਸ਼ਨ ਨੂੰ ਕਿਵੇਂ ਖੋਜਦੇ ਹਨ। ਕੀ Google ਵਿਸ਼ਲੇਸ਼ਣ ਨੂੰ ਵੈੱਬਸਾਈਟ ਵਿਜ਼ਿਟਾਂ ਅਤੇ ਸਟੋਰ-ਲਿੰਕ ਕਲਿੱਕਾਂ ਨੂੰ ਮਾਪਣ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣੀ ਹੈ? ਐਕਸਟੈਂਸ਼ਨ ਅਤੇ ਅਣਇੰਸਟੌਲ ਸਰਵੇਖਣ ਵਿਸ਼ਲੇਸ਼ਣ ਤੋਂ ਮੁਕਤ ਰਹਿੰਦੇ ਹਨ। ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦ ਨੂੰ ਕਿਸੇ ਵੀ ਸਮੇਂ ਬਦਲ ਸਕਦੇ ਹੋ।",
+      accept: "ਵਿਸ਼ਲੇਸ਼ਣ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ",
+      decline: "ਨਹੀਂ ਧੰਨਵਾਦ",
+      preferences: "ਵਿਸ਼ਲੇਸ਼ਣ ਤਰਜੀਹਾਂ",
+      websitePrivacy: "ਇਹ ਵੈਬਸਾਈਟ ਗੂਗਲ ਵਿਸ਼ਲੇਸ਼ਣ ਦੀ ਵਰਤੋਂ ਉਦੋਂ ਹੀ ਕਰਦੀ ਹੈ ਜਦੋਂ ਤੁਸੀਂ ਇਸਦੀ ਇਜਾਜ਼ਤ ਦਿੰਦੇ ਹੋ। ਇਹ ਮੁਲਾਕਾਤਾਂ ਅਤੇ ਸਟੋਰ-ਲਿੰਕ ਕਲਿੱਕਾਂ ਨੂੰ ਮਾਪਦਾ ਹੈ, ਨਾ ਕਿ ਸਥਾਪਨਾਵਾਂ ਜਾਂ ਐਕਸਟੈਂਸ਼ਨ ਵਰਤੋਂ। ਤੁਸੀਂ ਵਿਸ਼ਲੇਸ਼ਣ ਤਰਜੀਹਾਂ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇਜਾਜ਼ਤ ਵਾਪਸ ਲੈ ਸਕਦੇ ਹੋ।",
+      feedbackPolicy: "ਅਨਇੰਸਟਾਲ ਕਰਨ ਤੋਂ ਬਾਅਦ ਵੀ ਤੁਹਾਡਾ ਫੀਡਬੈਕ ਵਿਕਲਪਿਕ ਅਤੇ ਨਿੱਜੀ ਹੈ। ਕੋਈ ਨਾਮ ਜਾਂ ਈਮੇਲ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਨਿੱਜੀ ਵੇਰਵੇ ਜਾਂ ਗੱਲਬਾਤ ਸ਼ਾਮਲ ਨਾ ਕਰੋ।",
+      screenshot: "ChatGPT Read Aloud ਪਲੇਬੈਕ ਨਿਯੰਤਰਣ",
+      available: "ਵਰਤਮਾਨ ਵਿੱਚ ਉਪਲਬਧ ਸੰਸਕਰਣ ਲਈ ਆਪਣੇ ਸਟੋਰ ਦੀ ਜਾਂਚ ਕਰੋ।",
+      website: "ਅਧਿਕਾਰਤ ਵੈੱਬਸਾਈਟ"
+    },
+    sk: {
+      hide: "Skryť plávajúce ovládacie prvky",
+      hideMode: "Keď je skrytý",
+      idleOnly: "Skryť iba nečinnú bublinu",
+      allUi: "Skryť bublinu a hráča",
+      hideHint: "Zvuk stále funguje. Obnovte ovládacie prvky tu alebo pomocou skratky.",
+      visibilityShortcut: "Zobraziť/skryť plávajúce ovládacie prvky",
+      unassigned: "Nepriradené",
+      customize: "Prispôsobiť skratku",
+      shortcutScope: "Tlačidlá prehrávania fungujú na ChatGPT mimo textových polí. Skratka viditeľnosti funguje aj pri písaní.",
+      quickStart: "Začnite počúvať",
+      quickStartBody: "Otvorte ChatGPT a spustite Read Aloud po dokončení odpovede. Použite prehrávač na pozastavenie, vyhľadávanie, zmenu rýchlosti alebo sťahovanie.",
+      dismiss: "Rozumiem",
+      help: "Pomocník a riešenie problémov",
+      pending: "Spúšťa sa Read Aloud…",
+      nativeHelp: "Spustite prehrávanie pomocou tlačidla Read Aloud na ChatGPT vedľa odpovede.",
+      playError: "Prehrávanie nebolo možné obnoviť. Spustite Read Aloud znova pomocou tlačidla odpovede ChatGPT.",
+      downloadError: "Zvuk sa nepodarilo stiahnuť. Spustite Read Aloud, počkajte na načítanie zvuku a skúste to znova.",
+      downloading: "Pripravuje sa sťahovanie…",
+      savedError: "Nastavenie nebolo možné uložiť. Skúste to znova.",
+      sourceFormat: "Sťahovanie používa formát zvuku, ktorý poskytuje ChatGPT. Rozšírenie neprevádza zvuk.",
+      compactHelp: "Keď je priestor obmedzený, nad oknom so správou sa zobrazia dve zaoblené ovládacie lišty.",
+      surveyTitle: "Prepáč, že odchádzaš 💛",
+      surveyIntro: "Ďakujeme, že ste vyskúšali ChatGPT Audio Controls. Čo sme mohli urobiť lepšie?",
+      surveyHint: "Vyberte jeden dôvod a odošlite. Nie je potrebné písať.",
+      reasonBroken: "Nefungovalo to správne.",
+      reasonIntrusive: "Bublina alebo hráč sa postavil do cesty.",
+      reasonSlow: "Spomalilo to ChatGPT alebo môj prehliadač.",
+      reasonDifficult: "Bolo ťažké ho použiť.",
+      reasonMissing: "Chýbala funkcia, ktorú som potreboval.",
+      reasonLanguage: "Môj jazyk nebol dobre podporovaný.",
+      reasonUnneeded: "Už to nepotrebujem.",
+      reasonOther: "Niečo iné.",
+      addNote: "Pridať poznámku – voliteľné",
+      noteHint: "Neuvádzajte konverzácie ani osobné údaje. Maximálne 1 000 znakov.",
+      send: "Odoslať spätnú väzbu",
+      feedbackIntro: "Povedzte nám, čo by mohlo fungovať lepšie. Vyberte kategóriu a pridajte voliteľnú poznámku.",
+      feedbackBug: "Nahlásiť chybu",
+      feedbackSuggestion: "Navrhnite zlepšenie",
+      feedbackThanks: "Ďakujem. Vaša spätná väzba bola uložená.",
+      sending: "Odosiela sa...",
+      skip: "Preskočiť spätnú väzbu",
+      thanks: "Ďakujeme, že nám pomáhate zlepšovať sa. Ste vždy vítaní späť.",
+      goodbye: "Ďakujeme, že ste nám to vyskúšali. opatruj sa!",
+      feedbackError: "Vaša spätná väzba nebola potvrdená. Skúste to znova; vaša odpoveď je stále tu.",
+      chooseReason: "Vyberte jeden dôvod na odoslanie spätnej väzby.",
+      feedbackPrivacy: "Pomôžte nám vylepšiť ChatGPT Audio Controls. Vaša spätná väzba je voliteľná a súkromná – nepotrebujete žiadne meno ani e-mail. Základné podrobnosti o aplikácii a zariadení nám pomáhajú porozumieť problémom. Prosím, vynechajte osobné údaje alebo konverzácie.",
+      appearance: "Vzhľad",
+      themeSystem: "System",
+      themeLight: "Svetlo",
+      themeDark: "Tmavý",
+      language: "Jazyk",
+      siteTitle: "ChatGPT Read Aloud s ovládacími prvkami, ktoré držia krok.",
+      siteIntro: "Pozastaviť, pretočiť dozadu, zmeniť rýchlosť prehrávania a stiahnuť zvuk. Počas počúvania zostaňte v konverzácii.",
+      chrome: "Získajte za Chrome",
+      edge: "Získajte to pre Edge",
+      desktop: "Pre stolné prehliadače Chrome, Edge a kompatibilné. Ak chcete nainštalovať, otvorte túto stránku v počítači.",
+      features: "Počúvaj svoju cestu",
+      setup: "Tri kroky k lepšiemu počúvaniu",
+      stepInstall: "Nainštalujte rozšírenie z obchodu prehliadača.",
+      stepRead: "Otvorte ChatGPT a spustite Read Aloud po dokončení odpovede.",
+      stepControl: "Pozastavenie, vyhľadávanie, zmena rýchlosti alebo uloženie zvuku z prehrávača.",
+      privacy: "Súkromie",
+      privacyBody: "Rozšírenie nemá žiadnu analytiku ani telemetriu. Spracovanie zvuku a konverzácií zostáva vo vašom prehliadači. Synchronizácia prehliadača môže synchronizovať predvoľby.",
+      independent: "Nezávislý open-source projekt od Infoxica. Nie je pridružený alebo podporovaný OpenAI.",
+      analyticsTitle: "Pomôžte nám urobiť túto webovú stránku užitočnejšou",
+      analyticsBody: "Pomôžte nám zistiť, ktoré stránky sú užitočné a ako ľudia objavujú rozšírenie. Povoliť službe Google Analytics merať návštevy webových stránok a kliknutia na odkazy v obchode? Prieskum rozšírenia a odinštalovania zostáva bez analytiky. Svoj výber môžete kedykoľvek zmeniť.",
+      accept: "Povoliť analýzu",
+      decline: "Nie, ďakujem",
+      preferences: "Predvoľby služby Analytics",
+      websitePrivacy: "Táto webová stránka používa službu Google Analytics iba vtedy, keď to povolíte. Meria návštevy a kliknutia na odkazy v obchode, nie inštalácie alebo používanie rozšírení. Povolenie môžete zrušiť pomocou predvolieb služby Analytics.",
+      feedbackPolicy: "Vaša spätná väzba je voliteľná a súkromná, a to aj po odinštalovaní. Nevyžaduje sa žiadne meno ani e-mail. Neuvádzajte osobné údaje ani konverzácie.",
+      screenshot: "Ovládanie prehrávania ChatGPT Read Aloud",
+      available: "Aktuálne dostupnú verziu nájdete vo svojom obchode.",
+      website: "Oficiálna webová stránka"
+    },
+    sl: {
+      hide: "Skrij plavajoče kontrolnike",
+      hideMode: "Ko je skrito",
+      idleOnly: "Skrij samo nedejanski oblaček",
+      allUi: "Skrij oblaček in predvajalnik",
+      hideHint: "Zvok še naprej deluje. Obnovite kontrole tukaj ali z bližnjico.",
+      visibilityShortcut: "Pokaži/skrij plavajoče kontrolnike",
+      unassigned: "Ni dodeljeno",
+      customize: "Prilagodite bližnjico",
+      shortcutScope: "Tipke za predvajanje delujejo na ChatGPT zunaj besedilnih polj. Bližnjica vidnosti deluje tudi med tipkanjem.",
+      quickStart: "Začnite poslušati",
+      quickStartBody: "Odprite ChatGPT in zaženite Read Aloud ob končanem odgovoru. Uporabite predvajalnik za premor, iskanje, spreminjanje hitrosti ali prenos.",
+      dismiss: "Razumem",
+      help: "Pomoč in odpravljanje težav",
+      pending: "Zagon Read Aloud…",
+      nativeHelp: "Začnite predvajanje z gumbom Read Aloud ChatGPT poleg odgovora.",
+      playError: "Predvajanja ni bilo mogoče nadaljevati. Ponovno zaženite Read Aloud z odzivnim gumbom ChatGPT.",
+      downloadError: "Zvoka ni bilo mogoče prenesti. Zaženite Read Aloud, počakajte, da se zvok naloži, nato poskusite znova.",
+      downloading: "Priprava prenosa ...",
+      savedError: "Nastavitve ni bilo mogoče shraniti. prosim poskusite znova",
+      sourceFormat: "Prenosi uporabljajo zvočni format, ki ga ponuja ChatGPT. Razširitev ne pretvarja zvoka.",
+      compactHelp: "Ko je prostor omejen, se nad poljem za sporočila pojavita dve zaobljeni kontrolni vrstici.",
+      surveyTitle: "Žal mi je, da odhajaš 💛",
+      surveyIntro: "Hvala, ker ste preizkusili ChatGPT Audio Controls. Kaj bi lahko naredili bolje?",
+      surveyHint: "Izberite en razlog in pošljite. Tipkanje ni potrebno.",
+      reasonBroken: "Ni delovalo pravilno.",
+      reasonIntrusive: "Mehurček ali igralec je bil v napoto.",
+      reasonSlow: "Upočasnil je ChatGPT ali moj brskalnik.",
+      reasonDifficult: "Težko ga je bilo uporabljati.",
+      reasonMissing: "Manjkala je funkcija, ki sem jo potreboval.",
+      reasonLanguage: "Moj jezik ni bil dobro podprt.",
+      reasonUnneeded: "Ne potrebujem ga več.",
+      reasonOther: "Še nekaj.",
+      addNote: "Dodajte opombo — neobvezno",
+      noteHint: "Prosimo, ne vključujte pogovorov ali osebnih podatkov. Največ 1000 znakov.",
+      send: "Pošlji povratne informacije",
+      feedbackIntro: "Povejte nam, kaj bi lahko delovalo bolje. Izberite kategorijo in dodajte neobvezno opombo.",
+      feedbackBug: "Prijavite napako",
+      feedbackSuggestion: "Predlagaj izboljšavo",
+      feedbackThanks: "Hvala. Vaše povratne informacije so bile shranjene.",
+      sending: "Pošiljanje ...",
+      skip: "Preskoči povratne informacije",
+      thanks: "Hvala, ker nam pomagate izboljšati. Vedno ste dobrodošli nazaj.",
+      goodbye: "Hvala, ker ste nam omogočili poskus. pazi nase!",
+      feedbackError: "Vaša povratna informacija ni bila potrjena. Poskusite ponovno; tvoj odgovor je še vedno tukaj.",
+      chooseReason: "Izberite en razlog za pošiljanje povratnih informacij.",
+      feedbackPrivacy: "Pomagajte nam izboljšati ChatGPT Audio Controls. Vaše povratne informacije so neobvezne in zasebne – ime ali e-pošta nista potrebna. Osnovne podrobnosti o aplikaciji in napravi nam pomagajo razumeti težave. Prosimo, izpustite osebne podatke ali pogovore.",
+      appearance: "Videz",
+      themeSystem: "Sistem",
+      themeLight: "Svetloba",
+      themeDark: "Temno",
+      language: "Jezik",
+      siteTitle: "ChatGPT Read Aloud, s kontrolniki, ki sledijo.",
+      siteIntro: "Premor, previjanje nazaj, spreminjanje hitrosti predvajanja in prenos zvoka. Med poslušanjem ostanite v pogovoru.",
+      chrome: "Dobite ga za Chrome",
+      edge: "Dobite ga za Edge",
+      desktop: "Za namizne brskalnike Chrome, Edge in združljive brskalnike. Za namestitev odprite to stran v računalniku.",
+      features: "Poslušaj svoj način",
+      setup: "Trije koraki do boljšega poslušanja",
+      stepInstall: "Namestite razširitev iz trgovine vašega brskalnika.",
+      stepRead: "Odprite ChatGPT in zaženite Read Aloud ob končanem odgovoru.",
+      stepControl: "Začasno ustavite, poiščite, spremenite hitrost ali shranite zvok iz predvajalnika.",
+      privacy: "Zasebnost",
+      privacyBody: "Razširitev nima analitike ali telemetrije. Upravljanje zvoka in pogovorov ostane v vašem brskalniku. Sinhronizacija brskalnika lahko sinhronizira nastavitve.",
+      independent: "Neodvisen odprtokodni projekt podjetja Infoxica. Ni povezan z OpenAI ali ga podpira.",
+      analyticsTitle: "Pomagajte nam narediti to spletno stran bolj uporabno",
+      analyticsBody: "Pomagajte nam izvedeti, katere strani so uporabne in kako ljudje odkrijejo razširitev. Ali želite storitvi Google Analytics dovoliti merjenje obiskov spletnega mesta in klikov povezav do trgovin? Anketa o razširitvah in odstranitvah ostane brez analitike. Svojo izbiro lahko kadar koli spremenite.",
+      accept: "Dovoli analitiko",
+      decline: "Ne hvala",
+      preferences: "Nastavitve analitike",
+      websitePrivacy: "To spletno mesto uporablja Google Analytics samo, če to dovolite. Meri obiske in klike povezav do trgovin, ne pa namestitve ali uporabe razširitev. Dovoljenje lahko prekličete z nastavitvami storitve Analytics.",
+      feedbackPolicy: "Vaše povratne informacije so neobvezne in zasebne, tudi po odstranitvi. Ime ali e-pošta nista potrebna. Ne vključujte osebnih podatkov ali pogovorov.",
+      screenshot: "ChatGPT Read Aloud kontrolniki za predvajanje",
+      available: "Preverite svojo trgovino za trenutno razpoložljivo različico.",
+      website: "Uradna spletna stran"
+    },
+    so: {
+      hide: "Qari kontaroolada sabaynaya",
+      hideMode: "Marka la qariyo",
+      idleOnly: "Qari xumbo aan shaqayn oo kaliya",
+      allUi: "Qari xumbo iyo ciyaaryahan",
+      hideHint: "Maqalku wuu sii shaqaynayaa. Ku soo celi kontaroolada halkan ama jidka gaaban.",
+      visibilityShortcut: "Muuji / qari kontaroolada sabaynaya",
+      unassigned: "Laguma magacaabin",
+      customize: "Habbee habka gaaban",
+      shortcutScope: "Furayaasha dib-u-ciyaartu waxay ku shaqeeyaan ChatGPT meelaha qoraalka ka baxsan. Habka gaaban ee muuqaalku wuu shaqeeyaa marka la qorayo.",
+      quickStart: "Bilow dhegeysiga",
+      quickStartBody: "Fur ChatGPT oo billow Read Aloud jawaab dhamaystiran. Isticmaal ciyaaryahanka si aad u hakiso, u raadiso, u beddesho xawaaraha, ama u soo dejiso.",
+      dismiss: "Waan helay",
+      help: "Caawin iyo cilad-baadhis",
+      pending: "Laga bilaabo Read Aloud…",
+      nativeHelp: "Ku bilow dib u ciyaarista badhanka ChatGPT ee badhanka jawaabta agtiisa.",
+      playError: "Dib u ciyaarista dib uma bilaabi karto Mar labaad ku bilow Read Aloud addoo isticmaalaya badhanka jawaabta ChatGPT.",
+      downloadError: "Maqalka lama soo dejin karo Bilow Read Aloud, sug inta codku soo shubanayo, ka dibna isku day mar kale.",
+      downloading: "Diyaarinta soo dejintaada…",
+      savedError: "Goobta waa la badbaadin kari waayay. Fadlan isku day mar kale",
+      sourceFormat: "Soodejintu waxay isticmaashaa qaabka maqalka ah ee ay bixiso ChatGPT. Kordhigu ma beddelo codka",
+      compactHelp: "Marka boosku xaddidan yahay, laba baarar kontorool oo wareegsan ayaa ka muuqda sanduuqa farriinta korkiisa.",
+      surveyTitle: "Waan ka xunahay inaan arko adiga oo socda 💛",
+      surveyIntro: "Waad ku mahadsan tahay inaad tijaabisay ChatGPT Audio Controls. Maxaan ka fiicnaan lahayn?",
+      surveyHint: "Dooro hal sabab oo dir. Looma baahna wax qoris",
+      reasonBroken: "Si sax ah uma shaqeyn.",
+      reasonIntrusive: "Xumbo ama ciyaaryahan ayaa jidka galay.",
+      reasonSlow: "Waxay hoos u dhigtay ChatGPT ama browserkayga.",
+      reasonDifficult: "Way adkeyd in la isticmaalo.",
+      reasonMissing: "Muuqaal aan u baahnaa ayaa maqan",
+      reasonLanguage: "Luuqadayda si fiican looma taageerin.",
+      reasonUnneeded: "Uma baahni hadda.",
+      reasonOther: "Wax kale.",
+      addNote: "Ku dar qoraal - ikhtiyaari",
+      noteHint: "Fadlan ha ku darin wada sheekaysiga ama faahfaahinta shakhsi ahaaneed. Ugu badnaan 1,000 xaraf",
+      send: "Soo dir jawaab celin",
+      feedbackIntro: "Noo sheeg waxa si fiican u shaqayn kara. Dooro qayb oo ku dar qoraal ikhtiyaari ah.",
+      feedbackBug: "Ka warbixi cilad",
+      feedbackSuggestion: "Soo jeedi horumar",
+      feedbackThanks: "Waad ku mahadsan tahay. Jawaab celintaadii waa la keydiyay",
+      sending: "Diraya...",
+      skip: "Ka bood jawaab celinta",
+      thanks: "Waad ku mahadsan tahay inaad naga caawisay horumarinta. Had iyo jeer waa lagu soo dhaweynayaa.",
+      goodbye: "Waad ku mahadsan tahay inaad na tijaabisay. Iska ilaali!",
+      feedbackError: "Jawaab celintaada lama xaqiijin. Fadlan isku day mar kale; jawaabtaadu wali waa halkan",
+      chooseReason: "Dooro hal sabab oo aad jawaab celin ugu dirto.",
+      feedbackPrivacy: "Naga caawi inaan ka dhigno ChatGPT Audio Controls. Jawaab celintaadu waa ikhtiyaari waana gaar-magac ama iimayl looma baahna. Faahfaahinta abka iyo aaladda aasaasiga ah waxay naga caawiyaan fahamka arrimaha. Fadlan ka tag tafaasiisha gaarka ah ama wada hadalka",
+      appearance: "Muuqashada",
+      themeSystem: "Nidaamka",
+      themeLight: "Iftiin",
+      themeDark: "Madow",
+      language: "Luuqadda",
+      siteTitle: "ChatGPT Read Aloud, oo leh kontaroolo ilaalinaya.",
+      siteIntro: "Haki, dib u celi, beddel xawaaraha dib u ciyaarista oo soo deji codka Ku dhex jir sheekada intaad dhegaysanayso.",
+      chrome: "U hel Chrome",
+      edge: "U hel Edge",
+      desktop: "Loogu talagalay desktop Chrome, Edge iyo daalacashada ku habboon. Ka fur boggan kombiyuutarkaaga si aad u rakibto.",
+      features: "Dhagayso jidkaaga",
+      setup: "Saddex tillaabo oo dhegaysi wanaagsan lagu qaadayo",
+      stepInstall: "Ku rakib kordhinta bakhaarka biraawsarkaaga.",
+      stepRead: "Fur ChatGPT oo billow Read Aloud jawaab dhamaystiran.",
+      stepControl: "Haki, raadi, beddel xawaaraha ama ka badbaadi codka cayaartoyga.",
+      privacy: "Qarsoodi",
+      privacyBody: "Kordhintu ma laha falanqayn ama telemetry. Maqalka iyo wada sheekeysiga ayaa ku jira browserkaaga. Isku xidhka Browser waxa laga yaabaa in uu is waafajiyo dookhyada.",
+      independent: "Mashruuc il furan oo madax banaan oo ay leedahay Infoxica. Aan ku xidhnayn ama taageersanayn OpenAI.",
+      analyticsTitle: "Naga caawi inaan ka dhigno boggan mid faa'iido leh",
+      analyticsBody: "Naga caawi inaan barano bogag faa'iido leh iyo sida dadku u ogaadaan kordhinta. U ogolow Google Analytics inuu cabbiro booqashooyinka mareegaha iyo gujisyada isku xidhka dukaanka? Sahanka kordhinta iyo uninstall-ka ayaa xor ka ah falanqaynta. Waxaad bedeli kartaa doorashadaada wakhti kasta.",
+      accept: "Oggolow falanqaynta",
+      decline: "Maya mahadsanid",
+      preferences: "Dookhyada falanqaynta",
+      websitePrivacy: "Mareegtan waxay isticmaashaa Google Analytics kaliya ka dib markaad ogolaato. Waxay cabbirtaa booqashooyinka iyo gujisyada isku xidhka dukaanka, maaha rakibaadda ama isticmaalka kordhinta. Waxaad kala noqon kartaa oggolaanshaha adiga oo isticmaalaya dookhyada falanqaynta.",
+      feedbackPolicy: "Jawaab celintaadu waa ikhtiyaari waana mid gaar ah, xitaa ka dib markii la furo. Magac ama iimayl looma baahna. Fadlan ha ku darin faahfaahinta gaarka ah ama wada sheekaysiga",
+      screenshot: "ChatGPT Read Aloud kontaroolada dib u ciyaarida",
+      available: "Ka hubi dukaankaaga nooca hadda jira.",
+      website: "Mareegta rasmiga ah"
+    },
+    sq: {
+      hide: "Fshih kontrollet lundruese",
+      hideMode: "Kur fshihet",
+      idleOnly: "Fshih vetëm flluskën e papunë",
+      allUi: "Fshih flluskën dhe luajtësin",
+      hideHint: "Audioja vazhdon të funksionojë. Rikthe kontrollet këtu ose me shkurtoren.",
+      visibilityShortcut: "Shfaq / fshih kontrollet lundruese",
+      unassigned: "Nuk është caktuar",
+      customize: "Personalizo shkurtoren",
+      shortcutScope: "Tastet e luajtjes funksionojnë në ChatGPT jashtë fushave të tekstit. Shkurtorja e dukshmërisë funksionon gjithashtu gjatë shtypjes.",
+      quickStart: "Fillo të dëgjosh",
+      quickStartBody: "Hap ChatGPT dhe nis Read Aloud në një përgjigje të përfunduar. Përdorni luajtësin për të ndalur, kërkuar, ndryshuar shpejtësinë ose shkarkimin.",
+      dismiss: "E kuptova",
+      help: "Ndihma dhe zgjidhja e problemeve",
+      pending: "Nis Read Aloud…",
+      nativeHelp: "Filloni riprodhimin me butonin Read Aloud të ChatGPT pranë përgjigjes.",
+      playError: "Luajtja nuk mund të rifillonte. Niseni sërish Read Aloud duke përdorur butonin e përgjigjes së ChatGPT.",
+      downloadError: "Audioja nuk mund të shkarkohej. Nis Read Aloud, prit që audio të ngarkohet dhe provo sërish.",
+      downloading: "Po përgatit shkarkimin tuaj…",
+      savedError: "Cilësimi nuk mund të ruhej. Ju lutemi provoni përsëri.",
+      sourceFormat: "Shkarkimet përdorin formatin audio të ofruar nga ChatGPT. Shtesa nuk konverton audio.",
+      compactHelp: "Kur hapësira është e kufizuar, dy shirita kontrolli të rrumbullakosura shfaqen mbi kutinë e mesazheve.",
+      surveyTitle: "Më vjen keq që po ju shoh që po shkoni 💛",
+      surveyIntro: "Faleminderit që provove ChatGPT Audio Controls. Çfarë mund të kishim bërë më mirë?",
+      surveyHint: "Zgjidh një arsye dhe dërgo. Nuk ka nevojë për shtypje.",
+      reasonBroken: "Nuk funksionoi si duhet.",
+      reasonIntrusive: "Flluska ose lojtari u penguan.",
+      reasonSlow: "Ai ngadalësoi ChatGPT ose shfletuesin tim.",
+      reasonDifficult: "Ishte e vështirë për t'u përdorur.",
+      reasonMissing: "Mungonte një veçori që më duhej.",
+      reasonLanguage: "Gjuha ime nuk u mbështet mirë.",
+      reasonUnneeded: "Nuk kam më nevojë për të.",
+      reasonOther: "Diçka tjetër.",
+      addNote: "Shto një shënim — opsionale",
+      noteHint: "Ju lutemi, mos përfshini biseda ose detaje personale. Maksimumi 1000 karaktere.",
+      send: "Dërgo komente",
+      feedbackIntro: "Na tregoni se çfarë mund të funksionojë më mirë. Zgjidhni një kategori dhe shtoni një shënim opsional.",
+      feedbackBug: "Raportoni një defekt",
+      feedbackSuggestion: "Sugjeroni një përmirësim",
+      feedbackThanks: "Faleminderit. Komentet tuaja janë ruajtur.",
+      sending: "Po dërgohet…",
+      skip: "Kapërce komentet",
+      thanks: "Faleminderit që na ndihmove të përmirësohemi. Jeni gjithmonë të mirëpritur.",
+      goodbye: "Faleminderit që na provove. Kujdesuni!",
+      feedbackError: "Komentet tuaja nuk u konfirmuan. Ju lutemi provoni përsëri; përgjigja juaj është ende këtu.",
+      chooseReason: "Zgjidh një arsye për të dërguar komente.",
+      feedbackPrivacy: "Na ndihmo ta bëjmë ChatGPT Audio Controls më të mirë. Komentet tuaja janë opsionale dhe private—nuk nevojitet emër apo email. Detajet bazë të aplikacionit dhe pajisjes na ndihmojnë të kuptojmë problemet. Ju lutemi mos harroni detajet personale ose bisedat.",
+      appearance: "Pamja",
+      themeSystem: "Sistemi",
+      themeLight: "Dritë",
+      themeDark: "E errët",
+      language: "Gjuha",
+      siteTitle: "ChatGPT Read Aloud, me kontrolle që vazhdojnë.",
+      siteIntro: "Pushoni, ktheni prapa, ndryshoni shpejtësinë e riprodhimit dhe shkarkoni audion. Qëndroni në bisedë ndërsa dëgjoni.",
+      chrome: "Merreni për Chrome",
+      edge: "Merreni për Edge",
+      desktop: "Për desktop Chrome, Edge dhe shfletues të pajtueshëm. Hapeni këtë faqe në kompjuterin tuaj për ta instaluar.",
+      features: "Dëgjoni rrugën tuaj",
+      setup: "Tre hapa për të dëgjuar më mirë",
+      stepInstall: "Instaloni shtesën nga dyqani i shfletuesit tuaj.",
+      stepRead: "Hap ChatGPT dhe nis Read Aloud në një përgjigje të përfunduar.",
+      stepControl: "Ndalo, kërko, ndrysho shpejtësinë ose ruaje audion nga luajtësi.",
+      privacy: "Privatësia",
+      privacyBody: "Shtesa nuk ka analitikë ose telemetri. Trajtimi i audios dhe bisedave qëndrojnë në shfletuesin tuaj. Sinkronizimi i shfletuesit mund të sinkronizojë preferencat.",
+      independent: "Një projekt i pavarur me burim të hapur nga Infoxica. Nuk është i lidhur ose i miratuar nga OpenAI.",
+      analyticsTitle: "Na ndihmoni ta bëjmë këtë faqe interneti më të dobishme",
+      analyticsBody: "Na ndihmo të mësojmë se cilat faqe janë të dobishme dhe si njerëzit e zbulojnë shtesën. Të lejohet Google Analytics të matë vizitat në uebsajt dhe klikimet e lidhjeve në dyqan? Anketa e zgjatjes dhe e çinstalimit qëndron pa analiza. Ju mund të ndryshoni zgjedhjen tuaj në çdo kohë.",
+      accept: "Lejo analitikën",
+      decline: "Jo faleminderit",
+      preferences: "Preferencat e analitikës",
+      websitePrivacy: "Kjo faqe interneti përdor Google Analytics vetëm pasi ta lejoni. Ai mat vizitat dhe klikimet e lidhjeve në dyqan, jo instalimet ose përdorimin e shtesave. Mund të tërhiqni lejen duke përdorur preferencat e Analytics.",
+      feedbackPolicy: "Komentet tuaja janë opsionale dhe private, edhe pas çinstalimit. Nuk kërkohet emër ose email. Ju lutemi, mos përfshini detaje ose biseda personale.",
+      screenshot: "ChatGPT Read Aloud kontrollet e luajtjes",
+      available: "Kontrolloni dyqanin tuaj për versionin e disponueshëm aktualisht.",
+      website: "Faqja zyrtare e internetit"
+    },
+    sr: {
+      hide: "Сакриј плутајуће контроле",
+      hideMode: "Када је скривен",
+      idleOnly: "Сакриј само мехур у стању мировања",
+      allUi: "Сакриј балон и играча",
+      hideHint: "Аудио наставља да ради. Вратите контроле овде или помоћу пречице.",
+      visibilityShortcut: "Прикажи/сакриј плутајуће контроле",
+      unassigned: "Није додељено",
+      customize: "Прилагодите пречицу",
+      shortcutScope: "Тастери за репродукцију раде на ChatGPT ван текстуалних поља. Пречица за видљивост такође функционише док куцате.",
+      quickStart: "Почните да слушате",
+      quickStartBody: "Отворите ChatGPT и покрените Read Aloud по завршеном одговору. Користите плејер за паузирање, тражење, промену брзине или преузимање.",
+      dismiss: "Схватио сам",
+      help: "Помоћ и решавање проблема",
+      pending: "Покретање Read Aloud…",
+      nativeHelp: "Започните репродукцију помоћу ChatGPT дугмета Read Aloud поред одговора.",
+      playError: "Репродукција није могла да се настави. Поново покрените Read Aloud помоћу дугмета за одговор ChatGPT.",
+      downloadError: "Није могуће преузети аудио. Покрените Read Aloud, сачекајте да се аудио учита, а затим покушајте поново.",
+      downloading: "Припрема се преузимање…",
+      savedError: "Није могуће сачувати подешавање. Покушајте поново.",
+      sourceFormat: "Преузимања користе аудио формат који обезбеђује ChatGPT. Екстензија не претвара аудио.",
+      compactHelp: "Када је простор ограничен, изнад оквира за поруке појављују се две заобљене контролне траке.",
+      surveyTitle: "Жао ми је што одлазите 💛",
+      surveyIntro: "Хвала што сте испробали ChatGPT Audio Controls. Шта смо могли боље?",
+      surveyHint: "Изаберите један разлог и пошаљите. Није потребно куцање.",
+      reasonBroken: "Није функционисало како треба.",
+      reasonIntrusive: "Мехур или играч је стао на пут.",
+      reasonSlow: "Успорио је ChatGPT или мој претраживач.",
+      reasonDifficult: "Било је тешко користити.",
+      reasonMissing: "Недостајала ми је функција која ми је била потребна.",
+      reasonLanguage: "Мој језик није добро подржан.",
+      reasonUnneeded: "Не треба ми више.",
+      reasonOther: "Још нешто.",
+      addNote: "Додајте белешку — опционо",
+      noteHint: "Немојте укључивати разговоре или личне податке. Највише 1000 знакова.",
+      send: "Пошаљите повратне информације",
+      feedbackIntro: "Реците нам шта би могло боље да функционише. Одаберите категорију и додајте опционалну напомену.",
+      feedbackBug: "Пријавите грешку",
+      feedbackSuggestion: "Предложите побољшање",
+      feedbackThanks: "Хвала. Ваше повратне информације су сачуване.",
+      sending: "Слање…",
+      skip: "Прескочи повратне информације",
+      thanks: "Хвала вам што нам помажете да побољшамо. Увек сте добродошли назад.",
+      goodbye: "Хвала што сте нам покушали. Чувајте се!",
+      feedbackError: "Ваше повратне информације нису потврђене. Покушајте поново; ваш одговор је још увек овде.",
+      chooseReason: "Изаберите један разлог за слање повратних информација.",
+      feedbackPrivacy: "Помозите нам да побољшамо ChatGPT Audio Controls. Ваше повратне информације су опционе и приватне – није потребно име или имејл. Основни детаљи о апликацији и уређају нам помажу да разумемо проблеме. Изоставите личне податке или разговоре.",
+      appearance: "Изглед",
+      themeSystem: "Систем",
+      themeLight: "Светло",
+      themeDark: "Тамно",
+      language: "Језик",
+      siteTitle: "ChatGPT Read Aloud, са контролама које иду у корак.",
+      siteIntro: "Паузирајте, премотајте уназад, промените брзину репродукције и преузмите аудио. Останите у разговору док слушате.",
+      chrome: "Набавите за Chrome",
+      edge: "Узмите за Едге",
+      desktop: "За десктоп Chrome, Едге и компатибилне претраживаче. Отворите ову страницу на свом рачунару да бисте је инсталирали.",
+      features: "Слушајте свој начин",
+      setup: "Три корака до бољег слушања",
+      stepInstall: "Инсталирајте екстензију из продавнице вашег претраживача.",
+      stepRead: "Отворите ChatGPT и покрените Read Aloud по завршеном одговору.",
+      stepControl: "Паузирајте, тражите, промените брзину или сачувајте звук са плејера.",
+      privacy: "Приватност",
+      privacyBody: "Екстензија нема аналитику или телеметрију. Управљање звуком и разговором остаје у вашем претраживачу. Синхронизација прегледача може да синхронизује подешавања.",
+      independent: "Независни пројекат отвореног кода компаније Инфокица. Није повезан са ОпенАИ-ом нити га подржава.",
+      analyticsTitle: "Помозите нам да ову веб локацију учинимо кориснијом",
+      analyticsBody: "Помозите нам да сазнамо које су странице корисне и како људи откривају проширење. Дозволити Гоогле аналитици да мери посете веб-сајту и кликове на линкове до продавнице? Анкета о проширењу и деинсталирању остаје без аналитике. Можете променити свој избор у било ком тренутку.",
+      accept: "Дозволи аналитику",
+      decline: "Не хвала",
+      preferences: "Подешавања аналитике",
+      websitePrivacy: "Ова веб локација користи Гоогле аналитику само након што ви то дозволите. Мери посете и кликове на линкове до продавнице, а не инсталације или употребу додатака. Можете да повучете дозволу користећи подешавања Аналитике.",
+      feedbackPolicy: "Ваше повратне информације су опционе и приватне, чак и након деинсталирања. Није потребно име или имејл. Немојте укључивати личне податке или разговоре.",
+      screenshot: "ChatGPT Read Aloud контроле репродукције",
+      available: "Проверите своју продавницу за тренутно доступну верзију.",
+      website: "Званичан веб-сајт"
+    },
+    sw: {
+      hide: "Ficha vidhibiti vinavyoelea",
+      hideMode: "Inapofichwa",
+      idleOnly: "Ficha kiputo kisicho na kitu pekee",
+      allUi: "Ficha kiputo na mchezaji",
+      hideHint: "Sauti inaendelea kufanya kazi. Rejesha vidhibiti hapa au kwa njia ya mkato.",
+      visibilityShortcut: "Onyesha / ficha vidhibiti vinavyoelea",
+      unassigned: "Haijatumwa",
+      customize: "Geuza kukufaa njia ya mkato",
+      shortcutScope: "Vifunguo vya kucheza hufanya kazi kwenye ChatGPT nje ya sehemu za maandishi. Njia ya mkato ya mwonekano pia inafanya kazi wakati wa kuandika.",
+      quickStart: "Anza kusikiliza",
+      quickStartBody: "Fungua ChatGPT na uanze Read Aloud kwa jibu lililokamilika. Tumia kichezaji kusitisha, kutafuta, kubadilisha kasi au kupakua.",
+      dismiss: "Nimeielewa",
+      help: "Usaidizi na utatuzi",
+      pending: "Kuanzia Read Aloud...",
+      nativeHelp: "Anza kucheza tena na kitufe cha Read Aloud cha ChatGPT kando ya jibu.",
+      playError: "Uchezaji haukuweza kuendelea. Anzisha Read Aloud tena kwa kutumia kitufe cha majibu cha ChatGPT.",
+      downloadError: "Sauti haikuweza kupakuliwa. Anzisha Read Aloud, subiri sauti ipakiwe, kisha ujaribu tena.",
+      downloading: "Inatayarisha upakuaji wako...",
+      savedError: "Mipangilio haikuweza kuhifadhiwa. Tafadhali jaribu tena.",
+      sourceFormat: "Vipakuliwa hutumia umbizo la sauti lililotolewa na ChatGPT. Kiendelezi hakibadilishi sauti.",
+      compactHelp: "Wakati nafasi ni chache, pau mbili za udhibiti zenye mviringo huonekana juu ya kisanduku cha ujumbe.",
+      surveyTitle: "Samahani kukuona ukienda 💛",
+      surveyIntro: "Asante kwa kujaribu ChatGPT Audio Controls. Je, tungeweza kufanya nini vizuri zaidi?",
+      surveyHint: "Chagua sababu moja na utume. Hakuna haja ya kuandika.",
+      reasonBroken: "Haikufanya kazi ipasavyo.",
+      reasonIntrusive: "Kiputo au mchezaji aliingilia njia.",
+      reasonSlow: "Ilipunguza kasi ya ChatGPT au kivinjari changu.",
+      reasonDifficult: "Ilikuwa ngumu kutumia.",
+      reasonMissing: "Kipengele nilichohitaji kilikosekana.",
+      reasonLanguage: "Lugha yangu haikuauniwa vyema.",
+      reasonUnneeded: "Sihitaji tena.",
+      reasonOther: "Kitu kingine.",
+      addNote: "Ongeza dokezo - hiari",
+      noteHint: "Tafadhali usijumuishe mazungumzo au maelezo ya kibinafsi. Upeo wa herufi 1,000.",
+      send: "Tuma maoni",
+      feedbackIntro: "Tuambie ni nini kinachoweza kufanya kazi vizuri zaidi. Chagua kategoria na uongeze dokezo la hiari.",
+      feedbackBug: "Ripoti hitilafu",
+      feedbackSuggestion: "Pendekeza uboreshaji",
+      feedbackThanks: "Asante. Maoni yako yamehifadhiwa.",
+      sending: "Inatuma...",
+      skip: "Ruka maoni",
+      thanks: "Asante kwa kutusaidia kuboresha. Unakaribishwa tena kila wakati.",
+      goodbye: "Asante kwa kutujaribu. Jihadharini!",
+      feedbackError: "Maoni yako hayakuthibitishwa. Tafadhali jaribu tena; jibu lako bado liko hapa.",
+      chooseReason: "Chagua sababu moja ya kutuma maoni.",
+      feedbackPrivacy: "Tusaidie kuboresha ChatGPT Audio Controls. Maoni yako ni ya hiari na ya faragha—hakuna jina au barua pepe zinazohitajika. Maelezo ya msingi ya programu na kifaa hutusaidia kuelewa masuala. Tafadhali acha maelezo ya kibinafsi au mazungumzo.",
+      appearance: "Muonekano",
+      themeSystem: "Mfumo",
+      themeLight: "Mwanga",
+      themeDark: "Giza",
+      language: "Lugha",
+      siteTitle: "ChatGPT Read Aloud, yenye vidhibiti vinavyoendelea.",
+      siteIntro: "Sitisha, rudisha nyuma, badilisha kasi ya kucheza na upakue sauti. Kaa kwenye mazungumzo huku ukisikiliza.",
+      chrome: "Ipate kwa Chrome",
+      edge: "Ipate kwa Edge",
+      desktop: "Kwa kompyuta ya mezani Chrome, Edge na vivinjari vinavyooana. Fungua ukurasa huu kwenye kompyuta yako ili usakinishe.",
+      features: "Sikiliza njia yako",
+      setup: "Hatua tatu za usikilizaji bora",
+      stepInstall: "Sakinisha kiendelezi kutoka kwenye duka la kivinjari chako.",
+      stepRead: "Fungua ChatGPT na uanze Read Aloud kwa jibu lililokamilika.",
+      stepControl: "Sitisha, tafuta, badilisha kasi au hifadhi sauti kutoka kwa kichezaji.",
+      privacy: "Faragha",
+      privacyBody: "Kiendelezi hakina uchanganuzi au telemetry. Ushughulikiaji wa sauti na mazungumzo hukaa kwenye kivinjari chako. Usawazishaji wa kivinjari unaweza kulandanisha mapendeleo.",
+      independent: "Mradi huru wa chanzo huria na Infoxica. Haihusiani na au kuidhinishwa na OpenAI.",
+      analyticsTitle: "Tusaidie kufanya tovuti hii iwe muhimu zaidi",
+      analyticsBody: "Tusaidie kujua ni kurasa zipi zinazofaa na jinsi watu wanavyogundua kiendelezi. Ungependa kuruhusu Google Analytics kupima matembeleo ya tovuti na mibofyo ya kiungo cha duka? Utafiti wa viendelezi na uondoaji hubaki bila uchanganuzi. Unaweza kubadilisha chaguo lako wakati wowote.",
+      accept: "Ruhusu uchanganuzi",
+      decline: "Hapana, asante",
+      preferences: "Mapendeleo ya uchanganuzi",
+      websitePrivacy: "Tovuti hii hutumia Google Analytics baada tu ya kuiruhusu. Hupima matembeleo na mibofyo ya kiungo cha duka, si usakinishaji au matumizi ya kiendelezi. Unaweza kuondoa ruhusa kwa kutumia mapendeleo ya Analytics.",
+      feedbackPolicy: "Maoni yako ni ya hiari na ya faragha, hata baada ya kusanidua. Hakuna jina au barua pepe inahitajika. Tafadhali usijumuishe maelezo ya kibinafsi au mazungumzo.",
+      screenshot: "ChatGPT Read Aloud vidhibiti vya uchezaji",
+      available: "Angalia duka lako kwa toleo linalopatikana kwa sasa.",
+      website: "Tovuti rasmi"
+    },
+    ur: {
+      hide: "تیرتے کنٹرول کو چھپائیں۔",
+      hideMode: "جب چھپا ہوا ہو۔",
+      idleOnly: "صرف بیکار بلبلے کو چھپائیں۔",
+      allUi: "بلبلا اور پلیئر چھپائیں۔",
+      hideHint: "آڈیو کام کرتا رہتا ہے۔ کنٹرولز کو یہاں یا شارٹ کٹ کے ساتھ بحال کریں۔",
+      visibilityShortcut: "تیرتے کنٹرولز کو دکھائیں / چھپائیں۔",
+      unassigned: "تفویض نہیں کیا گیا ہے۔",
+      customize: "شارٹ کٹ کو حسب ضرورت بنائیں",
+      shortcutScope: "پلے بیک کیز ٹیکسٹ فیلڈ کے باہر ChatGPT پر کام کرتی ہیں۔ ٹائپنگ کے دوران مرئیت کا شارٹ کٹ بھی کام کرتا ہے۔",
+      quickStart: "سننا شروع کر دیں۔",
+      quickStartBody: "ChatGPT کھولیں اور مکمل جواب پر Read Aloud شروع کریں۔ پلیئر کو روکنے، تلاش کرنے، رفتار تبدیل کرنے یا ڈاؤن لوڈ کرنے کے لیے استعمال کریں۔",
+      dismiss: "سمجھ آیا",
+      help: "مدد اور خرابیوں کا سراغ لگانا",
+      pending: "Read Aloud شروع ہو رہا ہے…",
+      nativeHelp: "جواب کے ساتھ ChatGPT کے Read Aloud بٹن کے ساتھ پلے بیک شروع کریں۔",
+      playError: "پلے بیک دوبارہ شروع نہیں ہو سکا۔ ChatGPT کا رسپانس بٹن استعمال کر کے دوبارہ Read Aloud شروع کریں۔",
+      downloadError: "آڈیو ڈاؤن لوڈ نہیں ہو سکا۔ Read Aloud شروع کریں، آڈیو لوڈ ہونے کا انتظار کریں، پھر دوبارہ کوشش کریں۔",
+      downloading: "آپ کے ڈاؤن لوڈ کی تیاری...",
+      savedError: "ترتیب کو محفوظ نہیں کیا جا سکا۔ براہ کرم دوبارہ کوشش کریں۔",
+      sourceFormat: "ڈاؤن لوڈز ChatGPT کے ذریعہ فراہم کردہ آڈیو فارمیٹ کا استعمال کرتے ہیں۔ ایکسٹینشن آڈیو کو تبدیل نہیں کرتی ہے۔",
+      compactHelp: "جب جگہ محدود ہوتی ہے تو میسج باکس کے اوپر دو گول کنٹرول بار ظاہر ہوتے ہیں۔",
+      surveyTitle: "آپ کو جاتے دیکھ کر افسوس ہوا۔",
+      surveyIntro: "ChatGPT Audio Controls آزمانے کا شکریہ۔ ہم اس سے بہتر کیا کر سکتے تھے؟",
+      surveyHint: "ایک وجہ چن کر بھیج دیں۔ ٹائپنگ کی ضرورت نہیں۔",
+      reasonBroken: "اس نے صحیح کام نہیں کیا۔",
+      reasonIntrusive: "بلبلا یا کھلاڑی راستے میں آ گیا۔",
+      reasonSlow: "اس نے ChatGPT یا میرے براؤزر کو سست کر دیا۔",
+      reasonDifficult: "استعمال کرنا مشکل تھا۔",
+      reasonMissing: "مجھے جس خصوصیت کی ضرورت تھی وہ غائب تھی۔",
+      reasonLanguage: "میری زبان اچھی طرح سے معاون نہیں تھی۔",
+      reasonUnneeded: "مجھے اب اس کی ضرورت نہیں ہے۔",
+      reasonOther: "کچھ اور۔",
+      addNote: "ایک نوٹ شامل کریں - اختیاری۔",
+      noteHint: "براہ کرم گفتگو یا ذاتی تفصیلات شامل نہ کریں۔ زیادہ سے زیادہ 1,000 حروف۔",
+      send: "رائے بھیجیں۔",
+      feedbackIntro: "ہمیں بتائیں کہ کیا بہتر کام کر سکتا ہے؟ ایک زمرہ منتخب کریں اور ایک اختیاری نوٹ شامل کریں۔",
+      feedbackBug: "بگ کی اطلاع دیں۔",
+      feedbackSuggestion: "ایک بہتری تجویز کریں۔",
+      feedbackThanks: "شکریہ۔ آپ کے تاثرات کو محفوظ کر لیا گیا ہے۔",
+      sending: "بھیج رہا ہے…",
+      skip: "تاثرات چھوڑیں۔",
+      thanks: "ہمیں بہتر بنانے میں مدد کرنے کا شکریہ۔ آپ کو ہمیشہ واپسی پر خوش آمدید کہتے ہیں۔",
+      goodbye: "ہمیں آزمانے کا شکریہ۔ خیال رکھنا!",
+      feedbackError: "آپ کے تاثرات کی تصدیق نہیں ہوئی۔ براہ کرم دوبارہ کوشش کریں؛ آپ کا جواب اب بھی یہاں ہے.",
+      chooseReason: "رائے بھیجنے کے لیے ایک وجہ منتخب کریں۔",
+      feedbackPrivacy: "ChatGPT Audio Controls کو بہتر بنانے میں ہماری مدد کریں۔ آپ کی رائے اختیاری اور نجی ہے — کسی نام یا ای میل کی ضرورت نہیں ہے۔ بنیادی ایپ اور ڈیوائس کی تفصیلات مسائل کو سمجھنے میں ہماری مدد کرتی ہیں۔ براہ کرم ذاتی تفصیلات یا بات چیت چھوڑ دیں۔",
+      appearance: "ظاہری۔",
+      themeSystem: "سسٹم",
+      themeLight: "روشنی",
+      themeDark: "تاریک",
+      language: "زبان",
+      siteTitle: "ChatGPT Read Aloud، ایسے کنٹرولز کے ساتھ جو برقرار رہتے ہیں۔",
+      siteIntro: "موقوف کریں، ریوائنڈ کریں، پلے بیک کی رفتار کو تبدیل کریں اور آڈیو ڈاؤن لوڈ کریں۔ سنتے وقت گفتگو میں رہیں۔",
+      chrome: "Chrome کے لیے حاصل کریں۔",
+      edge: "ایج کے لیے حاصل کریں۔",
+      desktop: "ڈیسک ٹاپ Chrome، Edge اور ہم آہنگ براؤزرز کے لیے۔ انسٹال کرنے کے لیے اپنے کمپیوٹر پر یہ صفحہ کھولیں۔",
+      features: "اپنا طریقہ سنو",
+      setup: "بہتر سننے کے تین مراحل",
+      stepInstall: "اپنے براؤزر کے اسٹور سے ایکسٹینشن انسٹال کریں۔",
+      stepRead: "ChatGPT کھولیں اور مکمل جواب پر Read Aloud شروع کریں۔",
+      stepControl: "پلیئر سے آڈیو کو روکیں، تلاش کریں، رفتار تبدیل کریں یا محفوظ کریں۔",
+      privacy: "رازداری",
+      privacyBody: "ایکسٹینشن میں کوئی تجزیات یا ٹیلی میٹری نہیں ہے۔ آڈیو اور گفتگو کو سنبھالنا آپ کے براؤزر میں رہتا ہے۔ براؤزر کی مطابقت پذیری ترجیحات کو ہم آہنگ کر سکتی ہے۔",
+      independent: "Infoxica کی طرف سے ایک آزاد اوپن سورس پروجیکٹ۔ OpenAI کے ساتھ منسلک یا تائید شدہ نہیں ہے۔",
+      analyticsTitle: "اس ویب سائٹ کو مزید کارآمد بنانے میں ہماری مدد کریں۔",
+      analyticsBody: "یہ جاننے میں ہماری مدد کریں کہ کون سے صفحات کارآمد ہیں اور لوگ ایکسٹینشن کو کیسے دریافت کرتے ہیں۔ Google Analytics کو ویب سائٹ کے وزٹس اور اسٹور لنک کلکس کی پیمائش کرنے کی اجازت دیں؟ ایکسٹینشن اور ان انسٹال سروے تجزیات سے پاک رہتے ہیں۔ آپ کسی بھی وقت اپنی پسند کو تبدیل کر سکتے ہیں۔",
+      accept: "تجزیات کی اجازت دیں۔",
+      decline: "نہیں شکریہ",
+      preferences: "تجزیات کی ترجیحات",
+      websitePrivacy: "یہ ویب سائٹ گوگل تجزیات کو آپ کی اجازت کے بعد ہی استعمال کرتی ہے۔ یہ وزٹ اور اسٹور لنک کلکس کی پیمائش کرتا ہے، انسٹالیشن یا ایکسٹینشن کے استعمال کی نہیں۔ آپ تجزیات کی ترجیحات کا استعمال کرتے ہوئے اجازت واپس لے سکتے ہیں۔",
+      feedbackPolicy: "ان انسٹال کرنے کے بعد بھی آپ کی رائے اختیاری اور نجی ہے۔ کسی نام یا ای میل کی ضرورت نہیں ہے۔ براہ کرم ذاتی تفصیلات یا گفتگو شامل نہ کریں۔",
+      screenshot: "ChatGPT Read Aloud پلے بیک کنٹرولز",
+      available: "موجودہ دستیاب ورژن کے لیے اپنا اسٹور چیک کریں۔",
+      website: "سرکاری ویب سائٹ"
+    },
+    "es-419": {
+      hide: "Ocultar controles flotantes",
+      hideMode: "Qué ocultar",
+      idleOnly: "Solo la burbuja inactiva",
+      allUi: "Burbuja y reproductor",
+      hideHint: "El audio sigue funcionando. Recupera los controles aquí o con el atajo.",
+      visibilityShortcut: "Mostrar / ocultar controles flotantes",
+      unassigned: "Sin asignar",
+      customize: "Personalizar atajo",
+      shortcutScope: "Las teclas de reproducción funcionan en ChatGPT fuera de los campos de texto. El atajo de visibilidad también funciona al escribir.",
+      quickStart: "Empieza a escuchar",
+      quickStartBody: "Abre ChatGPT e inicia Leer en voz alta en una respuesta terminada. Usa el reproductor para pausar, desplazarte, cambiar la velocidad o descargar.",
+      dismiss: "Entendido",
+      help: "Ayuda y solución de problemas",
+      pending: "Iniciando lectura…",
+      nativeHelp: "Inicia la lectura con el botón de ChatGPT junto a la respuesta.",
+      playError: "No se pudo reanudar. Reinicia con el botón de lectura de ChatGPT.",
+      downloadError: "No se pudo descargar el audio. Inicia la lectura, espera a que cargue el audio y vuelve a intentarlo.",
+      downloading: "Preparando descarga…",
+      savedError: "No se pudo guardar el ajuste. Vuelve a intentarlo.",
+      sourceFormat: "Las descargas usan el formato de audio de ChatGPT. La extensión no convierte el audio.",
+      compactHelp: "Si falta espacio, las dos cápsulas aparecen encima del cuadro de mensaje.",
+      surveyTitle: "Sentimos verte partir 💛",
+      surveyIntro: "Gracias por probar ChatGPT Audio Controls. ¿Qué podríamos haber mejorado?",
+      surveyHint: "Elige un motivo y envía. No hace falta escribir.",
+      reasonBroken: "No funcionaba correctamente.",
+      reasonIntrusive: "La burbuja o el reproductor estorbaba.",
+      reasonSlow: "Ralentizaba ChatGPT o mi navegador.",
+      reasonDifficult: "Era difícil de usar.",
+      reasonMissing: "Faltaba una función que necesitaba.",
+      reasonLanguage: "Mi idioma no estaba bien soportado.",
+      reasonUnneeded: "Ya no lo necesito.",
+      reasonOther: "Otro motivo.",
+      addNote: "Añadir una nota — opcional",
+      noteHint: "No incluyas conversaciones ni datos personales. Máximo 1.000 caracteres.",
+      send: "Enviar comentarios",
+      feedbackIntro: "Cuéntanos qué podemos mejorar. Elige una categoría y añade una nota opcional.",
+      feedbackBug: "Informar de un error",
+      feedbackSuggestion: "Sugerir una mejora",
+      feedbackThanks: "Gracias. Tus comentarios se han guardado.",
+      sending: "Enviando…",
+      skip: "Omitir comentarios",
+      thanks: "Gracias por ayudarnos a mejorar. Siempre serás bienvenido.",
+      goodbye: "Gracias por probarlo. ¡Cuídate!",
+      feedbackError: "No se confirmó el guardado. Tu respuesta sigue aquí. Vuelve a intentarlo.",
+      chooseReason: "Elige un motivo para enviar tus comentarios.",
+      feedbackPrivacy: "Ayúdanos a mejorar ChatGPT Audio Controls. Tus comentarios son opcionales y privados, sin nombre ni correo. Algunos datos básicos de la aplicación y del dispositivo nos ayudan a entender los problemas. No incluyas datos personales ni conversaciones.",
+      appearance: "Apariencia",
+      themeSystem: "Sistema",
+      themeLight: "Claro",
+      themeDark: "Oscuro",
+      language: "Idioma",
+      siteTitle: "Leer en voz alta de ChatGPT, con controles prácticos.",
+      siteIntro: "Pausa, retrocede, cambia la velocidad y descarga audio. Sigue la conversación mientras escuchas.",
+      chrome: "Instalar para Chrome",
+      edge: "Instalar para Edge",
+      desktop: "Para Chrome, Edge y navegadores compatibles de escritorio. Abre esta página en tu computadora para instalar.",
+      features: "Escucha a tu manera",
+      setup: "Tres pasos para escuchar mejor",
+      stepInstall: "Instala la extensión desde la tienda de tu navegador.",
+      stepRead: "Abre ChatGPT e inicia Leer en voz alta en una respuesta terminada.",
+      stepControl: "Pausa, desplázate, cambia la velocidad o guarda el audio desde el reproductor.",
+      privacy: "Privacidad",
+      privacyBody: "La extensión no tiene analítica ni telemetría. El audio y las conversaciones se procesan en tu navegador. La sincronización del navegador puede sincronizar las preferencias.",
+      independent: "Un proyecto independiente de código abierto de Infoxica. Sin afiliación ni respaldo de OpenAI.",
+      analyticsTitle: "Ayúdanos a hacer esta web más útil",
+      analyticsBody: "Ayúdanos a saber qué páginas son útiles y cómo descubren la extensión. ¿Permites que Google Analytics mida las visitas y los clics hacia las tiendas? La extensión y la encuesta de desinstalación siguen sin analítica. Puedes cambiar tu elección cuando quieras.",
+      accept: "Permitir analítica",
+      decline: "No, gracias",
+      preferences: "Preferencias de analítica",
+      websitePrivacy: "Esta web usa Google Analytics solo tras tu consentimiento. Mide visitas y clics a las tiendas, no instalaciones ni uso de la extensión. Puedes retirar tu consentimiento en Preferencias de analítica.",
+      feedbackPolicy: "Tus comentarios son opcionales y privados, incluso después de desinstalar. No necesitas dar tu nombre ni correo electrónico. No incluyas datos personales ni conversaciones.",
+      screenshot: "Controles de reproducción de Leer en voz alta de ChatGPT",
+      available: "Consulta tu tienda para ver la versión disponible.",
+      website: "Sitio web oficial"
+    },
+    "fr-CA": {
+      hide: "Masquer les commandes flottantes",
+      hideMode: "Éléments à masquer",
+      idleOnly: "Masquer seulement la bulle inactive",
+      allUi: "Masquer la bulle et le lecteur",
+      hideHint: "L’audio reste disponible. Rétablissez les commandes ici ou avec le raccourci.",
+      visibilityShortcut: "Afficher / masquer les commandes flottantes",
+      unassigned: "Non attribué",
+      customize: "Modifier le raccourci",
+      shortcutScope: "Les touches de lecture fonctionnent hors des champs de texte de ChatGPT. Le raccourci d’affichage fonctionne aussi pendant la saisie.",
+      quickStart: "Commencer à écouter",
+      quickStartBody: "Ouvrez ChatGPT et lancez la lecture à voix haute d’une réponse terminée. Utilisez le lecteur pour mettre en pause, avancer, changer la vitesse ou télécharger.",
+      dismiss: "Compris",
+      help: "Aide et dépannage",
+      pending: "Démarrage de la lecture…",
+      nativeHelp: "Démarrez avec le bouton de lecture à côté de la réponse ChatGPT.",
+      playError: "Impossible de reprendre. Relancez avec le bouton de lecture de ChatGPT.",
+      downloadError: "Impossible de télécharger l’audio. Lancez la lecture à voix haute, attendez le chargement, puis réessayez.",
+      downloading: "Préparation du téléchargement…",
+      savedError: "Impossible d’enregistrer le réglage. Réessayez.",
+      sourceFormat: "Les téléchargements conservent le format audio fourni par ChatGPT. L’extension ne convertit pas l’audio.",
+      compactHelp: "Si l’espace manque, les deux capsules apparaissent au-dessus du champ de saisie.",
+      surveyTitle: "Dommage de vous voir partir 💛",
+      surveyIntro: "Merci d’avoir essayé ChatGPT Audio Controls. Qu’aurions-nous pu améliorer ?",
+      surveyHint: "Choisissez une raison et envoyez. Pas besoin d’écrire.",
+      reasonBroken: "Cela ne fonctionnait pas correctement.",
+      reasonIntrusive: "La bulle ou le lecteur me gênait.",
+      reasonSlow: "Cela ralentissait ChatGPT ou mon navigateur.",
+      reasonDifficult: "C’était difficile à utiliser.",
+      reasonMissing: "Une fonctionnalité nécessaire manquait.",
+      reasonLanguage: "Ma langue était mal prise en charge.",
+      reasonUnneeded: "Je n’en ai plus besoin.",
+      reasonOther: "Autre chose.",
+      addNote: "Ajouter une note — facultatif",
+      noteHint: "N’incluez pas de conversations ni de données personnelles. Maximum 1 000 caractères.",
+      send: "Envoyer mon avis",
+      feedbackIntro: "Dites-nous ce qui peut être amélioré. Choisissez une catégorie et ajoutez une note si vous le souhaitez.",
+      feedbackBug: "Signaler un bug",
+      feedbackSuggestion: "Suggérer une amélioration",
+      feedbackThanks: "Merci. Votre commentaire a été enregistré.",
+      sending: "Envoi…",
+      skip: "Passer",
+      thanks: "Merci de nous aider à nous améliorer. Vous serez toujours bienvenu.",
+      goodbye: "Merci d’avoir essayé. Bonne continuation !",
+      feedbackError: "L’enregistrement n’a pas été confirmé. Votre réponse est conservée ici. Réessayez.",
+      chooseReason: "Choisissez une raison pour envoyer votre avis.",
+      feedbackPrivacy: "Aidez-nous à améliorer ChatGPT Audio Controls. Votre avis est facultatif et reste privé, sans nom ni courriel. Quelques informations sur l’application et votre appareil nous aident à comprendre les problèmes. Merci de ne pas inclure de données personnelles ni de conversations.",
+      appearance: "Apparence",
+      themeSystem: "Système",
+      themeLight: "Clair",
+      themeDark: "Sombre",
+      language: "Langue",
+      siteTitle: "La lecture à voix haute de ChatGPT, avec des commandes pratiques.",
+      siteIntro: "Pause, retour arrière, vitesse et téléchargement audio. Écoutez tout en suivant la conversation.",
+      chrome: "Installer pour Chrome",
+      edge: "Installer pour Edge",
+      desktop: "Pour Chrome, Edge et les navigateurs compatibles sur ordinateur. Ouvrez cette page sur votre ordinateur pour installer.",
+      features: "Écoutez à votre rythme",
+      setup: "Trois étapes pour mieux écouter",
+      stepInstall: "Installez l’extension depuis la boutique de votre navigateur.",
+      stepRead: "Ouvrez ChatGPT et lancez la lecture à voix haute d’une réponse terminée.",
+      stepControl: "Mettez en pause, avancez, changez la vitesse ou enregistrez l’audio depuis le lecteur.",
+      privacy: "Confidentialité",
+      privacyBody: "L’extension n’intègre ni analyse d’audience ni télémétrie. L’audio et les conversations sont traités dans votre navigateur. Les préférences peuvent être synchronisées par le navigateur.",
+      independent: "Un projet open source indépendant d’Infoxica. Sans affiliation ni approbation d’OpenAI.",
+      analyticsTitle: "Aidez-nous à rendre ce site plus utile",
+      analyticsBody: "Aidez-nous à comprendre quelles pages sont utiles et comment les gens découvrent l’extension. Autoriser Google Analytics à mesurer les visites du site et les clics vers les boutiques ? L’extension et le questionnaire de désinstallation restent sans analyse. Vous pouvez changer d’avis à tout moment.",
+      accept: "Autoriser l’analyse",
+      decline: "Non merci",
+      preferences: "Préférences d’analyse",
+      websitePrivacy: "Ce site utilise Google Analytics uniquement avec votre accord. Il mesure les visites et les clics vers les boutiques, pas les installations ni l’utilisation de l’extension. Vous pouvez retirer votre accord dans les préférences d’analyse.",
+      feedbackPolicy: "Vos commentaires sont facultatifs et privés, même après la désinstallation. Aucun nom ni courriel n’est requis. Merci de ne pas inclure de données personnelles ni de conversations.",
+      screenshot: "Commandes de lecture à voix haute de ChatGPT",
+      available: "Consultez votre boutique pour connaître la version disponible.",
+      website: "Site officiel"
+    },
+    "hi-Latn": {
+      hide: "flotting niyantran chhipayen",
+      hideMode: "jab chhipa hua ho",
+      idleOnly: "keval nishkriya bulbule ko chhipayen",
+      allUi: "bulbula aur khiladi chhipayen",
+      hideHint: "audio kaam karta rahata hai. yahan ya shortcut se niyantran punarsthapit karen.",
+      visibilityShortcut: "flotting niyantran dikhaen/chhipayen",
+      unassigned: "assign nahin kiya gaya",
+      customize: "shortcut anukulit karen",
+      shortcutScope: "playback kunjiyan text field ke bahar ChatGPT par kaam karti han. type karte samay drishyata shortcut bhi kaam karta hai.",
+      quickStart: "sunna shuru karen",
+      quickStartBody: "ChatGPT kholen aur purna pratikriya par Read Aloud prarambh karen. rokne, khojne, gati badalne ya download karne ke liye player ka upyog karen.",
+      dismiss: "samajh gaya",
+      help: "sahayata aur samasya nivaran",
+      pending: "Read Aloud prarambh ho raha hai...",
+      nativeHelp: "pratikriya ke paas ChatGPT ke Read Aloud button ke saath playback prarambh karen.",
+      playError: "playback phir se shuru nahin ho saka. ChatGPT ke pratikriya button ka upyog karke Read Aloud ko phir se prarambh karen.",
+      downloadError: "audio download nahin kiya ja saka. Read Aloud prarambh karen, audio load hone tak pratiksha karen, phir punah prayas karen.",
+      downloading: "aapka download taiyar kiya ja raha hai...",
+      savedError: "setting saheji nahin ja saki. kripya pun: prayas karen.",
+      sourceFormat: "download ChatGPT dwara pradan kiye gaye audio praroop ka upyog karte han. extension audio parivartit nahin karta hai.",
+      compactHelp: "jab sthan seemit hota hai, to sandesh box ke upar do golakar niyantran pattiyan dikhai deti han.",
+      surveyTitle: "aapko jaate hue dekhkar dukh hua 💛",
+      surveyIntro: "ChatGPT Audio Controls aazmane ke liye dhanyavad. hum isse behtar kya kar sakte the?",
+      surveyHint: "ek karan chunein aur bhejen. typing ki jarurat nahin.",
+      reasonBroken: "yah sahi dhang se kaam nahin kiya.",
+      reasonIntrusive: "bulbula ya khiladi raste mein aa gaya.",
+      reasonSlow: "isne ChatGPT ya mere browser ko dheema kar diya.",
+      reasonDifficult: "iska upyog karna kathin tha.",
+      reasonMissing: "ek suvidha jiski mujhe aavashyakta thi wah gayab thi.",
+      reasonLanguage: "meri bhasha acchi tarah se samarthit nahin thi.",
+      reasonUnneeded: "mujhe ab iski aavashyakta nahin hai.",
+      reasonOther: "kuch aur.",
+      addNote: "ek note joden - vaikalpik",
+      noteHint: "kripya baatcheet ya vyaktigat vivaran shamil na karen. adhiktam 1,000 akshar.",
+      send: "pratikriya bhejen",
+      feedbackIntro: "hamen batayen ki kya behtar kaam kar sakta hai. ek shreni chunein aur ek vaikalpik note joden.",
+      feedbackBug: "bug ki report karen",
+      feedbackSuggestion: "sudhar ka sujhaav den",
+      feedbackThanks: "dhanyavad. aapki pratikriya sahej lee gai hai.",
+      sending: "bheja ja raha hai...",
+      skip: "pratikriya chhoden",
+      thanks: "hamen behtar banane mein madad karne ke liye dhanyavad. aapka sadaiv swagat hai.",
+      goodbye: "hamen aazmane ke liye dhanyavad. apna dhyan rakhna!",
+      feedbackError: "aapki pratikriya ki pushti nahin ki gai thi. kripya pun: prayas karen; aapka uttar abhi bhi yahan hai.",
+      chooseReason: "feedback bhejne ka ek karan chunen.",
+      feedbackPrivacy: "ChatGPT Audio Controls ko behtar banane mein hamari sahayata karen. aapki pratikriya vaikalpik aur niji hai—kisi naam ya email ki aavashyakta nahin hai. buniyadi app aur device vivaran hamen muddon ko samajhne mein madad karte han. kripya vyaktigat vivaran ya baatcheet chhod den.",
+      appearance: "upsthiti",
+      themeSystem: "pranali",
+      themeLight: "prakash",
+      themeDark: "andhera",
+      language: "bhasha",
+      siteTitle: "ChatGPT Read Aloud, niyantran ke sath.",
+      siteIntro: "roken, rewind karen, playback gati badalen aur audio download karen. sunte samay baatcheet mein bane rahen.",
+      chrome: "ise Chrome ke liye prapt karen",
+      edge: "ise age ke liye prapt karen",
+      desktop: "desktop Chrome, age aur sangat browser ke liye. install karne ke liye is page ko apne computer par kholen.",
+      features: "apni baat suno",
+      setup: "behtar sunne ke liye teen kadam",
+      stepInstall: "apne browser ke store se extension install karen.",
+      stepRead: "ChatGPT kholen aur purna pratikriya par Read Aloud prarambh karen.",
+      stepControl: "audio ko roken, dhundhen, gati badalen ya player se sahejen.",
+      privacy: "gopniyata",
+      privacyBody: "extension mein koi vishleshan ya telemetry nahin hai. audio aur vartalap prabandhan aapke browser mein rahata hai. browser sink prathmiktaon ko synchronize kar sakta hai.",
+      independent: "infoxika dwara ek swatantra opan-sors project. OpenAI se sambaddh ya samarthit nahin.",
+      analyticsTitle: "is website ko aur adhik upyogi banane mein hamari sahayata karen",
+      analyticsBody: "hamen yah janne mein sahayata karen ki kaun se prishth upyogi hain aur log extension ko kaise khojte han. kya Google Analytics ko website visit aur stor-link click mapne ki anumati den? extension aur uninstall sarvekshan analytics se mukt rahata hai. aap kabhi bhi apni pasand badal sakte han.",
+      accept: "vishleshan ki anumati den",
+      decline: "nahin dhanyavad",
+      preferences: "vishleshiki prathmiktaen",
+      websitePrivacy: "yah website aapki anumati ke baad hi Google Analytics ka upyog karti hai. yah visit aur stor-link click ko mapta hai, installation ya extension upyog ko nahin. aap Analytics prathmiktaon ka upyog karke anumati wapas le sakte han.",
+      feedbackPolicy: "uninstall karne ke baad bhi aapki pratikriya vaikalpik aur niji hai. kisi naam ya email ki aavashyakta nahin hai. kripya vyaktigat vivaran ya baatcheet shamil na karen.",
+      screenshot: "ChatGPT Read Aloud playback niyantran",
+      available: "vartmaan mein uplabdh sanskaran ke liye apne store ki janch karen.",
+      website: "adhikarik websit"
+    },
+    "zh-HK": {
+      hide: "隱藏浮動控制項",
+      hideMode: "隱藏範圍",
+      idleOnly: "僅隱藏閒置氣泡",
+      allUi: "隱藏氣泡和播放器",
+      hideHint: "音訊繼續正常運作。可在此處或使用快捷鍵恢復控制項。",
+      visibilityShortcut: "顯示／隱藏浮動控制項",
+      unassigned: "未指派",
+      customize: "自訂快速鍵",
+      shortcutScope: "播放按鍵在 ChatGPT 的文字欄位外生效。顯示快速鍵在輸入時也可使用。",
+      quickStart: "開始聆聽",
+      quickStartBody: "開啟 ChatGPT，為已完成的回覆啟動朗讀。使用播放器暫停、跳轉、調速或下載。",
+      dismiss: "知道了",
+      help: "說明與疑難排解",
+      pending: "正在啟動朗讀…",
+      nativeHelp: "請使用 ChatGPT 回答旁的朗讀按鈕開始播放。",
+      playError: "無法恢復播放。請使用 ChatGPT 的朗讀按鈕重新開始。",
+      downloadError: "無法下載音訊。請啟動朗讀，等待音訊載入後重試。",
+      downloading: "正在準備下載…",
+      savedError: "無法儲存設定。請重試。",
+      sourceFormat: "下載使用 ChatGPT 提供的音訊格式。擴充功能不會轉換音訊格式。",
+      compactHelp: "空間不足時，兩個圓角控制項會顯示在輸入框上方。",
+      surveyTitle: "很遺憾與你告別 💛",
+      surveyIntro: "感謝試用 ChatGPT Audio Controls。我們有哪些地方可以改進？",
+      surveyHint: "選擇一個原因並傳送，無需打字。",
+      reasonBroken: "無法正常運作。",
+      reasonIntrusive: "氣泡或播放器擋住了內容。",
+      reasonSlow: "讓 ChatGPT 或瀏覽器變慢了。",
+      reasonDifficult: "使用起來很困難。",
+      reasonMissing: "缺少我需要的功能。",
+      reasonLanguage: "對我的語言支援不佳。",
+      reasonUnneeded: "我不再需要它了。",
+      reasonOther: "其他原因。",
+      addNote: "新增備註（選填）",
+      noteHint: "請勿包含對話或個人資訊。最多 1,000 個字元。",
+      send: "傳送意見",
+      feedbackIntro: "告訴我們哪些地方可以改善。請選擇類別，並可新增備註。",
+      feedbackBug: "回報問題",
+      feedbackSuggestion: "提出改善建議",
+      feedbackThanks: "謝謝，您的回饋已儲存。",
+      sending: "正在傳送…",
+      skip: "略過意見回饋",
+      thanks: "感謝協助我們改進。隨時歡迎你回來。",
+      goodbye: "感謝試用，祝你一切順利！",
+      feedbackError: "尚未確認意見已儲存。你的答案仍在，請重試。",
+      chooseReason: "請選擇一個原因後傳送。",
+      feedbackPrivacy: "協助我們改善 ChatGPT Audio Controls。回饋完全自願且不公開，無需姓名或電子郵件。基本的應用程式和裝置資訊有助於我們了解問題。請勿包含個人資料或對話內容。",
+      appearance: "外觀",
+      themeSystem: "跟隨系統",
+      themeLight: "淺色",
+      themeDark: "深色",
+      language: "語言",
+      siteTitle: "讓 ChatGPT 朗讀更好用的播放控制項。",
+      siteIntro: "暫停、倒轉、調速和下載音訊。邊聽邊跟上對話。",
+      chrome: "安裝 Chrome 版",
+      edge: "安裝 Edge 版",
+      desktop: "適用於電腦版 Chrome、Edge 及相容瀏覽器。請在電腦上開啟本頁進行安裝。",
+      features: "按自己的步調聆聽",
+      setup: "三步開啟更便利的聆聽",
+      stepInstall: "從瀏覽器商店安裝擴充功能。",
+      stepRead: "開啟 ChatGPT，為已完成的回覆啟動朗讀。",
+      stepControl: "透過播放器暫停、跳轉、調速或儲存音訊。",
+      privacy: "隱私權",
+      privacyBody: "擴充功能沒有分析或遙測。音訊和對話處理在瀏覽器內進行。偏好設定可能透過瀏覽器同步功能同步。",
+      independent: "Infoxica 的獨立開源專案。與 OpenAI 無關聯，也未經其認可。",
+      analyticsTitle: "幫助我們讓網站更實用",
+      analyticsBody: "幫助我們了解哪些頁面有用，以及大家如何發現這款擴充功能。允許 Google Analytics 統計網站造訪和商店連結點擊嗎？擴充功能和解除安裝問卷仍不使用存取分析。你可以隨時變更選擇。",
+      accept: "允許分析",
+      decline: "不用，謝謝",
+      preferences: "分析偏好設定",
+      websitePrivacy: "本網站僅在你同意後使用 Google Analytics。統計內容是造訪和商店連結點擊，不是安裝或擴充功能使用情況。你可以在分析偏好設定中撤回同意。",
+      feedbackPolicy: "意見回饋由您自願提交並保持私密，解除安裝後也一樣。無需填寫姓名或電子郵件。請勿包含個人資訊或對話內容。",
+      screenshot: "ChatGPT 朗讀播放控制項",
+      available: "請在商店查看目前可用版本。",
+      website: "官方網站"
     }
   };
   // src/shared/i18n/release-locales.json
@@ -7104,7 +16965,7 @@
       throw new Error(`Incomplete release locale ${code}: ${values.length}/${keys.length}`);
     return [code, Object.fromEntries(keys.map((key, i) => [key, values[i]]))];
   }));
-  var releaseLocales = { en: releaseEnglish, ...release_locales_default, ...expanded, ...audience_release_default };
+  var releaseLocales = { en: releaseEnglish, ...release_locales_default, ...expanded, ...audience_release_default, ...chatgpt_release_default };
   function getReleaseCopy(language) {
     return releaseLocales[resolveLanguage(language)] || releaseEnglish;
   }
@@ -7138,8 +16999,10 @@
     th: "เค้าโครงเครื่องเล่น|เดสก์ท็อป|หน้าจอแคบ|อัตโนมัติ|ตำแหน่ง|การจัดวาง|แถวแนวนอน|ซ้อนแนวนอน|คอลัมน์แนวตั้ง|รูปตัว L|แถบเลื่อนก่อน|ด้านของวงกลม|ซ้าย|ขวา|รีเซ็ตเค้าโครง|ลากเพื่อจัดวาง|เสียงทั้งหมดพร้อมดาวน์โหลดแล้ว|แจ้งเมื่อเสียงทั้งหมดพร้อม|กำหนดแป้นลัดได้ในเบราว์เซอร์เดสก์ท็อป|รีเซ็ตความเร็วเป็น 1×|เพิ่มระดับเสียง|ลดระดับเสียง|ปิด / เปิดเสียง|บนซ้าย|บนกลาง|บนขวา|กลางซ้าย|กลางขวา|ล่างซ้าย|ล่างกลาง|ล่างขวา|บันทึกในอุปกรณ์นี้แล้ว|สลับแถบ".split("|")
   };
   Object.assign(catalogs, Object.fromEntries(Object.entries(audience_features_default).map(([code, copy]) => [code, copy.features])));
+  Object.assign(catalogs, Object.fromEntries(Object.entries(chatgpt_features_default).map(([code, copy]) => [code, copy.features])));
   var dockLabels = { en: "Composer dock", hi: "चैट इनपुट से जुड़ा प्लेयर", bn: "চ্যাট ইনপুটে যুক্ত প্লেয়ার", mr: "चॅट इनपुटला जोडलेला प्लेयर", te: "చాట్ ఇన్‌పుట్‌కు జోడించిన ప్లేయర్", ta: "அரட்டை உள்ளீட்டுடன் இணைந்த பிளேயர்", ar: "مشغّل مثبت بحقل الدردشة", fa: "پخش‌کننده متصل به کادر گفتگو", he: "נגן צמוד לתיבת הצ׳אט", "zh-CN": "输入框停靠", "zh-TW": "輸入框停靠", vi: "Gắn vào ô nhập", th: "ยึดกับช่องพิมพ์", es: "Acoplado al cuadro de texto", "pt-BR": "Acoplado à caixa de texto", "pt-PT": "Acoplado à caixa de texto", ru: "У поля ввода", fr: "Ancré au champ de saisie", de: "Am Eingabefeld andocken", ja: "入力欄にドッキング", ko: "입력창에 고정", id: "Menempel pada kotak pesan", it: "Agganciato al campo di testo", tr: "Mesaj kutusuna sabitle" };
   Object.assign(dockLabels, Object.fromEntries(Object.entries(audience_features_default).map(([code, copy]) => [code, copy.dock])));
+  Object.assign(dockLabels, Object.fromEntries(Object.entries(chatgpt_features_default).map(([code, copy]) => [code, copy.dock])));
   function featureCopy(language) {
     const a = catalogs[resolveLanguage(language)] || english;
     return { presets: { original: a[3], composer: dockLabels[resolveLanguage(language)], "top-left": a[23], "top-right": a[25], left: a[26], right: a[27], "bottom-left": a[28], "bottom-right": a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
@@ -7171,10 +17034,422 @@
     tr: "Geri sar|İleri sar"
   };
   Object.assign(seekCommands, Object.fromEntries(Object.entries(audience_features_default).map(([code, copy]) => [code, copy.seekCommands.join("|")])));
+  Object.assign(seekCommands, Object.fromEntries(Object.entries(chatgpt_features_default).map(([code, copy]) => [code, copy.seekCommands.join("|")])));
   function commandLabels(language, step) {
     const t = getTranslations(language), c = featureCopy(language), r = getReleaseCopy(language);
     return { "play-pause": t.content.shortcutsPopover.playPause, "seek-back": step === undefined ? seekCommands[resolveLanguage(language)].split("|")[0] : t.content.shortcutsPopover.back.replace("{s}", String(step)), "seek-forward": step === undefined ? seekCommands[resolveLanguage(language)].split("|")[1] : t.content.shortcutsPopover.forward.replace("{s}", String(step)), "speed-decrease": t.shortcuts.speedDecrease.action, "speed-increase": t.shortcuts.speedIncrease.action, "speed-reset": c.speedReset, "volume-increase": c.volumeUp, "volume-decrease": c.volumeDown, "toggle-mute": c.mute, "download-audio": t.content.tooltips.download, "toggle-collapse": `${t.content.tooltips.collapse} / ${t.content.tooltips.expand}`, "toggle-floating-ui": r.visibilityShortcut, "reset-layout": c.reset, "open-help": t.content.tooltips.shortcuts, "open-settings": t.popup.header.openOptions };
   }
+  // src/shared/i18n/chatgpt-donations.json
+  var chatgpt_donations_default = {
+    am: [
+      "መገንባቴን እንድቀጥል እርዳኝ።",
+      "ChatGPT Audio Controls ቀንዎን ትንሽ ቀለል አድርጎታል፣ ጊዜ ቆጥቦልዎታል ወይስ የበለጠ እንዲሰሩ ረድቶዎታል? በህይወትዎ ላይ ተጨማሪ እሴት ያለው ከሆነ እና የእርስዎን ግላዊነት የሚያከብሩ መሳሪያዎችን ዋጋ ከሰጡ - እባክዎ እድገቱን ለመደገፍ ያስቡበት።",
+      "የአንተ አስተዋጽዖ ማራዘሚያውን ለመገንባት እና ለማሻሻል የምጠቀምባቸውን የ AI ምዝገባዎች ወጪ ለመሸፈን ይረዳል። እንዲሁም ለመቀጠል ትንሽ ተጨማሪ ተነሳሽነት ይሰጠኛል.",
+      "መስጠት አይችሉም? ያ ሙሉ በሙሉ ደህና ነው። የእርስዎን ምርታማነት ምን እንደረዳው እና ምን የተሻለ ሊሆን እንደሚችል የእርስዎን እውነተኛ ተሞክሮ ማጋራት ትልቅ ትርጉም አለው። እዚህ በመሆኖ እናመሰግናለን። 🙏",
+      "ሚስጥራዊነት እና ሁሉም ባህሪያት ለሁሉም ሰው ይገኛሉ፣ መለገሱም ባይሆኑም።",
+      "የአንድ ጊዜ ድጋፍ በGitHub Sponsors · የአሜሪካ ዶላር",
+      "ለገሱ",
+      "በኋላ አስታውሰኝ።",
+      "እንደገና አትጠይቅ",
+      "ግምገማ አሳይ እና አስታዋሾችን ይደግፉ"
+    ],
+    bg: [
+      "Помогнете ми да продължа да строя",
+      "ChatGPT Audio Controls направи ли деня ви малко по-лесен, спести ли ви време или ви помогна ли да свършите повече? Ако има добавена стойност към живота ви – и вие цените инструменти, които зачитат поверителността ви – моля, помислете дали да подкрепите развитието му.",
+      "Вашият принос помага да се покрият нарастващите разходи за абонаментите за изкуствен интелект, които използвам за изграждане и подобряване на разширението. Това също ми дава малко допълнителна мотивация да продължа.",
+      "Не можете да дарите? Това е напълно в реда на нещата. Споделянето на вашия честен опит - какво е помогнало за вашата продуктивност и какво може да бъде по-добро - също означава много. Благодаря ви, че сте тук. 🙏",
+      "Поверителността и всички функции остават достъпни за всички, независимо дали дарявате или не.",
+      "Еднократна поддръжка чрез GitHub Sponsors · Щатски долари",
+      "Дарете",
+      "Напомни ми по-късно",
+      "Не питайте отново",
+      "Показване на напомняния за преглед и поддръжка"
+    ],
+    bs: [
+      "Pomozite mi da nastavim graditi",
+      "Da li vam je ChatGPT Audio Controls malo olakšao dan, uštedio vrijeme ili vam pomogao da uradite više? Ako ima dodatnu vrijednost u vašem životu – a cijenite alate koji poštuju vašu privatnost – razmislite o podršci njegovom razvoju.",
+      "Vaš doprinos pomaže u pokrivanju rastućih troškova pretplata na AI koje koristim za izgradnju i poboljšanje proširenja. To mi također daje malo dodatne motivacije da nastavim dalje.",
+      "Ne možete donirati? To je sasvim u redu. Dijeljenje vašeg iskrenog iskustva – što je pomoglo vašoj produktivnosti i što bi moglo biti bolje – također mnogo znači. Hvala vam što ste ovdje. 🙏",
+      "Privatnost i sve funkcije ostaju dostupne svima, bilo da donirate ili ne.",
+      "Jednokratna podrška putem GitHub Sponsors · Američki dolari",
+      "Donirajte",
+      "Podsjeti me kasnije",
+      "Ne pitaj ponovo",
+      "Prikaži podsjetnike za pregled i podršku"
+    ],
+    da: [
+      "Hjælp mig med at bygge videre",
+      "Har ChatGPT Audio Controls gjort din dag lidt lettere, sparet dig tid eller hjulpet dig med at få mere fra hånden? Hvis det har tilføjet værdi til dit liv - og du værdsætter værktøjer, der respekterer dit privatliv - så overvej at støtte udviklingen af ​​det.",
+      "Dit bidrag hjælper med at dække de stigende omkostninger ved de AI-abonnementer, jeg bruger til at bygge og forbedre udvidelsen. Det giver mig også lidt ekstra motivation til at blive ved.",
+      "Kan du ikke donere? Det er helt okay. At dele din ærlige oplevelse – hvad der hjalp din produktivitet, og hvad der kunne være bedre – betyder også meget. Tak fordi du er her. 🙏",
+      "Privatliv og alle funktioner forbliver tilgængelige for alle, uanset om du donerer eller ej.",
+      "Engangssupport gennem GitHub Sponsors · amerikanske dollars",
+      "Donér",
+      "Mind mig senere",
+      "Spørg ikke igen",
+      "Vis anmeldelse og supportpåmindelser"
+    ],
+    et: [
+      "Aidake mul ehitamist jätkata",
+      "Kas ChatGPT Audio Controls on muutnud teie päeva pisut lihtsamaks, säästnud teie aega või aidanud teil rohkem ära teha? Kui see on teie elule lisaväärtust andnud – ja hindate tööriistu, mis austavad teie privaatsust –, kaaluge selle arendamise toetamist.",
+      "Teie panus aitab katta tehisintellekti tellimuste kasvavaid kulusid, mida kasutan laienduse koostamiseks ja täiustamiseks. See annab mulle ka veidi lisamotivatsiooni jätkata.",
+      "Kas te ei saa annetada? See on täiesti okei. Oma ausa kogemuse jagamine – mis aitas teie tootlikkusele kaasa ja mis võiks olla parem – tähendab samuti palju. Aitäh, et olete siin. 🙏",
+      "Privaatsus ja kõik funktsioonid jäävad kõigile kättesaadavaks, olenemata sellest, kas annetate või mitte.",
+      "Ühekordne tugi läbi GitHub Sponsors · USA dollarites",
+      "Anneta",
+      "Tuleta mulle hiljem meelde",
+      "Ära enam küsi",
+      "Kuva ülevaatuse ja toe meeldetuletused"
+    ],
+    fil: [
+      "Tulungan akong magpatuloy sa pagbuo",
+      "Pinadali ba ng ChatGPT Audio Controls ang iyong araw, natipid ka ba ng oras, o nakatulong ba sa iyong mas marami pang magawa? Kung ito ay may dagdag na halaga sa iyong buhay—at pinahahalagahan mo ang mga tool na gumagalang sa iyong privacy—mangyaring isaalang-alang ang pagsuporta sa pagbuo nito.",
+      "Nakakatulong ang iyong kontribusyon na masakop ang tumataas na halaga ng mga subscription sa AI na ginagamit ko para buuin at pahusayin ang extension. Nagbibigay din ito sa akin ng kaunting karagdagang pagganyak upang magpatuloy.",
+      "Hindi makapag-donate? Iyan ay ganap na okay. Malaki rin ang ibig sabihin ng pagbabahagi ng iyong tapat na karanasan—kung ano ang nakatulong sa iyong pagiging produktibo at kung ano ang mas mahusay. Salamat dahil nandito ka. 🙏",
+      "Ang privacy at lahat ng feature ay mananatiling available sa lahat, mag-donate ka man o hindi.",
+      "Isang beses na suporta sa pamamagitan ng GitHub Sponsors · US dollars",
+      "Mag-donate",
+      "Paalalahanan ako mamaya",
+      "Huwag nang magtanong muli",
+      "Ipakita ang mga paalala sa pagsusuri at suporta"
+    ],
+    fi: [
+      "Auta minua jatkamaan rakentamista",
+      "Onko ChatGPT Audio Controls helpottanut päivääsi, säästänyt aikaa tai auttanut sinua saamaan enemmän aikaan? Jos sillä on lisäarvoa elämääsi – ja arvostat yksityisyyttäsi kunnioittavia työkaluja – harkitse sen kehittämisen tukemista.",
+      "Lahjoituksesi auttaa kattamaan AI-tilausten nousevat kustannukset, joita käytän laajennuksen rakentamiseen ja parantamiseen. Se antaa myös hieman lisämotivaatiota jatkaa.",
+      "Etkö voi lahjoittaa? Se on täysin ok. Rehellisen kokemuksesi jakaminen – mikä auttoi tuottavuuttasi ja mikä voisi olla parempaa – merkitsee myös paljon. Kiitos, että olet täällä. 🙏",
+      "Yksityisyys ja kaikki ominaisuudet ovat kaikkien saatavilla riippumatta siitä, lahjoitatko vai et.",
+      "Kertaluonteinen tuki GitHub Sponsors:n kautta · Yhdysvaltain dollareita",
+      "Lahjoita",
+      "Muistuta minua myöhemmin",
+      "Älä kysy uudelleen",
+      "Näytä arvostelu- ja tukimuistutukset"
+    ],
+    gu: [
+      "મને નિર્માણ કરવામાં મદદ કરો",
+      "શું ChatGPT Audio Controls એ તમારો દિવસ થોડો સરળ બનાવ્યો છે, તમારો સમય બચાવ્યો છે અથવા તમને વધુ કામ કરવામાં મદદ કરી છે? જો તે તમારા જીવનમાં મૂલ્ય ઉમેરે છે-અને તમે તમારી ગોપનીયતાને માન આપતા સાધનોને મહત્ત્વ આપો છો-કૃપા કરીને તેના વિકાસને સમર્થન આપવાનું વિચારો.",
+      "તમારું યોગદાન AI સબ્સ્ક્રિપ્શન્સની વધતી કિંમતને આવરી લેવામાં મદદ કરે છે જેનો ઉપયોગ હું એક્સ્ટેંશન બનાવવા અને સુધારવા માટે કરું છું. તે મને ચાલુ રાખવા માટે થોડી વધારાની પ્રેરણા પણ આપે છે.",
+      "દાન કરી શકતા નથી? તે સંપૂર્ણપણે ઠીક છે. તમારા પ્રામાણિક અનુભવને શેર કરવાનો - તમારી ઉત્પાદકતામાં શું મદદ કરી અને શું વધુ સારું હોઈ શકે - તેનો અર્થ પણ ઘણો છે. અહીં હોવા બદલ આભાર. 🙏",
+      "ગોપનીયતા અને તમામ સુવિધાઓ દરેક માટે ઉપલબ્ધ રહે છે, પછી ભલે તમે દાન કરો કે ન કરો.",
+      "GitHub Sponsors · યુએસ ડૉલર દ્વારા વન-ટાઇમ સપોર્ટ",
+      "દાન કરો",
+      "મને પછીથી યાદ કરાવો",
+      "ફરીથી પૂછશો નહીં",
+      "સમીક્ષા અને સમર્થન રીમાઇન્ડર્સ બતાવો"
+    ],
+    hr: [
+      "Pomozi mi da nastavim graditi",
+      "Je li vam ChatGPT Audio Controls malo olakšao dan, uštedio vrijeme ili vam pomogao učiniti više? Ako ima dodatnu vrijednost vašem životu—i cijenite alate koji poštuju vašu privatnost—razmislite o podršci njegovom razvoju.",
+      "Vaš doprinos pomaže u pokrivanju rastućih troškova AI pretplata koje koristim za izradu i poboljšanje proširenja. To mi daje i dodatnu motivaciju da nastavim.",
+      "Ne možete donirati? To je sasvim u redu. Dijeljenje vašeg iskrenog iskustva - što je pomoglo vašoj produktivnosti i što bi moglo biti bolje - također znači puno. Hvala vam što ste ovdje. 🙏",
+      "Privatnost i sve značajke ostaju dostupne svima, bez obzira da li donirate ili ne.",
+      "Jednokratna podrška putem GitHub Sponsors · američkih dolara",
+      "Donirajte",
+      "Podsjeti me kasnije",
+      "Ne pitaj više",
+      "Prikaži podsjetnike za recenzije i podršku"
+    ],
+    hy: [
+      "Օգնիր ինձ շարունակել կառուցել",
+      "ChatGPT Audio Controls-ը մի փոքր դյուրացրել է ձեր օրը, խնայե՞լ է ձեր ժամանակը կամ օգնել ձեզ ավելին անել: Եթե ​​այն ավելացրել է արժեք ձեր կյանքում, և դուք գնահատում եք ձեր գաղտնիությունը հարգող գործիքները, խնդրում ենք մտածել դրա զարգացմանն աջակցելու մասին:",
+      "Ձեր ներդրումն օգնում է ծածկել արհեստական ​​ինտելեկտի բաժանորդագրությունների աճող ծախսերը, որոնք ես օգտագործում եմ ընդլայնումը ստեղծելու և բարելավելու համար: Դա նաև ինձ մի փոքր լրացուցիչ մոտիվացիա է տալիս շարունակելու:",
+      "Չե՞ք կարող նվիրաբերել: Դա լիովին նորմալ է: Ձեր ազնիվ փորձառությունը կիսելը, թե ինչն է օգնել ձեր արտադրողականությանը և ինչը կարող է ավելի լավ լինել, նույնպես շատ բան է նշանակում: Շնորհակալություն այստեղ լինելու համար: 🙏",
+      "Գաղտնիությունը և բոլոր հնարավորությունները հասանելի են բոլորին, անկախ նրանից՝ նվիրաբերում եք, թե ոչ:",
+      "Միանվագ աջակցություն GitHub Sponsors · ԱՄՆ դոլար",
+      "Նվիրաբերիր",
+      "Հիշեցրու ինձ ավելի ուշ",
+      "Այլևս մի՛ հարցրու",
+      "Ցույց տալ վերանայման և աջակցման հիշեցումները"
+    ],
+    is: [
+      "Hjálpaðu mér að halda áfram að byggja",
+      "Hefur ChatGPT Audio Controls gert daginn þinn aðeins auðveldari, sparað þér tíma eða hjálpað þér að gera meira? Ef það hefur aukið gildi fyrir líf þitt - og þú metur verkfæri sem virða friðhelgi þína - vinsamlegast íhugaðu að styðja við þróun þess.",
+      "Framlag þitt hjálpar til við að standa straum af hækkandi kostnaði við gervigreindaráskriftirnar sem ég nota til að byggja upp og bæta viðbygginguna. Það gefur mér líka smá auka hvatningu til að halda áfram.",
+      "Geturðu ekki gefið? Það er alveg í lagi. Að deila heiðarlegri reynslu þinni - hvað hjálpaði framleiðni þinni og hvað gæti verið betra - þýðir líka mikið. Þakka þér fyrir að vera hér. 🙏",
+      "Persónuvernd og allir eiginleikar eru áfram í boði fyrir alla, hvort sem þú gefur eða ekki.",
+      "Stuðningur í eitt skipti í gegnum GitHub Sponsors · Bandaríkjadalir",
+      "Gefðu",
+      "Minntu mig síðar",
+      "Ekki spyrja aftur",
+      "Sýna umsögn og stuðningsáminningar"
+    ],
+    ka: [
+      "დამეხმარე აშენების გაგრძელებაში",
+      "ChatGPT Audio Controls-მ ცოტა გაამარტივა თქვენი დღე, დაზოგა დრო ან დაგეხმარა მეტის გაკეთებაში? თუ მას აქვს დამატებული ღირებულება თქვენს ცხოვრებაში და თქვენ აფასებთ ინსტრუმენტებს, რომლებიც პატივს სცემენ თქვენს კონფიდენციალურობას, გთხოვთ, გაითვალისწინოთ მისი განვითარების მხარდაჭერა.",
+      "თქვენი წვლილი გეხმარებათ დაფაროთ AI გამოწერების მზარდი ღირებულება, რომელსაც ვიყენებ გაფართოების შესაქმნელად და გასაუმჯობესებლად. ეს ასევე მაძლევს ცოტა დამატებით მოტივაციას, რომ გავაგრძელო.",
+      "არ შეგიძლია შემოწირულობა? ეს სრულიად ნორმალურია. თქვენი გულწრფელი გამოცდილების გაზიარება - რა დაეხმარა თქვენს პროდუქტიულობას და რა შეიძლება იყოს უკეთესი - ასევე ბევრს ნიშნავს. გმადლობთ აქ ყოფნისთვის. 🙏",
+      "კონფიდენციალურობა და ყველა ფუნქცია ხელმისაწვდომი რჩება ყველასთვის, მიუხედავად იმისა, გაწირავთ თუ არა.",
+      "ერთჯერადი მხარდაჭერა GitHub Sponsors · აშშ დოლარი",
+      "შემოწირულობა",
+      "შემახსენე მოგვიანებით",
+      "აღარ მკითხო",
+      "მიმოხილვისა და მხარდაჭერის შეხსენებების ჩვენება"
+    ],
+    kk: [
+      "Маған құрылысты жалғастыруға көмектес",
+      "ChatGPT Audio Controls күніңізді жеңілдетіп, уақытыңызды үнемдеді немесе көбірек жұмыс істеуге көмектесті ме? Егер ол сіздің өміріңізге құндылық қосса және сіз жеке өміріңізді құрметтейтін құралдарды бағалайсыз - оның дамуын қолдау мүмкіндігін қарастырыңыз.",
+      "Сіздің үлесіңіз кеңейтімді құру және жақсарту үшін пайдаланатын AI жазылымдарының өсіп келе жатқан құнын жабуға көмектеседі. Бұл маған әрі қарай жүруге қосымша мотивация береді.",
+      "Садақа бере алмайсыз ба? Бұл мүлдем дұрыс. Адал тәжірибеңізбен бөлісу - өнімділікке не көмектесті және не жақсырақ болуы мүмкін - бұл да көп нәрсені білдіреді. Осы жерде болғаныңызға рахмет. 🙏",
+      "Құпиялылық және барлық мүмкіндіктер, сіз қайырсаңыз да, бермесеңіз де барлығына қолжетімді болып қала береді.",
+      "GitHub Sponsors арқылы бір реттік қолдау · АҚШ доллары",
+      "Садақа беру",
+      "Кейінірек еске түсіріңіз",
+      "Қайта сұрамаңыз",
+      "Шолу және қолдау көрсету туралы еске салғыштарды көрсету"
+    ],
+    kn: [
+      "ನಿರ್ಮಿಸಲು ನನಗೆ ಸಹಾಯ ಮಾಡಿ",
+      "ChatGPT Audio Controls ನಿಮ್ಮ ದಿನವನ್ನು ಸ್ವಲ್ಪ ಸುಲಭಗೊಳಿಸಿದೆಯೇ, ನಿಮ್ಮ ಸಮಯವನ್ನು ಉಳಿಸಿದೆಯೇ ಅಥವಾ ಹೆಚ್ಚಿನದನ್ನು ಮಾಡಲು ನಿಮಗೆ ಸಹಾಯ ಮಾಡಿದೆಯೇ? ಅದು ನಿಮ್ಮ ಜೀವನಕ್ಕೆ ಮೌಲ್ಯವನ್ನು ಸೇರಿಸಿದ್ದರೆ-ಮತ್ತು ನಿಮ್ಮ ಗೌಪ್ಯತೆಯನ್ನು ಗೌರವಿಸುವ ಪರಿಕರಗಳನ್ನು ನೀವು ಗೌರವಿಸಿದರೆ-ದಯವಿಟ್ಟು ಅದರ ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸುವುದನ್ನು ಪರಿಗಣಿಸಿ.",
+      "ವಿಸ್ತರಣೆಯನ್ನು ನಿರ್ಮಿಸಲು ಮತ್ತು ಸುಧಾರಿಸಲು ನಾನು ಬಳಸುವ AI ಚಂದಾದಾರಿಕೆಗಳ ಹೆಚ್ಚುತ್ತಿರುವ ವೆಚ್ಚವನ್ನು ಸರಿದೂಗಿಸಲು ನಿಮ್ಮ ಕೊಡುಗೆ ಸಹಾಯ ಮಾಡುತ್ತದೆ. ಇದು ಮುಂದುವರಿಯಲು ನನಗೆ ಸ್ವಲ್ಪ ಹೆಚ್ಚುವರಿ ಪ್ರೇರಣೆ ನೀಡುತ್ತದೆ.",
+      "ದೇಣಿಗೆ ನೀಡಲು ಸಾಧ್ಯವಿಲ್ಲವೇ? ಅದು ಸಂಪೂರ್ಣವಾಗಿ ಸರಿ. ನಿಮ್ಮ ಪ್ರಾಮಾಣಿಕ ಅನುಭವವನ್ನು ಹಂಚಿಕೊಳ್ಳುವುದು-ನಿಮ್ಮ ಉತ್ಪಾದಕತೆಗೆ ಯಾವುದು ಸಹಾಯ ಮಾಡಿತು ಮತ್ತು ಯಾವುದು ಉತ್ತಮವಾಗಬಹುದು-ಅಂದರೆ ಬಹಳಷ್ಟು ಅರ್ಥ. ಇಲ್ಲಿರುವುದಕ್ಕೆ ಧನ್ಯವಾದಗಳು. 🙏",
+      "ಗೌಪ್ಯತೆ ಮತ್ತು ಎಲ್ಲಾ ವೈಶಿಷ್ಟ್ಯಗಳು ನೀವು ದೇಣಿಗೆ ನೀಡಲಿ ಅಥವಾ ಇಲ್ಲದಿರಲಿ ಎಲ್ಲರಿಗೂ ಲಭ್ಯವಿರುತ್ತವೆ.",
+      "GitHub Sponsors ಮೂಲಕ ಒಂದು-ಬಾರಿ ಬೆಂಬಲ · US ಡಾಲರ್‌ಗಳು",
+      "ದಾನ ಮಾಡಿ",
+      "ನಂತರ ನನಗೆ ನೆನಪಿಸಿ",
+      "ಮತ್ತೆ ಕೇಳಬೇಡಿ",
+      "ವಿಮರ್ಶೆ ಮತ್ತು ಬೆಂಬಲ ಜ್ಞಾಪನೆಗಳನ್ನು ತೋರಿಸಿ"
+    ],
+    lt: [
+      "Padėkite man toliau kurti",
+      "Ar ChatGPT Audio Controls palengvino jūsų dieną, sutaupė laiko ar padėjo nuveikti daugiau? Jei tai suteikia pridėtinės vertės jūsų gyvenimui ir vertinate įrankius, kurie gerbia jūsų privatumą, apsvarstykite galimybę paremti jo plėtrą.",
+      "Jūsų indėlis padeda padengti didėjančias AI prenumeratų, kurias naudoju plėtiniui kurti ir tobulinti, kainas. Tai taip pat suteikia man šiek tiek papildomos motyvacijos tęsti.",
+      "Negalite paaukoti? Tai visiškai gerai. Dalijimasis sąžininga patirtimi – kas padėjo jūsų produktyvumui ir kas gali būti geriau – taip pat labai daug reiškia. Ačiū, kad esate čia. 🙏",
+      "Privatumas ir visos funkcijos išlieka prieinamos visiems, nesvarbu, ar dovanojate, ar ne.",
+      "Vienkartinis palaikymas per GitHub Sponsors · JAV doleriai",
+      "Paaukoti",
+      "Priminti vėliau",
+      "Daugiau neklausk",
+      "Rodyti peržiūros ir palaikymo priminimus"
+    ],
+    lv: [
+      "Palīdziet man turpināt celtniecību",
+      "Vai ChatGPT Audio Controls ir padarījis jūsu dienu mazliet vieglāku, ietaupījis laiku vai palīdzējis paveikt vairāk? Ja tam ir pievienota vērtība jūsu dzīvei un jūs novērtējat rīkus, kas respektē jūsu privātumu, lūdzu, apsveriet iespēju atbalstīt tās attīstību.",
+      "Jūsu ieguldījums palīdz segt pieaugošās izmaksas par mākslīgā intelekta abonementiem, ko izmantoju paplašinājuma izveidei un uzlabošanai. Tas man arī dod nelielu papildu motivāciju turpināt.",
+      "Vai nevarat ziedot? Tas ir pilnīgi pareizi. Arī godīgas pieredzes apmaiņa — kas palīdzēja jūsu produktivitātei un kas varētu būt labāks — arī nozīmē daudz. Paldies, ka esat šeit. 🙏",
+      "Konfidencialitāte un visas funkcijas joprojām ir pieejamas ikvienam neatkarīgi no tā, vai jūs ziedojat vai ne.",
+      "Vienreizējs atbalsts, izmantojot GitHub Sponsors · ASV dolāri",
+      "Ziedot",
+      "Atgādināt vēlāk",
+      "Nejautājiet vēlreiz",
+      "Rādīt pārskatīšanas un atbalsta atgādinājumus"
+    ],
+    mk: [
+      "Помогни ми да продолжам да градам",
+      "Дали ChatGPT Audio Controls ви го олесни денот малку, ви заштеди време или ви помогна да завршите повеќе? Ако има додадена вредност во вашиот живот - и ги цените алатките што ја почитуваат вашата приватност - размислете за поддршка на нејзиниот развој.",
+      "Вашиот придонес помага да се покријат зголемените трошоци за претплатите за вештачка интелигенција што ги користам за изградба и подобрување на екстензијата. Тоа исто така ми дава малку дополнителна мотивација да продолжам.",
+      "Не можете да донирате? Тоа е сосема во ред. Споделувањето на вашето искрено искуство - што помогна во вашата продуктивност и што може да биде подобро - исто така значи многу. Ви благодариме што сте тука. 🙏",
+      "Приватноста и сите функции остануваат достапни за секого, без разлика дали донирате или не.",
+      "Еднократна поддршка преку GitHub Sponsors · американски долари",
+      "Донирајте",
+      "Потсети ме подоцна",
+      "Не прашувај повторно",
+      "Прикажи преглед и потсетници за поддршка"
+    ],
+    ml: [
+      "നിർമ്മാണം തുടരാൻ എന്നെ സഹായിക്കൂ",
+      "ChatGPT Audio Controls നിങ്ങളുടെ ദിവസം കുറച്ചുകൂടി എളുപ്പമാക്കിയിട്ടുണ്ടോ, നിങ്ങളുടെ സമയം ലാഭിച്ചിട്ടുണ്ടോ, അല്ലെങ്കിൽ കൂടുതൽ കാര്യങ്ങൾ ചെയ്യാൻ നിങ്ങളെ സഹായിച്ചിട്ടുണ്ടോ? ഇത് നിങ്ങളുടെ ജീവിതത്തിന് മൂല്യം കൂട്ടിയിട്ടുണ്ടെങ്കിൽ-നിങ്ങളുടെ സ്വകാര്യതയെ മാനിക്കുന്ന ടൂളുകളെ നിങ്ങൾ വിലമതിക്കുന്നുവെങ്കിൽ-അതിൻ്റെ വികസനത്തെ പിന്തുണയ്ക്കുന്നത് പരിഗണിക്കുക.",
+      "വിപുലീകരണം നിർമ്മിക്കുന്നതിനും മെച്ചപ്പെടുത്തുന്നതിനും ഞാൻ ഉപയോഗിക്കുന്ന AI സബ്‌സ്‌ക്രിപ്‌ഷനുകളുടെ വർദ്ധിച്ചുവരുന്ന ചെലവ് നികത്താൻ നിങ്ങളുടെ സംഭാവന സഹായിക്കുന്നു. തുടരാൻ ഇത് എനിക്ക് കുറച്ച് അധിക പ്രചോദനവും നൽകുന്നു.",
+      "സംഭാവന നൽകാൻ കഴിയുന്നില്ലേ? അത് പൂർണ്ണമായും ശരിയാണ്. നിങ്ങളുടെ സത്യസന്ധമായ അനുഭവം പങ്കിടുന്നത്-നിങ്ങളുടെ ഉൽപ്പാദനക്ഷമതയെ സഹായിച്ചതും മികച്ചതാകാൻ കഴിയുന്നതും-ഒരുപാട് അർത്ഥമാക്കുന്നു. ഇവിടെ ഉണ്ടായിരുന്നതിന് നന്ദി. 🙏",
+      "നിങ്ങൾ സംഭാവന നൽകിയാലും ഇല്ലെങ്കിലും സ്വകാര്യതയും എല്ലാ ഫീച്ചറുകളും എല്ലാവർക്കും ലഭ്യമാകും.",
+      "GitHub Sponsors വഴി ഒറ്റത്തവണ പിന്തുണ · യുഎസ് ഡോളർ",
+      "സംഭാവന ചെയ്യുക",
+      "എന്നെ പിന്നീട് ഓർമ്മിപ്പിക്കുക",
+      "വീണ്ടും ചോദിക്കരുത്",
+      "അവലോകനവും പിന്തുണ റിമൈൻഡറുകളും കാണിക്കുക"
+    ],
+    mn: [
+      "Барилга барихад минь туслаач",
+      "ChatGPT Audio Controls таны өдрийг бага зэрэг хөнгөвчилж, цагийг тань хэмнэж, эсвэл илүү их зүйл хийхэд тусалсан уу? Хэрэв энэ нь таны амьдралд үнэ цэнэ нэмсэн бол, мөн та өөрийн хувийн нууцыг хүндэтгэдэг хэрэгслүүдийг үнэлдэг бол түүний хөгжлийг дэмжих талаар бодож үзээрэй.",
+      "Таны оруулсан хувь нэмэр миний өргөтгөлийг бий болгож, сайжруулахад ашигладаг хиймэл оюун ухааны захиалгын өсөн нэмэгдэж буй зардлыг нөхөхөд тусалдаг. Энэ нь цааш үргэлжлүүлэх бага зэрэг нэмэлт урам зориг өгдөг.",
+      "Хандив өгч чадахгүй байна уу? Энэ нь бүрэн зөв юм. Таны бүтээмжид юу тусалсан, юу нь илүү сайн байж болох талаар шударга туршлагаа хуваалцах нь бас их ач холбогдолтой. Энд байгаад баярлалаа. 🙏",
+      "Таны хандивласан эсэхээс үл хамааран нууцлал болон бүх функцууд бүгдэд нээлттэй хэвээр байна.",
+      "GitHub Sponsors дамжуулан нэг удаагийн дэмжлэг · ам.доллар",
+      "Хандив",
+      "Надад дараа сануул",
+      "Дахиж битгий асуу",
+      "Хяналт болон дэмжлэгийн сануулгыг харуулах"
+    ],
+    ms: [
+      "Bantu saya terus membina",
+      "Adakah ChatGPT Audio Controls telah menjadikan hari anda lebih mudah, menjimatkan masa anda atau membantu anda menyelesaikan lebih banyak perkara? Jika ia mempunyai nilai tambah kepada hidup anda—dan anda menghargai alatan yang menghormati privasi anda—sila pertimbangkan untuk menyokong pembangunannya.",
+      "Sumbangan anda membantu menampung peningkatan kos langganan AI yang saya gunakan untuk membina dan menambah baik sambungan. Ia juga memberi saya sedikit motivasi tambahan untuk meneruskan.",
+      "Tidak boleh menderma? Itu betul-betul okay. Berkongsi pengalaman jujur ​​anda—apa yang membantu produktiviti anda dan perkara yang boleh menjadi lebih baik—bererti juga. Terima kasih kerana berada di sini. 🙏",
+      "Privasi dan semua ciri kekal tersedia kepada semua orang, sama ada anda menderma atau tidak.",
+      "Sokongan sekali melalui GitHub Sponsors · dolar AS",
+      "Derma",
+      "Ingatkan saya kemudian",
+      "Jangan tanya lagi",
+      "Tunjukkan semakan dan peringatan sokongan"
+    ],
+    my: [
+      "ကျွန်ုပ်အား ဆက်လက်တည်ဆောက်ရန် ကူညီပေးပါ။",
+      "ChatGPT Audio Controls သည် သင့်တစ်နေ့တာကို အနည်းငယ်ပိုမိုလွယ်ကူစေသည်၊ သင့်အချိန်ကို သက်သာစေသည်၊ သို့မဟုတ် သင့်အား ပိုမိုပြီးမြောက်အောင် ကူညီပေးပါသလား။ အကယ်၍ ၎င်းသည် သင့်ဘဝအတွက် ထပ်လောင်းတန်ဖိုးရှိပြီး—သင်၏ privacy ကိုလေးစားသောကိရိယာများကို သင်တန်ဖိုးထားပါက—၎င်း၏ဖွံ့ဖြိုးတိုးတက်မှုကို ပံ့ပိုးပေးရန် စဉ်းစားပါ။",
+      "သင်၏ပံ့ပိုးမှုသည် တိုးချဲ့မှုကို တည်ဆောက်ရန်နှင့် မြှင့်တင်ရန်အတွက် ကျွန်ုပ်အသုံးပြုသည့် AI စာရင်းသွင်းမှုများ၏ မြင့်တက်လာသောကုန်ကျစရိတ်ကို ကာမိစေရန် ကူညီပေးပါသည်။ ဆက်လက်လုပ်ဆောင်ရန် တွန်းအားအနည်းငယ်ကိုလည်း ပေးပါသည်။",
+      "မလှူနိုင်ဘူးလား။ အဲဒါ လုံးဝအဆင်ပြေပါတယ်။ သင်၏ ရိုးသားသော အတွေ့အကြုံကို မျှဝေခြင်း—မင်း၏ ကုန်ထုတ်စွမ်းအားကို အထောက်အကူဖြစ်စေသော အရာများနှင့် ပိုကောင်းလာနိုင်သည်—လည်း များစွာ အဓိပ္ပာယ်ရှိသည်။ ဒီမှာရှိတဲ့အတွက် ကျေးဇူးတင်ပါတယ်။ 🙏",
+      "သင်လှူဒါန်းသည်ဖြစ်စေ မလှူဒါန်းသည်ဖြစ်စေ လူတိုင်းအတွက် ကိုယ်ရေးကိုယ်တာနှင့် အင်္ဂါရပ်အားလုံးကို ရရှိနိုင်ပါသည်။",
+      "GitHub Sponsors · US ဒေါ်လာဖြင့် တစ်ကြိမ်တည်း ပံ့ပိုးမှု",
+      "လှူပါ။",
+      "ငါ့ကို နောက်မှသတိပေးပါ။",
+      "ထပ်မမေးနဲ့",
+      "သုံးသပ်ချက်နှင့် ပံ့ပိုးမှုသတိပေးချက်များကို ပြပါ။"
+    ],
+    nl: [
+      "Help me blijven bouwen",
+      "Heeft ChatGPT Audio Controls uw dag een beetje eenvoudiger gemaakt, u tijd bespaard of u geholpen meer gedaan te krijgen? Als het waarde aan uw leven heeft toegevoegd – en u waardeert hulpmiddelen die uw privacy respecteren – overweeg dan om de ontwikkeling ervan te ondersteunen.",
+      "Jouw bijdrage helpt bij het dekken van de stijgende kosten van de AI-abonnementen die ik gebruik om de extensie te bouwen en te verbeteren. Het geeft mij ook een beetje extra motivatie om door te gaan.",
+      "Kunt u niet doneren? Dat is helemaal oké. Het delen van uw eerlijke ervaringen – wat uw productiviteit heeft geholpen en wat beter kan – betekent ook veel. Bedankt dat je hier bent. 🙏",
+      "Privacy en alle functies blijven voor iedereen beschikbaar, ongeacht of u doneert of niet.",
+      "Eenmalige ondersteuning via GitHub Sponsors · Amerikaanse dollars",
+      "Doneer",
+      "Herinner me er later aan",
+      "Vraag het niet nog een keer",
+      "Beoordelings- en ondersteuningsherinneringen weergeven"
+    ],
+    pa: [
+      "ਨਿਰਮਾਣ ਕਰਨ ਵਿੱਚ ਮੇਰੀ ਮਦਦ ਕਰੋ",
+      "ਕੀ ChatGPT Audio Controls ਨੇ ਤੁਹਾਡੇ ਦਿਨ ਨੂੰ ਥੋੜ੍ਹਾ ਸੌਖਾ ਬਣਾ ਦਿੱਤਾ ਹੈ, ਤੁਹਾਡਾ ਸਮਾਂ ਬਚਾਇਆ ਹੈ, ਜਾਂ ਤੁਹਾਨੂੰ ਹੋਰ ਕੰਮ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕੀਤੀ ਹੈ? ਜੇਕਰ ਇਸਨੇ ਤੁਹਾਡੇ ਜੀਵਨ ਵਿੱਚ ਮਹੱਤਵ ਜੋੜਿਆ ਹੈ — ਅਤੇ ਤੁਸੀਂ ਉਹਨਾਂ ਸਾਧਨਾਂ ਦੀ ਕਦਰ ਕਰਦੇ ਹੋ ਜੋ ਤੁਹਾਡੀ ਗੋਪਨੀਯਤਾ ਦਾ ਸਨਮਾਨ ਕਰਦੇ ਹਨ — ਕਿਰਪਾ ਕਰਕੇ ਇਸਦੇ ਵਿਕਾਸ ਦਾ ਸਮਰਥਨ ਕਰਨ 'ਤੇ ਵਿਚਾਰ ਕਰੋ।",
+      "ਤੁਹਾਡਾ ਯੋਗਦਾਨ AI ਗਾਹਕੀ ਦੀ ਵਧਦੀ ਲਾਗਤ ਨੂੰ ਕਵਰ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ ਜੋ ਮੈਂ ਐਕਸਟੈਂਸ਼ਨ ਨੂੰ ਬਣਾਉਣ ਅਤੇ ਸੁਧਾਰਨ ਲਈ ਵਰਤਦਾ ਹਾਂ। ਇਹ ਮੈਨੂੰ ਜਾਰੀ ਰੱਖਣ ਲਈ ਥੋੜਾ ਜਿਹਾ ਵਾਧੂ ਪ੍ਰੇਰਣਾ ਵੀ ਦਿੰਦਾ ਹੈ।",
+      "ਦਾਨ ਨਹੀਂ ਕਰ ਸਕਦੇ? ਇਹ ਬਿਲਕੁਲ ਠੀਕ ਹੈ। ਆਪਣੇ ਇਮਾਨਦਾਰ ਅਨੁਭਵ ਨੂੰ ਸਾਂਝਾ ਕਰਨਾ—ਤੁਹਾਡੀ ਉਤਪਾਦਕਤਾ ਵਿੱਚ ਕਿਸ ਚੀਜ਼ ਨੇ ਮਦਦ ਕੀਤੀ ਅਤੇ ਕੀ ਬਿਹਤਰ ਹੋ ਸਕਦਾ ਹੈ—ਦਾ ਮਤਲਬ ਵੀ ਬਹੁਤ ਹੈ। ਇੱਥੇ ਹੋਣ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। 🙏",
+      "ਗੋਪਨੀਯਤਾ ਅਤੇ ਸਾਰੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਹਰ ਕਿਸੇ ਲਈ ਉਪਲਬਧ ਰਹਿੰਦੀਆਂ ਹਨ, ਭਾਵੇਂ ਤੁਸੀਂ ਦਾਨ ਕਰਦੇ ਹੋ ਜਾਂ ਨਹੀਂ।",
+      "GitHub Sponsors · ਯੂਐਸ ਡਾਲਰ ਦੁਆਰਾ ਇੱਕ-ਵਾਰ ਸਹਾਇਤਾ",
+      "ਦਾਨ ਕਰੋ",
+      "ਮੈਨੂੰ ਬਾਅਦ ਵਿੱਚ ਯਾਦ ਕਰਾਓ",
+      "ਦੁਬਾਰਾ ਨਾ ਪੁੱਛੋ",
+      "ਸਮੀਖਿਆ ਅਤੇ ਸਹਾਇਤਾ ਰੀਮਾਈਂਡਰ ਦਿਖਾਓ"
+    ],
+    sk: [
+      "Pomôž mi pokračovať v budovaní",
+      "Uľahčil vám ChatGPT Audio Controls deň, ušetril čas alebo vám pomohol urobiť viac? Ak má pre váš život pridanú hodnotu – a ceníte si nástroje, ktoré rešpektujú vaše súkromie –, zvážte podporu jeho rozvoja.",
+      "Váš príspevok pomáha pokryť rastúce náklady na predplatné AI, ktoré používam na vytvorenie a zlepšenie rozšírenia. Dáva mi to aj ďalšiu motiváciu pokračovať.",
+      "Nemôžete darovať? To je úplne v poriadku. Podeliť sa o svoje úprimné skúsenosti – čo pomohlo vašej produktivite a čo by mohlo byť lepšie – tiež veľa znamená. Ďakujem, že ste tu. 🙏",
+      "Ochrana osobných údajov a všetky funkcie zostávajú dostupné pre každého, či už prispejete alebo nie.",
+      "Jednorazová podpora prostredníctvom GitHub Sponsors · USD",
+      "Darujte",
+      "Pripomeň mi neskôr",
+      "Už sa nepýtaj",
+      "Zobraziť pripomienky recenzií a podpory"
+    ],
+    sl: [
+      "Pomagaj mi nadaljevati gradnjo",
+      "Vam je ChatGPT Audio Controls nekoliko olajšal dan, vam prihranil čas ali vam pomagal narediti več? Če ima dodano vrednost vašemu življenju – in cenite orodja, ki spoštujejo vašo zasebnost – razmislite o podpori njegovega razvoja.",
+      "Vaš prispevek pomaga pri kritju naraščajočih stroškov naročnin na umetno inteligenco, ki jih uporabljam za izdelavo in izboljšanje razširitve. To mi daje tudi dodatno motivacijo za nadaljevanje.",
+      "Ne morete darovati? To je povsem v redu. Veliko pomeni tudi deljenje vaše iskrene izkušnje – kaj je pomagalo vaši produktivnosti in kaj bi lahko bilo boljše. Hvala, ker ste tukaj. 🙏",
+      "Zasebnost in vse funkcije ostajajo na voljo vsem, ne glede na to, ali donirate ali ne.",
+      "Enkratna podpora prek GitHub Sponsors · ameriških dolarjev",
+      "Doniraj",
+      "Opomni me pozneje",
+      "Ne sprašuj več",
+      "Prikaži opomnike o pregledih in podpori"
+    ],
+    so: [
+      "Iga caawi inaan sii wado dhismaha",
+      "ChatGPT Audio Controls ma ka dhigay maalintaada wax yar, ma kaa badbaadiyay wakhti, ama ma kaa caawiyay inaad wax badan qabato? Haddii ay noloshaada ku kordhisay qiimo—oo aad qiimayso qalabka ixtiraamaya sirtaada—fadlan ka fiirso inaad taageerto horumarkeeda.",
+      "Wax ku biirintaadu waxay gacan ka geysataa daboolida qiimaha kor u kaca ee isdiiwaangelinta AI ee aan isticmaalo si aan u dhiso oo aan u wanaajiyo kordhinta. Waxa kale oo ay i siinaysaa dhiirigelin yar oo dheeraad ah si aan u sii wado.",
+      "Ma ku deeqi karaa? Taasi gabi ahaanba waa caadi. Wadaagista waayo-aragnimadaada daacadda ah - maxaa caawiyay wax soo saarkaaga iyo waxa ka fiicnaan kara - waxay la macno tahay sidoo kale. Waad ku mahadsan tahay joogitaankaaga halkan. 🙏",
+      "Qarsoodi iyo dhammaan sifooyinka ayaa weli diyaar u ah qof walba, haddii aad ku deeqdo iyo haddii kale.",
+      "Taageero hal mar ah iyada oo loo marayo GitHub Sponsors · US dollars",
+      "Ku deeq",
+      "Hadhow i xasuusi",
+      "Mar dambe ha weydiin",
+      "Muuji dib u eegista iyo xasuusinta taageerada"
+    ],
+    sq: [
+      "Më ndihmo të vazhdoj të ndërtoj",
+      "ChatGPT Audio Controls të ka bërë pak më të lehtë ditën, të ka kursyer kohë apo të ka ndihmuar të bësh më shumë? Nëse ka vlerë të shtuar në jetën tuaj - dhe vlerësoni mjetet që respektojnë privatësinë tuaj - ju lutemi merrni parasysh mbështetjen e zhvillimit të tij.",
+      "Kontributi juaj ndihmon në mbulimin e kostos në rritje të abonimeve të AI që përdor për të ndërtuar dhe përmirësuar shtesën. Gjithashtu më jep pak motivim shtesë për të vazhduar.",
+      "Nuk mund të dhurosh? Kjo është plotësisht në rregull. Të ndash përvojën tënde të sinqertë – çfarë e ndihmoi produktivitetin tënd dhe çfarë mund të ishte më mirë – do të thotë gjithashtu shumë. Faleminderit që jeni këtu. 🙏",
+      "Privatësia dhe të gjitha veçoritë mbeten të disponueshme për të gjithë, pavarësisht nëse dhuroni apo jo.",
+      "Mbështetje një herë përmes GitHub Sponsors · dollarë amerikanë",
+      "Dhuroni",
+      "Më kujto më vonë",
+      "Mos pyet më",
+      "Shfaq rikujtuesit e rishikimit dhe mbështetjes"
+    ],
+    sr: [
+      "Помозите ми да наставим да градим",
+      "Да ли вам је ChatGPT Audio Controls мало олакшао дан, уштедео време или вам помогао да урадите више? Ако има додатну вредност у вашем животу — а цените алате који поштују вашу приватност — размислите о подршци његовом развоју.",
+      "Ваш допринос помаже да се покрију растући трошкови претплата на вештачку интелигенцију које користим за изградњу и побољшање проширења. То ми такође даје додатну мотивацију да наставим даље.",
+      "Не можете да донирате? То је сасвим у реду. Дељење свог искреног искуства – шта је помогло вашој продуктивности и шта би могло бити боље – такође много значи. Хвала вам што сте овде. 🙏",
+      "Приватност и све функције остају доступне свима, без обзира да ли донирате или не.",
+      "Једнократна подршка преко GitHub Sponsors · амерички долари",
+      "Донирајте",
+      "Подсети ме касније",
+      "Не питај поново",
+      "Прикажи подсетнике за преглед и подршку"
+    ],
+    sw: [
+      "Nisaidie kuendelea kujenga",
+      "Je, ChatGPT Audio Controls imerahisisha siku yako, ikaokoa wakati, au imekusaidia kufanya mengi zaidi? Ikiwa imeongeza thamani kwa maisha yako—na unathamini zana zinazoheshimu faragha yako—tafadhali zingatia kuunga mkono uundaji wake.",
+      "Mchango wako husaidia kulipia gharama inayoongezeka ya usajili wa AI ninaotumia kujenga na kuboresha kiendelezi. Pia inanipa motisha kidogo ya kuendelea.",
+      "Huwezi kuchangia? Hiyo ni sawa kabisa. Kushiriki uzoefu wako wa uaminifu-kilichosaidia uzalishaji wako na kile kinachoweza kuwa bora-inamaanisha mengi pia. Asante kwa kuwa hapa. 🙏",
+      "Faragha na vipengele vyote vinaendelea kupatikana kwa kila mtu, iwe utachangia au la.",
+      "Usaidizi wa mara moja kupitia GitHub Sponsors · dola za Marekani",
+      "Changia",
+      "Nikumbushe baadaye",
+      "Usiulize tena",
+      "Onyesha mapitio na vikumbusho vya usaidizi"
+    ],
+    ur: [
+      "تعمیر کرنے میں میری مدد کریں۔",
+      "کیا ChatGPT Audio Controls نے آپ کے دن کو تھوڑا آسان بنا دیا ہے، آپ کا وقت بچایا ہے، یا مزید کام کرنے میں آپ کی مدد کی ہے؟ اگر اس نے آپ کی زندگی میں قدر کا اضافہ کیا ہے — اور آپ ان ٹولز کو اہمیت دیتے ہیں جو آپ کی رازداری کا احترام کرتے ہیں — تو براہ کرم اس کی ترقی کی حمایت کرنے پر غور کریں۔",
+      "آپ کا تعاون AI سبسکرپشنز کی بڑھتی ہوئی لاگت کو پورا کرنے میں مدد کرتا ہے جو میں توسیع کو بنانے اور بہتر بنانے کے لیے استعمال کرتا ہوں۔ یہ مجھے جاری رکھنے کے لیے تھوڑا سا اضافی حوصلہ بھی دیتا ہے۔",
+      "عطیہ نہیں کر سکتے؟ یہ بالکل ٹھیک ہے۔ اپنے ایماندارانہ تجربے کا اشتراک کرنا — کس چیز نے آپ کی پیداواری صلاحیت میں مدد کی اور کیا بہتر ہو سکتا ہے — کا مطلب بھی بہت کچھ ہے۔ یہاں ہونے کے لیے آپ کا شکریہ۔ 🙏",
+      "رازداری اور تمام خصوصیات ہر ایک کے لیے دستیاب رہتی ہیں، چاہے آپ عطیہ کریں یا نہ کریں۔",
+      "GitHub Sponsors · امریکی ڈالر کے ذریعے ایک وقتی تعاون",
+      "عطیہ کریں۔",
+      "مجھے بعد میں یاد دلانا",
+      "دوبارہ مت پوچھو",
+      "نظرثانی اور مدد کی یاددہانی دکھائیں۔"
+    ],
+    "es-419": [
+      "Ayúdame a seguir creando",
+      "¿ChatGPT Audio Controls te ha facilitado el día, ahorrado tiempo o ayudado a hacer más? Si aporta valor a tu vida y aprecias las herramientas que respetan tu privacidad, considera apoyar su desarrollo.",
+      "Tu aportación ayuda a cubrir el coste creciente de las suscripciones de IA que uso para crear y mejorar la extensión. También me da un poco más de motivación para seguir.",
+      "¿No puedes donar? No pasa nada. Compartir tu experiencia sincera —qué ha mejorado tu productividad y qué podría mejorar— también significa mucho. Gracias por estar aquí. 🙏",
+      "La privacidad y todas las funciones siguen disponibles para todos, donen o no.",
+      "Aportación única mediante GitHub Sponsors · Dólares estadounidenses",
+      "Donar",
+      "Recordármelo más tarde",
+      "No volver a preguntar",
+      "Mostrar recordatorios de reseñas y apoyo"
+    ],
+    "fr-CA": [
+      "Aidez-moi à continuer à créer",
+      "ChatGPT Audio Controls vous facilite la vie, vous fait gagner du temps ou vous aide à en faire plus ? Si cette extension vous est utile et que vous appréciez les outils qui respectent votre vie privée, pensez à soutenir son développement.",
+      "Votre contribution aide à couvrir le coût croissant des abonnements à l’IA que j’utilise pour créer et améliorer l’extension. Elle me donne aussi un peu plus de motivation pour continuer.",
+      "Vous ne pouvez pas faire de don ? Aucun souci. Partager votre expérience sincère —ce qui a amélioré votre productivité et ce qui pourrait être mieux— compte aussi beaucoup. Merci d’être là. 🙏",
+      "La confidentialité et toutes les fonctionnalités restent accessibles à tous, avec ou sans don.",
+      "Soutien ponctuel via GitHub Sponsors · Dollars américains",
+      "Faire un don",
+      "Me le rappeler plus tard",
+      "Ne plus demander",
+      "Afficher les rappels d’avis et de soutien"
+    ],
+    "hi-Latn": [
+      "nirman jaari rakhne mein meri sahayata karen",
+      "kya ChatGPT Audio Controls ne aapka din thoda aasan bana diya hai, aapka samay bachaya hai, ya aapko adhik kaam karne mein madad ki hai? yadi isne aapke jeevan mein mulya joda hai - aur aap un upkaranon ko mahatva dete hain jo aapki gopniyata ka samman karte hain - to kripya iske vikas ka samarthan karne par vichar karen.",
+      "aapka yogdaan ai sadasyata ki badhti laagat ko cover karne mein madad karta hai jiska upyog main extension banane aur sudharne ke liye karta hun. isse mujhe aage badhne ke liye thodi atirikt prerna bhi milti hai.",
+      "daan nahin kar sakte? yah bilkul theek hai. apna imandar anubhav sajha karna - kis cheez ne aapki utpadakta mein madad ki aur kya behtar ho sakta hai - bhi bahut mayne rakhta hai. yahan hone ke liye dhanyavad. 🙏",
+      "gopniyata aur sabhi suvidhayen sabhi ke liye uplabdh rehti han, chahe aap daan karen ya nahin.",
+      "GitHub Sponsors · ameriki dollar ke madhyam se ekmusht sahayata",
+      "daan karen",
+      "mujhe baad mein yaad dilana",
+      "dobara mat puchho",
+      "samiksha aur samarthan anusmarak dikhaen"
+    ],
+    "zh-HK": [
+      "支持我繼續開發",
+      "ChatGPT Audio Controls 是否讓你的日常更輕鬆、節省了時間，或提高了效率？如果它為你的生活帶來了價值，而你也重視尊重隱私的工具，歡迎支持它的開發。",
+      "你的支持將幫助支付我用於開發和改善擴充功能的 AI 訂閱費用，這些費用正持續增加。也會給我繼續開發的動力。",
+      "暫時無法捐助？完全沒關係。分享真實的使用體驗——它如何提升你的工作效率，還有哪些地方需要改善——也很有意義。感謝你的陪伴。🙏",
+      "無論是否捐助，所有人都能享有相同的隱私保護和完整功能。",
+      "透過 GitHub Sponsors 單次支持 · 美元",
+      "捐助",
+      "稍後提醒我",
+      "不再詢問",
+      "顯示評價與支持提醒"
+    ]
+  };
 
   // src/shared/i18n/donations.ts
   var keys = ["title", "value", "costs", "optional", "privacy", "once", "donate", "later", "never", "reminders"];
@@ -7580,6 +17855,7 @@
     const values = donationCatalogs[resolveLanguage(language)] || donationCatalogs.en;
     return Object.fromEntries(keys.map((key, index) => [key, values[index]]));
   }
+  Object.assign(donationCatalogs, chatgpt_donations_default);
 
   // src/shared/i18n/support.ts
   var supportCatalogs = {
@@ -7609,11 +17885,18 @@
     tr: ["ChatGPT Audio Controls’u geliştirmeye yardımcı olun", "Bir fikriniz mi var? Önerinizi paylaşın veya uzantıyı desteklemek için dürüst bir değerlendirme yazın.", "Öneri paylaş", "Değerlendirme yaz"]
   };
   Object.assign(supportCatalogs, Object.fromEntries(Object.entries(audience_features_default).map(([code, copy]) => [code, copy.support])));
+  Object.assign(supportCatalogs, Object.fromEntries(Object.entries(chatgpt_features_default).map(([code, copy]) => [code, copy.support])));
   var supportCopy = (language) => supportCatalogs[resolveLanguage(language)];
 
   // src/shared/support.ts
   var SPONSOR_AMOUNTS = [1, 3, 5, 10];
   var SPONSOR_URL = "https://github.com/sponsors/infoxica";
+  var COFFEE_URL = "https://paypal.me/infoxica";
+  function coffeeURL(amount) {
+    if (!SPONSOR_AMOUNTS.includes(amount))
+      throw new Error("Unsupported contribution");
+    return `${COFFEE_URL}/${amount}USD`;
+  }
   function sponsorURL(amount) {
     if (!SPONSOR_AMOUNTS.includes(amount))
       throw new Error("Unsupported contribution");
@@ -7630,6 +17913,79 @@
       return ["chrome"];
     return ["chrome", "edge"];
   }
+  // src/shared/i18n/coffee.json
+  var coffee_default = {
+    en: "Buy me a coffee",
+    ar: "ادعمني بفنجان قهوة",
+    bn: "এক কাপ কফি দিয়ে পাশে থাকুন",
+    ca: "Convida’m a un cafè",
+    cs: "Pozvěte mě na kávu",
+    de: "Spendier mir einen Kaffee",
+    el: "Κέρασέ με έναν καφέ",
+    es: "Invítame a un café",
+    fa: "مهمانم کن به یک قهوه",
+    fr: "Offrez-moi un café",
+    he: "הזמינו אותי לקפה",
+    hi: "एक कॉफ़ी के साथ सहयोग करें",
+    hu: "Hívj meg egy kávéra",
+    id: "Traktir saya kopi",
+    it: "Offrimi un caffè",
+    ja: "コーヒー1杯で応援する",
+    ko: "커피 한 잔으로 응원하기",
+    mr: "एक कॉफी देऊन पाठिंबा द्या",
+    nb: "Spander en kaffe på meg",
+    pl: "Postaw mi kawę",
+    "pt-BR": "Me pague um café",
+    "pt-PT": "Ofereça-me um café",
+    ro: "Oferă-mi o cafea",
+    ru: "Угостите меня кофе",
+    sv: "Bjud mig på en kaffe",
+    ta: "ஒரு காபி மூலம் ஆதரியுங்கள்",
+    te: "ఒక కాఫీతో మద్దతు ఇవ్వండి",
+    th: "เลี้ยงกาแฟฉันสักแก้ว",
+    tr: "Bana bir kahve ısmarla",
+    uk: "Пригостіть мене кавою",
+    vi: "Mời tôi một ly cà phê",
+    "zh-CN": "请我喝杯咖啡",
+    "zh-TW": "請我喝杯咖啡",
+    am: "ቡና ግዛልኝ",
+    bg: "Купете ми кафе",
+    bs: "Kupi me kafom",
+    da: "Køb mig en kop kaffe",
+    et: "Osta mulle kohvi",
+    fil: "Bilhan mo ako ng kape",
+    fi: "Osta minulle kahvia",
+    gu: "મને કોફી ખરીદો",
+    hr: "Časti me kavom",
+    hy: "Ինձ սուրճ գնիր",
+    is: "Keyptu mér kaffi",
+    ka: "მიყიდე ყავა",
+    kk: "Маған кофе сатып алыңыз",
+    kn: "ನನಗೆ ಕಾಫಿ ಖರೀದಿಸಿ",
+    lt: "Nupirk man kavos",
+    lv: "Nopērc man kafiju",
+    mk: "Купи ми кафе",
+    ml: "എനിക്കൊരു കാപ്പി വാങ്ങിത്തരൂ",
+    mn: "Надад кофе авч өгөөч",
+    ms: "Belikan saya kopi",
+    my: "ကော်ဖီဝယ်ပါ။",
+    nl: "Koop een kopje koffie voor me",
+    pa: "ਮੈਨੂੰ ਇੱਕ ਕੌਫੀ ਖਰੀਦੋ",
+    sk: "Kúp mi kávu",
+    sl: "Kupi mi kavo",
+    so: "Kafee iga iibso",
+    sq: "Më ble një kafe",
+    sr: "Купи ме кафом",
+    sw: "Ninunulie kahawa",
+    ur: "مجھے ایک کافی خریدو",
+    "es-419": "Invítame a un café",
+    "fr-CA": "Offrez-moi un café",
+    "hi-Latn": "mere liye ek coffee khrido",
+    "zh-HK": "請我喝杯咖啡"
+  };
+
+  // src/shared/i18n/coffee.ts
+  var coffeeCopy = (language) => coffee_default[resolveLanguage(language)] || coffee_default.en;
 
   // src/shared/engagement.ts
   var ENGAGEMENT_KEY = "cgpt-ra-engagement-v1";
@@ -7809,6 +18165,8 @@
     };
     for (const amount of SPONSOR_AMOUNTS)
       link(sponsorURL(amount), `US$${amount}`, "donation");
+    for (const amount of SPONSOR_AMOUNTS)
+      link(coffeeURL(amount), `${coffeeCopy(settings.language)} · PayPal · US$${amount}`, "donation");
     for (const store of ["chrome", "edge"])
       link(REVIEW_URLS[store], `${support[3]} · ${store === "chrome" ? "Chrome" : "Edge"}`, "review");
     section.append(links);
@@ -8076,6 +18434,7 @@
 
   // src/content/icons.ts
   var LUCIDE_ICONS = {
+    coffee: '<path d="M10 2v2M14 2v2M4 2v2M4 7h14v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4ZM18 8h1a3 3 0 1 1 0 6h-1M2 22h20"/>',
     x: '<path d="m6 6 12 12M18 6 6 18"></path>',
     check: '<path d="m5 12 4 4L19 6"></path>',
     ellipsis: '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>',
@@ -8151,7 +18510,7 @@
     let { x: left, y: top } = r, right = r.x + r.width, bottom = r.y + r.height;
     for (let node = el;node; node = node.parentElement) {
       const style = getComputedStyle(node);
-      if (style.display === "none" || style.opacity === "0" || style.contentVisibility === "hidden")
+      if (node.hidden || node.getAttribute("aria-hidden") === "true" || style.display === "none" || style.opacity === "0" || style.contentVisibility === "hidden")
         return null;
       if (node === el || style.display === "contents")
         continue;
@@ -8318,7 +18677,7 @@
       return Array.from(document.querySelectorAll('header, [role="banner"], nav[aria-label], [data-testid="page-header"], [data-testid="app-shell-sidebar"], #app-shell-sidebar')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]')).map(visibleBounds).filter((r) => !!r && r.width <= innerWidth && (r.height < innerHeight * 0.7 || r.width < innerWidth * 0.45));
     }
     nativeActions() {
-      return Array.from(document.querySelectorAll('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]')).map(bounds).filter((r) => r.width > 0 && r.height > 0);
+      return Array.from(document.querySelectorAll('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]')).map(visibleBounds).filter((r) => !!r);
     }
     geometry(p, expanded) {
       const viewport = this.viewport(), obstacles = this.obstacles(), area = { ...viewport };
@@ -8461,12 +18820,12 @@
           const after = bounds(el), old = before[i];
           if (el.hidden || !after.width || !old.width)
             return;
-          let from = { transform: "translate(" + (old.x - after.x) + "px," + (old.y - after.y) + "px)" };
+          let from = { transform: "translate(" + (old.x - after.x) + "px," + (old.y - after.y) + "px) scale(" + old.width / after.width + "," + old.height / after.height + ")", transformOrigin: "0 0" };
           if (docked && expanded !== this.lastExpanded && el !== this.circle) {
             const travel = geometry.surface.height;
             el.animate(expanded ? [{ transform: "translateY(" + travel + "px)", clipPath: "inset(0 0 100% 0)" }, { transform: "translateY(0)", clipPath: "inset(0)" }] : [{ transform: "translateY(0)", clipPath: "inset(0)", visibility: "visible" }, { transform: "translateY(" + travel + "px)", clipPath: "inset(0 0 100% 0)", visibility: "visible" }], { duration, easing: "cubic-bezier(.2,.8,.2,1)" });
           } else {
-            el.animate([from, { transform: "translate(0,0)" }], { duration, easing: "cubic-bezier(.16,1,.3,1)" });
+            el.animate([from, { transform: "translate(0,0) scale(1)", transformOrigin: "0 0" }], { duration, easing: "cubic-bezier(.16,1,.3,1)" });
           }
         });
       }
@@ -8575,6 +18934,10 @@
         const { clientX: x, clientY: y } = event;
         let dragging = false, selected = null, done = false;
         const offsets = new Map;
+        const originals = new Map;
+        let preview = null, previewScale = 1;
+        let previewContents = null, liftPending = false;
+        let previewBounds = { x, y, width: 0, height: 0 };
         let targets = [];
         const moving = pill ? [pill] : [this.seek, this.controls, this.circle, this.surface, this.join].filter((el) => !el.hidden && (this.expanded || el === this.circle));
         handle.setPointerCapture(event.pointerId);
@@ -8593,11 +18956,786 @@
               el.style.transform = "";
               const resting = bounds(el);
               offsets.set(el, { x: visible.x - resting.x, y: visible.y - resting.y });
+              originals.set(el, visible);
               el.classList.add("cgpt-ra-dragging");
             }
             this.overlay = document.createElement("div");
             this.overlay.id = "cgpt-ra-drop-targets";
             this.overlay.setAttribute("aria-hidden", "true");
+            this.overlay.classList.toggle("cgpt-ra-group-drag", !pill);
+            if (!pill) {
+              const rects = [...originals.values()];
+              const left = Math.min(...rects.map((r) => r.x)), top = Math.min(...rects.map((r) => r.y));
+              previewBounds = { x: left, y: top, width: Math.max(...rects.map((r) => r.x + r.width)) - left, height: Math.max(...rects.map((r) => r.y + r.height)) - top };
+              previewScale = Math.min(1, 240 / previewBounds.width, 120 / previewBounds.height);
+              preview = document.createElement("div");
+              preview.className = "cgpt-ra-drag-preview";
+              preview.inert = true;
+              const shadow = preview.attachShadow({ mode: "closed" });
+              const style = document.createElement("style");
+              style.textContent = `/*\r
+ * ChatGPT Audio Controls Styles\r
+ * Extension-owned player styles. Native composer styling is never overridden.\r
+ */\r
+\r
+#cgpt-ra-support-prompt,\r
+#cgpt-ra-left,\r
+#cgpt-ra-right,\r
+#cgpt-ra-floating-toggle {\r
+    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r
+    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r
+    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r
+    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r
+    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r
+    --cgpt-ra-text: var(--text-primary, #ffffff);\r
+    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r
+    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r
+    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r
+    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r
+}\r
+\r
+html.light #cgpt-ra-support-prompt,\r
+[data-theme='light'] #cgpt-ra-support-prompt,\r
+html.light #cgpt-ra-left,\r
+html.light #cgpt-ra-right,\r
+html.light #cgpt-ra-floating-toggle,\r
+[data-theme='light'] #cgpt-ra-left,\r
+[data-theme='light'] #cgpt-ra-right,\r
+[data-theme='light'] #cgpt-ra-floating-toggle {\r
+    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r
+    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r
+    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r
+    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r
+    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r
+    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r
+    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r
+    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r
+    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r
+    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r
+}\r
+\r
+/*\r
+ * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r
+ * Reuse them only on our own elements; no rule here targets native ChatGPT\r
+ * controls or writes variables on :root/body.\r
+ */\r
+[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r
+    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r
+    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r
+    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r
+    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r
+    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r
+    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r
+    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r
+    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r
+}\r
+\r
+#cgpt-ra-left,\r
+#cgpt-ra-right {\r
+    box-sizing: border-box;\r
+    position: fixed;\r
+    z-index: 9999;\r
+    border: 1px solid var(--cgpt-ra-border);\r
+    background: var(--cgpt-ra-bg);\r
+    color: var(--cgpt-ra-text);\r
+    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r
+    backdrop-filter: none;\r
+    -webkit-backdrop-filter: none;\r
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r
+    opacity: 1 !important;\r
+    transition: opacity .18s ease, visibility .18s ease;\r
+}\r
+\r
+/*\r
+ * Fused left player layout (Height 48px, Radius 24px)\r
+ */\r
+#cgpt-ra-left {\r
+    min-width: 240px;\r
+    max-width: 430px;\r
+    height: 48px;\r
+    display: block;\r
+    padding: 0 14px;\r
+    border-radius: 24px;\r
+    overflow: visible;\r
+}\r
+\r
+/* Transport controls live in the right rail beside speed/volume controls. */\r
+.cgpt-ra-transport-row {\r
+    position: static;\r
+    z-index: auto;\r
+    height: 36px;\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    gap: 2px;\r
+    padding: 0;\r
+    margin: 0;\r
+    border: 0;\r
+    border-radius: 0;\r
+    background: transparent;\r
+    box-shadow: none;\r
+}\r
+\r
+.cgpt-ra-transport-row > * {\r
+    position: relative;\r
+    z-index: 1;\r
+}\r
+\r
+/* Buttons in transport row: 36px size, play button 40px primary */\r
+.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r
+    width: 36px;\r
+    height: 36px;\r
+    flex: 0 0 36px;\r
+    border-radius: 50%;\r
+}\r
+\r
+.cgpt-ra-play {\r
+    width: 44px !important;\r
+    height: 44px !important;\r
+    flex: 0 0 44px !important;\r
+    border-radius: 50% !important;\r
+    background-color: var(--cgpt-ra-accent) !important;\r
+    color: var(--cgpt-ra-accent-text) !important;\r
+    box-shadow: none !important;\r
+    display: inline-flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+}\r
+\r
+.cgpt-ra-play:hover {\r
+    filter: brightness(1.08);\r
+}\r
+\r
+.cgpt-ra-play svg {\r
+    stroke: currentColor;\r
+    fill: currentColor;\r
+}\r
+\r
+.cgpt-ra-seek10 {\r
+    position: relative;\r
+}\r
+\r
+.cgpt-ra-seek10 .cgpt-ra-lucide {\r
+    width: 22px;\r
+    height: 22px;\r
+}\r
+\r
+.cgpt-ra-seek10 .cgpt-ra-ten {\r
+    position: absolute;\r
+    inset: 0;\r
+    display: grid;\r
+    place-items: center;\r
+    padding-top: 2px;\r
+    font-size: 9px;\r
+    font-weight: 700;\r
+    font-family: system-ui, sans-serif;\r
+    pointer-events: none;\r
+}\r
+\r
+.cgpt-ra-progress-row {\r
+    height: 46px;\r
+    display: grid;\r
+    grid-template-columns: 70px minmax(0, 1fr);\r
+    align-items: center;\r
+    gap: 10px;\r
+    padding: 0;\r
+    margin: 0;\r
+    border: 0;\r
+}\r
+\r
+/* Right rail (Height 48px, Radius 24px) */\r
+#cgpt-ra-right {\r
+    width: max-content;\r
+    min-width: 0;\r
+    height: 48px;\r
+    display: inline-flex;\r
+    align-items: center;\r
+    gap: 4px;\r
+    padding: 5px 8px;\r
+    border-radius: 24px;\r
+    white-space: nowrap;\r
+}\r
+\r
+/* Right rail ordering */\r
+.cgpt-ra-speed-wrap { order: 1; }\r
+.cgpt-ra-volume-wrap { order: 2; }\r
+.cgpt-ra-download { order: 3; margin-left: 2px; }\r
+.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r
+.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r
+\r
+/* Floating Mini Toggle Button (shown when collapsed / idle) */\r
+#cgpt-ra-floating-toggle {\r
+    box-sizing: border-box;\r
+    position: fixed;\r
+    z-index: 9999;\r
+    width: 42px;\r
+    height: 42px;\r
+    border-radius: 50%;\r
+    border: 1px solid var(--cgpt-ra-border);\r
+    background: var(--cgpt-ra-bg);\r
+    color: var(--cgpt-ra-text);\r
+    backdrop-filter: blur(16px);\r
+    -webkit-backdrop-filter: blur(16px);\r
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    cursor: pointer;\r
+    padding: 0;\r
+    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r
+}\r
+\r
+#cgpt-ra-floating-toggle:hover {\r
+    transform: scale(1.08);\r
+    border-color: var(--cgpt-ra-accent);\r
+}\r
+\r
+#cgpt-ra-floating-toggle img,\r
+#cgpt-ra-floating-toggle svg {\r
+    width: 24px;\r
+    height: 24px;\r
+    display: block;\r
+}\r
+\r
+#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r
+    display: none !important;\r
+}\r
+\r
+#cgpt-ra-left.cgpt-ra-collapsed,\r
+#cgpt-ra-right.cgpt-ra-collapsed {\r
+    opacity: 0 !important;\r
+    visibility: hidden;\r
+    pointer-events: none !important;\r
+    /* Do not create a containing block for viewport-positioned popovers. */\r
+}\r
+\r
+/* Disabled controls */\r
+#cgpt-ra-left.cgpt-ra-compact {\r
+    min-width: 0;\r
+    box-sizing: border-box;\r
+    border-radius: 24px;\r
+}\r
+#cgpt-ra-right.cgpt-ra-compact {\r
+    min-width: 0;\r
+    box-sizing: border-box;\r
+    height: auto;\r
+    min-height: 48px;\r
+    flex-wrap: wrap;\r
+    justify-content: center;\r
+    border-radius: 24px;\r
+    padding: 5px;\r
+}\r
+#cgpt-ra-status {\r
+    position: fixed;\r
+    z-index: 10001;\r
+    bottom: 16px;\r
+    left: 50%;\r
+    transform: translateX(-50%);\r
+    max-width: min(540px, calc(100vw - 32px));\r
+    padding: 12px 16px;\r
+    border-radius: 10px;\r
+    background: #202938;\r
+    color: #fff;\r
+    box-shadow: 0 2px 12px #0004;\r
+    font: 14px/1.5 system-ui, sans-serif;\r
+}\r
+#cgpt-ra-status[hidden] { display: none; }\r
+\r
+#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r
+#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r
+#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r
+#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r
+    pointer-events: none !important;\r
+}\r
+\r
+.cgpt-ra-icon-btn {\r
+    position: relative;\r
+    width: 36px;\r
+    height: 36px;\r
+    flex: 0 0 36px;\r
+    display: inline-flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    border: 0;\r
+    border-radius: 50%;\r
+    background: transparent;\r
+    color: inherit;\r
+    cursor: pointer;\r
+    padding: 0;\r
+    font-size: 17px;\r
+    transition: background .12s ease, opacity .12s ease;\r
+}\r
+\r
+.cgpt-ra-icon-btn:hover {\r
+    background: var(--cgpt-ra-bg-surface-hover);\r
+}\r
+\r
+.cgpt-ra-icon-btn:disabled {\r
+    opacity: 0.38;\r
+    cursor: default;\r
+    background: transparent;\r
+}\r
+\r
+.cgpt-ra-lucide {\r
+    display: block;\r
+    width: 19px;\r
+    height: 19px;\r
+    flex: 0 0 19px;\r
+    overflow: visible;\r
+    pointer-events: none;\r
+}\r
+\r
+.cgpt-ra-icon-btn svg {\r
+    stroke: currentColor;\r
+}\r
+\r
+.cgpt-ra-time {\r
+    min-width: 0;\r
+    color: var(--cgpt-ra-muted);\r
+    font-size: 10.5px;\r
+    line-height: 1;\r
+    font-variant-numeric: tabular-nums;\r
+    white-space: nowrap;\r
+    text-align: left;\r
+}\r
+\r
+.cgpt-ra-seek-wrap {\r
+    min-width: 0;\r
+    display: flex;\r
+    align-items: center;\r
+    padding: 0;\r
+}\r
+\r
+/*\r
+ * Sleek seeker range track:\r
+ * - 2px visual track normally\r
+ * - 4px track on hover / focus\r
+ */\r
+.cgpt-ra-range {\r
+    -webkit-appearance: none;\r
+    appearance: none;\r
+    width: 100%;\r
+    height: 18px;\r
+    margin: 0;\r
+    padding: 0;\r
+    border: 0;\r
+    outline: 0;\r
+    cursor: pointer;\r
+    color: var(--cgpt-ra-text);\r
+    background: transparent;\r
+}\r
+\r
+.cgpt-ra-range::-webkit-slider-runnable-track {\r
+    height: 2px;\r
+    border: 0;\r
+    border-radius: 999px;\r
+    background: var(--cgpt-ra-border);\r
+    transition: height .12s ease, background .12s ease;\r
+}\r
+\r
+.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r
+.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r
+    height: 4px;\r
+    background: var(--cgpt-ra-accent);\r
+}\r
+\r
+.cgpt-ra-range::-webkit-slider-thumb {\r
+    -webkit-appearance: none;\r
+    appearance: none;\r
+    width: 10px;\r
+    height: 10px;\r
+    margin-top: -4px;\r
+    border: 0;\r
+    border-radius: 50%;\r
+    background: var(--cgpt-ra-text);\r
+    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r
+    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r
+}\r
+\r
+.cgpt-ra-range:hover::-webkit-slider-thumb,\r
+.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r
+    width: 11px;\r
+    height: 11px;\r
+    margin-top: -3.5px;\r
+    background: var(--cgpt-ra-accent);\r
+}\r
+\r
+.cgpt-ra-range::-moz-range-track {\r
+    height: 2px;\r
+    border: 0;\r
+    border-radius: 999px;\r
+    background: var(--cgpt-ra-border);\r
+    transition: height .12s ease, background .12s ease;\r
+}\r
+\r
+.cgpt-ra-range:hover::-moz-range-track,\r
+.cgpt-ra-range:focus-visible::-moz-range-track {\r
+    height: 4px;\r
+    background: var(--cgpt-ra-accent);\r
+}\r
+\r
+.cgpt-ra-range::-moz-range-progress {\r
+    height: 2px;\r
+    border: 0;\r
+    border-radius: 999px;\r
+    background: var(--cgpt-ra-accent);\r
+}\r
+\r
+.cgpt-ra-range::-moz-range-thumb {\r
+    width: 10px;\r
+    height: 10px;\r
+    border: 0;\r
+    border-radius: 50%;\r
+    background: var(--cgpt-ra-text);\r
+}\r
+\r
+.cgpt-ra-range:disabled {\r
+    opacity: .35;\r
+    cursor: default;\r
+}\r
+\r
+.cgpt-ra-speed-wrap,\r
+.cgpt-ra-volume-wrap,\r
+.cgpt-ra-help-wrap {\r
+    position: relative;\r
+}\r
+\r
+.cgpt-ra-speed-btn {\r
+    width: auto;\r
+    min-width: 48px;\r
+    height: 36px;\r
+    padding: 0 10px;\r
+    border-radius: 18px;\r
+    font-size: 12.5px;\r
+    font-weight: 600;\r
+    font-family: system-ui, sans-serif;\r
+}\r
+\r
+.cgpt-ra-popover {\r
+    position: absolute;\r
+    right: 0;\r
+    bottom: calc(100% + 9px);\r
+    display: none;\r
+    border: 1px solid var(--cgpt-ra-border);\r
+    border-radius: 12px;\r
+    background: var(--cgpt-ra-bg-surface);\r
+    color: var(--cgpt-ra-text);\r
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r
+    overflow: hidden;\r
+    z-index: 10002;\r
+}\r
+\r
+.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r
+.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r
+    display: block;\r
+}\r
+\r
+.cgpt-ra-speed-menu {\r
+    min-width: 90px;\r
+    padding: 5px;\r
+}\r
+\r
+.cgpt-ra-speed-option {\r
+    width: 100%;\r
+    height: 30px;\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    border: 0;\r
+    border-radius: 7px;\r
+    background: transparent;\r
+    color: inherit;\r
+    cursor: pointer;\r
+    font-size: 12px;\r
+}\r
+\r
+.cgpt-ra-speed-option:hover,\r
+.cgpt-ra-speed-option.cgpt-selected {\r
+    background: var(--cgpt-ra-bg-surface-hover);\r
+}\r
+\r
+/* Vertical Volume Popover */\r
+.cgpt-ra-volume-popover {\r
+    position: absolute;\r
+    left: 50%;\r
+    bottom: calc(100% + 6px);\r
+    transform: translateX(-50%);\r
+    width: 44px;\r
+    height: 165px;\r
+    display: flex;\r
+    opacity: 0;\r
+    visibility: hidden;\r
+    pointer-events: none;\r
+    flex-direction: column;\r
+    align-items: center;\r
+    justify-content: flex-start;\r
+    gap: 0;\r
+    padding: 6px 5px 6px;\r
+    border: 1px solid var(--cgpt-ra-border);\r
+    border-radius: 22px;\r
+    background: var(--cgpt-ra-bg-surface);\r
+    color: var(--cgpt-ra-text);\r
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r
+    transition: opacity .12s ease, visibility .12s ease;\r
+    z-index: 10002;\r
+}\r
+\r
+.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r
+    opacity: 1;\r
+    visibility: visible;\r
+    pointer-events: auto;\r
+}\r
+\r
+.cgpt-ra-volume-popover input[type="range"] {\r
+    position: absolute;\r
+    top: 56px;\r
+    left: 50%;\r
+    width: 96px;\r
+    height: 18px;\r
+    margin: 0;\r
+    transform: translate(-50%, -50%) rotate(-90deg);\r
+    cursor: pointer;\r
+}\r
+\r
+.cgpt-ra-volume-value {\r
+    position: absolute;\r
+    left: 4px;\r
+    right: 4px;\r
+    bottom: 6px;\r
+    height: 24px;\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    border-top: 1px solid var(--cgpt-ra-border);\r
+    font-size: 9.5px;\r
+    font-weight: 600;\r
+    font-family: system-ui, sans-serif;\r
+    line-height: 1;\r
+    color: inherit;\r
+    opacity: .80;\r
+    text-align: center;\r
+}\r
+\r
+.cgpt-ra-help {\r
+    width: 300px;\r
+    padding: 12px 14px;\r
+    font-family: system-ui, sans-serif;\r
+}\r
+\r
+.cgpt-ra-help-title {\r
+    margin-bottom: 8px;\r
+    font-size: 12px;\r
+    font-weight: 700;\r
+}\r
+\r
+.cgpt-ra-shortcut-row {\r
+    display: flex;\r
+    justify-content: space-between;\r
+    gap: 20px;\r
+    padding: 4px 0;\r
+    font-size: 11px;\r
+}\r
+\r
+.cgpt-ra-shortcut-key {\r
+    color: inherit;\r
+    opacity: .65;\r
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r
+    white-space: nowrap;\r
+}\r
+\r
+.cgpt-ra-download-busy svg {\r
+    animation: cgpt-ra-spin .8s linear infinite;\r
+}\r
+\r
+@keyframes cgpt-ra-spin {\r
+    to { transform: rotate(360deg); }\r
+}\r
+/* Keep Pause available while a retained source is loading. */\r
+.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r
+\r
+\r
+/* Geometry and previews share 48px capsules and 44px interaction targets. */\r
+#cgpt-ra-left, #cgpt-ra-right {\r
+  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r
+  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r
+  backdrop-filter: none; -webkit-backdrop-filter: none;\r
+  box-shadow: 0 1px 5px #0000000d; transition: none;\r
+  font-family: inherit;\r
+}\r
+#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r
+#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r
+#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r
+#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r
+#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r
+#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r
+  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r
+  padding: 10px; box-sizing: border-box; margin: 0;\r
+}\r
+#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r
+#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r
+.cgpt-ra-extras { display: contents; }\r
+#cgpt-ra-right .cgpt-ra-more { display: none; }\r
+#cgpt-ra-right.cgpt-ra-compact-controls { flex-wrap: nowrap; }\r
+#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-more { display: grid; place-items: center; }\r
+#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras { display: none; position: fixed; width: 196px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r
+#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras.cgpt-open { display: flex; }\r
+#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r
+#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r
+#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r
+.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r
+.cgpt-ra-grip svg { width: 16px; height: 16px; }\r
+.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r
+.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r
+#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r
+#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r
+#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r
+#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r
+#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r
+#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r
+#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r
+#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r
+#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r
+.cgpt-ra-volume-popover input[type="range"] { height: 44px; }\r
+#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r
+#cgpt-ra-dock[hidden] { display: none; }\r
+#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r
+.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r
+.cgpt-ra-dock-join[hidden] { display: none; }\r
+.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r
+.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r
+.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r
+.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r
+.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r
+.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r
+#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r
+#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r
+#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r
+#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r
+#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r
+.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r
+.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r
+#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r
+#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r
+#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r
+#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r
+#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r
+#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r
+\r
+@media (prefers-reduced-motion: reduce) {\r
+  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r
+}\r
+\r
+/* One owned stacking context keeps native ChatGPT menus above the player. */\r
+#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r
+#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r
+#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r
+#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r
+#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r
+#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r
+#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r
+#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r
+#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r
+#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r
+#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r
+.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r
+.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r
+.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r
+#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r
+#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r
+#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r
+#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r
+#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r
+#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r
+.cgpt-ra-toast-success { display: flex; }\r
+html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r
+\r
+#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r
+\r
+/* Optional, non-modal support requests. No page or composer styles are changed. */\r
+#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\r
+#cgpt-ra-support-prompt * { box-sizing:border-box; }\r
+#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\r
+#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\r
+#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\r
+#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\r
+#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\r
+#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r
+#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\r
+#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\r
+#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\r
+#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\r
+.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r
+#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\r
+#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r
+#cgpt-ra-drop-targets .cgpt-ra-drag-preview{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none;opacity:.25;filter:drop-shadow(0 8px 12px #0003);z-index:1}\r
+#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-target-detail{visibility:hidden}\r
+#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-drop-active .cgpt-ra-target-detail{visibility:visible}\r
+#cgpt-ra-drop-targets .cgpt-ra-drop-marker{border-radius:50%;animation:cgpt-target-arrive 160ms cubic-bezier(.2,.8,.2,1)}\r
+#cgpt-ra-drop-targets .cgpt-ra-drop-active .cgpt-ra-drop-marker{visibility:hidden}\r
+.cgpt-ra-drag-source{opacity:0!important;pointer-events:none!important}\r
+@keyframes cgpt-target-arrive{from{opacity:0;transform:scale(.85)}to{opacity:.7;transform:scale(1)}}\r
+@media(prefers-reduced-motion:reduce){#cgpt-ra-drop-targets .cgpt-ra-drop-marker{animation:none}}\r
+.cgpt-ra-support-provider{flex-basis:100%;display:flex;align-items:center;gap:8px;margin:12px 0 4px!important}\r
+#cgpt-ra-left.cgpt-ra-drag-source,#cgpt-ra-right.cgpt-ra-drag-source,#cgpt-ra-floating-toggle.cgpt-ra-drag-source,#cgpt-ra-dock.cgpt-ra-drag-source{opacity:0!important}\r
+\r
+.cgpt-ra-dock-join.cgpt-ra-drag-source{opacity:0!important}\r
+`;
+              previewContents = document.createElement("div");
+              Object.assign(previewContents.style, { position: "relative", width: previewBounds.width + "px", height: previewBounds.height + "px", transformOrigin: "0 0" });
+              shadow.append(style, previewContents);
+              for (const el of moving) {
+                const clone = el.cloneNode(true), r = originals.get(el);
+                clone.classList.remove("cgpt-ra-dragging");
+                this.place(clone, { ...r, x: r.x - left, y: r.y - top });
+                clone.style.position = "absolute";
+                clone.style.transform = "none";
+                clone.style.opacity = "1";
+                previewContents.append(clone);
+                el.classList.add("cgpt-ra-drag-source");
+              }
+              preview.style.width = previewBounds.width + "px";
+              preview.style.height = previewBounds.height + "px";
+              this.overlay.append(preview);
+              liftPending = !this.reducedMotion();
+            }
             const profiles = pill ? [{ ...current, seekFirst: !current.seekFirst }] : PRESETS.map((preset) => ({ preset, seekFirst: current.seekFirst }));
             for (const profile of profiles) {
               const geometry = this.geometry(profile, true);
@@ -8611,6 +19749,7 @@
                 const join = document.createElement("div");
                 join.className = "cgpt-ra-dock-join";
                 this.paintJoin(join, geometry.surface, "var(--cgpt-drop-fill)");
+                join.classList.add("cgpt-ra-target-detail");
                 element.append(join);
               }
               const parts = pill ? [[pill === this.seek ? "seek" : "controls", pill === this.seek ? geometry.seek : geometry.controls]] : geometry.surface ? [["surface", geometry.surface], ["circle", geometry.circleVisual || geometry.circle]] : [["seek", geometry.seek], ["controls", geometry.controls], ["circle", geometry.circle]];
@@ -8618,14 +19757,23 @@
                 const outline = document.createElement("div");
                 outline.className = "cgpt-ra-drop-shape";
                 outline.dataset.part = kind;
+                if (!pill)
+                  outline.classList.add("cgpt-ra-target-detail");
                 this.place(outline, r);
                 const native = this.composer && getComputedStyle(this.composer);
                 outline.style.borderRadius = kind === "surface" ? (native?.borderTopLeftRadius || "28px") + " " + (native?.borderTopRightRadius || "28px") + " 0 0" : "24px";
                 element.append(outline);
               }
               const hit = pill ? pill === this.seek ? geometry.seek : geometry.controls : geometry.circle;
+              if (!pill) {
+                const marker = document.createElement("div");
+                marker.className = "cgpt-ra-drop-shape cgpt-ra-drop-marker";
+                marker.dataset.part = "marker";
+                this.place(marker, hit);
+                element.append(marker);
+              }
               this.overlay.append(element);
-              targets.push({ element, profile, hit });
+              targets.push({ element, profile, hit, parts: parts.map(([, r]) => r) });
             }
             document.body.append(this.overlay);
           }
@@ -8635,8 +19783,31 @@
           for (const target of targets)
             target.element.classList.toggle("cgpt-ra-drop-active", target === nearest);
           const pull = nearest && !this.reducedMotion() ? magneticOffset(e.clientX, e.clientY, nearest.hit) : null;
-          for (const el of moving)
-            el.style.transform = "translate(" + (e.clientX - x + (offsets.get(el)?.x || 0) + (pull?.x || 0)) + "px," + (e.clientY - y + (offsets.get(el)?.y || 0) + (pull?.y || 0)) + "px)";
+          const px = e.clientX + (pull?.x || 0), py = e.clientY + (pull?.y || 0);
+          if (preview) {
+            const v = this.viewport();
+            const width = previewBounds.width * previewScale, height = previewBounds.height * previewScale;
+            const candidates = [1, -1].flatMap((dy) => [1, -1].map((dx) => ({
+              width,
+              height,
+              x: Math.max(v.x, Math.min(px + (dx > 0 ? 32 : -width - 32), v.x + v.width - width)),
+              y: Math.max(v.y, Math.min(py + (dy > 0 ? 32 : -height - 32), v.y + v.height - height))
+            })));
+            const position = candidates.find((r) => !nearest?.parts.some((part) => intersects(r, part))) || candidates[0];
+            const { x: left, y: top } = position;
+            preview.style.transform = `translate(${left}px,${top}px) scale(${previewScale})`;
+            if (liftPending && previewContents) {
+              previewContents.animate([{ transform: `translate(${(previewBounds.x - left) / previewScale}px,${(previewBounds.y - top) / previewScale}px) scale(${1 / previewScale})` }, { transform: "none" }], { duration: 180, easing: "cubic-bezier(.2,.8,.2,1)" });
+              liftPending = false;
+            }
+            for (const el of moving) {
+              const r = originals.get(el);
+              el.style.transformOrigin = "0 0";
+              el.style.transform = `translate(${left + (r.x - previewBounds.x) * previewScale - r.x}px,${top + (r.y - previewBounds.y) * previewScale - r.y}px) scale(${previewScale})`;
+            }
+          } else
+            for (const el of moving)
+              el.style.transform = "translate(" + (e.clientX - x + (offsets.get(el)?.x || 0) + (pull?.x || 0)) + "px," + (e.clientY - y + (offsets.get(el)?.y || 0) + (pull?.y || 0)) + "px)";
         };
         const finish = (commit) => {
           if (done)
@@ -8657,7 +19828,7 @@
           this.overlay = null;
           this.cancelDrag = null;
           this.dragging = false;
-          moving.forEach((el) => el.classList.remove("cgpt-ra-dragging"));
+          moving.forEach((el) => el.classList.remove("cgpt-ra-dragging", "cgpt-ra-drag-source"));
           if (dragging) {
             this.previous = "drag";
             if (commit && selected)
@@ -9028,6 +20199,13 @@
         paragraph(d.once);
         for (const amount of SPONSOR_AMOUNTS)
           link(sponsorURL(amount), `US$${amount}`, "donation", `${d.donate} · US$${amount} · GitHub Sponsors`);
+        const coffeeHeading = document.createElement("p");
+        coffeeHeading.className = "cgpt-ra-support-provider";
+        coffeeHeading.innerHTML = getLucideSvg("coffee");
+        coffeeHeading.append(document.createTextNode(coffeeCopy(language) + " · PayPal"));
+        links.append(coffeeHeading);
+        for (const amount of SPONSOR_AMOUNTS)
+          link(coffeeURL(amount), `US$${amount}`, "donation", `${coffeeCopy(language)} · US$${amount} · PayPal`);
       }
       for (const store of reviewStores(navigator.userAgent))
         link(REVIEW_URLS[store], `${s[3]} · ${store === "edge" ? "Edge" : "Chrome"}`, "review");
@@ -9281,6 +20459,244 @@
       layoutDescription: "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
       gestureReleaseLabel: "Når du slipper knappen",
       seekPosition: "Avspillingsposisjon"
+    },
+    am: {
+      edit: "በአሳሽ ውስጥ ያርትዑ",
+      editHint: "በአሳሹ አቋራጮች ገጽ ላይ {action} ን ያግኙ። አሳሹ ለግለሰብ ትዕዛዞች አገናኞችን አይደግፍም።",
+      layoutDescription: "የመጀመሪያውን አቀማመጥ ያስቀምጡ፣ የማዕዘን ወይም የጎን ቅድመ ዝግጅት ይምረጡ ወይም ከቻት ግቤት በላይ መትከያ ያድርጉ። ለመንቀሳቀስ ይጎትቱ፣ አሞሌዎቹን ይቀይሩ እና አቀማመጥዎን ያስታውሱ።",
+      gestureReleaseLabel: "አዝራሩን ይልቀቁ",
+      seekPosition: "የመልሶ ማጫወት ቦታ"
+    },
+    bg: {
+      edit: "Редактиране в браузъра",
+      editHint: "Намерете {action} на страницата с преки пътища на браузъра. Браузърът не поддържа връзки към отделни команди.",
+      layoutDescription: "Запазете оригиналното разположение, изберете предварително зададен ъгъл или страна или закрепете над входа за чат. Плъзнете, за да се движите, разменете лентите и запомнете оформлението си.",
+      gestureReleaseLabel: "Освободете бутона",
+      seekPosition: "Позиция на възпроизвеждане"
+    },
+    bs: {
+      edit: "Uredi u pretraživaču",
+      editHint: "Pronađite {action} na stranici sa prečicama pretraživača. Pretraživač ne podržava veze do pojedinačnih komandi.",
+      layoutDescription: "Zadržite originalni položaj, odaberite ugao ili bočnu postavku ili pričvrstite iznad unosa za ćaskanje. Prevucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+      gestureReleaseLabel: "Otpustite dugme",
+      seekPosition: "Pozicija reprodukcije"
+    },
+    da: {
+      edit: "Rediger i browser",
+      editHint: "Find {action} på siden med browsergenveje. Browseren understøtter ikke links til individuelle kommandoer.",
+      layoutDescription: "Behold den originale placering, vælg en forudindstilling i hjørnet eller siden, eller sæt foran chatinputtet. Træk for at flytte, skift stregerne, og husk dit layout.",
+      gestureReleaseLabel: "Slip knappen",
+      seekPosition: "Afspilningsposition"
+    },
+    et: {
+      edit: "Redigeeri brauseris",
+      editHint: "Leidke brauseri otseteede lehelt {action}. Brauser ei toeta linke üksikutele käskudele.",
+      layoutDescription: "Säilitage algne paigutus, valige nurga või külje eelseade või dokkige vestlussisendi kohale. Lohistage liigutamiseks, ribade vahetamiseks ja paigutuse meeldejätmiseks.",
+      gestureReleaseLabel: "Vabastage nupp",
+      seekPosition: "Taasesituse asend"
+    },
+    fil: {
+      edit: "I-edit sa browser",
+      editHint: "Hanapin ang {action} sa pahina ng mga shortcut sa browser. Hindi sinusuportahan ng browser ang mga link sa mga indibidwal na command.",
+      layoutDescription: "Panatilihin ang orihinal na placement, pumili ng preset na sulok o gilid, o mag-dock sa itaas ng input ng chat. I-drag upang ilipat, palitan ang mga bar, at tandaan ang iyong layout.",
+      gestureReleaseLabel: "Bitawan ang button",
+      seekPosition: "Posisyon ng pag-playback"
+    },
+    fi: {
+      edit: "Muokkaa selaimessa",
+      editHint: "Etsi {action} selaimen pikakuvakesivulta. Selain ei tue linkkejä yksittäisiin komentoihin.",
+      layoutDescription: "Säilytä alkuperäinen sijoitus, valitse kulman tai sivun esiasetus tai kiinnitä chat-syötteen yläpuolelle. Siirrä vetämällä, vaihda palkkeja ja muista asettelusi.",
+      gestureReleaseLabel: "Vapauta painike",
+      seekPosition: "Toistopaikka"
+    },
+    gu: {
+      edit: "બ્રાઉઝરમાં ફેરફાર કરો",
+      editHint: "બ્રાઉઝર શોર્ટકટ્સ પેજ પર {action} શોધો. બ્રાઉઝર વ્યક્તિગત આદેશોની લિંક્સને સપોર્ટ કરતું નથી.",
+      layoutDescription: "મૂળ પ્લેસમેન્ટ રાખો, કોર્નર અથવા સાઇડ પ્રીસેટ પસંદ કરો અથવા ચેટ ઇનપુટની ઉપર ડોક કરો. ખસેડવા માટે ખેંચો, બારને સ્વેપ કરો અને તમારું લેઆઉટ યાદ રાખો.",
+      gestureReleaseLabel: "બટન છોડો",
+      seekPosition: "પ્લેબેક સ્થિતિ"
+    },
+    hr: {
+      edit: "Uredi u pregledniku",
+      editHint: "Pronađite {action} na stranici s prečacima preglednika. Preglednik ne podržava poveznice na pojedinačne naredbe.",
+      layoutDescription: "Zadržite izvorni položaj, odaberite unaprijed postavljen kut ili stranu ili usidrite iznad unosa za chat. Povucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+      gestureReleaseLabel: "Otpustite gumb",
+      seekPosition: "Položaj reprodukcije"
+    },
+    hy: {
+      edit: "Խմբագրել բրաուզերում",
+      editHint: "Գտեք {action} դիտարկիչի դյուրանցումների էջում: Զննարկիչը չի աջակցում առանձին հրամանների հղումներ:",
+      layoutDescription: "Պահպանեք բնօրինակ տեղադրումը, ընտրեք նախադրված անկյուն կամ կողային կամ ամրացրեք զրույցի մուտքագրման վերևում: Քաշեք՝ տեղափոխելու համար, փոխեք գծերը և հիշեք ձեր դասավորությունը:",
+      gestureReleaseLabel: "Ազատեք կոճակը",
+      seekPosition: "Նվագարկման դիրք"
+    },
+    is: {
+      edit: "Breyta í vafra",
+      editHint: "Finndu {action} á flýtivísasíðu vafrans. Vafrinn styður ekki tengla á einstakar skipanir.",
+      layoutDescription: "Haltu upprunalegu staðsetningunni, veldu horn- eða hliðarforstillingu, eða hafðu fyrir ofan spjallinntakið. Dragðu til að færa, skiptu um stikur og mundu skipulagið þitt.",
+      gestureReleaseLabel: "Slepptu takkanum",
+      seekPosition: "Spilunarstaða"
+    },
+    ka: {
+      edit: "რედაქტირება ბრაუზერში",
+      editHint: "იპოვეთ {action} ბრაუზერის მალსახმობების გვერდზე. ბრაუზერს არ აქვს ინდივიდუალური ბრძანებების ბმულების მხარდაჭერა.",
+      layoutDescription: "შეინახეთ თავდაპირველი განლაგება, აირჩიეთ კუთხე ან გვერდითი წინასწარ დაყენებული, ან დაამაგრეთ ჩატის შეყვანის ზემოთ. გადაიტანეთ გადასაადგილებლად, შეცვალეთ ზოლები და დაიმახსოვრეთ თქვენი განლაგება.",
+      gestureReleaseLabel: "გაათავისუფლეთ ღილაკი",
+      seekPosition: "დაკვრის პოზიცია"
+    },
+    kk: {
+      edit: "Браузерде өңдеу",
+      editHint: "Браузер таңбашалары бетінен {action} табыңыз. Браузер жеке пәрмендерге сілтемелерді қолдамайды.",
+      layoutDescription: "Бастапқы орынды сақтаңыз, бұрышты немесе бүйірлік алдын ала орнатуды таңдаңыз немесе чат кірісінің үстіне қондырыңыз. Жылжыту, жолақтарды ауыстыру және орналасуды есте сақтау үшін сүйреңіз.",
+      gestureReleaseLabel: "Түймені босатыңыз",
+      seekPosition: "Ойнату орны"
+    },
+    kn: {
+      edit: "ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಪಾದಿಸಿ",
+      editHint: "ಬ್ರೌಸರ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳ ಪುಟದಲ್ಲಿ {action} ಅನ್ನು ಹುಡುಕಿ. ಬ್ರೌಸರ್ ಪ್ರತ್ಯೇಕ ಆಜ್ಞೆಗಳಿಗೆ ಲಿಂಕ್‌ಗಳನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.",
+      layoutDescription: "ಮೂಲ ನಿಯೋಜನೆಯನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ, ಒಂದು ಮೂಲೆ ಅಥವಾ ಅಡ್ಡ ಪೂರ್ವನಿಗದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಚಾಟ್ ಇನ್‌ಪುಟ್‌ನ ಮೇಲೆ ಡಾಕ್ ಮಾಡಿ. ಸರಿಸಲು ಎಳೆಯಿರಿ, ಬಾರ್‌ಗಳನ್ನು ಸ್ವ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ವಿನ್ಯಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.",
+      gestureReleaseLabel: "ಬಟನ್ ಅನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿ",
+      seekPosition: "ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಥಾನ"
+    },
+    lt: {
+      edit: "Redaguoti naršyklėje",
+      editHint: "Naršyklės nuorodų puslapyje raskite {action}. Naršyklė nepalaiko nuorodų į atskiras komandas.",
+      layoutDescription: "Išsaugokite pradinę vietą, pasirinkite iš anksto nustatytą kampą ar šoną arba pritvirtinkite prie doko virš pokalbio įvesties. Vilkite, kad perkeltumėte, pakeiskite juostas ir prisiminkite savo išdėstymą.",
+      gestureReleaseLabel: "Atleiskite mygtuką",
+      seekPosition: "Atkūrimo padėtis"
+    },
+    lv: {
+      edit: "Rediģēt pārlūkprogrammā",
+      editHint: "Pārlūkprogrammas īsceļu lapā atrodiet {action}. Pārlūkprogramma neatbalsta saites uz atsevišķām komandām.",
+      layoutDescription: "Saglabājiet sākotnējo izvietojumu, izvēlieties stūra vai sānu sākotnējo iestatījumu vai piestipriniet dokstaciju virs tērzēšanas ievades. Velciet, lai pārvietotu, samainiet joslas un atcerieties savu izkārtojumu.",
+      gestureReleaseLabel: "Atlaidiet pogu",
+      seekPosition: "Atskaņošanas pozīcija"
+    },
+    mk: {
+      edit: "Уредете во прелистувачот",
+      editHint: "Најдете {action} на страницата со кратенки на прелистувачот. Прелистувачот не поддржува врски до поединечни команди.",
+      layoutDescription: "Чувајте ја оригиналната поставеност, изберете агол или странично претходно поставено или приклучете се над влезот за разговор. Повлечете за да се движите, заменете ги лентите и запомнете го вашиот распоред.",
+      gestureReleaseLabel: "Ослободете го копчето",
+      seekPosition: "Позиција за репродукција"
+    },
+    ml: {
+      edit: "ബ്രൗസറിൽ എഡിറ്റ് ചെയ്യുക",
+      editHint: "ബ്രൗസർ കുറുക്കുവഴികൾ പേജിൽ {action} കണ്ടെത്തുക. വ്യക്തിഗത കമാൻഡുകളിലേക്കുള്ള ലിങ്കുകളെ ബ്രൗസർ പിന്തുണയ്ക്കുന്നില്ല.",
+      layoutDescription: "യഥാർത്ഥ പ്ലേസ്‌മെൻ്റ് സൂക്ഷിക്കുക, ഒരു മൂലയോ സൈഡ് പ്രീസെറ്റോ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ചാറ്റ് ഇൻപുട്ടിന് മുകളിൽ ഡോക്ക് ചെയ്യുക. നീക്കാൻ വലിച്ചിടുക, ബാറുകൾ സ്വാപ്പ് ചെയ്യുക, നിങ്ങളുടെ ലേഔട്ട് ഓർമ്മിക്കുക.",
+      gestureReleaseLabel: "ബട്ടൺ റിലീസ് ചെയ്യുക",
+      seekPosition: "പ്ലേബാക്ക് സ്ഥാനം"
+    },
+    mn: {
+      edit: "Хөтөч дээр засварлах",
+      editHint: "Хөтөчийн товчлолын хуудаснаас {action}-г олоорой. Хөтөч нь бие даасан командын холбоосыг дэмждэггүй.",
+      layoutDescription: "Анхны байршлыг хадгалах, булан эсвэл хажуугийн урьдчилан тохируулгыг сонгох, эсвэл чатын оролтын дээгүүр залгах. Зөөж, бааруудыг сольж, байршлаа санахын тулд чирнэ үү.",
+      gestureReleaseLabel: "Товчлуурыг суллана уу",
+      seekPosition: "Тоглуулах байрлал"
+    },
+    ms: {
+      edit: "Edit dalam penyemak imbas",
+      editHint: "Cari {action} pada halaman pintasan penyemak imbas. Penyemak imbas tidak menyokong pautan ke arahan individu.",
+      layoutDescription: "Kekalkan peletakan asal, pilih sudut atau pratetap sisi atau dok di atas input sembang. Seret untuk mengalihkan, menukar bar dan ingat reka letak anda.",
+      gestureReleaseLabel: "Lepaskan butang",
+      seekPosition: "Kedudukan main balik"
+    },
+    my: {
+      edit: "ဘရောက်ဆာတွင်တည်းဖြတ်ပါ။",
+      editHint: "ဘရောက်ဆာဖြတ်လမ်းများစာမျက်နှာရှိ {action} ကိုရှာပါ။ ဘရောက်ဆာသည် တစ်ဦးချင်းအမိန့်စာများသို့ လင့်ခ်များကို မပံ့ပိုးပါ။",
+      layoutDescription: "မူရင်းနေရာချထားမှုကို ထားရှိပါ၊ ထောင့် သို့မဟုတ် ဘေးထွက်ကြိုတင်သတ်မှတ်မှုကို ရွေးချယ်ပါ၊ သို့မဟုတ် ချတ်ထည့်သွင်းမှု၏အထက်တွင် အထိုင်ချပါ။ ရွှေ့ရန် ဖိဆွဲပါ၊ ဘားများကို လဲလှယ်ပြီး သင့်အပြင်အဆင်ကို မှတ်သားပါ။",
+      gestureReleaseLabel: "ခလုတ်ကို လွှတ်လိုက်ပါ။",
+      seekPosition: "ပြန်ဖွင့်သည့်အနေအထား"
+    },
+    nl: {
+      edit: "Bewerken in browser",
+      editHint: "Zoek {action} op de pagina met browsersnelkoppelingen. De browser ondersteunt geen koppelingen naar afzonderlijke opdrachten.",
+      layoutDescription: "Behoud de oorspronkelijke plaatsing, kies een voorinstelling voor een hoek of zijkant, of plaats deze boven de chatinvoer. Sleep om te verplaatsen, verwissel de balken en onthoud uw lay-out.",
+      gestureReleaseLabel: "Laat de knop los",
+      seekPosition: "Afspeelpositie"
+    },
+    pa: {
+      edit: "ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਸੰਪਾਦਿਤ ਕਰੋ",
+      editHint: "ਬ੍ਰਾਊਜ਼ਰ ਸ਼ਾਰਟਕੱਟ ਪੰਨੇ 'ਤੇ {action} ਲੱਭੋ। ਬ੍ਰਾਊਜ਼ਰ ਵਿਅਕਤੀਗਤ ਕਮਾਂਡਾਂ ਦੇ ਲਿੰਕਾਂ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ।",
+      layoutDescription: "ਅਸਲੀ ਪਲੇਸਮੈਂਟ ਰੱਖੋ, ਇੱਕ ਕੋਨਾ ਜਾਂ ਸਾਈਡ ਪ੍ਰੀਸੈਟ ਚੁਣੋ, ਜਾਂ ਚੈਟ ਇਨਪੁਟ ਦੇ ਉੱਪਰ ਡੌਕ ਕਰੋ। ਮੂਵ ਕਰਨ ਲਈ ਖਿੱਚੋ, ਬਾਰਾਂ ਨੂੰ ਸਵੈਪ ਕਰੋ, ਅਤੇ ਆਪਣਾ ਖਾਕਾ ਯਾਦ ਰੱਖੋ।",
+      gestureReleaseLabel: "ਬਟਨ ਨੂੰ ਛੱਡੋ",
+      seekPosition: "ਪਲੇਬੈਕ ਸਥਿਤੀ"
+    },
+    sk: {
+      edit: "Upraviť v prehliadači",
+      editHint: "Nájdite {action} na stránke skratiek prehliadača. Prehliadač nepodporuje odkazy na jednotlivé príkazy.",
+      layoutDescription: "Ponechajte pôvodné umiestnenie, vyberte predvoľbu rohu alebo strany alebo ukotvte nad vstupom pre rozhovor. Ťahaním sa presúvajte, vymieňajte pruhy a zapamätajte si svoje rozloženie.",
+      gestureReleaseLabel: "Uvoľnite tlačidlo",
+      seekPosition: "Pozícia prehrávania"
+    },
+    sl: {
+      edit: "Uredi v brskalniku",
+      editHint: "Poiščite {action} na strani z bližnjicami brskalnika. Brskalnik ne podpira povezav do posameznih ukazov.",
+      layoutDescription: "Ohranite prvotno postavitev, izberite prednastavitev kota ali strani ali zasidrajte nad vnosom klepeta. Povlecite za premikanje, zamenjajte vrstice in si zapomnite svojo postavitev.",
+      gestureReleaseLabel: "Spustite gumb",
+      seekPosition: "Položaj predvajanja"
+    },
+    so: {
+      edit: "Wax ka beddel browserka dhexdiisa",
+      editHint: "Ka hel {action} bogga furaha browserka. Barowsarku ma taageerayo isku xirka amarada shaqsiga ah.",
+      layoutDescription: "Hayso meelaynta asalka ah, dooro gees ama gees horay loo dhigay, ama ku xidh meel ka sarraysa gelinta sheekada. Jiid si aad u guurto, u beddesho baararka, oo xasuuso qaabkaaga.",
+      gestureReleaseLabel: "Sii daa badhanka",
+      seekPosition: "Booska dib u ciyaarista"
+    },
+    sq: {
+      edit: "Ndrysho në shfletuesin",
+      editHint: "Gjeni {action} në faqen e shkurtoreve të shfletuesit. Shfletuesi nuk mbështet lidhje me komandat individuale.",
+      layoutDescription: "Mbani vendosjen origjinale, zgjidhni një kënd ose anësor të paravendosur, ose vendoseni mbi hyrjen e bisedës. Zvarritni për të lëvizur, ndërroni shiritat dhe mbani mend paraqitjen tuaj.",
+      gestureReleaseLabel: "Lëshojeni butonin",
+      seekPosition: "Pozicioni i luajtjes"
+    },
+    sr: {
+      edit: "Уреди у претраживачу",
+      editHint: "Пронађите {action} на страници са пречицама прегледача. Прегледач не подржава везе до појединачних команди.",
+      layoutDescription: "Задржите оригинално постављање, изаберите унапред подешено угао или страну или причврстите изнад уноса за ћаскање. Превуците да бисте померили, замените шипке и запамтите свој распоред.",
+      gestureReleaseLabel: "Отпустите дугме",
+      seekPosition: "Положај репродукције"
+    },
+    sw: {
+      edit: "Hariri katika kivinjari",
+      editHint: "Tafuta {action} kwenye ukurasa wa njia za mkato za kivinjari. Kivinjari hakitumii viungo kwa amri za kibinafsi.",
+      layoutDescription: "Weka nafasi asili, chagua kona au uwekaji wa pembeni mapema, au kituo juu ya ingizo la gumzo. Buruta ili usogeze, ubadilishane pau na ukumbuke mpangilio wako.",
+      gestureReleaseLabel: "Achilia kitufe",
+      seekPosition: "Nafasi ya kucheza"
+    },
+    ur: {
+      edit: "براؤزر میں ترمیم کریں۔",
+      editHint: "براؤزر کے شارٹ کٹ پیج پر {action} تلاش کریں۔ براؤزر انفرادی کمانڈز کے لنکس کو سپورٹ نہیں کرتا ہے۔",
+      layoutDescription: "اصل جگہ کا تعین رکھیں، ایک کونے یا سائیڈ پیش سیٹ کا انتخاب کریں، یا چیٹ ان پٹ کے اوپر گودی کریں۔ منتقل کرنے کے لیے گھسیٹیں، سلاخوں کو تبدیل کریں، اور اپنا لے آؤٹ یاد رکھیں۔",
+      gestureReleaseLabel: "بٹن جاری کریں۔",
+      seekPosition: "پلے بیک پوزیشن"
+    },
+    "es-419": {
+      edit: "Editar en el navegador",
+      editHint: "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
+      layoutDescription: "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
+      gestureReleaseLabel: "Al soltar el botón",
+      seekPosition: "Posición de reproducción"
+    },
+    "fr-CA": {
+      edit: "Modifier dans le navigateur",
+      editHint: "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
+      layoutDescription: "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
+      gestureReleaseLabel: "En relâchant le bouton",
+      seekPosition: "Position de lecture"
+    },
+    "hi-Latn": {
+      edit: "browser mein sampadit karen",
+      editHint: "browser shortcut page par {action} dhundhen. browser alg-alg command ke link ka samarthan nahin karta hai.",
+      layoutDescription: "mool placement rakhen, ek kone ya side preset chunen, ya chat input ke upar dock chunen. sthanantarit karne ke liye khinchen, baron ko swap karen aur apna layout yaad rakhen.",
+      gestureReleaseLabel: "button chhoden",
+      seekPosition: "playback sthiti"
+    },
+    "zh-HK": {
+      edit: "在瀏覽器中編輯",
+      editHint: "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
+      layoutDescription: "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
+      gestureReleaseLabel: "放開按鈕",
+      seekPosition: "播放位置"
     }
   };
 
@@ -10156,7 +21572,9 @@
     function parseColorToTheme(colorStr) {
       if (!colorStr)
         return null;
-      const str = colorStr.toLowerCase().trim();
+      let str = colorStr.toLowerCase().trim();
+      if (/^#[a-f0-9]{6}$/i.test(str))
+        str = `rgb(${parseInt(str.slice(1, 3), 16)}, ${parseInt(str.slice(3, 5), 16)}, ${parseInt(str.slice(5, 7), 16)})`;
       if (str.includes("green") || str === "#10a37f")
         return "green";
       if (str.includes("purple") || str.includes("violet") || str === "#8e55ea")
@@ -10174,6 +21592,8 @@
         const r = parseInt(rgbMatch[1], 10);
         const g = parseInt(rgbMatch[2], 10);
         const b = parseInt(rgbMatch[3], 10);
+        if (Math.max(r, g, b) - Math.min(r, g, b) < 24)
+          return "black";
         if (g > r + 30 && g > b - 10 && g > 110)
           return "green";
         if (b > 140 && r > 90 && g < 130)
@@ -10189,49 +21609,55 @@
       }
       return null;
     }
+    function activeThemeElements() {
+      const elements = [];
+      for (let el = getComposer();el; el = el.parentElement)
+        elements.push(el);
+      if (!elements.includes(document.documentElement))
+        elements.push(document.body, document.documentElement);
+      return elements.filter(Boolean);
+    }
     function resolveActiveChatGPTTheme() {
-      const attrEl = document.querySelector("[data-chat-theme]");
-      const attr = document.documentElement.getAttribute("data-chat-theme") || document.body?.getAttribute("data-chat-theme") || attrEl?.getAttribute("data-chat-theme");
-      if (attr && CHATGPT_THEME_KEYS.includes(attr.toLowerCase())) {
-        return attr.toLowerCase();
-      }
-      const classes = `${document.documentElement.className} ${document.body?.className || ""}`.toLowerCase();
-      for (const t of ["green", "purple", "orange", "pink", "yellow", "black", "blue"]) {
-        if (classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`) || classes.includes(`data-theme-${t}`)) {
-          return t;
-        }
-      }
-      const rootStyle = getComputedStyle(document.documentElement);
-      const accentRaw = rootStyle.getPropertyValue("--theme-submit-btn-bg").trim() || rootStyle.getPropertyValue("--interactive-bg-accent-secondary-default").trim();
-      const fromAccent = parseColorToTheme(accentRaw);
-      if (fromAccent)
-        return fromAccent;
-      const submitBtn = document.querySelector('button[data-testid="send-button"], button[aria-label*="Send"], button[aria-label*="Voice"], button[data-testid*="submit"]');
-      if (submitBtn) {
-        const btnStyle = getComputedStyle(submitBtn);
-        const fromBtnBg = parseColorToTheme(btnStyle.backgroundColor);
-        if (fromBtnBg)
-          return fromBtnBg;
-        const fromBtnColor = parseColorToTheme(btnStyle.color);
-        if (fromBtnColor)
-          return fromBtnColor;
-      }
-      return "blue";
+      const elements = activeThemeElements();
+      const owner = elements.find((el) => CHATGPT_THEME_KEYS.includes(el.getAttribute("data-chat-theme") || ""));
+      const named = owner?.getAttribute("data-chat-theme");
+      const style = getComputedStyle(owner || elements[0]);
+      const read = (...keys) => keys.map((key) => style.getPropertyValue(key).trim()).find(literalColor);
+      const palette = { blue: "#3a83f7", green: "#53b559", purple: "#8952ee", orange: "#ee7c37", pink: "#f077af", yellow: "#f6c543", black: "#000000" };
+      const accent = named ? read("--theme-submit-btn-bg", `--${named}-theme-submit-btn-bg`) || palette[named] : read("--color-background-accent-action", "--theme-submit-btn-bg", "--app-color-icon-accent", "--interactive-bg-accent-secondary-default");
+      const accentText = read("--color-text-accent-action", "--theme-submit-btn-text") || (named === "yellow" ? "#000000" : "#ffffff");
+      const classes = elements.map((el) => el.className).join(" ").toLowerCase();
+      const classTheme = CHATGPT_THEME_KEYS.find((t) => classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`));
+      return { chatTheme: named || classTheme || parseColorToTheme(accent || "") || "blue", accent: accent || (classTheme ? palette[classTheme] : undefined), accentText };
     }
     function detectAndCacheChatGPTTheme() {
       try {
         const isDark = document.documentElement.classList.contains("dark") || !document.documentElement.classList.contains("light");
-        const chatTheme = resolveActiveChatGPTTheme();
-        const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}`;
+        const { chatTheme, accent, accentText } = resolveActiveChatGPTTheme();
+        for (const el of [leftRail, rightRail, floatingToggle]) {
+          if (!el)
+            continue;
+          if (accent)
+            el.style.setProperty("--cgpt-ra-accent", accent);
+          else
+            el.style.removeProperty("--cgpt-ra-accent");
+          if (accentText)
+            el.style.setProperty("--cgpt-ra-accent-text", accentText);
+        }
+        const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}-${accent}-${accentText}`;
         if (cache.lastThemeCheck === themeKey)
           return;
         cache.lastThemeCheck = themeKey;
         const themeCache = {
           isDark,
           chatTheme,
+          accent,
+          accentText,
           updatedAt: Date.now()
         };
-        localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
+        try {
+          localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
+        } catch {}
         window.postMessage({
           source: "chatgpt-audio-controls-settings-bridge",
           type: "CGPT_RA_THEME_UPDATE",
@@ -10628,15 +22054,15 @@
       rightRail.className = "cgpt-ra-no-media cgpt-ra-collapsed";
       rightRail.innerHTML = `
       <div class="cgpt-ra-transport-row cgpt-ra-media-control">
+        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
+                disabled>
+          ${getLucideSvg("play")}
+        </button>
+
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
                 disabled>
           ${getLucideSvg("rotate-ccw")}
           <span class="cgpt-ra-ten">10</span>
-        </button>
-
-        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
-                disabled>
-          ${getLucideSvg("play")}
         </button>
 
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
@@ -11211,12 +22637,25 @@
         detectAndCacheChatGPTTheme();
       }, 250);
     }
+    const themeObserver = new MutationObserver(scheduleThemeSync);
+    let observedThemeElements = [];
+    function bindThemeObservers() {
+      const elements = activeThemeElements();
+      if (elements.length === observedThemeElements.length && elements.every((el, i) => el === observedThemeElements[i]))
+        return;
+      themeObserver.disconnect();
+      observedThemeElements = elements;
+      for (const el of elements)
+        themeObserver.observe(el, { attributes: true, attributeFilter: ["class", "data-theme", "data-chat-theme", "style"] });
+    }
     function startObserver() {
       const observer = new MutationObserver(() => {
         if (observerTimeout)
           return;
         observerTimeout = window.setTimeout(() => {
           observerTimeout = null;
+          bindThemeObservers();
+          scheduleThemeSync();
           scheduleLayoutSync();
         }, 500);
       });
@@ -11224,18 +22663,14 @@
         childList: true,
         subtree: true
       });
-      const themeObserver = new MutationObserver(scheduleThemeSync);
-      const themeAttributes = ["class", "data-theme", "data-chat-theme", "style"];
-      themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: themeAttributes
+      bindThemeObservers();
+      window.addEventListener("focus", scheduleThemeSync);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          bindThemeObservers();
+          scheduleThemeSync();
+        }
       });
-      if (document.body) {
-        themeObserver.observe(document.body, {
-          attributes: true,
-          attributeFilter: themeAttributes
-        });
-      }
       window.addEventListener("resize", scheduleLayoutSync, { passive: true });
       window.visualViewport?.addEventListener("resize", scheduleLayoutSync, { passive: true });
       window.visualViewport?.addEventListener("scroll", scheduleLayoutSync, { passive: true });
@@ -11272,4 +22707,4 @@
   })();
 })();
 
-(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-support-prompt,\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-support-prompt,\r\n[data-theme='light'] #cgpt-ra-support-prompt,\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras { display: none; position: fixed; width: 196px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n\r\n/* Optional, non-modal support requests. No page or composer styles are changed. */\r\n#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\r\n#cgpt-ra-support-prompt * { box-sizing:border-box; }\r\n#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\r\n#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\r\n#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\r\n#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\r\n#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\r\n.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();
+(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-support-prompt,\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-support-prompt,\r\n[data-theme='light'] #cgpt-ra-support-prompt,\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras { display: none; position: fixed; width: 196px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n\r\n/* Optional, non-modal support requests. No page or composer styles are changed. */\r\n#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\r\n#cgpt-ra-support-prompt * { box-sizing:border-box; }\r\n#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\r\n#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\r\n#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\r\n#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\r\n#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\r\n.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-drop-targets .cgpt-ra-drag-preview{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none;opacity:.25;filter:drop-shadow(0 8px 12px #0003);z-index:1}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-target-detail{visibility:hidden}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-drop-active .cgpt-ra-target-detail{visibility:visible}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-marker{border-radius:50%;animation:cgpt-target-arrive 160ms cubic-bezier(.2,.8,.2,1)}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-active .cgpt-ra-drop-marker{visibility:hidden}\r\n.cgpt-ra-drag-source{opacity:0!important;pointer-events:none!important}\r\n@keyframes cgpt-target-arrive{from{opacity:0;transform:scale(.85)}to{opacity:.7;transform:scale(1)}}\r\n@media(prefers-reduced-motion:reduce){#cgpt-ra-drop-targets .cgpt-ra-drop-marker{animation:none}}\r\n.cgpt-ra-support-provider{flex-basis:100%;display:flex;align-items:center;gap:8px;margin:12px 0 4px!important}\r\n#cgpt-ra-left.cgpt-ra-drag-source,#cgpt-ra-right.cgpt-ra-drag-source,#cgpt-ra-floating-toggle.cgpt-ra-drag-source,#cgpt-ra-dock.cgpt-ra-drag-source{opacity:0!important}\r\n\r\n.cgpt-ra-dock-join.cgpt-ra-drag-source{opacity:0!important}\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();

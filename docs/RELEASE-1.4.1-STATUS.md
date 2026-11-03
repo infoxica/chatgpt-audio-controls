@@ -1,4 +1,4 @@
-# v1.4.1 release status — 2026-11-02
+# v1.4.1 release status — 2026-11-03
 
 **Unreleased candidate.** Local implementation and staging are separate from
 native-device acceptance, PR approval, production deployment and store release.
@@ -11,7 +11,23 @@ README/changelog cleanup, root-domain links, readable sitemap, Worker selective
 static routing, safe legacy redirects and scoped-credential CI are prepared.
 Preferences, permissions and feedback protections are preserved. Real Android
 testing also produced a retained-AAC recovery fix and matching AAC filenames.
-The genuine 1.4.0→1.4.1 metadata bump is the final implementation commit.
+The checkout remains at 1.4.1. The existing metadata-bump commit predates the
+latest uncommitted refinements; reconcile the final-version-commit rule during
+the next release review.
+
+The latest local revision adds circle-first magnetic destinations, an inert
+compact drag preview, hidden-navigation filtering, sticky website navigation,
+PayPal coffee links and 67 interface locales. See the dated revision section in
+the acceptance document. These changes have not been deployed to staging or
+production and do not inherit the earlier native-device results.
+
+The subsequent navigation/accent revision adds the 72px full-width mobile
+header, full-screen language dialog, wider desktop language grid, grouped seek
+buttons and current ChatGPT accent-token synchronization. PayPal links remain
+direct; optional website click measurement and its localized disclosure are
+consent-gated. The local ZIP/userscript were rebuilt and verified. See the newest
+acceptance section for test evidence, hashes and the live accent-switch limit.
+This revision has not been committed, pushed, deployed or submitted to stores.
 
 ## Staging and rollback
 

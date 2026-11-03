@@ -51,6 +51,7 @@ export function orderLanguages(languages: LanguageOption[]): LanguageOption[] {
   return [...languages].sort((a, b) => a.code === 'auto' ? -1 : b.code === 'auto' ? 1 : a.label.localeCompare(b.label, 'en'));
 }
 export const SUPPORTED_LANGUAGES: LanguageOption[] = orderLanguages([
+  ...additionalLanguages,
   { code: "auto", label: "Auto Detect", nativeName: "Auto (Browser Default)" },
   { code: 'pl', label: 'Polish', nativeName: 'Polski' },
   { code: 'hu', label: 'Hungarian', nativeName: 'Magyar' },
@@ -125,3 +126,4 @@ export const SHORTCUTS: ShortcutItem[] = [
     category: "speed",
   },
 ];
+import { additionalLanguages } from './locale-registry';

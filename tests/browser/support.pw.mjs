@@ -60,6 +60,17 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
   await page.locator('#start').click();await expect(page.locator('#cgpt-ra-support-prompt')).toHaveCount(0);
   await page.goto('https://chatgpt.com/c/demo');await expect(page.locator('#cgpt-ra-support-prompt')).toHaveCount(0);await page.close();
  });
+ test('opening PayPal retires the same donation request without recording a payment',async()=>{
+  await context.route('https://paypal.me/**',route=>route.fulfill({contentType:'text/html',body:'Public payment destination fixture'}));
+  const page=await open(9);await page.locator('#start').click();
+  const card=page.locator('#cgpt-ra-support-prompt');await expect(card).toBeVisible({timeout:10000});
+  await expect(card.locator('a[href^="https://paypal.me/infoxica/"]')).toHaveCount(4);
+  const opened=context.waitForEvent('page');await card.locator('a[href="https://paypal.me/infoxica/5USD"]').click();
+  const destination=await opened;await expect(destination).toHaveURL('https://paypal.me/infoxica/5USD');
+  await expect.poll(async()=>(await stored(page)).donation.status).toBe('done');
+  await expect(card).toHaveCount(0);expect((await stored(page)).uses).toBe(10);
+  await destination.close();await page.close();await context.unroute('https://paypal.me/**');
+ });
  test('two tabs share the count and only the visible tab claims a request',async()=>{
   const first=await open(3),second=await open(3);
   await first.locator('#start').click();
@@ -83,7 +94,7 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
     // Exercise the wider fallback font that exposed the German heading overflow in Linux CI.
     if(surface==='options'&&language==='de')await page.addStyleTag({content:'.header-title-block {font-family:Arial,sans-serif}'});
     if(surface==='popup')await page.locator('.tab-btn').nth(2).click();
-    await expect(page.locator('.donation-amounts a')).toHaveCount(4);
+    await expect(page.locator('.donation-amounts a')).toHaveCount(8);
     for(const width of [320,360,390,768,1366]){
      await page.setViewportSize({width,height:900});
      await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),{message:`${surface} ${language} at ${width}px must fit after responsive layout settles`}).toBe(true);

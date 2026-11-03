@@ -97,3 +97,4 @@
  .support-card.card .support-panels > div { grid-template-columns:minmax(0,1.7fr) minmax(240px,1fr); gap:32px; align-items:center; padding:24px; }
  .support-card.card .support-panel-actions { border-block-start:0; padding-block-start:0; border-inline-start:1px solid var(--border-color); padding-inline-start:32px; }
 }
+.coffee-support{margin-block-start:20px}.coffee-support>p{display:flex;align-items:center;gap:8px;margin-block-end:12px}

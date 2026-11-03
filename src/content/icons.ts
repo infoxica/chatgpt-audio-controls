@@ -3,6 +3,7 @@
  * Does not depend on external fonts or CDNs.
  */
 export const LUCIDE_ICONS: Record<string, string> = {
+  coffee: '<path d="M10 2v2M14 2v2M4 2v2M4 7h14v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4ZM18 8h1a3 3 0 1 1 0 6h-1M2 22h20"/>',
   x: '<path d="m6 6 12 12M18 6 6 18"></path>',
   check: '<path d="m5 12 4 4L19 6"></path>',
   ellipsis: '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>',

@@ -1,35 +1,270 @@
 {
-  "en": ["See it in action", "Silent English demo with fictional content. No personal data is used."],
-  "pt-BR": ["Veja como funciona", "Demonstração em inglês, sem som e com conteúdo fictício. Nenhum dado pessoal é usado."],
-  "pt-PT": ["Veja como funciona", "Demonstração em inglês, sem som e com conteúdo fictício. Não são usados dados pessoais."],
-  "ja": ["実際の動きを見る", "架空の内容を使った英語の無音デモです。個人情報は使用していません。"],
-  "es": ["Mira cómo funciona", "Demostración en inglés, sin sonido y con contenido ficticio. No se usan datos personales."],
-  "de": ["So funktioniert es", "Stumme Demo auf Englisch mit fiktiven Inhalten. Es werden keine persönlichen Daten verwendet."],
-  "vi": ["Xem cách hoạt động", "Bản demo tiếng Anh không có âm thanh, dùng nội dung hư cấu. Không sử dụng dữ liệu cá nhân."],
-  "fr": ["Découvrez son fonctionnement", "Démonstration en anglais, sans son, avec un contenu fictif. Aucune donnée personnelle n’est utilisée."],
-  "hi": ["देखें, यह कैसे काम करता है", "काल्पनिक सामग्री वाला बिना आवाज़ का अंग्रेज़ी डेमो। किसी निजी जानकारी का उपयोग नहीं किया गया है।"],
-  "zh-CN": ["看看实际效果", "使用虚构内容的英文无声演示，不包含任何个人数据。"],
-  "zh-TW": ["看看實際效果", "使用虛構內容的英文無聲示範，不包含任何個人資料。"],
-  "ru": ["Посмотрите, как это работает", "Демонстрация на английском без звука с вымышленным содержимым. Личные данные не используются."],
-  "pl": ["Zobacz, jak to działa", "Demonstracja po angielsku, bez dźwięku, z fikcyjną treścią. Nie wykorzystuje danych osobowych."],
-  "tr": ["Nasıl çalıştığını görün", "Kurgusal içerikle hazırlanmış sessiz İngilizce demo. Kişisel veri kullanılmaz."],
-  "ko": ["실제 사용 모습 보기", "가상의 내용을 사용한 영어 무음 데모입니다. 개인 정보는 사용하지 않습니다."],
-  "fa": ["نحوهٔ کار را ببینید", "نمایش بی‌صدای انگلیسی با محتوای ساختگی. از اطلاعات شخصی استفاده نشده است."],
-  "ar": ["شاهد كيف يعمل", "عرض توضيحي صامت بالإنجليزية بمحتوى خيالي. لا تُستخدم أي بيانات شخصية."],
-  "it": ["Guarda come funziona", "Demo in inglese, senza audio, con contenuti fittizi. Non vengono utilizzati dati personali."],
-  "sv": ["Se hur det fungerar", "Tyst demo på engelska med fiktivt innehåll. Inga personuppgifter används."],
-  "ro": ["Vezi cum funcționează", "Demonstrație în engleză, fără sunet, cu conținut fictiv. Nu sunt folosite date personale."],
-  "th": ["ดูการทำงานจริง", "วิดีโอสาธิตภาษาอังกฤษแบบไม่มีเสียง ใช้เนื้อหาสมมติ ไม่มีการใช้ข้อมูลส่วนบุคคล"],
-  "id": ["Lihat cara kerjanya", "Demo berbahasa Inggris tanpa suara dengan konten fiktif. Tidak menggunakan data pribadi."],
-  "bn": ["কীভাবে কাজ করে দেখুন", "কাল্পনিক বিষয়বস্তু দিয়ে তৈরি শব্দহীন ইংরেজি ডেমো। কোনো ব্যক্তিগত তথ্য ব্যবহার করা হয়নি।"],
-  "mr": ["हे कसे काम करते ते पाहा", "काल्पनिक मजकूर वापरून तयार केलेला आवाज नसलेला इंग्रजी डेमो. कोणतीही वैयक्तिक माहिती वापरलेली नाही."],
-  "te": ["ఇది ఎలా పనిచేస్తుందో చూడండి", "కల్పిత విషయాలతో రూపొందించిన శబ్దం లేని ఆంగ్ల డెమో. వ్యక్తిగత సమాచారం ఉపయోగించలేదు."],
-  "ta": ["இது செயல்படுவதைப் பாருங்கள்", "கற்பனை உள்ளடக்கத்துடன் கூடிய ஒலியில்லா ஆங்கிலச் செயல்விளக்கம். தனிப்பட்ட தகவல்கள் பயன்படுத்தப்படவில்லை."],
-  "he": ["ראו איך זה עובד", "הדגמה שקטה באנגלית עם תוכן בדיוני. לא נעשה שימוש במידע אישי."],
-  "hu": ["Nézze meg működés közben", "Hang nélküli, angol nyelvű bemutató kitalált tartalommal. Nem használ személyes adatokat."],
-  "cs": ["Podívejte se, jak to funguje", "Tichá ukázka v angličtině se smyšleným obsahem. Nejsou použity osobní údaje."],
-  "uk": ["Подивіться, як це працює", "Демонстрація англійською без звуку з вигаданим вмістом. Особисті дані не використовуються."],
-  "ca": ["Mira com funciona", "Demostració en anglès, sense so i amb contingut fictici. No s’hi utilitzen dades personals."],
-  "el": ["Δείτε πώς λειτουργεί", "Αθόρυβη επίδειξη στα αγγλικά με φανταστικό περιεχόμενο. Δεν χρησιμοποιούνται προσωπικά δεδομένα."],
-  "nb": ["Se hvordan det fungerer", "Lydløs demo på engelsk med oppdiktet innhold. Ingen personopplysninger brukes."]
+  "en": [
+    "See it in action",
+    "Silent English demo with fictional content. No personal data is used."
+  ],
+  "pt-BR": [
+    "Veja como funciona",
+    "Demonstração em inglês, sem som e com conteúdo fictício. Nenhum dado pessoal é usado."
+  ],
+  "pt-PT": [
+    "Veja como funciona",
+    "Demonstração em inglês, sem som e com conteúdo fictício. Não são usados dados pessoais."
+  ],
+  "ja": [
+    "実際の動きを見る",
+    "架空の内容を使った英語の無音デモです。個人情報は使用していません。"
+  ],
+  "es": [
+    "Mira cómo funciona",
+    "Demostración en inglés, sin sonido y con contenido ficticio. No se usan datos personales."
+  ],
+  "de": [
+    "So funktioniert es",
+    "Stumme Demo auf Englisch mit fiktiven Inhalten. Es werden keine persönlichen Daten verwendet."
+  ],
+  "vi": [
+    "Xem cách hoạt động",
+    "Bản demo tiếng Anh không có âm thanh, dùng nội dung hư cấu. Không sử dụng dữ liệu cá nhân."
+  ],
+  "fr": [
+    "Découvrez son fonctionnement",
+    "Démonstration en anglais, sans son, avec un contenu fictif. Aucune donnée personnelle n’est utilisée."
+  ],
+  "hi": [
+    "देखें, यह कैसे काम करता है",
+    "काल्पनिक सामग्री वाला बिना आवाज़ का अंग्रेज़ी डेमो। किसी निजी जानकारी का उपयोग नहीं किया गया है।"
+  ],
+  "zh-CN": [
+    "看看实际效果",
+    "使用虚构内容的英文无声演示，不包含任何个人数据。"
+  ],
+  "zh-TW": [
+    "看看實際效果",
+    "使用虛構內容的英文無聲示範，不包含任何個人資料。"
+  ],
+  "ru": [
+    "Посмотрите, как это работает",
+    "Демонстрация на английском без звука с вымышленным содержимым. Личные данные не используются."
+  ],
+  "pl": [
+    "Zobacz, jak to działa",
+    "Demonstracja po angielsku, bez dźwięku, z fikcyjną treścią. Nie wykorzystuje danych osobowych."
+  ],
+  "tr": [
+    "Nasıl çalıştığını görün",
+    "Kurgusal içerikle hazırlanmış sessiz İngilizce demo. Kişisel veri kullanılmaz."
+  ],
+  "ko": [
+    "실제 사용 모습 보기",
+    "가상의 내용을 사용한 영어 무음 데모입니다. 개인 정보는 사용하지 않습니다."
+  ],
+  "fa": [
+    "نحوهٔ کار را ببینید",
+    "نمایش بی‌صدای انگلیسی با محتوای ساختگی. از اطلاعات شخصی استفاده نشده است."
+  ],
+  "ar": [
+    "شاهد كيف يعمل",
+    "عرض توضيحي صامت بالإنجليزية بمحتوى خيالي. لا تُستخدم أي بيانات شخصية."
+  ],
+  "it": [
+    "Guarda come funziona",
+    "Demo in inglese, senza audio, con contenuti fittizi. Non vengono utilizzati dati personali."
+  ],
+  "sv": [
+    "Se hur det fungerar",
+    "Tyst demo på engelska med fiktivt innehåll. Inga personuppgifter används."
+  ],
+  "ro": [
+    "Vezi cum funcționează",
+    "Demonstrație în engleză, fără sunet, cu conținut fictiv. Nu sunt folosite date personale."
+  ],
+  "th": [
+    "ดูการทำงานจริง",
+    "วิดีโอสาธิตภาษาอังกฤษแบบไม่มีเสียง ใช้เนื้อหาสมมติ ไม่มีการใช้ข้อมูลส่วนบุคคล"
+  ],
+  "id": [
+    "Lihat cara kerjanya",
+    "Demo berbahasa Inggris tanpa suara dengan konten fiktif. Tidak menggunakan data pribadi."
+  ],
+  "bn": [
+    "কীভাবে কাজ করে দেখুন",
+    "কাল্পনিক বিষয়বস্তু দিয়ে তৈরি শব্দহীন ইংরেজি ডেমো। কোনো ব্যক্তিগত তথ্য ব্যবহার করা হয়নি।"
+  ],
+  "mr": [
+    "हे कसे काम करते ते पाहा",
+    "काल्पनिक मजकूर वापरून तयार केलेला आवाज नसलेला इंग्रजी डेमो. कोणतीही वैयक्तिक माहिती वापरलेली नाही."
+  ],
+  "te": [
+    "ఇది ఎలా పనిచేస్తుందో చూడండి",
+    "కల్పిత విషయాలతో రూపొందించిన శబ్దం లేని ఆంగ్ల డెమో. వ్యక్తిగత సమాచారం ఉపయోగించలేదు."
+  ],
+  "ta": [
+    "இது செயல்படுவதைப் பாருங்கள்",
+    "கற்பனை உள்ளடக்கத்துடன் கூடிய ஒலியில்லா ஆங்கிலச் செயல்விளக்கம். தனிப்பட்ட தகவல்கள் பயன்படுத்தப்படவில்லை."
+  ],
+  "he": [
+    "ראו איך זה עובד",
+    "הדגמה שקטה באנגלית עם תוכן בדיוני. לא נעשה שימוש במידע אישי."
+  ],
+  "hu": [
+    "Nézze meg működés közben",
+    "Hang nélküli, angol nyelvű bemutató kitalált tartalommal. Nem használ személyes adatokat."
+  ],
+  "cs": [
+    "Podívejte se, jak to funguje",
+    "Tichá ukázka v angličtině se smyšleným obsahem. Nejsou použity osobní údaje."
+  ],
+  "uk": [
+    "Подивіться, як це працює",
+    "Демонстрація англійською без звуку з вигаданим вмістом. Особисті дані не використовуються."
+  ],
+  "ca": [
+    "Mira com funciona",
+    "Demostració en anglès, sense so i amb contingut fictici. No s’hi utilitzen dades personals."
+  ],
+  "el": [
+    "Δείτε πώς λειτουργεί",
+    "Αθόρυβη επίδειξη στα αγγλικά με φανταστικό περιεχόμενο. Δεν χρησιμοποιούνται προσωπικά δεδομένα."
+  ],
+  "nb": [
+    "Se hvordan det fungerer",
+    "Lydløs demo på engelsk med oppdiktet innhold. Ingen personopplysninger brukes."
+  ],
+  "am": [
+    "በተግባር ይመልከቱት።",
+    "ጸጥ ያለ የእንግሊዝኛ ማሳያ ከተጨባጭ ይዘት ጋር። ምንም የግል ውሂብ ጥቅም ላይ አይውልም."
+  ],
+  "bg": [
+    "Вижте го в действие",
+    "Безшумна демонстрация на английски с измислено съдържание. Не се използват лични данни."
+  ],
+  "bs": [
+    "Pogledajte to na djelu",
+    "Nečujni engleski demo sa izmišljenim sadržajem. Ne koriste se lični podaci."
+  ],
+  "da": [
+    "Se det i aktion",
+    "Stille engelsk demo med fiktivt indhold. Der bruges ingen personlige data."
+  ],
+  "et": [
+    "Vaadake seda töös",
+    "Väljamõeldud sisuga vaikne inglisekeelne demo. Isikuandmeid ei kasutata."
+  ],
+  "fil": [
+    "Tingnan ito sa pagkilos",
+    "Tahimik na English na demo na may kathang-isip na nilalaman. Walang personal na data ang ginagamit."
+  ],
+  "fi": [
+    "Katso se toiminnassa",
+    "Hiljainen englanninkielinen demo kuvitteellisella sisällöllä. Henkilötietoja ei käytetä."
+  ],
+  "gu": [
+    "તેને ક્રિયામાં જુઓ",
+    "કાલ્પનિક સામગ્રી સાથે સાયલન્ટ અંગ્રેજી ડેમો. કોઈ વ્યક્તિગત ડેટાનો ઉપયોગ થતો નથી."
+  ],
+  "hr": [
+    "Pogledajte ga na djelu",
+    "Tihi engleski demo s izmišljenim sadržajem. Ne koriste se osobni podaci."
+  ],
+  "hy": [
+    "Տեսեք այն գործողության մեջ",
+    "Լուռ անգլերեն ցուցադրություն՝ գեղարվեստական բովանդակությամբ: Անձնական տվյալներ չեն օգտագործվում:"
+  ],
+  "is": [
+    "Sjáðu það í verki",
+    "Þögul ensk kynning með skálduðu efni. Engar persónuupplýsingar eru notaðar."
+  ],
+  "ka": [
+    "იხილეთ მოქმედებაში",
+    "მდუმარე ინგლისური დემო გამოგონილი შინაარსით. პერსონალური მონაცემები არ გამოიყენება."
+  ],
+  "kk": [
+    "Оны әрекетте көріңіз",
+    "Ойдан шығарылған мазмұны бар үнсіз ағылшын демо. Жеке деректер пайдаланылмайды."
+  ],
+  "kn": [
+    "ಕ್ರಿಯೆಯಲ್ಲಿ ನೋಡಿ",
+    "ಕಾಲ್ಪನಿಕ ವಿಷಯದೊಂದಿಗೆ ಸೈಲೆಂಟ್ ಇಂಗ್ಲಿಷ್ ಡೆಮೊ. ಯಾವುದೇ ವೈಯಕ್ತಿಕ ಡೇಟಾವನ್ನು ಬಳಸಲಾಗುವುದಿಲ್ಲ."
+  ],
+  "lt": [
+    "Pamatykite tai veikiant",
+    "Tyli anglų kalbos demonstracinė versija su išgalvotu turiniu. Jokie asmens duomenys nenaudojami."
+  ],
+  "lv": [
+    "Skatiet to darbībā",
+    "Klusā angļu valodas demonstrācija ar izdomātu saturu. Personas dati netiek izmantoti."
+  ],
+  "mk": [
+    "Погледнете го на дело",
+    "Тивко англиско демо со измислена содржина. Не се користат лични податоци."
+  ],
+  "ml": [
+    "ഇത് പ്രവർത്തനത്തിൽ കാണുക",
+    "സാങ്കൽപ്പിക ഉള്ളടക്കമുള്ള സൈലൻ്റ് ഇംഗ്ലീഷ് ഡെമോ. വ്യക്തിഗത വിവരങ്ങളൊന്നും ഉപയോഗിക്കുന്നില്ല."
+  ],
+  "mn": [
+    "Үүнийг үйлдэл дээр нь хараарай",
+    "Зохиомол контент бүхий чимээгүй англи демо. Хувийн мэдээллийг ашигладаггүй."
+  ],
+  "ms": [
+    "Lihat dalam tindakan",
+    "Demo bahasa Inggeris senyap dengan kandungan fiksyen. Tiada data peribadi digunakan."
+  ],
+  "my": [
+    "လုပ်ဆောင်ချက်ကိုကြည့်ပါ။",
+    "စိတ်ကူးယဉ် အကြောင်းအရာများဖြင့် အသံတိတ် အင်္ဂလိပ်သရုပ်ပြ။ ကိုယ်ရေးကိုယ်တာဒေတာကို အသုံးမပြုပါ။"
+  ],
+  "nl": [
+    "Zie het in actie",
+    "Stille Engelse demo met fictieve inhoud. Er worden geen persoonlijke gegevens gebruikt."
+  ],
+  "pa": [
+    "ਇਸ ਨੂੰ ਕਾਰਵਾਈ ਵਿੱਚ ਵੇਖੋ",
+    "ਕਾਲਪਨਿਕ ਸਮੱਗਰੀ ਦੇ ਨਾਲ ਚੁੱਪ ਅੰਗਰੇਜ਼ੀ ਡੈਮੋ। ਕੋਈ ਨਿੱਜੀ ਡੇਟਾ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।"
+  ],
+  "sk": [
+    "Pozrite si to v akcii",
+    "Tiché anglické demo s vymysleným obsahom. Nepoužívajú sa žiadne osobné údaje."
+  ],
+  "sl": [
+    "Oglejte si v akciji",
+    "Tihi angleški demo z izmišljeno vsebino. Osebni podatki se ne uporabljajo."
+  ],
+  "so": [
+    "Ficil ahaan u arag",
+    "demo Ingiriis aamusnaan leh oo leh waxyaabo khayaali ah. Ma jiro xog shakhsi ah oo la isticmaalo"
+  ],
+  "sq": [
+    "Shihni atë në veprim",
+    "Demoja e heshtur në anglisht me përmbajtje imagjinare. Nuk përdoren të dhëna personale."
+  ],
+  "sr": [
+    "Погледајте то на делу",
+    "Нечујни енглески демо са измишљеним садржајем. Не користе се лични подаци."
+  ],
+  "sw": [
+    "Ione ikitekelezwa",
+    "Onyesho la Kiingereza kimya na maudhui ya kubuni. Hakuna data ya kibinafsi inayotumiwa."
+  ],
+  "ur": [
+    "عمل میں دیکھیں",
+    "افسانوی مواد کے ساتھ خاموش انگریزی ڈیمو۔ کوئی ذاتی ڈیٹا استعمال نہیں کیا جاتا ہے۔"
+  ],
+  "es-419": [
+    "Mira cómo funciona",
+    "Demostración en inglés, sin sonido y con contenido ficticio. No se usan datos personales."
+  ],
+  "fr-CA": [
+    "Découvrez son fonctionnement",
+    "Démonstration en anglais, sans son, avec un contenu fictif. Aucune donnée personnelle n’est utilisée."
+  ],
+  "hi-Latn": [
+    "ise karya roop mein dekhen",
+    "kalpanik samagri ke saath mook angreji demo. kisi bhi vyaktigat data ka upyog nahin kiya jata hai."
+  ],
+  "zh-HK": [
+    "看看實際效果",
+    "使用虛構內容的英文無聲示範，不包含任何個人資料。"
+  ]
 }

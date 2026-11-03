@@ -3,7 +3,7 @@ import { DAY, defaultEngagement, eligibleRequest, EngagementStore, isEngagementA
 import { ListeningUse, type ListeningActivity } from '../src/content/listening-use';
 import { donationCatalogs, donationCopy } from '../src/shared/i18n/donations';
 import { LOCALES } from '../src/shared/i18n/core';
-import { REVIEW_URLS, reviewStores, sponsorURL, SPONSOR_AMOUNTS } from '../src/shared/support';
+import { REVIEW_URLS, reviewStores, sponsorURL, coffeeURL, SPONSOR_AMOUNTS } from '../src/shared/support';
 import { promptPosition } from '../src/content/support-prompts';
 
 const day = 100 * DAY;
@@ -104,7 +104,7 @@ test('new logical session can qualify; owned-media boundaries do not reset progr
     for (let second = 1; second <= 20; second++) expect(tracker.observe({ event: 'progress', session, now: second * 1000, position: second, duration: 100, rate: 1, advancing: true })).toBe(second === 20);
   }
 });
-test('all 33 locales have complete donations, with English fallback and aliases', () => {
+test('all 67 locales have complete donations, with English fallback and aliases', () => {
   expect(Object.keys(donationCatalogs).sort()).toEqual(Object.keys(LOCALES).sort());
   for (const [code, values] of Object.entries(donationCatalogs)) {
     expect(values).toHaveLength(10); for (const v of values) expect(v.trim().length).toBeGreaterThan(0);
@@ -123,6 +123,8 @@ test('only one-time USD amounts and fixed support destinations', () => {
   expect(reviewStores('Chrome/140 Edg/140')).toEqual(['edge']);
   expect(reviewStores('Chrome/140')).toEqual(['chrome']); expect(reviewStores('Firefox/140')).toEqual(['chrome', 'edge']);
   expect(REVIEW_URLS.chrome).toContain('/reviews');
+  for (const amount of SPONSOR_AMOUNTS) expect(coffeeURL(amount)).toBe(`https://paypal.me/infoxica/${amount}USD`);
+  expect(() => coffeeURL(20 as any)).toThrow();
 });
 test('cards avoid composer and controls, and defer if viewport cannot fit', () => {
   const composer = { x: 10, y: 600, width: 370, height: 180 }, player = { x: 10, y: 550, width: 370, height: 48 };

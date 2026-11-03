@@ -3,7 +3,8 @@ import { eligibleRequest, type EngagementResult, type EngagementState, type Requ
 import { donationCopy } from '../shared/i18n/donations';
 import { supportCopy } from '../shared/i18n/support';
 import { languageDirection, resolveLanguage } from '../shared/i18n/core';
-import { REVIEW_URLS, reviewStores, sponsorURL, SPONSOR_AMOUNTS } from '../shared/support';
+import { REVIEW_URLS, reviewStores, sponsorURL, coffeeURL, SPONSOR_AMOUNTS } from '../shared/support';
+import { coffeeCopy } from '../shared/i18n/coffee';
 import { ListeningUse, type ListeningActivity } from './listening-use';
 import { getLucideSvg } from './icons';
 
@@ -138,6 +139,9 @@ export class SupportPrompts {
     if (kind === 'donation') {
       paragraph(d.costs); paragraph(d.once);
       for (const amount of SPONSOR_AMOUNTS) link(sponsorURL(amount), `US$${amount}`, 'donation', `${d.donate} · US$${amount} · GitHub Sponsors`);
+      const coffeeHeading = document.createElement('p'); coffeeHeading.className = 'cgpt-ra-support-provider';
+      coffeeHeading.innerHTML = getLucideSvg('coffee'); coffeeHeading.append(document.createTextNode(coffeeCopy(language) + ' · PayPal')); links.append(coffeeHeading);
+      for (const amount of SPONSOR_AMOUNTS) link(coffeeURL(amount), `US$${amount}`, 'donation', `${coffeeCopy(language)} · US$${amount} · PayPal`);
     }
     for (const store of reviewStores(navigator.userAgent)) link(REVIEW_URLS[store], `${s[3]} · ${store === 'edge' ? 'Edge' : 'Chrome'}`, 'review');
     el.append(links);

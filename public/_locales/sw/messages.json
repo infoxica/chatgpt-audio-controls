@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Cheza sauti / Sitisha sauti"
+  },
+  "command_seek_back": {
+    "message": "Tafuta nyuma"
+  },
+  "command_seek_forward": {
+    "message": "Tafuta mbele"
+  },
+  "command_speed_decrease": {
+    "message": "Punguza Kasi"
+  },
+  "command_speed_increase": {
+    "message": "Ongeza Kasi"
+  },
+  "command_speed_reset": {
+    "message": "Weka upya kasi hadi 1×"
+  },
+  "command_volume_increase": {
+    "message": "Ongeza sauti ya sauti"
+  },
+  "command_volume_decrease": {
+    "message": "Punguza sauti ya sauti"
+  },
+  "command_toggle_mute": {
+    "message": "Nyamazisha / acha kunyamazisha"
+  },
+  "command_download_audio": {
+    "message": "Pakua sauti"
+  },
+  "command_toggle_collapse": {
+    "message": "Kunja Mchezaji / Panua ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Weka upya mpangilio"
+  },
+  "command_open_help": {
+    "message": "Njia za mkato za kibodi na ishara"
+  },
+  "command_open_settings": {
+    "message": "Fungua Dashibodi na Mipangilio"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Soma kwa sauti"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Cheza sauti / Sitisha sauti · Kasi ya uchezaji · Pakua sauti"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Onyesha / ficha vidhibiti vinavyoelea"
+  }
+}

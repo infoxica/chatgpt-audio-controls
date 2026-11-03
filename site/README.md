@@ -171,6 +171,6 @@ These response headers still need a supported production host/proxy.
 Screenshot figures share an in-page native-dialog viewer, initialized by
 `image-viewer.ts`. It fits the full image to the viewport, supports keyboard
 activation, Escape, the localized close button and backdrop dismissal, and
-restores focus to the thumbnail. Close labels are supplied for all 33 languages
+restores focus to the thumbnail. Close labels are supplied for all 67 locales
 in `image-viewer-copy.json`. Store badges and the video retain their normal actions.
 Donation and review use separate responsive cards with space around section rules.

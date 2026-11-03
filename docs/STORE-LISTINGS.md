@@ -1354,3 +1354,782 @@ Et uavhengig åpen kildekode-prosjekt av Infoxica. Ikke tilknyttet eller godkjen
 Offisiell nettside: https://chatgpt-audio-controls.infoxica.com/nb/
 Hjelp og feilsøking: https://chatgpt-audio-controls.infoxica.com/nb/#help
 Personvern: https://chatgpt-audio-controls.infoxica.com/nb/#privacy
+
+## am
+
+### Title
+
+ChatGPT Audio Controls — ጮክ ብለህ አንብብ
+
+### Summary
+
+ChatGPT: ኦዲዮን ያጫውቱ / ኦዲዮን ለአፍታ ያቁሙ · የመልሶ ማጫወት ፍጥነት · አውርድ ኦዲዮ
+
+### Description
+
+ለአፍታ አቁም፣ ወደኋላ መለስ፣ የመልሶ ማጫወት ፍጥነትን ቀይር እና ኦዲዮን አውርድ። በሚያዳምጡበት ጊዜ በውይይቱ ውስጥ ይቆዩ።
+
+የተጫዋች አቀማመጥ: የመጀመሪያውን አቀማመጥ ያስቀምጡ፣ የማዕዘን ወይም የጎን ቅድመ ዝግጅት ይምረጡ ወይም ከቻት ግቤት በላይ መትከያ ያድርጉ። ለመንቀሳቀስ ይጎትቱ፣ አሞሌዎቹን ይቀይሩ እና አቀማመጥዎን ያስታውሱ።
+ሙሉ ኦዲዮ ሲዘጋጅ አሳውቅ.
+
+ChatGPT ይክፈቱ እና Read Aloud በተጠናቀቀ ምላሽ ይጀምሩ። ለአፍታ ለማቆም፣ ለመፈለግ፣ ፍጥነት ለመቀየር ወይም ለማውረድ ተጫዋቹን ይጠቀሙ።
+
+ቦታ ሲገደብ ሁለት የተጠጋጉ የመቆጣጠሪያ አሞሌዎች ከመልእክት ሳጥኑ በላይ ይታያሉ።
+
+ኦዲዮ መስራቱን ቀጥሏል። መቆጣጠሪያዎችን እዚህ ወይም በአቋራጭ ወደነበሩበት ይመልሱ።
+ስራ ፈት አረፋን ብቻ ደብቅ / አረፋ እና ተጫዋች ደብቅ
+
+ተንሳፋፊ መቆጣጠሪያዎችን አሳይ/ደብቅ: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). አቋራጭን አብጅ.
+የመልሶ ማጫወት ቁልፎች ከጽሑፍ መስኮች ውጭ በChatGPT ላይ ይሰራሉ። የታይነት አቋራጩ በሚተይቡበት ጊዜም ይሰራል።
+
+ማውረዶች በChatGPT የቀረበውን የድምጽ ቅርጸት ይጠቀማሉ። ቅጥያው ኦዲዮን አይቀይርም።
+
+ለዴስክቶፕ Chrome፣ Edge እና ተኳዃኝ አሳሾች። ለመጫን ይህን ገጽ በኮምፒውተርዎ ላይ ይክፈቱት።
+
+ቅጥያው ምንም ትንታኔ ወይም ቴሌሜትሪ የለውም። የድምጽ እና የውይይት አያያዝ በአሳሽዎ ውስጥ ይቆያል። የአሳሽ ማመሳሰል ምርጫዎችን ሊያሳምር ይችላል።
+
+ግብረ መልስዎ አማራጭ እና ግላዊ ነው፣ ካራገፉ በኋላም ቢሆን። ምንም ስም ወይም ኢሜይል አያስፈልግም. እባክዎን የግል ዝርዝሮችን ወይም ውይይቶችን አያካትቱ።
+
+ራሱን የቻለ ክፍት ምንጭ ፕሮጀክት በኢንፎክሲካ። ከOpenAI ጋር ያልተቆራኘ ወይም የጸደቀ።
+
+ኦፊሴላዊ ድር ጣቢያ: https://chatgpt-audio-controls.infoxica.com/am/
+እገዛ እና መላ መፈለግ: https://chatgpt-audio-controls.infoxica.com/am/#help
+ግላዊነት: https://chatgpt-audio-controls.infoxica.com/am/#privacy
+
+## bg
+
+### Title
+
+ChatGPT Audio Controls — Прочетете на глас
+
+### Summary
+
+ChatGPT: Възпроизвеждане на аудио / Пауза на аудио · Скорост на възпроизвеждане · Изтегляне на аудио
+
+### Description
+
+Пауза, превъртане назад, промяна на скоростта на възпроизвеждане и изтегляне на аудио. Останете в разговора, докато слушате.
+
+Оформление на играча: Запазете оригиналното разположение, изберете предварително зададен ъгъл или страна или закрепете над входа за чат. Плъзнете, за да се движите, разменете лентите и запомнете оформлението си.
+Известяване, когато пълното аудио е готово.
+
+Отворете ChatGPT и стартирайте Read Aloud при завършен отговор. Използвайте плейъра за пауза, търсене, промяна на скоростта или изтегляне.
+
+Когато пространството е ограничено, над полето за съобщения се появяват две заоблени контролни ленти.
+
+Аудиото продължава да работи. Възстановете контролите тук или с прекия път.
+Скриване само на празен балон / Скриване на балона и играча
+
+Показване/скриване на плаващи контроли: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Персонализиране на пряк път.
+Клавишите за възпроизвеждане работят на ChatGPT извън текстовите полета. Прекият път за видимост също работи, докато пишете.
+
+Изтеглянията използват аудио формата, предоставен от ChatGPT. Разширението не конвертира аудио.
+
+За десктоп Chrome, Edge и съвместими браузъри. Отворете тази страница на вашия компютър, за да инсталирате.
+
+Разширението няма анализ или телеметрия. Обработката на звука и разговора остава във вашия браузър. Синхронизирането на браузъра може да синхронизира предпочитанията.
+
+Вашата обратна връзка е незадължителна и лична, дори след деинсталиране. Не се изисква име или имейл. Моля, не включвайте лични данни или разговори.
+
+Независим проект с отворен код от Infoxica. Не е свързан с или одобрен от OpenAI.
+
+Официален уебсайт: https://chatgpt-audio-controls.infoxica.com/bg/
+Помощ и отстраняване на проблеми: https://chatgpt-audio-controls.infoxica.com/bg/#help
+Поверителност: https://chatgpt-audio-controls.infoxica.com/bg/#privacy
+
+## da
+
+### Title
+
+ChatGPT Audio Controls — Læs højt
+
+### Summary
+
+ChatGPT: Afspil lyd / Sæt lyd på pause · Afspilningshastighed · Download lyd
+
+### Description
+
+Sæt pause, spole tilbage, skift afspilningshastighed og download lyd. Bliv i samtalen, mens du lytter.
+
+Spillerlayout: Behold den originale placering, vælg en forudindstilling i hjørnet eller siden, eller sæt foran chatinputtet. Træk for at flytte, skift stregerne, og husk dit layout.
+Giv besked, når fuld lyd er klar.
+
+Åbn ChatGPT og start Read Aloud på et afsluttet svar. Brug afspilleren til at sætte på pause, søge, ændre hastighed eller downloade.
+
+Når pladsen er begrænset, vises to afrundede kontrolbjælker over meddelelsesboksen.
+
+Lyden bliver ved med at fungere. Gendan kontroller her eller med genvejen.
+Skjul kun inaktiv boble / Skjul boble og spiller
+
+Vis/skjul flydende kontroller: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Tilpas genvej.
+Afspilningstaster fungerer på ChatGPT uden for tekstfelter. Synlighedsgenvejen fungerer også, mens du skriver.
+
+Downloads bruger lydformatet leveret af ChatGPT. Udvidelsen konverterer ikke lyd.
+
+Til desktop Chrome, Edge og kompatible browsere. Åbn denne side på din computer for at installere.
+
+Udvidelsen har ingen analyser eller telemetri. Lyd- og samtalehåndtering forbliver i din browser. Browsersynkronisering kan synkronisere præferencer.
+
+Din feedback er valgfri og privat, selv efter afinstallation. Der kræves ikke navn eller e-mail. Inkluder venligst ikke personlige oplysninger eller samtaler.
+
+Et uafhængigt open source-projekt af Infoxica. Ikke tilknyttet eller godkendt af OpenAI.
+
+Officiel hjemmeside: https://chatgpt-audio-controls.infoxica.com/da/
+Hjælp og fejlfinding: https://chatgpt-audio-controls.infoxica.com/da/#help
+Fortrolighed: https://chatgpt-audio-controls.infoxica.com/da/#privacy
+
+## et
+
+### Title
+
+ChatGPT Audio Controls — Lugege ette
+
+### Summary
+
+ChatGPT: Esita heli / peata heli · Taasesituse kiirus · Laadige alla heli
+
+### Description
+
+Peatage, kerige tagasi, muutke taasesituse kiirust ja laadige alla heli. Püsige vestluses kuulamise ajal.
+
+Mängija paigutus: Säilitage algne paigutus, valige nurga või külje eelseade või dokkige vestlussisendi kohale. Lohistage liigutamiseks, ribade vahetamiseks ja paigutuse meeldejätmiseks.
+Teavita, kui täielik heli on valmis.
+
+Avage ChatGPT ja käivitage lõpetatud vastuse korral Read Aloud. Kasutage pleierit peatamiseks, otsimiseks, kiiruse muutmiseks või allalaadimiseks.
+
+Kui ruumi on vähe, kuvatakse teatekasti kohal kaks ümarat juhtriba.
+
+Heli töötab edasi. Taasta juhtelemendid siin või otsetee abil.
+Peida ainult jõudeolekumull / Peida mull ja pleier
+
+Kuva/peida ujuvad juhtelemendid: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Kohanda otsetee.
+Taasesitusklahvid töötavad ChatGPT-ga väljaspool tekstivälju. Nähtavuse otsetee töötab ka tippimise ajal.
+
+Allalaadimised kasutavad ChatGPT pakutavat helivormingut. Laiendus ei teisenda heli.
+
+Lauaarvuti Chrome, Edge ja ühilduvate brauserite jaoks. Installimiseks avage see leht oma arvutis.
+
+Laiendusel puudub analüütika ega telemeetria. Heli ja vestluse haldamine jäävad teie brauserisse. Brauseri sünkroonimine võib eelistusi sünkroonida.
+
+Teie tagasiside on valikuline ja privaatne isegi pärast desinstallimist. Nime ega e-posti pole vaja. Ärge lisage isikuandmeid ega vestlusi.
+
+Infoxica sõltumatu avatud lähtekoodiga projekt. Ei ole OpenAI-ga seotud ega kinnitatud.
+
+Ametlik veebisait: https://chatgpt-audio-controls.infoxica.com/et/
+Abi ja veaotsing: https://chatgpt-audio-controls.infoxica.com/et/#help
+Privaatsus: https://chatgpt-audio-controls.infoxica.com/et/#privacy
+
+## fil
+
+### Title
+
+ChatGPT Audio Controls — Basahin nang malakas
+
+### Summary
+
+ChatGPT: I-play ang audio / I-pause ang audio · Bilis ng pag-playback · Mag-download ng audio
+
+### Description
+
+I-pause, i-rewind, baguhin ang bilis ng pag-playback at mag-download ng audio. Manatili sa usapan habang nakikinig ka.
+
+Layout ng player: Panatilihin ang orihinal na placement, pumili ng preset na sulok o gilid, o mag-dock sa itaas ng input ng chat. I-drag upang ilipat, palitan ang mga bar, at tandaan ang iyong layout.
+Abisuhan kapag handa na ang buong audio.
+
+Buksan ang ChatGPT at simulan ang Read Aloud sa isang kumpletong tugon. Gamitin ang player upang i-pause, hanapin, baguhin ang bilis, o i-download.
+
+Kapag limitado ang espasyo, lalabas ang dalawang bilugan na control bar sa itaas ng kahon ng mensahe.
+
+Patuloy na gumagana ang audio. Ibalik ang mga kontrol dito o gamit ang shortcut.
+Itago lang ang idle bubble / Itago ang bubble at player
+
+Ipakita / itago ang mga lumulutang na kontrol: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). I-customize ang shortcut.
+Gumagana ang mga playback key sa ChatGPT sa labas ng mga text field. Gumagana rin ang visibility shortcut habang nagta-type.
+
+Ginagamit ng mga download ang audio format na ibinigay ng ChatGPT. Ang extension ay hindi nagko-convert ng audio.
+
+Para sa desktop Chrome, Edge at mga katugmang browser. Buksan ang page na ito sa iyong computer para i-install.
+
+Ang extension ay walang analytics o telemetry. Ang paghawak ng audio at pag-uusap ay mananatili sa iyong browser. Maaaring i-synchronize ng pag-sync ng browser ang mga kagustuhan.
+
+Ang iyong feedback ay opsyonal at pribado, kahit na pagkatapos i-uninstall. Walang pangalan o email ang kailangan. Mangyaring huwag isama ang mga personal na detalye o pag-uusap.
+
+Isang independiyenteng open-source na proyekto ng Infoxica. Hindi kaakibat o itinataguyod ng OpenAI.
+
+Opisyal na website: https://chatgpt-audio-controls.infoxica.com/fil/
+Tulong at pag-troubleshoot: https://chatgpt-audio-controls.infoxica.com/fil/#help
+Pagkapribado: https://chatgpt-audio-controls.infoxica.com/fil/#privacy
+
+## fi
+
+### Title
+
+ChatGPT Audio Controls — Lue ääneen
+
+### Summary
+
+ChatGPT: Toista ääni / Keskeytä ääni · Toistonopeus · Lataa ääni
+
+### Description
+
+Keskeytä, kelaa taaksepäin, muuta toistonopeutta ja lataa ääntä. Pysy keskustelussa samalla kun kuuntelet.
+
+Soittimen asettelu: Säilytä alkuperäinen sijoitus, valitse kulman tai sivun esiasetus tai kiinnitä chat-syötteen yläpuolelle. Siirrä vetämällä, vaihda palkkeja ja muista asettelusi.
+Ilmoita, kun täysi ääni on valmis.
+
+Avaa ChatGPT ja käynnistä Read Aloud, kun vastaus on valmis. Käytä soitinta keskeyttämiseen, etsimiseen, nopeuden muuttamiseen tai lataamiseen.
+
+Kun tilaa on rajoitetusti, viestiruudun yläpuolelle tulee kaksi pyöristettyä ohjauspalkkia.
+
+Ääni toimii edelleen. Palauta säätimet täällä tai pikanäppäimellä.
+Piilota vain tyhjäkäyntikupla / Piilota kupla ja soitin
+
+Näytä/piilota kelluvat säätimet: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Mukauta pikakuvaketta.
+Toistonäppäimet toimivat ChatGPT:ssa tekstikenttien ulkopuolella. Näkyvyyden pikanäppäin toimii myös kirjoitettaessa.
+
+Lataukset käyttävät ChatGPT:n tarjoamaa äänimuotoa. Laajennus ei muunna ääntä.
+
+Pöytätietokoneille Chrome, Edge ja yhteensopiville selaimille. Avaa tämä sivu tietokoneellasi asentaaksesi.
+
+Laajennuksessa ei ole analytiikkaa tai telemetriaa. Äänen ja keskustelun käsittely pysyvät selaimessasi. Selaimen synkronointi voi synkronoida asetuksia.
+
+Palautteesi on valinnaista ja yksityistä, jopa asennuksen poistamisen jälkeen. Nimeä tai sähköpostiosoitetta ei vaadita. Älä lisää henkilökohtaisia ​​tietoja tai keskusteluja.
+
+Infoxican itsenäinen avoimen lähdekoodin projekti. Ei liity OpenAI:han tai ole sen tukema.
+
+Virallinen verkkosivusto: https://chatgpt-audio-controls.infoxica.com/fi/
+Apua ja vianetsintä: https://chatgpt-audio-controls.infoxica.com/fi/#help
+Yksityisyys: https://chatgpt-audio-controls.infoxica.com/fi/#privacy
+
+## gu
+
+### Title
+
+ChatGPT Audio Controls — મોટેથી વાંચો
+
+### Summary
+
+ChatGPT: ઑડિયો ચલાવો / ઑડિયો થોભાવો · પ્લેબેક ઝડપ · ઓડિયો ડાઉનલોડ કરો
+
+### Description
+
+થોભાવો, રીવાઇન્ડ કરો, પ્લેબેક ઝડપ બદલો અને ઓડિયો ડાઉનલોડ કરો. જ્યારે તમે સાંભળો ત્યારે વાતચીતમાં રહો.
+
+પ્લેયર લેઆઉટ: મૂળ પ્લેસમેન્ટ રાખો, કોર્નર અથવા સાઇડ પ્રીસેટ પસંદ કરો અથવા ચેટ ઇનપુટની ઉપર ડોક કરો. ખસેડવા માટે ખેંચો, બારને સ્વેપ કરો અને તમારું લેઆઉટ યાદ રાખો.
+જ્યારે સંપૂર્ણ ઑડિયો તૈયાર હોય ત્યારે સૂચિત કરો.
+
+ChatGPT ખોલો અને પૂર્ણ પ્રતિસાદ પર Read Aloud શરૂ કરો. થોભાવવા, શોધવા, ઝડપ બદલવા અથવા ડાઉનલોડ કરવા માટે પ્લેયરનો ઉપયોગ કરો.
+
+જ્યારે જગ્યા મર્યાદિત હોય, ત્યારે સંદેશ બોક્સની ઉપર બે ગોળાકાર નિયંત્રણ પટ્ટીઓ દેખાય છે.
+
+ઓડિયો કામ કરતું રહે છે. નિયંત્રણો અહીં અથવા શૉર્ટકટ સાથે પુનઃસ્થાપિત કરો.
+માત્ર નિષ્ક્રિય બબલ છુપાવો / બબલ અને પ્લેયર છુપાવો
+
+તરતા નિયંત્રણો બતાવો / છુપાવો: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). શોર્ટકટ કસ્ટમાઇઝ કરો.
+પ્લેબેક કીઝ ટેક્સ્ટ ફીલ્ડની બહાર ChatGPT પર કામ કરે છે. ટાઈપ કરતી વખતે વિઝિબિલિટી શોર્ટકટ પણ કામ કરે છે.
+
+ડાઉનલોડ ChatGPT દ્વારા પ્રદાન કરવામાં આવેલ ઓડિયો ફોર્મેટનો ઉપયોગ કરે છે. એક્સ્ટેંશન ઑડિઓને કન્વર્ટ કરતું નથી.
+
+ડેસ્કટોપ Chrome, એજ અને સુસંગત બ્રાઉઝર્સ માટે. ઇન્સ્ટોલ કરવા માટે તમારા કમ્પ્યુટર પર આ પૃષ્ઠ ખોલો.
+
+એક્સ્ટેંશનમાં કોઈ એનાલિટિક્સ અથવા ટેલિમેટ્રી નથી. ઑડિયો અને વાતચીતનું સંચાલન તમારા બ્રાઉઝરમાં રહે છે. બ્રાઉઝર સિંક પસંદગીઓને સિંક્રનાઇઝ કરી શકે છે.
+
+અનઇન્સ્ટોલ કર્યા પછી પણ તમારો પ્રતિસાદ વૈકલ્પિક અને ખાનગી છે. કોઈ નામ કે ઈમેલની જરૂર નથી. કૃપા કરીને વ્યક્તિગત વિગતો અથવા વાતચીતો શામેલ કરશો નહીં.
+
+ઇન્ફોક્સિકા દ્વારા સ્વતંત્ર ઓપન સોર્સ પ્રોજેક્ટ. OpenAI સાથે સંલગ્ન અથવા સમર્થન નથી.
+
+સત્તાવાર વેબસાઇટ: https://chatgpt-audio-controls.infoxica.com/gu/
+મદદ અને મુશ્કેલીનિવારણ: https://chatgpt-audio-controls.infoxica.com/gu/#help
+ગોપનીયતા: https://chatgpt-audio-controls.infoxica.com/gu/#privacy
+
+## hr
+
+### Title
+
+ChatGPT Audio Controls — Čitaj naglas
+
+### Summary
+
+ChatGPT: Reproduciraj audio / Pauziraj audio · Brzina reprodukcije · Preuzmite zvuk
+
+### Description
+
+Pauziraj, premotaj unatrag, promijeni brzinu reprodukcije i preuzmi zvuk. Ostanite u razgovoru dok slušate.
+
+Raspored igrača: Zadržite izvorni položaj, odaberite unaprijed postavljen kut ili stranu ili usidrite iznad unosa za chat. Povucite za pomicanje, zamijenite trake i zapamtite svoj raspored.
+Obavijesti kada cijeli zvuk bude spreman.
+
+Otvorite ChatGPT i pokrenite Read Aloud nakon završenog odgovora. Koristite player za pauziranje, traženje, promjenu brzine ili preuzimanje.
+
+Kada je prostor ograničen, dvije zaobljene kontrolne trake pojavljuju se iznad okvira s porukom.
+
+Audio nastavlja raditi. Vratite kontrole ovdje ili pomoću prečaca.
+Sakrij samo oblačić u mirovanju / Sakrij oblačić i igrača
+
+Prikaži/sakrij plutajuće kontrole: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Prilagodite prečac.
+Tipke za reprodukciju rade na ChatGPT izvan tekstualnih polja. Prečac vidljivosti također radi tijekom tipkanja.
+
+Preuzimanja koriste audio format koji nudi ChatGPT. Proširenje ne pretvara zvuk.
+
+Za desktop Chrome, Edge i kompatibilne preglednike. Otvorite ovu stranicu na svom računalu za instalaciju.
+
+Proširenje nema analitiku ni telemetriju. Rukovanje zvukom i razgovorom ostaje u vašem pregledniku. Sinkronizacija preglednika može sinkronizirati postavke.
+
+Vaše povratne informacije nisu obavezne i privatne, čak i nakon deinstalacije. Nije potrebno ime ili e-pošta. Nemojte uključivati ​​osobne podatke ili razgovore.
+
+Neovisni projekt otvorenog koda tvrtke Infoxica. Nije povezan niti podržan od strane OpenAI.
+
+Službena stranica: https://chatgpt-audio-controls.infoxica.com/hr/
+Pomoć i rješavanje problema: https://chatgpt-audio-controls.infoxica.com/hr/#help
+Privatnost: https://chatgpt-audio-controls.infoxica.com/hr/#privacy
+
+## kn
+
+### Title
+
+ChatGPT Audio Controls — ಗಟ್ಟಿಯಾಗಿ ಓದಿ
+
+### Summary
+
+ChatGPT: ಆಡಿಯೊವನ್ನು ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ · ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ · ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ
+
+### Description
+
+ವಿರಾಮಗೊಳಿಸಿ, ರಿವೈಂಡ್ ಮಾಡಿ, ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗವನ್ನು ಬದಲಾಯಿಸಿ ಮತ್ತು ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. ನೀವು ಕೇಳುವಾಗ ಸಂಭಾಷಣೆಯಲ್ಲಿ ಇರಿ.
+
+ಆಟಗಾರರ ವಿನ್ಯಾಸ: ಮೂಲ ನಿಯೋಜನೆಯನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ, ಒಂದು ಮೂಲೆ ಅಥವಾ ಅಡ್ಡ ಪೂರ್ವನಿಗದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಚಾಟ್ ಇನ್‌ಪುಟ್‌ನ ಮೇಲೆ ಡಾಕ್ ಮಾಡಿ. ಸರಿಸಲು ಎಳೆಯಿರಿ, ಬಾರ್‌ಗಳನ್ನು ಸ್ವ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ವಿನ್ಯಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.
+ಪೂರ್ಣ ಆಡಿಯೋ ಸಿದ್ಧವಾದಾಗ ಸೂಚಿಸಿ.
+
+ChatGPT ತೆರೆಯಿರಿ ಮತ್ತು ಪೂರ್ಣಗೊಂಡ ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ Read Aloud ಪ್ರಾರಂಭಿಸಿ. ವಿರಾಮಗೊಳಿಸಲು, ಹುಡುಕಲು, ವೇಗವನ್ನು ಬದಲಾಯಿಸಲು ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಪ್ಲೇಯರ್ ಅನ್ನು ಬಳಸಿ.
+
+ಸ್ಥಳಾವಕಾಶವು ಸೀಮಿತವಾದಾಗ, ಸಂದೇಶ ಪೆಟ್ಟಿಗೆಯ ಮೇಲೆ ಎರಡು ದುಂಡಾದ ನಿಯಂತ್ರಣ ಬಾರ್‌ಗಳು ಗೋಚರಿಸುತ್ತವೆ.
+
+ಆಡಿಯೋ ಕೆಲಸ ಮಾಡುತ್ತಲೇ ಇರುತ್ತದೆ. ಇಲ್ಲಿ ಅಥವಾ ಶಾರ್ಟ್‌ಕಟ್‌ನೊಂದಿಗೆ ನಿಯಂತ್ರಣಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಿ.
+ಐಡಲ್ ಬಬಲ್ ಅನ್ನು ಮಾತ್ರ ಮರೆಮಾಡಿ / ಬಬಲ್ ಮತ್ತು ಪ್ಲೇಯರ್ ಅನ್ನು ಮರೆಮಾಡಿ
+
+ತೇಲುವ ನಿಯಂತ್ರಣಗಳನ್ನು ತೋರಿಸಿ / ಮರೆಮಾಡಿ: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). ಶಾರ್ಟ್‌ಕಟ್ ಅನ್ನು ಕಸ್ಟಮೈಸ್ ಮಾಡಿ.
+ಪಠ್ಯ ಕ್ಷೇತ್ರಗಳ ಹೊರಗಿನ ChatGPT ನಲ್ಲಿ ಪ್ಲೇಬ್ಯಾಕ್ ಕೀಗಳು ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತವೆ. ಟೈಪ್ ಮಾಡುವಾಗ ಗೋಚರತೆಯ ಶಾರ್ಟ್‌ಕಟ್ ಸಹ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ.
+
+ಡೌನ್‌ಲೋಡ್‌ಗಳು ChatGPT ಒದಗಿಸಿದ ಆಡಿಯೊ ಸ್ವರೂಪವನ್ನು ಬಳಸುತ್ತವೆ. ವಿಸ್ತರಣೆಯು ಆಡಿಯೊವನ್ನು ಪರಿವರ್ತಿಸುವುದಿಲ್ಲ.
+
+ಡೆಸ್ಕ್‌ಟಾಪ್ Chrome, ಎಡ್ಜ್ ಮತ್ತು ಹೊಂದಾಣಿಕೆಯ ಬ್ರೌಸರ್‌ಗಳಿಗಾಗಿ. ಸ್ಥಾಪಿಸಲು ನಿಮ್ಮ ಕಂಪ್ಯೂಟರ್‌ನಲ್ಲಿ ಈ ಪುಟವನ್ನು ತೆರೆಯಿರಿ.
+
+ವಿಸ್ತರಣೆಯು ಯಾವುದೇ ವಿಶ್ಲೇಷಣೆ ಅಥವಾ ಟೆಲಿಮೆಟ್ರಿಯನ್ನು ಹೊಂದಿಲ್ಲ. ಆಡಿಯೋ ಮತ್ತು ಸಂಭಾಷಣೆ ನಿರ್ವಹಣೆ ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತದೆ. ಬ್ರೌಸರ್ ಸಿಂಕ್ ಪ್ರಾಶಸ್ತ್ಯಗಳನ್ನು ಸಿಂಕ್ರೊನೈಸ್ ಮಾಡಬಹುದು.
+
+ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದ ನಂತರವೂ ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಐಚ್ಛಿಕ ಮತ್ತು ಖಾಸಗಿಯಾಗಿರುತ್ತದೆ. ಯಾವುದೇ ಹೆಸರು ಅಥವಾ ಇಮೇಲ್ ಅಗತ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ವೈಯಕ್ತಿಕ ವಿವರಗಳು ಅಥವಾ ಸಂಭಾಷಣೆಗಳನ್ನು ಸೇರಿಸಬೇಡಿ.
+
+ಇನ್ಫೋಕ್ಸಿಕಾದಿಂದ ಸ್ವತಂತ್ರ ಮುಕ್ತ-ಮೂಲ ಯೋಜನೆ. OpenAI ನೊಂದಿಗೆ ಸಂಯೋಜಿತವಾಗಿಲ್ಲ ಅಥವಾ ಅನುಮೋದಿಸಿಲ್ಲ.
+
+ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್: https://chatgpt-audio-controls.infoxica.com/kn/
+ಸಹಾಯ ಮತ್ತು ದೋಷನಿವಾರಣೆ: https://chatgpt-audio-controls.infoxica.com/kn/#help
+ಗೌಪ್ಯತೆ: https://chatgpt-audio-controls.infoxica.com/kn/#privacy
+
+## lt
+
+### Title
+
+ChatGPT Audio Controls — Skaityti garsiai
+
+### Summary
+
+ChatGPT: Leisti garsą / pristabdyti garsą · Atkūrimo greitis · Atsisiųsti garso įrašą
+
+### Description
+
+Pristabdyti, atsukti atgal, pakeisti atkūrimo greitį ir atsisiųsti garso įrašą. Likite pokalbyje, kol klausotės.
+
+Grotuvo išdėstymas: Išsaugokite pradinę vietą, pasirinkite iš anksto nustatytą kampą ar šoną arba pritvirtinkite prie doko virš pokalbio įvesties. Vilkite, kad perkeltumėte, pakeiskite juostas ir prisiminkite savo išdėstymą.
+Pranešti, kai bus paruoštas visas garsas.
+
+Atidarykite ChatGPT ir paleiskite Read Aloud, kai atsakymas baigtas. Naudokite grotuvą norėdami pristabdyti, ieškoti, keisti greitį arba atsisiųsti.
+
+Kai vietos ribotas, virš pranešimų laukelio atsiranda dvi suapvalintos valdymo juostos.
+
+Garsas veikia toliau. Atkurkite valdiklius čia arba naudodami spartųjį klavišą.
+Slėpti tik tuščiosios eigos debesėlį / Slėpti burbulą ir grotuvą
+
+Rodyti / slėpti slankiuosius valdiklius: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Tinkinkite nuorodą.
+Atkūrimo klavišai veikia ChatGPT už teksto laukų ribų. Matomumo spartusis klavišas taip pat veikia renkant tekstą.
+
+Atsisiuntimams naudojamas ChatGPT teikiamas garso formatas. Plėtinys nekonvertuoja garso.
+
+Staliniams kompiuteriams Chrome, Edge ir suderinamoms naršyklėms. Norėdami įdiegti, atidarykite šį puslapį savo kompiuteryje.
+
+Plėtinyje nėra analizės ar telemetrijos. Garso ir pokalbių tvarkymas lieka jūsų naršyklėje. Naršyklės sinchronizavimas gali sinchronizuoti nuostatas.
+
+Jūsų atsiliepimai yra neprivalomi ir privatūs, net ir pašalinus. Vardo ar el. pašto adreso nereikia. Neįtraukite asmeninės informacijos ar pokalbių.
+
+Nepriklausomas „Infoxica“ atvirojo kodo projektas. Nesusijęs su „OpenAI“ arba jo nepatvirtintas.
+
+Oficiali svetainė: https://chatgpt-audio-controls.infoxica.com/lt/
+Pagalba ir trikčių šalinimas: https://chatgpt-audio-controls.infoxica.com/lt/#help
+Privatumas: https://chatgpt-audio-controls.infoxica.com/lt/#privacy
+
+## lv
+
+### Title
+
+ChatGPT Audio Controls — Lasīt skaļi
+
+### Summary
+
+ChatGPT: Atskaņot audio / Pauzēt audio · Atskaņošanas ātrums · Lejupielādēt audio
+
+### Description
+
+Pauzējiet, attiniet atpakaļ, mainiet atskaņošanas ātrumu un lejupielādējiet audio. Palieciet sarunā, kamēr klausāties.
+
+Spēlētāja izkārtojums: Saglabājiet sākotnējo izvietojumu, izvēlieties stūra vai sānu sākotnējo iestatījumu vai piestipriniet dokstaciju virs tērzēšanas ievades. Velciet, lai pārvietotu, samainiet joslas un atcerieties savu izkārtojumu.
+Paziņot, kad pilns audio ir gatavs.
+
+Atveriet ChatGPT un palaidiet Read Aloud, kad atbilde ir pabeigta. Izmantojiet atskaņotāju, lai apturētu, meklētu, mainītu ātrumu vai lejupielādētu.
+
+Ja vieta ir ierobežota, virs ziņojuma lodziņa tiek parādītas divas noapaļotas vadības joslas.
+
+Audio turpina darboties. Atjaunojiet vadīklas šeit vai ar saīsni.
+Slēpt tikai tukšgaitas burbuli / Paslēpt burbuli un atskaņotāju
+
+Rādīt/slēpt peldošās vadīklas: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Pielāgot saīsni.
+Atskaņošanas taustiņi darbojas uz ChatGPT ārpus teksta laukiem. Redzamības saīsne darbojas arī rakstīšanas laikā.
+
+Lejupielādēs tiek izmantots ChatGPT nodrošinātais audio formāts. Paplašinājums nepārvērš audio.
+
+Darbvirsmas Chrome, Edge un saderīgām pārlūkprogrammām. Atveriet šo lapu savā datorā, lai instalētu.
+
+Paplašinājumam nav analītikas vai telemetrijas. Audio un sarunu apstrāde paliek jūsu pārlūkprogrammā. Pārlūka sinhronizācija var sinhronizēt preferences.
+
+Jūsu atsauksmes nav obligātas un ir privātas pat pēc atinstalēšanas. Nav nepieciešams vārds vai e-pasts. Lūdzu, neiekļaujiet personas datus vai sarunas.
+
+Neatkarīgs Infoxica atvērtā pirmkoda projekts. Nav saistīts ar OpenAI vai to neapstiprina.
+
+Oficiālā vietne: https://chatgpt-audio-controls.infoxica.com/lv/
+Palīdzība un problēmu novēršana: https://chatgpt-audio-controls.infoxica.com/lv/#help
+Privātums: https://chatgpt-audio-controls.infoxica.com/lv/#privacy
+
+## ml
+
+### Title
+
+ChatGPT Audio Controls — ഉറക്കെ വായിക്കുക
+
+### Summary
+
+ChatGPT: ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക · പ്ലേബാക്ക് വേഗത · ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക
+
+### Description
+
+താൽക്കാലികമായി നിർത്തുക, റിവൈൻഡ് ചെയ്യുക, പ്ലേബാക്ക് വേഗത മാറ്റുക, ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക. നിങ്ങൾ കേൾക്കുമ്പോൾ സംഭാഷണത്തിൽ തുടരുക.
+
+പ്ലെയർ ലേഔട്ട്: യഥാർത്ഥ പ്ലേസ്‌മെൻ്റ് സൂക്ഷിക്കുക, ഒരു മൂലയോ സൈഡ് പ്രീസെറ്റോ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ചാറ്റ് ഇൻപുട്ടിന് മുകളിൽ ഡോക്ക് ചെയ്യുക. നീക്കാൻ വലിച്ചിടുക, ബാറുകൾ സ്വാപ്പ് ചെയ്യുക, നിങ്ങളുടെ ലേഔട്ട് ഓർമ്മിക്കുക.
+മുഴുവൻ ഓഡിയോ തയ്യാറാകുമ്പോൾ അറിയിക്കുക.
+
+ChatGPT തുറന്ന് പൂർത്തിയായ പ്രതികരണത്തിൽ Read Aloud ആരംഭിക്കുക. താൽക്കാലികമായി നിർത്താനോ തിരയാനോ വേഗത മാറ്റാനോ ഡൗൺലോഡ് ചെയ്യാനോ പ്ലെയർ ഉപയോഗിക്കുക.
+
+ഇടം പരിമിതമാകുമ്പോൾ, സന്ദേശ ബോക്‌സിന് മുകളിൽ രണ്ട് വൃത്താകൃതിയിലുള്ള കൺട്രോൾ ബാറുകൾ ദൃശ്യമാകും.
+
+ഓഡിയോ പ്രവർത്തിക്കുന്നു. ഇവിടെയോ കുറുക്കുവഴിയിലൂടെയോ നിയന്ത്രണങ്ങൾ പുനഃസ്ഥാപിക്കുക.
+നിഷ്‌ക്രിയ ബബിൾ മാത്രം മറയ്ക്കുക / ബബിളും പ്ലെയറും മറയ്ക്കുക
+
+ഫ്ലോട്ടിംഗ് നിയന്ത്രണങ്ങൾ കാണിക്കുക / മറയ്ക്കുക: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). കുറുക്കുവഴി ഇഷ്ടാനുസൃതമാക്കുക.
+പ്ലേബാക്ക് കീകൾ ടെക്സ്റ്റ് ഫീൽഡുകൾക്ക് പുറത്ത് ChatGPT-ൽ പ്രവർത്തിക്കുന്നു. ടൈപ്പ് ചെയ്യുമ്പോൾ ദൃശ്യപരത കുറുക്കുവഴിയും പ്രവർത്തിക്കുന്നു.
+
+ഡൗൺലോഡുകൾ ChatGPT നൽകുന്ന ഓഡിയോ ഫോർമാറ്റ് ഉപയോഗിക്കുന്നു. വിപുലീകരണം ഓഡിയോ പരിവർത്തനം ചെയ്യുന്നില്ല.
+
+ഡെസ്ക്ടോപ്പ് Chrome, എഡ്ജ്, അനുയോജ്യമായ ബ്രൗസറുകൾക്ക്. ഇൻസ്റ്റാൾ ചെയ്യാൻ നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ ഈ പേജ് തുറക്കുക.
+
+വിപുലീകരണത്തിന് അനലിറ്റിക്‌സോ ടെലിമെട്രിയോ ഇല്ല. ഓഡിയോ, സംഭാഷണം കൈകാര്യം ചെയ്യൽ നിങ്ങളുടെ ബ്രൗസറിൽ നിലനിൽക്കും. ബ്രൗസർ സമന്വയം മുൻഗണനകൾ സമന്വയിപ്പിച്ചേക്കാം.
+
+അൺഇൻസ്‌റ്റാൾ ചെയ്‌തതിന് ശേഷവും നിങ്ങളുടെ ഫീഡ്‌ബാക്ക് ഓപ്‌ഷണലും സ്വകാര്യവുമാണ്. പേരോ ഇമെയിലോ ആവശ്യമില്ല. വ്യക്തിപരമായ വിവരങ്ങളോ സംഭാഷണങ്ങളോ ഉൾപ്പെടുത്തരുത്.
+
+ഇൻഫോക്സിക്കയുടെ ഒരു സ്വതന്ത്ര ഓപ്പൺ സോഴ്സ് പ്രോജക്റ്റ്. OpenAI-യുമായി അഫിലിയേറ്റ് ചെയ്തിട്ടില്ല അല്ലെങ്കിൽ അംഗീകരിക്കുന്നില്ല.
+
+ഔദ്യോഗിക വെബ്സൈറ്റ്: https://chatgpt-audio-controls.infoxica.com/ml/
+സഹായവും ട്രബിൾഷൂട്ടിംഗും: https://chatgpt-audio-controls.infoxica.com/ml/#help
+സ്വകാര്യത: https://chatgpt-audio-controls.infoxica.com/ml/#privacy
+
+## ms
+
+### Title
+
+ChatGPT Audio Controls — Baca dengan kuat
+
+### Summary
+
+ChatGPT: Mainkan audio / Jeda audio · Kelajuan main balik · Muat turun audio
+
+### Description
+
+Jeda, putar balik, tukar kelajuan main balik dan muat turun audio. Kekal dalam perbualan semasa anda mendengar.
+
+Susun atur pemain: Kekalkan peletakan asal, pilih sudut atau pratetap sisi atau dok di atas input sembang. Seret untuk mengalihkan, menukar bar dan ingat reka letak anda.
+Maklumkan apabila audio penuh sedia.
+
+Buka ChatGPT dan mulakan Read Aloud pada respons yang lengkap. Gunakan pemain untuk menjeda, mencari, menukar kelajuan atau memuat turun.
+
+Apabila ruang terhad, dua bar kawalan bulat muncul di atas kotak mesej.
+
+Audio terus berfungsi. Pulihkan kawalan di sini atau dengan pintasan.
+Sembunyikan gelembung terbiar sahaja / Sembunyikan gelembung dan pemain
+
+Tunjukkan / sembunyikan kawalan terapung: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Sesuaikan pintasan.
+Kekunci main balik berfungsi pada ChatGPT di luar medan teks. Pintasan keterlihatan juga berfungsi semasa menaip.
+
+Muat turun menggunakan format audio yang disediakan oleh ChatGPT. Sambungan tidak menukar audio.
+
+Untuk desktop Chrome, Edge dan penyemak imbas yang serasi. Buka halaman ini pada komputer anda untuk memasang.
+
+Sambungan tidak mempunyai analitik atau telemetri. Pengendalian audio dan perbualan kekal dalam penyemak imbas anda. Penyegerakan penyemak imbas boleh menyegerakkan pilihan.
+
+Maklum balas anda adalah pilihan dan peribadi, walaupun selepas menyahpasang. Tiada nama atau e-mel diperlukan. Tolong jangan sertakan butiran peribadi atau perbualan.
+
+Projek sumber terbuka bebas oleh Infoxica. Tidak bergabung dengan atau disokong oleh OpenAI.
+
+Laman web rasmi: https://chatgpt-audio-controls.infoxica.com/ms/
+Bantuan dan penyelesaian masalah: https://chatgpt-audio-controls.infoxica.com/ms/#help
+Privasi: https://chatgpt-audio-controls.infoxica.com/ms/#privacy
+
+## nl
+
+### Title
+
+ChatGPT Audio Controls — Lees hardop
+
+### Summary
+
+ChatGPT: Audio afspelen / Audio pauzeren · Afspeelsnelheid · Audio downloaden
+
+### Description
+
+Pauzeren, terugspoelen, afspeelsnelheid wijzigen en audio downloaden. Blijf bij het gesprek terwijl u luistert.
+
+Spelerindeling: Behoud de oorspronkelijke plaatsing, kies een voorinstelling voor een hoek of zijkant, of plaats deze boven de chatinvoer. Sleep om te verplaatsen, verwissel de balken en onthoud uw lay-out.
+Waarschuw wanneer volledige audio gereed is.
+
+Open ChatGPT en start Read Aloud op basis van een voltooid antwoord. Gebruik de speler om te pauzeren, zoeken, de snelheid te wijzigen of te downloaden.
+
+Als de ruimte beperkt is, verschijnen er twee afgeronde bedieningsbalken boven het berichtvenster.
+
+Audio blijft werken. Herstel de bedieningselementen hier of met de snelkoppeling.
+Alleen inactieve bel verbergen / Verberg bel en speler
+
+Zwevende besturingselementen tonen/verbergen: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Snelkoppeling aanpassen.
+Afspeeltoetsen werken op ChatGPT buiten tekstvelden. De zichtbaarheidssnelkoppeling werkt ook tijdens het typen.
+
+Downloads gebruiken het audioformaat van ChatGPT. De extensie converteert geen audio.
+
+Voor desktop Chrome, Edge en compatibele browsers. Open deze pagina op uw computer om te installeren.
+
+De extensie heeft geen analyses of telemetrie. Audio- en gespreksafhandeling blijven in uw browser. Browsersynchronisatie kan voorkeuren synchroniseren.
+
+Je feedback is optioneel en privé, zelfs na het verwijderen. Er is geen naam of e-mailadres vereist. Voeg geen persoonlijke gegevens of gesprekken toe.
+
+Een onafhankelijk open-sourceproject van Infoxica. Niet aangesloten bij of goedgekeurd door OpenAI.
+
+Officiële website: https://chatgpt-audio-controls.infoxica.com/nl/
+Hulp en probleemoplossing: https://chatgpt-audio-controls.infoxica.com/nl/#help
+Privacy: https://chatgpt-audio-controls.infoxica.com/nl/#privacy
+
+## sk
+
+### Title
+
+ChatGPT Audio Controls — Čítajte nahlas
+
+### Summary
+
+ChatGPT: Prehrať zvuk / Pozastaviť zvuk · Rýchlosť prehrávania · Stiahnite si zvuk
+
+### Description
+
+Pozastaviť, pretočiť dozadu, zmeniť rýchlosť prehrávania a stiahnuť zvuk. Počas počúvania zostaňte v konverzácii.
+
+Rozloženie hráča: Ponechajte pôvodné umiestnenie, vyberte predvoľbu rohu alebo strany alebo ukotvte nad vstupom pre rozhovor. Ťahaním sa presúvajte, vymieňajte pruhy a zapamätajte si svoje rozloženie.
+Upozorniť, keď bude pripravený úplný zvuk.
+
+Otvorte ChatGPT a spustite Read Aloud po dokončení odpovede. Použite prehrávač na pozastavenie, vyhľadávanie, zmenu rýchlosti alebo sťahovanie.
+
+Keď je priestor obmedzený, nad oknom so správou sa zobrazia dve zaoblené ovládacie lišty.
+
+Zvuk stále funguje. Obnovte ovládacie prvky tu alebo pomocou skratky.
+Skryť iba nečinnú bublinu / Skryť bublinu a hráča
+
+Zobraziť/skryť plávajúce ovládacie prvky: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Prispôsobiť skratku.
+Tlačidlá prehrávania fungujú na ChatGPT mimo textových polí. Skratka viditeľnosti funguje aj pri písaní.
+
+Sťahovanie používa formát zvuku, ktorý poskytuje ChatGPT. Rozšírenie neprevádza zvuk.
+
+Pre stolné prehliadače Chrome, Edge a kompatibilné. Ak chcete nainštalovať, otvorte túto stránku v počítači.
+
+Rozšírenie nemá žiadnu analytiku ani telemetriu. Spracovanie zvuku a konverzácií zostáva vo vašom prehliadači. Synchronizácia prehliadača môže synchronizovať predvoľby.
+
+Vaša spätná väzba je voliteľná a súkromná, a to aj po odinštalovaní. Nevyžaduje sa žiadne meno ani e-mail. Neuvádzajte osobné údaje ani konverzácie.
+
+Nezávislý open-source projekt od Infoxica. Nie je pridružený alebo podporovaný OpenAI.
+
+Oficiálna webová stránka: https://chatgpt-audio-controls.infoxica.com/sk/
+Pomocník a riešenie problémov: https://chatgpt-audio-controls.infoxica.com/sk/#help
+Súkromie: https://chatgpt-audio-controls.infoxica.com/sk/#privacy
+
+## sl
+
+### Title
+
+ChatGPT Audio Controls — Berite na glas
+
+### Summary
+
+ChatGPT: Predvajaj zvok / Zaustavi zvok · Hitrost predvajanja · Prenos zvoka
+
+### Description
+
+Premor, previjanje nazaj, spreminjanje hitrosti predvajanja in prenos zvoka. Med poslušanjem ostanite v pogovoru.
+
+Postavitev igralca: Ohranite prvotno postavitev, izberite prednastavitev kota ali strani ali zasidrajte nad vnosom klepeta. Povlecite za premikanje, zamenjajte vrstice in si zapomnite svojo postavitev.
+Obvesti, ko je pripravljen celoten zvok.
+
+Odprite ChatGPT in zaženite Read Aloud ob končanem odgovoru. Uporabite predvajalnik za premor, iskanje, spreminjanje hitrosti ali prenos.
+
+Ko je prostor omejen, se nad poljem za sporočila pojavita dve zaobljeni kontrolni vrstici.
+
+Zvok še naprej deluje. Obnovite kontrole tukaj ali z bližnjico.
+Skrij samo nedejanski oblaček / Skrij oblaček in predvajalnik
+
+Pokaži/skrij plavajoče kontrolnike: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Prilagodite bližnjico.
+Tipke za predvajanje delujejo na ChatGPT zunaj besedilnih polj. Bližnjica vidnosti deluje tudi med tipkanjem.
+
+Prenosi uporabljajo zvočni format, ki ga ponuja ChatGPT. Razširitev ne pretvarja zvoka.
+
+Za namizne brskalnike Chrome, Edge in združljive brskalnike. Za namestitev odprite to stran v računalniku.
+
+Razširitev nima analitike ali telemetrije. Upravljanje zvoka in pogovorov ostane v vašem brskalniku. Sinhronizacija brskalnika lahko sinhronizira nastavitve.
+
+Vaše povratne informacije so neobvezne in zasebne, tudi po odstranitvi. Ime ali e-pošta nista potrebna. Ne vključujte osebnih podatkov ali pogovorov.
+
+Neodvisen odprtokodni projekt podjetja Infoxica. Ni povezan z OpenAI ali ga podpira.
+
+Uradna spletna stran: https://chatgpt-audio-controls.infoxica.com/sl/
+Pomoč in odpravljanje težav: https://chatgpt-audio-controls.infoxica.com/sl/#help
+Zasebnost: https://chatgpt-audio-controls.infoxica.com/sl/#privacy
+
+## sr
+
+### Title
+
+ChatGPT Audio Controls — Читај наглас
+
+### Summary
+
+ChatGPT: Пусти аудио / паузирај аудио · Брзина репродукције · Преузми аудио
+
+### Description
+
+Паузирајте, премотајте уназад, промените брзину репродукције и преузмите аудио. Останите у разговору док слушате.
+
+Распоред играча: Задржите оригинално постављање, изаберите унапред подешено угао или страну или причврстите изнад уноса за ћаскање. Превуците да бисте померили, замените шипке и запамтите свој распоред.
+Обавести када је комплетан звук спреман.
+
+Отворите ChatGPT и покрените Read Aloud по завршеном одговору. Користите плејер за паузирање, тражење, промену брзине или преузимање.
+
+Када је простор ограничен, изнад оквира за поруке појављују се две заобљене контролне траке.
+
+Аудио наставља да ради. Вратите контроле овде или помоћу пречице.
+Сакриј само мехур у стању мировања / Сакриј балон и играча
+
+Прикажи/сакриј плутајуће контроле: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Прилагодите пречицу.
+Тастери за репродукцију раде на ChatGPT ван текстуалних поља. Пречица за видљивост такође функционише док куцате.
+
+Преузимања користе аудио формат који обезбеђује ChatGPT. Екстензија не претвара аудио.
+
+За десктоп Chrome, Едге и компатибилне претраживаче. Отворите ову страницу на свом рачунару да бисте је инсталирали.
+
+Екстензија нема аналитику или телеметрију. Управљање звуком и разговором остаје у вашем претраживачу. Синхронизација прегледача може да синхронизује подешавања.
+
+Ваше повратне информације су опционе и приватне, чак и након деинсталирања. Није потребно име или имејл. Немојте укључивати личне податке или разговоре.
+
+Независни пројекат отвореног кода компаније Инфокица. Није повезан са ОпенАИ-ом нити га подржава.
+
+Званичан веб-сајт: https://chatgpt-audio-controls.infoxica.com/sr/
+Помоћ и решавање проблема: https://chatgpt-audio-controls.infoxica.com/sr/#help
+Приватност: https://chatgpt-audio-controls.infoxica.com/sr/#privacy
+
+## sw
+
+### Title
+
+ChatGPT Audio Controls — Soma kwa sauti
+
+### Summary
+
+ChatGPT: Cheza sauti / Sitisha sauti · Kasi ya uchezaji · Pakua sauti
+
+### Description
+
+Sitisha, rudisha nyuma, badilisha kasi ya kucheza na upakue sauti. Kaa kwenye mazungumzo huku ukisikiliza.
+
+Mpangilio wa mchezaji: Weka nafasi asili, chagua kona au uwekaji wa pembeni mapema, au kituo juu ya ingizo la gumzo. Buruta ili usogeze, ubadilishane pau na ukumbuke mpangilio wako.
+Arifu wakati sauti kamili iko tayari.
+
+Fungua ChatGPT na uanze Read Aloud kwa jibu lililokamilika. Tumia kichezaji kusitisha, kutafuta, kubadilisha kasi au kupakua.
+
+Wakati nafasi ni chache, pau mbili za udhibiti zenye mviringo huonekana juu ya kisanduku cha ujumbe.
+
+Sauti inaendelea kufanya kazi. Rejesha vidhibiti hapa au kwa njia ya mkato.
+Ficha kiputo kisicho na kitu pekee / Ficha kiputo na mchezaji
+
+Onyesha / ficha vidhibiti vinavyoelea: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Geuza kukufaa njia ya mkato.
+Vifunguo vya kucheza hufanya kazi kwenye ChatGPT nje ya sehemu za maandishi. Njia ya mkato ya mwonekano pia inafanya kazi wakati wa kuandika.
+
+Vipakuliwa hutumia umbizo la sauti lililotolewa na ChatGPT. Kiendelezi hakibadilishi sauti.
+
+Kwa kompyuta ya mezani Chrome, Edge na vivinjari vinavyooana. Fungua ukurasa huu kwenye kompyuta yako ili usakinishe.
+
+Kiendelezi hakina uchanganuzi au telemetry. Ushughulikiaji wa sauti na mazungumzo hukaa kwenye kivinjari chako. Usawazishaji wa kivinjari unaweza kulandanisha mapendeleo.
+
+Maoni yako ni ya hiari na ya faragha, hata baada ya kusanidua. Hakuna jina au barua pepe inahitajika. Tafadhali usijumuishe maelezo ya kibinafsi au mazungumzo.
+
+Mradi huru wa chanzo huria na Infoxica. Haihusiani na au kuidhinishwa na OpenAI.
+
+Tovuti rasmi: https://chatgpt-audio-controls.infoxica.com/sw/
+Usaidizi na utatuzi: https://chatgpt-audio-controls.infoxica.com/sw/#help
+Faragha: https://chatgpt-audio-controls.infoxica.com/sw/#privacy
+
+## es-419
+
+### Title
+
+ChatGPT Audio Controls — Leer respuesta
+
+### Summary
+
+ChatGPT: Reproducir / Pausar · Velocidad de reproducción · Descargar audio
+
+### Description
+
+Pausa, retrocede, cambia la velocidad y descarga audio. Sigue la conversación mientras escuchas.
+
+Diseño del reproductor: Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.
+Avisar cuando el audio completo esté listo.
+
+Abre ChatGPT e inicia Leer en voz alta en una respuesta terminada. Usa el reproductor para pausar, desplazarte, cambiar la velocidad o descargar.
+
+Si falta espacio, las dos cápsulas aparecen encima del cuadro de mensaje.
+
+El audio sigue funcionando. Recupera los controles aquí o con el atajo.
+Solo la burbuja inactiva / Burbuja y reproductor
+
+Mostrar / ocultar controles flotantes: Alt+Shift+Y (Windows/Linux) / Option ⌥+Shift ⇧+Y (macOS). Personalizar atajo.
+Las teclas de reproducción funcionan en ChatGPT fuera de los campos de texto. El atajo de visibilidad también funciona al escribir.
+
+Las descargas usan el formato de audio de ChatGPT. La extensión no convierte el audio.
+
+Para Chrome, Edge y navegadores compatibles de escritorio. Abre esta página en tu computadora para instalar.
+
+La extensión no tiene analítica ni telemetría. El audio y las conversaciones se procesan en tu navegador. La sincronización del navegador puede sincronizar las preferencias.
+
+Tus comentarios son opcionales y privados, incluso después de desinstalar. No necesitas dar tu nombre ni correo electrónico. No incluyas datos personales ni conversaciones.
+
+Un proyecto independiente de código abierto de Infoxica. Sin afiliación ni respaldo de OpenAI.
+
+Sitio web oficial: https://chatgpt-audio-controls.infoxica.com/es-419/
+Ayuda y solución de problemas: https://chatgpt-audio-controls.infoxica.com/es-419/#help
+Privacidad: https://chatgpt-audio-controls.infoxica.com/es-419/#privacy

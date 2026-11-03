@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ComponentPropsWithoutRef } from 'react';
-import * as Select from '@radix-ui/react-select';
 import * as Accordion from '@radix-ui/react-accordion';
 import * as Toggle from '@radix-ui/react-toggle';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { Slot } from '@radix-ui/react-slot';
-import { ArrowUpRight, BookOpen, Check, ChevronDown, ChevronUp, CircleHelp, Globe, Languages, LayoutDashboard, List, Menu, Minus, Moon, MousePointerClick, Play, Plus, Settings, ShieldCheck, Star, Sun } from 'lucide-react';
-import { consentKey, disableAnalytics, enableAnalytics, trackStoreClick } from './analytics';
+import { ArrowUpRight, BookOpen, Check, ChevronDown, CircleHelp, Globe, Languages, LayoutDashboard, List, Menu, Minus, Moon, MousePointerClick, Play, Plus, Settings, ShieldCheck, Star, Sun, X } from 'lucide-react';
+import { directionForLocale } from '../src/shared/i18n/direction';
+import { consentKey, disableAnalytics, enableAnalytics, trackStoreClick, trackSupportClick } from './analytics';
 
 export function Button({ asChild = false, variant = 'outline', className = '', ...props }: ComponentPropsWithoutRef<'button'> & {
   asChild?: boolean;
@@ -20,6 +20,7 @@ export interface HeaderControlsProps {
   locale: string;
   languageLabel: string;
   themeLabel: string;
+  closeLabel: string;
   options: { code: string; name: string; url: string }[];
 }
 
@@ -58,9 +59,25 @@ export function SiteNavigation({ label, groups }: SiteNavigationProps) {
   </div>;
 }
 
-export function HeaderControls({ locale, languageLabel, themeLabel, options }: HeaderControlsProps) {
+export function HeaderControls({ locale, languageLabel, themeLabel, closeLabel, options }: HeaderControlsProps) {
   const [light, setLight] = useState(false);
   const themeKey = 'cgpt-audio-website-theme';
+  const dialog = useRef<HTMLDialogElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const [languagesOpen, setLanguagesOpen] = useState(false);
+  useEffect(() => {
+    if (!languagesOpen || !dialog.current) return;
+    const modal = dialog.current, previousOverflow = document.documentElement.style.overflow;
+    modal.showModal(); document.documentElement.style.overflow = 'hidden';
+    const desktop = matchMedia('(min-width:1001px)');
+    const closeOnDesktop = () => { if (desktop.matches) setLanguagesOpen(false); };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => {
+      desktop.removeEventListener('change', closeOnDesktop);
+      modal.close(); document.documentElement.style.overflow = previousOverflow;
+      if (!desktop.matches) trigger.current?.focus();
+    };
+  }, [languagesOpen]);
   useEffect(() => {
     let savedLight = false;
     try { savedLight = localStorage.getItem(themeKey) === 'light'; } catch { /* Storage can be disabled. */ }
@@ -85,28 +102,23 @@ export function HeaderControls({ locale, languageLabel, themeLabel, options }: H
       <div className="mega-position"><NavigationMenu.Viewport className="mega-viewport language-mega-viewport" /></div>
     </NavigationMenu.Root>
     <div className="mobile-languages">
-    <Select.Root value={locale} onValueChange={code => {
-      const option = options.find(item => item.code === code);
-      if (option) location.assign(option.url);
-    }}>
-      <Select.Trigger id="locale-mobile" className="language-picker" aria-label={`${languageLabel}: ${options.find(item => item.code === locale)?.name || locale}`} title={languageLabel}>
+      <button ref={trigger} id="locale-mobile" className="language-picker" aria-haspopup="dialog" aria-expanded={languagesOpen} aria-label={`${languageLabel}: ${options.find(item => item.code === locale)?.name || locale}`} onClick={() => setLanguagesOpen(true)}>
         <Languages size={20} strokeWidth={1.6} aria-hidden="true" />
-        <span className="sr-only"><Select.Value>{options.find(item => item.code === locale)?.name}</Select.Value></span>
-        <Select.Icon asChild><ChevronDown className="language-chevron" size={14} aria-hidden="true" /></Select.Icon>
-      </Select.Trigger>
-      <Select.Portal>
-        <Select.Content className="language-menu" position="popper" align="end" sideOffset={8} collisionPadding={12}>
-          <Select.ScrollUpButton className="language-scroll"><ChevronUp size={16} aria-hidden="true" /></Select.ScrollUpButton>
-          <Select.Viewport className="language-options">
-            {options.map(option => <Select.Item className="language-option" key={option.code} value={option.code} textValue={option.name}>
-              <Select.ItemText><span lang={option.code}>{option.name}</span></Select.ItemText>
-              <Select.ItemIndicator><Check size={16} aria-hidden="true" /></Select.ItemIndicator>
-            </Select.Item>)}
-          </Select.Viewport>
-          <Select.ScrollDownButton className="language-scroll"><ChevronDown size={16} aria-hidden="true" /></Select.ScrollDownButton>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+      </button>
+      <dialog ref={dialog} dir={directionForLocale(locale)} className="language-dialog" aria-labelledby="language-dialog-title" onKeyDown={event => {
+        if (event.key !== 'Tab') return;
+        const focusable = event.currentTarget.querySelectorAll<HTMLElement>('button,a[href]');
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }} onCancel={event => { event.preventDefault(); setLanguagesOpen(false); }}>
+        <div className="language-dialog-header"><h2 id="language-dialog-title">{languageLabel}</h2><button autoFocus type="button" aria-label={closeLabel} onClick={() => setLanguagesOpen(false)}><X size={24} aria-hidden="true" /></button></div>
+        <ul className="language-grid">{options.map(option => <li key={option.code}>
+          <a href={option.url} lang={option.code} className="language-grid-link" aria-current={option.code === locale ? 'page' : undefined}>
+            <span>{option.name}</span>{option.code === locale && <Check size={16} aria-hidden="true" />}
+          </a>
+        </li>)}</ul>
+      </dialog>
     </div>
     <Toggle.Root asChild pressed={light} onPressedChange={next => {
       setLight(next);
@@ -155,9 +167,11 @@ export function ConsentBanner({ title, body, accept, decline }: ConsentBannerPro
     const show = () => { focusOnOpen.current = true; setOpen(true); };
     preferences?.addEventListener('click', show);
     document.addEventListener('click', trackStoreClick);
+    document.addEventListener('click', trackSupportClick);
     return () => {
       preferences?.removeEventListener('click', show);
       document.removeEventListener('click', trackStoreClick);
+      document.removeEventListener('click', trackSupportClick);
     };
   }, []);
   useEffect(() => {

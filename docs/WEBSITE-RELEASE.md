@@ -9,8 +9,8 @@ is separate from a successful build or staging check.
 
 Run `bun run build:site`, `bun run prepare:web-assets`, and `bun run build:feedback`.
 Run the HTTP, browser, feedback, locale and release checks before promotion.
-The public build contains 165 localized pages (33 languages, five routes), with
-34 language alternatives including x-default for each sitemap URL.
+The public build contains 335 localized pages (67 languages, five routes), with
+68 language alternatives including x-default for each sitemap URL.
 
 `site-dist/` is the production asset source. `build/site-staging/` adds noindex
 headers and disallows crawling. `build/website-snapshot/` is a copy of the current

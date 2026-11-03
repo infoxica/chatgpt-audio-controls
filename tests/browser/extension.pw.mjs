@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 
-const localizationTargets=['en','pt-BR','ja','es','de','vi','fr','hi','zh-CN','zh-TW','ru','pl','tr','ko','fa','ar','it','sv','ro'];
+const localizationTargets=Object.keys(JSON.parse(await fs.readFile('site/navigation-copy.json','utf8')));
 // Read the TypeScript/JSON catalogs with the same runtime as the build.
 const localized=JSON.parse(execFileSync('bun',['-e',`
   import { getTranslations } from './src/shared/i18n/core';
@@ -39,6 +39,27 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.addInitScript(()=>{window.fixtureAudios=[];const Original=window.Audio;window.Audio=function(...args){const audio=new Original(...args);window.fixtureAudios.push(audio);return audio;};});
     await page.goto('https://chatgpt.com/');await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();return page;
   }
+  test('transport order and nested accent changes propagate without changing appearance',async()=>{
+    const page=await open(1512);await page.locator('#cgpt-ra-floating-toggle').click();
+    expect(await page.locator('.cgpt-ra-transport-row > button').evaluateAll(els=>els.map(e=>e.classList.contains('cgpt-ra-play')?'play':e.classList.contains('cgpt-ra-back')?'back':'next'))).toEqual(['play','back','next']);
+    const appearance=await page.locator('html').getAttribute('class');
+    let dashboard;
+    if(distribution==='extension'){dashboard=await context.newPage();await dashboard.goto(`chrome-extension://${extensionId}/src/options/index.html`);}
+    for(const [name,color,text] of [['green','#53b559','#ffffff'],['purple','#8952ee','#ffffff'],['orange','#ee7c37','#ffffff'],['pink','#f077af','#ffffff'],['yellow','#f6c543','#000000'],['black','#000000','#ffffff'],['blue','#3a83f7','#ffffff'],['custom','#234567','#ffffff'],['custom','#345678','#ffffff'],['white','#ffffff','#000000']]){
+      await page.evaluate(({color,text})=>{
+        let owner=document.querySelector('#theme-owner');if(!owner){owner=document.createElement('section');owner.id='theme-owner';const form=document.querySelector('form');form.before(owner);owner.append(form);const irrelevant=document.createElement('div');irrelevant.dataset.chatTheme='pink';document.body.prepend(irrelevant);}
+        owner.style.setProperty('--color-background-accent-action',color);owner.style.setProperty('--color-text-accent-action',text);
+      },{color,text});
+      await expect.poll(()=>page.locator('.cgpt-ra-play').evaluate(e=>getComputedStyle(e).getPropertyValue('--cgpt-ra-accent').trim())).toBe(color);
+      if(dashboard){await expect.poll(()=>dashboard.locator('html').evaluate(e=>e.style.getPropertyValue('--accent'))).toBe(color);await expect.poll(()=>dashboard.locator('html').evaluate(e=>e.style.getPropertyValue('--accent-foreground'))).toBe(text);}
+      else await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('cgpt-ra-theme-cache')).accent)).toBe(color);
+    }
+    await page.evaluate(()=>{const old=document.querySelector('#theme-owner'),next=document.createElement('section');next.id='theme-owner';next.dataset.chatTheme='green';old.replaceWith(next);next.append(old.querySelector('form'));});
+    await expect.poll(()=>page.locator('.cgpt-ra-play').evaluate(e=>getComputedStyle(e).getPropertyValue('--cgpt-ra-accent').trim())).toBe('#53b559');
+    expect(await page.locator('html').getAttribute('class')).toBe(appearance);
+    if(dashboard){const popup=await context.newPage();await popup.goto(`chrome-extension://${extensionId}/src/popup/index.html`);await expect.poll(()=>popup.locator('html').evaluate(e=>e.style.getPropertyValue('--accent'))).toBe('#53b559');await popup.close();await dashboard.close();}
+    await page.close();
+  });
   async function revealSecondary(page) {
     await expect(page.locator('#cgpt-ra-right')).toBeVisible();
     const more=page.locator('.cgpt-ra-more');
@@ -56,7 +77,14 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   async function storedLayout(page) {
     return distribution==='extension' ? worker.evaluate(key=>chrome.storage.local.get(key).then(data=>data[key]),layoutKey) : page.evaluate(key=>JSON.parse(localStorage.getItem(key)),layoutKey);
   }
+  let lastSettingsWrite = 0;
   async function setting(page, value) {
+    // Locale sweeps share a real extension: respect Chrome's 120 sync writes/minute.
+    if (distribution === 'extension') {
+      const delay = Math.max(0, 650 - (Date.now() - lastSettingsWrite));
+      if (delay) await new Promise(resolve => setTimeout(resolve, delay));
+      lastSettingsWrite = Date.now();
+    }
     if(distribution==='extension') await worker.evaluate(value=>chrome.storage.sync.set({'cgpt-ra-settings':value}),value);
     else await page.evaluate(value=>{localStorage.setItem('cgpt-ra-settings',JSON.stringify(value));window.postMessage({source:'chatgpt-audio-controls-settings-bridge',type:'CGPT_RA_SETTINGS_UPDATE',settings:value},'*');},value);
   }
@@ -107,7 +135,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     if(distribution==='extension') await worker.evaluate(()=>chrome.storage.sync.clear());
     const page=await open(1600); await layout(page);
     for(const language of localizationTargets) {
-      const {t,f,r,p}=localized[language], direction=['ar','fa'].includes(language)?'rtl':'ltr';
+      const {t,f,r,p}=localized[language], direction=['ar','fa','he','ur'].includes(language)?'rtl':'ltr';
       await setting(page,{language,notifyDownloadReady:true,tapSeekSeconds:5});
       await expect(page.locator('#cgpt-ra-left')).toHaveAttribute('lang',language);
       await expect(page.locator('#cgpt-ra-right')).toHaveAttribute('dir',direction);
@@ -130,7 +158,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await page.keyboard.press('Escape');
     }
     await page.reload();
-    await expect(page.locator('#cgpt-ra-right')).toHaveAttribute('lang','ro');
+    await expect(page.locator('#cgpt-ra-right')).toHaveAttribute('lang',localizationTargets.at(-1));
     await setting(page,{language:'en'}); await page.close();
   });
   if(distribution==='extension') test('requested locales render popup, onboarding, options, gestures and command help',async()=>{
@@ -138,7 +166,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await worker.evaluate(async()=>{await chrome.storage.sync.clear();await chrome.storage.local.clear();});
     const page=await context.newPage();
     for(const language of localizationTargets) {
-      const {t,r,p}=localized[language], direction=['ar','fa'].includes(language)?'rtl':'ltr';
+      const {t,r,p}=localized[language], direction=['ar','fa','he','ur'].includes(language)?'rtl':'ltr';
       await setting(page,{language});
       await page.setViewportSize({width:360,height:800});
       await page.goto(`chrome-extension://${extensionId}/src/popup/index.html`);
@@ -161,9 +189,9 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       expect(await page.locator('.kbd').first().evaluate(el=>getComputedStyle(el).direction)).toBe('ltr');
       expect(await page.locator('.kbd').first().evaluate(el=>getComputedStyle(el.parentElement).direction)).toBe('ltr');
       expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-      if(['ar','fa'].includes(language)) await page.screenshot({path:`build/localization-${language}-shortcuts.png`,fullPage:true});
+      if(['ar','fa','he','ur'].includes(language)) await page.screenshot({path:`build/localization-${language}-shortcuts.png`,fullPage:true});
     }
-    await page.reload();await expect(page.locator('html')).toHaveAttribute('lang','ro');
+    await page.reload();await expect(page.locator('html')).toHaveAttribute('lang',localizationTargets.at(-1));
     await setting(page,{language:'en'});await page.close();
   });
   test('Arabic and Persian recovery messages keep their own language and direction',async()=>{
@@ -215,6 +243,30 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await expect.poll(()=>page.evaluate(()=>document.getElementById('cgpt-ra-right').getBoundingClientRect().top)).toBeLessThan(30);
     await layout(page);await page.close();
   });
+  test('main drag reveals circles first and one exact destination with a compact inert preview',async()=>{
+    const page=await open(1512); await page.setViewportSize({width:1512,height:850});
+    await layout(page); await page.locator('#native-read').click();
+    await startDrag(page,'#cgpt-ra-floating-toggle'); await page.mouse.move(750,360);
+    await expect(page.locator('.cgpt-ra-drop-active')).toHaveCount(0);
+    await expect(page.locator('.cgpt-ra-target-detail:visible')).toHaveCount(0);
+    expect(await page.locator('.cgpt-ra-drop-marker:visible').count()).toBeGreaterThan(1);
+    const preview=page.locator('.cgpt-ra-drag-preview'); await expect(preview).toHaveAttribute('inert','');
+    await expect.poll(async()=>{const r=await preview.boundingBox();return r.width<=240.1&&r.height<=120.1;}).toBe(true);
+    const target=page.locator('.cgpt-ra-drop-target[data-preset="top-right"]');
+    const circle=await target.locator('[data-part="marker"]').boundingBox();
+    await page.mouse.move(circle.x+22,circle.y+22);
+    await expect(target).toHaveClass(/cgpt-ra-drop-active/);
+    await expect(page.locator('.cgpt-ra-drop-active')).toHaveCount(1);
+    expect(await target.locator('.cgpt-ra-target-detail:visible').count()).toBeGreaterThan(1);
+    await expect(page.locator('.cgpt-ra-drop-target:not(.cgpt-ra-drop-active) .cgpt-ra-target-detail:visible')).toHaveCount(0);
+    await page.screenshot({path:`build/browser-results/${distribution}-compact-drag-1512.png`});
+    await page.keyboard.press('Escape');await page.mouse.up();
+    await expect(preview).toHaveCount(0);await expect(page.locator('.cgpt-ra-drag-source')).toHaveCount(0);
+    expect((await storedLayout(page)).desktop.preset).toBe('original');
+    await page.emulateMedia({reducedMotion:'reduce'});await startDrag(page,'#cgpt-ra-floating-toggle');
+    expect(await page.locator('#cgpt-ra-drop-targets').evaluate(e=>e.getAnimations({subtree:true}).length)).toBe(0);
+    await page.keyboard.press('Escape');await page.mouse.up();await page.close();
+  });
   test('left layouts follow only the visible sidebar, including matching drag destinations',async()=>{
     const page=await open(2200);await page.setViewportSize({width:2200,height:1100});await page.locator('#native-read').click();
     await page.evaluate(()=>{
@@ -232,7 +284,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
         await expect.poll(leftEdge,{message:`${preset}, seekFirst=${seekFirst}, sidebar=${width}px, opacity=${opacity}`}).toBeCloseTo(expected,0);
         await startDrag(page,'#cgpt-ra-floating-toggle');
         const target=page.locator('.cgpt-ra-drop-target[data-preset="'+preset+'"]');
-        await expect(target.locator('[data-part="circle"]')).toBeVisible();
+        await expect(target.locator('[data-part="marker"]')).toBeAttached();
         expect(await target.locator('[data-part]').evaluateAll(els=>Math.min(...els.map(e=>e.getBoundingClientRect().left)))).toBeCloseTo(expected,0);
         await page.keyboard.press('Escape');await page.mouse.up();
         await expect(page.locator('#cgpt-ra-drop-targets')).toHaveCount(0);
@@ -320,9 +372,10 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   });
   test('magnetic capture shares preview geometry and pill drags expose only their destination',async()=>{
     const page=await open(1600);await page.setViewportSize({width:1600,height:1100});await layout(page);await page.locator('#native-read').click();
+    await page.emulateMedia({reducedMotion:'reduce'});
     await startDrag(page,'#cgpt-ra-floating-toggle');
     const target=page.locator('.cgpt-ra-drop-target[data-preset="top-right"]');
-    const hit=await target.locator('[data-part="circle"]').boundingBox();
+    const hit=await target.locator('[data-part="marker"]').boundingBox();
     await page.mouse.move(hit.x-25,hit.y+22);await expect(target).not.toHaveClass(/cgpt-ra-drop-active/);
     await page.mouse.move(hit.x-24,hit.y+22);await expect(target).toHaveClass(/cgpt-ra-drop-active/);
     const previews=await target.locator('[data-part]').evaluateAll(nodes=>Object.fromEntries(nodes.map(e=>{const r=e.getBoundingClientRect();return [e.dataset.part,{x:r.x,y:r.y,width:r.width,height:r.height}];})));
@@ -787,7 +840,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.emulateMedia({reducedMotion:'reduce'});
     const cdp=await context.newCDPSession(page);
     await page.locator('#native-read').click();
-    for(const [width,height] of [[1512,982],[1440,900],[1280,800],[1728,1117],[1920,1080],[768,800],[390,740],[360,740],[320,740]]) {
+    for(const [width,height] of [[1512,982],[1536,864],[1512,850],[1335,724],[1440,900],[1280,800],[1728,1117],[1920,1080],[768,800],[390,740],[360,740],[320,740]]) {
       await cdp.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:2,mobile:false});
       for(const seekFirst of [true,false]) {
         await layout(page,profile({seekFirst}),profile({preset:'composer',seekFirst}));

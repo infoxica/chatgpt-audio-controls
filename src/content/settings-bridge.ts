@@ -1,3 +1,4 @@
+import { ACCENT_CACHE_KEY, readAccentCache } from '../shared/accent';
 import { isLayout, readLayout, writeLayout, LAYOUT_KEY } from '../shared/layout';
 import { getSettings, saveSettings } from "../shared/storage";
 import { VISIBILITY_COMMAND, isPlayerCommand } from "../shared/shortcuts";
@@ -87,7 +88,8 @@ window.addEventListener("message", (event: MessageEvent) => {
     typeof event.data.theme.isDark === "boolean" &&
     typeof event.data.theme.updatedAt === "number"
   ) {
-    void chrome.storage.local.set({ "cgpt-ra-theme-cache": event.data.theme });
+    const theme = readAccentCache(event.data.theme);
+    if (theme) void chrome.storage.local.set({ [ACCENT_CACHE_KEY]: theme }).catch(() => {});
   }
 });
 
