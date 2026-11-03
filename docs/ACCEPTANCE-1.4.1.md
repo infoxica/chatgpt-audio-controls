@@ -277,3 +277,36 @@ The existing demo is a 23-second walkthrough of playback, speed, seeking,
 download, collapse and docking. Video/screenshots are 1920×1080 (16:9), captured
 in an isolated fictional conversation without personal chats, account details
 or microphone recording. This is acceptance metadata, not homepage/README copy.
+
+## Post-merge production acceptance — 2026-11-03
+
+This section supersedes earlier pending statuses above. PR #26 merged as
+`5416d0b`; its tree matches the green-CI candidate `0dd49af`. Both candidate
+CI 41610640161 and merged-develop CI 41638313445 passed. The browser suite has
+122 passes and one intentional skip.
+
+The owner explicitly confirmed the reloaded 1.4.1 candidate passed desktop
+Chrome, Edge and Tampermonkey playback, pause/resume, seeking and download.
+These three acceptance flags now reflect owner-reported evidence, not agent
+browser reloads. The owner also accepted the genuine 1.4.0 -> 1.4.1 merge as
+satisfying the version-bump rule despite its merge title.
+
+The merged website/feedback candidate was promoted after successful staging,
+merged CI, seven local HTTP tests and an exact-production dry run. Production
+Worker version is `b83cc576-8631-4145-a06c-e008ef4fcef4`; rollback remains
+`7f11f9b3-4a4b-41a4-ba64-5251022a0459`.
+
+Live Edge checks passed homepage rendering, all 67 language choices, image
+viewer open/close, FHD video playback (17s observed advancing, 1920×1080,
+readyState 4), Urdu RTL without horizontal overflow, the feedback bug-intent
+selection and 67 locale choices, database health (`ok: true`), API method
+rejection, crawler rules and sitemap structure (335 unique URLs, 68 alternatives
+each, all on the new hostname). The feedback form has nonce-bearing scripts
+and no analytics scripts. Existing production persistence acceptance is retained;
+no new feedback record was created. Scripted HTTP clients received Cloudflare
+403 responses; protections were not relaxed, and live browser checks succeeded.
+
+Public-only screenshot:
+`build/acceptance-1.4.1/production-languages-2026-11-03.jpg`.
+All acceptance flags are now true. Release tagging, store submission and public
+availability still require their respective workflow/provider evidence.
