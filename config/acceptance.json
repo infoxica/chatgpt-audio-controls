@@ -6,5 +6,5 @@
   "userscriptLive": false,
   "nativeMac": true,
   "websiteDeployment": false,
-  "edgeAndroidLive": false
+  "edgeAndroidLive": true
 }

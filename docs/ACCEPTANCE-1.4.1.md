@@ -7,6 +7,56 @@ The owner confirmed the requested real Mac checklist passed for candidate 1.4.1
 acceptance, not an automated macOS run. `nativeMac` is now true. Other gates
 remain unchanged until their current-candidate checks are completed.
 
+Real Edge Android acceptance is now complete for the current player build
+(2026-11-03, Samsung Galaxy S25 Ultra, Android 17, Edge 156.0.4314.43).
+The unpacked candidate was refreshed from `dist`; the store extension was
+temporarily disabled to isolate it. A temporary fictional conversation about
+Pip the gardening robot supplied the audio; no private conversation was captured.
+
+- Touch playback advanced to 3s, paused at 3s, resumed to 6s and sought to 16s.
+- Composer docking, collapse/expand and the volume popup passed. Portrait
+  411×729, landscape 855×329 and keyboard-reduced 411×413 CSS viewports had no
+  horizontal page overflow. The volume slider had no overflowing scroll area.
+- Edge's native save dialog completed a named AAC download and reported
+  **1 download completed**. The file exists on the phone and is 277,409 bytes.
+  Local `ffprobe` identified mono AAC at 24,000Hz and 37.920716s; decoding the
+  complete file with `ffmpeg -v error -f null` exited successfully without errors.
+  SHA-256: `2b74fe961be18ebb6b4af56462b5a802021e40ceabe917d78faf7f92754e8ecd`.
+- Evidence is local under `build/android-release-2026-11-03.json`,
+  `build/android-ui-2026-11-03.json` and `build/acceptance-1.4.1/`.
+  The phone's unpacked candidate remains enabled; restoring the previously
+  enabled store version was blocked by automatic approval review after the
+  browser security policy rejected access to Extensions pages. No alternate
+  restoration route was attempted. Store version 1.3.0 remains disabled.
+  A keyboard-dismissal harness action navigated back after the keyboard was
+  already closed; the temporary chat was recreated before testing download.
+  That navigation is not recorded as a product failure or a successful restore check.
+
+Staging was refreshed to Worker version
+`ea7cb0bd-6c4d-4c48-8e54-22a81f8b487c`. Homepage and image-viewer interaction
+passed in Edge. HTTP checks passed `/health`, private feedback, Japanese home,
+sitemap, image assets and noindex robots rules. Production remains unchanged.
+The installed-feedback URL preserved dark theme and preselected Report a bug
+without submitting. The staged 1920×1080 walkthrough played to its 22.88s end
+without a media error. The staging page capture is
+`build/acceptance-1.4.1/staging-website-2026-11-03.png`.
+
+CI run 41605652934 passed 121 browser scenarios with one intentional skip and
+one failure: the userscript hit-area assertion sampled an in-flight transform
+after a replacement animation started. The assertion now polls the same 44px
+minimum until settled; persistent undersizing still fails. Six repeated local
+extension/userscript checks passed. Full CI must pass
+on the updated commit before merging. The separate Edge listing preparation
+failure was fixed by using the 52 supported browser manifest locales.
+
+The first acceptance/test commit attempt timed out awaiting GPG key unlock.
+Signing was not disabled. The retry succeeded, and the test correction is
+committed as `6924469`. Publication validation
+with `RELEASE_TAG=v1.4.1` correctly continues to reject the open desktop,
+userscript and production deployment gates. A fresh full CI run is required
+after pushing this follow-up. Codex's last completed review covers
+the older `ef54d42` head. No newer automatic review was visible when checked.
+
 ## Navigation and accent revision — 2026-11-03
 
 This is the latest local evidence and supersedes the artifact hashes and test
