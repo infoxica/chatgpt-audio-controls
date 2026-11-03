@@ -301,7 +301,9 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       await expect.poll(()=>page.evaluate(()=>{const ids=['cgpt-ra-left','cgpt-ra-right','cgpt-ra-floating-toggle'];const rects=ids.map(id=>document.getElementById(id).getBoundingClientRect());return rects.every((r,i)=>r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&rects.every((s,j)=>i===j||r.right<=s.left||r.left>=s.right||r.bottom<=s.top||r.top>=s.bottom));})).toBe(true);
       await expect(page.locator('#cgpt-ra-right')).toHaveClass(preset==='left'||preset==='right'||preset.startsWith('top')&&seekFirst||preset.startsWith('bottom')&&!seekFirst?/cgpt-ra-vertical/:/^(?!.*cgpt-ra-vertical)/);
       await page.evaluate(()=>Promise.all(['cgpt-ra-left','cgpt-ra-right','cgpt-ra-floating-toggle'].flatMap(id=>document.getElementById(id).getAnimations().map(a=>a.finished.catch(()=>{})))));
-      const smallButtons=await page.locator('#cgpt-ra-right button:not(.cgpt-ra-speed-option):not(.cgpt-ra-popover *)').evaluateAll(nodes=>nodes.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {name:e.className,w:r.width,h:r.height};}).filter(r=>r.w<44||r.h<44));expect(smallButtons).toEqual([]);
+      // A resize/readiness update can replace the animation we just awaited.
+      // Check the settled hit areas, while still failing persistently undersized controls.
+      await expect.poll(()=>page.locator('#cgpt-ra-right button:not(.cgpt-ra-speed-option):not(.cgpt-ra-popover *)').evaluateAll(nodes=>nodes.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return {name:e.className,w:r.width,h:r.height};}).filter(r=>r.w<44||r.h<44)),{message:`44px controls after ${preset}, seekFirst=${seekFirst} settles`}).toEqual([]);
       await expect.poll(()=>page.locator('.cgpt-ra-seek-slider').evaluate(e=>{const r=e.getBoundingClientRect(),p=document.getElementById('cgpt-ra-left').getBoundingClientRect();return r.left>=p.left&&r.right<=p.right+1&&r.top>=p.top&&r.bottom<=p.bottom+1;})).toBe(true);
     }
     const saved=await storedLayout(page);
