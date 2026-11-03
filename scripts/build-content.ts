@@ -1,4 +1,4 @@
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 declare const Bun: any;
@@ -14,7 +14,7 @@ async function buildContentScript() {
     entrypoints: [resolve(__dirname, "../src/content/content.ts")],
     outdir: outDir,
     target: "browser",
-    define: { __USERSCRIPT__: "false" },
+    define: { __USERSCRIPT__: "false", __PLAYER_CSS__: JSON.stringify(readFileSync(resolve(__dirname, '../src/content/player.css'), 'utf8')) },
     naming: "content.js",
     minify: false,
   });

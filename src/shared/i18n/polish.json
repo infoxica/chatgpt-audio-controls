@@ -229,5 +229,243 @@
     "layoutDescription": "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
     "gestureReleaseLabel": "Når du slipper knappen",
     "seekPosition": "Avspillingsposisjon"
+  },
+  "am": {
+    "edit": "በአሳሽ ውስጥ ያርትዑ",
+    "editHint": "በአሳሹ አቋራጮች ገጽ ላይ {action} ን ያግኙ። አሳሹ ለግለሰብ ትዕዛዞች አገናኞችን አይደግፍም።",
+    "layoutDescription": "የመጀመሪያውን አቀማመጥ ያስቀምጡ፣ የማዕዘን ወይም የጎን ቅድመ ዝግጅት ይምረጡ ወይም ከቻት ግቤት በላይ መትከያ ያድርጉ። ለመንቀሳቀስ ይጎትቱ፣ አሞሌዎቹን ይቀይሩ እና አቀማመጥዎን ያስታውሱ።",
+    "gestureReleaseLabel": "አዝራሩን ይልቀቁ",
+    "seekPosition": "የመልሶ ማጫወት ቦታ"
+  },
+  "bg": {
+    "edit": "Редактиране в браузъра",
+    "editHint": "Намерете {action} на страницата с преки пътища на браузъра. Браузърът не поддържа връзки към отделни команди.",
+    "layoutDescription": "Запазете оригиналното разположение, изберете предварително зададен ъгъл или страна или закрепете над входа за чат. Плъзнете, за да се движите, разменете лентите и запомнете оформлението си.",
+    "gestureReleaseLabel": "Освободете бутона",
+    "seekPosition": "Позиция на възпроизвеждане"
+  },
+  "bs": {
+    "edit": "Uredi u pretraživaču",
+    "editHint": "Pronađite {action} na stranici sa prečicama pretraživača. Pretraživač ne podržava veze do pojedinačnih komandi.",
+    "layoutDescription": "Zadržite originalni položaj, odaberite ugao ili bočnu postavku ili pričvrstite iznad unosa za ćaskanje. Prevucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+    "gestureReleaseLabel": "Otpustite dugme",
+    "seekPosition": "Pozicija reprodukcije"
+  },
+  "da": {
+    "edit": "Rediger i browser",
+    "editHint": "Find {action} på siden med browsergenveje. Browseren understøtter ikke links til individuelle kommandoer.",
+    "layoutDescription": "Behold den originale placering, vælg en forudindstilling i hjørnet eller siden, eller sæt foran chatinputtet. Træk for at flytte, skift stregerne, og husk dit layout.",
+    "gestureReleaseLabel": "Slip knappen",
+    "seekPosition": "Afspilningsposition"
+  },
+  "et": {
+    "edit": "Redigeeri brauseris",
+    "editHint": "Leidke brauseri otseteede lehelt {action}. Brauser ei toeta linke üksikutele käskudele.",
+    "layoutDescription": "Säilitage algne paigutus, valige nurga või külje eelseade või dokkige vestlussisendi kohale. Lohistage liigutamiseks, ribade vahetamiseks ja paigutuse meeldejätmiseks.",
+    "gestureReleaseLabel": "Vabastage nupp",
+    "seekPosition": "Taasesituse asend"
+  },
+  "fil": {
+    "edit": "I-edit sa browser",
+    "editHint": "Hanapin ang {action} sa pahina ng mga shortcut sa browser. Hindi sinusuportahan ng browser ang mga link sa mga indibidwal na command.",
+    "layoutDescription": "Panatilihin ang orihinal na placement, pumili ng preset na sulok o gilid, o mag-dock sa itaas ng input ng chat. I-drag upang ilipat, palitan ang mga bar, at tandaan ang iyong layout.",
+    "gestureReleaseLabel": "Bitawan ang button",
+    "seekPosition": "Posisyon ng pag-playback"
+  },
+  "fi": {
+    "edit": "Muokkaa selaimessa",
+    "editHint": "Etsi {action} selaimen pikakuvakesivulta. Selain ei tue linkkejä yksittäisiin komentoihin.",
+    "layoutDescription": "Säilytä alkuperäinen sijoitus, valitse kulman tai sivun esiasetus tai kiinnitä chat-syötteen yläpuolelle. Siirrä vetämällä, vaihda palkkeja ja muista asettelusi.",
+    "gestureReleaseLabel": "Vapauta painike",
+    "seekPosition": "Toistopaikka"
+  },
+  "gu": {
+    "edit": "બ્રાઉઝરમાં ફેરફાર કરો",
+    "editHint": "બ્રાઉઝર શોર્ટકટ્સ પેજ પર {action} શોધો. બ્રાઉઝર વ્યક્તિગત આદેશોની લિંક્સને સપોર્ટ કરતું નથી.",
+    "layoutDescription": "મૂળ પ્લેસમેન્ટ રાખો, કોર્નર અથવા સાઇડ પ્રીસેટ પસંદ કરો અથવા ચેટ ઇનપુટની ઉપર ડોક કરો. ખસેડવા માટે ખેંચો, બારને સ્વેપ કરો અને તમારું લેઆઉટ યાદ રાખો.",
+    "gestureReleaseLabel": "બટન છોડો",
+    "seekPosition": "પ્લેબેક સ્થિતિ"
+  },
+  "hr": {
+    "edit": "Uredi u pregledniku",
+    "editHint": "Pronađite {action} na stranici s prečacima preglednika. Preglednik ne podržava poveznice na pojedinačne naredbe.",
+    "layoutDescription": "Zadržite izvorni položaj, odaberite unaprijed postavljen kut ili stranu ili usidrite iznad unosa za chat. Povucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+    "gestureReleaseLabel": "Otpustite gumb",
+    "seekPosition": "Položaj reprodukcije"
+  },
+  "hy": {
+    "edit": "Խմբագրել բրաուզերում",
+    "editHint": "Գտեք {action} դիտարկիչի դյուրանցումների էջում: Զննարկիչը չի աջակցում առանձին հրամանների հղումներ:",
+    "layoutDescription": "Պահպանեք բնօրինակ տեղադրումը, ընտրեք նախադրված անկյուն կամ կողային կամ ամրացրեք զրույցի մուտքագրման վերևում: Քաշեք՝ տեղափոխելու համար, փոխեք գծերը և հիշեք ձեր դասավորությունը:",
+    "gestureReleaseLabel": "Ազատեք կոճակը",
+    "seekPosition": "Նվագարկման դիրք"
+  },
+  "is": {
+    "edit": "Breyta í vafra",
+    "editHint": "Finndu {action} á flýtivísasíðu vafrans. Vafrinn styður ekki tengla á einstakar skipanir.",
+    "layoutDescription": "Haltu upprunalegu staðsetningunni, veldu horn- eða hliðarforstillingu, eða hafðu fyrir ofan spjallinntakið. Dragðu til að færa, skiptu um stikur og mundu skipulagið þitt.",
+    "gestureReleaseLabel": "Slepptu takkanum",
+    "seekPosition": "Spilunarstaða"
+  },
+  "ka": {
+    "edit": "რედაქტირება ბრაუზერში",
+    "editHint": "იპოვეთ {action} ბრაუზერის მალსახმობების გვერდზე. ბრაუზერს არ აქვს ინდივიდუალური ბრძანებების ბმულების მხარდაჭერა.",
+    "layoutDescription": "შეინახეთ თავდაპირველი განლაგება, აირჩიეთ კუთხე ან გვერდითი წინასწარ დაყენებული, ან დაამაგრეთ ჩატის შეყვანის ზემოთ. გადაიტანეთ გადასაადგილებლად, შეცვალეთ ზოლები და დაიმახსოვრეთ თქვენი განლაგება.",
+    "gestureReleaseLabel": "გაათავისუფლეთ ღილაკი",
+    "seekPosition": "დაკვრის პოზიცია"
+  },
+  "kk": {
+    "edit": "Браузерде өңдеу",
+    "editHint": "Браузер таңбашалары бетінен {action} табыңыз. Браузер жеке пәрмендерге сілтемелерді қолдамайды.",
+    "layoutDescription": "Бастапқы орынды сақтаңыз, бұрышты немесе бүйірлік алдын ала орнатуды таңдаңыз немесе чат кірісінің үстіне қондырыңыз. Жылжыту, жолақтарды ауыстыру және орналасуды есте сақтау үшін сүйреңіз.",
+    "gestureReleaseLabel": "Түймені босатыңыз",
+    "seekPosition": "Ойнату орны"
+  },
+  "kn": {
+    "edit": "ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಪಾದಿಸಿ",
+    "editHint": "ಬ್ರೌಸರ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳ ಪುಟದಲ್ಲಿ {action} ಅನ್ನು ಹುಡುಕಿ. ಬ್ರೌಸರ್ ಪ್ರತ್ಯೇಕ ಆಜ್ಞೆಗಳಿಗೆ ಲಿಂಕ್‌ಗಳನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.",
+    "layoutDescription": "ಮೂಲ ನಿಯೋಜನೆಯನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ, ಒಂದು ಮೂಲೆ ಅಥವಾ ಅಡ್ಡ ಪೂರ್ವನಿಗದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಚಾಟ್ ಇನ್‌ಪುಟ್‌ನ ಮೇಲೆ ಡಾಕ್ ಮಾಡಿ. ಸರಿಸಲು ಎಳೆಯಿರಿ, ಬಾರ್‌ಗಳನ್ನು ಸ್ವ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ವಿನ್ಯಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.",
+    "gestureReleaseLabel": "ಬಟನ್ ಅನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿ",
+    "seekPosition": "ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಥಾನ"
+  },
+  "lt": {
+    "edit": "Redaguoti naršyklėje",
+    "editHint": "Naršyklės nuorodų puslapyje raskite {action}. Naršyklė nepalaiko nuorodų į atskiras komandas.",
+    "layoutDescription": "Išsaugokite pradinę vietą, pasirinkite iš anksto nustatytą kampą ar šoną arba pritvirtinkite prie doko virš pokalbio įvesties. Vilkite, kad perkeltumėte, pakeiskite juostas ir prisiminkite savo išdėstymą.",
+    "gestureReleaseLabel": "Atleiskite mygtuką",
+    "seekPosition": "Atkūrimo padėtis"
+  },
+  "lv": {
+    "edit": "Rediģēt pārlūkprogrammā",
+    "editHint": "Pārlūkprogrammas īsceļu lapā atrodiet {action}. Pārlūkprogramma neatbalsta saites uz atsevišķām komandām.",
+    "layoutDescription": "Saglabājiet sākotnējo izvietojumu, izvēlieties stūra vai sānu sākotnējo iestatījumu vai piestipriniet dokstaciju virs tērzēšanas ievades. Velciet, lai pārvietotu, samainiet joslas un atcerieties savu izkārtojumu.",
+    "gestureReleaseLabel": "Atlaidiet pogu",
+    "seekPosition": "Atskaņošanas pozīcija"
+  },
+  "mk": {
+    "edit": "Уредете во прелистувачот",
+    "editHint": "Најдете {action} на страницата со кратенки на прелистувачот. Прелистувачот не поддржува врски до поединечни команди.",
+    "layoutDescription": "Чувајте ја оригиналната поставеност, изберете агол или странично претходно поставено или приклучете се над влезот за разговор. Повлечете за да се движите, заменете ги лентите и запомнете го вашиот распоред.",
+    "gestureReleaseLabel": "Ослободете го копчето",
+    "seekPosition": "Позиција за репродукција"
+  },
+  "ml": {
+    "edit": "ബ്രൗസറിൽ എഡിറ്റ് ചെയ്യുക",
+    "editHint": "ബ്രൗസർ കുറുക്കുവഴികൾ പേജിൽ {action} കണ്ടെത്തുക. വ്യക്തിഗത കമാൻഡുകളിലേക്കുള്ള ലിങ്കുകളെ ബ്രൗസർ പിന്തുണയ്ക്കുന്നില്ല.",
+    "layoutDescription": "യഥാർത്ഥ പ്ലേസ്‌മെൻ്റ് സൂക്ഷിക്കുക, ഒരു മൂലയോ സൈഡ് പ്രീസെറ്റോ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ചാറ്റ് ഇൻപുട്ടിന് മുകളിൽ ഡോക്ക് ചെയ്യുക. നീക്കാൻ വലിച്ചിടുക, ബാറുകൾ സ്വാപ്പ് ചെയ്യുക, നിങ്ങളുടെ ലേഔട്ട് ഓർമ്മിക്കുക.",
+    "gestureReleaseLabel": "ബട്ടൺ റിലീസ് ചെയ്യുക",
+    "seekPosition": "പ്ലേബാക്ക് സ്ഥാനം"
+  },
+  "mn": {
+    "edit": "Хөтөч дээр засварлах",
+    "editHint": "Хөтөчийн товчлолын хуудаснаас {action}-г олоорой. Хөтөч нь бие даасан командын холбоосыг дэмждэггүй.",
+    "layoutDescription": "Анхны байршлыг хадгалах, булан эсвэл хажуугийн урьдчилан тохируулгыг сонгох, эсвэл чатын оролтын дээгүүр залгах. Зөөж, бааруудыг сольж, байршлаа санахын тулд чирнэ үү.",
+    "gestureReleaseLabel": "Товчлуурыг суллана уу",
+    "seekPosition": "Тоглуулах байрлал"
+  },
+  "ms": {
+    "edit": "Edit dalam penyemak imbas",
+    "editHint": "Cari {action} pada halaman pintasan penyemak imbas. Penyemak imbas tidak menyokong pautan ke arahan individu.",
+    "layoutDescription": "Kekalkan peletakan asal, pilih sudut atau pratetap sisi atau dok di atas input sembang. Seret untuk mengalihkan, menukar bar dan ingat reka letak anda.",
+    "gestureReleaseLabel": "Lepaskan butang",
+    "seekPosition": "Kedudukan main balik"
+  },
+  "my": {
+    "edit": "ဘရောက်ဆာတွင်တည်းဖြတ်ပါ။",
+    "editHint": "ဘရောက်ဆာဖြတ်လမ်းများစာမျက်နှာရှိ {action} ကိုရှာပါ။ ဘရောက်ဆာသည် တစ်ဦးချင်းအမိန့်စာများသို့ လင့်ခ်များကို မပံ့ပိုးပါ။",
+    "layoutDescription": "မူရင်းနေရာချထားမှုကို ထားရှိပါ၊ ထောင့် သို့မဟုတ် ဘေးထွက်ကြိုတင်သတ်မှတ်မှုကို ရွေးချယ်ပါ၊ သို့မဟုတ် ချတ်ထည့်သွင်းမှု၏အထက်တွင် အထိုင်ချပါ။ ရွှေ့ရန် ဖိဆွဲပါ၊ ဘားများကို လဲလှယ်ပြီး သင့်အပြင်အဆင်ကို မှတ်သားပါ။",
+    "gestureReleaseLabel": "ခလုတ်ကို လွှတ်လိုက်ပါ။",
+    "seekPosition": "ပြန်ဖွင့်သည့်အနေအထား"
+  },
+  "nl": {
+    "edit": "Bewerken in browser",
+    "editHint": "Zoek {action} op de pagina met browsersnelkoppelingen. De browser ondersteunt geen koppelingen naar afzonderlijke opdrachten.",
+    "layoutDescription": "Behoud de oorspronkelijke plaatsing, kies een voorinstelling voor een hoek of zijkant, of plaats deze boven de chatinvoer. Sleep om te verplaatsen, verwissel de balken en onthoud uw lay-out.",
+    "gestureReleaseLabel": "Laat de knop los",
+    "seekPosition": "Afspeelpositie"
+  },
+  "pa": {
+    "edit": "ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਸੰਪਾਦਿਤ ਕਰੋ",
+    "editHint": "ਬ੍ਰਾਊਜ਼ਰ ਸ਼ਾਰਟਕੱਟ ਪੰਨੇ 'ਤੇ {action} ਲੱਭੋ। ਬ੍ਰਾਊਜ਼ਰ ਵਿਅਕਤੀਗਤ ਕਮਾਂਡਾਂ ਦੇ ਲਿੰਕਾਂ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ।",
+    "layoutDescription": "ਅਸਲੀ ਪਲੇਸਮੈਂਟ ਰੱਖੋ, ਇੱਕ ਕੋਨਾ ਜਾਂ ਸਾਈਡ ਪ੍ਰੀਸੈਟ ਚੁਣੋ, ਜਾਂ ਚੈਟ ਇਨਪੁਟ ਦੇ ਉੱਪਰ ਡੌਕ ਕਰੋ। ਮੂਵ ਕਰਨ ਲਈ ਖਿੱਚੋ, ਬਾਰਾਂ ਨੂੰ ਸਵੈਪ ਕਰੋ, ਅਤੇ ਆਪਣਾ ਖਾਕਾ ਯਾਦ ਰੱਖੋ।",
+    "gestureReleaseLabel": "ਬਟਨ ਨੂੰ ਛੱਡੋ",
+    "seekPosition": "ਪਲੇਬੈਕ ਸਥਿਤੀ"
+  },
+  "sk": {
+    "edit": "Upraviť v prehliadači",
+    "editHint": "Nájdite {action} na stránke skratiek prehliadača. Prehliadač nepodporuje odkazy na jednotlivé príkazy.",
+    "layoutDescription": "Ponechajte pôvodné umiestnenie, vyberte predvoľbu rohu alebo strany alebo ukotvte nad vstupom pre rozhovor. Ťahaním sa presúvajte, vymieňajte pruhy a zapamätajte si svoje rozloženie.",
+    "gestureReleaseLabel": "Uvoľnite tlačidlo",
+    "seekPosition": "Pozícia prehrávania"
+  },
+  "sl": {
+    "edit": "Uredi v brskalniku",
+    "editHint": "Poiščite {action} na strani z bližnjicami brskalnika. Brskalnik ne podpira povezav do posameznih ukazov.",
+    "layoutDescription": "Ohranite prvotno postavitev, izberite prednastavitev kota ali strani ali zasidrajte nad vnosom klepeta. Povlecite za premikanje, zamenjajte vrstice in si zapomnite svojo postavitev.",
+    "gestureReleaseLabel": "Spustite gumb",
+    "seekPosition": "Položaj predvajanja"
+  },
+  "so": {
+    "edit": "Wax ka beddel browserka dhexdiisa",
+    "editHint": "Ka hel {action} bogga furaha browserka. Barowsarku ma taageerayo isku xirka amarada shaqsiga ah.",
+    "layoutDescription": "Hayso meelaynta asalka ah, dooro gees ama gees horay loo dhigay, ama ku xidh meel ka sarraysa gelinta sheekada. Jiid si aad u guurto, u beddesho baararka, oo xasuuso qaabkaaga.",
+    "gestureReleaseLabel": "Sii daa badhanka",
+    "seekPosition": "Booska dib u ciyaarista"
+  },
+  "sq": {
+    "edit": "Ndrysho në shfletuesin",
+    "editHint": "Gjeni {action} në faqen e shkurtoreve të shfletuesit. Shfletuesi nuk mbështet lidhje me komandat individuale.",
+    "layoutDescription": "Mbani vendosjen origjinale, zgjidhni një kënd ose anësor të paravendosur, ose vendoseni mbi hyrjen e bisedës. Zvarritni për të lëvizur, ndërroni shiritat dhe mbani mend paraqitjen tuaj.",
+    "gestureReleaseLabel": "Lëshojeni butonin",
+    "seekPosition": "Pozicioni i luajtjes"
+  },
+  "sr": {
+    "edit": "Уреди у претраживачу",
+    "editHint": "Пронађите {action} на страници са пречицама прегледача. Прегледач не подржава везе до појединачних команди.",
+    "layoutDescription": "Задржите оригинално постављање, изаберите унапред подешено угао или страну или причврстите изнад уноса за ћаскање. Превуците да бисте померили, замените шипке и запамтите свој распоред.",
+    "gestureReleaseLabel": "Отпустите дугме",
+    "seekPosition": "Положај репродукције"
+  },
+  "sw": {
+    "edit": "Hariri katika kivinjari",
+    "editHint": "Tafuta {action} kwenye ukurasa wa njia za mkato za kivinjari. Kivinjari hakitumii viungo kwa amri za kibinafsi.",
+    "layoutDescription": "Weka nafasi asili, chagua kona au uwekaji wa pembeni mapema, au kituo juu ya ingizo la gumzo. Buruta ili usogeze, ubadilishane pau na ukumbuke mpangilio wako.",
+    "gestureReleaseLabel": "Achilia kitufe",
+    "seekPosition": "Nafasi ya kucheza"
+  },
+  "ur": {
+    "edit": "براؤزر میں ترمیم کریں۔",
+    "editHint": "براؤزر کے شارٹ کٹ پیج پر {action} تلاش کریں۔ براؤزر انفرادی کمانڈز کے لنکس کو سپورٹ نہیں کرتا ہے۔",
+    "layoutDescription": "اصل جگہ کا تعین رکھیں، ایک کونے یا سائیڈ پیش سیٹ کا انتخاب کریں، یا چیٹ ان پٹ کے اوپر گودی کریں۔ منتقل کرنے کے لیے گھسیٹیں، سلاخوں کو تبدیل کریں، اور اپنا لے آؤٹ یاد رکھیں۔",
+    "gestureReleaseLabel": "بٹن جاری کریں۔",
+    "seekPosition": "پلے بیک پوزیشن"
+  },
+  "es-419": {
+    "edit": "Editar en el navegador",
+    "editHint": "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
+    "layoutDescription": "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
+    "gestureReleaseLabel": "Al soltar el botón",
+    "seekPosition": "Posición de reproducción"
+  },
+  "fr-CA": {
+    "edit": "Modifier dans le navigateur",
+    "editHint": "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
+    "layoutDescription": "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
+    "gestureReleaseLabel": "En relâchant le bouton",
+    "seekPosition": "Position de lecture"
+  },
+  "hi-Latn": {
+    "edit": "browser mein sampadit karen",
+    "editHint": "browser shortcut page par {action} dhundhen. browser alg-alg command ke link ka samarthan nahin karta hai.",
+    "layoutDescription": "mool placement rakhen, ek kone ya side preset chunen, ya chat input ke upar dock chunen. sthanantarit karne ke liye khinchen, baron ko swap karen aur apna layout yaad rakhen.",
+    "gestureReleaseLabel": "button chhoden",
+    "seekPosition": "playback sthiti"
+  },
+  "zh-HK": {
+    "edit": "在瀏覽器中編輯",
+    "editHint": "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
+    "layoutDescription": "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
+    "gestureReleaseLabel": "放開按鈕",
+    "seekPosition": "播放位置"
   }
 }

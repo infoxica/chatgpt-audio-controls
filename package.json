@@ -1,6 +1,6 @@
 {
   "name": "chatgpt-audio-controls",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Audio Controls for ChatGPT — Pause, Resume, Seeker, Speed, Volume, Download, and Shortcuts.",
   "type": "module",
   "scripts": {
@@ -16,9 +16,10 @@
     "version:check": "bun run scripts/check-versions.ts",
     "release:check": "bun run scripts/validate-release.ts",
     "typecheck": "tsc --noEmit",
-    "build:feedback": "bun scripts/build-feedback-copy.ts && wrangler deploy --config feedback/worker/wrangler.jsonc --dry-run --outdir ../../build/feedback-worker",
+    "build:feedback": "bun run build:site && bun run prepare:web-assets && bun scripts/build-feedback-copy.ts && wrangler deploy --config feedback/worker/wrangler.jsonc --dry-run --outdir build/feedback-worker",
     "typecheck:feedback": "bun run typegen:feedback && tsc -p feedback/worker/tsconfig.json",
-    "typegen:feedback": "wrangler types --config feedback/worker/wrangler.jsonc feedback/worker/worker-configuration.d.ts"
+    "typegen:feedback": "wrangler types --config feedback/worker/wrangler.jsonc feedback/worker/worker-configuration.d.ts",
+    "prepare:web-assets": "bun scripts/prepare-web-assets.ts"
   },
   "keywords": [
     "chatgpt",

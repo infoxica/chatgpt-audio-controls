@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Atskaņot audio / Pauzēt audio"
+  },
+  "command_seek_back": {
+    "message": "Meklējiet atpakaļ"
+  },
+  "command_seek_forward": {
+    "message": "Meklējiet uz priekšu"
+  },
+  "command_speed_decrease": {
+    "message": "Samaziniet ātrumu"
+  },
+  "command_speed_increase": {
+    "message": "Palieliniet ātrumu"
+  },
+  "command_speed_reset": {
+    "message": "Atiestatiet ātrumu uz 1×"
+  },
+  "command_volume_increase": {
+    "message": "Palieliniet audio skaļumu"
+  },
+  "command_volume_decrease": {
+    "message": "Samaziniet audio skaļumu"
+  },
+  "command_toggle_mute": {
+    "message": "Izslēgt/ieslēgt skaņu"
+  },
+  "command_download_audio": {
+    "message": "Lejupielādēt audio"
+  },
+  "command_toggle_collapse": {
+    "message": "Sakļaut atskaņotāju / Izvērsiet ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Atiestatīt izkārtojumu"
+  },
+  "command_open_help": {
+    "message": "Tastatūras īsinājumtaustiņi un žesti"
+  },
+  "command_open_settings": {
+    "message": "Atveriet informācijas paneli un iestatījumus"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Lasīt skaļi"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Atskaņot audio / Pauzēt audio · Atskaņošanas ātrums · Lejupielādēt audio"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Rādīt/slēpt peldošās vadīklas"
+  }
+}

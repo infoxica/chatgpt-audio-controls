@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "ઑડિયો ચલાવો / ઑડિયો થોભાવો"
+  },
+  "command_seek_back": {
+    "message": "પાછળની તરફ શોધો"
+  },
+  "command_seek_forward": {
+    "message": "આગળ શોધો"
+  },
+  "command_speed_decrease": {
+    "message": "ઝડપ ઘટાડો"
+  },
+  "command_speed_increase": {
+    "message": "ઝડપ વધારો"
+  },
+  "command_speed_reset": {
+    "message": "ઝડપને 1× પર રીસેટ કરો"
+  },
+  "command_volume_increase": {
+    "message": "ઓડિયો વોલ્યુમ વધારો"
+  },
+  "command_volume_decrease": {
+    "message": "ઓડિયો વોલ્યુમ ઘટાડો"
+  },
+  "command_toggle_mute": {
+    "message": "મ્યૂટ/અનમ્યૂટ કરો"
+  },
+  "command_download_audio": {
+    "message": "ઓડિયો ડાઉનલોડ કરો"
+  },
+  "command_toggle_collapse": {
+    "message": "પ્લેયરને સંકુચિત કરો / ChatGPT Audio Controls વિસ્તૃત કરો"
+  },
+  "command_reset_layout": {
+    "message": "લેઆઉટ રીસેટ કરો"
+  },
+  "command_open_help": {
+    "message": "કીબોર્ડ શોર્ટકટ્સ અને હાવભાવ"
+  },
+  "command_open_settings": {
+    "message": "ડેશબોર્ડ અને સેટિંગ્સ ખોલો"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — મોટેથી વાંચો"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: ઑડિયો ચલાવો / ઑડિયો થોભાવો · પ્લેબેક ઝડપ · ઓડિયો ડાઉનલોડ કરો"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "તરતા નિયંત્રણો બતાવો / છુપાવો"
+  }
+}

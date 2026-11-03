@@ -1,4 +1,5 @@
 import { resolveLanguage } from './core';
+import chatgptDonations from './chatgpt-donations.json';
 // Shared by the static website, React surfaces, and standalone player.
 const keys = ['title', 'value', 'costs', 'optional', 'privacy', 'once', 'donate', 'later', 'never', 'reminders'] as const;
 export type DonationCopy = Record<typeof keys[number], string>;
@@ -272,3 +273,4 @@ export function donationCopy(language?: string): DonationCopy {
   const values = donationCatalogs[resolveLanguage(language)] || donationCatalogs.en;
   return Object.fromEntries(keys.map((key, index) => [key, values[index]])) as DonationCopy;
 }
+Object.assign(donationCatalogs, chatgptDonations);

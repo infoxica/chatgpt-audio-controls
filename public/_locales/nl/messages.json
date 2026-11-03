@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Audio afspelen / Audio pauzeren"
+  },
+  "command_seek_back": {
+    "message": "Zoek achteruit"
+  },
+  "command_seek_forward": {
+    "message": "Zoek vooruit"
+  },
+  "command_speed_decrease": {
+    "message": "Snelheid verlagen"
+  },
+  "command_speed_increase": {
+    "message": "Snelheid verhogen"
+  },
+  "command_speed_reset": {
+    "message": "Snelheid resetten naar 1×"
+  },
+  "command_volume_increase": {
+    "message": "Verhoog het audiovolume"
+  },
+  "command_volume_decrease": {
+    "message": "Verlaag het audiovolume"
+  },
+  "command_toggle_mute": {
+    "message": "Dempen/dempen opheffen"
+  },
+  "command_download_audio": {
+    "message": "Audio downloaden"
+  },
+  "command_toggle_collapse": {
+    "message": "Speler samenvouwen / Vouw ChatGPT Audio Controls uit"
+  },
+  "command_reset_layout": {
+    "message": "Lay-out opnieuw instellen"
+  },
+  "command_open_help": {
+    "message": "Sneltoetsen en gebaren"
+  },
+  "command_open_settings": {
+    "message": "Open Dashboard en instellingen"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Lees hardop"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Audio afspelen / Audio pauzeren · Afspeelsnelheid · Audio downloaden"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Zwevende besturingselementen tonen/verbergen"
+  }
+}

@@ -1,7 +1,8 @@
-import { Heart, MessageSquare, Bug, Star } from 'lucide-react';
+import { Heart, MessageSquare, Bug, Star, Coffee } from 'lucide-react';
+import { coffeeCopy } from './i18n/coffee';
 import { useEffect, useState } from 'react';
 import { donationCopy } from './i18n/donations';
-import { SPONSOR_AMOUNTS, sponsorURL, REVIEW_URLS } from './support';
+import { SPONSOR_AMOUNTS, sponsorURL, coffeeURL, REVIEW_URLS } from './support';
 import { engagementRequest, watchEngagement } from './engagement-client';
 import { getReleaseCopy } from './i18n/release-copy';
 import type { ThemePreference } from './ThemeSelect';
@@ -35,6 +36,8 @@ export function SupportCard({ language, theme, surface = 'dashboard' }: { langua
     <div className="support-panel-actions">
     <p className="donation-caption">{d.once}</p>
     <div className="donation-amounts">{SPONSOR_AMOUNTS.map(amount => <a key={amount} href={sponsorURL(amount)} target="_blank" rel="noreferrer" onClick={() => opened('donation')} aria-label={`${d.donate} · US$${amount} · GitHub Sponsors`}><Heart size={15} aria-hidden="true" /><bdi>US${amount}</bdi></a>)}</div>
+    <div className="coffee-support"><p><Coffee size={18} aria-hidden="true" />{coffeeCopy(language)} · PayPal</p>
+    <div className="donation-amounts">{SPONSOR_AMOUNTS.map(amount => <a key={amount} href={coffeeURL(amount)} target="_blank" rel="noreferrer" onClick={() => opened('donation')} aria-label={`${coffeeCopy(language)} · US$${amount} · PayPal`}><Coffee size={15} aria-hidden="true" /><bdi>US${amount}</bdi></a>)}</div></div>
    </div>
    </div>
    <div className="review-section">

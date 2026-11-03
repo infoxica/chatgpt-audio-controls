@@ -1,3 +1,4 @@
+import { useChatGPTAccent } from '../shared/useChatGPTAccent';
 import { useTheme } from '../shared/ThemeSelect';
 import { SupportCard } from "../shared/SupportCard";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
@@ -16,6 +17,7 @@ export const App: React.FC = () => {
   const [section, setSection] = useState<DashboardSection>("settings");
   const [settings, setSettings] = useState<ExtensionSettings>(DEFAULT_SETTINGS);
   useTheme(settings.theme);
+  useChatGPTAccent();
   const { t } = useTranslation(settings.language);
 
   useEffect(() => subscribeSettings(setSettings), []);
@@ -25,36 +27,6 @@ export const App: React.FC = () => {
       setSettings(loaded);
     });
 
-    try {
-      const rawTheme = localStorage.getItem("cgpt-ra-theme-cache");
-      if (rawTheme) {
-        const parsed = JSON.parse(rawTheme);
-        if (parsed.chatTheme) {
-          document.documentElement.setAttribute("data-chat-theme", parsed.chatTheme);
-        }
-      }
-      if (typeof chrome !== "undefined" && chrome.storage?.local) {
-        chrome.storage.local.get(["cgpt-ra-theme-cache"], (res) => {
-          if (res?.["cgpt-ra-theme-cache"]?.chatTheme) {
-            document.documentElement.setAttribute("data-chat-theme", res["cgpt-ra-theme-cache"].chatTheme);
-          }
-        });
-
-        const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-          if (changes["cgpt-ra-theme-cache"]?.newValue?.chatTheme) {
-            document.documentElement.setAttribute(
-              "data-chat-theme",
-              changes["cgpt-ra-theme-cache"].newValue.chatTheme
-            );
-          }
-        };
-
-        chrome.storage.onChanged.addListener(handleStorageChange);
-        return () => {
-          chrome.storage.onChanged.removeListener(handleStorageChange);
-        };
-      }
-    } catch (_) {}
   }, []);
 
   const [saveError, setSaveError] = useState(false);

@@ -1,6 +1,6 @@
 import { ExtensionSettings, ShortcutItem } from "./types";
 
-export const EXTENSION_VERSION = "1.4.0";
+export const EXTENSION_VERSION = "1.4.1";
 
 export const SPEED_PRESETS = [0.5, 0.75, 1, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 
@@ -51,6 +51,7 @@ export function orderLanguages(languages: LanguageOption[]): LanguageOption[] {
   return [...languages].sort((a, b) => a.code === 'auto' ? -1 : b.code === 'auto' ? 1 : a.label.localeCompare(b.label, 'en'));
 }
 export const SUPPORTED_LANGUAGES: LanguageOption[] = orderLanguages([
+  ...additionalLanguages,
   { code: "auto", label: "Auto Detect", nativeName: "Auto (Browser Default)" },
   { code: 'pl', label: 'Polish', nativeName: 'Polski' },
   { code: 'hu', label: 'Hungarian', nativeName: 'Magyar' },
@@ -125,3 +126,4 @@ export const SHORTCUTS: ShortcutItem[] = [
     category: "speed",
   },
 ];
+import { additionalLanguages } from './locale-registry';

@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Toista ääni / Keskeytä ääni"
+  },
+  "command_seek_back": {
+    "message": "Etsi taaksepäin"
+  },
+  "command_seek_forward": {
+    "message": "Etsi eteenpäin"
+  },
+  "command_speed_decrease": {
+    "message": "Pienennä nopeutta"
+  },
+  "command_speed_increase": {
+    "message": "Lisää nopeutta"
+  },
+  "command_speed_reset": {
+    "message": "Palauta nopeus arvoon 1×"
+  },
+  "command_volume_increase": {
+    "message": "Lisää äänenvoimakkuutta"
+  },
+  "command_volume_decrease": {
+    "message": "Vähennä äänenvoimakkuutta"
+  },
+  "command_toggle_mute": {
+    "message": "Mykistä / poista mykistys"
+  },
+  "command_download_audio": {
+    "message": "Lataa ääni"
+  },
+  "command_toggle_collapse": {
+    "message": "Kutista soitin / Laajenna ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Palauta asettelu"
+  },
+  "command_open_help": {
+    "message": "Pikanäppäimet ja eleet"
+  },
+  "command_open_settings": {
+    "message": "Avaa Dashboard & Settings"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Lue ääneen"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Toista ääni / Keskeytä ääni · Toistonopeus · Lataa ääni"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Näytä/piilota kelluvat säätimet"
+  }
+}

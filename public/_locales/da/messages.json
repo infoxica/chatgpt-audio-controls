@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Afspil lyd / Sæt lyd på pause"
+  },
+  "command_seek_back": {
+    "message": "Søg baglæns"
+  },
+  "command_seek_forward": {
+    "message": "Søg frem"
+  },
+  "command_speed_decrease": {
+    "message": "Sænk hastigheden"
+  },
+  "command_speed_increase": {
+    "message": "Øg hastigheden"
+  },
+  "command_speed_reset": {
+    "message": "Nulstil hastigheden til 1×"
+  },
+  "command_volume_increase": {
+    "message": "Øg lydstyrken"
+  },
+  "command_volume_decrease": {
+    "message": "Sænk lydstyrken"
+  },
+  "command_toggle_mute": {
+    "message": "Slå lyden fra/til"
+  },
+  "command_download_audio": {
+    "message": "Download lyd"
+  },
+  "command_toggle_collapse": {
+    "message": "Skjul afspiller / Udvid ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Nulstil layout"
+  },
+  "command_open_help": {
+    "message": "Tastaturgenveje og bevægelser"
+  },
+  "command_open_settings": {
+    "message": "Åbn Dashboard & Settings"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Læs højt"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Afspil lyd / Sæt lyd på pause · Afspilningshastighed · Download lyd"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Vis/skjul flydende kontroller"
+  }
+}

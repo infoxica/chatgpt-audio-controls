@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "ಆಡಿಯೊವನ್ನು ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ"
+  },
+  "command_seek_back": {
+    "message": "ಹಿಂದಕ್ಕೆ ಹುಡುಕು"
+  },
+  "command_seek_forward": {
+    "message": "ಸೀಕ್ ಫಾರ್ವರ್ಡ್"
+  },
+  "command_speed_decrease": {
+    "message": "ವೇಗವನ್ನು ಕಡಿಮೆ ಮಾಡಿ"
+  },
+  "command_speed_increase": {
+    "message": "ವೇಗವನ್ನು ಹೆಚ್ಚಿಸಿ"
+  },
+  "command_speed_reset": {
+    "message": "1× ಗೆ ವೇಗವನ್ನು ಮರುಹೊಂದಿಸಿ"
+  },
+  "command_volume_increase": {
+    "message": "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಹೆಚ್ಚಿಸಿ"
+  },
+  "command_volume_decrease": {
+    "message": "ಆಡಿಯೋ ವಾಲ್ಯೂಮ್ ಅನ್ನು ಕಡಿಮೆ ಮಾಡಿ"
+  },
+  "command_toggle_mute": {
+    "message": "ಮ್ಯೂಟ್ / ಅನ್‌ಮ್ಯೂಟ್"
+  },
+  "command_download_audio": {
+    "message": "ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ"
+  },
+  "command_toggle_collapse": {
+    "message": "ಪ್ಲೇಯರ್ ಅನ್ನು ಕುಗ್ಗಿಸಿ / ChatGPT Audio Controls ವಿಸ್ತರಿಸಿ"
+  },
+  "command_reset_layout": {
+    "message": "ಲೇಔಟ್ ಅನ್ನು ಮರುಹೊಂದಿಸಿ"
+  },
+  "command_open_help": {
+    "message": "ಕೀಬೋರ್ಡ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು ಮತ್ತು ಗೆಸ್ಚರ್‌ಗಳು"
+  },
+  "command_open_settings": {
+    "message": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — ಗಟ್ಟಿಯಾಗಿ ಓದಿ"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: ಆಡಿಯೊವನ್ನು ಪ್ಲೇ ಮಾಡಿ / ಆಡಿಯೊವನ್ನು ವಿರಾಮಗೊಳಿಸಿ · ಪ್ಲೇಬ್ಯಾಕ್ ವೇಗ · ಆಡಿಯೋ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "ತೇಲುವ ನಿಯಂತ್ರಣಗಳನ್ನು ತೋರಿಸಿ / ಮರೆಮಾಡಿ"
+  }
+}

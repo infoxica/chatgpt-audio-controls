@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "Пусти аудио / паузирај аудио"
+  },
+  "command_seek_back": {
+    "message": "Тражи уназад"
+  },
+  "command_seek_forward": {
+    "message": "Тражи напред"
+  },
+  "command_speed_decrease": {
+    "message": "Смањење брзине"
+  },
+  "command_speed_increase": {
+    "message": "Повећај брзину"
+  },
+  "command_speed_reset": {
+    "message": "Ресетујте брзину на 1×"
+  },
+  "command_volume_increase": {
+    "message": "Повећајте јачину звука"
+  },
+  "command_volume_decrease": {
+    "message": "Смањите јачину звука"
+  },
+  "command_toggle_mute": {
+    "message": "Искључи/укључи звук"
+  },
+  "command_download_audio": {
+    "message": "Преузми аудио"
+  },
+  "command_toggle_collapse": {
+    "message": "Цоллапс Плаиер / Прошири ChatGPT Audio Controls"
+  },
+  "command_reset_layout": {
+    "message": "Ресетуј распоред"
+  },
+  "command_open_help": {
+    "message": "Тастерске пречице и покрети"
+  },
+  "command_open_settings": {
+    "message": "Отворите контролну таблу и подешавања"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — Читај наглас"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: Пусти аудио / паузирај аудио · Брзина репродукције · Преузми аудио"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "Прикажи/сакриј плутајуће контроле"
+  }
+}

@@ -1,5 +1,6 @@
 import { expandedRelease } from './expanded-release';
 import audienceRelease from './audience-release.json';
+import chatgptRelease from './chatgpt-release.json';
 import { resolveLanguage } from './core';
 import translated from './release-locales.json';
 
@@ -85,7 +86,7 @@ const expanded = Object.fromEntries(Object.entries(expandedRelease).map(([code, 
   if (values.length !== keys.length || values.some(v => !v.trim())) throw new Error(`Incomplete release locale ${code}: ${values.length}/${keys.length}`);
   return [code, Object.fromEntries(keys.map((key, i) => [key, values[i]])) as ReleaseCopy];
 }));
-export const releaseLocales: Record<string, ReleaseCopy> = { en: releaseEnglish, ...translated, ...expanded, ...audienceRelease };
+export const releaseLocales: Record<string, ReleaseCopy> = { en: releaseEnglish, ...translated, ...expanded, ...audienceRelease, ...chatgptRelease };
 export function getReleaseCopy(language?: string): ReleaseCopy {
   return releaseLocales[resolveLanguage(language)] || releaseEnglish;
 }

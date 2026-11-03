@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 26 October 2026
+Last updated: 3 November 2026
 
 ChatGPT Audio Controls provides local playback controls for audio you choose to play with ChatGPT’s native Read Aloud button. It does not collect conversations, audio, browsing history, installation identifiers, or automatic diagnostics. The extension contains no analytics or remote executable code.
 
@@ -18,7 +18,7 @@ The extension keeps an aggregate listening-use count and review/support reminder
 
 You can turn off automatic requests with **Show review and support reminders**, dismiss each request permanently, or choose one later reminder. Resetting playback or layout preferences does not reset those choices. No conversation text, audio, chat addresses, browsing history, or individual listening-session history is stored for these reminders.
 
-Donation and review buttons open GitHub Sponsors or the relevant browser store only when you choose them. GitHub handles the payment and its own account/billing information; this extension does not process payments or learn whether you donated or submitted a review. Opening a link only retires the corresponding automatic request. Privacy protections and all features remain available regardless of contributions. These links add no extension telemetry or new website analytics events.
+Donation and review buttons open GitHub Sponsors, PayPal, or the relevant browser store only when you choose them. The selected payment provider handles its own account and billing information; this extension does not process payments or learn whether you donated or submitted a review. Opening either payment provider retires the same donation request. Privacy protections and all features remain available regardless of contributions. These links add no extension telemetry. Optional website click measurement is described below.
 
 ## Voluntary feedback
 
@@ -32,7 +32,7 @@ Older installations may visit a Google Apps Script transition page that links to
 
 ## Public website
 
-The public website remains on GitHub Pages. Google Analytics loads only after website consent, measures website visits and store-link clicks, and can be disabled with Analytics preferences. The extension and feedback form do not use Google Analytics.
+Google Analytics loads only after website consent, measures website visits and store-link clicks, and can be disabled with Analytics preferences. With that consent, website PayPal buttons also record a support-link click containing only the provider, predefined amount, currency, page locale, and predefined placement. These events do not identify payments or confirm contributions. PayPal links go directly to PayPal without tracking parameters or redirects. The extension and feedback form do not use Google Analytics.
 
 ## Contact and source
 

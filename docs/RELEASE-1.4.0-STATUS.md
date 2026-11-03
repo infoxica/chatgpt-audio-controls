@@ -1,5 +1,9 @@
 # v1.4.0 release candidate
 
+## Acceptance continuation — 2026-11-02
+
+[Current evidence and blockers](RELEASE-ACCEPTANCE-2026-11-02.md) supersede the historical deployment/validation status below. PR #24 is merged and the website was deployed. Two acceptance defects are corrected locally: website document direction and Escape dismissal/focus in wide player popovers. Version remains 1.4.0; public extension rollout is still blocked by incomplete final-platform acceptance and the repository's production-promotion requirements.
+
 ## Optional support and reminders — 2026-11-01
 
 Implemented localized GitHub Sponsors sections and private usage-based review/support requests in the extension and userscript. [Support acceptance notes](SUPPORT-ACCEPTANCE-1.4.0.md) record tests, verified one-time checkout amounts, screenshots and remaining live acceptance. The package and website are rebuilt locally at 1.4.0. Historical hashes below do not describe these updated artifacts; publication and acceptance flags remain unchanged.

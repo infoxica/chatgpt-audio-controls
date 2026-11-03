@@ -1,0 +1,56 @@
+{
+  "command_play_pause": {
+    "message": "ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക"
+  },
+  "command_seek_back": {
+    "message": "പിന്നോട്ട് നോക്കുക"
+  },
+  "command_seek_forward": {
+    "message": "മുന്നോട്ട് നോക്കുക"
+  },
+  "command_speed_decrease": {
+    "message": "വേഗത കുറയ്ക്കുക"
+  },
+  "command_speed_increase": {
+    "message": "വേഗത വർദ്ധിപ്പിക്കുക"
+  },
+  "command_speed_reset": {
+    "message": "1× ലേക്ക് വേഗത പുനഃസജ്ജമാക്കുക"
+  },
+  "command_volume_increase": {
+    "message": "ഓഡിയോ വോളിയം വർദ്ധിപ്പിക്കുക"
+  },
+  "command_volume_decrease": {
+    "message": "ഓഡിയോ വോളിയം കുറയ്ക്കുക"
+  },
+  "command_toggle_mute": {
+    "message": "നിശബ്ദമാക്കുക / നിശബ്ദമാക്കുക"
+  },
+  "command_download_audio": {
+    "message": "ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക"
+  },
+  "command_toggle_collapse": {
+    "message": "പ്ലെയർ ചുരുക്കുക / ChatGPT Audio Controls വികസിപ്പിക്കുക"
+  },
+  "command_reset_layout": {
+    "message": "ലേഔട്ട് പുനഃസജ്ജമാക്കുക"
+  },
+  "command_open_help": {
+    "message": "കീബോർഡ് കുറുക്കുവഴികളും ആംഗ്യങ്ങളും"
+  },
+  "command_open_settings": {
+    "message": "ഡാഷ്‌ബോർഡും ക്രമീകരണങ്ങളും തുറക്കുക"
+  },
+  "extensionName": {
+    "message": "ChatGPT Audio Controls — ഉറക്കെ വായിക്കുക"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT: ഓഡിയോ പ്ലേ ചെയ്യുക / ഓഡിയോ താൽക്കാലികമായി നിർത്തുക · പ്ലേബാക്ക് വേഗത · ഓഡിയോ ഡൗൺലോഡ് ചെയ്യുക"
+  },
+  "extensionActionTitle": {
+    "message": "ChatGPT Audio Controls"
+  },
+  "visibilityCommand": {
+    "message": "ഫ്ലോട്ടിംഗ് നിയന്ത്രണങ്ങൾ കാണിക്കുക / മറയ്ക്കുക"
+  }
+}

@@ -6,7 +6,8 @@ import { getReleaseCopy } from '../shared/i18n/release-copy';
 import { getTranslations, languageDirection, resolveLanguage } from '../shared/i18n/core';
 import { donationCopy } from '../shared/i18n/donations';
 import { supportCopy } from '../shared/i18n/support';
-import { SPONSOR_AMOUNTS, sponsorURL, REVIEW_URLS } from '../shared/support';
+import { SPONSOR_AMOUNTS, sponsorURL, coffeeURL, REVIEW_URLS } from '../shared/support';
+import { coffeeCopy } from '../shared/i18n/coffee';
 import { engagementRequest, watchEngagement } from '../shared/engagement-client';
 export async function openStandaloneSettings(settings: ExtensionSettings, changed: (settings: ExtensionSettings) => void): Promise<void> {
   document.getElementById('cgpt-ra-settings-dialog')?.remove();
@@ -24,6 +25,7 @@ export async function openStandaloneSettings(settings: ExtensionSettings, change
     a.onclick = () => { void engagementRequest({ type: 'opened', kind }).catch(showError); }; links.append(a);
   };
   for (const amount of SPONSOR_AMOUNTS) link(sponsorURL(amount), `US$${amount}`, 'donation');
+  for (const amount of SPONSOR_AMOUNTS) link(coffeeURL(amount), `${coffeeCopy(settings.language)} · PayPal · US$${amount}`, 'donation');
   for (const store of ['chrome', 'edge'] as const) link(REVIEW_URLS[store], `${support[3]} · ${store === 'chrome' ? 'Chrome' : 'Edge'}`, 'review');
   section.append(links);
   const reminderRow = document.createElement('label'), reminder = document.createElement('input'); reminder.type = 'checkbox'; reminder.disabled = true; reminderRow.textContent = d.reminders; reminderRow.append(reminder); section.append(reminderRow);

@@ -16,7 +16,7 @@ export function analyticsLocation(href: string): string {
   const allowed: Record<string, string[]> = {
     utm_source: ['official_website', 'extension', 'ext_sidebar', 'ext_app_menu', 'github', 'chrome_web_store', 'edge_addons'],
     utm_medium: ['referral', 'extension', 'organic'],
-    utm_campaign: ['extension', 'v1.4.0'],
+    utm_campaign: ['extension', 'v1.4.0', 'v1.4.1'],
     utm_content: ['sidebar', 'app_menu', 'popup', 'options', 'listing', 'readme'],
   };
   for (const [key, values] of Object.entries(allowed)) {
@@ -73,5 +73,16 @@ export function trackStoreClick(event: MouseEvent) {
   window.gtag?.('event', 'store_link_click', {
     store: link.dataset.store, locale: document.documentElement.lang,
     placement: link.dataset.placement, transport_type: 'beacon',
+  });
+}
+
+/** Website clicks only: opening a provider is not evidence of a payment. */
+export function trackSupportClick(event: MouseEvent) {
+  const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-support-provider]') : null;
+  if (!accepted || !link || link.dataset.supportProvider !== 'paypal' || link.dataset.supportPlacement !== 'support') return;
+  const amount = Number(link.dataset.supportAmount);
+  if (![1, 3, 5, 10].includes(amount) || link.href !== `https://paypal.me/infoxica/${amount}USD`) return;
+  window.gtag?.('event', 'support_link_click', {
+    provider: 'paypal', amount, currency: 'USD', locale: document.documentElement.lang, placement: 'support', transport_type: 'beacon',
   });
 }

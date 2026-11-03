@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs/promises';
-const base='https://infoxica.github.io/chatgpt-audio-controls/';
+import vm from 'node:vm';
+const base='https://chatgpt-audio-controls.infoxica.com/';
+const localeCodes=Object.keys(JSON.parse(await fs.readFile('site/navigation-copy.json','utf8')));
 async function serveSite(context,tracking=[]) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
@@ -14,6 +16,16 @@ async function serveSite(context,tracking=[]) {
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
+for(const [width,locale] of [[1512,''],[320,''],[390,'ur/']])test(`sticky navigation clears anchors and PayPal remains explicit at ${width} ${locale}`,async({page,context})=>{
+  await serveSite(context);await page.setViewportSize({width,height:982});await page.goto(base+locale);
+  await page.evaluate(()=>document.querySelector('#support').scrollIntoView());
+  const geometry=await page.locator('.top').evaluate(el=>({top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,height:el.getBoundingClientRect().height,measured:parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-height'))}));
+  expect(geometry.top).toBeCloseTo(0,0);expect(Math.abs(geometry.measured-geometry.height)).toBeLessThanOrEqual(1);
+  expect((await page.locator('#support').boundingBox()).y).toBeGreaterThanOrEqual(geometry.bottom);
+  for(const amount of [1,3,5,10])await expect(page.locator(`#support a[href="https://paypal.me/infoxica/${amount}USD"]`)).toHaveCount(1);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  if(locale)await expect(page.locator('html')).toHaveAttribute('dir','rtl');
+});
 for(const [width,locale] of [[1280,''],[360,''],[390,'ar/']])test(`private demo plays without overflow or autoplay at ${width} ${locale}`,async({page,context})=>{
   await serveSite(context);await page.setViewportSize({width,height:900});
   const mediaRequests=[];page.on('request',r=>{if(r.url().endsWith('.mp4'))mediaRequests.push(r.url());});
@@ -87,24 +99,24 @@ test('static routes and consent keep analytics opt-in and store clicks distinct'
   await page.evaluate(()=>window.scrollTo(0,0));
   await page.screenshot({path:'build/browser-results/website.png',fullPage:true});
   await page.setViewportSize({width:390,height:844});
-  await page.getByRole('combobox',{name:'Language: English',exact:true}).click();
-  await page.getByRole('option',{name:'日本語',exact:true}).click();
+  await page.getByRole('button',{name:'Language: English',exact:true}).click();
+  await page.locator('.language-dialog').getByRole('link',{name:'日本語',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/');
   await expect(page.locator('html')).toHaveAttribute('lang','ja');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
   await page.screenshot({path:'build/browser-results/website-mobile-ja.png',fullPage:true});
   await page.setViewportSize({width:320,height:740});
-  for (const locale of ['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb']) {
+  for (const locale of localeCodes) {
     await page.goto(base+(locale==='en'?'':locale+'/'));
-    await expect(page.locator('#locale-mobile')).toHaveAttribute('role','combobox');
+    await expect(page.locator('#locale-mobile')).toHaveAttribute('aria-haspopup','dialog');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),locale).toBe(true);
   }
   expect(errors).toEqual([]);
 });
 test('guide pages stay local, align with the homepage, and preserve locale-specific metadata',async({page,context})=>{
-  // This exhaustive pass navigates 132 localized pages, not a single UI flow.
+  test.setTimeout(180000);
+  // This exhaustive pass navigates 268 localized pages, not a single UI flow.
   // Keep every locale assertion while allowing the expanded catalog to finish.
-  test.setTimeout(120000);
   await serveSite(context);
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto(base);await page.getByRole('button',{name:'No thanks',exact:true}).click();
@@ -117,16 +129,16 @@ test('guide pages stay local, align with the homepage, and preserve locale-speci
   await expect(page.locator('#stores a[data-store]')).toHaveCount(2);
   await page.screenshot({path:'build/browser-results/website-installation.png',fullPage:true});
   await page.locator('#locale').hover();
-  await page.locator('.language-grid').getByRole('link',{name:'日本語',exact:true}).click();
+  await page.locator('.desktop-languages .language-grid').getByRole('link',{name:'日本語',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/installation/');
   await page.locator('.guide-nav').getByRole('link',{name:'Tampermonkey',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/userscript/');
   await expect(page.locator('main a[href$=".user.js"]')).toHaveCount(1);
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'build/browser-results/website-userscript-ja.png',fullPage:true});
-  const codes=['en','zh-CN','zh-TW','vi','th','es','pt-BR','pt-PT','ru','hi','fr','de','ja','ko','id','it','tr','bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb'];
+  const codes=localeCodes;
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(localeCodes.length*5);
   await page.setViewportSize({width:320,height:740});
   for(const code of codes) for(const route of ['guide','installation','userscript','glossary']) {
     const relative=(code==='en'?'':code+'/')+route+'/';
@@ -171,8 +183,8 @@ test('hierarchical navigation and discovery artifacts cover every localized page
   await expect(page).toHaveURL(base+'#dashboard');
   const navigation=JSON.parse(await fs.readFile('site/navigation-copy.json','utf8'));
   const sitemap=await fs.readFile('site-dist/sitemap.xml','utf8');
-  expect((sitemap.match(/<loc>/g)||[]).length).toBe(165);
-  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(165*34);
+  expect((sitemap.match(/<loc>/g)||[]).length).toBe(localeCodes.length*5);
+  expect((sitemap.match(/<xhtml:link /g)||[]).length).toBe(localeCodes.length*5*(localeCodes.length+1));
   for(const locale of Object.keys(navigation)) {
     const prefix=locale==='en'?'':locale+'/';
     for(const slug of ['', 'guide/', 'installation/', 'userscript/', 'glossary/']) {
@@ -243,17 +255,17 @@ test('desktop language grid and Support descriptions stay consistent', async ({p
   await page.goto(base+'guide/');
   await page.getByRole('button',{name:'No thanks',exact:true}).click();
   await page.locator('#locale').hover();
-  await expect(page.locator('.language-grid-link')).toHaveCount(33);
-  await expect(page.locator('.language-grid-link[aria-current=page]')).toHaveText('English');
-  expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(4);
+  await expect(page.locator('.desktop-languages .language-grid-link')).toHaveCount(67);
+  await expect(page.locator('.desktop-languages .language-grid-link[aria-current=page]')).toHaveText('English');
+  expect(await page.locator('.desktop-languages .language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBeGreaterThanOrEqual(7);
   await page.screenshot({path:'build/browser-results/website-language-grid.png',animations:'disabled'});
   await page.setViewportSize({width:1100,height:850});
   // Resizing moves the trigger away from the pointer; re-enter the language
   // menu instead of leaving the pointer over a different navigation trigger.
   await page.locator('#locale').hover();
-  await expect(page.locator('.language-grid')).toBeVisible();
-  expect(await page.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(3);
-  await page.locator('.language-grid').getByRole('link',{name:'日本語',exact:true}).click();
+  await expect(page.locator('.desktop-languages .language-grid')).toBeVisible();
+  expect(await page.locator('.desktop-languages .language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBeGreaterThanOrEqual(6);
+  await page.locator('.desktop-languages .language-grid').getByRole('link',{name:'日本語',exact:true}).click();
   await expect(page).toHaveURL(base+'ja/guide/');
   await page.goto(base);
   await page.locator('.desktop-navigation').getByRole('button',{name:'Support',exact:true}).hover();
@@ -265,14 +277,15 @@ test('desktop language grid and Support descriptions stay consistent', async ({p
 for(const [width,locale] of [[320,''],[360,'de/'],[390,'ar/'],[768,'ja/'],[1920,'']]) test(`support links and layout at ${width} ${locale}`,async({page,context})=>{
  const requests=[];await serveSite(context,requests);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
  await expect(page.locator('.donate-header')).toHaveAttribute('href',base+locale+'#support');await page.locator('.donate-header').click();await expect(page.locator('#support')).toBeVisible();
- await expect(page.locator('#support .donation-amounts a')).toHaveCount(4);
+ await expect(page.locator('#support .donation-amounts a')).toHaveCount(8);
  const amounts=[1,3,5,10];for(let i=0;i<4;i++){const a=page.locator('#support .donation-amounts a').nth(i);await expect(a).toHaveAttribute('href',`https://github.com/sponsors/infoxica/sponsorships?frequency=one-time&amount=${amounts[i]}`);const r=await a.boundingBox();expect(r.width).toBeGreaterThanOrEqual(44);expect(r.height).toBeGreaterThanOrEqual(44);}
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await expect(page.locator('#reviews a')).toHaveCount(2);expect(requests.filter(url=>url.includes('google-analytics')||url.includes('github.com/sponsors'))).toEqual([]);
  if(width===1920){await page.locator('#support').screenshot({path:'build/support-website-dark.png'});await page.evaluate(()=>document.documentElement.dataset.theme='light');await page.locator('#support').screenshot({path:'build/support-website-light.png'});}
 });
 
-for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`screenshot viewer and separate support cards at ${width} ${locale}`,async({page,context})=>{
+for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'ar/']])test(`screenshot viewer and separate support cards at ${width} ${locale}`,async({page,context})=>{
  await serveSite(context);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
+ await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar/'?'rtl':'ltr');
  await page.locator('#analytics-decline').click();
  const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(3);
  for(let i=0;i<3;i++){
@@ -281,6 +294,12 @@ for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`s
   await expect.poll(()=>viewer.locator('img').evaluate(el=>el.naturalWidth)).toBe(1920);
   expect(await viewer.locator('img').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;})).toBe(true);
   expect(await viewer.locator('button').getAttribute('aria-label')).toBeTruthy();
+  const offset=await viewer.locator('button').evaluate(el=>{
+    const b=el.getBoundingClientRect(),s=el.querySelector('svg').getBoundingClientRect();
+    return Math.max(Math.abs((b.left+b.right-s.left-s.right)/2),Math.abs((b.top+b.bottom-s.top-s.bottom)/2));
+  });
+  expect(offset).toBeLessThanOrEqual(1);
+
   if(i===0){await page.keyboard.press('Tab');await expect(viewer.locator('button')).toBeFocused();await page.screenshot({path:`build/image-viewer-${width}.png`});await page.keyboard.press('Escape');}
   else if(i===1)await viewer.locator('button').click();else await viewer.click({position:{x:4,y:200}});
   await expect(viewer).not.toBeVisible();await expect(trigger).toBeFocused();expect(page.url()).toBe(base+locale);
@@ -291,10 +310,69 @@ for(const [width,locale] of [[1920,''],[768,'de/'],[360,''],[390,'ar/']])test(`s
  expect(cards[1].y-cards[0].y-cards[0].height).toBeCloseTo(24,0);
  for(const selector of ['.support-contribution','#reviews']){
   const box=await page.locator(selector).evaluate(el=>{const a=el.querySelector('.support-copy').getBoundingClientRect(),b=el.querySelector('.support-card-actions').getBoundingClientRect();return {a:{x:a.x,y:a.y,width:a.width,height:a.height},b:{x:b.x,y:b.y,width:b.width,height:b.height},padding:getComputedStyle(el).paddingTop};});
-  if(width>760){expect(box.b.x-box.a.x-box.a.width).toBeCloseTo(32,0);expect(box.padding).toBe('32px');}
+  if(width>760){const gap=locale==='ar/'?box.a.x-box.b.x-box.b.width:box.b.x-box.a.x-box.a.width;expect(gap).toBeCloseTo(32,0);expect(box.padding).toBe('24px');}
   else {expect(box.b.y-box.a.y-box.a.height).toBeCloseTo(24,0);expect(box.padding).toBe('24px');}
  }
  const dividerGap=await page.locator('#support').evaluate(el=>el.getBoundingClientRect().top-document.querySelector('#guides').getBoundingClientRect().bottom);expect(dividerGap).toBeCloseTo(32,0);
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.screenshot({path:`build/support-cards-${width}.png`});
+});
+
+test('legacy redirect preserves locale and approved campaigns without forwarding private data',async()=>{
+  const html=await fs.readFile('build/legacy-pages/ja/guide/index.html','utf8');
+  const canonical=html.match(/rel="canonical" href="([^"]+)"/)[1];
+  expect(canonical).toBe(base+'ja/guide/');
+  expect(html).toContain('http-equiv="refresh"');
+  expect(html).toContain('Continue to ChatGPT Audio Controls');
+  expect(await fs.readFile('build/legacy-pages/llms.txt','utf8')).toBe(await fs.readFile('site-dist/llms.txt','utf8'));
+  const script=await fs.readFile('build/legacy-pages/redirect.js','utf8');
+  for(const hash of ['#support','#private%20words']){
+    let destination;
+    vm.runInNewContext(script,{URL,document:{querySelector:()=>({href:canonical})},location:{href:'https://infoxica.github.io/chatgpt-audio-controls/ja/guide/?utm_source=github&utm_campaign=v1.4.1&email=private@example.test&redirect=https://evil.test',hash,replace:url=>{destination=url;}}});
+    const url=new URL(destination);expect(url.origin+url.pathname).toBe(canonical);
+    expect(url.search).toBe('?utm_source=github&utm_campaign=v1.4.1');
+    expect(url.hash).toBe(hash==='#support'?'#support':'');
+  }
+  expect(await fs.readFile('build/legacy-pages/assets/walkthrough.mp4')).toEqual(await fs.readFile('site-dist/assets/walkthrough.mp4'));
+});
+
+for (const [width, locale, columns] of [[320,'',2],[360,'de/',2],[390,'ar/',2],[480,'de/',3],[768,'ur/',4],[1000,'ja/',4]]) test(`compact full-width header and language modal ${width} ${locale}`, async ({page,context}) => {
+  await serveSite(context); await page.setViewportSize({width,height:800}); await page.goto(base+locale);
+  const header=await page.locator('.top').boundingBox();expect(header.width).toBe(width);expect(header.height).toBeLessThanOrEqual(72);expect(header.x).toBe(0);
+  const hamburger=await page.locator('.mobile-navigation button').boundingBox();expect(hamburger.x+hamburger.width).toBe(width-12);
+  for(const selector of ['#locale-mobile','#theme-toggle','.donate-header','.mobile-navigation button']) { const r=await page.locator(selector).boundingBox();expect(r.width).toBeGreaterThanOrEqual(44);expect(r.height).toBeGreaterThanOrEqual(44); }
+  await page.locator('#locale-mobile').click();const modal=page.locator('.language-dialog');await expect(modal).toBeVisible();await expect(modal).toHaveAttribute('dir', /^(ar|ur)/.test(locale)?'rtl':'ltr');
+  expect(await modal.boundingBox()).toMatchObject({x:0,y:0,width,height:800});
+  expect(await modal.locator('.language-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(columns);
+  await expect(modal.getByRole('link')).toHaveCount(67);
+  await expect(modal.getByRole('button')).toBeFocused();await page.keyboard.press('Shift+Tab');await expect(modal.getByRole('link').last()).toBeFocused();await page.keyboard.press('Tab');await expect(modal.getByRole('button')).toBeFocused();
+  await page.screenshot({path:`build/browser-results/language-modal-${width}.png`});
+  await page.keyboard.press('Escape');await expect(modal).not.toBeVisible();await expect(page.locator('#locale-mobile')).toBeFocused();
+  expect(await page.evaluate(()=>document.documentElement.style.overflow)).toBe('');
+  await page.screenshot({path:`build/browser-results/mobile-header-${width}.png`});
+});
+
+for (const [width,height,locale] of [[1512,850,''],[1536,724,'de/']]) test(`all desktop languages fit the laptop panel ${width}`, async ({page,context}) => {
+  await serveSite(context);await page.setViewportSize({width,height});await page.goto(base+locale);
+  await page.locator('#locale').hover();const panel=page.locator('.desktop-languages .language-mega-content');
+  await expect(panel).toBeVisible();
+  await page.locator('.language-mega-viewport').evaluate(async el=>{await Promise.all(el.getAnimations({subtree:true}).map(animation=>animation.finished.catch(()=>{})));});
+  expect(await panel.evaluate(el=>el.scrollHeight<=el.clientHeight)).toBe(true);
+  await expect(panel.locator('.language-grid a')).toHaveCount(67);
+  const bounds=await panel.boundingBox();expect(bounds.x).toBeGreaterThanOrEqual(24);expect(bounds.x+bounds.width).toBeLessThanOrEqual(width-24);expect(bounds.y+bounds.height).toBeLessThanOrEqual(height);
+  for(const link of await panel.locator('.language-grid a').all()) await expect(link).toBeInViewport();
+  await page.screenshot({path:`build/browser-results/desktop-languages-${width}.png`,animations:'disabled'});
+});
+
+test('PayPal website click events require consent and keep direct links', async ({page,context}) => {
+  await serveSite(context);await page.goto(base);
+  await expect(page.locator('#site-consent')).toContainText('PayPal link clicks');
+  await page.evaluate(()=>document.querySelectorAll('a[data-support-provider]').forEach(a=>a.addEventListener('click',e=>e.preventDefault())));
+  const events=()=>page.evaluate(()=>(window.dataLayer||[]).map(a=>Array.from(a)).filter(a=>a[0]==='event'&&a[1]==='support_link_click'));
+  const link=page.locator('a[data-support-provider][data-support-amount="5"]');
+  await link.click();expect(await events()).toEqual([]);
+  await page.locator('#analytics-accept').click();await link.click();
+  expect(await events()).toEqual([['event','support_link_click',{provider:'paypal',amount:5,currency:'USD',locale:'en',placement:'support',transport_type:'beacon'}]]);
+  await expect(link).toHaveAttribute('href','https://paypal.me/infoxica/5USD');
+  await page.locator('#analytics-preferences').click();await page.locator('#analytics-decline').click();await link.click();expect(await events()).toHaveLength(1);
 });

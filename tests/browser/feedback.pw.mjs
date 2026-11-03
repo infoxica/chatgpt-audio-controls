@@ -22,9 +22,10 @@ const count = async () => (await db.prepare('SELECT COUNT(*) AS n FROM feedback'
 
 test('all added locales switch direction and fit narrow feedback screens',async({page})=>{
   await open(page);
-  for(const language of ['bn','mr','te','ta','ar','fa','he','pl','hu','sv','cs','uk','ca','el','ro','nb']) {
+  for(const language of Object.keys(JSON.parse(await fs.readFile('site/navigation-copy.json','utf8')))) {
     await page.locator('#language').selectOption(language);
-    await expect(page.locator('html')).toHaveAttribute('dir',['ar','fa','he'].includes(language)?'rtl':'ltr');
+    await expect(page.locator('#privacy-link')).toHaveAttribute('href', `https://chatgpt-audio-controls.infoxica.com/${language === 'en' ? '' : language + '/'}#privacy`);
+    await expect(page.locator('html')).toHaveAttribute('dir',['ar','fa','he','ur'].includes(language)?'rtl':'ltr');
     for(const width of [320,390,768]) {await page.setViewportSize({width,height:800});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth ? [] : [...document.querySelectorAll('body *')].filter(e=>{const r=e.getBoundingClientRect();return r.right>innerWidth+1||r.left < -1;}).map(e=>({tag:e.tagName,name:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))),`${language} ${width}`).toEqual([]);}
   }
 });
@@ -58,12 +59,12 @@ test('theme follows system changes, remembers overrides and preserves answers', 
   await expect(page.locator('#language')).toHaveAttribute('title', /Deutsch/);
   await expect(page.locator('#theme')).toHaveAccessibleName(/.+/);
 });
-test('both modes, no default choice, 33 languages and Skip create no record', async ({ page }) => {
+test('both modes, no default choice, 67 languages and Skip create no record', async ({ page }) => {
   const before = await count();
   for (const [mode, total] of [['installed', 3], ['uninstall', 8]]) {
     await open(page, mode); await expect(page.locator('input[name=reason]')).toHaveCount(total);
     await expect(page.locator('input:checked')).toHaveCount(0);
-    await expect(page.locator('#language option')).toHaveCount(33);
+    await expect(page.locator('#language option')).toHaveCount(67);
     await page.getByRole('button', { name: 'Send feedback', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Choose one reason');
     await page.getByRole('button', { name: 'Skip feedback', exact: true }).click();

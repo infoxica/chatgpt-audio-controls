@@ -42,11 +42,30 @@
         "required": [
           "TURNSTILE_SECRET_KEY"
         ]
+      },
+      "assets": {
+        "directory": "../../build/site-staging",
+        "binding": "ASSETS",
+        "html_handling": "auto-trailing-slash",
+        "not_found_handling": "none",
+        "run_worker_first": [
+          "/feedback",
+          "/feedback/*",
+          "/api",
+          "/api/*",
+          "/health",
+          "/health/*"
+        ]
       }
     },
     "production": {
       "name": "chatgpt-audio-feedback",
-      "routes": [{ "pattern": "chatgpt-audio-controls.infoxica.com", "custom_domain": true }],
+      "routes": [
+        {
+          "pattern": "chatgpt-audio-controls.infoxica.com",
+          "custom_domain": true
+        }
+      ],
       "vars": {
         "TURNSTILE_SITE_KEY": "0x4AAAAAAFmZI5PtqIBrKeQK",
         "ENVIRONMENT": "production"
@@ -69,6 +88,20 @@
   "secrets": {
     "required": [
       "TURNSTILE_SECRET_KEY"
+    ]
+  },
+  "assets": {
+    "directory": "../../site-dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+    "run_worker_first": [
+      "/feedback",
+      "/feedback/*",
+      "/api",
+      "/api/*",
+      "/health",
+      "/health/*"
     ]
   }
 }

@@ -1,3 +1,4 @@
+import { literalColor } from '../shared/accent';
 import { openStandaloneSettings } from './standalone-settings';
 import { PlayerLayout } from './player-layout';
 import { ReadyToast } from './ready-toast';
@@ -351,7 +352,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 
   function parseColorToTheme(colorStr: string): string | null {
     if (!colorStr) return null;
-    const str = colorStr.toLowerCase().trim();
+    let str = colorStr.toLowerCase().trim();
+    if (/^#[a-f0-9]{6}$/i.test(str)) str = `rgb(${parseInt(str.slice(1, 3), 16)}, ${parseInt(str.slice(3, 5), 16)}, ${parseInt(str.slice(5, 7), 16)})`;
 
     if (str.includes("green") || str === "#10a37f") return "green";
     if (str.includes("purple") || str.includes("violet") || str === "#8e55ea") return "purple";
@@ -366,6 +368,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       const g = parseInt(rgbMatch[2], 10);
       const b = parseInt(rgbMatch[3], 10);
 
+      if (Math.max(r, g, b) - Math.min(r, g, b) < 24) return "black";
       if (g > r + 30 && g > b - 10 && g > 110) return "green";
       if (b > 140 && r > 90 && g < 130) return "purple";
       if (r > 190 && g > 70 && g < 180 && b < 80) return "orange";
@@ -377,46 +380,26 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     return null;
   }
 
-  function resolveActiveChatGPTTheme(): string {
-    const attrEl = document.querySelector("[data-chat-theme]");
-    const attr =
-      document.documentElement.getAttribute("data-chat-theme") ||
-      document.body?.getAttribute("data-chat-theme") ||
-      attrEl?.getAttribute("data-chat-theme");
+  function activeThemeElements(): HTMLElement[] {
+    const elements: HTMLElement[] = [];
+    for (let el = getComposer(); el; el = el.parentElement) elements.push(el);
+    if (!elements.includes(document.documentElement)) elements.push(document.body, document.documentElement);
+    return elements.filter(Boolean);
+  }
 
-    if (attr && CHATGPT_THEME_KEYS.includes(attr.toLowerCase())) {
-      return attr.toLowerCase();
-    }
-
-    const classes = `${document.documentElement.className} ${document.body?.className || ""}`.toLowerCase();
-    for (const t of ["green", "purple", "orange", "pink", "yellow", "black", "blue"]) {
-      if (classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`) || classes.includes(`data-theme-${t}`)) {
-        return t;
-      }
-    }
-
-    const rootStyle = getComputedStyle(document.documentElement);
-    // ChatGPT's theme selector drives --theme-submit-btn-bg. The generic
-    // interactive accent remains blue even when a chat theme is selected.
-    const accentRaw =
-      rootStyle.getPropertyValue("--theme-submit-btn-bg").trim() ||
-      rootStyle.getPropertyValue("--interactive-bg-accent-secondary-default").trim();
-
-    const fromAccent = parseColorToTheme(accentRaw);
-    if (fromAccent) return fromAccent;
-
-    const submitBtn = document.querySelector(
-      'button[data-testid="send-button"], button[aria-label*="Send"], button[aria-label*="Voice"], button[data-testid*="submit"]'
-    );
-    if (submitBtn) {
-      const btnStyle = getComputedStyle(submitBtn);
-      const fromBtnBg = parseColorToTheme(btnStyle.backgroundColor);
-      if (fromBtnBg) return fromBtnBg;
-      const fromBtnColor = parseColorToTheme(btnStyle.color);
-      if (fromBtnColor) return fromBtnColor;
-    }
-
-    return "blue";
+  function resolveActiveChatGPTTheme(): { chatTheme: string; accent?: string; accentText?: string } {
+    const elements = activeThemeElements();
+    const owner = elements.find(el => CHATGPT_THEME_KEYS.includes(el.getAttribute('data-chat-theme') || ''));
+    const named = owner?.getAttribute('data-chat-theme');
+    const style = getComputedStyle(owner || elements[0]);
+    const read = (...keys: string[]) => keys.map(key => style.getPropertyValue(key).trim()).find(literalColor);
+    const palette: Record<string, string> = { blue: '#3a83f7', green: '#53b559', purple: '#8952ee', orange: '#ee7c37', pink: '#f077af', yellow: '#f6c543', black: '#000000' };
+    const accent = named ? (read('--theme-submit-btn-bg', `--${named}-theme-submit-btn-bg`) || palette[named]) :
+      read('--color-background-accent-action', '--theme-submit-btn-bg', '--app-color-icon-accent', '--interactive-bg-accent-secondary-default');
+    const accentText = read('--color-text-accent-action', '--theme-submit-btn-text') || (named === 'yellow' ? '#000000' : '#ffffff');
+    const classes = elements.map(el => el.className).join(' ').toLowerCase();
+    const classTheme = CHATGPT_THEME_KEYS.find(t => classes.includes(`theme-${t}`) || classes.includes(`chat-theme-${t}`));
+    return { chatTheme: named || classTheme || parseColorToTheme(accent || '') || 'blue', accent: accent || (classTheme ? palette[classTheme] : undefined), accentText };
   }
 
   function detectAndCacheChatGPTTheme(): void {
@@ -424,19 +407,25 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       const isDark = document.documentElement.classList.contains("dark") ||
         !document.documentElement.classList.contains("light");
 
-      const chatTheme = resolveActiveChatGPTTheme();
-      const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}`;
+      const { chatTheme, accent, accentText } = resolveActiveChatGPTTheme();
+      // Player nodes are body children, outside ChatGPT's themed composer subtree.
+      for (const el of [leftRail, rightRail, floatingToggle]) {
+        if (!el) continue;
+        if (accent) el.style.setProperty('--cgpt-ra-accent', accent); else el.style.removeProperty('--cgpt-ra-accent');
+        if (accentText) el.style.setProperty('--cgpt-ra-accent-text', accentText);
+      }
+      const themeKey = `${isDark ? "dark" : "light"}-${chatTheme}-${accent}-${accentText}`;
 
       if (cache.lastThemeCheck === themeKey) return;
       cache.lastThemeCheck = themeKey;
 
       const themeCache = {
         isDark,
-        chatTheme,
+        chatTheme, accent, accentText,
         updatedAt: Date.now(),
       };
 
-      localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache));
+      try { localStorage.setItem("cgpt-ra-theme-cache", JSON.stringify(themeCache)); } catch { /* Extension storage remains available through the bridge. */ }
       window.postMessage(
         {
           source: "chatgpt-audio-controls-settings-bridge",
@@ -897,15 +886,15 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 
     rightRail.innerHTML = `
       <div class="cgpt-ra-transport-row cgpt-ra-media-control">
+        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
+                disabled>
+          ${getLucideSvg("play")}
+        </button>
+
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-back cgpt-ra-media-control"
                 disabled>
           ${getLucideSvg("rotate-ccw")}
           <span class="cgpt-ra-ten">10</span>
-        </button>
-
-        <button class="cgpt-ra-icon-btn cgpt-ra-play cgpt-ra-media-control"
-                disabled>
-          ${getLucideSvg("play")}
         </button>
 
         <button class="cgpt-ra-icon-btn cgpt-ra-seek10 cgpt-ra-forward cgpt-ra-media-control"
@@ -1392,7 +1381,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     const type = String(mime || "").toLowerCase();
 
     if (type.includes("mpeg")) return "mp3";
-    if (type.includes("mp4") || type.includes("m4a") || type.includes("aac"))
+    if (type.includes("aac")) return "aac";
+    if (type.includes("mp4") || type.includes("m4a"))
       return "m4a";
     if (type.includes("wav")) return "wav";
     if (type.includes("ogg") || type.includes("opus")) return "ogg";
@@ -1552,6 +1542,15 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     }, 250);
   }
 
+  const themeObserver = new MutationObserver(scheduleThemeSync);
+  let observedThemeElements: HTMLElement[] = [];
+  function bindThemeObservers(): void {
+    const elements = activeThemeElements();
+    if (elements.length === observedThemeElements.length && elements.every((el, i) => el === observedThemeElements[i])) return;
+    themeObserver.disconnect(); observedThemeElements = elements;
+    for (const el of elements) themeObserver.observe(el, { attributes: true, attributeFilter: ['class', 'data-theme', 'data-chat-theme', 'style'] });
+  }
+
   function startObserver(): void {
     // Structural changes can replace the composer, but attribute
     // changes across the whole ChatGPT tree are far too noisy (hover/focus
@@ -1560,6 +1559,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       if (observerTimeout) return;
       observerTimeout = window.setTimeout(() => {
         observerTimeout = null;
+        bindThemeObservers();
+        scheduleThemeSync();
         scheduleLayoutSync();
       }, 500);
     });
@@ -1569,21 +1570,9 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       subtree: true,
     });
 
-    // Theme changes generally happen on the root/body. Watching only those
-    // nodes avoids turning every descendant class/style mutation into a
-    // synchronous computed-style pass.
-    const themeObserver = new MutationObserver(scheduleThemeSync);
-    const themeAttributes = ["class", "data-theme", "data-chat-theme", "style"];
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: themeAttributes,
-    });
-    if (document.body) {
-      themeObserver.observe(document.body, {
-        attributes: true,
-        attributeFilter: themeAttributes,
-      });
-    }
+    bindThemeObservers();
+    window.addEventListener('focus', scheduleThemeSync);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { bindThemeObservers(); scheduleThemeSync(); } });
 
     window.addEventListener("resize", scheduleLayoutSync, { passive: true });
     window.visualViewport?.addEventListener('resize', scheduleLayoutSync, { passive: true });

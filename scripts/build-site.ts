@@ -1,8 +1,11 @@
 import imageViewerCopy from "../site/image-viewer-copy.json";
+import supportAnalyticsCopy from "../site/support-analytics-copy.json";
 import { donationCopy, donationCatalogs } from "../src/shared/i18n/donations";
+import { coffeeCopy } from "../src/shared/i18n/coffee";
 import {
   SPONSOR_AMOUNTS,
   sponsorURL,
+  coffeeURL,
   REVIEW_URLS,
 } from "../src/shared/support";
 import { featureCopy } from "../src/shared/i18n/features";
@@ -21,6 +24,7 @@ import {
 import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import {
   Heart,
+  Coffee,
   Star,
   CirclePlay,
   Gauge,
@@ -31,6 +35,7 @@ import {
   CircleCheck,
   ArrowRight,
   ExternalLink,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { releaseLocales } from "../src/shared/i18n/release-copy";
@@ -207,6 +212,8 @@ await build({
   },
 });
 for (const [code, base] of Object.entries(LOCALES)) {
+  const disclosure = supportAnalyticsCopy[code as keyof typeof supportAnalyticsCopy];
+  if (!disclosure?.trim()) throw new Error(`Missing analytics disclosure ${code}`);
   const c = releaseLocales[code],
     f = featureCopy(code),
     d = donationCopy(code);
@@ -293,6 +300,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
     island("site-controls", HeaderControls, {
       locale: code,
       languageLabel: c.language,
+      closeLabel: c.dismiss,
       themeLabel: base.popup.header.switchTheme,
       options: SUPPORTED_LANGUAGES.filter((item) => item.code !== "auto").map(
         (item) => ({
@@ -315,7 +323,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
   });
   const consent = island("site-consent", ConsentBanner, {
     title: c.analyticsTitle,
-    body: c.analyticsBody,
+    body: `${c.analyticsBody} ${disclosure}`,
     accept: c.accept,
     decline: c.decline,
   });
@@ -478,11 +486,11 @@ for (const [code, base] of Object.entries(LOCALES)) {
       ],
     };
 
-    return `<!doctype html><html lang="${code}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.png"><meta property="og:image:width" content="1920"><meta property="og:image:height" content="1080"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.png"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
-  <a class="skip" href="#main">${escape(c.features)}</a><header class="top"><a class="brand" href="${url}"><img src="${path}assets/icon.png" alt="" width="34" height="34"><span>ChatGPT<br>Audio Controls</span></a><div class="header-actions">${navigation}<a class="ui-button donate-header" href="${url}#support">${icon(Heart)}${escape(d.donate)}</a>${controlsFor(slug)}</div></header>
+    return `<!doctype html><html lang="${code}" dir="${languageDirection(code)}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.png"><meta property="og:image:width" content="1920"><meta property="og:image:height" content="1080"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.png"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
+  <a class="skip" href="#main">${escape(c.features)}</a><header class="top"><a class="brand" href="${url}"><img src="${path}assets/icon.png" alt="" width="34" height="34"><span>ChatGPT<br>Audio Controls</span></a><div class="header-actions">${navigation}<a class="ui-button donate-header" aria-label="${escape(d.donate)}" href="${url}#support">${icon(Heart)}<span>${escape(d.donate)}</span></a>${controlsFor(slug)}</div></header>
   ${content}
   <footer>${footerNavigation}<p>${escape(c.independent)}</p><p class="copyright-disclaimer">${escape(n.disclaimer)}</p><div class="links"><a href="${root}sitemap.xml">${escape(n.sitemap)}</a><a href="${root}llms.txt">llms.txt</a><a href="https://github.com/infoxica/chatgpt-audio-controls">${escape(base.popup.about.githubRepo)}</a><a href="${url}#privacy">${escape(c.privacy)}</a>${renderToStaticMarkup(createElement(Button, { id: "analytics-preferences", variant: "link" }, c.preferences))}</div></footer>
-  ${consent}<dialog class="image-viewer" dir="${languageDirection(code)}" aria-labelledby="image-viewer-caption"><button type="button" class="image-viewer-close" aria-label="${escape(closeImage)}" title="${escape(closeImage)}">×</button><figure><img alt=""><figcaption id="image-viewer-caption"></figcaption></figure></dialog></body></html>`;
+  ${consent}<dialog class="image-viewer" dir="${languageDirection(code)}" aria-labelledby="image-viewer-caption"><button type="button" class="image-viewer-close" aria-label="${escape(closeImage)}" title="${escape(closeImage)}">${renderToStaticMarkup(createElement(X, { size: 24, "aria-hidden": true }))}</button><figure><img alt=""><figcaption id="image-viewer-caption"></figcaption></figure></dialog></body></html>`;
   };
   const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls</div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p><p class="small">${escape(c.quickStartBody)}</p>${install("hero")}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
   <section class="section demo-section" id="demo" aria-labelledby="demo-title"><h2 id="demo-title">${escape(demo[0])}</h2><p class="small" id="demo-note">${escape(demo[1])}</p>
@@ -494,7 +502,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
   <section class="section settings-story" id="dashboard"><div><h2>${escape(base.common.dashboard)}</h2><p>${escape(base.options.headers.preferencesDesc)}</p><h3>${escape(base.options.general.languageTitle)}</h3><p>${escape(base.options.general.languageDesc)}</p><h3>${escape(base.options.general.seekTitle)}</h3><p>${escape(base.options.general.seekDesc)}</p><h3>${escape(base.options.nav.darkMode)} / ${escape(base.options.nav.lightMode)}</h3></div><figure><img src="${path}assets/popup.png" alt="${escape(base.options.headers.preferencesTitle)}" width="1920" height="1080" loading="lazy"><figcaption class="small">${escape(base.options.headers.preferencesTitle)}</figcaption></figure></section>
   <section class="section reading" id="help"><h2>${escape(c.help)}</h2>${faq}<p><a href="https://github.com/infoxica/chatgpt-audio-controls/issues">${escape(base.popup.about.reportIssue)} ${externalLinkIcon}</a></p></section>
   <section class="section reading" id="guides"><h2>${escape(base.popup.about.documentation)}</h2><p>${escape(g.intro)}</p><div class="links">${linkButton(url + "guide/", base.popup.about.documentation)}${linkButton(url + "installation/", g.installation)}${linkButton(url + "userscript/", "Tampermonkey")}${linkButton(url + "glossary/", g.glossary)}</div><p class="small guide-note">${escape(w.userscriptNote)}</p></section>
-  <section class="section support-section" id="support"><div class="support-columns"><div class="support-contribution"><div class="support-copy"><div class="support-heading">${icon(Heart, "support-heart")}<h2>${escape(d.title)}</h2></div><p>${escape(d.value)}</p><p>${escape(d.costs)}</p></div><div class="support-card-actions"><p class="support-once">${escape(d.once)}</p><div class="donation-amounts">${SPONSOR_AMOUNTS.map((amount) => `<a href="${escape(sponsorURL(amount))}" target="_blank" rel="noreferrer" aria-label="${escape(d.donate + " · US$" + amount + " · GitHub Sponsors")}">${icon(Heart)}<bdi>US$${amount}</bdi></a>`).join("")}</div><p class="small">${escape(d.privacy)}</p></div></div><div class="review-section" id="reviews"><div class="support-copy"><div class="support-heading">${icon(Star, "support-review-icon")}<h3>${escape(w.reviewTitle)}</h3></div><p>${escape(d.optional)}</p></div><div class="links support-card-actions">${[
+  <section class="section support-section" id="support"><div class="support-columns"><div class="support-contribution"><div class="support-copy"><div class="support-heading">${icon(Heart, "support-heart")}<h2>${escape(d.title)}</h2></div><p>${escape(d.value)}</p><p>${escape(d.costs)}</p></div><div class="support-card-actions"><p class="support-once">${escape(d.once)}</p><div class="donation-amounts">${SPONSOR_AMOUNTS.map((amount) => `<a href="${escape(sponsorURL(amount))}" target="_blank" rel="noreferrer" aria-label="${escape(d.donate + " · US$" + amount + " · GitHub Sponsors")}">${icon(Heart)}<bdi>US$${amount}</bdi></a>`).join("")}</div><div class="coffee-support"><p>${icon(Coffee)}${escape(coffeeCopy(code))} · PayPal</p><div class="donation-amounts">${SPONSOR_AMOUNTS.map(amount => `<a data-support-provider="paypal" data-support-amount="${amount}" data-support-placement="support" href="${escape(coffeeURL(amount))}" target="_blank" rel="noreferrer" aria-label="${escape(coffeeCopy(code) + " · US$" + amount + " · PayPal")}">${icon(Coffee)}<bdi>US$${amount}</bdi></a>`).join("")}</div></div><p class="small">${escape(d.privacy)}</p></div></div><div class="review-section" id="reviews"><div class="support-copy"><div class="support-heading">${icon(Star, "support-review-icon")}<h3>${escape(w.reviewTitle)}</h3></div><p>${escape(d.optional)}</p></div><div class="links support-card-actions">${[
     [chromeReviewUrl, "Chrome Web Store"],
     [edgeReviewUrl, "Microsoft Edge Add-ons"],
   ]
@@ -502,7 +510,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
       linkButton(href, w.reviewLink.replace("{store}", store), true),
     )
     .join("")}</div></div></div></section>
-  <section class="section reading" id="privacy"><h2>${escape(c.privacy)}</h2><p>${escape(c.privacyBody)}</p><p>${escape(c.websitePrivacy)}</p><p>${escape(c.feedbackPolicy)}</p></section><section class="section closing"><h2>${escape(c.quickStart)}</h2>${install("footer")}</section></main>`;
+  <section class="section reading" id="privacy"><h2>${escape(c.privacy)}</h2><p>${escape(c.privacyBody)}</p><p>${escape(c.websitePrivacy)} ${escape(disclosure)}</p><p>${escape(c.feedbackPolicy)}</p></section><section class="section closing"><h2>${escape(c.quickStart)}</h2>${install("footer")}</section></main>`;
   const html = renderPage("", c.siteTitle, c.siteIntro, homeContent, schema);
   writeFileSync(`${directory}/index.html`, html);
   for (const route of [
@@ -577,25 +585,12 @@ for (const [code, base] of Object.entries(LOCALES)) {
 }
 writeFileSync(
   "site-dist/sitemap.xml",
-  `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${Object.keys(
-    LOCALES,
-  )
-    .flatMap((code) =>
-      ["", "guide/", "installation/", "userscript/", "glossary/"].map(
-        (slug) =>
-          `<url><loc>${localeUrl(code)}${slug}</loc><lastmod>${lastModified}</lastmod>${Object.keys(
-            LOCALES,
-          )
-            .map(
-              (language) =>
-                `<xhtml:link rel="alternate" hreflang="${language}" href="${localeUrl(language)}${slug}"/>`,
-            )
-            .join(
-              "",
-            )}<xhtml:link rel="alternate" hreflang="x-default" href="${root}${slug}"/></url>`,
-      ),
-    )
-    .join("")}</urlset>`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${Object.keys(LOCALES)
+    .flatMap(code => ["", "guide/", "installation/", "userscript/", "glossary/"].map(slug =>
+      `  <url>\n    <loc>${escape(localeUrl(code) + slug)}</loc>\n    <lastmod>${lastModified}</lastmod>\n${Object.keys(LOCALES)
+        .map(language => `    <xhtml:link rel="alternate" hreflang="${language}" href="${escape(localeUrl(language) + slug)}"/>`)
+        .join("\n")}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${escape(root + slug)}"/>\n  </url>`))
+    .join("\n")}\n</urlset>\n`,
 );
 // Owner-approved policy: public website content is available for search,
 // AI inference, and training. Keep current and legacy crawler names explicit.

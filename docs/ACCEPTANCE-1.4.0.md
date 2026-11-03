@@ -2,6 +2,8 @@
 
 Record device, OS, browser/manager version, extension build, date and evidence beside every completed item. Automated fixture checks alone do not close these live gates.
 
+Latest continuation: [2026-11-02 evidence](RELEASE-ACCEPTANCE-2026-11-02.md), including public website deployment, partial final-candidate Edge checks and two acceptance fixes. Full platform gates remain open.
+
 The subsequent [localization audit](LOCALIZATION-AUDIT-1.4.0.md) supersedes the earlier source snapshot below. It records current extension/userscript checks separately; no live acceptance item was closed by that audit.
 
 ## Local release preparation — 2026-11-01

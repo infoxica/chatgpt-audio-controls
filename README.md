@@ -15,14 +15,14 @@
   </a>
 </p>
 
-[![Source version](https://img.shields.io/badge/source-v1.4.0-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Source version](https://img.shields.io/badge/source-v1.4.1-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
 [![License](https://img.shields.io/badge/license-MIT-22c55e.svg?style=for-the-badge)](LICENSE)
 [![Agent Ready](https://agent-ready.dev/api/badge/item-loaded-partial-complexity.trycloudflare.com)](https://agent-ready.dev)
 
-[Why I Created This](#why-i-created-this) • [Features](#features) • [Video & Screenshots](#video--screenshots) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
+[Changelog](CHANGELOG.md) • [Official website](https://chatgpt-audio-controls.infoxica.com/) • [Why I Created This](#why-i-created-this) • [Features](#features) • [Video & Screenshots](#video--screenshots) • [Languages](#-multi-language--internationalization-i18n) • [Installation](#installation) • [Tampermonkey Guide](#tampermonkey-guide-no-extension-required) • [Shortcuts](#keyboard-shortcuts--gestures) • [FAQ](#faq) • [Privacy](#privacy-policy)
 
 <br />
 
@@ -46,7 +46,7 @@ This extension adds play/pause, seeking, speed, volume, and download controls ri
 
 ## Video & Screenshots
 
-A 23-second walkthrough of playback, speed, seeking, download, collapse and docking. The video and screenshots are **1920 × 1080 (16:9)**, recorded in an isolated browser using a fictional conversation—no personal chats, account details or recorded microphone audio.
+See playback, seeking, speed, downloads and docking in action.
 
 [![Watch the ChatGPT Audio Controls walkthrough](assets/demo/composer-dock.png)](assets/demo/walkthrough.mp4)
 
@@ -77,47 +77,82 @@ A 23-second walkthrough of playback, speed, seeking, download, collapse and dock
   <img src="assets/demo/settings.png" alt="ChatGPT Audio Controls settings dashboard" width="85%" />
 </div>
 
-- **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing. Help sits beside Dashboard; Send feedback is in About.
+- **Popup**: Speed presets, volume, shortcuts, and smooth scrubbing.
 - **Settings Dashboard**: Customize default speed, volume, and seek step; view shortcuts and troubleshooting guidance.
 - **System, Light, or Dark** appearance for the popup, settings dashboard, and feedback form. System follows your device preference; your choice is remembered.
 
 ### 🌐 Multi-Language & Internationalization (i18n)
 - **Automatic Browser Language Detection**: Automatically adapts to your browser language out of the box.
 - **Customizable in Settings**: Switch your preferred interface language anytime from the Dashboard.
-- **Supported interface languages in the v1.4.0 candidate (33)**:
+- **Supported interface languages (67)**:
+  - **Albanian** — Shqip (`sq`)
+  - **Amharic** — አማርኛ (`am`)
   - **Arabic** — العربية (`ar`)
+  - **Armenian** — Հայերեն (`hy`)
   - **Bengali** — বাংলা (`bn`)
+  - **Bosnian** — Bosanski (`bs`)
+  - **Bulgarian** — Български (`bg`)
+  - **Burmese** — မြန်မာ (`my`)
   - **Catalan** — Català (`ca`)
   - **Chinese (Simplified)** — 简体中文 (`zh-CN`)
+  - **Chinese (Traditional, Hong Kong)** — 繁體中文（香港） (`zh-HK`)
   - **Chinese (Traditional)** — 繁體中文 (`zh-TW`)
+  - **Croatian** — Hrvatski (`hr`)
   - **Czech** — Čeština (`cs`)
+  - **Danish** — Dansk (`da`)
+  - **Dutch** — Nederlands (`nl`)
   - **English** — English (`en`)
+  - **Estonian** — Eesti (`et`)
+  - **Filipino** — Filipino (`fil`)
+  - **Finnish** — Suomi (`fi`)
   - **French** — Français (`fr`)
+  - **French (Canada)** — Français (Canada) (`fr-CA`)
+  - **Georgian** — ქართული (`ka`)
   - **German** — Deutsch (`de`)
   - **Greek** — Ελληνικά (`el`)
+  - **Gujarati** — ગુજરાતી (`gu`)
   - **Hebrew** — עברית (`he`)
   - **Hindi** — हिन्दी (`hi`)
+  - **Hindi (Latin)** — Hindi (Latin) (`hi-Latn`)
   - **Hungarian** — Magyar (`hu`)
+  - **Icelandic** — Íslenska (`is`)
   - **Indonesian** — Bahasa Indonesia (`id`)
   - **Italian** — Italiano (`it`)
   - **Japanese** — 日本語 (`ja`)
+  - **Kannada** — ಕನ್ನಡ (`kn`)
+  - **Kazakh** — Қазақ тілі (`kk`)
   - **Korean** — 한국어 (`ko`)
+  - **Latvian** — Latviešu (`lv`)
+  - **Lithuanian** — Lietuvių (`lt`)
+  - **Macedonian** — Македонски (`mk`)
+  - **Malay** — Bahasa Melayu (`ms`)
+  - **Malayalam** — മലയാളം (`ml`)
   - **Marathi** — मराठी (`mr`)
+  - **Mongolian** — Монгол (`mn`)
   - **Norwegian Bokmål** — Norsk bokmål (`nb`)
   - **Persian** — فارسی (`fa`)
   - **Polish** — Polski (`pl`)
   - **Portuguese (Brazil)** — Português (Brasil) (`pt-BR`)
   - **Portuguese (Portugal)** — Português (Portugal) (`pt-PT`)
+  - **Punjabi** — ਪੰਜਾਬੀ (`pa`)
   - **Romanian** — Română (`ro`)
   - **Russian** — Русский (`ru`)
+  - **Serbian** — Српски (`sr`)
+  - **Slovak** — Slovenčina (`sk`)
+  - **Slovenian** — Slovenščina (`sl`)
+  - **Somali** — Soomaali (`so`)
   - **Spanish** — Español (`es`)
+  - **Spanish (Latin America)** — Español (Latinoamérica) (`es-419`)
+  - **Swahili** — Kiswahili (`sw`)
   - **Swedish** — Svenska (`sv`)
   - **Tamil** — தமிழ் (`ta`)
   - **Telugu** — తెలుగు (`te`)
   - **Thai** — ไทย (`th`)
   - **Turkish** — Türkçe (`tr`)
   - **Ukrainian** — Українська (`uk`)
+  - **Urdu** — اردو (`ur`)
   - **Vietnamese** — Tiếng Việt (`vi`)
+
 
 ---
 
@@ -225,39 +260,13 @@ Your feedback is optional and private, even after uninstalling. No name or email
 
 ---
 
-## v1.4.0 — Native player and magnetic docking (release candidate)
-
-Drag the circular collapse/expand control to reveal fitting destinations: original placement, four corner L layouts, two vertical side-center layouts, or the composer dock. Targets match the real controls and attract the dragged player within 24 CSS pixels. A pill's subtle grip swaps it with the other slot in the current layout.
-
-The composer dock shares the input's width and surface, with one desktop row or two mobile rows. Collapse slides it away, leaving an expand circle on the right for LTR languages or left for RTL. Placement, pill order and reset are also keyboard-accessible in settings. Versioned desktop/mobile profiles stay on this device; compatible earlier preferences migrate automatically. Drops settle in about 220ms, reset takes 280ms, and collapse/expand takes 200ms. Reduced-motion preferences remove animated travel and magnetic movement.
-
-This candidate supports 33 interface languages, including Polish, Hungarian, Swedish, Czech, Ukrainian, Catalan, Greek, Romanian and Norwegian Bokmål. Auto stays first; language choices follow English-name alphabetical order. Arabic, Persian and Hebrew use RTL. Audio languages and voices still come from ChatGPT. New translations await native-speaker review.
-
-Open settings sections, four support actions, individual shortcut-edit guidance and a five-second optional download-ready toast complement the refined player. Fifteen desktop commands are assignable through browser shortcut settings; mobile commands APIs are optional. Responsive testing has passed locally, but real Edge Android acceptance remains pending.
-
-The dock preserves the native composer's border, radius and shadow. Its small branded tab clears the corner curve; L-layout seek tracks adapt to the free side span and avoid native top-right actions. See the [current acceptance record](docs/ACCEPTANCE-1.4.0.md), [audience baseline](docs/AUDIENCE-2026-10-30.md) and [signing assessment](docs/PACKAGE-SIGNING-ASSESSMENT.md). Website/listing changes are prepared locally; publishing and signing enrollment are separate.
-
-Extension and userscript players are built from the same source. Use one distribution at a time. The userscript’s help menu opens local settings; browser-level shortcut assignment requires the extension.
-
-Real Edge desktop/Android acceptance and publication remain pending. See [release status](docs/RELEASE-1.4.0-STATUS.md).
-
-## v1.3.0
-
-Version 1.3.0 repairs playback after ChatGPT clears its audio element, restores separate capsules for the new composer, removes the duplicate Read Aloud action, and adds private, optional feedback in all 17 extension languages. Use ChatGPT’s native response button to start listening. Popup, dashboard, and feedback appearance follows your saved System / Light / Dark preference.
-
-Show/hide uses a customizable browser command: **Alt+Shift+Y** on Windows/Linux or **Option+Shift+Y** on macOS, including while typing. The shortcut pages show the actual assignment and a customization link. Playback keys still act outside editable text fields and respect the shortcuts preference.
-
-The [official website](https://infoxica.github.io/chatgpt-audio-controls/) and voluntary uninstall survey have separate deployment requirements. The extension has no analytics or normal-use telemetry. Website analytics require consent; submitted uninstall feedback is stored privately. Downloads keep the format supplied by ChatGPT; the extension does not convert audio.
-
-See the [delivery status](docs/RELEASE-1.3.0-STATUS.md) and [acceptance checklist](docs/ACCEPTANCE-1.3.0.md). GitHub publication and availability in each browser store are tracked separately. Native Mac testing is waived for v1.3.0 only. The standalone userscript receives the playback and capsule changes; popup, dashboard, and uninstall registration are extension features.
-
 ## 🤝 Contributing
 
 Contributions, feedback, and suggestions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on our workflow and PR guidelines.
 
 Maintainers preparing a Chrome Web Store or Microsoft Edge Add-ons submission should also use the [store launch checklist](docs/STORE-LAUNCH-CHECKLIST.md).
 
-Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and current version heading to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
+Run `bun run version:check` after each version bump. CI, packaging, and release validation require the README source-version badge and changelog link to match the package, manifest, UI, userscript, and changelog. The source badge describes this checkout; browser stores may publish updates at different times.
 
 ---
 

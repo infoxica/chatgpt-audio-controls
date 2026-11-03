@@ -15,3 +15,19 @@ if (faq) hydrateRoot(faq, <FaqAccordion {...props<FaqAccordionProps>('site-faq')
 hydrateRoot(document.getElementById('site-consent')!, <ConsentBanner {...props<ConsentBannerProps>('site-consent')} />, { identifierPrefix: 'site-consent' });
 
 installImageViewer();
+
+const header = document.querySelector<HTMLElement>('.top');
+if (header) {
+  const measureHeader = () => document.documentElement.style.setProperty('--site-header-height', `${Math.ceil(header.getBoundingClientRect().height)}px`);
+  new ResizeObserver(measureHeader).observe(header);
+  measureHeader();
+}
+
+// Keep the visual and keyboard order identical when mobile navigation moves.
+const navigation = document.getElementById('site-navigation');
+const actions = navigation?.parentElement;
+if (navigation && actions) {
+  const mobileHeader = matchMedia('(max-width:1000px)');
+  const orderHeader = () => mobileHeader.matches ? actions.append(navigation) : actions.prepend(navigation);
+  mobileHeader.addEventListener('change', orderHeader); orderHeader();
+}

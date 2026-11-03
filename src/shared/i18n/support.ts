@@ -1,4 +1,5 @@
 import audience from './audience-features.json';
+import chatgptFeatures from './chatgpt-features.json';
 import { resolveLanguage } from './core';
 // Title, description, suggestion action, review action.
 export const supportCatalogs: Record<string, string[]> = {
@@ -28,4 +29,5 @@ export const supportCatalogs: Record<string, string[]> = {
  tr: ['ChatGPT Audio Controls’u geliştirmeye yardımcı olun', 'Bir fikriniz mi var? Önerinizi paylaşın veya uzantıyı desteklemek için dürüst bir değerlendirme yazın.', 'Öneri paylaş', 'Değerlendirme yaz'],
 };
 Object.assign(supportCatalogs, Object.fromEntries(Object.entries(audience).map(([code, copy]) => [code, copy.support])));
+Object.assign(supportCatalogs, Object.fromEntries(Object.entries(chatgptFeatures).map(([code, copy]) => [code, copy.support])));
 export const supportCopy = (language?: string) => supportCatalogs[resolveLanguage(language)];

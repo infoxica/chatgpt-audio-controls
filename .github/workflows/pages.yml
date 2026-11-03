@@ -1,8 +1,8 @@
-name: Official website
+name: Legacy website redirects
 on:
   push:
     branches: [master]
-    paths: ['site/**', 'scripts/build-site.ts', 'scripts/preview-site.py', 'tests/site_http_test.py', 'src/shared/i18n/**', 'src/shared/constants.ts', 'config/release.json', 'assets/**', 'public/icons/**', '.github/workflows/pages.yml', 'package.json', 'bun.lock']
+    paths: ['site/**', 'scripts/build-site.ts', 'scripts/prepare-web-assets.ts', 'scripts/preview-site.py', 'tests/site_http_test.py', 'src/shared/i18n/**', 'src/shared/constants.ts', 'config/release.json', 'assets/**', 'public/icons/**', '.github/workflows/pages.yml', 'package.json', 'bun.lock']
   pull_request:
     branches: [develop, master]
   workflow_dispatch:
@@ -30,14 +30,18 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run scripts/build-site.ts
       - run: python3 -B tests/site_http_test.py
+      - run: bun run prepare:web-assets
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site-dist
+          path: build/legacy-pages
   deploy:
     if: >-
+      vars.WEBSITE_CLOUDFLARE_READY == 'true' && (
       (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
       (github.event_name == 'workflow_dispatch' && inputs.publish_website == true &&
-      (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'))
+      (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')))
+    # Enable only after the new Cloudflare hostname passes production checks.
+    # Keep the previous Pages site online until then.
     needs: build
     permissions:
       pages: write
