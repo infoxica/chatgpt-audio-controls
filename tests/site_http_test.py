@@ -1,6 +1,7 @@
 """HTTP-level discovery checks against the actual preview handler."""
 import importlib.util
 import http.client
+import hashlib
 import json
 import re
 from datetime import datetime
@@ -88,6 +89,16 @@ class SiteHTTP(unittest.TestCase):
                         self.assertTrue(node['url'].startswith('https://'))
                 webpage = next(node for node in schema['@graph'] if node['@type'] == 'WebPage')
                 self.assertTrue(webpage['breadcrumb']['@id'].startswith(preview.CANONICAL))
+
+    def test_published_skill_digest(self):
+        base = '/.well-known/agent-skills/'
+        with self.get(base + 'index.json') as index:
+            self.assertEqual(index.headers.get_content_type(), 'application/json')
+            skill, = json.load(index)['skills']
+        with self.get(base + skill['url'].removeprefix('./')) as response:
+            body = response.read()
+            self.assertEqual(skill['digest'], 'sha256:' + hashlib.sha256(body).hexdigest())
+            self.assertIn(b'name: chatgpt-audio-controls', body)
 
     def test_document_direction_for_every_generated_page(self):
         pages = list(Path('site-dist').rglob('index.html'))

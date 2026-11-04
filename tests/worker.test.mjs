@@ -15,6 +15,7 @@ beforeAll(async()=>{
   const directory='build/worker-static-fixture';
   await fs.mkdir(directory+'/api/feedback',{recursive:true});
   await fs.writeFile(directory+'/index.html','<!doctype html><title>Public website</title>');
+  await fs.writeFile(directory+'/index.md','# Public website');
   await fs.writeFile(directory+'/feedback.html','This must never replace the private form');
   await fs.writeFile(directory+'/api/feedback/index.html','This must never replace the API');
   mf=new Miniflare({modules:true,script:await built.outputs[0].text(),compatibilityDate:'2026-07-30',
@@ -60,4 +61,16 @@ test('static assets cannot shadow private feedback, API routes or unknown pages'
 });
 test('database outage cannot acknowledge success',async()=>{
   await db.exec('DROP TABLE feedback');const response=await submit(answer());expect(response.status).toBe(503);expect((await response.json()).saved).toBe(false);
+});
+
+test('Worker negotiates Markdown, HEAD and canonical discovery headers on public pages',async()=>{
+  const fetchPage=(accept,method='GET')=>mf.dispatchFetch(origin+'/',{method,headers:{Accept:accept}});
+  const md=await fetchPage('text/markdown');
+  expect(md.headers.get('content-type')).toContain('text/markdown');
+  expect(md.headers.get('vary')).toContain('Accept');
+  expect(md.headers.get('link')).toContain('rel="canonical"');
+  expect(await md.text()).toBe('# Public website');
+  expect(await (await fetchPage('text/markdown','HEAD')).text()).toBe('');
+  expect(await (await fetchPage('text/html, text/markdown;q=0.3')).text()).toContain('<title>');
+  expect((await mf.dispatchFetch(origin+'/api/extension-stats')).status).toBe(503);
 });

@@ -1,14 +1,15 @@
 # Website discovery audit
 
 Scope: the public extension website and its documentation. This site has no
-public API, login system, agent registration service, MCP server, or A2A agent.
+login system, agent registration service, MCP server, or A2A agent. The optional
+homepage statistics use a public, read-only JSON endpoint.
 The private feedback service is separate and is not an agent-facing API.
 
 ## Implemented and locally verifiable
 
-The static build generates robots.txt, a 85-page canonical sitemap with language
-alternates, llms.txt, and Markdown versions of every page. The Pages workflow
-regenerates these resources on each website publication.
+The website build generates robots.txt, a 335-page canonical sitemap with language
+alternates, llms.txt, Markdown versions of every page, and an install skill with
+a SHA-256 digest calculated from the published bytes.
 
 The owner selected **allow search, AI answers, and AI training**. Explicit crawler
 groups allow all public paths and declare `search=yes, ai-input=yes, ai-train=yes`.
@@ -37,12 +38,16 @@ discovery links, preview analytics, and rejected paths against a real HTTP serve
 The website targets the root of `https://chatgpt-audio-controls.infoxica.com/`
 through Cloudflare Worker static assets. `/feedback`, `/api/*`, and `/health`
 remain explicit Worker routes; private forms are never cached as public assets.
-The root robots file and sitemap cover all 165 public localized pages.
+The root robots file and sitemap cover all 335 public localized pages.
 
-The Python preview's negotiated Markdown and Link headers are local behavior.
-Production serves direct Markdown mirrors and HTML discovery links; static assets
-do not implement Accept negotiation. Do not treat preview-only checks as live
-acceptance. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
+The website Worker negotiates the Markdown mirror and sets Link and Vary headers
+on public pages. Cloudflare security rules run before Worker code. On November 4,
+2026, a security event for the production sitemap identified the custom rule
+**Block HTTP/1.1 Traffic**. An exception for public GET/HEAD requests on the
+website hostname restored HTTP/1.1 access. The production sitemap parsed with
+335 entries and robots.txt returned 200. Search Console accepted resubmission.
+The next successful Google read, indexing and the Worker deployment need
+separate evidence. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
 
 ## Remaining checklist items
 
@@ -50,14 +55,14 @@ acceptance. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
 | --- | --- |
 | AI crawler rules and Content Signals | Generated with the owner's explicit allow-search, allow-inference, allow-training policy. Local HTTP checks cover the output; production root deployment remains pending. |
 | DNS-AID and DNSSEC | No agent endpoint to advertise, no agent service is supplied by this website. An owned hostname alone does not create an agent endpoint; DNSSEC policy remains a separate domain-owner concern. |
-| API catalog | Not applicable: no public API or OpenAPI description. |
+| API catalog | The statistics endpoint has no published OpenAPI catalog. |
 | OAuth/OIDC discovery | Not applicable: this website is not an authorization server. |
 | OAuth protected-resource metadata | Not applicable: no protected website API. |
 | auth.md | Not applicable: no agent registration or credentials. |
 | MCP server card | Not applicable: no MCP server or transport endpoint. |
-| Agent skills index | Not applicable to the current product: no published executable agent skills; user documentation is linked in llms.txt. |
+| Agent skills index | The build publishes the install and playback instructions at `/.well-known/agent-skills/chatgpt-audio-controls/SKILL.md`; index.json and llms.txt link to discovery resources. |
 | WebMCP | Not implemented: current website actions are standard navigation/store links, not an agent tool interface. Creating one would be a new feature. |
-| ARD capability catalog | No MCP, A2A, skill, or API capability to advertise. Do not publish invented entries solely to satisfy a scanner. |
+| ARD capability catalog | Installation instructions use the agent-skills index. |
 
 The linked scanner skills were reviewed on 2026-09-08. They describe implementations
 for sites that provide the corresponding capabilities; not every missing service

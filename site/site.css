@@ -115,3 +115,9 @@ p,li{overflow-wrap:anywhere}
  .top .donate-header,.top .theme-toggle,.top .language-picker,.top .mobile-navigation .navigation-trigger{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:8px;flex:none}
  .top .donate-header span{display:none}
 }
+
+.hero .eyebrow { flex-wrap: wrap; justify-content: center; max-width: 100%; }
+.store-stats { overflow-wrap: anywhere; }
+.store-stats summary { cursor: pointer; padding-block: 8px; }
+.store-stats details[open] { text-align: start; }
+.store-stats p { margin: 6px 0; font-size: .9em; }

@@ -3,10 +3,11 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const base='https://chatgpt-audio-controls.infoxica.com/';
 const localeCodes=Object.keys(JSON.parse(await fs.readFile('site/navigation-copy.json','utf8')));
-async function serveSite(context,tracking=[]) {
+async function serveSite(context,tracking=[],stats=null) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
     if(url.startsWith(base)){
+      if(url===base+'api/extension-stats') return route.fulfill({json:stats});
       const relative=url.split('?')[0].slice(base.length) || 'index.html';
       const file=relative.endsWith('/')?relative+'index.html':relative;
       const content=await fs.readFile('site-dist/'+file);
@@ -16,6 +17,35 @@ async function serveSite(context,tracking=[]) {
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
+test('statistics disclosure exposes dated store figures and preserves navigation in RTL',async({page,context})=>{
+  const date=new Date().toISOString();
+  const store={users:103,rating:null,ratingCount:0,usersUpdatedAt:date,ratingsUpdatedAt:date};
+  const stats={chrome:{...store,users:1124,rating:4.84,ratingCount:12},edge:store,
+    combined:{rating:4.84,ratingCount:12,ratingMode:'weighted',contributors:['chrome']}};
+  await serveSite(context,[],stats);
+  await page.setViewportSize({width:320,height:700});
+  await page.goto(base+'ar/');
+  const disclosure=page.locator('.store-stats summary');
+  await expect(disclosure).toContainText('≈');
+  await disclosure.focus(); await disclosure.press('Enter');
+  await expect(page.locator('.store-stats a')).toHaveCount(2);
+  await expect(page.locator('.store-stats p').first()).toContainText('Chrome');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});
+test('store links work during loading and when the snapshot is unavailable',async({page,context})=>{
+  await serveSite(context);
+  let release;
+  const gate=new Promise(resolve=>{release=resolve});
+  await page.route(base+'api/extension-stats', async route=>{
+    await gate; await route.fulfill({status:503,json:{error:'stats_unavailable'}});
+  });
+  await page.goto(base,{waitUntil:'domcontentloaded'});
+  const links=page.locator('.store-stats a');
+  await expect(links).toHaveCount(2);
+  const done=page.waitForResponse(base+'api/extension-stats'); release(); await done;
+  await expect(links.first()).toBeVisible();
+  await expect(page.locator('.store-stats summary')).toHaveCount(0);
+});
 for(const [width,locale] of [[1512,''],[320,''],[390,'ur/']])test(`sticky navigation clears anchors and PayPal remains explicit at ${width} ${locale}`,async({page,context})=>{
   await serveSite(context);await page.setViewportSize({width,height:982});await page.goto(base+locale);
   await page.evaluate(()=>document.querySelector('#support').scrollIntoView());

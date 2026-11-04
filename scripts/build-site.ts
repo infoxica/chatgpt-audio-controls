@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import statsCopy from "../site/stats-copy.json";
 import imageViewerCopy from "../site/image-viewer-copy.json";
 import supportAnalyticsCopy from "../site/support-analytics-copy.json";
 import { donationCopy, donationCatalogs } from "../src/shared/i18n/donations";
@@ -60,6 +63,8 @@ markdown.remove((node) =>
 const contentPaths = [
   "scripts/build-site.ts",
   "site/GuidePages.tsx",
+  "site/agent-skills",
+  "site/stats-copy.json",
   "site/components.tsx",
   "assets/demo",
   "site/image-viewer.ts",
@@ -135,6 +140,17 @@ const alternativesFor = (slug: string) =>
     .join("") +
   `<link rel="alternate" hreflang="x-default" href="${root}${slug}">`;
 mkdirSync("site-dist/assets", { recursive: true });
+const skillId = "chatgpt-audio-controls";
+const skillRoot = "site-dist/.well-known/agent-skills";
+const skill = readFileSync("site/agent-skills/" + skillId + "/SKILL.md");
+mkdirSync(skillRoot + "/" + skillId, { recursive: true });
+writeFileSync(skillRoot + "/" + skillId + "/SKILL.md", skill);
+writeFileSync(skillRoot + "/index.json", JSON.stringify({
+  $schema: "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  skills: [{ name: skillId, description: skill.toString().match(/^description: (.+)$/m)![1],
+    type: "skill-md", url: "./" + skillId + "/SKILL.md",
+    digest: "sha256:" + createHash("sha256").update(skill).digest("hex") }],
+}, null, 2) + "\n");
 copyFileSync("site/site.css", "site-dist/assets/site.css");
 
 copyFileSync(
@@ -486,13 +502,15 @@ for (const [code, base] of Object.entries(LOCALES)) {
       ],
     };
 
-    return `<!doctype html><html lang="${code}" dir="${languageDirection(code)}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.png"><meta property="og:image:width" content="1920"><meta property="og:image:height" content="1080"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.png"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
+    return `<!doctype html><html lang="${code}" dir="${languageDirection(code)}" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(title)} | ChatGPT Audio Controls</title><meta name="description" content="${escape(description)}"><link rel="describedby" type="application/json" href="${root}.well-known/agent-skills/index.json"><link rel="canonical" href="${pageUrl}">${alternatives}<link rel="alternate" type="text/markdown" href="${pageUrl}index.md"><link rel="describedby" type="text/markdown" href="${root}llms.txt"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta property="og:site_name" content="ChatGPT Audio Controls"><meta property="og:type" content="website"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${pageUrl}"><meta property="og:image" content="${root}assets/player.png"><meta property="og:image:width" content="1920"><meta property="og:image:height" content="1080"><meta property="og:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:title" content="${escape(title)}"><meta name="twitter:description" content="${escape(description)}"><meta name="twitter:image" content="${root}assets/player.png"><meta name="twitter:image:alt" content="${escape(c.screenshot)}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="${path}assets/icon.png"><link rel="stylesheet" href="${path}assets/site.css"><script type="application/ld+json">${JSON.stringify(graph).replace(/</g, "\\u003c")}</script><script type="module" src="${path}assets/site.js"></script></head><body data-ga4="${escape(config.websiteGa4Id)}">
   <a class="skip" href="#main">${escape(c.features)}</a><header class="top"><a class="brand" href="${url}"><img src="${path}assets/icon.png" alt="" width="34" height="34"><span>ChatGPT<br>Audio Controls</span></a><div class="header-actions">${navigation}<a class="ui-button donate-header" aria-label="${escape(d.donate)}" href="${url}#support">${icon(Heart)}<span>${escape(d.donate)}</span></a>${controlsFor(slug)}</div></header>
   ${content}
   <footer>${footerNavigation}<p>${escape(c.independent)}</p><p class="copyright-disclaimer">${escape(n.disclaimer)}</p><div class="links"><a href="${root}sitemap.xml">${escape(n.sitemap)}</a><a href="${root}llms.txt">llms.txt</a><a href="https://github.com/infoxica/chatgpt-audio-controls">${escape(base.popup.about.githubRepo)}</a><a href="${url}#privacy">${escape(c.privacy)}</a>${renderToStaticMarkup(createElement(Button, { id: "analytics-preferences", variant: "link" }, c.preferences))}</div></footer>
   ${consent}<dialog class="image-viewer" dir="${languageDirection(code)}" aria-labelledby="image-viewer-caption"><button type="button" class="image-viewer-close" aria-label="${escape(closeImage)}" title="${escape(closeImage)}">${renderToStaticMarkup(createElement(X, { size: 24, "aria-hidden": true }))}</button><figure><img alt=""><figcaption id="image-viewer-caption"></figcaption></figure></dialog></body></html>`;
   };
-  const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls</div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p><p class="small">${escape(c.quickStartBody)}</p>${install("hero")}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
+  const labels = statsCopy[code as keyof typeof statsCopy];
+  if (!labels) throw Error("Missing stats labels: " + code);
+  const homeContent = `<main id="main"><section class="hero"><div class="eyebrow">${playIcon} ChatGPT Audio Controls<span class="store-stats" data-stats-url="${escape(new URL("/api/extension-stats", process.env.WEBSITE_API_ORIGIN || root).href)}" data-labels="${escape(JSON.stringify(labels))}"><a href="${chromeUrl}">Chrome</a> · <a href="${edgeUrl}">Edge</a></span></div><h1>${escape(c.siteTitle)}</h1><p class="intro">${escape(c.siteIntro)}</p><p class="small">${escape(c.quickStartBody)}</p>${install("hero")}<p class="small">${escape(c.desktop)}<br>${escape(c.available)}</p></section>
   <section class="section demo-section" id="demo" aria-labelledby="demo-title"><h2 id="demo-title">${escape(demo[0])}</h2><p class="small" id="demo-note">${escape(demo[1])}</p>
   <video controls playsinline preload="none" poster="${path}assets/player.png" width="1920" height="1080" aria-label="${escape(demo[0])}" aria-describedby="demo-note"><source src="${path}assets/walkthrough.mp4" type="video/mp4"></video>
   <details class="demo-transcript" lang="en" dir="ltr"><summary>Video transcript (English)</summary><ol>${demoChapters.map((chapter) => `<li>${escape(chapter.text)}</li>`).join("")}</ol></details>
@@ -642,6 +660,7 @@ ChatGPT and OpenAI are trademarks of OpenAI. This project is not affiliated with
 
 ## Documentation
 
+- [Browser agent skill index](${root}.well-known/agent-skills/index.json): Install and operate the extension using browser controls.
 - [Overview](${root}index.md): Features, setup, shortcuts, FAQs, reviews, and privacy.
 - [User guide](${root}guide/index.md): Playback controls, settings, shortcuts, and troubleshooting.
 - [Installation](${root}installation/index.md): Store installation, unpacked ZIP, and source builds.

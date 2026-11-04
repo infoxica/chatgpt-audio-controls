@@ -13,7 +13,11 @@
   },
   "vars": {
     "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
-    "ENVIRONMENT": "local"
+    "ENVIRONMENT": "local",
+    "CHROME_ITEM_ID": "aifalimlfgiepmbejcemcofninobaiea",
+    "EDGE_ITEM_ID": "cmhbacgmcgiolpidfjcpefkhbbeamemf",
+    "RATING_MODE": "weighted",
+    "EDGE_STATS_ENABLED": "false"
   },
   "d1_databases": [
     {
@@ -28,7 +32,11 @@
       "name": "chatgpt-audio-feedback-staging",
       "vars": {
         "TURNSTILE_SITE_KEY": "0x4AAAAAAFmYysX2jPu8WFFj",
-        "ENVIRONMENT": "staging"
+        "ENVIRONMENT": "staging",
+        "CHROME_ITEM_ID": "aifalimlfgiepmbejcemcofninobaiea",
+        "EDGE_ITEM_ID": "cmhbacgmcgiolpidfjcpefkhbbeamemf",
+        "RATING_MODE": "weighted",
+        "EDGE_STATS_ENABLED": "false"
       },
       "d1_databases": [
         {
@@ -49,14 +57,15 @@
         "html_handling": "auto-trailing-slash",
         "not_found_handling": "none",
         "run_worker_first": [
-          "/feedback",
-          "/feedback/*",
-          "/api",
-          "/api/*",
-          "/health",
-          "/health/*"
+          "/*",
+          "!/assets/*"
         ]
-      }
+      },
+      "kv_namespaces": [
+        {
+          "binding": "STATS_KV"
+        }
+      ]
     },
     "production": {
       "name": "chatgpt-audio-feedback",
@@ -68,7 +77,11 @@
       ],
       "vars": {
         "TURNSTILE_SITE_KEY": "0x4AAAAAAFmZI5PtqIBrKeQK",
-        "ENVIRONMENT": "production"
+        "ENVIRONMENT": "production",
+        "CHROME_ITEM_ID": "aifalimlfgiepmbejcemcofninobaiea",
+        "EDGE_ITEM_ID": "cmhbacgmcgiolpidfjcpefkhbbeamemf",
+        "RATING_MODE": "weighted",
+        "EDGE_STATS_ENABLED": "false"
       },
       "d1_databases": [
         {
@@ -81,6 +94,16 @@
       "secrets": {
         "required": [
           "TURNSTILE_SECRET_KEY"
+        ]
+      },
+      "kv_namespaces": [
+        {
+          "binding": "STATS_KV"
+        }
+      ],
+      "triggers": {
+        "crons": [
+          "0 3 * * *"
         ]
       }
     }
@@ -96,12 +119,13 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none",
     "run_worker_first": [
-      "/feedback",
-      "/feedback/*",
-      "/api",
-      "/api/*",
-      "/health",
-      "/health/*"
+      "/*",
+      "!/assets/*"
     ]
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "STATS_KV"
+    }
+  ]
 }

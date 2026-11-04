@@ -1,4 +1,5 @@
 import { installImageViewer } from './image-viewer';
+import { loadStoreStats } from './store-stats';
 import { hydrateRoot } from 'react-dom/client';
 import { SiteNavigation, type SiteNavigationProps } from './components';
 import { HeaderControls, FaqAccordion, ConsentBanner, type HeaderControlsProps, type FaqAccordionProps, type ConsentBannerProps } from './components';
@@ -15,6 +16,8 @@ if (faq) hydrateRoot(faq, <FaqAccordion {...props<FaqAccordionProps>('site-faq')
 hydrateRoot(document.getElementById('site-consent')!, <ConsentBanner {...props<ConsentBannerProps>('site-consent')} />, { identifierPrefix: 'site-consent' });
 
 installImageViewer();
+const stats = document.querySelector<HTMLElement>('.store-stats');
+if (stats) void loadStoreStats(stats);
 
 const header = document.querySelector<HTMLElement>('.top');
 if (header) {

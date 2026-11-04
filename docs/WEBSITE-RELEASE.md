@@ -18,16 +18,16 @@ candidate, **not** a backup of a previous deployment. Preserve previous deployed
 artifacts separately before promotion.
 
 The Python preview accepts the new root URL and redirects the legacy project
-prefix without redirecting `/` to itself. Its Markdown Accept negotiation and
-custom Link headers are preview features; production provides explicit Markdown
-mirrors and HTML discovery links.
+prefix without redirecting `/` to itself. The Worker negotiates localized Markdown
+and advertises canonical, alternate and llms.txt links on generated page responses.
 
 ## Worker routing and security
 
 `/feedback`, `/feedback/*`, `/api`, `/api/*`, `/health`, and `/health/*` run the
 Worker first. Feedback retains its CSP, no-store policy, Turnstile verification,
 rate limits and D1 protections. Public static assets cannot shadow these routes.
-Other matching assets use Cloudflare's asset handler; missing assets remain 404.
+Public pages run the negotiation handler. Media under `/assets/` bypasses it.
+The public statistics endpoint reads KV. Missing assets remain 404.
 See [Cloudflare selective Worker routing](https://developers.cloudflare.com/workers/static-assets/routing/worker-script/).
 
 Deploy and exercise the staging environment first:
@@ -68,3 +68,26 @@ command, then verify feedback/API routes and the intended website state.
 Restore the prior Pages artifact if redirects have been activated, and clear
 WEBSITE_CLOUDFLARE_READY until production checks pass again.
 Do not roll back D1 data or rotate secrets for a static-site rollback.
+
+## Set up staging statistics
+
+1. In Cloudflare, select the account that owns the existing feedback Worker. Copy its account ID. Under **API Tokens**, create a dedicated deployment token scoped to that account. Start with the Edit Cloudflare Workers template. Include Workers Scripts edit and Workers KV Storage edit for binding/provisioning. Scope route permissions to the website zone for production. Preserve existing D1, Turnstile and custom-domain bindings. Test staging first and inspect any permission error before granting additional access.
+2. On GitHub open **infoxica/chatgpt-audio-controls → Settings → Environments**. Select or create `cloudflare-staging`. Under **Environment secrets**, add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Use a separate protected `cloudflare-production` environment for promotion. The workflow reads these secrets only during credential checking and deployment.
+3. Sign into Google Cloud as a user authorized to read this item's publisher statistics. Enable the Chrome Web Store API in a dedicated project, configure Google Auth Platform's audience and consent screen, and create a **Web application** OAuth client. If using Google's OAuth Playground, register its exact redirect URI `https://developers.google.com/oauthplayground`. In its gear menu select **Use your own OAuth credentials** and **Offline** access. Authorize only `https://www.googleapis.com/auth/chromewebstore.readonly`, approve as the publisher user, and exchange the code for tokens. Use the **refresh token**. An external consent screen in Testing can issue short-lived grants; choose an appropriate production or internal consent configuration before relying on daily refreshes. [Google setup](https://developer.chrome.com/docs/webstore/using-api) · [OAuth Playground](https://developers.google.com/oauthplayground/)
+4. In Cloudflare open **Workers & Pages → chatgpt-audio-feedback-staging → Settings → Variables and Secrets**. Add encrypted secrets `STATS_CLIENT_ID`, `STATS_CLIENT_SECRET`, `STATS_REFRESH_TOKEN` and `STATS_PUBLISHER_ID` (publisher dashboard ID). Preserve the existing Turnstile secret. Alternatively use interactive `wrangler secret put NAME --env staging --config feedback/worker/wrangler.jsonc`. Keep values out of shell arguments, Git and chat. Rotate by replacing and verifying the grant before revoking the old one. Publishing uses separate credentials.
+5. Wrangler binds `STATS_KV` separately for each environment. On first deployment verify the provisioned namespace under the Worker's Bindings and pin its namespace ID in that environment before moving it or changing Worker names. Keep key `extension:stats:v1` without expiry. The public Chrome item ID is `aifalimlfgiepmbejcemcofninobaiea`. The Edge item ID is `cmhbacgmcgiolpidfjcpefkhbbeamemf`.
+6. Run **Cloudflare website and feedback** on the reviewed branch with **staging** selected. The staging homepage uses its own API. To test the scheduled event locally, run `bunx wrangler dev --test-scheduled --config feedback/worker/wrangler.jsonc` and request `http://localhost:8787/__scheduled?cron=0+3+*+*+*`. To exercise a real staging Worker, temporarily configure a staging Cron Trigger, observe one scheduled event in Worker logs, and remove that trigger. Verify the cached JSON contains the expected per-field dates and counts. No visitor URL initiates a refresh.
+7. Edge automation defaults to disabled. Verify Microsoft's applicable terms and permission to use the undocumented details endpoint. If permitted, enable `EDGE_STATS_ENABLED=true` in the staging config for the scheduled test. A denial, challenge or schema change is a failed observation. Do not bypass it. Enable production only after staging succeeds.
+8. Before production, record the current Worker version and smoke-test feedback, sitemap, Markdown GET/HEAD, skill digest and stats in staging. After promotion verify the **03:00 UTC** scheduled event, both store observations and the public response. Test both requested scanners against the canonical hostname. Record Search Console's **last read** and discovered pages separately from a successful submission and from indexed pages.
+
+Chrome reports seven-day active users and Edge reports active installations. The combined number can include the same person twice. Ratings use rating counts as weights by default. Set `RATING_MODE=max` to display the higher store rating with its own count. The API returns 503 before there are usable observations. A retained measurement is marked stale when its latest attempt fails or it ages past 48 hours. The homepage suppresses figures older than a week. KV propagation can briefly expose the previous snapshot.
+
+### Manual Edge fallback
+
+Obtain a dated, authorized Edge observation and prepare a JSON file with `crxId`, `activeInstallCount`, `averageRating`, and `ratingCount`. Use zero count and a null average only for a confirmed unrated listing. Export the current value with `wrangler kv key get extension:stats:v1 --binding STATS_KV --remote --text --env staging --config feedback/worker/wrangler.jsonc` and keep a UTF-8 backup. Outside the refresh window run:
+
+```sh
+bun scripts/import-edge-stats.ts previous.json edge.json OBSERVATION_TIME_UTC cmhbacgmcgiolpidfjcpefkhbbeamemf > candidate.json
+```
+
+Use `-` for the previous file only after verifying that the key has never existed. Compare the output with the backup and re-read KV before writing. If the prior value changed, regenerate against the new value. Write the approved JSON with `wrangler kv key put extension:stats:v1 --path candidate.json --binding STATS_KV --remote --env staging --config feedback/worker/wrangler.jsonc`. Verify the dated result after propagation. Select production explicitly for a production import.
