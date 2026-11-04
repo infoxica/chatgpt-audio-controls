@@ -45,9 +45,9 @@ on public pages. Cloudflare security rules run before Worker code. On November 4
 2026, a security event for the production sitemap identified the custom rule
 **Block HTTP/1.1 Traffic**. An exception for public GET/HEAD requests on the
 website hostname restored HTTP/1.1 access. The production sitemap parsed with
-335 entries and robots.txt returned 200. Search Console accepted resubmission.
-The next successful Google read, indexing and the Worker deployment need
-separate evidence. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
+335 entries and robots.txt returned 200. After resubmission, Google Search Console
+reported **Success**, last read November 4, 2026, and **335 discovered pages**.
+Page indexing is tracked separately. See [deployment and rollback](../docs/WEBSITE-RELEASE.md).
 
 ## Remaining checklist items
 
