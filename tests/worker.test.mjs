@@ -74,3 +74,36 @@ test('Worker negotiates Markdown, HEAD and canonical discovery headers on public
   expect(await (await fetchPage('text/html, text/markdown;q=0.3')).text()).toContain('<title>');
   expect((await mf.dispatchFetch(origin+'/api/extension-stats')).status).toBe(503);
 });
+
+test('statistics requests work in workerd and never follow upstream credential redirects',async()=>{
+  const entry='build/worker-stats-fixture.ts';
+  await fs.writeFile(entry,`import {collectChrome} from '../feedback/worker/src/store-sources';
+    export default {async fetch(request,env){return Response.json(await collectChrome(env,Date.parse('2026-11-04T03:00:00Z')))}};`);
+  const built=await Bun.build({entrypoints:[entry],target:'browser',format:'esm'});
+  expect(built.success).toBe(true);
+  let redirectRatings=false;
+  const requests=[];
+  const runtime=new Miniflare({modules:true,script:await built.outputs[0].text(),compatibilityDate:'2026-07-30',
+    bindings:{STATS_CLIENT_ID:'fake-client',STATS_CLIENT_SECRET:'fake-secret',STATS_REFRESH_TOKEN:'fake-refresh',STATS_PUBLISHER_ID:'p',CHROME_ITEM_ID:'c'},
+    outboundService:async request=>{
+      requests.push(request.url);
+      if(new URL(request.url).hostname==='oauth2.googleapis.com') {
+        expect(request.method).toBe('POST');
+        expect((await request.formData()).get('refresh_token')).toBe('fake-refresh');
+        return Response.json({access_token:'fake-access'});
+      }
+      expect(request.headers.get('authorization')).toBe('Bearer fake-access');
+      if(request.url.endsWith('/ratingSummary')) return redirectRatings ?
+        new Response(null,{status:302,headers:{Location:'https://untrusted.invalid/'}}) :
+        Response.json({name:'publishers/p/items/c/ratingSummary',rating:4.5,ratingCount:'10'});
+      return Response.json({metricRows:[{date:{year:2026,month:11,day:3},metricValues:[{metric:'users-7d',value:'100'}]}]});
+    }});
+  try {
+    const collect=async()=>await (await runtime.dispatchFetch('https://test.invalid/')).json();
+    expect(await collect()).toEqual({ratings:{rating:4.5,ratingCount:10},audience:{users:100,metricDate:'2026-11-03'}});
+    redirectRatings=true;
+    expect(await collect()).toEqual({audience:{users:100,metricDate:'2026-11-03'}});
+    expect(requests).toHaveLength(6);
+    expect(requests.every(url=>!url.includes('untrusted.invalid'))).toBe(true);
+  } finally {await runtime.dispose()}
+},30000);

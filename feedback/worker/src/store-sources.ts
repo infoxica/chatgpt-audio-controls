@@ -27,7 +27,9 @@ async function request(url: string | URL, init: RequestInit = {}) {
   for (let attempt = 0; ; attempt++) {
     let delay = 250;
     try {
-      const res = await fetch(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(10000) });
+      // workerd supports follow/manual, not redirect:error. Reject 3xx below so
+      // OAuth bodies and Authorization headers never follow an upstream redirect.
+      const res = await fetch(url, { ...init, redirect: 'manual', signal: AbortSignal.timeout(10000) });
       if (res.ok) {
         if (!res.headers.get('content-type')?.includes('application/json')) throw new UpstreamError('invalid_type');
         return await res.json() as Record<string, unknown>;
