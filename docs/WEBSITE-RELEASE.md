@@ -121,6 +121,31 @@ rating. The API retains the full source observations for inspection.
   TypeScript checks pass. Failed collection correctly leaves the endpoint at 503
   rather than publishing invented zero counts. Runtime diagnostics expose only
   bounded failure categories, never credentials or raw upstream responses.
+- The final staging deployment in run [42005880839](https://github.com/infoxica/chatgpt-audio-controls/actions/runs/42005880839)
+  succeeded at commit `1d51f5a`; Worker version
+  `971ef268-795e-4c8a-8fd0-3519ae7d732c`. Both authenticated Google methods now
+  return successful HTTP responses. The cached rating is **4.0 from four ratings**;
+  the clean-browser homepage shows `Chrome ★ 4.0/5` with its source disclosure.
+  Evidence: `build/acceptance-1.4.1/staging-live-rating-2026-11-05.png`.
+- **Chrome user-count acceptance remains open.** Despite requesting `users-7d`
+  without dimensions, the response contains nonempty dimension values. The
+  adapter rejects these rows with `no_valid_users:dimensioned_row`, rather than
+  interpreting an unidentified slice as a total or summing overlapping users.
+  Confirm Google's aggregate response semantics before accepting these values.
+  The public endpoint accurately returns `chrome.users: null`,
+  `combined.users: null`, and `isComplete: false`; ratings remain usable.
+- The temporary staging cron was removed with `wrangler triggers deploy` using
+  the explicit empty staging cron list. Scheduled changes can take time to
+  propagate. Production's configured daily schedule has not been deployed by
+  this work. Final local regression result: **14 tests passed, 137 assertions**.
+- A separate manual Edge observation at `2026-11-05T09:56:23.627664Z` returned
+  103 active installations and zero ratings. This observation was not imported
+  into KV: it predates subsequent scheduled attempts and must not be relabelled
+  as a newer observation. No combined audience total has been published.
+- PR [#29](https://github.com/infoxica/chatgpt-audio-controls/pull/29) remains open
+  with review required. Production promotion, its first daily refresh, Google
+  Search Console evidence, and the production scanner checks remain separate
+  acceptance gates. Extension and userscript versions remain **1.4.1**.
 - Microsoft's [store-linked terms](https://www.microsoft.com/en-us/legal/terms-of-use)
   and [services agreement](https://www.microsoft.com/en-us/servicesagreement) were
   reviewed. They do not establish a supported statistics API or explicit permission
