@@ -5,7 +5,9 @@
     "Ratings",
     "Highest store rating",
     "Last updated",
-    "Last available data"
+    "Last available data",
+    "Rated",
+    "Users / installs"
   ],
   "am": [
     "ንቁ ተጠቃሚዎች (7 ቀናት)",
@@ -13,7 +15,9 @@
     "ደረጃዎች",
     "ከፍተኛው የመደብር ደረጃ",
     "የመጨረሻ ዝማኔ",
-    "መጨረሻ የተገኘ መረጃ"
+    "መጨረሻ የተገኘ መረጃ",
+    "ደረጃ",
+    "ተጠቃሚዎች / ጭነቶች"
   ],
   "bg": [
     "Активни потребители (7 дни)",
@@ -21,7 +25,9 @@
     "Оценки",
     "Най-висока оценка в магазин",
     "Обновено",
-    "Последни налични данни"
+    "Последни налични данни",
+    "Оценка",
+    "Потребители / инсталации"
   ],
   "bs": [
     "Aktivni korisnici (7 dana)",
@@ -29,7 +35,9 @@
     "Ocjene",
     "Najviša ocjena u trgovini",
     "Ažurirano",
-    "Posljednji dostupni podaci"
+    "Posljednji dostupni podaci",
+    "Ocjena",
+    "Korisnici / instalacije"
   ],
   "da": [
     "Aktive brugere (7 dage)",
@@ -37,7 +45,9 @@
     "Bedømmelser",
     "Højeste butiksbedømmelse",
     "Opdateret",
-    "Senest tilgængelige data"
+    "Senest tilgængelige data",
+    "Bedømmelse",
+    "Brugere / installationer"
   ],
   "et": [
     "Aktiivsed kasutajad (7 päeva)",
@@ -45,7 +55,9 @@
     "Hinnangud",
     "Kõrgeim poehinnang",
     "Uuendatud",
-    "Viimased saadaolevad andmed"
+    "Viimased saadaolevad andmed",
+    "Hinnang",
+    "Kasutajad / installid"
   ],
   "fil": [
     "Mga aktibong user (7 araw)",
@@ -53,7 +65,9 @@
     "Mga rating",
     "Pinakamataas na rating sa tindahan",
     "Huling update",
-    "Huling datos na magagamit"
+    "Huling datos na magagamit",
+    "Rating",
+    "Mga user / pag-install"
   ],
   "fi": [
     "Aktiiviset käyttäjät (7 päivää)",
@@ -61,7 +75,9 @@
     "Arviot",
     "Korkein kauppa-arvosana",
     "Päivitetty",
-    "Viimeisimmät saatavilla olevat tiedot"
+    "Viimeisimmät saatavilla olevat tiedot",
+    "Arvosana",
+    "Käyttäjät / asennukset"
   ],
   "gu": [
     "સક્રિય વપરાશકર્તાઓ (7 દિવસ)",
@@ -69,7 +85,9 @@
     "રેટિંગ",
     "સ્ટોરનું સૌથી ઊંચું રેટિંગ",
     "છેલ્લો સુધારો",
-    "છેલ્લે ઉપલબ્ધ માહિતી"
+    "છેલ્લે ઉપલબ્ધ માહિતી",
+    "રેટિંગ",
+    "વપરાશકર્તાઓ / ઇન્સ્ટોલેશન"
   ],
   "hr": [
     "Aktivni korisnici (7 dana)",
@@ -77,7 +95,9 @@
     "Ocjene",
     "Najviša ocjena u trgovini",
     "Ažurirano",
-    "Posljednji dostupni podaci"
+    "Posljednji dostupni podaci",
+    "Ocjena",
+    "Korisnici / instalacije"
   ],
   "hy": [
     "Ակտիվ օգտատերեր (7 օր)",
@@ -85,7 +105,9 @@
     "Գնահատականներ",
     "Խանութի ամենաբարձր գնահատականը",
     "Թարմացվել է",
-    "Վերջին հասանելի տվյալները"
+    "Վերջին հասանելի տվյալները",
+    "Գնահատական",
+    "Օգտատերեր / տեղադրումներ"
   ],
   "is": [
     "Virkir notendur (7 dagar)",
@@ -93,7 +115,9 @@
     "Einkunnir",
     "Hæsta einkunn í verslun",
     "Uppfært",
-    "Síðustu tiltæku gögn"
+    "Síðustu tiltæku gögn",
+    "Einkunn",
+    "Notendur / uppsetningar"
   ],
   "ka": [
     "აქტიური მომხმარებლები (7 დღე)",
@@ -101,7 +125,9 @@
     "შეფასებები",
     "მაღაზიის უმაღლესი შეფასება",
     "განახლდა",
-    "ბოლო ხელმისაწვდომი მონაცემები"
+    "ბოლო ხელმისაწვდომი მონაცემები",
+    "შეფასება",
+    "მომხმარებლები / ინსტალაციები"
   ],
   "kk": [
     "Белсенді пайдаланушылар (7 күн)",
@@ -109,7 +135,9 @@
     "Бағалар",
     "Дүкендегі ең жоғары баға",
     "Жаңартылды",
-    "Соңғы қолжетімді деректер"
+    "Соңғы қолжетімді деректер",
+    "Баға",
+    "Пайдаланушылар / орнатулар"
   ],
   "kn": [
     "ಸಕ್ರಿಯ ಬಳಕೆದಾರರು (7 ದಿನಗಳು)",
@@ -117,7 +145,9 @@
     "ರೇಟಿಂಗ್‌ಗಳು",
     "ಅತ್ಯಧಿಕ ಸ್ಟೋರ್ ರೇಟಿಂಗ್",
     "ಕೊನೆಯ ನವೀಕರಣ",
-    "ಕೊನೆಯದಾಗಿ ಲಭ್ಯವಿದ್ದ ಮಾಹಿತಿ"
+    "ಕೊನೆಯದಾಗಿ ಲಭ್ಯವಿದ್ದ ಮಾಹಿತಿ",
+    "ರೇಟಿಂಗ್",
+    "ಬಳಕೆದಾರರು / ಸ್ಥಾಪನೆಗಳು"
   ],
   "lt": [
     "Aktyvūs naudotojai (7 dienos)",
@@ -125,7 +155,9 @@
     "Įvertinimai",
     "Aukščiausias parduotuvės įvertinimas",
     "Atnaujinta",
-    "Paskutiniai turimi duomenys"
+    "Paskutiniai turimi duomenys",
+    "Įvertinimas",
+    "Naudotojai / diegimai"
   ],
   "lv": [
     "Aktīvie lietotāji (7 dienas)",
@@ -133,7 +165,9 @@
     "Vērtējumi",
     "Augstākais veikala vērtējums",
     "Atjaunināts",
-    "Pēdējie pieejamie dati"
+    "Pēdējie pieejamie dati",
+    "Vērtējums",
+    "Lietotāji / instalācijas"
   ],
   "mk": [
     "Активни корисници (7 дена)",
@@ -141,7 +175,9 @@
     "Оценки",
     "Највисока оценка во продавница",
     "Ажурирано",
-    "Последни достапни податоци"
+    "Последни достапни податоци",
+    "Оцена",
+    "Корисници / инсталации"
   ],
   "ml": [
     "സജീവ ഉപയോക്താക്കൾ (7 ദിവസം)",
@@ -149,7 +185,9 @@
     "റേറ്റിംഗുകൾ",
     "ഏറ്റവും ഉയർന്ന സ്റ്റോർ റേറ്റിംഗ്",
     "അവസാന പുതുക്കൽ",
-    "അവസാനം ലഭ്യമായ വിവരങ്ങൾ"
+    "അവസാനം ലഭ്യമായ വിവരങ്ങൾ",
+    "റേറ്റിംഗ്",
+    "ഉപയോക്താക്കൾ / ഇൻസ്റ്റാളുകൾ"
   ],
   "mn": [
     "Идэвхтэй хэрэглэгчид (7 хоног)",
@@ -157,7 +195,9 @@
     "Үнэлгээ",
     "Дэлгүүрийн хамгийн өндөр үнэлгээ",
     "Шинэчилсэн",
-    "Сүүлд авсан мэдээлэл"
+    "Сүүлд авсан мэдээлэл",
+    "Үнэлгээ",
+    "Хэрэглэгчид / суулгалтууд"
   ],
   "ms": [
     "Pengguna aktif (7 hari)",
@@ -165,7 +205,9 @@
     "Penilaian",
     "Penilaian kedai tertinggi",
     "Dikemas kini",
-    "Data terakhir yang tersedia"
+    "Data terakhir yang tersedia",
+    "Penilaian",
+    "Pengguna / pemasangan"
   ],
   "my": [
     "တက်ကြွအသုံးပြုသူများ (၇ ရက်)",
@@ -173,7 +215,9 @@
     "အဆင့်သတ်မှတ်ချက်များ",
     "စတိုး၏ အမြင့်ဆုံးအဆင့်",
     "နောက်ဆုံး ပြင်ဆင်ချိန်",
-    "နောက်ဆုံးရရှိထားသော အချက်အလက်"
+    "နောက်ဆုံးရရှိထားသော အချက်အလက်",
+    "အဆင့်သတ်မှတ်ချက်",
+    "အသုံးပြုသူများ / ထည့်သွင်းမှုများ"
   ],
   "nl": [
     "Actieve gebruikers (7 dagen)",
@@ -181,7 +225,9 @@
     "Beoordelingen",
     "Hoogste winkelbeoordeling",
     "Bijgewerkt",
-    "Laatst beschikbare gegevens"
+    "Laatst beschikbare gegevens",
+    "Beoordeling",
+    "Gebruikers / installaties"
   ],
   "pa": [
     "ਸਰਗਰਮ ਵਰਤੋਂਕਾਰ (7 ਦਿਨ)",
@@ -189,7 +235,9 @@
     "ਰੇਟਿੰਗਾਂ",
     "ਸਟੋਰ ਦੀ ਸਭ ਤੋਂ ਉੱਚੀ ਰੇਟਿੰਗ",
     "ਆਖਰੀ ਅੱਪਡੇਟ",
-    "ਆਖ਼ਰੀ ਉਪਲਬਧ ਜਾਣਕਾਰੀ"
+    "ਆਖ਼ਰੀ ਉਪਲਬਧ ਜਾਣਕਾਰੀ",
+    "ਰੇਟਿੰਗ",
+    "ਵਰਤੋਂਕਾਰ / ਇੰਸਟਾਲੇਸ਼ਨਾਂ"
   ],
   "sk": [
     "Aktívni používatelia (7 dní)",
@@ -197,7 +245,9 @@
     "Hodnotenia",
     "Najvyššie hodnotenie v obchode",
     "Aktualizované",
-    "Posledné dostupné údaje"
+    "Posledné dostupné údaje",
+    "Hodnotenie",
+    "Používatelia / inštalácie"
   ],
   "sl": [
     "Aktivni uporabniki (7 dni)",
@@ -205,7 +255,9 @@
     "Ocene",
     "Najvišja ocena v trgovini",
     "Posodobljeno",
-    "Zadnji razpoložljivi podatki"
+    "Zadnji razpoložljivi podatki",
+    "Ocena",
+    "Uporabniki / namestitve"
   ],
   "so": [
     "Isticmaalayaasha firfircoon (7 maalmood)",
@@ -213,7 +265,9 @@
     "Qiimeynaha",
     "Qiimeynta dukaanka ugu sarreysa",
     "La cusbooneysiiyey",
-    "Xogtii ugu dambaysay ee la helay"
+    "Xogtii ugu dambaysay ee la helay",
+    "Qiimayn",
+    "Isticmaaleyaal / rakibid"
   ],
   "sq": [
     "Përdorues aktivë (7 ditë)",
@@ -221,7 +275,9 @@
     "Vlerësime",
     "Vlerësimi më i lartë në dyqan",
     "Përditësuar",
-    "Të dhënat e fundit të disponueshme"
+    "Të dhënat e fundit të disponueshme",
+    "Vlerësimi",
+    "Përdorues / instalime"
   ],
   "sr": [
     "Активни корисници (7 дана)",
@@ -229,7 +285,9 @@
     "Оцене",
     "Највиша оцена у продавници",
     "Ажурирано",
-    "Последњи доступни подаци"
+    "Последњи доступни подаци",
+    "Оцена",
+    "Корисници / инсталације"
   ],
   "sw": [
     "Watumiaji hai (siku 7)",
@@ -237,7 +295,9 @@
     "Ukadiriaji",
     "Ukadiriaji wa juu zaidi wa duka",
     "Imesasishwa",
-    "Takwimu za mwisho zilizopatikana"
+    "Takwimu za mwisho zilizopatikana",
+    "Ukadiriaji",
+    "Watumiaji / usakinishaji"
   ],
   "ur": [
     "فعال صارفین (7 دن)",
@@ -245,7 +305,9 @@
     "درجہ بندیاں",
     "اسٹور کی بلند ترین درجہ بندی",
     "آخری تازہ کاری",
-    "آخری دستیاب اعداد و شمار"
+    "آخری دستیاب اعداد و شمار",
+    "درجہ بندی",
+    "صارفین / انسٹالیشنز"
   ],
   "pl": [
     "Aktywni użytkownicy (7 dni)",
@@ -253,7 +315,9 @@
     "Oceny",
     "Najwyższa ocena w sklepie",
     "Zaktualizowano",
-    "Ostatnie dostępne dane"
+    "Ostatnie dostępne dane",
+    "Ocena",
+    "Użytkownicy / instalacje"
   ],
   "hu": [
     "Aktív felhasználók (7 nap)",
@@ -261,7 +325,9 @@
     "Értékelések",
     "Legmagasabb áruházi értékelés",
     "Frissítve",
-    "Legutóbb elérhető adatok"
+    "Legutóbb elérhető adatok",
+    "Értékelés",
+    "Felhasználók / telepítések"
   ],
   "sv": [
     "Aktiva användare (7 dagar)",
@@ -269,7 +335,9 @@
     "Betyg",
     "Högsta butiksbetyg",
     "Uppdaterat",
-    "Senast tillgängliga uppgifter"
+    "Senast tillgängliga uppgifter",
+    "Betyg",
+    "Användare / installationer"
   ],
   "cs": [
     "Aktivní uživatelé (7 dní)",
@@ -277,7 +345,9 @@
     "Hodnocení",
     "Nejvyšší hodnocení v obchodě",
     "Aktualizováno",
-    "Poslední dostupné údaje"
+    "Poslední dostupné údaje",
+    "Hodnocení",
+    "Uživatelé / instalace"
   ],
   "uk": [
     "Активні користувачі (7 днів)",
@@ -285,7 +355,9 @@
     "Оцінки",
     "Найвища оцінка в магазині",
     "Оновлено",
-    "Останні доступні дані"
+    "Останні доступні дані",
+    "Оцінка",
+    "Користувачі / встановлення"
   ],
   "ca": [
     "Usuaris actius (7 dies)",
@@ -293,7 +365,9 @@
     "Valoracions",
     "Valoració més alta de les botigues",
     "Actualitzat",
-    "Últimes dades disponibles"
+    "Últimes dades disponibles",
+    "Valoració",
+    "Usuaris / instal·lacions"
   ],
   "el": [
     "Ενεργοί χρήστες (7 ημέρες)",
@@ -301,7 +375,9 @@
     "Αξιολογήσεις",
     "Υψηλότερη βαθμολογία καταστήματος",
     "Ενημερώθηκε",
-    "Τελευταία διαθέσιμα στοιχεία"
+    "Τελευταία διαθέσιμα στοιχεία",
+    "Αξιολόγηση",
+    "Χρήστες / εγκαταστάσεις"
   ],
   "ro": [
     "Utilizatori activi (7 zile)",
@@ -309,7 +385,9 @@
     "Evaluări",
     "Cea mai mare notă din magazine",
     "Actualizat",
-    "Ultimele date disponibile"
+    "Ultimele date disponibile",
+    "Evaluare",
+    "Utilizatori / instalări"
   ],
   "nb": [
     "Aktive brukere (7 dager)",
@@ -317,7 +395,9 @@
     "Vurderinger",
     "Høyeste butikkvurdering",
     "Oppdatert",
-    "Sist tilgjengelige tall"
+    "Sist tilgjengelige tall",
+    "Vurdering",
+    "Brukere / installasjoner"
   ],
   "bn": [
     "সক্রিয় ব্যবহারকারী (৭ দিন)",
@@ -325,7 +405,9 @@
     "রেটিং",
     "স্টোরের সর্বোচ্চ রেটিং",
     "সর্বশেষ হালনাগাদ",
-    "সর্বশেষ উপলভ্য তথ্য"
+    "সর্বশেষ উপলভ্য তথ্য",
+    "রেটিং",
+    "ব্যবহারকারী / ইনস্টল"
   ],
   "mr": [
     "सक्रिय वापरकर्ते (७ दिवस)",
@@ -333,7 +415,9 @@
     "रेटिंग",
     "स्टोअरमधील सर्वोच्च रेटिंग",
     "शेवटचे अद्यतन",
-    "शेवटची उपलब्ध आकडेवारी"
+    "शेवटची उपलब्ध आकडेवारी",
+    "रेटिंग",
+    "वापरकर्ते / इंस्टॉल"
   ],
   "te": [
     "సక్రియ వినియోగదారులు (7 రోజులు)",
@@ -341,7 +425,9 @@
     "రేటింగ్‌లు",
     "అత్యధిక స్టోర్ రేటింగ్",
     "చివరి నవీకరణ",
-    "చివరిగా అందుబాటులో ఉన్న సమాచారం"
+    "చివరిగా అందుబాటులో ఉన్న సమాచారం",
+    "రేటింగ్",
+    "వినియోగదారులు / ఇన్‌స్టాల్‌లు"
   ],
   "ta": [
     "செயலில் உள்ள பயனர்கள் (7 நாட்கள்)",
@@ -349,7 +435,9 @@
     "மதிப்பீடுகள்",
     "அதிகபட்சக் கடை மதிப்பீடு",
     "கடைசிப் புதுப்பிப்பு",
-    "கடைசியாகக் கிடைத்த தரவு"
+    "கடைசியாகக் கிடைத்த தரவு",
+    "மதிப்பீடு",
+    "பயனர்கள் / நிறுவல்கள்"
   ],
   "ar": [
     "المستخدمون النشطون (٧ أيام)",
@@ -357,7 +445,9 @@
     "التقييمات",
     "أعلى تقييم بين المتجرين",
     "آخر تحديث",
-    "آخر بيانات متاحة"
+    "آخر بيانات متاحة",
+    "التقييم",
+    "المستخدمون / عمليات التثبيت"
   ],
   "fa": [
     "کاربران فعال (۷ روز)",
@@ -365,7 +455,9 @@
     "امتیازها",
     "بالاترین امتیاز فروشگاه",
     "آخرین به‌روزرسانی",
-    "آخرین داده‌های موجود"
+    "آخرین داده‌های موجود",
+    "امتیاز",
+    "کاربران / نصب‌ها"
   ],
   "he": [
     "משתמשים פעילים (7 ימים)",
@@ -373,7 +465,9 @@
     "דירוגים",
     "הדירוג הגבוה ביותר בחנויות",
     "עדכון אחרון",
-    "הנתונים האחרונים הזמינים"
+    "הנתונים האחרונים הזמינים",
+    "דירוג",
+    "משתמשים / התקנות"
   ],
   "zh-CN": [
     "活跃用户（7 天）",
@@ -381,7 +475,9 @@
     "评分数",
     "商店最高评分",
     "上次更新",
-    "最近可用数据"
+    "最近可用数据",
+    "评分",
+    "用户 / 安装量"
   ],
   "zh-TW": [
     "活躍使用者（7 天）",
@@ -389,7 +485,9 @@
     "評分數",
     "商店最高評分",
     "上次更新",
-    "最近可用資料"
+    "最近可用資料",
+    "評分",
+    "使用者 / 安裝次數"
   ],
   "vi": [
     "Người dùng hoạt động (7 ngày)",
@@ -397,7 +495,9 @@
     "Lượt đánh giá",
     "Điểm cửa hàng cao nhất",
     "Cập nhật",
-    "Dữ liệu gần nhất hiện có"
+    "Dữ liệu gần nhất hiện có",
+    "Đánh giá",
+    "Người dùng / lượt cài đặt"
   ],
   "th": [
     "ผู้ใช้ที่ใช้งาน (7 วัน)",
@@ -405,7 +505,9 @@
     "คะแนนรีวิว",
     "คะแนนร้านค้าสูงสุด",
     "อัปเดตล่าสุด",
-    "ข้อมูลล่าสุดที่มี"
+    "ข้อมูลล่าสุดที่มี",
+    "คะแนน",
+    "ผู้ใช้ / การติดตั้ง"
   ],
   "es": [
     "Usuarios activos (7 días)",
@@ -413,7 +515,9 @@
     "Valoraciones",
     "Puntuación más alta de las tiendas",
     "Actualizado",
-    "Últimos datos disponibles"
+    "Últimos datos disponibles",
+    "Valoración",
+    "Usuarios / instalaciones"
   ],
   "pt-BR": [
     "Usuários ativos (7 dias)",
@@ -421,7 +525,9 @@
     "Avaliações",
     "Maior nota entre as lojas",
     "Atualizado",
-    "Últimos dados disponíveis"
+    "Últimos dados disponíveis",
+    "Avaliação",
+    "Usuários / instalações"
   ],
   "pt-PT": [
     "Utilizadores ativos (7 dias)",
@@ -429,7 +535,9 @@
     "Avaliações",
     "Classificação mais alta das lojas",
     "Atualizado",
-    "Últimos dados disponíveis"
+    "Últimos dados disponíveis",
+    "Avaliação",
+    "Utilizadores / instalações"
   ],
   "ru": [
     "Активные пользователи (7 дней)",
@@ -437,7 +545,9 @@
     "Оценки",
     "Наивысшая оценка в магазине",
     "Обновлено",
-    "Последние доступные данные"
+    "Последние доступные данные",
+    "Оценка",
+    "Пользователи / установки"
   ],
   "hi": [
     "सक्रिय उपयोगकर्ता (7 दिन)",
@@ -445,7 +555,9 @@
     "रेटिंग",
     "स्टोर की उच्चतम रेटिंग",
     "पिछला अपडेट",
-    "अंतिम उपलब्ध आँकड़े"
+    "अंतिम उपलब्ध आँकड़े",
+    "रेटिंग",
+    "उपयोगकर्ता / इंस्टॉल"
   ],
   "hi-Latn": [
     "Sakriya users (7 din)",
@@ -453,7 +565,9 @@
     "Ratings",
     "Store ki sabse oonchi rating",
     "Aakhri update",
-    "Aakhri uplabdh aankde"
+    "Aakhri uplabdh aankde",
+    "Rating",
+    "Users / installs"
   ],
   "fr": [
     "Utilisateurs actifs (7 jours)",
@@ -461,7 +575,9 @@
     "Évaluations",
     "Meilleure note des boutiques",
     "Mis à jour",
-    "Dernières données disponibles"
+    "Dernières données disponibles",
+    "Note",
+    "Utilisateurs / installations"
   ],
   "de": [
     "Aktive Nutzer (7 Tage)",
@@ -469,7 +585,9 @@
     "Bewertungen",
     "Höchste Store-Bewertung",
     "Aktualisiert",
-    "Zuletzt verfügbare Daten"
+    "Zuletzt verfügbare Daten",
+    "Bewertung",
+    "Nutzer / Installationen"
   ],
   "ja": [
     "アクティブユーザー（7日間）",
@@ -477,7 +595,9 @@
     "評価件数",
     "ストアの最高評価",
     "更新日",
-    "最後に取得できたデータ"
+    "最後に取得できたデータ",
+    "評価",
+    "ユーザー / インストール数"
   ],
   "ko": [
     "활성 사용자(7일)",
@@ -485,7 +605,9 @@
     "평가 수",
     "스토어 최고 평점",
     "최근 업데이트",
-    "마지막으로 확인된 데이터"
+    "마지막으로 확인된 데이터",
+    "평점",
+    "사용자 / 설치 수"
   ],
   "id": [
     "Pengguna aktif (7 hari)",
@@ -493,7 +615,9 @@
     "Penilaian",
     "Nilai toko tertinggi",
     "Diperbarui",
-    "Data terakhir yang tersedia"
+    "Data terakhir yang tersedia",
+    "Penilaian",
+    "Pengguna / pemasangan"
   ],
   "it": [
     "Utenti attivi (7 giorni)",
@@ -501,7 +625,9 @@
     "Valutazioni",
     "Voto più alto negli store",
     "Aggiornato",
-    "Ultimi dati disponibili"
+    "Ultimi dati disponibili",
+    "Valutazione",
+    "Utenti / installazioni"
   ],
   "tr": [
     "Etkin kullanıcılar (7 gün)",
@@ -509,7 +635,9 @@
     "Değerlendirmeler",
     "En yüksek mağaza puanı",
     "Güncellendi",
-    "Son kullanılabilir veriler"
+    "Son kullanılabilir veriler",
+    "Puan",
+    "Kullanıcılar / yüklemeler"
   ],
   "fr-CA": [
     "Utilisateurs actifs (7 jours)",
@@ -517,7 +645,9 @@
     "Évaluations",
     "Meilleure note des boutiques",
     "Mis à jour",
-    "Dernières données disponibles"
+    "Dernières données disponibles",
+    "Note",
+    "Utilisateurs / installations"
   ],
   "es-419": [
     "Usuarios activos (7 días)",
@@ -525,7 +655,9 @@
     "Valoraciones",
     "Puntuación más alta de las tiendas",
     "Actualizado",
-    "Últimos datos disponibles"
+    "Últimos datos disponibles",
+    "Valoración",
+    "Usuarios / instalaciones"
   ],
   "zh-HK": [
     "活躍使用者（7 天）",
@@ -533,6 +665,8 @@
     "評分數",
     "商店最高評分",
     "上次更新",
-    "最近可用數據"
+    "最近可用數據",
+    "評分",
+    "使用者 / 安裝次數"
   ]
 }

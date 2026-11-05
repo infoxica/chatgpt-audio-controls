@@ -117,7 +117,14 @@ p,li{overflow-wrap:anywhere}
 }
 
 .hero .eyebrow { flex-wrap: wrap; justify-content: center; max-width: 100%; }
-.store-stats { overflow-wrap: anywhere; }
-.store-stats summary { cursor: pointer; padding-block: 8px; }
-.store-stats details[open] { text-align: start; }
-.store-stats p { margin: 6px 0; font-size: .9em; }
+.eyebrow-brand, .store-stat { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.store-stats { display: contents; }
+.store-stat { border-inline-start: 1px solid var(--border); padding-inline-start: 12px; margin-inline-start: 4px; min-width: 0; }
+.store-stat > svg { width: 18px; height: 18px; flex: none; }
+.rating-stars { display: inline-flex; gap: 1px; direction: ltr; flex: none; }
+.rating-stars svg { width: 15px; height: 15px; color: var(--accent); }
+.store-stat > span:last-child { overflow-wrap: anywhere; }
+@media(max-width:540px) {
+ .eyebrow-brand { flex-basis: 100%; }
+ .store-stat { margin-inline-start: 0; padding-inline-start: 0; border: 0; }
+}

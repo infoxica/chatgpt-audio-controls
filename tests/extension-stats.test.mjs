@@ -110,8 +110,8 @@ test('homepage recomputes ratings after expiry, including an expired max-mode wi
   const refreshed=mergeSnapshot(first,{ratings:chrome.ratings},{},new Date(later).toISOString());
   for (const mode of ['weighted','max']) {
     const rendered=renderStats(summarize(refreshed,mode,later),labels.en,'en',later);
-    expect(rendered.summary).toContain('Chrome');
-    expect(rendered.summary).toContain('5.0/5');
+    expect(rendered.parts.find(p=>p.kind==='rating').description).toContain('Chrome');
+    expect(rendered.summary).toContain('5.0/5.0');
     expect(rendered.details.join(' ')).not.toContain('Edge');
     expect(rendered.details.join(' ')).toContain('10');
     expect(renderStats(summarize(first,mode,later),labels.en,'en',later).summary).toBe('');
@@ -119,7 +119,21 @@ test('homepage recomputes ratings after expiry, including an expired max-mode wi
   const boundary=renderStats(summarize(first,'weighted',now+7*day),labels.en,'en',now+7*day);
   expect(boundary.details.join(' ')).toContain('Edge');
   const edgeOnly=mergeSnapshot(first,{},edge,new Date(later).toISOString());
-  expect(renderStats(summarize(edgeOnly,'weighted',later),labels.en,'en',later).summary).toContain('Edge ★ 4.0/5');
+  const rendered=renderStats(summarize(edgeOnly,'weighted',later),labels.en,'en',later);
+  expect(rendered.summary).toContain('4.0/5.0 Rated');
+  expect(rendered.parts.find(p=>p.kind==='rating').description).toContain('Edge');
+});
+
+test('compact eyebrow uses honest audience labels, decimal rating scale and no update dates',()=>{
+  const rendered=renderStats(summarize(mergeSnapshot(null,chrome,edge,at),'weighted',now),labels.en,'en',now);
+  expect(rendered.summary).toBe('≈1,250 Users / installs | 4.8/5.0 Rated');
+  expect(rendered.details.join(' ')).not.toMatch(/2026|updated|Downloads/);
+  expect(rendered.parts[0].description).toContain('Active users (7 days): 1,124');
+  expect(rendered.parts[0].description).toContain('Active installations: 103');
+  for (const copy of Object.values(labels)) {
+    expect(copy).toHaveLength(8);
+    expect(copy.every(value=>typeof value==='string' && value.trim())).toBe(true);
+  }
 });
 
 test('scheduled merge owns external I/O; public reads, preflights and errors only access KV',async()=>{

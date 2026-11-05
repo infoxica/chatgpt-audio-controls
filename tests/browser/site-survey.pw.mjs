@@ -17,22 +17,36 @@ async function serveSite(context,tracking=[],stats=null) {
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
-test('statistics disclosure exposes dated store figures and preserves navigation in RTL',async({page,context})=>{
+for(const [width,locale] of [[1512,''],[320,'ar/']]) test(`compact statistics eyebrow at ${width} ${locale}`,async({page,context})=>{
   const date=new Date().toISOString();
   const store={users:103,rating:null,ratingCount:0,usersUpdatedAt:date,ratingsUpdatedAt:date};
-  const stats={chrome:{...store,users:1124,rating:4.84,ratingCount:12},edge:store,
-    combined:{rating:4.84,ratingCount:12,ratingMode:'weighted',contributors:['chrome']}};
+  const stats={chrome:{...store,users:1124,rating:4,ratingCount:12},edge:store,
+    combined:{ratingMode:'weighted'}};
   await serveSite(context,[],stats);
-  await page.setViewportSize({width:320,height:700});
-  await page.goto(base+'ar/');
-  const disclosure=page.locator('.store-stats summary');
-  await expect(disclosure).toContainText('≈');
-  await disclosure.focus(); await disclosure.press('Enter');
-  await expect(page.locator('.store-stats a')).toHaveCount(2);
-  await expect(page.locator('.store-stats p').first()).toContainText('Chrome');
+  await page.setViewportSize({width,height:900});
+  await page.goto(base+locale);
+  await expect(page.locator('.store-stat-audience')).toContainText('≈');
+  await expect(page.locator('.rating-stars svg')).toHaveCount(5);
+  await expect(page.locator('.eyebrow a, .eyebrow details')).toHaveCount(0);
+  await expect(page.locator('.store-stat-rating')).toHaveAttribute('aria-label',/Chrome/);
+  if(!locale) await expect(page.locator('.store-stat-rating')).toHaveText('4.0/5.0 Rated');
+  expect(await page.locator('.eyebrow').textContent()).not.toMatch(/updated|2026/);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:`build/browser-results/stats-eyebrow-${width}.png`});
 });
-test('store links work during loading and when the snapshot is unavailable',async({page,context})=>{
+
+test('expired Edge ratings cannot hide a fresh Chrome rating in the eyebrow',async({page,context})=>{
+  const date=new Date().toISOString(),expired=new Date(Date.now()-8*86400000).toISOString();
+  const stats={chrome:{users:null,rating:4,ratingCount:4,ratingsUpdatedAt:date},
+    edge:{users:null,rating:5,ratingCount:100,ratingsUpdatedAt:expired},
+    combined:{ratingMode:'max',contributors:['edge'],rating:5,ratingCount:100}};
+  await serveSite(context,[],stats); await page.goto(base);
+  await expect(page.locator('.store-stat-rating')).toHaveText('4.0/5.0 Highest store rating');
+  await expect(page.locator('.store-stat-rating')).toHaveAttribute('aria-label',/Chrome/);
+  expect(await page.locator('.store-stat-rating').getAttribute('aria-label')).not.toContain('Edge');
+});
+
+test('product identity remains during loading and when statistics are unavailable',async({page,context})=>{
   await serveSite(context);
   let release;
   const gate=new Promise(resolve=>{release=resolve});
@@ -40,11 +54,11 @@ test('store links work during loading and when the snapshot is unavailable',asyn
     await gate; await route.fulfill({status:503,json:{error:'stats_unavailable'}});
   });
   await page.goto(base,{waitUntil:'domcontentloaded'});
-  const links=page.locator('.store-stats a');
-  await expect(links).toHaveCount(2);
+  await expect(page.locator('.eyebrow-brand')).toHaveText('ChatGPT Audio Controls');
+  await expect(page.locator('.eyebrow a')).toHaveCount(0);
   const done=page.waitForResponse(base+'api/extension-stats'); release(); await done;
-  await expect(links.first()).toBeVisible();
-  await expect(page.locator('.store-stats summary')).toHaveCount(0);
+  await expect(page.locator('.eyebrow-brand')).toBeVisible();
+  await expect(page.locator('.store-stat')).toHaveCount(0);
 });
 for(const [width,locale] of [[1512,''],[320,''],[390,'ur/']])test(`sticky navigation clears anchors and PayPal remains explicit at ${width} ${locale}`,async({page,context})=>{
   await serveSite(context);await page.setViewportSize({width,height:982});await page.goto(base+locale);

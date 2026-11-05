@@ -86,6 +86,17 @@ The homepage excludes expired rating observations before computing its displayed
 weighted or maximum rating. One expired store cannot hide the other store's fresh
 rating. The API retains the full source observations for inspection.
 
+The homepage eyebrow now uses icon-labelled product, audience and rating items
+with separators on desktop and wrapping on mobile. It shows five decorative stars
+and a one-decimal scale such as `4.0/5.0 Rated`, without update dates, a disclosure
+panel or store links. Screen-reader labels retain source and metric explanations;
+observation timestamps remain in the API. The audience label is `Users / installs`,
+not downloads, because neither upstream metric measures downloads. Partial
+audience figures explicitly name their store. Both new labels are localized in
+all 67 website catalogs. Expired-contributor regression coverage exercises
+weighted and max modes, including a stale max-mode winner, in unit tests and the
+rendered website.
+
 ### Staging acceptance — 2026-11-05
 
 - Both GitHub deployment environments have the account ID and API token secrets;
