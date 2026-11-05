@@ -30,6 +30,9 @@
   "env": {
     "staging": {
       "name": "chatgpt-audio-feedback-staging",
+      "triggers": {
+        "crons": []
+      },
       "vars": {
         "TURNSTILE_SITE_KEY": "0x4AAAAAAFmYysX2jPu8WFFj",
         "ENVIRONMENT": "staging",

@@ -57,6 +57,21 @@ test('Edge identity, partial fields, real zero-rating shape and bounded retry',a
   expect(upstream).toHaveBeenCalledTimes(5);
 });
 
+test('OAuth diagnostics distinguish missing setup and request failures without logging secrets',async()=>{
+  const warning=spyOn(console,'warn').mockImplementation(()=>{});
+  try {
+    upstream=spyOn(globalThis,'fetch').mockImplementation(async()=>json({}));
+    await collectChrome({...env,STATS_REFRESH_TOKEN:''},now);
+    expect(upstream).not.toHaveBeenCalled();
+    await collectChrome(env,now);
+    upstream.mockImplementation(async()=>{throw new TypeError('private-token-and-response')});
+    await collectChrome(env,now);
+    const output=warning.mock.calls.map(([message])=>JSON.parse(message));
+    expect(output.map(x=>x.category)).toEqual(['unconfigured','missing_token','network_or_runtime']);
+    expect(JSON.stringify(output)).not.toContain('private-token');
+  } finally {warning.mockRestore()}
+});
+
 test('independent observation dates, aggregation modes, retained failures and read-time age',()=>{
   const first=mergeSnapshot(null,chrome,edge,at);
   const weighted=summarize(first,'weighted',now);

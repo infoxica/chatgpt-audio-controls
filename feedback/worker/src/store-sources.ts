@@ -48,18 +48,21 @@ async function observe<T>(operation: string, run: () => Promise<T>): Promise<T |
   try { return await run(); }
   catch (error) {
     console.warn(JSON.stringify({ event: 'stats_source_failed', operation,
-      category: error instanceof UpstreamError ? error.message : 'unavailable_or_invalid' }));
+      category: error instanceof UpstreamError ? error.message :
+        error instanceof Error && error.name === 'TimeoutError' ? 'timeout' :
+        error instanceof TypeError ? 'network_or_runtime' :
+        error instanceof SyntaxError ? 'invalid_json' : 'unavailable_or_invalid' }));
   }
 }
 
 export async function collectChrome(env: SourceEnv, now: number): Promise<SourceData> {
   const token = await observe('chrome.oauth', async () => {
-    if (!env.STATS_CLIENT_ID || !env.STATS_CLIENT_SECRET || !env.STATS_REFRESH_TOKEN || !env.STATS_PUBLISHER_ID) throw Error('unconfigured');
+    if (!env.STATS_CLIENT_ID || !env.STATS_CLIENT_SECRET || !env.STATS_REFRESH_TOKEN || !env.STATS_PUBLISHER_ID) throw new UpstreamError('unconfigured');
     const result = await request('https://oauth2.googleapis.com/token', {
       method: 'POST', body: new URLSearchParams({ grant_type: 'refresh_token', client_id: env.STATS_CLIENT_ID,
         client_secret: env.STATS_CLIENT_SECRET, refresh_token: env.STATS_REFRESH_TOKEN })
     });
-    if (typeof result.access_token !== 'string' || !result.access_token) throw Error('missing_token');
+    if (typeof result.access_token !== 'string' || !result.access_token) throw new UpstreamError('missing_token');
     return result.access_token;
   });
   if (!token) return {};
