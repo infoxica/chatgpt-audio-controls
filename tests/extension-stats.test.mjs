@@ -29,13 +29,24 @@ test('Google queries 14 complete UTC dates and picks newest valid aggregate acro
     expect(u.searchParams.has('dimensions')).toBe(false);
     expect(u.searchParams.get('timeSpec.firstDate.day')).toBe('21');
     expect(u.searchParams.get('timeSpec.lastDate.day')).toBe('3');
-    return u.searchParams.has('pageToken') ? json({metricRows:[row(3,'1124'),row(1,'99')]}) :
+    return u.searchParams.has('pageToken') ? json({metricRows:[{...row(3,'1124'),dimensionValues:['']},row(1,'99')]}) :
       json({metricRows:[row(2,'invalid'),row(4,'9999'),row(1,'1120')],nextPageToken:'next'});
   });
   expect(await collectChrome(env,now)).toEqual(chrome);
   expect(urls).toHaveLength(4);
   expect(()=>readRating(4,'9007199254740992')).toThrow();
   expect(()=>readRating(4,null)).toThrow();
+});
+
+test('dimensioned rows cannot become an aggregate users count',async()=>{
+  upstream=spyOn(globalThis,'fetch').mockImplementation(async input=>{
+    const url=String(input);
+    if(url.includes('oauth2'))return json({access_token:'mock'});
+    if(url.endsWith('ratingSummary'))return json({name:'publishers/p/items/c/ratingSummary',rating:4,ratingCount:'1'});
+    return json({metricRows:[{...row(3,'9999'),dimensionValues:['US']},
+      {...row(3,'8888'),dimensionValues:'invalid'},row(2,'100')]});
+  });
+  expect((await collectChrome(env,now)).audience).toEqual({users:100,metricDate:'2026-11-02'});
 });
 
 test('Edge identity, partial fields, real zero-rating shape and bounded retry',async()=>{

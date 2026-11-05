@@ -99,7 +99,12 @@ export async function collectChrome(env: SourceEnv, now: number): Promise<Source
               !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0,10) !== date) {
             rejected.add('invalid_or_out_of_range_date'); continue;
           }
-          if (row.dimensionValues?.length) { rejected.add('dimensioned_row'); continue; }
+          // The dimensionless query may include empty placeholder columns.
+          // Nonempty dimension values are slices, never an aggregate user total.
+          if (row.dimensionValues !== undefined && (!Array.isArray(row.dimensionValues) ||
+              row.dimensionValues.some((value: unknown) => value !== ''))) {
+            rejected.add('dimensioned_row'); continue;
+          }
           if (!Array.isArray(row.metricValues)) { rejected.add('missing_values'); continue; }
           const metric = row.metricValues.find((m: {metric?: string} | null) => m?.metric === 'users-7d');
           if (!metric) rejected.add('missing_users_7d');
