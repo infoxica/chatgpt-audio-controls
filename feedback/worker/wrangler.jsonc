@@ -63,7 +63,8 @@
       },
       "kv_namespaces": [
         {
-          "binding": "STATS_KV"
+          "binding": "STATS_KV",
+          "id": "26e410b118514002b026b792e0be0413"
         }
       ]
     },

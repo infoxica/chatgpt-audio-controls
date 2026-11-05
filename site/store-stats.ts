@@ -1,4 +1,4 @@
-import type { StatsResponse } from '../feedback/worker/src/stats-model';
+import { aggregateRatings, type StatsResponse } from '../feedback/worker/src/stats-model';
 
 const sources = ['chrome','edge'] as const;
 const names = {chrome:'Chrome', edge:'Edge'};
@@ -24,8 +24,9 @@ export function renderStats(data: StatsResponse, labels: string[], locale: strin
         ' · ' + (item.usersStale ? retainedLabel : updatedLabel) + ': ' + date(item.metricDate || item.usersUpdatedAt!));
     }
   }
-  const {contributors, rating, ratingCount, ratingMode} = data.combined;
-  if (rating !== null && contributors.length && contributors.every(s=>recent(data[s].ratingsUpdatedAt))) {
+  const {contributors, rating, ratingCount, ratingMode} = aggregateRatings(data, data.combined.ratingMode,
+    sources.filter(s=>recent(data[s].ratingsUpdatedAt)));
+  if (rating !== null && contributors.length) {
     const value = new Intl.NumberFormat(locale,{minimumFractionDigits:1,maximumFractionDigits:1}).format(rating) + '/' + number.format(5);
     const credit = ratingMode === 'max' ? highestLabel + ' · ' + names[contributors[0]] + ' ' :
       contributors.length === 1 ? names[contributors[0]] + ' ' : '';

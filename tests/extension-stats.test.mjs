@@ -78,6 +78,24 @@ test('independent observation dates, aggregation modes, retained failures and re
   expect(renderStats(weighted,labels.en,'en',now+8*day).summary).toBe('');
 });
 
+test('homepage recomputes ratings after expiry, including an expired max-mode winner',()=>{
+  const first=mergeSnapshot(null,chrome,{...edge,ratings:{rating:5,ratingCount:100}},at);
+  const later=now+8*day;
+  const refreshed=mergeSnapshot(first,{ratings:chrome.ratings},{},new Date(later).toISOString());
+  for (const mode of ['weighted','max']) {
+    const rendered=renderStats(summarize(refreshed,mode,later),labels.en,'en',later);
+    expect(rendered.summary).toContain('Chrome');
+    expect(rendered.summary).toContain('5.0/5');
+    expect(rendered.details.join(' ')).not.toContain('Edge');
+    expect(rendered.details.join(' ')).toContain('10');
+    expect(renderStats(summarize(first,mode,later),labels.en,'en',later).summary).toBe('');
+  }
+  const boundary=renderStats(summarize(first,'weighted',now+7*day),labels.en,'en',now+7*day);
+  expect(boundary.details.join(' ')).toContain('Edge');
+  const edgeOnly=mergeSnapshot(first,{},edge,new Date(later).toISOString());
+  expect(renderStats(summarize(edgeOnly,'weighted',later),labels.en,'en',later).summary).toContain('Edge ★ 4.0/5');
+});
+
 test('scheduled merge owns external I/O; public reads, preflights and errors only access KV',async()=>{
   let raw=null;
   const kv={get:async key=>{expect(key).toBe(STATS_KEY);return JSON.parse(raw)},put:async(key,value,...options)=>{

@@ -44,16 +44,19 @@ function describe(record: StoreSnapshot, now: number) {
     usersUpdatedAt:audience?.updatedAt ?? null, ratingsUpdatedAt:ratings?.updatedAt ?? null, metricDate:audience?.metricDate ?? null,
     lastAttempt, usersStale, ratingsStale, status};
 }
-export function summarize(snapshot: Snapshot, mode: string, now: number) {
-  const data = {chrome:describe(snapshot.chrome, now), edge:describe(snapshot.edge, now)};
-  let contributors = stores.filter(s => data[s].rating !== null && (data[s].ratingCount ?? 0) > 0);
+export function aggregateRatings(data: Record<Store, {rating: number | null; ratingCount: number | null}>, mode: string, eligible: readonly Store[] = stores) {
+  let contributors = eligible.filter(s => data[s].rating !== null && (data[s].ratingCount ?? 0) > 0);
   const ratingMode = mode === 'max' ? 'max' : 'weighted';
   if (ratingMode === 'max') contributors = contributors.sort((a,b)=>data[b].rating! - data[a].rating!).slice(0,1);
   const count = contributors.reduce((n,s)=>n+data[s].ratingCount!,0);
   const rating = count ? contributors.reduce((n,s)=>n+data[s].rating!*data[s].ratingCount!,0)/count : null;
+  return {rating, ratingCount:count || (eligible.every(s=>data[s].ratingCount==null) ? null : 0), ratingMode, contributors};
+}
+
+export function summarize(snapshot: Snapshot, mode: string, now: number) {
+  const data = {chrome:describe(snapshot.chrome, now), edge:describe(snapshot.edge, now)};
   const users = data.chrome.users !== null && data.edge.users !== null ? data.chrome.users + data.edge.users : null;
-  return {...data, combined:{users, rating, ratingCount:count || (stores.every(s=>data[s].ratingCount===null) ? null : 0),
-    ratingMode, contributors, isApproximate:true, isComplete:users!==null},
+  return {...data, combined:{users, ...aggregateRatings(data,mode), isApproximate:true, isComplete:users!==null},
     updatedAt:snapshot.updatedAt, stale:stores.some(s=>data[s].usersStale || data[s].ratingsStale)};
 }
 export type StatsResponse = ReturnType<typeof summarize>;
