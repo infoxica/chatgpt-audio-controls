@@ -112,6 +112,15 @@ rating. The API retains the full source observations for inspection.
   both TypeScript checks, website/Worker build, 11 Worker/provider tests,
   33 website browser tests, and the 1.4.1 version check passed. Local Worker and
   browser tests required running outside the sandbox's localhost/process limits.
+- The first scheduled staging attempts revealed a runtime bug: Workers rejects
+  `fetch` with `redirect: "error"` before contacting Google. The wrapper now uses
+  `manual` and rejects 3xx responses, preserving the rule against forwarding OAuth
+  credentials to redirect destinations. A workerd test with fake credentials
+  reproduces the original failure and verifies both successful collection and
+  redirect rejection. The expanded Worker/provider suite passes 13 tests; both
+  TypeScript checks pass. Failed collection correctly leaves the endpoint at 503
+  rather than publishing invented zero counts. Runtime diagnostics expose only
+  bounded failure categories, never credentials or raw upstream responses.
 - Microsoft's [store-linked terms](https://www.microsoft.com/en-us/legal/terms-of-use)
   and [services agreement](https://www.microsoft.com/en-us/servicesagreement) were
   reviewed. They do not establish a supported statistics API or explicit permission

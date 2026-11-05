@@ -87,27 +87,33 @@ export async function collectChrome(env: SourceEnv, now: number): Promise<Source
       }
       let latest: Audience | undefined;
       const tokens = new Set<string>();
+      const rejected = new Set<string>();
       do {
         const page = await request(url, {headers});
-        if (!Array.isArray(page.metricRows)) throw Error('missing_rows');
+        if (!Array.isArray(page.metricRows)) throw new UpstreamError('missing_rows');
+        if (!page.metricRows.length) rejected.add('empty_rows');
         for (const row of page.metricRows) {
           const {year, month, day} = row?.date ?? {};
           const date = [year, String(month).padStart(2,'0'), String(day).padStart(2,'0')].join('-');
           if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < bounds[0] || date > bounds[1] ||
-              !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0,10) !== date ||
-              row.dimensionValues?.length || !Array.isArray(row.metricValues)) continue;
+              !Number.isFinite(Date.parse(date)) || new Date(date).toISOString().slice(0,10) !== date) {
+            rejected.add('invalid_or_out_of_range_date'); continue;
+          }
+          if (row.dimensionValues?.length) { rejected.add('dimensioned_row'); continue; }
+          if (!Array.isArray(row.metricValues)) { rejected.add('missing_values'); continue; }
           const metric = row.metricValues.find((m: {metric?: string} | null) => m?.metric === 'users-7d');
+          if (!metric) rejected.add('missing_users_7d');
           if (metric && (!latest || date > latest.metricDate!)) {
             try { latest = {users:count(metric.value), metricDate:date}; }
-            catch { /* Other dated rows may still be usable. */ }
+            catch { rejected.add('invalid_count'); }
           }
         }
         if (!page.nextPageToken) break;
-        if (typeof page.nextPageToken !== 'string' || tokens.has(page.nextPageToken) || tokens.size >= 14) throw Error('invalid_pagination');
+        if (typeof page.nextPageToken !== 'string' || tokens.has(page.nextPageToken) || tokens.size >= 14) throw new UpstreamError('invalid_pagination');
         tokens.add(page.nextPageToken);
         url.searchParams.set('pageToken', page.nextPageToken);
       } while (true);
-      if (!latest) throw Error('missing_metric');
+      if (!latest) throw new UpstreamError('no_valid_users:' + [...rejected].sort().join(','));
       return latest;
     })
   ]);
