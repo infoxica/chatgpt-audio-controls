@@ -1,0 +1,404 @@
+{
+  "en": [
+    "Feature tour",
+    "Back",
+    "Next",
+    "Skip tour"
+  ],
+  "am": [
+    "የባህሪያት መግቢያ",
+    "ተመለስ",
+    "ቀጣይ",
+    "መግቢያውን ዝለል"
+  ],
+  "bg": [
+    "Обиколка на функциите",
+    "Назад",
+    "Напред",
+    "Пропускане"
+  ],
+  "bs": [
+    "Pregled funkcija",
+    "Nazad",
+    "Dalje",
+    "Preskoči"
+  ],
+  "ca": [
+    "Visita de les funcions",
+    "Enrere",
+    "Següent",
+    "Omet la visita"
+  ],
+  "cs": [
+    "Prohlídka funkcí",
+    "Zpět",
+    "Další",
+    "Přeskočit"
+  ],
+  "da": [
+    "Rundvisning i funktioner",
+    "Tilbage",
+    "Næste",
+    "Spring over"
+  ],
+  "de": [
+    "Funktionstour",
+    "Zurück",
+    "Weiter",
+    "Tour überspringen"
+  ],
+  "el": [
+    "Περιήγηση λειτουργιών",
+    "Πίσω",
+    "Επόμενο",
+    "Παράλειψη"
+  ],
+  "es": [
+    "Recorrido por las funciones",
+    "Atrás",
+    "Siguiente",
+    "Omitir recorrido"
+  ],
+  "et": [
+    "Funktsioonide tutvustus",
+    "Tagasi",
+    "Edasi",
+    "Jäta vahele"
+  ],
+  "fi": [
+    "Toimintojen esittely",
+    "Takaisin",
+    "Seuraava",
+    "Ohita esittely"
+  ],
+  "fil": [
+    "Paglilibot sa mga feature",
+    "Bumalik",
+    "Susunod",
+    "Laktawan"
+  ],
+  "fr": [
+    "Découvrir les fonctionnalités",
+    "Retour",
+    "Suivant",
+    "Passer la visite"
+  ],
+  "gu": [
+    "સુવિધાઓનો પરિચય",
+    "પાછળ",
+    "આગળ",
+    "પરિચય છોડો"
+  ],
+  "hr": [
+    "Pregled značajki",
+    "Natrag",
+    "Dalje",
+    "Preskoči"
+  ],
+  "hu": [
+    "Funkcióbemutató",
+    "Vissza",
+    "Tovább",
+    "Kihagyás"
+  ],
+  "hy": [
+    "Գործառույթների ծանոթացում",
+    "Հետ",
+    "Հաջորդը",
+    "Բաց թողնել"
+  ],
+  "is": [
+    "Kynning á eiginleikum",
+    "Til baka",
+    "Næsta",
+    "Sleppa kynningu"
+  ],
+  "ka": [
+    "ფუნქციების გაცნობა",
+    "უკან",
+    "შემდეგი",
+    "გამოტოვება"
+  ],
+  "kk": [
+    "Мүмкіндіктермен танысу",
+    "Артқа",
+    "Келесі",
+    "Өткізіп жіберу"
+  ],
+  "kn": [
+    "ವೈಶಿಷ್ಟ್ಯಗಳ ಪರಿಚಯ",
+    "ಹಿಂದೆ",
+    "ಮುಂದೆ",
+    "ಪರಿಚಯವನ್ನು ಬಿಡಿ"
+  ],
+  "lt": [
+    "Funkcijų apžvalga",
+    "Atgal",
+    "Toliau",
+    "Praleisti"
+  ],
+  "lv": [
+    "Funkciju apskats",
+    "Atpakaļ",
+    "Tālāk",
+    "Izlaist"
+  ],
+  "mk": [
+    "Преглед на функциите",
+    "Назад",
+    "Следно",
+    "Прескокни"
+  ],
+  "ml": [
+    "സവിശേഷതകളുടെ പരിചയം",
+    "പിന്നോട്ട്",
+    "അടുത്തത്",
+    "ഒഴിവാക്കുക"
+  ],
+  "mn": [
+    "Боломжуудын танилцуулга",
+    "Буцах",
+    "Дараах",
+    "Алгасах"
+  ],
+  "ms": [
+    "Pengenalan ciri",
+    "Kembali",
+    "Seterusnya",
+    "Langkau"
+  ],
+  "my": [
+    "လုပ်ဆောင်ချက်များ မိတ်ဆက်",
+    "နောက်သို့",
+    "ရှေ့သို့",
+    "ကျော်ရန်"
+  ],
+  "nl": [
+    "Rondleiding door functies",
+    "Terug",
+    "Volgende",
+    "Overslaan"
+  ],
+  "pa": [
+    "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਜਾਣ-ਪਛਾਣ",
+    "ਪਿੱਛੇ",
+    "ਅੱਗੇ",
+    "ਛੱਡੋ"
+  ],
+  "pl": [
+    "Przewodnik po funkcjach",
+    "Wstecz",
+    "Dalej",
+    "Pomiń"
+  ],
+  "pt-BR": [
+    "Conheça os recursos",
+    "Voltar",
+    "Próximo",
+    "Pular apresentação"
+  ],
+  "pt-PT": [
+    "Conheça as funcionalidades",
+    "Voltar",
+    "Seguinte",
+    "Ignorar apresentação"
+  ],
+  "ro": [
+    "Turul funcțiilor",
+    "Înapoi",
+    "Înainte",
+    "Omite turul"
+  ],
+  "sk": [
+    "Prehliadka funkcií",
+    "Späť",
+    "Ďalej",
+    "Preskočiť"
+  ],
+  "sl": [
+    "Predstavitev funkcij",
+    "Nazaj",
+    "Naprej",
+    "Preskoči"
+  ],
+  "so": [
+    "Barashada astaamaha",
+    "Dib u noqo",
+    "Xiga",
+    "Ka bood"
+  ],
+  "sq": [
+    "Prezantimi i veçorive",
+    "Prapa",
+    "Tjetra",
+    "Anashkalo"
+  ],
+  "sr": [
+    "Преглед функција",
+    "Назад",
+    "Даље",
+    "Прескочи"
+  ],
+  "sv": [
+    "Funktionsguide",
+    "Tillbaka",
+    "Nästa",
+    "Hoppa över"
+  ],
+  "sw": [
+    "Utangulizi wa vipengele",
+    "Rudi",
+    "Inayofuata",
+    "Ruka"
+  ],
+  "ur": [
+    "خصوصیات کا تعارف",
+    "پیچھے",
+    "آگے",
+    "تعارف چھوڑیں"
+  ],
+  "uk": [
+    "Огляд функцій",
+    "Назад",
+    "Далі",
+    "Пропустити"
+  ],
+  "nb": [
+    "Omvisning i funksjoner",
+    "Tilbake",
+    "Neste",
+    "Hopp over"
+  ],
+  "bn": [
+    "ফিচার পরিচিতি",
+    "পিছনে",
+    "পরবর্তী",
+    "পরিচিতি এড়িয়ে যান"
+  ],
+  "mr": [
+    "वैशिष्ट्यांचा परिचय",
+    "मागे",
+    "पुढे",
+    "परिचय वगळा"
+  ],
+  "te": [
+    "ఫీచర్ల పరిచయం",
+    "వెనుకకు",
+    "తదుపరి",
+    "దాటవేయండి"
+  ],
+  "ta": [
+    "அம்சங்களின் அறிமுகம்",
+    "பின்செல்",
+    "அடுத்து",
+    "தவிர்"
+  ],
+  "ar": [
+    "جولة في الميزات",
+    "السابق",
+    "التالي",
+    "تخطي الجولة"
+  ],
+  "fa": [
+    "آشنایی با امکانات",
+    "قبلی",
+    "بعدی",
+    "رد کردن معرفی"
+  ],
+  "he": [
+    "סיור בתכונות",
+    "הקודם",
+    "הבא",
+    "דילוג על הסיור"
+  ],
+  "zh-CN": [
+    "功能导览",
+    "上一步",
+    "下一步",
+    "跳过导览"
+  ],
+  "zh-TW": [
+    "功能導覽",
+    "上一步",
+    "下一步",
+    "跳過導覽"
+  ],
+  "vi": [
+    "Khám phá tính năng",
+    "Quay lại",
+    "Tiếp theo",
+    "Bỏ qua"
+  ],
+  "th": [
+    "แนะนำฟีเจอร์",
+    "ย้อนกลับ",
+    "ถัดไป",
+    "ข้ามการแนะนำ"
+  ],
+  "ru": [
+    "Обзор возможностей",
+    "Назад",
+    "Далее",
+    "Пропустить"
+  ],
+  "hi": [
+    "सुविधाओं का परिचय",
+    "पीछे",
+    "आगे",
+    "परिचय छोड़ें"
+  ],
+  "hi-Latn": [
+    "Features ka parichay",
+    "Peechhe",
+    "Aage",
+    "Parichay chhodein"
+  ],
+  "ja": [
+    "機能ガイド",
+    "戻る",
+    "次へ",
+    "スキップ"
+  ],
+  "ko": [
+    "기능 둘러보기",
+    "이전",
+    "다음",
+    "건너뛰기"
+  ],
+  "id": [
+    "Panduan fitur",
+    "Kembali",
+    "Berikutnya",
+    "Lewati"
+  ],
+  "it": [
+    "Guida alle funzioni",
+    "Indietro",
+    "Avanti",
+    "Salta la guida"
+  ],
+  "tr": [
+    "Özellik turu",
+    "Geri",
+    "İleri",
+    "Turu atla"
+  ],
+  "fr-CA": [
+    "Découvrir les fonctionnalités",
+    "Retour",
+    "Suivant",
+    "Passer la visite"
+  ],
+  "es-419": [
+    "Recorrido por las funciones",
+    "Atrás",
+    "Siguiente",
+    "Omitir recorrido"
+  ],
+  "zh-HK": [
+    "功能導覽",
+    "上一步",
+    "下一步",
+    "跳過導覽"
+  ]
+}

@@ -6,6 +6,8 @@ import { releaseEnglish, releaseLocales } from '../src/shared/i18n/release-copy.
 import { featureCopy, commandLabels } from '../src/shared/i18n/features';
 import polish from '../src/shared/i18n/polish.json';
 import coffee from '../src/shared/i18n/coffee.json';
+import tour from '../src/shared/i18n/tour.json';
+import {tourCopy} from '../src/shared/i18n/tour';
 import supportAnalytics from '../site/support-analytics-copy.json';
 import { supportCatalogs } from '../src/shared/i18n/support';
 import { COMMANDS } from '../src/shared/shortcuts';
@@ -14,6 +16,16 @@ const leaves = value=>Object.values(value).flatMap(item=>typeof item==='object'?
 const flatten = (value, prefix='') => Object.fromEntries(Object.entries(value).flatMap(([key,item])=>typeof item==='object' && item!==null ? Object.entries(flatten(item,`${prefix}${key}.`)) : [[prefix+key,item]]));
 const placeholders = value => (value.match(/\{[^{}]+\}/g)||[]).sort();
 const targets = ['en','pt_BR','ja','es','de','vi','fr','hi','zh_CN','zh_TW','ru','pl','tr','ko','fa','ar','it','sv','ro'];
+
+test('feature tour navigation covers every locale and respects manual preference',()=>{
+  expect(Object.keys(tour).sort()).toEqual(Object.keys(LOCALES).sort());
+  for(const [code,copy] of Object.entries(tour)) {
+    expect(copy).toHaveLength(4);
+    expect(copy.every(text=>typeof text==='string' && text.trim())).toBe(true);
+    expect(tourCopy(code).title).toBe(copy[0]);
+  }
+  expect(tourCopy('unknown').title).toBe(tour.en[0]);
+});
 
 test('all 67 website, feedback-source and support catalogs preserve keys and placeholders',()=>{
   const codes=Object.keys(LOCALES).sort();

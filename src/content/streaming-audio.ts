@@ -2,7 +2,10 @@
 // stream instead, before ChatGPT aborts its reader and clears the source on pause.
 type AudioRequest = {
   controller: AbortController;
-  timer: ReturnType<typeof setTimeout>;
+  retentionController: AbortController;
+  hostSignal?: AbortSignal;
+  timer?: ReturnType<typeof setTimeout>;
+  capturing: boolean;
   promise: Promise<Blob>;
   resolve: (blob: Blob) => void;
   reject: (error: unknown) => void;
@@ -25,14 +28,15 @@ export class StreamingAudioCapture {
   private urls = new Map<string, AudioStream>();
   private buffers = new WeakMap<object, AudioStream>();
 
-  begin(): AudioRequest {
+  begin(hostSignal?: AbortSignal): AudioRequest {
     let resolve!: AudioRequest['resolve'], reject!: AudioRequest['reject'];
     const promise = new Promise<Blob>((yes, no) => { resolve = yes; reject = no; });
     void promise.catch(() => {});
     const controller = new AbortController();
-    const request: AudioRequest = { controller, promise, resolve, reject, claimed: false,
-      timer: setTimeout(() => { controller.abort(); reject(new Error('Audio capture timed out')); this.requests.delete(request); }, 60000) };
+    const request: AudioRequest = { controller, retentionController: new AbortController(), hostSignal,
+      promise, resolve, reject, claimed: false, capturing: true };
     this.requests.add(request);
+    this.progress(request);
     const waiting = [...this.sources.values()].filter(stream => !stream.request && !stream.settled);
     for (const stream of waiting) stream.candidates.push(request);
     const active = waiting.filter(stream => stream.active);
@@ -46,9 +50,32 @@ export class StreamingAudioCapture {
   }
 
   complete(request: AudioRequest, payload: Promise<Blob>): void {
-    void payload.then(blob => { clearTimeout(request.timer); request.resolve(blob); }, error => {
-      clearTimeout(request.timer); request.reject(error); this.requests.delete(request);
-    });
+    void payload.then(blob => {
+      if (!request.capturing) return;
+      request.capturing = false; clearTimeout(request.timer); request.resolve(blob);
+    }, error => this.failCapture(request, error));
+  }
+
+  progress(request: AudioRequest): void {
+    if (!request.capturing) return;
+    clearTimeout(request.timer);
+    // Bound inactivity, not total synthesis time. Expiring the optional clone
+    // must never abort the response that ChatGPT is still consuming.
+    request.timer = setTimeout(() => this.failCapture(request, new Error('Audio capture timed out')), 60000);
+  }
+
+  private failCapture(request: AudioRequest, error: unknown): void {
+    if (!request.capturing) return;
+    request.capturing = false; clearTimeout(request.timer);
+    request.retentionController.abort(error); request.reject(error); this.requests.delete(request);
+    // Retention no longer needs to outlive a native pause/cancel. Restore the
+    // caller's cancellation semantics, including an abort that already happened.
+    const host = request.hostSignal;
+    if (host) {
+      const abort = () => request.controller.abort(host.reason);
+      if (host.aborted) abort();
+      else host.addEventListener('abort', abort, { once: true, signal: request.controller.signal });
+    }
   }
 
   register(source: object, url: string): void {
@@ -120,7 +147,10 @@ export class StreamingAudioCapture {
   }
 
   private releaseRequest(request: AudioRequest): void {
-    clearTimeout(request.timer); request.controller.abort(); request.reject(new Error('Audio session replaced')); this.requests.delete(request);
+    request.capturing = false; clearTimeout(request.timer);
+    const error = new Error('Audio session replaced');
+    request.retentionController.abort(error); request.controller.abort(error);
+    request.reject(error); this.requests.delete(request);
   }
 
   clearExcept(url = ''): void {

@@ -1,7 +1,8 @@
 import type { ThemePreference } from '../../shared/ThemeSelect';
 import { SupportCard } from "../../shared/SupportCard";
 import React from "react";
-import { Sparkles, ShieldCheck, BookOpen, Bug, Globe } from "lucide-react";
+import { Sparkles, ShieldCheck, BookOpen, Bug, Globe, CirclePlay, ArrowUpRight } from "lucide-react";
+import { tourCopy } from '../../shared/i18n/tour';
 import { GithubIcon } from "../../shared/GithubIcon";
 import { EXTENSION_VERSION } from "../../shared/constants";
 import { TranslationSchema } from "../../shared/i18n";
@@ -42,6 +43,9 @@ export const AboutTab: React.FC<AboutTabProps> = ({ t, language, theme }) => {
         <p style={{ fontSize: 14, color: "var(--text-secondary)", marginTop: 10, lineHeight: 1.55 }}>
           {getReleaseCopy(language).siteIntro}
         </p>
+        <a href="../tour/index.html" target="_blank" rel="noreferrer" className="feature-tour-link">
+          <CirclePlay size={18} aria-hidden="true" />{tourCopy(language).title}<ArrowUpRight size={16} aria-hidden="true" />
+        </a>
       </div>
 
       <SupportCard language={language} theme={theme} surface="popup" />

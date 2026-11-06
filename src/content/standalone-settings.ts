@@ -9,12 +9,16 @@ import { supportCopy } from '../shared/i18n/support';
 import { SPONSOR_AMOUNTS, sponsorURL, coffeeURL, REVIEW_URLS } from '../shared/support';
 import { coffeeCopy } from '../shared/i18n/coffee';
 import { engagementRequest, watchEngagement } from '../shared/engagement-client';
+import { openStandaloneTour } from '../tour/tour';
+import { tourCopy } from '../shared/i18n/tour';
 export async function openStandaloneSettings(settings: ExtensionSettings, changed: (settings: ExtensionSettings) => void): Promise<void> {
   document.getElementById('cgpt-ra-settings-dialog')?.remove();
   let layout = defaultLayout(); try { layout = await readLayout(); } catch {}
   const dialog = document.createElement('dialog'); dialog.id = 'cgpt-ra-settings-dialog'; dialog.dir = languageDirection(settings.language);
   dialog.lang = resolveLanguage(settings.language);
   const c = featureCopy(settings.language), r = getReleaseCopy(settings.language);
+  const tour = document.createElement('button'); tour.type = 'button'; tour.textContent = tourCopy(settings.language).title;
+  tour.onclick = () => openStandaloneTour(settings); dialog.append(tour);
   const d = donationCopy(settings.language), support = supportCopy(settings.language);
   const section = document.createElement('section'); section.className = 'cgpt-ra-standalone-support';
   const title = document.createElement('h2'); title.textContent = d.title; section.append(title);

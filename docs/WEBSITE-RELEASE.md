@@ -1,11 +1,16 @@
 # Website deployment and rollback
 
-The v1.4.1 candidate targets **https://chatgpt-audio-controls.infoxica.com/**.
+The current 1.4.2 candidate targets **https://chatgpt-audio-controls.infoxica.com/**.
 The existing feedback Worker serves the website through its ASSETS binding.
 The custom hostname and TLS configuration remain unchanged. Production deployment
 is separate from a successful build or staging check.
 
 ## Build and validate
+
+PR #29 now includes the coordinated 1.4.2 extension patch as well as the website
+work. The dated 1.4.1 staging evidence below remains historical; it does not
+establish production deployment or device acceptance for 1.4.2. Current extension
+checks and release gates are tracked in [ACCEPTANCE-1.4.2.md](ACCEPTANCE-1.4.2.md).
 
 Run `bun run build:site`, `bun run prepare:web-assets`, and `bun run build:feedback`.
 Run the HTTP, browser, feedback, locale and release checks before promotion.

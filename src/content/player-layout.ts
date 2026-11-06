@@ -99,6 +99,14 @@ export class PlayerLayout {
     window.postMessage({ source, type: 'CGPT_RA_LAYOUT_REQUEST' }, '*');
   }
   async reset(): Promise<void> { this.cancelDrag?.(); this.motion = 280; await this.save(defaultLayout()); }
+  setPageVisible(visible: boolean): void {
+    this.layer.hidden = !visible;
+    if (!visible) {
+      this.cancelDrag?.();
+      this.controls.querySelectorAll('.cgpt-open').forEach(el => el.classList.remove('cgpt-open'));
+      this.more.setAttribute('aria-expanded', 'false');
+    }
+  }
   private async save(value: LayoutPreferences): Promise<void> {
     try {
       if (standalone) localStorage.setItem(LAYOUT_KEY, JSON.stringify(value));

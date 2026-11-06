@@ -18127,6 +18127,1094 @@
     };
   }
 
+  // src/content/icons.ts
+  var LUCIDE_ICONS = {
+    coffee: '<path d="M10 2v2M14 2v2M4 2v2M4 7h14v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4ZM18 8h1a3 3 0 1 1 0 6h-1M2 22h20"/>',
+    x: '<path d="m6 6 12 12M18 6 6 18"></path>',
+    check: '<path d="m5 12 4 4L19 6"></path>',
+    ellipsis: '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>',
+    "chevron-up": '<path d="m18 15-6-6-6 6"></path>',
+    "chevron-down": '<path d="m6 9 6 6 6-6"></path>',
+    "grip-vertical": '<circle cx="9" cy="5" r="1"></circle><circle cx="9" cy="12" r="1"></circle><circle cx="9" cy="19" r="1"></circle><circle cx="15" cy="5" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="15" cy="19" r="1"></circle>',
+    play: '<polygon points="6 3 20 12 6 21 6 3"></polygon>',
+    pause: '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>',
+    square: '<rect x="5" y="5" width="14" height="14" rx="2"></rect>',
+    download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line>',
+    "volume-2": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>',
+    "volume-1": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>',
+    "volume-x": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><line x1="22" x2="16" y1="9" y2="15"></line><line x1="16" x2="22" y1="9" y2="15"></line>',
+    "circle-help": '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
+    "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
+    "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
+    "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
+    "chevron-right": '<polyline points="9 18 15 12 9 6"></polyline>',
+    "chevron-left": '<polyline points="15 18 9 12 15 6"></polyline>',
+    "minimize-2": '<polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line>',
+    "chatgpt-audio": `
+    <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(60)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(120)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
+      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
+      <circle cx="0" cy="0" r="10" fill="var(--cgpt-ra-accent)" stroke="#ffffff" stroke-width="1.5" />
+      <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
+    </g>
+  `
+  };
+  function getLucideSvg(name, className = "") {
+    const body = LUCIDE_ICONS[name] || LUCIDE_ICONS["circle-help"];
+    return `
+    <svg
+      class="cgpt-ra-lucide ${className}"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >${body}</svg>
+  `;
+  }
+  function setIcon(button, iconName, extraHTML = "") {
+    if (!button)
+      return;
+    const iconKey = `${iconName}\x00${extraHTML}`;
+    if (button.dataset.cgptRaIcon === iconKey)
+      return;
+    button.dataset.cgptRaIcon = iconKey;
+    button.innerHTML = getLucideSvg(iconName) + extraHTML;
+  }
+  // src/shared/i18n/polish.json
+  var polish_default = {
+    en: {
+      edit: "Edit in browser",
+      editHint: "Find {action} on the browser shortcuts page. The browser does not support links to individual commands.",
+      layoutDescription: "Keep the original placement, choose a corner or side preset, or dock above the chat input. Drag to move, swap the bars, and remember your layout.",
+      gestureReleaseLabel: "Release the button",
+      seekPosition: "Playback position"
+    },
+    bn: {
+      edit: "ব্রাউজারে সম্পাদনা করুন",
+      editHint: "ব্রাউজার শর্টকাট পৃষ্ঠায় {action} খুঁজুন। ব্রাউজার পৃথক কমান্ডের লিঙ্ক সমর্থন করে না।",
+      layoutDescription: "আসল প্লেসমেন্ট রাখুন, একটি কোণা বা সাইড প্রিসেট চয়ন করুন বা চ্যাট ইনপুটের উপরে ডক করুন। সরাতে টেনে আনুন, বারগুলি অদলবদল করুন এবং আপনার লেআউটটি মনে রাখুন।",
+      gestureReleaseLabel: "বোতাম ছেড়ে দিলে",
+      seekPosition: "প্লেব্যাকের অবস্থান"
+    },
+    mr: {
+      edit: "ब्राउझरमध्ये संपादित करा",
+      editHint: "ब्राउझर शॉर्टकट पृष्ठावर {action} शोधा. ब्राउझर वैयक्तिक आदेशांच्या दुव्यांचे समर्थन करत नाही.",
+      layoutDescription: "मूळ प्लेसमेंट ठेवा, एक कोपरा किंवा साइड प्रीसेट निवडा किंवा चॅट इनपुटच्या वर डॉक करा. हलविण्यासाठी ड्रॅग करा, बार स्वॅप करा आणि तुमचा लेआउट लक्षात ठेवा.",
+      gestureReleaseLabel: "बटण सोडल्यावर",
+      seekPosition: "प्लेबॅकची स्थिती"
+    },
+    te: {
+      edit: "బ్రౌజర్‌లో సవరించండి",
+      editHint: "బ్రౌజర్ సత్వరమార్గాల పేజీలో {action}ని కనుగొనండి. బ్రౌజర్ వ్యక్తిగత ఆదేశాలకు లింక్‌లకు మద్దతు ఇవ్వదు.",
+      layoutDescription: "ఒరిజినల్ ప్లేస్‌మెంట్‌ను ఉంచండి, ఒక మూలను లేదా సైడ్ ప్రీసెట్‌ను ఎంచుకోండి లేదా చాట్ ఇన్‌పుట్ పైన డాక్ చేయండి. తరలించడానికి లాగండి, బార్‌లను మార్చుకోండి మరియు మీ లేఅవుట్‌ను గుర్తుంచుకోండి.",
+      gestureReleaseLabel: "బటన్‌ను వదిలినప్పుడు",
+      seekPosition: "ప్లేబ్యాక్ స్థానం"
+    },
+    ta: {
+      edit: "உலாவியில் திருத்தவும்",
+      editHint: "உலாவி குறுக்குவழிகள் பக்கத்தில் {action} ஐக் கண்டறியவும். தனிப்பட்ட கட்டளைகளுக்கான இணைப்புகளை உலாவி ஆதரிக்காது.",
+      layoutDescription: "அசல் இடத்தை வைத்திருங்கள், ஒரு மூலை அல்லது பக்க முன்னமைவைத் தேர்வுசெய்யவும் அல்லது அரட்டை உள்ளீட்டிற்கு மேலே டாக் செய்யவும். நகர்த்த இழுக்கவும், பார்களை மாற்றவும் மற்றும் உங்கள் தளவமைப்பை நினைவில் கொள்ளவும்.",
+      gestureReleaseLabel: "பொத்தானை விடும்போது",
+      seekPosition: "இயக்க நிலை"
+    },
+    ar: {
+      edit: "تحرير في المتصفح",
+      editHint: "ابحث عن {action} في صفحة اختصارات المتصفح. لا يدعم المتصفح الروابط للأوامر الفردية.",
+      layoutDescription: "احتفظ بالموضع الأصلي، أو اختر زاوية أو إعدادًا جانبيًا مسبقًا، أو قم بالتثبيت فوق مدخلات الدردشة. اسحب للتحرك، وقم بتبديل الأشرطة، وتذكر التخطيط الخاص بك.",
+      gestureReleaseLabel: "عند إفلات الزر",
+      seekPosition: "موضع التشغيل"
+    },
+    fa: {
+      edit: "ویرایش در مرورگر",
+      editHint: "{action} را در صفحه میانبرهای مرورگر پیدا کنید. مرورگر پیوندهایی به دستورات فردی را پشتیبانی نمی کند.",
+      layoutDescription: "مکان اصلی را نگه دارید، یک گوشه یا کناری از پیش تنظیم شده انتخاب کنید، یا بالای ورودی چت قرار بگیرید. بکشید تا حرکت کنید، میله‌ها را عوض کنید و طرح‌بندی خود را به خاطر بسپارید.",
+      gestureReleaseLabel: "با رها کردن دکمه",
+      seekPosition: "موقعیت پخش"
+    },
+    he: {
+      edit: "ערוך בדפדפן",
+      editHint: "מצא את {action} בדף קיצורי הדרך של הדפדפן. הדפדפן אינו תומך בקישורים לפקודות בודדות.",
+      layoutDescription: "שמור את המיקום המקורי, בחר פינה או צד מוגדר מראש, או עגן מעל קלט הצ'אט. גרור כדי לזוז, להחליף את הפסים ולזכור את הפריסה שלך.",
+      gestureReleaseLabel: "בשחרור הכפתור",
+      seekPosition: "מיקום ההשמעה"
+    },
+    "zh-CN": {
+      edit: "在浏览器中编辑",
+      editHint: "在浏览器快捷方式页面找到{action}。浏览器不支持指向单个命令的链接。",
+      layoutDescription: "保留原始位置，选择角落或侧面预设，或停靠在聊天输入上方。拖动移动、交换栏并记住您的布局。",
+      gestureReleaseLabel: "松开按钮",
+      seekPosition: "播放位置"
+    },
+    "zh-TW": {
+      edit: "在瀏覽器中編輯",
+      editHint: "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
+      layoutDescription: "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
+      gestureReleaseLabel: "放開按鈕",
+      seekPosition: "播放位置"
+    },
+    vi: {
+      edit: "Chỉnh sửa trong trình duyệt",
+      editHint: "Tìm {action} trên trang phím tắt của trình duyệt. Trình duyệt không hỗ trợ liên kết đến các lệnh riêng lẻ.",
+      layoutDescription: "Giữ nguyên vị trí ban đầu, chọn cài đặt sẵn ở một góc hoặc một bên hoặc gắn phía trên đầu vào trò chuyện. Kéo để di chuyển, hoán đổi các thanh và ghi nhớ bố cục của bạn.",
+      gestureReleaseLabel: "Khi thả nút",
+      seekPosition: "Vị trí phát"
+    },
+    th: {
+      edit: "แก้ไขในเบราว์เซอร์",
+      editHint: "ค้นหา {action} บนหน้าทางลัดของเบราว์เซอร์ เบราว์เซอร์ไม่รองรับลิงก์ไปยังคำสั่งแต่ละคำสั่ง",
+      layoutDescription: "คงตำแหน่งเดิมไว้ เลือกมุมหรือด้านข้างที่กำหนดไว้ล่วงหน้า หรือวางเหนือช่องแชท ลากเพื่อย้าย สลับแถบ และจดจำเค้าโครงของคุณ",
+      gestureReleaseLabel: "เมื่อปล่อยปุ่ม",
+      seekPosition: "ตำแหน่งการเล่น"
+    },
+    es: {
+      edit: "Editar en el navegador",
+      editHint: "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
+      layoutDescription: "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
+      gestureReleaseLabel: "Al soltar el botón",
+      seekPosition: "Posición de reproducción"
+    },
+    "pt-BR": {
+      edit: "Editar no navegador",
+      editHint: "Encontre {action} na página de atalhos do navegador. O navegador não oferece suporte a links para comandos individuais.",
+      layoutDescription: "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
+      gestureReleaseLabel: "Ao soltar o botão",
+      seekPosition: "Posição da reprodução"
+    },
+    "pt-PT": {
+      edit: "Editar no browser",
+      editHint: "Encontre {action} na página de atalhos do browser. O navegador não suporta links para comandos individuais.",
+      layoutDescription: "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
+      gestureReleaseLabel: "Ao soltar o botão",
+      seekPosition: "Posição de reprodução"
+    },
+    ru: {
+      edit: "Редактировать в браузере",
+      editHint: "Найдите {action} на странице ярлыков браузера. Браузер не поддерживает ссылки на отдельные команды.",
+      layoutDescription: "Сохраните исходное расположение, выберите угол или боковую настройку или закрепите ее над полем ввода в чате. Перетаскивайте, меняйте местами полосы и запоминайте расположение.",
+      gestureReleaseLabel: "При отпускании кнопки",
+      seekPosition: "Позиция воспроизведения"
+    },
+    hi: {
+      edit: "ब्राउज़र में संपादित करें",
+      editHint: "ब्राउज़र शॉर्टकट पेज पर {action} ढूंढें। ब्राउज़र अलग-अलग कमांड के लिंक का समर्थन नहीं करता है।",
+      layoutDescription: "मूल प्लेसमेंट रखें, एक कोना या साइड प्रीसेट चुनें, या चैट इनपुट के ऊपर डॉक चुनें। स्थानांतरित करने के लिए खींचें, बारों को स्वैप करें और अपना लेआउट याद रखें।",
+      gestureReleaseLabel: "बटन छोड़ने पर",
+      seekPosition: "प्लेबैक की स्थिति"
+    },
+    fr: {
+      edit: "Modifier dans le navigateur",
+      editHint: "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
+      layoutDescription: "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
+      gestureReleaseLabel: "En relâchant le bouton",
+      seekPosition: "Position de lecture"
+    },
+    de: {
+      edit: "Im Browser bearbeiten",
+      editHint: "Suchen Sie {action} auf der Seite mit den Browser-Verknüpfungen. Der Browser unterstützt keine Links zu einzelnen Befehlen.",
+      layoutDescription: "Behalten Sie die ursprüngliche Platzierung bei, wählen Sie eine Eck- oder Seitenvoreinstellung oder docken Sie oberhalb der Chat-Eingabe an. Ziehen Sie zum Verschieben, tauschen Sie die Balken aus und merken Sie sich Ihr Layout.",
+      gestureReleaseLabel: "Beim Loslassen",
+      seekPosition: "Wiedergabeposition"
+    },
+    ja: {
+      edit: "ブラウザで編集する",
+      editHint: "ブラウザのショートカット ページで {action} を見つけます。ブラウザは、個々のコマンドへのリンクをサポートしていません。",
+      layoutDescription: "元の配置を維持し、コーナーまたはサイドのプリセットを選択するか、チャット入力の上にドッキングします。ドラッグして移動したり、バーを交換したりして、レイアウトを記憶します。",
+      gestureReleaseLabel: "ボタンを離すと",
+      seekPosition: "再生位置"
+    },
+    ko: {
+      edit: "브라우저에서 편집",
+      editHint: "브라우저 바로가기 페이지에서 {action}를 찾으세요. 브라우저는 개별 명령에 대한 링크를 지원하지 않습니다.",
+      layoutDescription: "원래 배치를 유지하고, 모서리나 측면 사전 설정을 선택하거나, 채팅 입력 위에 고정하세요. 드래그하여 이동하고, 막대를 바꾸고, 레이아웃을 기억하세요.",
+      gestureReleaseLabel: "버튼을 놓으면",
+      seekPosition: "재생 위치"
+    },
+    id: {
+      edit: "Sunting di peramban",
+      editHint: "Temukan {action} di halaman pintasan browser. Browser tidak mendukung tautan ke perintah individual.",
+      layoutDescription: "Pertahankan penempatan aslinya, pilih preset sudut atau samping, atau dok di atas masukan obrolan. Seret untuk memindahkan, tukar bilah, dan ingat tata letak Anda.",
+      gestureReleaseLabel: "Saat tombol dilepas",
+      seekPosition: "Posisi pemutaran"
+    },
+    it: {
+      edit: "Modifica nel browser",
+      editHint: "Trova {action} nella pagina delle scorciatoie del browser. Il browser non supporta collegamenti a singoli comandi.",
+      layoutDescription: "Mantieni la posizione originale, scegli un angolo o un lato preimpostato oppure aggancialo sopra l'input della chat. Trascina per spostare, scambia le barre e ricorda il layout.",
+      gestureReleaseLabel: "Al rilascio del pulsante",
+      seekPosition: "Posizione di riproduzione"
+    },
+    tr: {
+      edit: "Tarayıcıda düzenle",
+      editHint: "Tarayıcı kısayolları sayfasında {action}'yu bulun. Tarayıcı, bireysel komutlara olan bağlantıları desteklemez.",
+      layoutDescription: "Orijinal yerleşimi koruyun, bir köşe veya yan ön ayar seçin veya sohbet girişinin üzerine sabitleyin. Taşımak, çubukları değiştirmek ve düzeninizi hatırlamak için sürükleyin.",
+      gestureReleaseLabel: "Düğmeyi bıraktığınızda",
+      seekPosition: "Oynatma konumu"
+    },
+    pl: {
+      edit: "Edytuj w przeglądarce",
+      editHint: "Znajdź {action} na stronie skrótów przeglądarki. Przeglądarka nie obsługuje odnośników do poszczególnych poleceń.",
+      layoutDescription: "Zachowaj oryginalne położenie, wybierz róg lub bok ekranu albo umieść odtwarzacz nad polem wiadomości. Przeciągaj i zamieniaj paski — rozszerzenie zapamięta układ.",
+      gestureReleaseLabel: "Po zwolnieniu przycisku",
+      seekPosition: "Pozycja odtwarzania"
+    },
+    hu: {
+      edit: "Szerkesztés a böngészőben",
+      editHint: "Keresse meg a {action} elemet a böngésző parancsikonok oldalán. A böngésző nem támogatja az egyes parancsokra mutató hivatkozásokat.",
+      layoutDescription: "Tartsa meg az eredeti elhelyezést, válasszon egy sarok vagy oldal előre beállított értéket, vagy dokkoljon a csevegés bemenete fölé. Húzza a mozgatáshoz, cserélje fel a sávokat, és emlékezzen az elrendezésre.",
+      gestureReleaseLabel: "A gomb felengedésekor",
+      seekPosition: "Lejátszási pozíció"
+    },
+    sv: {
+      edit: "Redigera i webbläsaren",
+      editHint: "Hitta {action} på webbläsarens genvägssida. Webbläsaren stöder inte länkar till enskilda kommandon.",
+      layoutDescription: "Behåll den ursprungliga placeringen, välj ett hörn eller en sida, eller docka ovanför meddelandefältet. Dra för att flytta och byta plats på fälten. Tillägget sparar din layout.",
+      gestureReleaseLabel: "När du släpper knappen",
+      seekPosition: "Uppspelningsposition"
+    },
+    cs: {
+      edit: "Upravit v prohlížeči",
+      editHint: "Najděte {action} na stránce zástupců prohlížeče. Prohlížeč nepodporuje odkazy na jednotlivé příkazy.",
+      layoutDescription: "Ponechte původní umístění, vyberte přednastavení rohu nebo strany nebo ukotvete nad vstupem chatu. Přetažením se můžete pohybovat, vyměňovat pruhy a pamatovat si rozvržení.",
+      gestureReleaseLabel: "Po uvolnění tlačítka",
+      seekPosition: "Pozice přehrávání"
+    },
+    uk: {
+      edit: "Редагувати в браузері",
+      editHint: "Знайдіть {action} на сторінці ярликів браузера. Браузер не підтримує посилання на окремі команди.",
+      layoutDescription: "Збережіть вихідне розташування, виберіть кут або бічні налаштування або закріпіть над введенням чату. Перетягуйте, щоб рухатися, міняйте смужки місцями та запам’ятовуйте свій макет.",
+      gestureReleaseLabel: "Після відпускання кнопки",
+      seekPosition: "Позиція відтворення"
+    },
+    ca: {
+      edit: "Edita al navegador",
+      editHint: "Cerqueu {action} a la pàgina de dreceres del navegador. El navegador no admet enllaços a ordres individuals.",
+      layoutDescription: "Manteniu la ubicació original, trieu una cantonada o un lateral preestablert, o acopleu-lo a sobre de l'entrada del xat. Arrossegueu per moure's, intercanvieu les barres i recordeu la vostra disposició.",
+      gestureReleaseLabel: "En deixar anar el botó",
+      seekPosition: "Posició de reproducció"
+    },
+    el: {
+      edit: "Επεξεργασία στο πρόγραμμα περιήγησης",
+      editHint: "Βρείτε το {action} στη σελίδα συντομεύσεων του προγράμματος περιήγησης. Το πρόγραμμα περιήγησης δεν υποστηρίζει συνδέσμους με μεμονωμένες εντολές.",
+      layoutDescription: "Διατηρήστε την αρχική τοποθέτηση, επιλέξτε μια γωνιακή ή πλευρική προεπιλογή ή συνδέστε πάνω από την είσοδο συνομιλίας. Σύρετε για να μετακινηθείτε, αλλάξτε τις γραμμές και θυμηθείτε τη διάταξή σας.",
+      gestureReleaseLabel: "Όταν αφήσετε το κουμπί",
+      seekPosition: "Θέση αναπαραγωγής"
+    },
+    ro: {
+      edit: "Editați în browser",
+      editHint: "Găsiți {action} pe pagina de comenzi rapide ale browserului. Browserul nu acceptă link-uri către comenzi individuale.",
+      layoutDescription: "Păstrați poziția inițială, alegeți un colț sau o latură a ecranului ori andocați playerul deasupra câmpului de mesaj. Trageți pentru a muta barele sau a le schimba ordinea. Extensia reține aranjamentul.",
+      gestureReleaseLabel: "La eliberarea butonului",
+      seekPosition: "Poziția redării"
+    },
+    nb: {
+      edit: "Rediger i nettleseren",
+      editHint: "Finn {action} på snarveisiden for nettleseren. Nettleseren støtter ikke lenker til individuelle kommandoer.",
+      layoutDescription: "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
+      gestureReleaseLabel: "Når du slipper knappen",
+      seekPosition: "Avspillingsposisjon"
+    },
+    am: {
+      edit: "በአሳሽ ውስጥ ያርትዑ",
+      editHint: "በአሳሹ አቋራጮች ገጽ ላይ {action} ን ያግኙ። አሳሹ ለግለሰብ ትዕዛዞች አገናኞችን አይደግፍም።",
+      layoutDescription: "የመጀመሪያውን አቀማመጥ ያስቀምጡ፣ የማዕዘን ወይም የጎን ቅድመ ዝግጅት ይምረጡ ወይም ከቻት ግቤት በላይ መትከያ ያድርጉ። ለመንቀሳቀስ ይጎትቱ፣ አሞሌዎቹን ይቀይሩ እና አቀማመጥዎን ያስታውሱ።",
+      gestureReleaseLabel: "አዝራሩን ይልቀቁ",
+      seekPosition: "የመልሶ ማጫወት ቦታ"
+    },
+    bg: {
+      edit: "Редактиране в браузъра",
+      editHint: "Намерете {action} на страницата с преки пътища на браузъра. Браузърът не поддържа връзки към отделни команди.",
+      layoutDescription: "Запазете оригиналното разположение, изберете предварително зададен ъгъл или страна или закрепете над входа за чат. Плъзнете, за да се движите, разменете лентите и запомнете оформлението си.",
+      gestureReleaseLabel: "Освободете бутона",
+      seekPosition: "Позиция на възпроизвеждане"
+    },
+    bs: {
+      edit: "Uredi u pretraživaču",
+      editHint: "Pronađite {action} na stranici sa prečicama pretraživača. Pretraživač ne podržava veze do pojedinačnih komandi.",
+      layoutDescription: "Zadržite originalni položaj, odaberite ugao ili bočnu postavku ili pričvrstite iznad unosa za ćaskanje. Prevucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+      gestureReleaseLabel: "Otpustite dugme",
+      seekPosition: "Pozicija reprodukcije"
+    },
+    da: {
+      edit: "Rediger i browser",
+      editHint: "Find {action} på siden med browsergenveje. Browseren understøtter ikke links til individuelle kommandoer.",
+      layoutDescription: "Behold den originale placering, vælg en forudindstilling i hjørnet eller siden, eller sæt foran chatinputtet. Træk for at flytte, skift stregerne, og husk dit layout.",
+      gestureReleaseLabel: "Slip knappen",
+      seekPosition: "Afspilningsposition"
+    },
+    et: {
+      edit: "Redigeeri brauseris",
+      editHint: "Leidke brauseri otseteede lehelt {action}. Brauser ei toeta linke üksikutele käskudele.",
+      layoutDescription: "Säilitage algne paigutus, valige nurga või külje eelseade või dokkige vestlussisendi kohale. Lohistage liigutamiseks, ribade vahetamiseks ja paigutuse meeldejätmiseks.",
+      gestureReleaseLabel: "Vabastage nupp",
+      seekPosition: "Taasesituse asend"
+    },
+    fil: {
+      edit: "I-edit sa browser",
+      editHint: "Hanapin ang {action} sa pahina ng mga shortcut sa browser. Hindi sinusuportahan ng browser ang mga link sa mga indibidwal na command.",
+      layoutDescription: "Panatilihin ang orihinal na placement, pumili ng preset na sulok o gilid, o mag-dock sa itaas ng input ng chat. I-drag upang ilipat, palitan ang mga bar, at tandaan ang iyong layout.",
+      gestureReleaseLabel: "Bitawan ang button",
+      seekPosition: "Posisyon ng pag-playback"
+    },
+    fi: {
+      edit: "Muokkaa selaimessa",
+      editHint: "Etsi {action} selaimen pikakuvakesivulta. Selain ei tue linkkejä yksittäisiin komentoihin.",
+      layoutDescription: "Säilytä alkuperäinen sijoitus, valitse kulman tai sivun esiasetus tai kiinnitä chat-syötteen yläpuolelle. Siirrä vetämällä, vaihda palkkeja ja muista asettelusi.",
+      gestureReleaseLabel: "Vapauta painike",
+      seekPosition: "Toistopaikka"
+    },
+    gu: {
+      edit: "બ્રાઉઝરમાં ફેરફાર કરો",
+      editHint: "બ્રાઉઝર શોર્ટકટ્સ પેજ પર {action} શોધો. બ્રાઉઝર વ્યક્તિગત આદેશોની લિંક્સને સપોર્ટ કરતું નથી.",
+      layoutDescription: "મૂળ પ્લેસમેન્ટ રાખો, કોર્નર અથવા સાઇડ પ્રીસેટ પસંદ કરો અથવા ચેટ ઇનપુટની ઉપર ડોક કરો. ખસેડવા માટે ખેંચો, બારને સ્વેપ કરો અને તમારું લેઆઉટ યાદ રાખો.",
+      gestureReleaseLabel: "બટન છોડો",
+      seekPosition: "પ્લેબેક સ્થિતિ"
+    },
+    hr: {
+      edit: "Uredi u pregledniku",
+      editHint: "Pronađite {action} na stranici s prečacima preglednika. Preglednik ne podržava poveznice na pojedinačne naredbe.",
+      layoutDescription: "Zadržite izvorni položaj, odaberite unaprijed postavljen kut ili stranu ili usidrite iznad unosa za chat. Povucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
+      gestureReleaseLabel: "Otpustite gumb",
+      seekPosition: "Položaj reprodukcije"
+    },
+    hy: {
+      edit: "Խմբագրել բրաուզերում",
+      editHint: "Գտեք {action} դիտարկիչի դյուրանցումների էջում: Զննարկիչը չի աջակցում առանձին հրամանների հղումներ:",
+      layoutDescription: "Պահպանեք բնօրինակ տեղադրումը, ընտրեք նախադրված անկյուն կամ կողային կամ ամրացրեք զրույցի մուտքագրման վերևում: Քաշեք՝ տեղափոխելու համար, փոխեք գծերը և հիշեք ձեր դասավորությունը:",
+      gestureReleaseLabel: "Ազատեք կոճակը",
+      seekPosition: "Նվագարկման դիրք"
+    },
+    is: {
+      edit: "Breyta í vafra",
+      editHint: "Finndu {action} á flýtivísasíðu vafrans. Vafrinn styður ekki tengla á einstakar skipanir.",
+      layoutDescription: "Haltu upprunalegu staðsetningunni, veldu horn- eða hliðarforstillingu, eða hafðu fyrir ofan spjallinntakið. Dragðu til að færa, skiptu um stikur og mundu skipulagið þitt.",
+      gestureReleaseLabel: "Slepptu takkanum",
+      seekPosition: "Spilunarstaða"
+    },
+    ka: {
+      edit: "რედაქტირება ბრაუზერში",
+      editHint: "იპოვეთ {action} ბრაუზერის მალსახმობების გვერდზე. ბრაუზერს არ აქვს ინდივიდუალური ბრძანებების ბმულების მხარდაჭერა.",
+      layoutDescription: "შეინახეთ თავდაპირველი განლაგება, აირჩიეთ კუთხე ან გვერდითი წინასწარ დაყენებული, ან დაამაგრეთ ჩატის შეყვანის ზემოთ. გადაიტანეთ გადასაადგილებლად, შეცვალეთ ზოლები და დაიმახსოვრეთ თქვენი განლაგება.",
+      gestureReleaseLabel: "გაათავისუფლეთ ღილაკი",
+      seekPosition: "დაკვრის პოზიცია"
+    },
+    kk: {
+      edit: "Браузерде өңдеу",
+      editHint: "Браузер таңбашалары бетінен {action} табыңыз. Браузер жеке пәрмендерге сілтемелерді қолдамайды.",
+      layoutDescription: "Бастапқы орынды сақтаңыз, бұрышты немесе бүйірлік алдын ала орнатуды таңдаңыз немесе чат кірісінің үстіне қондырыңыз. Жылжыту, жолақтарды ауыстыру және орналасуды есте сақтау үшін сүйреңіз.",
+      gestureReleaseLabel: "Түймені босатыңыз",
+      seekPosition: "Ойнату орны"
+    },
+    kn: {
+      edit: "ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಪಾದಿಸಿ",
+      editHint: "ಬ್ರೌಸರ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳ ಪುಟದಲ್ಲಿ {action} ಅನ್ನು ಹುಡುಕಿ. ಬ್ರೌಸರ್ ಪ್ರತ್ಯೇಕ ಆಜ್ಞೆಗಳಿಗೆ ಲಿಂಕ್‌ಗಳನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.",
+      layoutDescription: "ಮೂಲ ನಿಯೋಜನೆಯನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ, ಒಂದು ಮೂಲೆ ಅಥವಾ ಅಡ್ಡ ಪೂರ್ವನಿಗದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಚಾಟ್ ಇನ್‌ಪುಟ್‌ನ ಮೇಲೆ ಡಾಕ್ ಮಾಡಿ. ಸರಿಸಲು ಎಳೆಯಿರಿ, ಬಾರ್‌ಗಳನ್ನು ಸ್ವ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ವಿನ್ಯಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.",
+      gestureReleaseLabel: "ಬಟನ್ ಅನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿ",
+      seekPosition: "ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಥಾನ"
+    },
+    lt: {
+      edit: "Redaguoti naršyklėje",
+      editHint: "Naršyklės nuorodų puslapyje raskite {action}. Naršyklė nepalaiko nuorodų į atskiras komandas.",
+      layoutDescription: "Išsaugokite pradinę vietą, pasirinkite iš anksto nustatytą kampą ar šoną arba pritvirtinkite prie doko virš pokalbio įvesties. Vilkite, kad perkeltumėte, pakeiskite juostas ir prisiminkite savo išdėstymą.",
+      gestureReleaseLabel: "Atleiskite mygtuką",
+      seekPosition: "Atkūrimo padėtis"
+    },
+    lv: {
+      edit: "Rediģēt pārlūkprogrammā",
+      editHint: "Pārlūkprogrammas īsceļu lapā atrodiet {action}. Pārlūkprogramma neatbalsta saites uz atsevišķām komandām.",
+      layoutDescription: "Saglabājiet sākotnējo izvietojumu, izvēlieties stūra vai sānu sākotnējo iestatījumu vai piestipriniet dokstaciju virs tērzēšanas ievades. Velciet, lai pārvietotu, samainiet joslas un atcerieties savu izkārtojumu.",
+      gestureReleaseLabel: "Atlaidiet pogu",
+      seekPosition: "Atskaņošanas pozīcija"
+    },
+    mk: {
+      edit: "Уредете во прелистувачот",
+      editHint: "Најдете {action} на страницата со кратенки на прелистувачот. Прелистувачот не поддржува врски до поединечни команди.",
+      layoutDescription: "Чувајте ја оригиналната поставеност, изберете агол или странично претходно поставено или приклучете се над влезот за разговор. Повлечете за да се движите, заменете ги лентите и запомнете го вашиот распоред.",
+      gestureReleaseLabel: "Ослободете го копчето",
+      seekPosition: "Позиција за репродукција"
+    },
+    ml: {
+      edit: "ബ്രൗസറിൽ എഡിറ്റ് ചെയ്യുക",
+      editHint: "ബ്രൗസർ കുറുക്കുവഴികൾ പേജിൽ {action} കണ്ടെത്തുക. വ്യക്തിഗത കമാൻഡുകളിലേക്കുള്ള ലിങ്കുകളെ ബ്രൗസർ പിന്തുണയ്ക്കുന്നില്ല.",
+      layoutDescription: "യഥാർത്ഥ പ്ലേസ്‌മെൻ്റ് സൂക്ഷിക്കുക, ഒരു മൂലയോ സൈഡ് പ്രീസെറ്റോ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ചാറ്റ് ഇൻപുട്ടിന് മുകളിൽ ഡോക്ക് ചെയ്യുക. നീക്കാൻ വലിച്ചിടുക, ബാറുകൾ സ്വാപ്പ് ചെയ്യുക, നിങ്ങളുടെ ലേഔട്ട് ഓർമ്മിക്കുക.",
+      gestureReleaseLabel: "ബട്ടൺ റിലീസ് ചെയ്യുക",
+      seekPosition: "പ്ലേബാക്ക് സ്ഥാനം"
+    },
+    mn: {
+      edit: "Хөтөч дээр засварлах",
+      editHint: "Хөтөчийн товчлолын хуудаснаас {action}-г олоорой. Хөтөч нь бие даасан командын холбоосыг дэмждэггүй.",
+      layoutDescription: "Анхны байршлыг хадгалах, булан эсвэл хажуугийн урьдчилан тохируулгыг сонгох, эсвэл чатын оролтын дээгүүр залгах. Зөөж, бааруудыг сольж, байршлаа санахын тулд чирнэ үү.",
+      gestureReleaseLabel: "Товчлуурыг суллана уу",
+      seekPosition: "Тоглуулах байрлал"
+    },
+    ms: {
+      edit: "Edit dalam penyemak imbas",
+      editHint: "Cari {action} pada halaman pintasan penyemak imbas. Penyemak imbas tidak menyokong pautan ke arahan individu.",
+      layoutDescription: "Kekalkan peletakan asal, pilih sudut atau pratetap sisi atau dok di atas input sembang. Seret untuk mengalihkan, menukar bar dan ingat reka letak anda.",
+      gestureReleaseLabel: "Lepaskan butang",
+      seekPosition: "Kedudukan main balik"
+    },
+    my: {
+      edit: "ဘရောက်ဆာတွင်တည်းဖြတ်ပါ။",
+      editHint: "ဘရောက်ဆာဖြတ်လမ်းများစာမျက်နှာရှိ {action} ကိုရှာပါ။ ဘရောက်ဆာသည် တစ်ဦးချင်းအမိန့်စာများသို့ လင့်ခ်များကို မပံ့ပိုးပါ။",
+      layoutDescription: "မူရင်းနေရာချထားမှုကို ထားရှိပါ၊ ထောင့် သို့မဟုတ် ဘေးထွက်ကြိုတင်သတ်မှတ်မှုကို ရွေးချယ်ပါ၊ သို့မဟုတ် ချတ်ထည့်သွင်းမှု၏အထက်တွင် အထိုင်ချပါ။ ရွှေ့ရန် ဖိဆွဲပါ၊ ဘားများကို လဲလှယ်ပြီး သင့်အပြင်အဆင်ကို မှတ်သားပါ။",
+      gestureReleaseLabel: "ခလုတ်ကို လွှတ်လိုက်ပါ။",
+      seekPosition: "ပြန်ဖွင့်သည့်အနေအထား"
+    },
+    nl: {
+      edit: "Bewerken in browser",
+      editHint: "Zoek {action} op de pagina met browsersnelkoppelingen. De browser ondersteunt geen koppelingen naar afzonderlijke opdrachten.",
+      layoutDescription: "Behoud de oorspronkelijke plaatsing, kies een voorinstelling voor een hoek of zijkant, of plaats deze boven de chatinvoer. Sleep om te verplaatsen, verwissel de balken en onthoud uw lay-out.",
+      gestureReleaseLabel: "Laat de knop los",
+      seekPosition: "Afspeelpositie"
+    },
+    pa: {
+      edit: "ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਸੰਪਾਦਿਤ ਕਰੋ",
+      editHint: "ਬ੍ਰਾਊਜ਼ਰ ਸ਼ਾਰਟਕੱਟ ਪੰਨੇ 'ਤੇ {action} ਲੱਭੋ। ਬ੍ਰਾਊਜ਼ਰ ਵਿਅਕਤੀਗਤ ਕਮਾਂਡਾਂ ਦੇ ਲਿੰਕਾਂ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ।",
+      layoutDescription: "ਅਸਲੀ ਪਲੇਸਮੈਂਟ ਰੱਖੋ, ਇੱਕ ਕੋਨਾ ਜਾਂ ਸਾਈਡ ਪ੍ਰੀਸੈਟ ਚੁਣੋ, ਜਾਂ ਚੈਟ ਇਨਪੁਟ ਦੇ ਉੱਪਰ ਡੌਕ ਕਰੋ। ਮੂਵ ਕਰਨ ਲਈ ਖਿੱਚੋ, ਬਾਰਾਂ ਨੂੰ ਸਵੈਪ ਕਰੋ, ਅਤੇ ਆਪਣਾ ਖਾਕਾ ਯਾਦ ਰੱਖੋ।",
+      gestureReleaseLabel: "ਬਟਨ ਨੂੰ ਛੱਡੋ",
+      seekPosition: "ਪਲੇਬੈਕ ਸਥਿਤੀ"
+    },
+    sk: {
+      edit: "Upraviť v prehliadači",
+      editHint: "Nájdite {action} na stránke skratiek prehliadača. Prehliadač nepodporuje odkazy na jednotlivé príkazy.",
+      layoutDescription: "Ponechajte pôvodné umiestnenie, vyberte predvoľbu rohu alebo strany alebo ukotvte nad vstupom pre rozhovor. Ťahaním sa presúvajte, vymieňajte pruhy a zapamätajte si svoje rozloženie.",
+      gestureReleaseLabel: "Uvoľnite tlačidlo",
+      seekPosition: "Pozícia prehrávania"
+    },
+    sl: {
+      edit: "Uredi v brskalniku",
+      editHint: "Poiščite {action} na strani z bližnjicami brskalnika. Brskalnik ne podpira povezav do posameznih ukazov.",
+      layoutDescription: "Ohranite prvotno postavitev, izberite prednastavitev kota ali strani ali zasidrajte nad vnosom klepeta. Povlecite za premikanje, zamenjajte vrstice in si zapomnite svojo postavitev.",
+      gestureReleaseLabel: "Spustite gumb",
+      seekPosition: "Položaj predvajanja"
+    },
+    so: {
+      edit: "Wax ka beddel browserka dhexdiisa",
+      editHint: "Ka hel {action} bogga furaha browserka. Barowsarku ma taageerayo isku xirka amarada shaqsiga ah.",
+      layoutDescription: "Hayso meelaynta asalka ah, dooro gees ama gees horay loo dhigay, ama ku xidh meel ka sarraysa gelinta sheekada. Jiid si aad u guurto, u beddesho baararka, oo xasuuso qaabkaaga.",
+      gestureReleaseLabel: "Sii daa badhanka",
+      seekPosition: "Booska dib u ciyaarista"
+    },
+    sq: {
+      edit: "Ndrysho në shfletuesin",
+      editHint: "Gjeni {action} në faqen e shkurtoreve të shfletuesit. Shfletuesi nuk mbështet lidhje me komandat individuale.",
+      layoutDescription: "Mbani vendosjen origjinale, zgjidhni një kënd ose anësor të paravendosur, ose vendoseni mbi hyrjen e bisedës. Zvarritni për të lëvizur, ndërroni shiritat dhe mbani mend paraqitjen tuaj.",
+      gestureReleaseLabel: "Lëshojeni butonin",
+      seekPosition: "Pozicioni i luajtjes"
+    },
+    sr: {
+      edit: "Уреди у претраживачу",
+      editHint: "Пронађите {action} на страници са пречицама прегледача. Прегледач не подржава везе до појединачних команди.",
+      layoutDescription: "Задржите оригинално постављање, изаберите унапред подешено угао или страну или причврстите изнад уноса за ћаскање. Превуците да бисте померили, замените шипке и запамтите свој распоред.",
+      gestureReleaseLabel: "Отпустите дугме",
+      seekPosition: "Положај репродукције"
+    },
+    sw: {
+      edit: "Hariri katika kivinjari",
+      editHint: "Tafuta {action} kwenye ukurasa wa njia za mkato za kivinjari. Kivinjari hakitumii viungo kwa amri za kibinafsi.",
+      layoutDescription: "Weka nafasi asili, chagua kona au uwekaji wa pembeni mapema, au kituo juu ya ingizo la gumzo. Buruta ili usogeze, ubadilishane pau na ukumbuke mpangilio wako.",
+      gestureReleaseLabel: "Achilia kitufe",
+      seekPosition: "Nafasi ya kucheza"
+    },
+    ur: {
+      edit: "براؤزر میں ترمیم کریں۔",
+      editHint: "براؤزر کے شارٹ کٹ پیج پر {action} تلاش کریں۔ براؤزر انفرادی کمانڈز کے لنکس کو سپورٹ نہیں کرتا ہے۔",
+      layoutDescription: "اصل جگہ کا تعین رکھیں، ایک کونے یا سائیڈ پیش سیٹ کا انتخاب کریں، یا چیٹ ان پٹ کے اوپر گودی کریں۔ منتقل کرنے کے لیے گھسیٹیں، سلاخوں کو تبدیل کریں، اور اپنا لے آؤٹ یاد رکھیں۔",
+      gestureReleaseLabel: "بٹن جاری کریں۔",
+      seekPosition: "پلے بیک پوزیشن"
+    },
+    "es-419": {
+      edit: "Editar en el navegador",
+      editHint: "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
+      layoutDescription: "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
+      gestureReleaseLabel: "Al soltar el botón",
+      seekPosition: "Posición de reproducción"
+    },
+    "fr-CA": {
+      edit: "Modifier dans le navigateur",
+      editHint: "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
+      layoutDescription: "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
+      gestureReleaseLabel: "En relâchant le bouton",
+      seekPosition: "Position de lecture"
+    },
+    "hi-Latn": {
+      edit: "browser mein sampadit karen",
+      editHint: "browser shortcut page par {action} dhundhen. browser alg-alg command ke link ka samarthan nahin karta hai.",
+      layoutDescription: "mool placement rakhen, ek kone ya side preset chunen, ya chat input ke upar dock chunen. sthanantarit karne ke liye khinchen, baron ko swap karen aur apna layout yaad rakhen.",
+      gestureReleaseLabel: "button chhoden",
+      seekPosition: "playback sthiti"
+    },
+    "zh-HK": {
+      edit: "在瀏覽器中編輯",
+      editHint: "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
+      layoutDescription: "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
+      gestureReleaseLabel: "放開按鈕",
+      seekPosition: "播放位置"
+    }
+  };
+
+  // src/shared/i18n/polish.ts
+  function polishCopy(language) {
+    return polish_default[resolveLanguage(language)] || polish_default.en;
+  }
+  // src/shared/i18n/tour.json
+  var tour_default = {
+    en: [
+      "Feature tour",
+      "Back",
+      "Next",
+      "Skip tour"
+    ],
+    am: [
+      "የባህሪያት መግቢያ",
+      "ተመለስ",
+      "ቀጣይ",
+      "መግቢያውን ዝለል"
+    ],
+    bg: [
+      "Обиколка на функциите",
+      "Назад",
+      "Напред",
+      "Пропускане"
+    ],
+    bs: [
+      "Pregled funkcija",
+      "Nazad",
+      "Dalje",
+      "Preskoči"
+    ],
+    ca: [
+      "Visita de les funcions",
+      "Enrere",
+      "Següent",
+      "Omet la visita"
+    ],
+    cs: [
+      "Prohlídka funkcí",
+      "Zpět",
+      "Další",
+      "Přeskočit"
+    ],
+    da: [
+      "Rundvisning i funktioner",
+      "Tilbage",
+      "Næste",
+      "Spring over"
+    ],
+    de: [
+      "Funktionstour",
+      "Zurück",
+      "Weiter",
+      "Tour überspringen"
+    ],
+    el: [
+      "Περιήγηση λειτουργιών",
+      "Πίσω",
+      "Επόμενο",
+      "Παράλειψη"
+    ],
+    es: [
+      "Recorrido por las funciones",
+      "Atrás",
+      "Siguiente",
+      "Omitir recorrido"
+    ],
+    et: [
+      "Funktsioonide tutvustus",
+      "Tagasi",
+      "Edasi",
+      "Jäta vahele"
+    ],
+    fi: [
+      "Toimintojen esittely",
+      "Takaisin",
+      "Seuraava",
+      "Ohita esittely"
+    ],
+    fil: [
+      "Paglilibot sa mga feature",
+      "Bumalik",
+      "Susunod",
+      "Laktawan"
+    ],
+    fr: [
+      "Découvrir les fonctionnalités",
+      "Retour",
+      "Suivant",
+      "Passer la visite"
+    ],
+    gu: [
+      "સુવિધાઓનો પરિચય",
+      "પાછળ",
+      "આગળ",
+      "પરિચય છોડો"
+    ],
+    hr: [
+      "Pregled značajki",
+      "Natrag",
+      "Dalje",
+      "Preskoči"
+    ],
+    hu: [
+      "Funkcióbemutató",
+      "Vissza",
+      "Tovább",
+      "Kihagyás"
+    ],
+    hy: [
+      "Գործառույթների ծանոթացում",
+      "Հետ",
+      "Հաջորդը",
+      "Բաց թողնել"
+    ],
+    is: [
+      "Kynning á eiginleikum",
+      "Til baka",
+      "Næsta",
+      "Sleppa kynningu"
+    ],
+    ka: [
+      "ფუნქციების გაცნობა",
+      "უკან",
+      "შემდეგი",
+      "გამოტოვება"
+    ],
+    kk: [
+      "Мүмкіндіктермен танысу",
+      "Артқа",
+      "Келесі",
+      "Өткізіп жіберу"
+    ],
+    kn: [
+      "ವೈಶಿಷ್ಟ್ಯಗಳ ಪರಿಚಯ",
+      "ಹಿಂದೆ",
+      "ಮುಂದೆ",
+      "ಪರಿಚಯವನ್ನು ಬಿಡಿ"
+    ],
+    lt: [
+      "Funkcijų apžvalga",
+      "Atgal",
+      "Toliau",
+      "Praleisti"
+    ],
+    lv: [
+      "Funkciju apskats",
+      "Atpakaļ",
+      "Tālāk",
+      "Izlaist"
+    ],
+    mk: [
+      "Преглед на функциите",
+      "Назад",
+      "Следно",
+      "Прескокни"
+    ],
+    ml: [
+      "സവിശേഷതകളുടെ പരിചയം",
+      "പിന്നോട്ട്",
+      "അടുത്തത്",
+      "ഒഴിവാക്കുക"
+    ],
+    mn: [
+      "Боломжуудын танилцуулга",
+      "Буцах",
+      "Дараах",
+      "Алгасах"
+    ],
+    ms: [
+      "Pengenalan ciri",
+      "Kembali",
+      "Seterusnya",
+      "Langkau"
+    ],
+    my: [
+      "လုပ်ဆောင်ချက်များ မိတ်ဆက်",
+      "နောက်သို့",
+      "ရှေ့သို့",
+      "ကျော်ရန်"
+    ],
+    nl: [
+      "Rondleiding door functies",
+      "Terug",
+      "Volgende",
+      "Overslaan"
+    ],
+    pa: [
+      "ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਜਾਣ-ਪਛਾਣ",
+      "ਪਿੱਛੇ",
+      "ਅੱਗੇ",
+      "ਛੱਡੋ"
+    ],
+    pl: [
+      "Przewodnik po funkcjach",
+      "Wstecz",
+      "Dalej",
+      "Pomiń"
+    ],
+    "pt-BR": [
+      "Conheça os recursos",
+      "Voltar",
+      "Próximo",
+      "Pular apresentação"
+    ],
+    "pt-PT": [
+      "Conheça as funcionalidades",
+      "Voltar",
+      "Seguinte",
+      "Ignorar apresentação"
+    ],
+    ro: [
+      "Turul funcțiilor",
+      "Înapoi",
+      "Înainte",
+      "Omite turul"
+    ],
+    sk: [
+      "Prehliadka funkcií",
+      "Späť",
+      "Ďalej",
+      "Preskočiť"
+    ],
+    sl: [
+      "Predstavitev funkcij",
+      "Nazaj",
+      "Naprej",
+      "Preskoči"
+    ],
+    so: [
+      "Barashada astaamaha",
+      "Dib u noqo",
+      "Xiga",
+      "Ka bood"
+    ],
+    sq: [
+      "Prezantimi i veçorive",
+      "Prapa",
+      "Tjetra",
+      "Anashkalo"
+    ],
+    sr: [
+      "Преглед функција",
+      "Назад",
+      "Даље",
+      "Прескочи"
+    ],
+    sv: [
+      "Funktionsguide",
+      "Tillbaka",
+      "Nästa",
+      "Hoppa över"
+    ],
+    sw: [
+      "Utangulizi wa vipengele",
+      "Rudi",
+      "Inayofuata",
+      "Ruka"
+    ],
+    ur: [
+      "خصوصیات کا تعارف",
+      "پیچھے",
+      "آگے",
+      "تعارف چھوڑیں"
+    ],
+    uk: [
+      "Огляд функцій",
+      "Назад",
+      "Далі",
+      "Пропустити"
+    ],
+    nb: [
+      "Omvisning i funksjoner",
+      "Tilbake",
+      "Neste",
+      "Hopp over"
+    ],
+    bn: [
+      "ফিচার পরিচিতি",
+      "পিছনে",
+      "পরবর্তী",
+      "পরিচিতি এড়িয়ে যান"
+    ],
+    mr: [
+      "वैशिष्ट्यांचा परिचय",
+      "मागे",
+      "पुढे",
+      "परिचय वगळा"
+    ],
+    te: [
+      "ఫీచర్ల పరిచయం",
+      "వెనుకకు",
+      "తదుపరి",
+      "దాటవేయండి"
+    ],
+    ta: [
+      "அம்சங்களின் அறிமுகம்",
+      "பின்செல்",
+      "அடுத்து",
+      "தவிர்"
+    ],
+    ar: [
+      "جولة في الميزات",
+      "السابق",
+      "التالي",
+      "تخطي الجولة"
+    ],
+    fa: [
+      "آشنایی با امکانات",
+      "قبلی",
+      "بعدی",
+      "رد کردن معرفی"
+    ],
+    he: [
+      "סיור בתכונות",
+      "הקודם",
+      "הבא",
+      "דילוג על הסיור"
+    ],
+    "zh-CN": [
+      "功能导览",
+      "上一步",
+      "下一步",
+      "跳过导览"
+    ],
+    "zh-TW": [
+      "功能導覽",
+      "上一步",
+      "下一步",
+      "跳過導覽"
+    ],
+    vi: [
+      "Khám phá tính năng",
+      "Quay lại",
+      "Tiếp theo",
+      "Bỏ qua"
+    ],
+    th: [
+      "แนะนำฟีเจอร์",
+      "ย้อนกลับ",
+      "ถัดไป",
+      "ข้ามการแนะนำ"
+    ],
+    ru: [
+      "Обзор возможностей",
+      "Назад",
+      "Далее",
+      "Пропустить"
+    ],
+    hi: [
+      "सुविधाओं का परिचय",
+      "पीछे",
+      "आगे",
+      "परिचय छोड़ें"
+    ],
+    "hi-Latn": [
+      "Features ka parichay",
+      "Peechhe",
+      "Aage",
+      "Parichay chhodein"
+    ],
+    ja: [
+      "機能ガイド",
+      "戻る",
+      "次へ",
+      "スキップ"
+    ],
+    ko: [
+      "기능 둘러보기",
+      "이전",
+      "다음",
+      "건너뛰기"
+    ],
+    id: [
+      "Panduan fitur",
+      "Kembali",
+      "Berikutnya",
+      "Lewati"
+    ],
+    it: [
+      "Guida alle funzioni",
+      "Indietro",
+      "Avanti",
+      "Salta la guida"
+    ],
+    tr: [
+      "Özellik turu",
+      "Geri",
+      "İleri",
+      "Turu atla"
+    ],
+    "fr-CA": [
+      "Découvrir les fonctionnalités",
+      "Retour",
+      "Suivant",
+      "Passer la visite"
+    ],
+    "es-419": [
+      "Recorrido por las funciones",
+      "Atrás",
+      "Siguiente",
+      "Omitir recorrido"
+    ],
+    "zh-HK": [
+      "功能導覽",
+      "上一步",
+      "下一步",
+      "跳過導覽"
+    ]
+  };
+
+  // src/shared/i18n/tour.ts
+  function tourCopy(language) {
+    const [title, back, next, skip] = tour_default[resolveLanguage(language)];
+    return { title, back, next, skip };
+  }
+
+  // src/tour/tour.ts
+  var TOUR_KEY = "cgpt-ra-tour-v1";
+  function mountTour(host, settings, finish, standalone = false) {
+    const t = getTranslations(settings.language), r = getReleaseCopy(settings.language);
+    const c = featureCopy(settings.language), copy = tourCopy(settings.language);
+    const direction = languageDirection(settings.language);
+    const steps = [
+      { title: r.quickStart, body: r.nativeHelp, icons: ["volume-2"], caption: t.content.tooltips.readAloud },
+      { title: t.popup.tabs.controls, body: r.stepControl, icons: ["play", "rotate-ccw", "rotate-cw"], caption: "0:24 ━━━━━●━━━━ 1:30" },
+      { title: t.popup.quickControls.playbackSpeed, body: t.options.general.speedDesc + " " + t.options.general.volumeDesc, icons: ["play", "volume-2"], caption: "0.5×   1×   1.5×   2×   3×" },
+      { title: t.content.tooltips.download, body: c.ready + ". " + r.sourceFormat, icons: ["download", "check"], caption: c.ready },
+      { title: c.layout, body: polishCopy(settings.language).layoutDescription + " " + r.hideHint, icons: ["grip-vertical", "minimize-2", "circle-help"], caption: c.saved }
+    ];
+    const shadow = host.attachShadow({ mode: "open" });
+    const style = document.createElement("style");
+    style.textContent = `
+    :host{display:block;color-scheme:light dark;font:16px/1.6 system-ui,sans-serif}
+    *{box-sizing:border-box} .tour{--bg:#fff;--surface:#f5f5f5;--text:#202123;--muted:#5d5d5d;--border:#dedede;--accent:#3968c8;background:var(--bg);color:var(--text);padding:24px;width:min(600px,100%);margin:auto;border-radius:20px}
+    @media(prefers-color-scheme:dark){.tour:not([data-theme=light]){--bg:#212121;--surface:#2f2f2f;--text:#ececec;--muted:#b4b4b4;--border:#454545;--accent:#7ca9ff}}
+    .tour[data-theme=dark]{--bg:#212121;--surface:#2f2f2f;--text:#ececec;--muted:#b4b4b4;--border:#454545;--accent:#7ca9ff}
+    header{display:flex;align-items:center;gap:10px;font-size:14px}header svg{width:28px;height:28px;flex:none}header span{flex:1}
+    button{font:inherit;font-size:14px;min-height:44px;min-width:44px;padding:8px 16px;border:1px solid var(--border);border-radius:12px;background:transparent;color:inherit;cursor:pointer}button:hover{background:var(--surface)}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.45;cursor:default}
+    #skip{border-color:transparent;padding-inline:8px;color:var(--muted)}section{margin:24px 0}#preview{min-height:150px;border-radius:16px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:16px;font-size:14px;text-align:center;color:var(--muted)}.demo-controls{display:flex;gap:24px;color:var(--text);direction:ltr}.demo-controls svg{width:28px;height:28px}#progress{color:var(--muted);font-size:13px;margin:20px 0 8px}h1{font-size:clamp(24px,5vw,32px);font-weight:500;line-height:1.25;margin:0 0 14px}#description{margin:0;min-height:104px;color:var(--muted)}footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.primary{background:var(--text);color:var(--bg);border-color:var(--text)}.primary:hover{background:var(--text);opacity:.9}#dots{display:flex;gap:6px}#dots span{width:6px;height:6px;border-radius:50%;background:var(--border)}#dots .active{background:var(--accent)}.privacy{font-size:12px;color:var(--muted);margin:24px 0 0}#error{color:var(--text);font-size:14px}
+    @media(max-width:400px){.tour{padding:16px}header{flex-wrap:wrap}#description{min-height:140px}#dots{display:none}}
+    @media(prefers-reduced-motion:no-preference){#preview{animation:appear .18s ease-out}@keyframes appear{from{transform:translateY(4px);opacity:.5}to{transform:none;opacity:1}}}
+  `;
+    const main = document.createElement("div");
+    main.className = "tour";
+    main.dataset.theme = settings.theme;
+    main.dir = direction;
+    main.lang = resolveLanguage(settings.language);
+    main.innerHTML = '<header><span id="brand"></span><button id="skip" type="button"></button></header><section aria-labelledby="title"><div id="preview" aria-hidden="true"></div><p id="progress"></p><div aria-live="polite" aria-atomic="true"><h1 id="title"></h1><p id="description"></p></div></section><footer><button id="back" type="button"></button><div id="dots" aria-hidden="true"></div><button id="next" class="primary" type="button"></button></footer><p class="privacy"></p><p id="error" role="alert"></p>';
+    shadow.append(style, main);
+    const el = (id) => shadow.getElementById(id);
+    const button = (id) => el(id);
+    const logo = document.createElement("span");
+    logo.innerHTML = getLucideSvg("chatgpt-audio");
+    logo.setAttribute("aria-hidden", "true");
+    main.querySelector("header").prepend(logo);
+    el("brand").textContent = copy.title;
+    el("progress").dir = "ltr";
+    el("progress").style.textAlign = direction === "rtl" ? "right" : "left";
+    button("skip").textContent = copy.skip;
+    button("back").textContent = copy.back;
+    main.querySelector(".privacy").textContent = r.privacyBody;
+    let index = 0, finishing = false;
+    function render() {
+      const step = steps[index];
+      el("title").textContent = step.title;
+      el("description").textContent = step.body;
+      const number = new Intl.NumberFormat(main.lang);
+      el("progress").textContent = `${number.format(index + 1)} / ${number.format(steps.length)}`;
+      el("preview").innerHTML = `<div class="demo-controls">${step.icons.map((name) => getLucideSvg(name)).join("")}</div>`;
+      const caption = document.createElement("span");
+      caption.textContent = step.caption;
+      if (index === 1 || index === 2)
+        caption.dir = "ltr";
+      el("preview").append(caption);
+      el("dots").innerHTML = steps.map((_, i) => `<span class="${i === index ? "active" : ""}"></span>`).join("");
+      button("back").disabled = index === 0 || finishing;
+      button("next").textContent = index === steps.length - 1 ? standalone ? r.dismiss : t.common.openChatGPT : copy.next;
+      button("next").disabled = finishing;
+      button("skip").disabled = finishing;
+    }
+    async function complete(skipped) {
+      if (finishing)
+        return;
+      finishing = true;
+      render();
+      try {
+        await finish(skipped);
+      } catch {
+        finishing = false;
+        render();
+        el("error").textContent = r.savedError;
+      }
+    }
+    button("next").onclick = () => {
+      if (index < steps.length - 1) {
+        index++;
+        render();
+      } else
+        complete(false);
+    };
+    button("back").onclick = () => {
+      if (index > 0) {
+        index--;
+        render();
+      }
+    };
+    button("skip").onclick = () => void complete(true);
+    main.addEventListener("keydown", (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || finishing)
+        return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        complete(true);
+      }
+      if (event.key === (direction === "rtl" ? "ArrowLeft" : "ArrowRight") && index < steps.length - 1) {
+        event.preventDefault();
+        index++;
+        render();
+      }
+      if (event.key === (direction === "rtl" ? "ArrowRight" : "ArrowLeft") && index > 0) {
+        event.preventDefault();
+        index--;
+        render();
+      }
+    });
+    render();
+    button("next").focus();
+  }
+  function openStandaloneTour(settings) {
+    if (document.getElementById("cgpt-ra-tour"))
+      return;
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const dialog = document.createElement("dialog");
+    dialog.id = "cgpt-ra-tour";
+    dialog.setAttribute("aria-label", tourCopy(settings.language).title);
+    dialog.style.cssText = "padding:0;border:0;border-radius:20px;width:min(600px,calc(100vw - 24px));max-height:calc(100dvh - 24px);background:transparent;";
+    const root = document.createElement("div");
+    dialog.append(root);
+    document.body.append(dialog);
+    dialog.addEventListener("cancel", (event) => event.preventDefault());
+    dialog.addEventListener("close", () => {
+      dialog.remove();
+      previous?.focus();
+    }, { once: true });
+    dialog.showModal();
+    mountTour(root, settings, async (skipped) => {
+      localStorage.setItem(TOUR_KEY, skipped ? "skipped" : "completed");
+      dialog.close();
+    }, true);
+  }
+
   // src/content/standalone-settings.ts
   async function openStandaloneSettings(settings, changed) {
     document.getElementById("cgpt-ra-settings-dialog")?.remove();
@@ -18139,6 +19227,11 @@
     dialog.dir = languageDirection(settings.language);
     dialog.lang = resolveLanguage(settings.language);
     const c = featureCopy(settings.language), r = getReleaseCopy(settings.language);
+    const tour = document.createElement("button");
+    tour.type = "button";
+    tour.textContent = tourCopy(settings.language).title;
+    tour.onclick = () => openStandaloneTour(settings);
+    dialog.append(tour);
     const d = donationCopy(settings.language), support = supportCopy(settings.language);
     const section = document.createElement("section");
     section.className = "cgpt-ra-standalone-support";
@@ -18432,70 +19525,6 @@
     return (expanded ? [a, b, circle, ...surface ? [surface] : []] : [circle]).every((r) => fits(r, v)) ? result : null;
   }
 
-  // src/content/icons.ts
-  var LUCIDE_ICONS = {
-    coffee: '<path d="M10 2v2M14 2v2M4 2v2M4 7h14v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4ZM18 8h1a3 3 0 1 1 0 6h-1M2 22h20"/>',
-    x: '<path d="m6 6 12 12M18 6 6 18"></path>',
-    check: '<path d="m5 12 4 4L19 6"></path>',
-    ellipsis: '<circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle>',
-    "chevron-up": '<path d="m18 15-6-6-6 6"></path>',
-    "chevron-down": '<path d="m6 9 6 6 6-6"></path>',
-    "grip-vertical": '<circle cx="9" cy="5" r="1"></circle><circle cx="9" cy="12" r="1"></circle><circle cx="9" cy="19" r="1"></circle><circle cx="15" cy="5" r="1"></circle><circle cx="15" cy="12" r="1"></circle><circle cx="15" cy="19" r="1"></circle>',
-    play: '<polygon points="6 3 20 12 6 21 6 3"></polygon>',
-    pause: '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>',
-    square: '<rect x="5" y="5" width="14" height="14" rx="2"></rect>',
-    download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line>',
-    "volume-2": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>',
-    "volume-1": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>',
-    "volume-x": '<path d="M11 5 6 9H2v6h4l5 4V5Z"></path><line x1="22" x2="16" y1="9" y2="15"></line><line x1="16" x2="22" y1="9" y2="15"></line>',
-    "circle-help": '<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
-    "rotate-ccw": '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path>',
-    "rotate-cw": '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path>',
-    "loader-circle": '<path d="M21 12a9 9 0 1 1-6.22-8.56"></path>',
-    "chevron-right": '<polyline points="9 18 15 12 9 6"></polyline>',
-    "chevron-left": '<polyline points="15 18 9 12 15 6"></polyline>',
-    "minimize-2": '<polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line>',
-    "chatgpt-audio": `
-    <g transform="translate(12,12) scale(0.35)" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" />
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(60)" />
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(120)" />
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(180)" />
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(240)" />
-      <path d="M 0,-24 C 10,-24 16,-18 16,-8 L 16,-2 C 16,4 12,8 6,8 L 0,8" transform="rotate(300)" />
-      <circle cx="0" cy="0" r="10" fill="var(--cgpt-ra-accent)" stroke="#ffffff" stroke-width="1.5" />
-      <polygon points="-2,-4 5,0 -2,4" fill="#ffffff" stroke="none" />
-    </g>
-  `
-  };
-  function getLucideSvg(name, className = "") {
-    const body = LUCIDE_ICONS[name] || LUCIDE_ICONS["circle-help"];
-    return `
-    <svg
-      class="cgpt-ra-lucide ${className}"
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-      focusable="false"
-    >${body}</svg>
-  `;
-  }
-  function setIcon(button, iconName, extraHTML = "") {
-    if (!button)
-      return;
-    const iconKey = `${iconName}\x00${extraHTML}`;
-    if (button.dataset.cgptRaIcon === iconKey)
-      return;
-    button.dataset.cgptRaIcon = iconKey;
-    button.innerHTML = getLucideSvg(iconName) + extraHTML;
-  }
-
   // src/content/player-layout.ts
   var standalone2 = true;
   var source = "chatgpt-audio-controls-settings-bridge";
@@ -18646,6 +19675,14 @@
       this.cancelDrag?.();
       this.motion = 280;
       await this.save(defaultLayout());
+    }
+    setPageVisible(visible) {
+      this.layer.hidden = !visible;
+      if (!visible) {
+        this.cancelDrag?.();
+        this.controls.querySelectorAll(".cgpt-open").forEach((el) => el.classList.remove("cgpt-open"));
+        this.more.setAttribute("aria-expanded", "false");
+      }
     }
     async save(value) {
       try {
@@ -19659,6 +20696,7 @@ html.light #cgpt-ra-floating-toggle,\r
 \r
 /* One owned stacking context keeps native ChatGPT menus above the player. */\r
 #cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r
+#cgpt-ra-layer[hidden] { display: none !important; }\r
 #cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r
 #cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r
 #cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r
@@ -20227,483 +21265,6 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       return el;
     }
   }
-  // src/shared/i18n/polish.json
-  var polish_default = {
-    en: {
-      edit: "Edit in browser",
-      editHint: "Find {action} on the browser shortcuts page. The browser does not support links to individual commands.",
-      layoutDescription: "Keep the original placement, choose a corner or side preset, or dock above the chat input. Drag to move, swap the bars, and remember your layout.",
-      gestureReleaseLabel: "Release the button",
-      seekPosition: "Playback position"
-    },
-    bn: {
-      edit: "ব্রাউজারে সম্পাদনা করুন",
-      editHint: "ব্রাউজার শর্টকাট পৃষ্ঠায় {action} খুঁজুন। ব্রাউজার পৃথক কমান্ডের লিঙ্ক সমর্থন করে না।",
-      layoutDescription: "আসল প্লেসমেন্ট রাখুন, একটি কোণা বা সাইড প্রিসেট চয়ন করুন বা চ্যাট ইনপুটের উপরে ডক করুন। সরাতে টেনে আনুন, বারগুলি অদলবদল করুন এবং আপনার লেআউটটি মনে রাখুন।",
-      gestureReleaseLabel: "বোতাম ছেড়ে দিলে",
-      seekPosition: "প্লেব্যাকের অবস্থান"
-    },
-    mr: {
-      edit: "ब्राउझरमध्ये संपादित करा",
-      editHint: "ब्राउझर शॉर्टकट पृष्ठावर {action} शोधा. ब्राउझर वैयक्तिक आदेशांच्या दुव्यांचे समर्थन करत नाही.",
-      layoutDescription: "मूळ प्लेसमेंट ठेवा, एक कोपरा किंवा साइड प्रीसेट निवडा किंवा चॅट इनपुटच्या वर डॉक करा. हलविण्यासाठी ड्रॅग करा, बार स्वॅप करा आणि तुमचा लेआउट लक्षात ठेवा.",
-      gestureReleaseLabel: "बटण सोडल्यावर",
-      seekPosition: "प्लेबॅकची स्थिती"
-    },
-    te: {
-      edit: "బ్రౌజర్‌లో సవరించండి",
-      editHint: "బ్రౌజర్ సత్వరమార్గాల పేజీలో {action}ని కనుగొనండి. బ్రౌజర్ వ్యక్తిగత ఆదేశాలకు లింక్‌లకు మద్దతు ఇవ్వదు.",
-      layoutDescription: "ఒరిజినల్ ప్లేస్‌మెంట్‌ను ఉంచండి, ఒక మూలను లేదా సైడ్ ప్రీసెట్‌ను ఎంచుకోండి లేదా చాట్ ఇన్‌పుట్ పైన డాక్ చేయండి. తరలించడానికి లాగండి, బార్‌లను మార్చుకోండి మరియు మీ లేఅవుట్‌ను గుర్తుంచుకోండి.",
-      gestureReleaseLabel: "బటన్‌ను వదిలినప్పుడు",
-      seekPosition: "ప్లేబ్యాక్ స్థానం"
-    },
-    ta: {
-      edit: "உலாவியில் திருத்தவும்",
-      editHint: "உலாவி குறுக்குவழிகள் பக்கத்தில் {action} ஐக் கண்டறியவும். தனிப்பட்ட கட்டளைகளுக்கான இணைப்புகளை உலாவி ஆதரிக்காது.",
-      layoutDescription: "அசல் இடத்தை வைத்திருங்கள், ஒரு மூலை அல்லது பக்க முன்னமைவைத் தேர்வுசெய்யவும் அல்லது அரட்டை உள்ளீட்டிற்கு மேலே டாக் செய்யவும். நகர்த்த இழுக்கவும், பார்களை மாற்றவும் மற்றும் உங்கள் தளவமைப்பை நினைவில் கொள்ளவும்.",
-      gestureReleaseLabel: "பொத்தானை விடும்போது",
-      seekPosition: "இயக்க நிலை"
-    },
-    ar: {
-      edit: "تحرير في المتصفح",
-      editHint: "ابحث عن {action} في صفحة اختصارات المتصفح. لا يدعم المتصفح الروابط للأوامر الفردية.",
-      layoutDescription: "احتفظ بالموضع الأصلي، أو اختر زاوية أو إعدادًا جانبيًا مسبقًا، أو قم بالتثبيت فوق مدخلات الدردشة. اسحب للتحرك، وقم بتبديل الأشرطة، وتذكر التخطيط الخاص بك.",
-      gestureReleaseLabel: "عند إفلات الزر",
-      seekPosition: "موضع التشغيل"
-    },
-    fa: {
-      edit: "ویرایش در مرورگر",
-      editHint: "{action} را در صفحه میانبرهای مرورگر پیدا کنید. مرورگر پیوندهایی به دستورات فردی را پشتیبانی نمی کند.",
-      layoutDescription: "مکان اصلی را نگه دارید، یک گوشه یا کناری از پیش تنظیم شده انتخاب کنید، یا بالای ورودی چت قرار بگیرید. بکشید تا حرکت کنید، میله‌ها را عوض کنید و طرح‌بندی خود را به خاطر بسپارید.",
-      gestureReleaseLabel: "با رها کردن دکمه",
-      seekPosition: "موقعیت پخش"
-    },
-    he: {
-      edit: "ערוך בדפדפן",
-      editHint: "מצא את {action} בדף קיצורי הדרך של הדפדפן. הדפדפן אינו תומך בקישורים לפקודות בודדות.",
-      layoutDescription: "שמור את המיקום המקורי, בחר פינה או צד מוגדר מראש, או עגן מעל קלט הצ'אט. גרור כדי לזוז, להחליף את הפסים ולזכור את הפריסה שלך.",
-      gestureReleaseLabel: "בשחרור הכפתור",
-      seekPosition: "מיקום ההשמעה"
-    },
-    "zh-CN": {
-      edit: "在浏览器中编辑",
-      editHint: "在浏览器快捷方式页面找到{action}。浏览器不支持指向单个命令的链接。",
-      layoutDescription: "保留原始位置，选择角落或侧面预设，或停靠在聊天输入上方。拖动移动、交换栏并记住您的布局。",
-      gestureReleaseLabel: "松开按钮",
-      seekPosition: "播放位置"
-    },
-    "zh-TW": {
-      edit: "在瀏覽器中編輯",
-      editHint: "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
-      layoutDescription: "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
-      gestureReleaseLabel: "放開按鈕",
-      seekPosition: "播放位置"
-    },
-    vi: {
-      edit: "Chỉnh sửa trong trình duyệt",
-      editHint: "Tìm {action} trên trang phím tắt của trình duyệt. Trình duyệt không hỗ trợ liên kết đến các lệnh riêng lẻ.",
-      layoutDescription: "Giữ nguyên vị trí ban đầu, chọn cài đặt sẵn ở một góc hoặc một bên hoặc gắn phía trên đầu vào trò chuyện. Kéo để di chuyển, hoán đổi các thanh và ghi nhớ bố cục của bạn.",
-      gestureReleaseLabel: "Khi thả nút",
-      seekPosition: "Vị trí phát"
-    },
-    th: {
-      edit: "แก้ไขในเบราว์เซอร์",
-      editHint: "ค้นหา {action} บนหน้าทางลัดของเบราว์เซอร์ เบราว์เซอร์ไม่รองรับลิงก์ไปยังคำสั่งแต่ละคำสั่ง",
-      layoutDescription: "คงตำแหน่งเดิมไว้ เลือกมุมหรือด้านข้างที่กำหนดไว้ล่วงหน้า หรือวางเหนือช่องแชท ลากเพื่อย้าย สลับแถบ และจดจำเค้าโครงของคุณ",
-      gestureReleaseLabel: "เมื่อปล่อยปุ่ม",
-      seekPosition: "ตำแหน่งการเล่น"
-    },
-    es: {
-      edit: "Editar en el navegador",
-      editHint: "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
-      layoutDescription: "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
-      gestureReleaseLabel: "Al soltar el botón",
-      seekPosition: "Posición de reproducción"
-    },
-    "pt-BR": {
-      edit: "Editar no navegador",
-      editHint: "Encontre {action} na página de atalhos do navegador. O navegador não oferece suporte a links para comandos individuais.",
-      layoutDescription: "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
-      gestureReleaseLabel: "Ao soltar o botão",
-      seekPosition: "Posição da reprodução"
-    },
-    "pt-PT": {
-      edit: "Editar no browser",
-      editHint: "Encontre {action} na página de atalhos do browser. O navegador não suporta links para comandos individuais.",
-      layoutDescription: "Mantenha o posicionamento original, escolha uma predefinição de canto ou lateral ou encaixe acima da entrada do chat. Arraste para mover, troque as barras e lembre-se do seu layout.",
-      gestureReleaseLabel: "Ao soltar o botão",
-      seekPosition: "Posição de reprodução"
-    },
-    ru: {
-      edit: "Редактировать в браузере",
-      editHint: "Найдите {action} на странице ярлыков браузера. Браузер не поддерживает ссылки на отдельные команды.",
-      layoutDescription: "Сохраните исходное расположение, выберите угол или боковую настройку или закрепите ее над полем ввода в чате. Перетаскивайте, меняйте местами полосы и запоминайте расположение.",
-      gestureReleaseLabel: "При отпускании кнопки",
-      seekPosition: "Позиция воспроизведения"
-    },
-    hi: {
-      edit: "ब्राउज़र में संपादित करें",
-      editHint: "ब्राउज़र शॉर्टकट पेज पर {action} ढूंढें। ब्राउज़र अलग-अलग कमांड के लिंक का समर्थन नहीं करता है।",
-      layoutDescription: "मूल प्लेसमेंट रखें, एक कोना या साइड प्रीसेट चुनें, या चैट इनपुट के ऊपर डॉक चुनें। स्थानांतरित करने के लिए खींचें, बारों को स्वैप करें और अपना लेआउट याद रखें।",
-      gestureReleaseLabel: "बटन छोड़ने पर",
-      seekPosition: "प्लेबैक की स्थिति"
-    },
-    fr: {
-      edit: "Modifier dans le navigateur",
-      editHint: "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
-      layoutDescription: "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
-      gestureReleaseLabel: "En relâchant le bouton",
-      seekPosition: "Position de lecture"
-    },
-    de: {
-      edit: "Im Browser bearbeiten",
-      editHint: "Suchen Sie {action} auf der Seite mit den Browser-Verknüpfungen. Der Browser unterstützt keine Links zu einzelnen Befehlen.",
-      layoutDescription: "Behalten Sie die ursprüngliche Platzierung bei, wählen Sie eine Eck- oder Seitenvoreinstellung oder docken Sie oberhalb der Chat-Eingabe an. Ziehen Sie zum Verschieben, tauschen Sie die Balken aus und merken Sie sich Ihr Layout.",
-      gestureReleaseLabel: "Beim Loslassen",
-      seekPosition: "Wiedergabeposition"
-    },
-    ja: {
-      edit: "ブラウザで編集する",
-      editHint: "ブラウザのショートカット ページで {action} を見つけます。ブラウザは、個々のコマンドへのリンクをサポートしていません。",
-      layoutDescription: "元の配置を維持し、コーナーまたはサイドのプリセットを選択するか、チャット入力の上にドッキングします。ドラッグして移動したり、バーを交換したりして、レイアウトを記憶します。",
-      gestureReleaseLabel: "ボタンを離すと",
-      seekPosition: "再生位置"
-    },
-    ko: {
-      edit: "브라우저에서 편집",
-      editHint: "브라우저 바로가기 페이지에서 {action}를 찾으세요. 브라우저는 개별 명령에 대한 링크를 지원하지 않습니다.",
-      layoutDescription: "원래 배치를 유지하고, 모서리나 측면 사전 설정을 선택하거나, 채팅 입력 위에 고정하세요. 드래그하여 이동하고, 막대를 바꾸고, 레이아웃을 기억하세요.",
-      gestureReleaseLabel: "버튼을 놓으면",
-      seekPosition: "재생 위치"
-    },
-    id: {
-      edit: "Sunting di peramban",
-      editHint: "Temukan {action} di halaman pintasan browser. Browser tidak mendukung tautan ke perintah individual.",
-      layoutDescription: "Pertahankan penempatan aslinya, pilih preset sudut atau samping, atau dok di atas masukan obrolan. Seret untuk memindahkan, tukar bilah, dan ingat tata letak Anda.",
-      gestureReleaseLabel: "Saat tombol dilepas",
-      seekPosition: "Posisi pemutaran"
-    },
-    it: {
-      edit: "Modifica nel browser",
-      editHint: "Trova {action} nella pagina delle scorciatoie del browser. Il browser non supporta collegamenti a singoli comandi.",
-      layoutDescription: "Mantieni la posizione originale, scegli un angolo o un lato preimpostato oppure aggancialo sopra l'input della chat. Trascina per spostare, scambia le barre e ricorda il layout.",
-      gestureReleaseLabel: "Al rilascio del pulsante",
-      seekPosition: "Posizione di riproduzione"
-    },
-    tr: {
-      edit: "Tarayıcıda düzenle",
-      editHint: "Tarayıcı kısayolları sayfasında {action}'yu bulun. Tarayıcı, bireysel komutlara olan bağlantıları desteklemez.",
-      layoutDescription: "Orijinal yerleşimi koruyun, bir köşe veya yan ön ayar seçin veya sohbet girişinin üzerine sabitleyin. Taşımak, çubukları değiştirmek ve düzeninizi hatırlamak için sürükleyin.",
-      gestureReleaseLabel: "Düğmeyi bıraktığınızda",
-      seekPosition: "Oynatma konumu"
-    },
-    pl: {
-      edit: "Edytuj w przeglądarce",
-      editHint: "Znajdź {action} na stronie skrótów przeglądarki. Przeglądarka nie obsługuje odnośników do poszczególnych poleceń.",
-      layoutDescription: "Zachowaj oryginalne położenie, wybierz róg lub bok ekranu albo umieść odtwarzacz nad polem wiadomości. Przeciągaj i zamieniaj paski — rozszerzenie zapamięta układ.",
-      gestureReleaseLabel: "Po zwolnieniu przycisku",
-      seekPosition: "Pozycja odtwarzania"
-    },
-    hu: {
-      edit: "Szerkesztés a böngészőben",
-      editHint: "Keresse meg a {action} elemet a böngésző parancsikonok oldalán. A böngésző nem támogatja az egyes parancsokra mutató hivatkozásokat.",
-      layoutDescription: "Tartsa meg az eredeti elhelyezést, válasszon egy sarok vagy oldal előre beállított értéket, vagy dokkoljon a csevegés bemenete fölé. Húzza a mozgatáshoz, cserélje fel a sávokat, és emlékezzen az elrendezésre.",
-      gestureReleaseLabel: "A gomb felengedésekor",
-      seekPosition: "Lejátszási pozíció"
-    },
-    sv: {
-      edit: "Redigera i webbläsaren",
-      editHint: "Hitta {action} på webbläsarens genvägssida. Webbläsaren stöder inte länkar till enskilda kommandon.",
-      layoutDescription: "Behåll den ursprungliga placeringen, välj ett hörn eller en sida, eller docka ovanför meddelandefältet. Dra för att flytta och byta plats på fälten. Tillägget sparar din layout.",
-      gestureReleaseLabel: "När du släpper knappen",
-      seekPosition: "Uppspelningsposition"
-    },
-    cs: {
-      edit: "Upravit v prohlížeči",
-      editHint: "Najděte {action} na stránce zástupců prohlížeče. Prohlížeč nepodporuje odkazy na jednotlivé příkazy.",
-      layoutDescription: "Ponechte původní umístění, vyberte přednastavení rohu nebo strany nebo ukotvete nad vstupem chatu. Přetažením se můžete pohybovat, vyměňovat pruhy a pamatovat si rozvržení.",
-      gestureReleaseLabel: "Po uvolnění tlačítka",
-      seekPosition: "Pozice přehrávání"
-    },
-    uk: {
-      edit: "Редагувати в браузері",
-      editHint: "Знайдіть {action} на сторінці ярликів браузера. Браузер не підтримує посилання на окремі команди.",
-      layoutDescription: "Збережіть вихідне розташування, виберіть кут або бічні налаштування або закріпіть над введенням чату. Перетягуйте, щоб рухатися, міняйте смужки місцями та запам’ятовуйте свій макет.",
-      gestureReleaseLabel: "Після відпускання кнопки",
-      seekPosition: "Позиція відтворення"
-    },
-    ca: {
-      edit: "Edita al navegador",
-      editHint: "Cerqueu {action} a la pàgina de dreceres del navegador. El navegador no admet enllaços a ordres individuals.",
-      layoutDescription: "Manteniu la ubicació original, trieu una cantonada o un lateral preestablert, o acopleu-lo a sobre de l'entrada del xat. Arrossegueu per moure's, intercanvieu les barres i recordeu la vostra disposició.",
-      gestureReleaseLabel: "En deixar anar el botó",
-      seekPosition: "Posició de reproducció"
-    },
-    el: {
-      edit: "Επεξεργασία στο πρόγραμμα περιήγησης",
-      editHint: "Βρείτε το {action} στη σελίδα συντομεύσεων του προγράμματος περιήγησης. Το πρόγραμμα περιήγησης δεν υποστηρίζει συνδέσμους με μεμονωμένες εντολές.",
-      layoutDescription: "Διατηρήστε την αρχική τοποθέτηση, επιλέξτε μια γωνιακή ή πλευρική προεπιλογή ή συνδέστε πάνω από την είσοδο συνομιλίας. Σύρετε για να μετακινηθείτε, αλλάξτε τις γραμμές και θυμηθείτε τη διάταξή σας.",
-      gestureReleaseLabel: "Όταν αφήσετε το κουμπί",
-      seekPosition: "Θέση αναπαραγωγής"
-    },
-    ro: {
-      edit: "Editați în browser",
-      editHint: "Găsiți {action} pe pagina de comenzi rapide ale browserului. Browserul nu acceptă link-uri către comenzi individuale.",
-      layoutDescription: "Păstrați poziția inițială, alegeți un colț sau o latură a ecranului ori andocați playerul deasupra câmpului de mesaj. Trageți pentru a muta barele sau a le schimba ordinea. Extensia reține aranjamentul.",
-      gestureReleaseLabel: "La eliberarea butonului",
-      seekPosition: "Poziția redării"
-    },
-    nb: {
-      edit: "Rediger i nettleseren",
-      editHint: "Finn {action} på snarveisiden for nettleseren. Nettleseren støtter ikke lenker til individuelle kommandoer.",
-      layoutDescription: "Behold den opprinnelige plasseringen, velg en forhåndsinnstilling på hjørnet eller siden, eller forankre over chat-inngangen. Dra for å flytte, bytt stolpene og husk oppsettet ditt.",
-      gestureReleaseLabel: "Når du slipper knappen",
-      seekPosition: "Avspillingsposisjon"
-    },
-    am: {
-      edit: "በአሳሽ ውስጥ ያርትዑ",
-      editHint: "በአሳሹ አቋራጮች ገጽ ላይ {action} ን ያግኙ። አሳሹ ለግለሰብ ትዕዛዞች አገናኞችን አይደግፍም።",
-      layoutDescription: "የመጀመሪያውን አቀማመጥ ያስቀምጡ፣ የማዕዘን ወይም የጎን ቅድመ ዝግጅት ይምረጡ ወይም ከቻት ግቤት በላይ መትከያ ያድርጉ። ለመንቀሳቀስ ይጎትቱ፣ አሞሌዎቹን ይቀይሩ እና አቀማመጥዎን ያስታውሱ።",
-      gestureReleaseLabel: "አዝራሩን ይልቀቁ",
-      seekPosition: "የመልሶ ማጫወት ቦታ"
-    },
-    bg: {
-      edit: "Редактиране в браузъра",
-      editHint: "Намерете {action} на страницата с преки пътища на браузъра. Браузърът не поддържа връзки към отделни команди.",
-      layoutDescription: "Запазете оригиналното разположение, изберете предварително зададен ъгъл или страна или закрепете над входа за чат. Плъзнете, за да се движите, разменете лентите и запомнете оформлението си.",
-      gestureReleaseLabel: "Освободете бутона",
-      seekPosition: "Позиция на възпроизвеждане"
-    },
-    bs: {
-      edit: "Uredi u pretraživaču",
-      editHint: "Pronađite {action} na stranici sa prečicama pretraživača. Pretraživač ne podržava veze do pojedinačnih komandi.",
-      layoutDescription: "Zadržite originalni položaj, odaberite ugao ili bočnu postavku ili pričvrstite iznad unosa za ćaskanje. Prevucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
-      gestureReleaseLabel: "Otpustite dugme",
-      seekPosition: "Pozicija reprodukcije"
-    },
-    da: {
-      edit: "Rediger i browser",
-      editHint: "Find {action} på siden med browsergenveje. Browseren understøtter ikke links til individuelle kommandoer.",
-      layoutDescription: "Behold den originale placering, vælg en forudindstilling i hjørnet eller siden, eller sæt foran chatinputtet. Træk for at flytte, skift stregerne, og husk dit layout.",
-      gestureReleaseLabel: "Slip knappen",
-      seekPosition: "Afspilningsposition"
-    },
-    et: {
-      edit: "Redigeeri brauseris",
-      editHint: "Leidke brauseri otseteede lehelt {action}. Brauser ei toeta linke üksikutele käskudele.",
-      layoutDescription: "Säilitage algne paigutus, valige nurga või külje eelseade või dokkige vestlussisendi kohale. Lohistage liigutamiseks, ribade vahetamiseks ja paigutuse meeldejätmiseks.",
-      gestureReleaseLabel: "Vabastage nupp",
-      seekPosition: "Taasesituse asend"
-    },
-    fil: {
-      edit: "I-edit sa browser",
-      editHint: "Hanapin ang {action} sa pahina ng mga shortcut sa browser. Hindi sinusuportahan ng browser ang mga link sa mga indibidwal na command.",
-      layoutDescription: "Panatilihin ang orihinal na placement, pumili ng preset na sulok o gilid, o mag-dock sa itaas ng input ng chat. I-drag upang ilipat, palitan ang mga bar, at tandaan ang iyong layout.",
-      gestureReleaseLabel: "Bitawan ang button",
-      seekPosition: "Posisyon ng pag-playback"
-    },
-    fi: {
-      edit: "Muokkaa selaimessa",
-      editHint: "Etsi {action} selaimen pikakuvakesivulta. Selain ei tue linkkejä yksittäisiin komentoihin.",
-      layoutDescription: "Säilytä alkuperäinen sijoitus, valitse kulman tai sivun esiasetus tai kiinnitä chat-syötteen yläpuolelle. Siirrä vetämällä, vaihda palkkeja ja muista asettelusi.",
-      gestureReleaseLabel: "Vapauta painike",
-      seekPosition: "Toistopaikka"
-    },
-    gu: {
-      edit: "બ્રાઉઝરમાં ફેરફાર કરો",
-      editHint: "બ્રાઉઝર શોર્ટકટ્સ પેજ પર {action} શોધો. બ્રાઉઝર વ્યક્તિગત આદેશોની લિંક્સને સપોર્ટ કરતું નથી.",
-      layoutDescription: "મૂળ પ્લેસમેન્ટ રાખો, કોર્નર અથવા સાઇડ પ્રીસેટ પસંદ કરો અથવા ચેટ ઇનપુટની ઉપર ડોક કરો. ખસેડવા માટે ખેંચો, બારને સ્વેપ કરો અને તમારું લેઆઉટ યાદ રાખો.",
-      gestureReleaseLabel: "બટન છોડો",
-      seekPosition: "પ્લેબેક સ્થિતિ"
-    },
-    hr: {
-      edit: "Uredi u pregledniku",
-      editHint: "Pronađite {action} na stranici s prečacima preglednika. Preglednik ne podržava poveznice na pojedinačne naredbe.",
-      layoutDescription: "Zadržite izvorni položaj, odaberite unaprijed postavljen kut ili stranu ili usidrite iznad unosa za chat. Povucite za pomicanje, zamijenite trake i zapamtite svoj raspored.",
-      gestureReleaseLabel: "Otpustite gumb",
-      seekPosition: "Položaj reprodukcije"
-    },
-    hy: {
-      edit: "Խմբագրել բրաուզերում",
-      editHint: "Գտեք {action} դիտարկիչի դյուրանցումների էջում: Զննարկիչը չի աջակցում առանձին հրամանների հղումներ:",
-      layoutDescription: "Պահպանեք բնօրինակ տեղադրումը, ընտրեք նախադրված անկյուն կամ կողային կամ ամրացրեք զրույցի մուտքագրման վերևում: Քաշեք՝ տեղափոխելու համար, փոխեք գծերը և հիշեք ձեր դասավորությունը:",
-      gestureReleaseLabel: "Ազատեք կոճակը",
-      seekPosition: "Նվագարկման դիրք"
-    },
-    is: {
-      edit: "Breyta í vafra",
-      editHint: "Finndu {action} á flýtivísasíðu vafrans. Vafrinn styður ekki tengla á einstakar skipanir.",
-      layoutDescription: "Haltu upprunalegu staðsetningunni, veldu horn- eða hliðarforstillingu, eða hafðu fyrir ofan spjallinntakið. Dragðu til að færa, skiptu um stikur og mundu skipulagið þitt.",
-      gestureReleaseLabel: "Slepptu takkanum",
-      seekPosition: "Spilunarstaða"
-    },
-    ka: {
-      edit: "რედაქტირება ბრაუზერში",
-      editHint: "იპოვეთ {action} ბრაუზერის მალსახმობების გვერდზე. ბრაუზერს არ აქვს ინდივიდუალური ბრძანებების ბმულების მხარდაჭერა.",
-      layoutDescription: "შეინახეთ თავდაპირველი განლაგება, აირჩიეთ კუთხე ან გვერდითი წინასწარ დაყენებული, ან დაამაგრეთ ჩატის შეყვანის ზემოთ. გადაიტანეთ გადასაადგილებლად, შეცვალეთ ზოლები და დაიმახსოვრეთ თქვენი განლაგება.",
-      gestureReleaseLabel: "გაათავისუფლეთ ღილაკი",
-      seekPosition: "დაკვრის პოზიცია"
-    },
-    kk: {
-      edit: "Браузерде өңдеу",
-      editHint: "Браузер таңбашалары бетінен {action} табыңыз. Браузер жеке пәрмендерге сілтемелерді қолдамайды.",
-      layoutDescription: "Бастапқы орынды сақтаңыз, бұрышты немесе бүйірлік алдын ала орнатуды таңдаңыз немесе чат кірісінің үстіне қондырыңыз. Жылжыту, жолақтарды ауыстыру және орналасуды есте сақтау үшін сүйреңіз.",
-      gestureReleaseLabel: "Түймені босатыңыз",
-      seekPosition: "Ойнату орны"
-    },
-    kn: {
-      edit: "ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಪಾದಿಸಿ",
-      editHint: "ಬ್ರೌಸರ್ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳ ಪುಟದಲ್ಲಿ {action} ಅನ್ನು ಹುಡುಕಿ. ಬ್ರೌಸರ್ ಪ್ರತ್ಯೇಕ ಆಜ್ಞೆಗಳಿಗೆ ಲಿಂಕ್‌ಗಳನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.",
-      layoutDescription: "ಮೂಲ ನಿಯೋಜನೆಯನ್ನು ಇರಿಸಿಕೊಳ್ಳಿ, ಒಂದು ಮೂಲೆ ಅಥವಾ ಅಡ್ಡ ಪೂರ್ವನಿಗದಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಚಾಟ್ ಇನ್‌ಪುಟ್‌ನ ಮೇಲೆ ಡಾಕ್ ಮಾಡಿ. ಸರಿಸಲು ಎಳೆಯಿರಿ, ಬಾರ್‌ಗಳನ್ನು ಸ್ವ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ನಿಮ್ಮ ವಿನ್ಯಾಸವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ.",
-      gestureReleaseLabel: "ಬಟನ್ ಅನ್ನು ಬಿಡುಗಡೆ ಮಾಡಿ",
-      seekPosition: "ಪ್ಲೇಬ್ಯಾಕ್ ಸ್ಥಾನ"
-    },
-    lt: {
-      edit: "Redaguoti naršyklėje",
-      editHint: "Naršyklės nuorodų puslapyje raskite {action}. Naršyklė nepalaiko nuorodų į atskiras komandas.",
-      layoutDescription: "Išsaugokite pradinę vietą, pasirinkite iš anksto nustatytą kampą ar šoną arba pritvirtinkite prie doko virš pokalbio įvesties. Vilkite, kad perkeltumėte, pakeiskite juostas ir prisiminkite savo išdėstymą.",
-      gestureReleaseLabel: "Atleiskite mygtuką",
-      seekPosition: "Atkūrimo padėtis"
-    },
-    lv: {
-      edit: "Rediģēt pārlūkprogrammā",
-      editHint: "Pārlūkprogrammas īsceļu lapā atrodiet {action}. Pārlūkprogramma neatbalsta saites uz atsevišķām komandām.",
-      layoutDescription: "Saglabājiet sākotnējo izvietojumu, izvēlieties stūra vai sānu sākotnējo iestatījumu vai piestipriniet dokstaciju virs tērzēšanas ievades. Velciet, lai pārvietotu, samainiet joslas un atcerieties savu izkārtojumu.",
-      gestureReleaseLabel: "Atlaidiet pogu",
-      seekPosition: "Atskaņošanas pozīcija"
-    },
-    mk: {
-      edit: "Уредете во прелистувачот",
-      editHint: "Најдете {action} на страницата со кратенки на прелистувачот. Прелистувачот не поддржува врски до поединечни команди.",
-      layoutDescription: "Чувајте ја оригиналната поставеност, изберете агол или странично претходно поставено или приклучете се над влезот за разговор. Повлечете за да се движите, заменете ги лентите и запомнете го вашиот распоред.",
-      gestureReleaseLabel: "Ослободете го копчето",
-      seekPosition: "Позиција за репродукција"
-    },
-    ml: {
-      edit: "ബ്രൗസറിൽ എഡിറ്റ് ചെയ്യുക",
-      editHint: "ബ്രൗസർ കുറുക്കുവഴികൾ പേജിൽ {action} കണ്ടെത്തുക. വ്യക്തിഗത കമാൻഡുകളിലേക്കുള്ള ലിങ്കുകളെ ബ്രൗസർ പിന്തുണയ്ക്കുന്നില്ല.",
-      layoutDescription: "യഥാർത്ഥ പ്ലേസ്‌മെൻ്റ് സൂക്ഷിക്കുക, ഒരു മൂലയോ സൈഡ് പ്രീസെറ്റോ തിരഞ്ഞെടുക്കുക അല്ലെങ്കിൽ ചാറ്റ് ഇൻപുട്ടിന് മുകളിൽ ഡോക്ക് ചെയ്യുക. നീക്കാൻ വലിച്ചിടുക, ബാറുകൾ സ്വാപ്പ് ചെയ്യുക, നിങ്ങളുടെ ലേഔട്ട് ഓർമ്മിക്കുക.",
-      gestureReleaseLabel: "ബട്ടൺ റിലീസ് ചെയ്യുക",
-      seekPosition: "പ്ലേബാക്ക് സ്ഥാനം"
-    },
-    mn: {
-      edit: "Хөтөч дээр засварлах",
-      editHint: "Хөтөчийн товчлолын хуудаснаас {action}-г олоорой. Хөтөч нь бие даасан командын холбоосыг дэмждэггүй.",
-      layoutDescription: "Анхны байршлыг хадгалах, булан эсвэл хажуугийн урьдчилан тохируулгыг сонгох, эсвэл чатын оролтын дээгүүр залгах. Зөөж, бааруудыг сольж, байршлаа санахын тулд чирнэ үү.",
-      gestureReleaseLabel: "Товчлуурыг суллана уу",
-      seekPosition: "Тоглуулах байрлал"
-    },
-    ms: {
-      edit: "Edit dalam penyemak imbas",
-      editHint: "Cari {action} pada halaman pintasan penyemak imbas. Penyemak imbas tidak menyokong pautan ke arahan individu.",
-      layoutDescription: "Kekalkan peletakan asal, pilih sudut atau pratetap sisi atau dok di atas input sembang. Seret untuk mengalihkan, menukar bar dan ingat reka letak anda.",
-      gestureReleaseLabel: "Lepaskan butang",
-      seekPosition: "Kedudukan main balik"
-    },
-    my: {
-      edit: "ဘရောက်ဆာတွင်တည်းဖြတ်ပါ။",
-      editHint: "ဘရောက်ဆာဖြတ်လမ်းများစာမျက်နှာရှိ {action} ကိုရှာပါ။ ဘရောက်ဆာသည် တစ်ဦးချင်းအမိန့်စာများသို့ လင့်ခ်များကို မပံ့ပိုးပါ။",
-      layoutDescription: "မူရင်းနေရာချထားမှုကို ထားရှိပါ၊ ထောင့် သို့မဟုတ် ဘေးထွက်ကြိုတင်သတ်မှတ်မှုကို ရွေးချယ်ပါ၊ သို့မဟုတ် ချတ်ထည့်သွင်းမှု၏အထက်တွင် အထိုင်ချပါ။ ရွှေ့ရန် ဖိဆွဲပါ၊ ဘားများကို လဲလှယ်ပြီး သင့်အပြင်အဆင်ကို မှတ်သားပါ။",
-      gestureReleaseLabel: "ခလုတ်ကို လွှတ်လိုက်ပါ။",
-      seekPosition: "ပြန်ဖွင့်သည့်အနေအထား"
-    },
-    nl: {
-      edit: "Bewerken in browser",
-      editHint: "Zoek {action} op de pagina met browsersnelkoppelingen. De browser ondersteunt geen koppelingen naar afzonderlijke opdrachten.",
-      layoutDescription: "Behoud de oorspronkelijke plaatsing, kies een voorinstelling voor een hoek of zijkant, of plaats deze boven de chatinvoer. Sleep om te verplaatsen, verwissel de balken en onthoud uw lay-out.",
-      gestureReleaseLabel: "Laat de knop los",
-      seekPosition: "Afspeelpositie"
-    },
-    pa: {
-      edit: "ਬਰਾਊਜ਼ਰ ਵਿੱਚ ਸੰਪਾਦਿਤ ਕਰੋ",
-      editHint: "ਬ੍ਰਾਊਜ਼ਰ ਸ਼ਾਰਟਕੱਟ ਪੰਨੇ 'ਤੇ {action} ਲੱਭੋ। ਬ੍ਰਾਊਜ਼ਰ ਵਿਅਕਤੀਗਤ ਕਮਾਂਡਾਂ ਦੇ ਲਿੰਕਾਂ ਦਾ ਸਮਰਥਨ ਨਹੀਂ ਕਰਦਾ ਹੈ।",
-      layoutDescription: "ਅਸਲੀ ਪਲੇਸਮੈਂਟ ਰੱਖੋ, ਇੱਕ ਕੋਨਾ ਜਾਂ ਸਾਈਡ ਪ੍ਰੀਸੈਟ ਚੁਣੋ, ਜਾਂ ਚੈਟ ਇਨਪੁਟ ਦੇ ਉੱਪਰ ਡੌਕ ਕਰੋ। ਮੂਵ ਕਰਨ ਲਈ ਖਿੱਚੋ, ਬਾਰਾਂ ਨੂੰ ਸਵੈਪ ਕਰੋ, ਅਤੇ ਆਪਣਾ ਖਾਕਾ ਯਾਦ ਰੱਖੋ।",
-      gestureReleaseLabel: "ਬਟਨ ਨੂੰ ਛੱਡੋ",
-      seekPosition: "ਪਲੇਬੈਕ ਸਥਿਤੀ"
-    },
-    sk: {
-      edit: "Upraviť v prehliadači",
-      editHint: "Nájdite {action} na stránke skratiek prehliadača. Prehliadač nepodporuje odkazy na jednotlivé príkazy.",
-      layoutDescription: "Ponechajte pôvodné umiestnenie, vyberte predvoľbu rohu alebo strany alebo ukotvte nad vstupom pre rozhovor. Ťahaním sa presúvajte, vymieňajte pruhy a zapamätajte si svoje rozloženie.",
-      gestureReleaseLabel: "Uvoľnite tlačidlo",
-      seekPosition: "Pozícia prehrávania"
-    },
-    sl: {
-      edit: "Uredi v brskalniku",
-      editHint: "Poiščite {action} na strani z bližnjicami brskalnika. Brskalnik ne podpira povezav do posameznih ukazov.",
-      layoutDescription: "Ohranite prvotno postavitev, izberite prednastavitev kota ali strani ali zasidrajte nad vnosom klepeta. Povlecite za premikanje, zamenjajte vrstice in si zapomnite svojo postavitev.",
-      gestureReleaseLabel: "Spustite gumb",
-      seekPosition: "Položaj predvajanja"
-    },
-    so: {
-      edit: "Wax ka beddel browserka dhexdiisa",
-      editHint: "Ka hel {action} bogga furaha browserka. Barowsarku ma taageerayo isku xirka amarada shaqsiga ah.",
-      layoutDescription: "Hayso meelaynta asalka ah, dooro gees ama gees horay loo dhigay, ama ku xidh meel ka sarraysa gelinta sheekada. Jiid si aad u guurto, u beddesho baararka, oo xasuuso qaabkaaga.",
-      gestureReleaseLabel: "Sii daa badhanka",
-      seekPosition: "Booska dib u ciyaarista"
-    },
-    sq: {
-      edit: "Ndrysho në shfletuesin",
-      editHint: "Gjeni {action} në faqen e shkurtoreve të shfletuesit. Shfletuesi nuk mbështet lidhje me komandat individuale.",
-      layoutDescription: "Mbani vendosjen origjinale, zgjidhni një kënd ose anësor të paravendosur, ose vendoseni mbi hyrjen e bisedës. Zvarritni për të lëvizur, ndërroni shiritat dhe mbani mend paraqitjen tuaj.",
-      gestureReleaseLabel: "Lëshojeni butonin",
-      seekPosition: "Pozicioni i luajtjes"
-    },
-    sr: {
-      edit: "Уреди у претраживачу",
-      editHint: "Пронађите {action} на страници са пречицама прегледача. Прегледач не подржава везе до појединачних команди.",
-      layoutDescription: "Задржите оригинално постављање, изаберите унапред подешено угао или страну или причврстите изнад уноса за ћаскање. Превуците да бисте померили, замените шипке и запамтите свој распоред.",
-      gestureReleaseLabel: "Отпустите дугме",
-      seekPosition: "Положај репродукције"
-    },
-    sw: {
-      edit: "Hariri katika kivinjari",
-      editHint: "Tafuta {action} kwenye ukurasa wa njia za mkato za kivinjari. Kivinjari hakitumii viungo kwa amri za kibinafsi.",
-      layoutDescription: "Weka nafasi asili, chagua kona au uwekaji wa pembeni mapema, au kituo juu ya ingizo la gumzo. Buruta ili usogeze, ubadilishane pau na ukumbuke mpangilio wako.",
-      gestureReleaseLabel: "Achilia kitufe",
-      seekPosition: "Nafasi ya kucheza"
-    },
-    ur: {
-      edit: "براؤزر میں ترمیم کریں۔",
-      editHint: "براؤزر کے شارٹ کٹ پیج پر {action} تلاش کریں۔ براؤزر انفرادی کمانڈز کے لنکس کو سپورٹ نہیں کرتا ہے۔",
-      layoutDescription: "اصل جگہ کا تعین رکھیں، ایک کونے یا سائیڈ پیش سیٹ کا انتخاب کریں، یا چیٹ ان پٹ کے اوپر گودی کریں۔ منتقل کرنے کے لیے گھسیٹیں، سلاخوں کو تبدیل کریں، اور اپنا لے آؤٹ یاد رکھیں۔",
-      gestureReleaseLabel: "بٹن جاری کریں۔",
-      seekPosition: "پلے بیک پوزیشن"
-    },
-    "es-419": {
-      edit: "Editar en el navegador",
-      editHint: "Busque {action} en la página de accesos directos del navegador. El navegador no admite enlaces a comandos individuales.",
-      layoutDescription: "Mantenga la ubicación original, elija una esquina o un lado preestablecido, o colóquelo encima de la entrada del chat. Arrastra para moverte, cambia las barras y recuerda tu diseño.",
-      gestureReleaseLabel: "Al soltar el botón",
-      seekPosition: "Posición de reproducción"
-    },
-    "fr-CA": {
-      edit: "Modifier dans le navigateur",
-      editHint: "Recherchez {action} sur la page des raccourcis du navigateur. Le navigateur ne prend pas en charge les liens vers des commandes individuelles.",
-      layoutDescription: "Conservez l'emplacement d'origine, choisissez un coin ou un côté prédéfini, ou placez-le au-dessus de l'entrée du chat. Faites glisser pour vous déplacer, échangez les barres et mémorisez votre disposition.",
-      gestureReleaseLabel: "En relâchant le bouton",
-      seekPosition: "Position de lecture"
-    },
-    "hi-Latn": {
-      edit: "browser mein sampadit karen",
-      editHint: "browser shortcut page par {action} dhundhen. browser alg-alg command ke link ka samarthan nahin karta hai.",
-      layoutDescription: "mool placement rakhen, ek kone ya side preset chunen, ya chat input ke upar dock chunen. sthanantarit karne ke liye khinchen, baron ko swap karen aur apna layout yaad rakhen.",
-      gestureReleaseLabel: "button chhoden",
-      seekPosition: "playback sthiti"
-    },
-    "zh-HK": {
-      edit: "在瀏覽器中編輯",
-      editHint: "在瀏覽器捷徑頁面找到{action}。瀏覽器不支援指向單一命令的連結。",
-      layoutDescription: "保留原始位置，選擇角落或側面預設，或停靠在聊天輸入上方。拖曳移動、交換欄並記住您的佈局。",
-      gestureReleaseLabel: "放開按鈕",
-      seekPosition: "播放位置"
-    }
-  };
-
-  // src/shared/i18n/polish.ts
-  function polishCopy(language) {
-    return polish_default[resolveLanguage(language)] || polish_default.en;
-  }
 
   // src/shared/shortcuts.ts
   var VISIBILITY_COMMAND = "toggle-floating-ui";
@@ -21097,7 +21658,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     sources = new Map;
     urls = new Map;
     buffers = new WeakMap;
-    begin() {
+    begin(hostSignal) {
       let resolve, reject;
       const promise = new Promise((yes, no) => {
         resolve = yes;
@@ -21107,17 +21668,16 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       const controller = new AbortController;
       const request = {
         controller,
+        retentionController: new AbortController,
+        hostSignal,
         promise,
         resolve,
         reject,
         claimed: false,
-        timer: setTimeout(() => {
-          controller.abort();
-          reject(new Error("Audio capture timed out"));
-          this.requests.delete(request);
-        }, 60000)
+        capturing: true
       };
       this.requests.add(request);
+      this.progress(request);
       const waiting = [...this.sources.values()].filter((stream) => !stream.request && !stream.settled);
       for (const stream of waiting)
         stream.candidates.push(request);
@@ -21132,13 +21692,35 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     }
     complete(request, payload) {
       payload.then((blob) => {
+        if (!request.capturing)
+          return;
+        request.capturing = false;
         clearTimeout(request.timer);
         request.resolve(blob);
-      }, (error) => {
-        clearTimeout(request.timer);
-        request.reject(error);
-        this.requests.delete(request);
-      });
+      }, (error) => this.failCapture(request, error));
+    }
+    progress(request) {
+      if (!request.capturing)
+        return;
+      clearTimeout(request.timer);
+      request.timer = setTimeout(() => this.failCapture(request, new Error("Audio capture timed out")), 60000);
+    }
+    failCapture(request, error) {
+      if (!request.capturing)
+        return;
+      request.capturing = false;
+      clearTimeout(request.timer);
+      request.retentionController.abort(error);
+      request.reject(error);
+      this.requests.delete(request);
+      const host = request.hostSignal;
+      if (host) {
+        const abort = () => request.controller.abort(host.reason);
+        if (host.aborted)
+          abort();
+        else
+          host.addEventListener("abort", abort, { once: true, signal: request.controller.signal });
+      }
     }
     register(source, url) {
       let resolve, reject;
@@ -21230,9 +21812,12 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       return stream.promise;
     }
     releaseRequest(request) {
+      request.capturing = false;
       clearTimeout(request.timer);
-      request.controller.abort();
-      request.reject(new Error("Audio session replaced"));
+      const error = new Error("Audio session replaced");
+      request.retentionController.abort(error);
+      request.controller.abort(error);
+      request.reject(error);
       this.requests.delete(request);
     }
     clearExcept(url = "") {
@@ -21256,6 +21841,18 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
   function floatingVisibility(hidden, mode, session, expanded) {
     const hideAll = hidden && mode === "all";
     return { player: !hideAll && expanded, launcher: !hideAll && !expanded && (!hidden || session) };
+  }
+  function isPlayerPage(url) {
+    let path, hash;
+    try {
+      path = decodeURIComponent(url.pathname);
+      hash = decodeURIComponent(url.hash);
+    } catch {
+      return false;
+    }
+    if (/(?:^|[/#?&=])(settings|spaces|dots)(?:[/#?&=]|$)/i.test(path + hash))
+      return false;
+    return /^\/(?:new\/?)?$/.test(path) || /^\/(?:c|share)\/[^/]+\/?$/.test(path) || /^\/g\/[^/]+(?:\/(?:project|c\/[^/]+))?\/?$/.test(path) || /^\/codex(?:\/|$)/.test(path);
   }
 
   // src/content/content.ts
@@ -21357,6 +21954,8 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     }
     let statusTimer = 0;
     function showStatus(message, error = false) {
+      if (!pageAllowsPlayer())
+        return;
       let status = document.getElementById("cgpt-ra-status");
       if (!status) {
         status = document.createElement("div");
@@ -21529,6 +22128,16 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
           const scope = document.createElement("p");
           scope.textContent = /Android/i.test(navigator.userAgent) ? featureCopy(settingsCache?.language).desktopShortcuts : recoveryCopy().shortcutScope;
           helpPopover.append(scope);
+          const tourButton = document.createElement("button");
+          tourButton.type = "button";
+          tourButton.textContent = tourCopy(settingsCache?.language).title;
+          tourButton.onclick = () => {
+            if (standalone3)
+              openStandaloneTour(settingsCache || DEFAULT_SETTINGS);
+            else
+              window.postMessage({ source: "chatgpt-audio-controls-settings-bridge", type: "CGPT_RA_OPEN_TOUR" }, "*");
+          };
+          helpPopover.append(tourButton);
           const settingsButton = document.createElement("button");
           settingsButton.type = "button";
           settingsButton.textContent = t.popup.header.openOptions;
@@ -21708,17 +22317,30 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     }
     const retentionFetch = PAGE.fetch.bind(PAGE);
     const streamingAudio = new StreamingAudioCapture;
-    async function readAudio(response) {
-      if (Number(response.headers.get("content-length")) > MAX_BLOB_MAP_BYTES || !response.body)
+    async function readAudio(response, signal, progress) {
+      if (Number(response.headers.get("content-length")) > MAX_BLOB_MAP_BYTES || !response.body) {
+        response.body?.cancel().catch(() => {});
         throw new Error("Audio size unsupported");
+      }
       const reader = response.body.getReader();
+      const abort = () => {
+        reader.cancel(signal?.reason).catch(() => {});
+      };
+      if (signal?.aborted)
+        abort();
+      else
+        signal?.addEventListener("abort", abort, { once: true });
       const parts = [];
       let size = 0;
       try {
         while (true) {
+          signal?.throwIfAborted();
           const { done, value } = await reader.read();
+          signal?.throwIfAborted();
           if (done)
             break;
+          if (value.byteLength)
+            progress?.();
           size += value.byteLength;
           if (size > MAX_BLOB_MAP_BYTES) {
             reader.cancel().catch(() => {});
@@ -21727,6 +22349,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
           parts.push(value);
         }
       } finally {
+        signal?.removeEventListener("abort", abort);
         reader.releaseLock();
       }
       if (!size)
@@ -21747,7 +22370,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
         throw new Error("Audio unavailable");
       return readAudio(response);
     }
-    const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
+    const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !pageAllowsPlayer() || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
     const playback = new PlaybackSession(retainAudio, (media) => {
       activeMedia = media;
       if (media)
@@ -21757,7 +22380,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       scheduleLayoutSync();
     }, () => showStatus(recoveryCopy().playError, true), (ready) => {
       readyToast.clear();
-      if (ready && getSavedSettings().notifyDownloadReady !== false)
+      if (ready && pageAllowsPlayer() && getSavedSettings().notifyDownloadReady !== false)
         readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
     }, (activity) => supportPrompts.observe(activity));
     window.addEventListener("pagehide", () => {
@@ -21806,7 +22429,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
         async function wrappedFetch(...args) {
           const inputURL = typeof args[0] === "string" ? args[0] : args[0]?.url || "";
           const signal = args[1]?.signal || args[0]?.signal;
-          const capture = looksLikeAudio(inputURL, "") && !signal?.aborted ? streamingAudio.begin() : null;
+          const capture = looksLikeAudio(inputURL, "") && !signal?.aborted ? streamingAudio.begin(signal) : null;
           let response;
           try {
             response = await originalFetch(...capture ? [args[0], { ...args[1], signal: capture.controller.signal }] : args);
@@ -21819,7 +22442,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
             const requestURL = typeof args[0] === "string" ? args[0] : args[0]?.url || response.url || "";
             const type = response.headers?.get("content-type") || "";
             if (looksLikeAudio(requestURL, type)) {
-              const pending = readAudio(response.clone());
+              const pending = readAudio(response.clone(), capture?.retentionController.signal, capture ? () => streamingAudio.progress(capture) : undefined);
               if (capture)
                 streamingAudio.complete(capture, pending);
               pending.catch(() => {});
@@ -22216,6 +22839,11 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     const composerObserver = new ResizeObserver(scheduleLayoutSync);
     const composerAttributes = new MutationObserver(scheduleLayoutSync);
     let conversationPath = location.pathname;
+    function pageAllowsPlayer() {
+      if (!isPlayerPage(location))
+        return false;
+      return !Array.from(document.querySelectorAll('dialog[open], [aria-modal="true"]')).some((el) => !el.closest('[id^="cgpt-ra"]') && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== "hidden");
+    }
     function getComposer() {
       const candidates = document.querySelectorAll('[data-chatgpt-composer], [data-type="unified-composer"]');
       const composer = Array.from(candidates).find((el) => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"]'));
@@ -22245,6 +22873,15 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
         blobURLMap.clear();
         blobURLBytes = 0;
         updateControls();
+      }
+      const allowed = pageAllowsPlayer();
+      playerLayout?.setPageVisible(allowed);
+      if (!allowed) {
+        readyToast.clear();
+        const status = document.getElementById("cgpt-ra-status");
+        if (status)
+          status.hidden = true;
+        return;
       }
       const composer = getComposer();
       if (composer !== observedComposer) {
@@ -22661,8 +23298,20 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       });
       observer.observe(document.documentElement, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["open", "aria-modal", "aria-hidden"]
       });
+      window.addEventListener("popstate", scheduleLayoutSync);
+      window.addEventListener("hashchange", scheduleLayoutSync);
+      for (const method of ["pushState", "replaceState"]) {
+        const original = history[method];
+        history[method] = function(...args) {
+          const result = original.apply(this, args);
+          scheduleLayoutSync();
+          return result;
+        };
+      }
       bindThemeObservers();
       window.addEventListener("focus", scheduleThemeSync);
       document.addEventListener("visibilitychange", () => {
@@ -22707,4 +23356,4 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
   })();
 })();
 
-(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-support-prompt,\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-support-prompt,\r\n[data-theme='light'] #cgpt-ra-support-prompt,\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras { display: none; position: fixed; width: 196px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n\r\n/* Optional, non-modal support requests. No page or composer styles are changed. */\r\n#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\r\n#cgpt-ra-support-prompt * { box-sizing:border-box; }\r\n#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\r\n#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\r\n#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\r\n#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\r\n#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\r\n.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-drop-targets .cgpt-ra-drag-preview{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none;opacity:.25;filter:drop-shadow(0 8px 12px #0003);z-index:1}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-target-detail{visibility:hidden}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-drop-active .cgpt-ra-target-detail{visibility:visible}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-marker{border-radius:50%;animation:cgpt-target-arrive 160ms cubic-bezier(.2,.8,.2,1)}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-active .cgpt-ra-drop-marker{visibility:hidden}\r\n.cgpt-ra-drag-source{opacity:0!important;pointer-events:none!important}\r\n@keyframes cgpt-target-arrive{from{opacity:0;transform:scale(.85)}to{opacity:.7;transform:scale(1)}}\r\n@media(prefers-reduced-motion:reduce){#cgpt-ra-drop-targets .cgpt-ra-drop-marker{animation:none}}\r\n.cgpt-ra-support-provider{flex-basis:100%;display:flex;align-items:center;gap:8px;margin:12px 0 4px!important}\r\n#cgpt-ra-left.cgpt-ra-drag-source,#cgpt-ra-right.cgpt-ra-drag-source,#cgpt-ra-floating-toggle.cgpt-ra-drag-source,#cgpt-ra-dock.cgpt-ra-drag-source{opacity:0!important}\r\n\r\n.cgpt-ra-dock-join.cgpt-ra-drag-source{opacity:0!important}\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();
+(function addPlayerStyle(){const root=document.documentElement;if(!root){requestAnimationFrame(addPlayerStyle);return;}const style=document.createElement('style');style.id='cgpt-ra-userscript-style';style.textContent="/*\r\n * ChatGPT Audio Controls Styles\r\n * Extension-owned player styles. Native composer styling is never overridden.\r\n */\r\n\r\n#cgpt-ra-support-prompt,\r\n#cgpt-ra-left,\r\n#cgpt-ra-right,\r\n#cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #212121));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #303030));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-border: var(--border-default, rgba(255, 255, 255, .15));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(255, 255, 255, .10));\r\n    --cgpt-ra-text: var(--text-primary, #ffffff);\r\n    --cgpt-ra-muted: var(--text-tertiary, #afafaf);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(255, 255, 255, .28));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\nhtml.light #cgpt-ra-support-prompt,\r\n[data-theme='light'] #cgpt-ra-support-prompt,\r\nhtml.light #cgpt-ra-left,\r\nhtml.light #cgpt-ra-right,\r\nhtml.light #cgpt-ra-floating-toggle,\r\n[data-theme='light'] #cgpt-ra-left,\r\n[data-theme='light'] #cgpt-ra-right,\r\n[data-theme='light'] #cgpt-ra-floating-toggle {\r\n    --cgpt-ra-bg: var(--main-surface-primary, var(--bg-primary, #ffffff));\r\n    --cgpt-ra-bg-surface: var(--main-surface-secondary, var(--bg-secondary, #f9f9f9));\r\n    --cgpt-ra-bg-surface-hover: var(--interactive-bg-secondary-hover, rgba(0, 0, 0, .07));\r\n    --cgpt-ra-border: var(--border-default, rgba(0, 0, 0, .12));\r\n    --cgpt-ra-border-light: var(--border-extra-light, rgba(0, 0, 0, .08));\r\n    --cgpt-ra-text: var(--text-primary, #0d0d0d);\r\n    --cgpt-ra-muted: var(--text-tertiary, #5d5d5d);\r\n    --cgpt-ra-disabled: var(--border-extra-light, rgba(0, 0, 0, .25));\r\n    --cgpt-ra-accent: var(--theme-submit-btn-bg, var(--interactive-bg-accent-secondary-default, var(--theme-blue-default, #3a83f7)));\r\n    --cgpt-ra-accent-text: var(--theme-submit-btn-text, var(--interactive-label-primary-default, #ffffff));\r\n}\r\n\r\n/*\r\n * ChatGPT defines these theme variables on the [data-chat-theme] subtree.\r\n * Reuse them only on our own elements; no rule here targets native ChatGPT\r\n * controls or writes variables on :root/body.\r\n */\r\n[data-chat-theme='blue'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--blue-theme-submit-btn-bg, #3a83f7);\r\n    --cgpt-ra-accent-text: var(--blue-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='green'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--green-theme-submit-btn-bg, #53b559);\r\n    --cgpt-ra-accent-text: var(--green-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='purple'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--purple-theme-submit-btn-bg, #8952ee);\r\n    --cgpt-ra-accent-text: var(--purple-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='orange'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--orange-theme-submit-btn-bg, #ee7c37);\r\n    --cgpt-ra-accent-text: var(--orange-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='pink'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--pink-theme-submit-btn-bg, #f077af);\r\n    --cgpt-ra-accent-text: var(--pink-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='yellow'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--yellow-theme-submit-btn-bg, #f6c543);\r\n    --cgpt-ra-accent-text: var(--yellow-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n[data-chat-theme='black'] :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) {\r\n    --cgpt-ra-accent: var(--black-theme-submit-btn-bg, #000000);\r\n    --cgpt-ra-accent-text: var(--black-theme-submit-btn-text, #ffffff);\r\n}\r\n\r\n#cgpt-ra-left,\r\n#cgpt-ra-right {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    /* Fixed popovers must use the viewport, not a filter-created containing block. */\r\n    backdrop-filter: none;\r\n    -webkit-backdrop-filter: none;\r\n    box-shadow: 0 2px 10px rgba(0, 0, 0, .14);\r\n    opacity: 1 !important;\r\n    transition: opacity .18s ease, visibility .18s ease;\r\n}\r\n\r\n/*\r\n * Fused left player layout (Height 48px, Radius 24px)\r\n */\r\n#cgpt-ra-left {\r\n    min-width: 240px;\r\n    max-width: 430px;\r\n    height: 48px;\r\n    display: block;\r\n    padding: 0 14px;\r\n    border-radius: 24px;\r\n    overflow: visible;\r\n}\r\n\r\n/* Transport controls live in the right rail beside speed/volume controls. */\r\n.cgpt-ra-transport-row {\r\n    position: static;\r\n    z-index: auto;\r\n    height: 36px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    gap: 2px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n    border-radius: 0;\r\n    background: transparent;\r\n    box-shadow: none;\r\n}\r\n\r\n.cgpt-ra-transport-row > * {\r\n    position: relative;\r\n    z-index: 1;\r\n}\r\n\r\n/* Buttons in transport row: 36px size, play button 40px primary */\r\n.cgpt-ra-transport-row .cgpt-ra-icon-btn {\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    border-radius: 50%;\r\n}\r\n\r\n.cgpt-ra-play {\r\n    width: 44px !important;\r\n    height: 44px !important;\r\n    flex: 0 0 44px !important;\r\n    border-radius: 50% !important;\r\n    background-color: var(--cgpt-ra-accent) !important;\r\n    color: var(--cgpt-ra-accent-text) !important;\r\n    box-shadow: none !important;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.cgpt-ra-play:hover {\r\n    filter: brightness(1.08);\r\n}\r\n\r\n.cgpt-ra-play svg {\r\n    stroke: currentColor;\r\n    fill: currentColor;\r\n}\r\n\r\n.cgpt-ra-seek10 {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-lucide {\r\n    width: 22px;\r\n    height: 22px;\r\n}\r\n\r\n.cgpt-ra-seek10 .cgpt-ra-ten {\r\n    position: absolute;\r\n    inset: 0;\r\n    display: grid;\r\n    place-items: center;\r\n    padding-top: 2px;\r\n    font-size: 9px;\r\n    font-weight: 700;\r\n    font-family: system-ui, sans-serif;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-progress-row {\r\n    height: 46px;\r\n    display: grid;\r\n    grid-template-columns: 70px minmax(0, 1fr);\r\n    align-items: center;\r\n    gap: 10px;\r\n    padding: 0;\r\n    margin: 0;\r\n    border: 0;\r\n}\r\n\r\n/* Right rail (Height 48px, Radius 24px) */\r\n#cgpt-ra-right {\r\n    width: max-content;\r\n    min-width: 0;\r\n    height: 48px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    gap: 4px;\r\n    padding: 5px 8px;\r\n    border-radius: 24px;\r\n    white-space: nowrap;\r\n}\r\n\r\n/* Right rail ordering */\r\n.cgpt-ra-speed-wrap { order: 1; }\r\n.cgpt-ra-volume-wrap { order: 2; }\r\n.cgpt-ra-download { order: 3; margin-left: 2px; }\r\n.cgpt-ra-help-wrap { order: 4; margin-left: 2px; }\r\n.cgpt-ra-collapse-btn { order: 5; margin-left: 4px; }\r\n\r\n/* Floating Mini Toggle Button (shown when collapsed / idle) */\r\n#cgpt-ra-floating-toggle {\r\n    box-sizing: border-box;\r\n    position: fixed;\r\n    z-index: 9999;\r\n    width: 42px;\r\n    height: 42px;\r\n    border-radius: 50%;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    background: var(--cgpt-ra-bg);\r\n    color: var(--cgpt-ra-text);\r\n    backdrop-filter: blur(16px);\r\n    -webkit-backdrop-filter: blur(16px);\r\n    box-shadow: 0 2px 8px rgba(0, 0, 0, .14);\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    transition: transform .15s ease, background .15s ease, opacity .15s ease;\r\n}\r\n\r\n#cgpt-ra-floating-toggle:hover {\r\n    transform: scale(1.08);\r\n    border-color: var(--cgpt-ra-accent);\r\n}\r\n\r\n#cgpt-ra-floating-toggle img,\r\n#cgpt-ra-floating-toggle svg {\r\n    width: 24px;\r\n    height: 24px;\r\n    display: block;\r\n}\r\n\r\n#cgpt-ra-floating-toggle.cgpt-ra-hidden {\r\n    display: none !important;\r\n}\r\n\r\n#cgpt-ra-left.cgpt-ra-collapsed,\r\n#cgpt-ra-right.cgpt-ra-collapsed {\r\n    opacity: 0 !important;\r\n    visibility: hidden;\r\n    pointer-events: none !important;\r\n    /* Do not create a containing block for viewport-positioned popovers. */\r\n}\r\n\r\n/* Disabled controls */\r\n#cgpt-ra-left.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    border-radius: 24px;\r\n}\r\n#cgpt-ra-right.cgpt-ra-compact {\r\n    min-width: 0;\r\n    box-sizing: border-box;\r\n    height: auto;\r\n    min-height: 48px;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    border-radius: 24px;\r\n    padding: 5px;\r\n}\r\n#cgpt-ra-status {\r\n    position: fixed;\r\n    z-index: 10001;\r\n    bottom: 16px;\r\n    left: 50%;\r\n    transform: translateX(-50%);\r\n    max-width: min(540px, calc(100vw - 32px));\r\n    padding: 12px 16px;\r\n    border-radius: 10px;\r\n    background: #202938;\r\n    color: #fff;\r\n    box-shadow: 0 2px 12px #0004;\r\n    font: 14px/1.5 system-ui, sans-serif;\r\n}\r\n#cgpt-ra-status[hidden] { display: none; }\r\n\r\n#cgpt-ra-left.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-media-control,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-volume-popover,\r\n#cgpt-ra-right.cgpt-ra-no-media .cgpt-ra-speed-menu {\r\n    pointer-events: none !important;\r\n}\r\n\r\n.cgpt-ra-icon-btn {\r\n    position: relative;\r\n    width: 36px;\r\n    height: 36px;\r\n    flex: 0 0 36px;\r\n    display: inline-flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    padding: 0;\r\n    font-size: 17px;\r\n    transition: background .12s ease, opacity .12s ease;\r\n}\r\n\r\n.cgpt-ra-icon-btn:hover {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n.cgpt-ra-icon-btn:disabled {\r\n    opacity: 0.38;\r\n    cursor: default;\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-lucide {\r\n    display: block;\r\n    width: 19px;\r\n    height: 19px;\r\n    flex: 0 0 19px;\r\n    overflow: visible;\r\n    pointer-events: none;\r\n}\r\n\r\n.cgpt-ra-icon-btn svg {\r\n    stroke: currentColor;\r\n}\r\n\r\n.cgpt-ra-time {\r\n    min-width: 0;\r\n    color: var(--cgpt-ra-muted);\r\n    font-size: 10.5px;\r\n    line-height: 1;\r\n    font-variant-numeric: tabular-nums;\r\n    white-space: nowrap;\r\n    text-align: left;\r\n}\r\n\r\n.cgpt-ra-seek-wrap {\r\n    min-width: 0;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 0;\r\n}\r\n\r\n/*\r\n * Sleek seeker range track:\r\n * - 2px visual track normally\r\n * - 4px track on hover / focus\r\n */\r\n.cgpt-ra-range {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 100%;\r\n    height: 18px;\r\n    margin: 0;\r\n    padding: 0;\r\n    border: 0;\r\n    outline: 0;\r\n    cursor: pointer;\r\n    color: var(--cgpt-ra-text);\r\n    background: transparent;\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-runnable-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-runnable-track,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-runnable-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    appearance: none;\r\n    width: 10px;\r\n    height: 10px;\r\n    margin-top: -4px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n    box-shadow: 0 0 0 1px var(--cgpt-ra-bg);\r\n    transition: width .12s ease, height .12s ease, margin-top .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-webkit-slider-thumb,\r\n.cgpt-ra-range:focus-visible::-webkit-slider-thumb {\r\n    width: 11px;\r\n    height: 11px;\r\n    margin-top: -3.5px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-track {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-border);\r\n    transition: height .12s ease, background .12s ease;\r\n}\r\n\r\n.cgpt-ra-range:hover::-moz-range-track,\r\n.cgpt-ra-range:focus-visible::-moz-range-track {\r\n    height: 4px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-progress {\r\n    height: 2px;\r\n    border: 0;\r\n    border-radius: 999px;\r\n    background: var(--cgpt-ra-accent);\r\n}\r\n\r\n.cgpt-ra-range::-moz-range-thumb {\r\n    width: 10px;\r\n    height: 10px;\r\n    border: 0;\r\n    border-radius: 50%;\r\n    background: var(--cgpt-ra-text);\r\n}\r\n\r\n.cgpt-ra-range:disabled {\r\n    opacity: .35;\r\n    cursor: default;\r\n}\r\n\r\n.cgpt-ra-speed-wrap,\r\n.cgpt-ra-volume-wrap,\r\n.cgpt-ra-help-wrap {\r\n    position: relative;\r\n}\r\n\r\n.cgpt-ra-speed-btn {\r\n    width: auto;\r\n    min-width: 48px;\r\n    height: 36px;\r\n    padding: 0 10px;\r\n    border-radius: 18px;\r\n    font-size: 12.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-popover {\r\n    position: absolute;\r\n    right: 0;\r\n    bottom: calc(100% + 9px);\r\n    display: none;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 12px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    overflow: hidden;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-speed-wrap.cgpt-open .cgpt-ra-popover,\r\n.cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover {\r\n    display: block;\r\n}\r\n\r\n.cgpt-ra-speed-menu {\r\n    min-width: 90px;\r\n    padding: 5px;\r\n}\r\n\r\n.cgpt-ra-speed-option {\r\n    width: 100%;\r\n    height: 30px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border: 0;\r\n    border-radius: 7px;\r\n    background: transparent;\r\n    color: inherit;\r\n    cursor: pointer;\r\n    font-size: 12px;\r\n}\r\n\r\n.cgpt-ra-speed-option:hover,\r\n.cgpt-ra-speed-option.cgpt-selected {\r\n    background: var(--cgpt-ra-bg-surface-hover);\r\n}\r\n\r\n/* Vertical Volume Popover */\r\n.cgpt-ra-volume-popover {\r\n    position: absolute;\r\n    left: 50%;\r\n    bottom: calc(100% + 6px);\r\n    transform: translateX(-50%);\r\n    width: 44px;\r\n    height: 165px;\r\n    display: flex;\r\n    opacity: 0;\r\n    visibility: hidden;\r\n    pointer-events: none;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: flex-start;\r\n    gap: 0;\r\n    padding: 6px 5px 6px;\r\n    border: 1px solid var(--cgpt-ra-border);\r\n    border-radius: 22px;\r\n    background: var(--cgpt-ra-bg-surface);\r\n    color: var(--cgpt-ra-text);\r\n    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);\r\n    transition: opacity .12s ease, visibility .12s ease;\r\n    z-index: 10002;\r\n}\r\n\r\n.cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover {\r\n    opacity: 1;\r\n    visibility: visible;\r\n    pointer-events: auto;\r\n}\r\n\r\n.cgpt-ra-volume-popover input[type=\"range\"] {\r\n    position: absolute;\r\n    top: 56px;\r\n    left: 50%;\r\n    width: 96px;\r\n    height: 18px;\r\n    margin: 0;\r\n    transform: translate(-50%, -50%) rotate(-90deg);\r\n    cursor: pointer;\r\n}\r\n\r\n.cgpt-ra-volume-value {\r\n    position: absolute;\r\n    left: 4px;\r\n    right: 4px;\r\n    bottom: 6px;\r\n    height: 24px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    border-top: 1px solid var(--cgpt-ra-border);\r\n    font-size: 9.5px;\r\n    font-weight: 600;\r\n    font-family: system-ui, sans-serif;\r\n    line-height: 1;\r\n    color: inherit;\r\n    opacity: .80;\r\n    text-align: center;\r\n}\r\n\r\n.cgpt-ra-help {\r\n    width: 300px;\r\n    padding: 12px 14px;\r\n    font-family: system-ui, sans-serif;\r\n}\r\n\r\n.cgpt-ra-help-title {\r\n    margin-bottom: 8px;\r\n    font-size: 12px;\r\n    font-weight: 700;\r\n}\r\n\r\n.cgpt-ra-shortcut-row {\r\n    display: flex;\r\n    justify-content: space-between;\r\n    gap: 20px;\r\n    padding: 4px 0;\r\n    font-size: 11px;\r\n}\r\n\r\n.cgpt-ra-shortcut-key {\r\n    color: inherit;\r\n    opacity: .65;\r\n    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;\r\n    white-space: nowrap;\r\n}\r\n\r\n.cgpt-ra-download-busy svg {\r\n    animation: cgpt-ra-spin .8s linear infinite;\r\n}\r\n\r\n@keyframes cgpt-ra-spin {\r\n    to { transform: rotate(360deg); }\r\n}\r\n/* Keep Pause available while a retained source is loading. */\r\n.cgpt-ra-buffering { outline: 2px dotted currentColor !important; outline-offset: -3px; }\r\n\r\n\r\n/* Geometry and previews share 48px capsules and 44px interaction targets. */\r\n#cgpt-ra-left, #cgpt-ra-right {\r\n  min-width: 0; max-width: none; min-height: 0; padding: 1px; border-radius: 24px;\r\n  display: flex; gap: 0; align-items: center; box-sizing: border-box;\r\n  backdrop-filter: none; -webkit-backdrop-filter: none;\r\n  box-shadow: 0 1px 5px #0000000d; transition: none;\r\n  font-family: inherit;\r\n}\r\n#cgpt-ra-left .cgpt-ra-progress-row { display: flex; flex: 1; min-width: 0; width: auto; height: 44px; padding: 0 8px 0 0; gap: 8px; }\r\n#cgpt-ra-left .cgpt-ra-time { font-size: 10px; flex-shrink: 0; }\r\n#cgpt-ra-left .cgpt-ra-seek-wrap { flex: 1; min-width: 24px; }\r\n#cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider { height: 44px; }\r\n#cgpt-ra-right .cgpt-ra-transport-row { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-icon-btn, .cgpt-ra-grip {\r\n  width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px;\r\n  padding: 10px; box-sizing: border-box; margin: 0;\r\n}\r\n#cgpt-ra-right .cgpt-ra-speed-btn { min-width: 44px; width: 44px; padding: 0; }\r\n#cgpt-ra-right .cgpt-ra-speed-wrap, #cgpt-ra-right .cgpt-ra-volume-wrap, #cgpt-ra-right .cgpt-ra-help-wrap { flex: 0 0 44px; margin: 0; }\r\n.cgpt-ra-extras { display: contents; }\r\n#cgpt-ra-right .cgpt-ra-more { display: none; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls { flex-wrap: nowrap; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-more { display: grid; place-items: center; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras { display: none; position: fixed; width: 196px; padding: 8px; border: 1px solid var(--cgpt-ra-border); border-radius: 16px; background: var(--cgpt-ra-bg); box-shadow: 0 4px 18px #0002; box-sizing: border-box; }\r\n#cgpt-ra-right.cgpt-ra-compact-controls .cgpt-ra-extras.cgpt-open { display: flex; }\r\n#cgpt-ra-left.cgpt-ra-vertical, #cgpt-ra-right.cgpt-ra-vertical { flex-direction: column; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-progress-row { flex-direction: column; height: auto; min-height: 0; width: 44px; padding: 0 0 10px; gap: 6px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-time { font-size: 9px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-wrap { width: 44px; min-height: 0; height: auto; justify-content: center; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-seek-slider { writing-mode: vertical-lr; direction: rtl; height: 100%; width: 44px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-runnable-track { width: 4px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range:hover::-webkit-slider-thumb { margin-left: -3.5px; }\r\n#cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-track, #cgpt-ra-left.cgpt-ra-vertical .cgpt-ra-range::-moz-range-progress { width: 2px; height: 100%; }\r\n#cgpt-ra-left .cgpt-ra-time, #cgpt-ra-left:not(.cgpt-ra-vertical) .cgpt-ra-seek-slider, .cgpt-ra-shortcut-key { direction: ltr; unicode-bidi: isolate; }\r\n.cgpt-ra-grip { border: 0; background: transparent; color: inherit; border-radius: 50%; cursor: grab; touch-action: none; user-select: none; display: grid; place-items: center; opacity: .45; }\r\n.cgpt-ra-grip svg { width: 16px; height: 16px; }\r\n.cgpt-ra-vertical > .cgpt-ra-grip svg { transform: rotate(90deg); }\r\n.cgpt-ra-grip:hover, .cgpt-ra-grip:focus-visible { opacity: 1; background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-floating-toggle { touch-action: none; cursor: grab; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0; backdrop-filter: none; transition: background .15s; box-shadow: 0 1px 5px #0000000d; --cgpt-safe-left: env(safe-area-inset-left, 0px); --cgpt-safe-right: env(safe-area-inset-right, 0px); --cgpt-safe-top: env(safe-area-inset-top, 0px); --cgpt-safe-bottom: env(safe-area-inset-bottom, 0px); }\r\n#cgpt-ra-floating-toggle svg { width: 18px; height: 18px; }\r\n#cgpt-ra-floating-toggle:hover { transform: none; border-color: var(--cgpt-ra-border); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-left.cgpt-ra-fit-hidden, #cgpt-ra-right.cgpt-ra-fit-hidden { display: none !important; }\r\n#cgpt-ra-right .cgpt-ra-popover, #cgpt-ra-right .cgpt-ra-volume-popover { position: fixed; right: auto; bottom: auto; transform: none; overflow: auto; box-sizing: border-box; }\r\n#cgpt-ra-right .cgpt-ra-help-wrap.cgpt-open .cgpt-ra-popover { display: block; }\r\n#cgpt-ra-right .cgpt-ra-volume-wrap.cgpt-open .cgpt-ra-volume-popover { opacity: 1; visibility: visible; pointer-events: auto; }\r\n#cgpt-ra-right .cgpt-ra-shortcut-row { gap: 8px; flex-wrap: wrap; }\r\n#cgpt-ra-right .cgpt-ra-popover button { min-height: 44px; }\r\n.cgpt-ra-volume-popover input[type=\"range\"] { height: 44px; }\r\n#cgpt-ra-dock { position: fixed; z-index: 9998; pointer-events: none; box-sizing: border-box; border: 1px solid var(--border-light, #8883); border-bottom: 0; border-radius: 28px 28px 0 0; transform-origin: top left; }\r\n#cgpt-ra-dock[hidden] { display: none; }\r\n#cgpt-ra-dock.cgpt-ra-dock-closed { visibility: hidden; }\r\n.cgpt-ra-dock-join { position: fixed; pointer-events: none; transform-origin: top left; }\r\n.cgpt-ra-dock-join[hidden] { display: none; }\r\n.cgpt-ra-dock-join::before, .cgpt-ra-dock-join::after { content: ''; position: absolute; top: 0; background: var(--join-color); }\r\n.cgpt-ra-dock-join::before { left: 0; width: var(--join-left-x); height: var(--join-left-y); mask: radial-gradient(ellipse farthest-side at 100% 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join::after { right: 0; width: var(--join-right-x); height: var(--join-right-y); mask: radial-gradient(ellipse farthest-side at 0 100%, transparent 100%, #000 100%); }\r\n.cgpt-ra-dock-join.cgpt-ra-dragging { opacity: .25; will-change: transform; }\r\n.cgpt-ra-drop-target { --cgpt-drop-fill: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); }\r\n.cgpt-ra-drop-target.cgpt-ra-drop-active { --cgpt-drop-fill: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-left.cgpt-ra-in-dock, #cgpt-ra-right.cgpt-ra-in-dock { background: transparent; border: 0; border-radius: 0; box-shadow: none; }\r\n#cgpt-ra-left.cgpt-ra-in-dock.cgpt-ra-collapsed, #cgpt-ra-right.cgpt-ra-in-dock.cgpt-ra-collapsed { opacity: 1 !important; visibility: hidden; }\r\n#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle { transform-origin: top left; }\r\n#cgpt-ra-left.cgpt-ra-dragging, #cgpt-ra-right.cgpt-ra-dragging, #cgpt-ra-floating-toggle.cgpt-ra-dragging, #cgpt-ra-dock.cgpt-ra-dragging { opacity: .25 !important; will-change: transform; }\r\n#cgpt-ra-drop-targets { position: fixed; inset: 0; z-index: 2147483646; pointer-events: none; }\r\n.cgpt-ra-drop-shape { position: absolute; box-sizing: border-box; border: 1px dashed var(--text-tertiary, #999); background: color-mix(in srgb, var(--main-surface-primary, #212121) 6%, transparent); opacity: .7; transition: background 120ms, opacity 120ms, border-color 120ms; }\r\n.cgpt-ra-drop-active .cgpt-ra-drop-shape { border: 1px solid var(--text-primary, #eee); opacity: .85; background: color-mix(in srgb, var(--text-primary, #eee) 12%, transparent); }\r\n#cgpt-ra-ready-toast, #cgpt-ra-settings-dialog { color: var(--text-primary, #fff); background: var(--main-surface-primary, #212121); border: 1px solid #888; border-radius: 16px; padding: 14px; font: 14px/1.5 system-ui; box-sizing: border-box; }\r\n#cgpt-ra-ready-toast { position: fixed; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 24px); width: max-content; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; z-index: 2147483645; box-shadow: 0 3px 16px #0005; }\r\n#cgpt-ra-ready-toast button, #cgpt-ra-settings-dialog button, #cgpt-ra-settings-dialog select { min-height: 44px; padding: 8px; border: 1px solid #888; border-radius: 8px; background: transparent; color: inherit; font: inherit; }\r\n#cgpt-ra-settings-dialog { width: min(500px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }\r\n#cgpt-ra-settings-dialog label { display: grid; gap: 8px; margin-block: 12px; }\r\n#cgpt-ra-settings-dialog::backdrop { background: #0007; }\r\n\r\n@media (prefers-reduced-motion: reduce) {\r\n  #cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle, .cgpt-ra-drop-shape { transition: none; }\r\n}\r\n\r\n/* One owned stacking context keeps native ChatGPT menus above the player. */\r\n#cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }\r\n#cgpt-ra-layer[hidden] { display: none !important; }\r\n#cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle::before { content: ''; position: absolute; left: 6px; top: var(--toggle-top, 8px); width: 32px; height: 28px; box-sizing: border-box; border: 1px solid transparent; border-radius: 14px; background: transparent; }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle svg { position: absolute; width: 18px; height: 18px; left: 13px; top: calc(var(--toggle-top, 8px) + 5px); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle.cgpt-ra-logo::before { border: var(--dock-border-width, 1px) var(--dock-border-style, solid) var(--dock-border, var(--cgpt-ra-border)); border-bottom: 0; box-shadow: var(--dock-shadow, none); clip-path: inset(-8px -8px 0); border-radius: 16px 16px 0 0; background: var(--dock-background, var(--cgpt-ra-bg)); }\r\n#cgpt-ra-floating-toggle.cgpt-ra-dock-toggle:is(:hover, :focus-visible)::before { border-color: var(--dock-border, var(--cgpt-ra-border)); background: var(--cgpt-ra-bg-surface-hover); }\r\n#cgpt-ra-right .cgpt-ra-volume-popover { overflow: hidden; scrollbar-width: none; width: 52px; padding: 6px 3px 32px; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover::-webkit-scrollbar { display: none; }\r\n#cgpt-ra-right .cgpt-ra-volume-popover input[type=range] { position: static; transform: none; writing-mode: vertical-lr; direction: rtl; width: 44px; height: 100%; min-height: 44px; margin: 0; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-runnable-track { width: 2px; height: 100%; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-webkit-slider-thumb { margin-top: 0; margin-left: -4px; }\r\n.cgpt-ra-volume-popover .cgpt-ra-range::-moz-range-track { width: 2px; height: 100%; }\r\n#cgpt-ra-ready-toast { padding: 4px 8px 4px 12px; gap: 8px; border-radius: 14px; border-color: #22a06b66; background: #edf9f1; color: #145c36; font-size: 13px; box-shadow: 0 3px 12px #0001; }\r\n#cgpt-ra-ready-toast button { border: 0; font-size: 12px; font-weight: 600; cursor: pointer; }\r\n#cgpt-ra-ready-toast button:hover { background: #16804a12; }\r\n#cgpt-ra-ready-toast button:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }\r\n#cgpt-ra-ready-toast svg { width: 18px; height: 18px; }\r\n#cgpt-ra-ready-toast .cgpt-ra-toast-dismiss { width: 44px; display: grid; place-items: center; }\r\n.cgpt-ra-toast-success { display: flex; }\r\nhtml.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { background: #142d22; color: #b6e8c8; }\r\n\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger { color: #cf3434; border-color: #cf343466; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:hover { background: #cf343412; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-danger:focus-visible { outline: 2px solid #cf3434; outline-offset: 2px; }\r\n\r\n/* Optional, non-modal support requests. No page or composer styles are changed. */\r\n#cgpt-ra-support-prompt { position:fixed; z-index:10001; box-sizing:border-box; padding:20px; border:1px solid #db709355; border-radius:16px; background:var(--cgpt-ra-bg); color:var(--cgpt-ra-text); box-shadow:0 8px 28px #0002; font:13px/1.5 system-ui,sans-serif; text-align:start; }\r\n#cgpt-ra-support-prompt * { box-sizing:border-box; }\r\n#cgpt-ra-support-prompt h2 { margin:0; padding-inline-end:32px; font-size:16px; line-height:1.4; font-weight:600; color:inherit; }\r\n#cgpt-ra-support-prompt p { margin:12px 0; color:var(--cgpt-ra-muted); font-size:13px; line-height:1.5; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-actions { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-support-prompt :is(a,button) { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 10px; border:1px solid #db709355; border-radius:9px; font:inherit; color:inherit; background:transparent; text-decoration:none; cursor:pointer; overflow-wrap:normal; }\r\n#cgpt-ra-support-prompt :is(a,button):hover { background:#db709317; }\r\n#cgpt-ra-support-prompt :is(a,button):focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-support-prompt .secondary { margin-block-start:12px; }\r\n#cgpt-ra-support-prompt .secondary button { border-color:var(--cgpt-ra-border); }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close { position:absolute; inset-inline-end:8px; top:8px; width:44px; border:0; }\r\n#cgpt-ra-support-prompt .cgpt-ra-support-close svg { width:16px; height:16px; }\r\n.cgpt-ra-support-announcement { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support { padding-block-end:16px; border-block-end:1px solid #8884; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-standalone-support p { font-size:13px; line-height:1.5; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links { display:flex; flex-wrap:wrap; gap:8px; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a { display:inline-flex; align-items:center; min-height:44px; padding:8px; color:inherit; border:1px solid #db709366; border-radius:8px; text-decoration:none; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:hover { background:#db70931a; }\r\n#cgpt-ra-settings-dialog .cgpt-ra-support-links a:focus-visible { outline:2px solid #c84c7a; outline-offset:2px; }\r\n#cgpt-ra-drop-targets .cgpt-ra-drag-preview{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none;opacity:.25;filter:drop-shadow(0 8px 12px #0003);z-index:1}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-target-detail{visibility:hidden}\r\n#cgpt-ra-drop-targets.cgpt-ra-group-drag .cgpt-ra-drop-active .cgpt-ra-target-detail{visibility:visible}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-marker{border-radius:50%;animation:cgpt-target-arrive 160ms cubic-bezier(.2,.8,.2,1)}\r\n#cgpt-ra-drop-targets .cgpt-ra-drop-active .cgpt-ra-drop-marker{visibility:hidden}\r\n.cgpt-ra-drag-source{opacity:0!important;pointer-events:none!important}\r\n@keyframes cgpt-target-arrive{from{opacity:0;transform:scale(.85)}to{opacity:.7;transform:scale(1)}}\r\n@media(prefers-reduced-motion:reduce){#cgpt-ra-drop-targets .cgpt-ra-drop-marker{animation:none}}\r\n.cgpt-ra-support-provider{flex-basis:100%;display:flex;align-items:center;gap:8px;margin:12px 0 4px!important}\r\n#cgpt-ra-left.cgpt-ra-drag-source,#cgpt-ra-right.cgpt-ra-drag-source,#cgpt-ra-floating-toggle.cgpt-ra-drag-source,#cgpt-ra-dock.cgpt-ra-drag-source{opacity:0!important}\r\n\r\n.cgpt-ra-dock-join.cgpt-ra-drag-source{opacity:0!important}\r\n";const mount=()=>{if(!style.isConnected)root.append(style);};mount();new MutationObserver(mount).observe(root,{childList:true,subtree:true});})();

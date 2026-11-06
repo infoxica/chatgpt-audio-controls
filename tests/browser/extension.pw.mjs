@@ -39,6 +39,64 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.addInitScript(()=>{window.fixtureAudios=[];const Original=window.Audio;window.Audio=function(...args){const audio=new Original(...args);window.fixtureAudios.push(audio);return audio;};});
     await page.goto('https://chatgpt.com/');await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();return page;
   }
+  test('player hides on non-chat pages and native settings without changing saved visibility',async()=>{
+    const page=await open();
+    for(const route of ['/spaces','/dots','/settings','/apps','/gpts','/library','/c/test#settings/General']) {
+      await page.evaluate(route=>history.pushState({},'',route),route);
+      await expect(page.locator('#cgpt-ra-layer')).toBeHidden();
+      await expect(page.locator('#cgpt-ra-floating-toggle')).toBeHidden();
+    }
+    for(const route of ['/c/test','/g/g-p-test/project','/g/g-p-test/c/test','/codex','/codex/tasks/test','/']) {
+      await page.evaluate(route=>history.replaceState({},'',route),route);
+      await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();
+    }
+    await page.locator('#native-read').click();
+    await expect.poll(()=>page.locator('#host').evaluate(audio=>!audio.paused)).toBe(true);
+    const saved=await storedLayout(page);
+    await page.evaluate(()=>{const dialog=document.createElement('dialog');dialog.id='native-settings';document.body.append(dialog);dialog.showModal();});
+    await expect(page.locator('#cgpt-ra-layer')).toBeHidden();
+    expect(await page.locator('#host').evaluate(audio=>audio.paused)).toBe(false);
+    await page.evaluate(()=>document.querySelector('#native-settings').close());
+    await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();
+    expect(await storedLayout(page)).toEqual(saved);
+    await page.close();
+  });
+  test('feature tour is accessible from player help in both distributions',async()=>{
+    const page=await open(); await page.locator('#cgpt-ra-floating-toggle').click();
+    await expect(page.locator('#cgpt-ra-right')).toBeVisible();
+    if(await page.locator('.cgpt-ra-more').isVisible()) await page.locator('.cgpt-ra-more').click();
+    await page.locator('.cgpt-ra-help-wrap > button').click();
+    const link=page.locator('.cgpt-ra-help').getByRole('button',{name:'Feature tour',exact:true});
+    if(distribution==='extension') {
+      const created=context.waitForEvent('page'); await link.click(); const tour=await created;
+      await expect(tour).toHaveURL(`chrome-extension://${extensionId}/src/tour/index.html`);
+      await expect(tour.locator('#progress')).toHaveText('1 / 5'); await tour.close();
+      const surface=await context.newPage();
+      await surface.goto(`chrome-extension://${extensionId}/src/popup/index.html`);
+      await expect(surface.locator('aside').getByRole('link',{name:'Feature tour',exact:true})).toBeVisible();
+      await surface.getByRole('button',{name:'About',exact:true}).click();
+      await expect(surface.locator('.popup-about').getByRole('link',{name:'Feature tour',exact:true})).toHaveAttribute('href','../tour/index.html');
+      await surface.goto(`chrome-extension://${extensionId}/src/options/index.html`);
+      const replay=surface.locator('.sidebar-footer').getByRole('link',{name:'Feature tour',exact:true});
+      await expect(replay).toBeVisible(); await replay.focus(); await expect(replay).toBeFocused();
+      const reopened=context.waitForEvent('page'); await replay.click(); const replayed=await reopened;
+      await expect(replayed.locator('#progress')).toHaveText('1 / 5'); await replayed.close(); await surface.close();
+    } else {
+      await link.click(); await expect(page.locator('#cgpt-ra-tour')).toBeVisible();
+      await expect(page.locator('#cgpt-ra-tour #progress')).toHaveText('1 / 5');
+      await page.locator('#cgpt-ra-tour #next').press('Escape');
+      await expect(page.locator('#cgpt-ra-tour')).toHaveCount(0);
+      expect(await page.evaluate(()=>localStorage.getItem('cgpt-ra-tour-v1'))).toBe('skipped');
+      await page.locator('.cgpt-ra-help').getByRole('button',{name:'Open Dashboard & Settings'}).click();
+      const settings=page.locator('#cgpt-ra-settings-dialog');
+      const replay=settings.getByRole('button',{name:'Feature tour',exact:true});
+      await replay.click(); await expect(page.locator('#cgpt-ra-tour #progress')).toHaveText('1 / 5');
+      await page.locator('#cgpt-ra-tour #next').press('Escape');
+      await expect(settings).toBeVisible(); await expect(replay).toBeFocused();
+      await page.keyboard.press('Escape');
+    }
+    await page.close();
+  });
   test('transport order and nested accent changes propagate without changing appearance',async()=>{
     const page=await open(1512);await page.locator('#cgpt-ra-floating-toggle').click();
     expect(await page.locator('.cgpt-ra-transport-row > button').evaluateAll(els=>els.map(e=>e.classList.contains('cgpt-ra-play')?'play':e.classList.contains('cgpt-ra-back')?'back':'next'))).toEqual(['play','back','next']);
@@ -91,6 +149,9 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   async function startDrag(page, selector) {
     await page.locator(selector).hover();
     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    // Layout saves settle with a FLIP animation. Read coordinates after it
+    // finishes so a normal drag cannot miss the moving handle.
+    await page.locator(selector).evaluate(el=>Promise.all(el.getAnimations().map(animation=>animation.finished.catch(()=>{}))));
     const box=await page.locator(selector).boundingBox();
     await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2-12,box.y+box.height/2-12);
     await expect(page.locator('#cgpt-ra-drop-targets')).toBeVisible();
@@ -596,6 +657,30 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();
     const download=await downloading;expect(download.suggestedFilename()).toMatch(/\.aac$/);
     expect(await fs.readFile(await download.path())).toEqual(wav());await page.close();
+  });
+  for(const cancel of [false,true]) test(`slow native speech requests survive the capture timeout (${cancel?'then canceled by host':'then completed'})`,async()=>{
+    const page=await open(); await page.clock.install();
+    let release;
+    const gate=new Promise(resolve=>release=resolve);
+    await page.route('**/slow-speech',async route=>{await gate;await route.fulfill({contentType:'audio/mpeg',body:'native response continues'}).catch(()=>{});});
+    const requested=page.waitForRequest('**/slow-speech');
+    await page.evaluate(()=>{
+      window.slowResult='pending';
+      window.slowAbort=new AbortController();
+      fetch('/slow-speech',{signal:window.slowAbort.signal}).then(r=>r.text()).then(value=>window.slowResult=value,error=>window.slowResult=error.name);
+    });
+    await requested;
+    try {
+      await page.clock.fastForward(61000);
+      expect(await page.evaluate(()=>window.slowResult)).toBe('pending');
+      if(cancel) {
+        await page.evaluate(()=>window.slowAbort.abort());
+        await expect.poll(()=>page.evaluate(()=>window.slowResult)).toBe('AbortError');
+      } else {
+        release();
+        await expect.poll(()=>page.evaluate(()=>window.slowResult)).toBe('native response continues');
+      }
+    } finally {release();await page.close();}
   });
   test('MediaSource speech survives host abort, source removal and file-decoder rejection',async()=>{
     const page=await open();

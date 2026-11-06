@@ -105,13 +105,14 @@ test('independent observation dates, aggregation modes, retained failures and re
 });
 
 test('homepage recomputes ratings after expiry, including an expired max-mode winner',()=>{
-  const first=mergeSnapshot(null,chrome,{...edge,ratings:{rating:5,ratingCount:100}},at);
+  const freshChrome={ratings:{rating:4,ratingCount:10}};
+  const first=mergeSnapshot(null,{...chrome,...freshChrome},{...edge,ratings:{rating:5,ratingCount:100}},at);
   const later=now+8*day;
-  const refreshed=mergeSnapshot(first,{ratings:chrome.ratings},{},new Date(later).toISOString());
+  const refreshed=mergeSnapshot(first,freshChrome,{},new Date(later).toISOString());
   for (const mode of ['weighted','max']) {
     const rendered=renderStats(summarize(refreshed,mode,later),labels.en,'en',later);
     expect(rendered.parts.find(p=>p.kind==='rating').description).toContain('Chrome');
-    expect(rendered.summary).toContain('5.0/5.0');
+    expect(rendered.summary).toContain('4.0/5.0');
     expect(rendered.details.join(' ')).not.toContain('Edge');
     expect(rendered.details.join(' ')).toContain('10');
     expect(renderStats(summarize(first,mode,later),labels.en,'en',later).summary).toBe('');

@@ -70,6 +70,8 @@ See playback, seeking, speed, downloads and docking in action.
 - **One-Click Audio Download**: Save the active Read Aloud stream directly to your computer in the source format exposed by ChatGPT.
 - **Responsive Layout**: Keeps the player usable on narrow laptop screens.
 - **Floating Mini Toggle**: When no audio is playing, a neat floating logo button stays docked on the right. Click it anytime to expand the player!
+- **Chat-only visibility**: Controls appear in chats, project conversations and Codex, and stay out of settings, Spaces, Dots and other non-chat pages.
+- **Feature tour**: A short walkthrough opens after a fresh extension installation. Replay it from popup About, the dashboard sidebar, the getting-started panel or the player's Help menu. Userscript users can open the same tour from Help or settings.
 
 ### ⚛️ Extension Popup & Dashboard
 

@@ -10,12 +10,14 @@ import { COMMANDS, isPlayerCommand, matchesShortcut, PlayerCommand } from '../sh
 import { PlaybackSession } from "./playback-session";
 import { StreamingAudioCapture } from "./streaming-audio";
 import { getReleaseCopy } from "../shared/i18n/release-copy";
-import { floatingVisibility } from "../shared/visibility";
+import { floatingVisibility, isPlayerPage } from "../shared/visibility";
 import { playbackAction, platformKeys } from "../shared/shortcuts";
 import { getLucideSvg, setIcon } from "./icons";
 import { SPEED_PRESETS, STORAGE_KEYS, DEFAULT_SETTINGS } from "../shared/constants";
 import { ExtensionSettings } from "../shared/types";
 import { getTranslations } from "../shared/i18n/core";
+import { openStandaloneTour } from '../tour/tour';
+import { tourCopy } from '../shared/i18n/tour';
 
 declare const __USERSCRIPT__: boolean;
 const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
@@ -132,6 +134,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
 
   let statusTimer = 0;
   function showStatus(message: string, error = false): void {
+    if (!pageAllowsPlayer()) return;
     let status = document.getElementById('cgpt-ra-status');
     if (!status) { status = document.createElement('div'); status.id = 'cgpt-ra-status'; status.setAttribute('role', 'status'); document.body.append(status); }
     status.dir = languageDirection(settingsCache?.language);
@@ -298,6 +301,12 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
         const scope = document.createElement('p');
         scope.textContent = /Android/i.test(navigator.userAgent) ? featureCopy(settingsCache?.language).desktopShortcuts : recoveryCopy().shortcutScope;
         helpPopover.append(scope);
+        const tourButton = document.createElement('button'); tourButton.type = 'button'; tourButton.textContent = tourCopy(settingsCache?.language).title;
+        tourButton.onclick = () => {
+          if (standalone) openStandaloneTour(settingsCache || DEFAULT_SETTINGS);
+          else window.postMessage({ source: 'chatgpt-audio-controls-settings-bridge', type: 'CGPT_RA_OPEN_TOUR' }, '*');
+        };
+        helpPopover.append(tourButton);
         const settingsButton = document.createElement('button'); settingsButton.type = 'button'; settingsButton.textContent = t.popup.header.openOptions; settingsButton.onclick = () => dispatchAction('open-settings'); helpPopover.append(settingsButton);
       }
 
@@ -500,20 +509,29 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
   // cleanup owns MediaSource requests and must not cancel this fallback.
   const retentionFetch: typeof fetch = PAGE.fetch.bind(PAGE);
   const streamingAudio = new StreamingAudioCapture();
-  async function readAudio(response: Response): Promise<Blob> {
-    if (Number(response.headers.get('content-length')) > MAX_BLOB_MAP_BYTES || !response.body) throw new Error('Audio size unsupported');
+  async function readAudio(response: Response, signal?: AbortSignal, progress?: () => void): Promise<Blob> {
+    if (Number(response.headers.get('content-length')) > MAX_BLOB_MAP_BYTES || !response.body) {
+      void response.body?.cancel().catch(() => {});
+      throw new Error('Audio size unsupported');
+    }
     const reader = response.body.getReader();
+    const abort = () => { void reader.cancel(signal?.reason).catch(() => {}); };
+    if (signal?.aborted) abort();
+    else signal?.addEventListener('abort', abort, { once: true });
     const parts: Uint8Array<ArrayBuffer>[] = [];
     let size = 0;
     try {
       while (true) {
+        signal?.throwIfAborted();
         const { done, value } = await reader.read();
+        signal?.throwIfAborted();
         if (done) break;
+        if (value.byteLength) progress?.();
         size += value.byteLength;
         if (size > MAX_BLOB_MAP_BYTES) { void reader.cancel().catch(() => {}); throw new Error('Audio size unsupported'); }
         parts.push(value as Uint8Array<ArrayBuffer>);
       }
-    } finally { reader.releaseLock(); }
+    } finally { signal?.removeEventListener('abort', abort); reader.releaseLock(); }
     if (!size) throw new Error('Empty audio');
     return new Blob(parts, { type: response.headers.get('content-type') || 'application/octet-stream' });
   }
@@ -527,7 +545,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     if (!response.ok) throw new Error('Audio unavailable');
     return readAudio(response);
   }
-  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
+  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !pageAllowsPlayer() || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
   const playback = new PlaybackSession(retainAudio, media => {
     activeMedia = media;
     if (media) installMediaListeners(media);
@@ -536,7 +554,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     scheduleLayoutSync();
   }, () => showStatus(recoveryCopy().playError, true), ready => {
     readyToast.clear();
-    if (ready && getSavedSettings().notifyDownloadReady !== false) readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
+    if (ready && pageAllowsPlayer() && getSavedSettings().notifyDownloadReady !== false) readyToast.show(featureCopy(settingsCache?.language).ready, getI18n().content.tooltips.download, recoveryCopy().dismiss, languageDirection(settingsCache?.language), () => void downloadCurrentAudio(), resolveLanguage(settingsCache?.language));
   }, activity => supportPrompts.observe(activity));
   window.addEventListener('pagehide', () => { playback.dispose(); activeMedia = null; blobURLMap.clear(); blobURLBytes = 0; streamingAudio.clearExcept(); });
 
@@ -585,7 +603,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       async function wrappedFetch(...args: any[]) {
         const inputURL = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
         const signal = args[1]?.signal || args[0]?.signal;
-        const capture = looksLikeAudio(inputURL, '') && !signal?.aborted ? streamingAudio.begin() : null;
+        const capture = looksLikeAudio(inputURL, '') && !signal?.aborted ? streamingAudio.begin(signal) : null;
         let response: Response;
         try {
           // ChatGPT aborts its reader on Pause. Keep only the recognized audio
@@ -605,7 +623,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
           const type = response.headers?.get("content-type") || "";
 
           if (looksLikeAudio(requestURL, type)) {
-            const pending = readAudio(response.clone());
+            const pending = readAudio(response.clone(), capture?.retentionController.signal,
+              capture ? () => streamingAudio.progress(capture) : undefined);
             if (capture) streamingAudio.complete(capture, pending);
             void pending.catch(() => {});
           } else if (capture) streamingAudio.complete(capture, Promise.reject(new Error('Not audio')));
@@ -1077,6 +1096,13 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
   const composerObserver = new ResizeObserver(scheduleLayoutSync);
   const composerAttributes = new MutationObserver(scheduleLayoutSync);
   let conversationPath = location.pathname;
+  function pageAllowsPlayer(): boolean {
+    if (!isPlayerPage(location)) return false;
+    // Settings can be a modal over a chat without changing the pathname.
+    return !Array.from(document.querySelectorAll<HTMLElement>('dialog[open], [aria-modal="true"]')).some(el =>
+      !el.closest('[id^="cgpt-ra"]') && el.getClientRects().length > 0 &&
+      getComputedStyle(el).visibility !== 'hidden');
+  }
   function getComposer(): HTMLElement | null {
     const candidates = document.querySelectorAll<HTMLElement>('[data-chatgpt-composer], [data-type="unified-composer"]');
     const composer = Array.from(candidates).find(el => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"]'));
@@ -1102,6 +1128,13 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       playback.dispose(); activeMedia = null; userForcedExpand = false; streamingAudio.clearExcept();
       blobURLMap.clear(); blobURLBytes = 0;
       updateControls();
+    }
+    const allowed = pageAllowsPlayer();
+    playerLayout?.setPageVisible(allowed);
+    if (!allowed) {
+      readyToast.clear();
+      const status = document.getElementById('cgpt-ra-status'); if (status) status.hidden = true;
+      return;
     }
     const composer = getComposer();
     if (composer !== observedComposer) {
@@ -1552,9 +1585,8 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
   }
 
   function startObserver(): void {
-    // Structural changes can replace the composer, but attribute
-    // changes across the whole ChatGPT tree are far too noisy (hover/focus
-    // state alone can produce many). Keep this observer child-list only.
+    // Watch replacement composers and modal visibility, but avoid noisy
+    // class/style changes from hover, focus and player animation.
     const observer = new MutationObserver(() => {
       if (observerTimeout) return;
       observerTimeout = window.setTimeout(() => {
@@ -1568,7 +1600,20 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
+      attributes: true,
+      attributeFilter: ['open', 'aria-modal', 'aria-hidden'],
     });
+
+    window.addEventListener('popstate', scheduleLayoutSync);
+    window.addEventListener('hashchange', scheduleLayoutSync);
+    for (const method of ['pushState', 'replaceState'] as const) {
+      const original = history[method];
+      history[method] = function (...args: Parameters<History[typeof method]>) {
+        const result = original.apply(this, args);
+        scheduleLayoutSync();
+        return result;
+      };
+    }
 
     bindThemeObservers();
     window.addEventListener('focus', scheduleThemeSync);

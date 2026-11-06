@@ -70,6 +70,7 @@ window.addEventListener("message", (event: MessageEvent) => {
       })();
     }
     if (event.data.type === 'CGPT_RA_OPEN_SETTINGS') void chrome.runtime.sendMessage({ type: 'open-settings' }).catch(() => {});
+    if (event.data.type === 'CGPT_RA_OPEN_TOUR') void chrome.runtime.sendMessage({ type: 'open-tour' }).catch(() => {});
   }
   if (
     event.source === window &&

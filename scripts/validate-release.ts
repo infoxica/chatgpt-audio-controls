@@ -23,5 +23,5 @@ const expectedVersion = releaseTag.slice(1);
 checkVersions(expectedVersion);
 if (!validFeedbackURL(services.feedbackUrl || '')) throw new Error('A verified production feedback URL is required.');
 if (!/^G-[A-Z0-9]+$/.test(services.websiteGa4Id || '')) throw new Error('Configure the real website GA4 measurement ID.');
-if (!acceptanceComplete(acceptance, expectedVersion)) throw new Error('Required release acceptance checks remain open. See docs/RELEASE-1.4.1-STATUS.md.');
+if (!acceptanceComplete(acceptance, expectedVersion)) throw new Error('Required release acceptance checks remain open. See config/acceptance.json and the candidate acceptance notes.');
 console.log(`Release metadata is consistent for ${releaseTag}.`);
