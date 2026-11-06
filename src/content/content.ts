@@ -545,7 +545,9 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
     if (!response.ok) throw new Error('Audio unavailable');
     return readAudio(response);
   }
-  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !pageAllowsPlayer() || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
+  // Native dialogs temporarily obscure a shown prompt; only navigation or an
+  // intentional hide should clear it. SupportPrompts handles modal deferral.
+  const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !isPlayerPage(location) || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
   const playback = new PlaybackSession(retainAudio, media => {
     activeMedia = media;
     if (media) installMediaListeners(media);

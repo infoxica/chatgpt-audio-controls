@@ -53,7 +53,27 @@
   acceptance record (`build/release-1.4.2-gate.log`).
 - Local package: `dist-zip/chatgpt-audio-controls-v1.4.2.zip`, 99 entries, integrity
   checked, with the new tour entry and assets included. SHA-256:
-  `e5d40c27b4e99417d77c4718c02cc781c75743aec7f1e108cf241343ab9b0968`.
+  `b207b1c957c4be832f6df5e36c4cff93f1bf5204cf04ac2cf81e32b215e37e19`.
+
+## CI follow-up (2026-11-06)
+
+CI run `42264523712` passed build/unit checks and 136 browser tests, but failed
+the two cross-tab support tests (extension and userscript). The new modal-aware
+player visibility predicate incorrectly cleared a shown support card; its claim
+was already consumed, so it could not return when the native dialog closed.
+
+The fix distinguishes permanent route/intentional hiding from temporary modal
+deferral. Both native dialogs and ARIA modals now retain the card while hidden,
+restore it on closing, and keep the display count at one. The original failure
+was reproduced locally in both distributions before the correction. Version
+remains 1.4.2; extension and generated userscript share the fix.
+
+The unit suite passes 80 tests after this correction. All 17 applicable targeted
+browser checks pass, covering support requests, player visibility and tour entry
+in both distributions; the userscript-only React-surface check is intentionally
+skipped. Logs: `build/ci29-after.log` and `build/ci29-unit.log`. Build, userscript
+parity, version and ZIP validation pass. The next PR CI run must confirm the full
+browser suite. The owner will test Mac and Edge Android; acceptance remains unset.
 
 ## Acceptance boundaries
 

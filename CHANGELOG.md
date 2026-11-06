@@ -8,6 +8,7 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 - Prevent the optional audio-retention timeout from aborting ChatGPT's native speech request. Reset the capture deadline when bytes arrive, cancel only the retained copy on inactivity, and preserve native cancellation and pause recovery.
 - Show floating controls only on chat, project/custom-GPT conversation and Codex surfaces. Hide them on other pages and behind native modal dialogs without changing saved layout or visibility preferences.
+- Restore an already-shown support reminder after a native dialog closes without consuming another reminder; navigation and intentionally hidden controls still clear it.
 - Introduce a localized five-step feature tour on fresh extension installs, with replay from popup About, getting started, dashboard navigation and player Help. Standalone userscript users can open the same tour from Help and settings.
 - Preserve fresh website ratings when another store's retained rating expires by excluding expired contributors before weighted or maximum aggregation.
 

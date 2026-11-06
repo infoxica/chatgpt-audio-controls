@@ -21102,7 +21102,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
     }
     unsafe() {
       const context = this.context();
-      return document.hidden || context.hidden || Date.now() - this.lastTyping < 3000 || Boolean(document.querySelector(".cgpt-ra-dragging")) || Array.from(document.querySelectorAll('dialog[open],[role="dialog"],[role="menu"],[role="listbox"],[popover]:popover-open,.cgpt-open,#cgpt-ra-ready-toast')).some(visible);
+      return document.hidden || context.hidden || Date.now() - this.lastTyping < 3000 || Boolean(document.querySelector(".cgpt-ra-dragging")) || Array.from(document.querySelectorAll('dialog[open],[aria-modal="true"],[role="dialog"],[role="menu"],[role="listbox"],[popover]:popover-open,.cgpt-open,#cgpt-ra-ready-toast')).some(visible);
     }
     position(el) {
       const viewport = window.visualViewport;
@@ -22370,7 +22370,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
         throw new Error("Audio unavailable");
       return readAudio(response);
     }
-    const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !pageAllowsPlayer() || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
+    const supportPrompts = new SupportPrompts(() => ({ language: settingsCache?.language, hidden: !isPlayerPage(location) || getSavedSettings().floatingUiHidden === true, composer: getComposer() }));
     const playback = new PlaybackSession(retainAudio, (media) => {
       activeMedia = media;
       if (media)

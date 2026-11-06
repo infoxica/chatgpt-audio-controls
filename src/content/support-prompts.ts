@@ -68,7 +68,7 @@ export class SupportPrompts {
   private unsafe(): boolean {
     const context = this.context();
     return document.hidden || context.hidden || Date.now() - this.lastTyping < 3000 || Boolean(document.querySelector('.cgpt-ra-dragging')) ||
-      Array.from(document.querySelectorAll('dialog[open],[role="dialog"],[role="menu"],[role="listbox"],[popover]:popover-open,.cgpt-open,#cgpt-ra-ready-toast')).some(visible);
+      Array.from(document.querySelectorAll('dialog[open],[aria-modal="true"],[role="dialog"],[role="menu"],[role="listbox"],[popover]:popover-open,.cgpt-open,#cgpt-ra-ready-toast')).some(visible);
   }
   private position(el: HTMLElement): boolean {
     const viewport = window.visualViewport;
