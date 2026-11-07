@@ -27,6 +27,7 @@ jobs:
           bun-version: 1.3.9
       - run: bun install --frozen-lockfile
       - run: bun run build:feedback
+      - run: bun test tests/extension-stats.test.mjs tests/worker.test.mjs
       - run: python3 -B tests/site_http_test.py
       - name: Verify deployment credentials
         env:

@@ -80,8 +80,16 @@ for(const distribution of ['extension','userscript']) test.describe('support '+d
   await expect.poll(async()=>(await stored(second)).uses).toBe(5);
   await expect(second.locator('#cgpt-ra-support-prompt')).toBeVisible({timeout:10000});
   await expect(first.locator('#cgpt-ra-support-prompt')).toHaveCount(0);expect((await stored(second)).review.displays).toBe(1);
-  await second.evaluate(()=>{const dialog=document.createElement('dialog');dialog.id='native-dialog';dialog.textContent='Example menu';document.body.append(dialog);dialog.showModal();});
-  await expect(second.locator('#cgpt-ra-support-prompt')).toBeHidden();await second.locator('#native-dialog').evaluate(el=>el.remove());await expect(second.locator('#cgpt-ra-support-prompt')).toBeVisible();expect((await stored(second)).review.displays).toBe(1);
+  for(const nativeDialog of [true,false]) {
+   await second.evaluate(nativeDialog=>{const dialog=document.createElement(nativeDialog?'dialog':'div');dialog.id='native-dialog';dialog.textContent='Example menu';document.body.append(dialog);if(nativeDialog)dialog.showModal();else dialog.setAttribute('aria-modal','true');},nativeDialog);
+   await expect(second.locator('#cgpt-ra-layer')).toBeHidden();
+   await expect(second.locator('#cgpt-ra-support-prompt')).toBeHidden();
+   // Hiding for a modal must retain this exact card and its claim, not consume it.
+   await expect(second.locator('#cgpt-ra-support-prompt')).toHaveCount(1);
+   await second.locator('#native-dialog').evaluate(el=>el.remove());
+   await expect(second.locator('#cgpt-ra-layer')).toBeVisible();
+   await expect(second.locator('#cgpt-ra-support-prompt')).toBeVisible();expect((await stored(second)).review.displays).toBe(1);
+  }
   await second.close();await first.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});await first.bringToFront();await first.waitForTimeout(1000);await expect(first.locator('#cgpt-ra-support-prompt')).toHaveCount(0);await first.close();
  });
  test('dashboard and popup support sections keep touch targets, language and storage',async()=>{

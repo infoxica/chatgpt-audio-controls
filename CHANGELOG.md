@@ -4,7 +4,17 @@ All notable changes to **ChatGPT Audio Controls & Read Aloud** are documented in
 
 ---
 
-## [1.4.1] — Unreleased
+## [1.4.2] — Unreleased
+
+- Add bottom-aligned split controls alongside the existing top-aligned split, following composer growth with matching drag previews. Composer docking is now the default and layout-reset destination; saved layouts remain unchanged.
+- Match composer docking to the actual rounded input surface even when ChatGPT changes or translates its editor label. Keep the collapsed logo inset beyond the corner curve and reserve 8px around nearby native buttons, temporarily using a compact fallback when necessary without changing saved placement.
+- Prevent the optional audio-retention timeout from aborting ChatGPT's native speech request. Reset the capture deadline when bytes arrive, cancel only the retained copy on inactivity, and preserve native cancellation and pause recovery.
+- Show floating controls only on chat, project/custom-GPT conversation and Codex surfaces. Hide them on other pages and behind native modal dialogs without changing saved layout or visibility preferences.
+- Restore an already-shown support reminder after a native dialog closes without consuming another reminder; navigation and intentionally hidden controls still clear it.
+- Introduce a localized five-step feature tour on fresh extension installs, with replay from popup About, getting started, dashboard navigation and player Help. Standalone userscript users can open the same tour from Help and settings.
+- Preserve fresh website ratings when another store's retained rating expires by excluding expired contributors before weighted or maximum aggregation.
+
+## [1.4.1] — 2026-11-03
 
 Includes the unpublished 1.4.0 feature work and the following corrections.
 

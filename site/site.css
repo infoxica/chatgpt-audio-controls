@@ -115,3 +115,16 @@ p,li{overflow-wrap:anywhere}
  .top .donate-header,.top .theme-toggle,.top .language-picker,.top .mobile-navigation .navigation-trigger{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:8px;flex:none}
  .top .donate-header span{display:none}
 }
+
+.hero .eyebrow { flex-wrap: wrap; justify-content: center; max-width: 100%; }
+.eyebrow-brand, .store-stat { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.store-stats { display: contents; }
+.store-stat { border-inline-start: 1px solid var(--border); padding-inline-start: 12px; margin-inline-start: 4px; min-width: 0; }
+.store-stat > svg { width: 18px; height: 18px; flex: none; }
+.rating-stars { display: inline-flex; gap: 1px; direction: ltr; flex: none; }
+.rating-stars svg { width: 15px; height: 15px; color: var(--accent); }
+.store-stat > span:last-child { overflow-wrap: anywhere; }
+@media(max-width:540px) {
+ .eyebrow-brand { flex-basis: 100%; }
+ .store-stat { margin-inline-start: 0; padding-inline-start: 0; border: 0; }
+}

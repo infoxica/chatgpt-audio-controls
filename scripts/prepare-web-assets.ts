@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import config from '../config/release.json';
 import { analyticsLocation } from '../site/analytics';
@@ -22,6 +22,11 @@ function visit(directory: string) {
     if (entry.isDirectory()) { if (entry.name !== 'assets') visit(source); continue; }
     if (!entry.name.endsWith('.html')) continue;
     const route = relative('site-dist', source).replaceAll('\\', '/');
+    const staging = join('build/site-staging', route);
+    const html = readFileSync(staging, 'utf8');
+    if (html.includes('data-stats-url=')) {
+      writeFileSync(staging, html.replace(/data-stats-url="[^"]+"/, 'data-stats-url="/api/extension-stats"'));
+    }
     const canonical = new URL(route.replace(/index\.html$/, ''), config.siteUrl).href;
     const output = join(destination, route);
     mkdirSync(join(output, '..'), { recursive: true });

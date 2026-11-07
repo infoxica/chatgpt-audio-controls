@@ -3,10 +3,11 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const base='https://chatgpt-audio-controls.infoxica.com/';
 const localeCodes=Object.keys(JSON.parse(await fs.readFile('site/navigation-copy.json','utf8')));
-async function serveSite(context,tracking=[]) {
+async function serveSite(context,tracking=[],stats=null) {
   await context.route('**/*',async route=>{
     const url=route.request().url();
     if(url.startsWith(base)){
+      if(url===base+'api/extension-stats') return route.fulfill({json:stats});
       const relative=url.split('?')[0].slice(base.length) || 'index.html';
       const file=relative.endsWith('/')?relative+'index.html':relative;
       const content=await fs.readFile('site-dist/'+file);
@@ -16,6 +17,49 @@ async function serveSite(context,tracking=[]) {
     tracking.push(url);return route.fulfill({body:'',contentType:'application/javascript'});
   });
 }
+for(const [width,locale] of [[1512,''],[320,'ar/']]) test(`compact statistics eyebrow at ${width} ${locale}`,async({page,context})=>{
+  const date=new Date().toISOString();
+  const store={users:103,rating:null,ratingCount:0,usersUpdatedAt:date,ratingsUpdatedAt:date};
+  const stats={chrome:{...store,users:1124,rating:4,ratingCount:12},edge:store,
+    combined:{ratingMode:'weighted'}};
+  await serveSite(context,[],stats);
+  await page.setViewportSize({width,height:900});
+  await page.goto(base+locale);
+  await expect(page.locator('.store-stat-audience')).toContainText('≈');
+  await expect(page.locator('.rating-stars svg')).toHaveCount(5);
+  await expect(page.locator('.eyebrow a, .eyebrow details')).toHaveCount(0);
+  await expect(page.locator('.store-stat-rating')).toHaveAttribute('aria-label',/Chrome/);
+  if(!locale) await expect(page.locator('.store-stat-rating')).toHaveText('4.0/5.0 Rated');
+  expect(await page.locator('.eyebrow').textContent()).not.toMatch(/updated|2026/);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:`build/browser-results/stats-eyebrow-${width}.png`});
+});
+
+test('expired Edge ratings cannot hide a fresh Chrome rating in the eyebrow',async({page,context})=>{
+  const date=new Date().toISOString(),expired=new Date(Date.now()-8*86400000).toISOString();
+  const stats={chrome:{users:null,rating:4,ratingCount:4,ratingsUpdatedAt:date},
+    edge:{users:null,rating:5,ratingCount:100,ratingsUpdatedAt:expired},
+    combined:{ratingMode:'max',contributors:['edge'],rating:5,ratingCount:100}};
+  await serveSite(context,[],stats); await page.goto(base);
+  await expect(page.locator('.store-stat-rating')).toHaveText('4.0/5.0 Highest store rating');
+  await expect(page.locator('.store-stat-rating')).toHaveAttribute('aria-label',/Chrome/);
+  expect(await page.locator('.store-stat-rating').getAttribute('aria-label')).not.toContain('Edge');
+});
+
+test('product identity remains during loading and when statistics are unavailable',async({page,context})=>{
+  await serveSite(context);
+  let release;
+  const gate=new Promise(resolve=>{release=resolve});
+  await page.route(base+'api/extension-stats', async route=>{
+    await gate; await route.fulfill({status:503,json:{error:'stats_unavailable'}});
+  });
+  await page.goto(base,{waitUntil:'domcontentloaded'});
+  await expect(page.locator('.eyebrow-brand')).toHaveText('ChatGPT Audio Controls');
+  await expect(page.locator('.eyebrow a')).toHaveCount(0);
+  const done=page.waitForResponse(base+'api/extension-stats'); release(); await done;
+  await expect(page.locator('.eyebrow-brand')).toBeVisible();
+  await expect(page.locator('.store-stat')).toHaveCount(0);
+});
 for(const [width,locale] of [[1512,''],[320,''],[390,'ur/']])test(`sticky navigation clears anchors and PayPal remains explicit at ${width} ${locale}`,async({page,context})=>{
   await serveSite(context);await page.setViewportSize({width,height:982});await page.goto(base+locale);
   await page.evaluate(()=>document.querySelector('#support').scrollIntoView());
@@ -37,7 +81,7 @@ for(const [width,locale] of [[1280,''],[360,''],[390,'ar/']])test(`private demo 
   await expect.poll(()=>video.evaluate(el=>el.currentTime)).toBeGreaterThan(0.2);
   expect(await video.evaluate(el=>[el.videoWidth,el.videoHeight])).toEqual([1920,1080]);
   await video.evaluate(el=>el.pause());
-  await expect(page.locator('.demo-gallery img')).toHaveCount(2);
+  await expect(page.locator('.demo-gallery img')).toHaveCount(4);
   await page.locator('.demo-transcript summary').click();await expect(page.locator('.demo-transcript li')).toHaveCount(7);
   await page.screenshot({path:`build/browser-results/demo-site-${width}.png`});
 });
@@ -287,8 +331,8 @@ for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'a
  await serveSite(context);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
  await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar/'?'rtl':'ltr');
  await page.locator('#analytics-decline').click();
- const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(3);
- for(let i=0;i<3;i++){
+ const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(5);
+ for(let i=0;i<await triggers.count();i++){
   const trigger=triggers.nth(i);await trigger.scrollIntoViewIfNeeded();await trigger.focus();await trigger.press('Enter');
   const viewer=page.getByRole('dialog');await expect(viewer).toBeVisible();await expect(viewer.locator('button')).toBeFocused();
   await expect.poll(()=>viewer.locator('img').evaluate(el=>el.naturalWidth)).toBe(1920);

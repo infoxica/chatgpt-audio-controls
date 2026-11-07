@@ -684,6 +684,7 @@ html.light #cgpt-ra-floating-toggle,
 
 /* One owned stacking context keeps native ChatGPT menus above the player. */
 #cgpt-ra-layer { position: fixed; inset: 0; z-index: 10; pointer-events: none; }
+#cgpt-ra-layer[hidden] { display: none !important; }
 #cgpt-ra-layer > :is(#cgpt-ra-left, #cgpt-ra-right, #cgpt-ra-floating-toggle) { pointer-events: auto; }
 #cgpt-ra-floating-toggle.cgpt-ra-logo svg { width: 24px; height: 24px; }
 #cgpt-ra-floating-toggle.cgpt-ra-dock-toggle { border: 0; background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }

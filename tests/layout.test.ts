@@ -1,6 +1,7 @@
 import { supportCatalogs } from '../src/shared/i18n/support';
 import { expect, test } from 'bun:test';
 import { PRESETS, migrateLayout, defaultLayout, defaultProfile, isLayout, layoutProfile } from '../src/shared/layout';
+import splitLabels from '../src/shared/i18n/split-layout.json';
 import { dockGeometry, intersects, magneticOffset, fits } from '../src/content/layout-geometry';
 import { featureCatalogs, featureCopy } from '../src/shared/i18n/features';
 import { LOCALES, languageDirection, resolveLanguage } from '../src/shared/i18n/core';
@@ -42,11 +43,11 @@ test('compact vertical and corner controls preserve a constrained preset', () =>
   }
 });
 
-test('all 14 desktop presets have correct non-overlapping geometry', () => {
+test('all desktop presets and pill orders have correct non-overlapping geometry', () => {
   const viewport = { x: 12, y: 80, width: 1400, height: 850 };
   const composer = { x: 400, y: 800, width: 760, height: 80 };
   let count = 0;
-  for (const preset of PRESETS) for (const seekFirst of preset === 'original' || preset === 'composer' ? [true] : [true, false]) {
+  for (const preset of PRESETS) for (const seekFirst of [true, false]) {
     count++;
     const g = dockGeometry({ preset, seekFirst }, viewport, true, composer)!;
     expect(g).not.toBeNull();
@@ -67,7 +68,7 @@ test('all 14 desktop presets have correct non-overlapping geometry', () => {
       expect(g.circle.y).toBeGreaterThan((seekFirst ? g.seek : g.controls).y);
     }
   }
-  expect(count).toBe(14);
+  expect(count).toBe(PRESETS.length * 2);
 });
 test('mobile docks are flush, horizontal, reversible and direction-aware', () => {
   for (const width of [320, 360, 390, 768]) for (const seekFirst of [true, false]) for (const rtl of [true, false]) {
@@ -95,15 +96,48 @@ test('magnet has one 24px hit boundary and never pulls beyond 12px', () => {
 });
 test('versioned layout migration and validation keep mobile composer-only', () => {
   expect(isLayout(defaultLayout())).toBe(true);
-  for (const input of [null, {}, { ...defaultLayout(), version: 1 }, { ...defaultLayout(), narrow: defaultProfile() }, { ...defaultLayout(), desktop: { preset: 'constructor', seekFirst: true } }]) expect(isLayout(input)).toBe(false);
+  for (const input of [null, {}, { ...defaultLayout(), version: 1 }, { ...defaultLayout(), narrow: { preset: 'split-bottom', seekFirst: true } }, { ...defaultLayout(), desktop: { preset: 'constructor', seekFirst: true } }]) expect(isLayout(input)).toBe(false);
   expect(migrateLayout({ version: 1, desktop: { mode: 'docked', anchor: 'top-right', arrangement: 'corner', seekFirst: false }, narrow: { seekFirst: false } })).toEqual({ version: 2, desktop: { preset: 'top-right', seekFirst: false }, narrow: { preset: 'composer', seekFirst: false } });
-  expect(migrateLayout({ version: 1, desktop: { mode: 'docked', anchor: 'top', arrangement: 'row', seekFirst: true } })).toEqual(defaultLayout());
+  expect(migrateLayout({ version: 1, desktop: { mode: 'docked', anchor: 'top', arrangement: 'row', seekFirst: true } }).desktop.preset).toBe('original');
   expect(layoutProfile(767)).toBe('narrow'); expect(layoutProfile(768)).toBe('desktop');
 });
+
+test('fresh defaults dock while saved split choices survive migration', () => {
+  expect(defaultLayout().desktop.preset).toBe('composer');
+  expect(defaultLayout().narrow.preset).toBe('composer');
+  expect(migrateLayout(null)).toEqual(defaultLayout());
+  for (const preset of ['original', 'split-bottom'] as const) {
+    const saved = { ...defaultLayout(), desktop: { preset, seekFirst: false } };
+    expect(migrateLayout(saved)).toEqual(saved);
+  }
+  expect(migrateLayout({version:1,desktop:{mode:'automatic',seekFirst:true}}).desktop.preset).toBe('original');
+});
+
+test('split bottom follows the composer base without changing top alignment or physical sides', () => {
+  const v = {x:12,y:12,width:1980,height:960};
+  for (const height of [80,350,690]) for (const seekFirst of [true,false]) for (const rtl of [true,false]) {
+    const c = {x:600,y:780-height,width:760,height};
+    const bottom = dockGeometry({preset:'split-bottom',seekFirst},v,true,c,rtl)!;
+    const top = dockGeometry({preset:'original',seekFirst},v,true,c,rtl)!;
+    expect(bottom.seek.y+bottom.seek.height).toBe(c.y+c.height);
+    expect(bottom.controls.y+bottom.controls.height).toBe(c.y+c.height);
+    expect(bottom.circle.y).toBe(bottom.seek.y+2);
+    expect(top.seek.y).toBe(c.y);expect(top.controls.y).toBe(c.y);
+    for (const part of ['seek','controls','circle'] as const) {
+      expect(bottom[part].x).toBe(top[part].x);
+      expect(fits(bottom[part],v)).toBe(true);
+      expect(intersects(bottom[part],c)).toBe(false);
+    }
+  }
+});
 test('feature catalogs cover every language and direction is locale-specific', () => {
+  expect(Object.keys(splitLabels).sort()).toEqual(Object.keys(LOCALES).sort());
   expect(Object.keys(featureCatalogs).sort()).toEqual(Object.keys(LOCALES).sort());
   for (const values of Object.values(featureCatalogs)) { expect(values.length).toBe(33); expect(values.every(v => v.trim())).toBe(true); }
-  for (const code of Object.keys(LOCALES)) expect(Object.values(featureCopy(code).presets).every(label => !!label?.trim())).toBe(true);
+  for (const code of Object.keys(LOCALES)) {
+    expect(Object.keys(featureCopy(code).presets).sort()).toEqual([...PRESETS].sort());
+    expect(Object.values(featureCopy(code).presets).every(label => !!label?.trim())).toBe(true);
+  }
   for (const code of ['ar', 'fa', 'he']) expect(languageDirection(code)).toBe('rtl');
   for (const code of ['en', 'hi', 'bn', 'ta', 'te', 'mr', 'tr']) expect(languageDirection(code)).toBe('ltr');
   expect(resolveLanguage('he')).toBe('he');

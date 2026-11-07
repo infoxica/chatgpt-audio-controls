@@ -1,5 +1,6 @@
 import audience from './audience-features.json';
 import chatgptFeatures from './chatgpt-features.json';
+import splitLabels from './split-layout.json';
 import { getTranslations, resolveLanguage } from './core';
 import { getReleaseCopy } from './release-copy';
 
@@ -39,7 +40,8 @@ Object.assign(dockLabels, Object.fromEntries(Object.entries(audience).map(([code
 Object.assign(dockLabels, Object.fromEntries(Object.entries(chatgptFeatures).map(([code, copy]) => [code, copy.dock])));
 export function featureCopy(language?: string) {
   const a = catalogs[resolveLanguage(language)] || english;
-  return { presets: { original: a[3], composer: dockLabels[resolveLanguage(language)], 'top-left': a[23], 'top-right': a[25], left: a[26], right: a[27], 'bottom-left': a[28], 'bottom-right': a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
+  const split = splitLabels[resolveLanguage(language)] || splitLabels.en;
+  return { presets: { original: split[0], 'split-bottom': split[1], composer: dockLabels[resolveLanguage(language)], 'top-left': a[23], 'top-right': a[25], left: a[26], right: a[27], 'bottom-left': a[28], 'bottom-right': a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
 }
 const seekCommands: Record<string, string> = {
   en: 'Seek backward|Seek forward', hi: 'पीछे जाएँ|आगे जाएँ', bn: 'পিছনে যান|সামনে যান', mr: 'मागे जा|पुढे जा', te: 'వెనక్కి వెళ్లండి|ముందుకు వెళ్లండి', ta: 'பின்னால் நகர்த்து|முன்னால் நகர்த்து', ar: 'الرجوع للخلف|التقدم للأمام', fa: 'رفتن به عقب|رفتن به جلو', he: 'דילוג אחורה|דילוג קדימה',

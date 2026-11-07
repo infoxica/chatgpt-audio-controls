@@ -15,7 +15,7 @@
   </a>
 </p>
 
-[![Source version](https://img.shields.io/badge/source-v1.4.1-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
+[![Source version](https://img.shields.io/badge/source-v1.4.2-3968c8.svg?style=for-the-badge)](CHANGELOG.md)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-install-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/aifalimlfgiepmbejcemcofninobaiea/)
 [![Microsoft Edge](https://img.shields.io/badge/Edge_Add--ons-install-0078D7.svg?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/chatgpt-audio-controls-/cmhbacgmcgiolpidfjcpefkhbbeamemf)
 [![Userscript](https://img.shields.io/badge/Userscript-Tampermonkey-f59e0b.svg?style=for-the-badge&logo=tampermonkey&logoColor=white)](userscript/chatgpt-audio-controls.user.js)
@@ -56,9 +56,17 @@ See playback, seeking, speed, downloads and docking in action.
 
 ![Corner layout with the seekbar and playback controls](assets/demo/corner-layout.png)
 
-### Original layout
+### Split layouts
 
-![Original split player layout beside the composer](assets/demo/original-layout.png)
+Align the controls with the top or bottom of your composer.
+
+![Top-aligned split player beside the composer](assets/demo/original-layout.png)
+
+![Bottom-aligned split player beside a taller composer](assets/demo/split-bottom.png)
+
+### Side layout
+
+![Vertical playback controls and seekbar beside the conversation](assets/demo/side-layout.png)
 
 ## ✨ Features
 
@@ -70,6 +78,8 @@ See playback, seeking, speed, downloads and docking in action.
 - **One-Click Audio Download**: Save the active Read Aloud stream directly to your computer in the source format exposed by ChatGPT.
 - **Responsive Layout**: Keeps the player usable on narrow laptop screens.
 - **Floating Mini Toggle**: When no audio is playing, a neat floating logo button stays docked on the right. Click it anytime to expand the player!
+- **Chat-only visibility**: Controls appear in chats, project conversations and Codex, and stay out of settings, Spaces, Dots and other non-chat pages.
+- **Feature tour**: A short walkthrough opens after a fresh extension installation. Replay it from popup About, the dashboard sidebar, the getting-started panel or the player's Help menu. Userscript users can open the same tour from Help or settings.
 
 ### ⚛️ Extension Popup & Dashboard
 

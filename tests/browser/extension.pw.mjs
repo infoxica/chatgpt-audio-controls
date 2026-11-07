@@ -39,6 +39,64 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await page.addInitScript(()=>{window.fixtureAudios=[];const Original=window.Audio;window.Audio=function(...args){const audio=new Original(...args);window.fixtureAudios.push(audio);return audio;};});
     await page.goto('https://chatgpt.com/');await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();return page;
   }
+  test('player hides on non-chat pages and native settings without changing saved visibility',async()=>{
+    const page=await open();
+    for(const route of ['/spaces','/dots','/settings','/apps','/gpts','/library','/c/test#settings/General']) {
+      await page.evaluate(route=>history.pushState({},'',route),route);
+      await expect(page.locator('#cgpt-ra-layer')).toBeHidden();
+      await expect(page.locator('#cgpt-ra-floating-toggle')).toBeHidden();
+    }
+    for(const route of ['/c/test','/g/g-p-test/project','/g/g-p-test/c/test','/codex','/codex/tasks/test','/']) {
+      await page.evaluate(route=>history.replaceState({},'',route),route);
+      await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();
+    }
+    await page.locator('#native-read').click();
+    await expect.poll(()=>page.locator('#host').evaluate(audio=>!audio.paused)).toBe(true);
+    const saved=await storedLayout(page);
+    await page.evaluate(()=>{const dialog=document.createElement('dialog');dialog.id='native-settings';document.body.append(dialog);dialog.showModal();});
+    await expect(page.locator('#cgpt-ra-layer')).toBeHidden();
+    expect(await page.locator('#host').evaluate(audio=>audio.paused)).toBe(false);
+    await page.evaluate(()=>document.querySelector('#native-settings').close());
+    await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();
+    expect(await storedLayout(page)).toEqual(saved);
+    await page.close();
+  });
+  test('feature tour is accessible from player help in both distributions',async()=>{
+    const page=await open(); await page.locator('#cgpt-ra-floating-toggle').click();
+    await expect(page.locator('#cgpt-ra-right')).toBeVisible();
+    if(await page.locator('.cgpt-ra-more').isVisible()) await page.locator('.cgpt-ra-more').click();
+    await page.locator('.cgpt-ra-help-wrap > button').click();
+    const link=page.locator('.cgpt-ra-help').getByRole('button',{name:'Feature tour',exact:true});
+    if(distribution==='extension') {
+      const created=context.waitForEvent('page'); await link.click(); const tour=await created;
+      await expect(tour).toHaveURL(`chrome-extension://${extensionId}/src/tour/index.html`);
+      await expect(tour.locator('#progress')).toHaveText('1 / 5'); await tour.close();
+      const surface=await context.newPage();
+      await surface.goto(`chrome-extension://${extensionId}/src/popup/index.html`);
+      await expect(surface.locator('aside').getByRole('link',{name:'Feature tour',exact:true})).toBeVisible();
+      await surface.getByRole('button',{name:'About',exact:true}).click();
+      await expect(surface.locator('.popup-about').getByRole('link',{name:'Feature tour',exact:true})).toHaveAttribute('href','../tour/index.html');
+      await surface.goto(`chrome-extension://${extensionId}/src/options/index.html`);
+      const replay=surface.locator('.sidebar-footer').getByRole('link',{name:'Feature tour',exact:true});
+      await expect(replay).toBeVisible(); await replay.focus(); await expect(replay).toBeFocused();
+      const reopened=context.waitForEvent('page'); await replay.click(); const replayed=await reopened;
+      await expect(replayed.locator('#progress')).toHaveText('1 / 5'); await replayed.close(); await surface.close();
+    } else {
+      await link.click(); await expect(page.locator('#cgpt-ra-tour')).toBeVisible();
+      await expect(page.locator('#cgpt-ra-tour #progress')).toHaveText('1 / 5');
+      await page.locator('#cgpt-ra-tour #next').press('Escape');
+      await expect(page.locator('#cgpt-ra-tour')).toHaveCount(0);
+      expect(await page.evaluate(()=>localStorage.getItem('cgpt-ra-tour-v1'))).toBe('skipped');
+      await page.locator('.cgpt-ra-help').getByRole('button',{name:'Open Dashboard & Settings'}).click();
+      const settings=page.locator('#cgpt-ra-settings-dialog');
+      const replay=settings.getByRole('button',{name:'Feature tour',exact:true});
+      await replay.click(); await expect(page.locator('#cgpt-ra-tour #progress')).toHaveText('1 / 5');
+      await page.locator('#cgpt-ra-tour #next').press('Escape');
+      await expect(settings).toBeVisible(); await expect(replay).toBeFocused();
+      await page.keyboard.press('Escape');
+    }
+    await page.close();
+  });
   test('transport order and nested accent changes propagate without changing appearance',async()=>{
     const page=await open(1512);await page.locator('#cgpt-ra-floating-toggle').click();
     expect(await page.locator('.cgpt-ra-transport-row > button').evaluateAll(els=>els.map(e=>e.classList.contains('cgpt-ra-play')?'play':e.classList.contains('cgpt-ra-back')?'back':'next'))).toEqual(['play','back','next']);
@@ -89,8 +147,14 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     else await page.evaluate(value=>{localStorage.setItem('cgpt-ra-settings',JSON.stringify(value));window.postMessage({source:'chatgpt-audio-controls-settings-bridge',type:'CGPT_RA_SETTINGS_UPDATE',settings:value},'*');},value);
   }
   async function startDrag(page, selector) {
-    await page.locator(selector).hover();
+    // Fresh installs may open the welcome tab. A drag is a foreground action;
+    // settle its animation before hit testing rather than hovering a moving rail.
+    await page.bringToFront();
     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    // Layout saves settle with a FLIP animation. Read coordinates after it
+    // finishes so a normal drag cannot miss the moving handle.
+    await page.locator(selector).evaluate(el=>Promise.all(el.getAnimations().map(animation=>animation.finished.catch(()=>{}))));
+    await page.locator(selector).hover();
     const box=await page.locator(selector).boundingBox();
     await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2-12,box.y+box.height/2-12);
     await expect(page.locator('#cgpt-ra-drop-targets')).toBeVisible();
@@ -224,7 +288,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await circle.click();await expect(circle).toHaveAttribute('aria-expanded','false');await circle.click();
     const box=await circle.boundingBox();await page.mouse.move(box.x+22,box.y+22);await page.mouse.down();await page.mouse.move(box.x+25,box.y+22);
     await expect(page.locator('#cgpt-ra-drop-targets')).toHaveCount(0);await page.mouse.up();await expect(circle).toHaveAttribute('aria-expanded','false');await circle.click();await expect(circle).toHaveAttribute('aria-expanded','true');
-    await startDrag(page,'#cgpt-ra-floating-toggle');await expect(page.locator('.cgpt-ra-drop-target')).toHaveCount(8);
+    await startDrag(page,'#cgpt-ra-floating-toggle');await expect(page.locator('.cgpt-ra-drop-target')).toHaveCount(9);
     await drop(page,'.cgpt-ra-drop-target[data-preset="top-left"] [data-part="circle"]');
     await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');await expect(circle).toHaveAttribute('aria-expanded','true');
     const saved=await storedLayout(page);
@@ -295,7 +359,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   });
   test('all desktop arrangements and orders fit, narrow fallback preserves preference',async()=>{
     const page=await open(1600);await page.setViewportSize({width:1600,height:1100});await page.locator('#native-read').click();
-    for(const preset of ['original','composer','top-left','top-right','bottom-left','bottom-right','left','right'])for(const seekFirst of [true,false]) {
+    for(const preset of ['original','split-bottom','composer','top-left','top-right','bottom-left','bottom-right','left','right'])for(const seekFirst of [true,false]) {
       await layout(page,profile({preset,seekFirst}));
       await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset',preset);
       await expect.poll(()=>page.evaluate(()=>{const ids=['cgpt-ra-left','cgpt-ra-right','cgpt-ra-floating-toggle'];const rects=ids.map(id=>document.getElementById(id).getBoundingClientRect());return rects.every((r,i)=>r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&rects.every((s,j)=>i===j||r.right<=s.left||r.left>=s.right||r.bottom<=s.top||r.top>=s.bottom));})).toBe(true);
@@ -314,6 +378,42 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       expect(await storedLayout(page)).toEqual(saved);
     }
     await page.setViewportSize({width:390,height:400});await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();expect(await storedLayout(page)).toEqual(saved);
+    await layout(page);await page.close();
+  });
+  test('fresh layout docks and split bottom tracks a tall composer with exact drag previews',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    if(distribution==='extension')await worker.evaluate(key=>chrome.storage.local.remove(key),layoutKey);
+    else await page.evaluate(key=>localStorage.removeItem(key),layoutKey);
+    await page.reload();const circle=page.locator('#cgpt-ra-floating-toggle');
+    await expect(circle).toHaveAttribute('data-preset','composer');
+    await circle.click();await expect(page.locator('#cgpt-ra-dock')).toBeVisible();
+    for(const seekFirst of [true,false]) {
+      await layout(page,profile({preset:'split-bottom',seekFirst}));
+      for(const height of [120,450,650]) {
+        await page.locator('form').evaluate((e,height)=>e.style.height=height+'px',height);
+        await expect.poll(()=>page.evaluate(()=>{
+          const c=document.querySelector('form').getBoundingClientRect();
+          return ['#cgpt-ra-left','#cgpt-ra-right'].every(id=>Math.abs(document.querySelector(id).getBoundingClientRect().bottom-c.bottom)<.5);
+        })).toBe(true);
+      }
+      if(seekFirst)await page.screenshot({path:`build/split-bottom-${distribution}.png`});
+      await startDrag(page,'#cgpt-ra-left .cgpt-ra-grip');
+      await expect(page.locator('.cgpt-ra-drop-target')).toHaveAttribute('data-preset','split-bottom');
+      await page.keyboard.press('Escape');await page.mouse.up();
+    }
+    await layout(page,profile());await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('#cgpt-ra-left').getBoundingClientRect().top-document.querySelector('form').getBoundingClientRect().top))).toBeLessThan(.5);
+    await startDrag(page,'#cgpt-ra-floating-toggle');
+    const target=page.locator('.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="circle"]');
+    const box=await target.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+    await expect(page.locator('.cgpt-ra-drop-target[data-preset="split-bottom"]')).toHaveClass(/cgpt-ra-drop-active/);
+    await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="seek"]').getBoundingClientRect().bottom-document.querySelector('form').getBoundingClientRect().bottom))).toBeLessThan(.5);
+    await drop(page,'.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="circle"]');
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('split-bottom');
+    await page.reload();await expect(circle).toHaveAttribute('data-preset','split-bottom');await circle.click();
+    await page.setViewportSize({width:390,height:800});await expect(circle).toHaveAttribute('data-preset','composer');
+    expect((await storedLayout(page)).desktop.preset).toBe('split-bottom');
+    await page.setViewportSize({width:1512,height:800});await expect(circle).toHaveAttribute('data-preset','split-bottom');
     await layout(page);await page.close();
   });
   test('download readiness precedes playback end, reuses bytes, obeys preference and clears on navigation',async()=>{
@@ -444,6 +544,57 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       expect(await page.locator('form').getAttribute('style')).toBe(before);
     }
     await setting(page,{language:'en'});await page.close();
+  });
+  test('renamed and localized composers use the painted surface and inset the collapsed tab',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    await page.evaluate(()=>{
+      const form=document.querySelector('form'),surface=document.createElement('div');surface.id='painted-composer';
+      surface.style.cssText='background:#212121;border-radius:28px;border:1px solid #424242;padding:12px';
+      surface.append(...form.childNodes);form.append(surface);form.dataset.type='unified-composer';
+      form.style.cssText+=';background:transparent;border-radius:0;padding:10px';
+      const input=surface.querySelector('[contenteditable]');input.classList.add('ProseMirror');input.setAttribute('aria-label','Work with ChatGPT');
+    });
+    const nativeStyle=await page.locator('#painted-composer').getAttribute('style');
+    await layout(page,profile({preset:'composer'}));
+    for(const [label,lang] of [['Work with ChatGPT','en'],['Trabaja con ChatGPT','es'],['اكتب رسالة','ar']]) {
+      await page.locator('#painted-composer [contenteditable]').evaluate((e,label)=>e.setAttribute('aria-label',label),label);
+      await setting(page,{language:lang,notifyDownloadReady:false});
+      const circle=page.locator('#cgpt-ra-floating-toggle');
+      await expect(circle).toHaveAttribute('aria-expanded','false');
+      await expect.poll(()=>circle.evaluate(e=>{const r=e.getBoundingClientRect(),c=document.querySelector('#painted-composer').getBoundingClientRect();return e.dir==='rtl'?r.left+6-c.left:c.right-r.right+6;})).toBe(34);
+      const c=await page.locator('#painted-composer').boundingBox();
+      if(lang==='en')await page.screenshot({path:`build/dock-corrected-collapsed-${distribution}.png`,clip:{x:c.x-2,y:c.y-54,width:c.width+4,height:c.height+56}});
+      await circle.click();
+      await expect(page.locator('#cgpt-ra-dock')).toHaveCSS('border-top-left-radius','28px');
+      await expect.poll(()=>page.evaluate(()=>{const d=document.querySelector('#cgpt-ra-dock').getBoundingClientRect(),c=document.querySelector('#painted-composer').getBoundingClientRect();return Math.abs(d.bottom-c.top)<.5&&Math.abs(d.width-c.width)<.5;})).toBe(true);
+      expect(await page.locator('#painted-composer').getAttribute('style')).toBe(nativeStyle);
+      if(lang==='en')await page.screenshot({path:`build/dock-corrected-expanded-${distribution}.png`,clip:{x:c.x-2,y:c.y-54,width:c.width+4,height:c.height+56}});
+      await circle.click();
+    }
+    await setting(page,{language:'en'});await layout(page);await page.close();
+  });
+  test('docking reserves eight pixels around nearby native buttons and restores the saved dock',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    await layout(page,profile({preset:'composer'}));await page.locator('#cgpt-ra-floating-toggle').click();
+    const saved=await storedLayout(page),nativeStyle=await page.locator('form').getAttribute('style');
+    await page.evaluate(()=>{
+      const c=document.querySelector('form').getBoundingClientRect(),button=document.createElement('button');
+      button.id='nearby-native-action';button.textContent='Copy response';
+      button.style.cssText=`position:fixed;left:${c.left+12}px;top:${c.top-42}px;width:44px;height:36px`;
+      button.onclick=()=>button.dataset.clicked='true';document.querySelector('article').append(button);
+    });
+    const action=page.locator('#nearby-native-action'),style=await action.getAttribute('style');
+    await expect.poll(()=>page.evaluate(()=>{
+      const a=document.querySelector('#nearby-native-action').getBoundingClientRect();
+      return ['#cgpt-ra-dock','#cgpt-ra-floating-toggle'].every(id=>{const r=document.querySelector(id).getBoundingClientRect();return r.bottom<=a.top-8||r.top>=a.bottom+8||r.right<=a.left-8||r.left>=a.right+8;});
+    })).toBe(true);
+    await action.click();await expect(action).toHaveAttribute('data-clicked','true');
+    expect(await action.getAttribute('style')).toBe(style);expect(await page.locator('form').getAttribute('style')).toBe(nativeStyle);
+    await action.evaluate(e=>e.remove());
+    await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('#cgpt-ra-dock').getBoundingClientRect().bottom-document.querySelector('form').getBoundingClientRect().top))).toBeLessThan(.5);
+    expect(await storedLayout(page)).toEqual(saved);await layout(page);await page.close();
   });
   test('rounded composer corners join visually without covering native input',async()=>{
     const page=await open(1366);await setting(page,{notifyDownloadReady:false});
@@ -597,6 +748,81 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const download=await downloading;expect(download.suggestedFilename()).toMatch(/\.aac$/);
     expect(await fs.readFile(await download.path())).toEqual(wav());await page.close();
   });
+  for(const cancel of [false,true]) test(`slow native speech requests survive the capture timeout (${cancel?'then canceled by host':'then completed'})`,async()=>{
+    const page=await open(); await page.clock.install();
+    let release;
+    const gate=new Promise(resolve=>release=resolve);
+    await page.route('**/slow-speech',async route=>{await gate;await route.fulfill({contentType:'audio/mpeg',body:'native response continues'}).catch(()=>{});});
+    const requested=page.waitForRequest('**/slow-speech');
+    await page.evaluate(()=>{
+      window.slowResult='pending';
+      window.slowAbort=new AbortController();
+      fetch('/slow-speech',{signal:window.slowAbort.signal}).then(r=>r.text()).then(value=>window.slowResult=value,error=>window.slowResult=error.name);
+    });
+    await requested;
+    try {
+      await page.clock.fastForward(61000);
+      expect(await page.evaluate(()=>window.slowResult)).toBe('pending');
+      if(cancel) {
+        await page.evaluate(()=>window.slowAbort.abort());
+        await expect.poll(()=>page.evaluate(()=>window.slowResult)).toBe('AbortError');
+      } else {
+        release();
+        await expect.poll(()=>page.evaluate(()=>window.slowResult)).toBe('native response continues');
+      }
+    } finally {release();await page.close();}
+  });
+  test('progressing speech retention beyond one minute preserves pause, backward seek and download',async()=>{
+    const page=await open();await setting(page,{notifyDownloadReady:false});await page.clock.install();
+    let requests=0;page.on('request',r=>{if(r.url().endsWith('/speech.mp3'))requests++;});
+    await page.evaluate(async()=>{
+      // Delay the retained response body, independently of the native consumer.
+      // This exercises the real clone reader and inactivity deadline, not just headers.
+      const clone=Response.prototype.clone;
+      Response.prototype.clone=function(){
+        const copy=clone.call(this);if(!this.url.endsWith('/speech.mp3'))return copy;
+        const stream=new ReadableStream({start(controller){window.retainedBody=controller;},cancel(){window.retainedCanceled=true;}});
+        void copy.arrayBuffer().then(bytes=>window.retainedBytes=new Uint8Array(bytes));
+        return new Response(stream,{headers:this.headers});
+      };
+      const response=await fetch('/speech.mp3',{signal:(window.speechAbort=new AbortController()).signal});
+      const source=new MediaSource(),host=document.getElementById('host');
+      host.addEventListener('pause',()=>window.speechAbort.abort(),{once:true});
+      source.addEventListener('sourceopen',async()=>{
+        const buffer=source.addSourceBuffer('audio/mpeg'),bytes=await response.arrayBuffer();
+        buffer.addEventListener('updateend',()=>{if(source.readyState==='open')source.endOfStream();},{once:true});buffer.appendBuffer(bytes);
+      },{once:true});
+      host.src=URL.createObjectURL(source);void host.play().catch(()=>{});
+    });
+    await expect.poll(()=>page.evaluate(()=>!!window.retainedBytes)).toBe(true);
+    await expect(page.locator('.cgpt-ra-play')).toBeEnabled();
+    for(const last of [false,true]) {
+      await page.clock.fastForward(59000);
+      expect(await page.evaluate(()=>!!window.retainedCanceled)).toBe(false);
+      await page.evaluate(last=>{
+        const bytes=window.retainedBytes,half=Math.floor(bytes.length/2);
+        window.retainedBody.enqueue(last?bytes.slice(half):bytes.slice(0,half));
+        if(last)window.retainedBody.close();
+      },last);
+      // Allow the clone's read loop to observe the chunk before advancing time.
+      await page.evaluate(()=>new Promise(resolve=>queueMicrotask(resolve)));
+    }
+    await page.clock.resume();
+    await page.locator('#host').evaluate(audio=>audio.currentTime=15);
+    await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(15);
+    await page.locator('.cgpt-ra-play').click();
+    await expect(page.locator('#host')).not.toHaveAttribute('src');
+    await page.locator('.cgpt-ra-back').click();
+    await expect.poll(()=>time(page)).toBeLessThan(10);
+    const pausedAt=await time(page);
+    await page.locator('.cgpt-ra-play').click();
+    await expect.poll(()=>time(page)).toBeGreaterThan(pausedAt);
+    await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();
+    await expect(page.locator('.cgpt-ra-play rect')).toHaveCount(2);
+    const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();
+    expect(await fs.readFile(await (await downloading).path())).toEqual(await fs.readFile('tests/fixtures/speech.mp3'));
+    expect(requests).toBe(1);await page.close();
+  });
   test('MediaSource speech survives host abort, source removal and file-decoder rejection',async()=>{
     const page=await open();
     let requests=0;page.on('request',r=>{if(r.url().endsWith('/speech.mp3'))requests++;});
@@ -687,12 +913,12 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       }
     }
     await setting(page,{language:'en'});await page.reload();
-    await page.locator('.layout-settings').getByLabel('Placement',{exact:true}).selectOption('top-left');
-    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');
+    await page.locator('.layout-settings').getByLabel('Placement',{exact:true}).selectOption({label:'Split (bottom)'});
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('split-bottom');
     await page.locator('.layout-settings').getByLabel('Seek pill first',{exact:true}).uncheck();
     await expect.poll(async()=>(await storedLayout(page)).desktop.seekFirst).toBe(false);
     await page.locator('.layout-settings').getByRole('button',{name:'Reset layout'}).click();
-    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('original');
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('composer');
     await page.getByRole('button',{name:'Shortcuts & Gestures'}).click();
     await expect(page.locator('.release-ui kbd')).toHaveCount(15);await expect(page.locator('.release-ui')).toContainText('Alt+Shift+Y');
     await page.close();
@@ -785,7 +1011,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const downloading=page.waitForEvent('download');await command('download-audio');expect(await fs.readFile(await(await downloading).path())).toEqual(wav());
     await command('toggle-collapse');await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('aria-expanded','false');await command('toggle-collapse');
     await command('toggle-floating-ui');await expect.poll(()=>worker.evaluate(()=>chrome.storage.sync.get('cgpt-ra-settings.floatingUiHidden').then(v=>v['cgpt-ra-settings.floatingUiHidden']))).toBe(true);await command('toggle-floating-ui');
-    await layout(page,profile({preset:'top-left'}));await command('reset-layout');await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('original');
+    await layout(page,profile({preset:'top-left'}));await command('reset-layout');await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('composer');
     await command('open-help');await expect(page.locator('.cgpt-ra-help')).toBeVisible();
     const opened=context.waitForEvent('page');await command('open-settings');const options=await opened;await options.waitForLoadState();await options.close();
     await worker.evaluate(()=>chrome.storage.sync.set({'cgpt-ra-settings.enableShortcuts':false}));await command('play-pause');await expect(page.locator('.cgpt-ra-play polygon')).toHaveCount(1);

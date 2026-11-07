@@ -1,6 +1,6 @@
 # Official website
 
-The homepage includes a self-hosted demonstration video, two player screenshots,
+The homepage includes a self-hosted demonstration video, four player screenshots,
 and a fresh settings screenshot. All media uses a disposable profile and fictional
 content; see [demo provenance and regeneration](../assets/demo/README.md).
 
@@ -11,9 +11,8 @@ Use `cloudflared tunnel --url http://127.0.0.1:4178` to share this preview.
 See [the discovery audit](AGENT-DISCOVERY.md) for local checks, production hosting
 requirements, and the applicability of API/agent scanner findings.
 
-Build 120 static pages across 24 locales with `bun run scripts/build-site.ts`. Output is
-written to `site-dist` and excluded from extension packages. GitHub Pages uses
-the separate website workflow.
+Build 335 static pages across 67 locales with `bun run scripts/build-site.ts`. Output is
+written to `site-dist` and excluded from extension packages. Cloudflare serves the canonical website; GitHub Pages retains legacy redirects.
 
 The website uses React 19 and Radix UI primitives for the language Select,
 FAQ Accordion, and theme Toggle. Shared React buttons use Radix Slot for link

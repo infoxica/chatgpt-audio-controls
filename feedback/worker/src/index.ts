@@ -1,5 +1,7 @@
 import releaseLocales from './locales.generated.json';
 import { renderForm } from './page';
+import { refreshStats, serveStats } from './extension-stats';
+import { servePublic } from './public-site';
 
 const uninstallReasons = ['broken', 'intrusive', 'slow', 'difficult', 'missing', 'language', 'unneeded', 'other'];
 const browsers = ['Chrome', 'Chromium', 'Edge', 'Firefox', 'Safari', 'Other'];
@@ -29,8 +31,12 @@ async function readInput(request: Request): Promise<Record<string, unknown>> {
 }
 
 export default {
+  async scheduled(event: ScheduledController, env: Env) {
+    await refreshStats(env, event.scheduledTime);
+  },
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    if (url.pathname === '/api/extension-stats') return serveStats(request, env);
     if (request.method === 'GET' && url.pathname === '/health') {
       try { await env.DB.prepare('SELECT 1 FROM feedback LIMIT 1').first(); return json({ ok: true }); }
       catch { return json({ ok: false }, 503); }
@@ -45,7 +51,10 @@ export default {
         'Content-Security-Policy': `default-src 'none'; script-src 'nonce-${nonce}' https://challenges.cloudflare.com; style-src 'nonce-${nonce}'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; img-src 'self' data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`,
       } });
     }
-    if (url.pathname !== '/api/feedback') return new Response('Not found', { status: 404 });
+    if (url.pathname !== '/api/feedback') {
+      if (/^\/(?:feedback|health|api)(?:\/|$)/.test(url.pathname)) return new Response('Not found', {status:404});
+      return servePublic(request, env.ASSETS);
+    }
     if (request.method !== 'POST') return json({ saved: false, error: 'method' }, 405);
     if (request.headers.get('origin') !== url.origin) return json({ saved: false, error: 'origin' }, 403);
     let input: Record<string, unknown>;

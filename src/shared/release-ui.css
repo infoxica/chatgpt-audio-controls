@@ -98,3 +98,5 @@
  .support-card.card .support-panel-actions { border-block-start:0; padding-block-start:0; border-inline-start:1px solid var(--border-color); padding-inline-start:32px; }
 }
 .coffee-support{margin-block-start:20px}.coffee-support>p{display:flex;align-items:center;gap:8px;margin-block-end:12px}
+.feature-tour-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 12px;margin-block:8px;border:1px solid var(--border-color,var(--border));border-radius:10px;color:var(--accent);text-decoration:none;font-size:14px;line-height:1.4}
+.feature-tour-link:hover{background:var(--bg-hover,var(--surface))}.feature-tour-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.feature-tour-link svg{flex-shrink:0}

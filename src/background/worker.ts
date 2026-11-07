@@ -29,7 +29,10 @@ async function registerUninstall(): Promise<void> {
   await chrome.runtime.setUninstallURL(url);
 }
 const register = () => { void registerUninstall().catch(error => console.warn('Could not register feedback page', error)); };
-chrome.runtime.onInstalled.addListener(register);
+chrome.runtime.onInstalled.addListener(details => {
+  register();
+  if (details.reason === 'install') void chrome.tabs.create({url:chrome.runtime.getURL('src/tour/index.html')}).catch(() => {});
+});
 chrome.runtime.onStartup.addListener(register);
 chrome.runtime.onMessage.addListener((message, sender, reply) => {
   if (sender.id !== chrome.runtime.id) return;
@@ -49,6 +52,9 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
     return true;
   }
   if (message?.type === 'open-settings') { void chrome.runtime.openOptionsPage(); return; }
+  if (message?.type === 'open-tour') {
+    void chrome.tabs.create({url:chrome.runtime.getURL('src/tour/index.html')}).catch(() => {}); return;
+  }
   if (message?.type !== 'get-visibility-shortcut') return;
   if (!chrome.commands?.getAll) { reply({ shortcut: '', commands: {} }); return; }
   void chrome.commands.getAll().then(commands => reply({ shortcut: commands.find(c => c.name === VISIBILITY_COMMAND)?.shortcut || '', commands: Object.fromEntries(commands.filter(c => isPlayerCommand(c.name)).map(c => [c.name, c.shortcut || ''])) })).catch(() => reply({ shortcut: '', commands: {} }));

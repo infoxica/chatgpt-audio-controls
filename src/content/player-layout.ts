@@ -99,6 +99,14 @@ export class PlayerLayout {
     window.postMessage({ source, type: 'CGPT_RA_LAYOUT_REQUEST' }, '*');
   }
   async reset(): Promise<void> { this.cancelDrag?.(); this.motion = 280; await this.save(defaultLayout()); }
+  setPageVisible(visible: boolean): void {
+    this.layer.hidden = !visible;
+    if (!visible) {
+      this.cancelDrag?.();
+      this.controls.querySelectorAll('.cgpt-open').forEach(el => el.classList.remove('cgpt-open'));
+      this.more.setAttribute('aria-expanded', 'false');
+    }
+  }
   private async save(value: LayoutPreferences): Promise<void> {
     try {
       if (standalone) localStorage.setItem(LAYOUT_KEY, JSON.stringify(value));
@@ -123,12 +131,24 @@ export class PlayerLayout {
       .filter(e => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]')).map(visibleBounds)
       .filter((r): r is Rect => !!r && r.width <= innerWidth && (r.height < innerHeight * .7 || r.width < innerWidth * .45));
   }
-  private nativeActions(): Rect[] {
-    // Only application chrome outside conversations/composers; response toolbars
-    // and email editors must never force the player away from its saved dock.
-    return Array.from(document.querySelectorAll<HTMLElement>('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]'))
+  private nativeActions(nearComposer = false): Rect[] {
+    // General layout obstacles are application chrome, not entire response or
+    // email headers. Docking additionally checks nearby interactive controls.
+    const actions = Array.from(document.querySelectorAll<HTMLElement>('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]'))
       .filter(e => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]'))
       .map(visibleBounds).filter((r): r is Rect => !!r);
+    if (nearComposer && this.composer) {
+      const c = bounds(this.composer);
+      // Reserve breathing room for actual interactive controls near the join,
+      // not an entire response/email header. Never restyle native buttons.
+      const vicinity = { x: c.x - 8, y: c.y - 112, width: c.width + 16, height: 120 };
+      for (const el of document.querySelectorAll<HTMLElement>('button, [role="button"]')) {
+        if (el.closest('[id^="cgpt-ra"], [role="menu"], [role="dialog"], dialog, [contenteditable]')) continue;
+        const r = visibleBounds(el);
+        if (r && intersects(r, vicinity)) actions.push(r);
+      }
+    }
+    return actions;
   }
   private geometry(p: LayoutProfile, expanded: boolean): PlayerGeometry | null {
     const viewport = this.viewport(), obstacles = this.obstacles(), area = { ...viewport };
@@ -143,7 +163,7 @@ export class PlayerLayout {
     const c = this.composer ? bounds(this.composer) : undefined;
     const native = this.composer && getComputedStyle(this.composer);
     const radius = (value: string | undefined) => value?.endsWith('%') ? (parseFloat(value) || 0) * (c?.width || 0) / 100 : parseFloat(value || '') || 0;
-    const environment = { actions: this.nativeActions(), cornerLeft: radius(native?.borderTopLeftRadius), cornerRight: radius(native?.borderTopRightRadius) };
+    const environment = { actions: this.nativeActions(p.preset === 'composer'), cornerLeft: radius(native?.borderTopLeftRadius), cornerRight: radius(native?.borderTopRightRadius) };
     let result = dockGeometry(p, area, expanded, c, languageDirection(this.language()) === 'rtl', layoutProfile(innerWidth) === 'narrow', environment);
     // A corner that intersects the composer can move upward, keeping its shape.
     if (c && expanded && p.preset.startsWith('bottom') && (!result || [result.seek, result.controls, result.circle].some(r => intersects(r, c)))) {
@@ -156,11 +176,12 @@ export class PlayerLayout {
   }
   private compactGeometry(profile: LayoutProfile, expanded: boolean): PlayerGeometry | null {
     const v = this.viewport(), obstacles = this.obstacles(), c = this.composer && bounds(this.composer);
+    const actions = this.nativeActions(profile.preset === 'composer');
     // A temporary floating surface keeps an absent/off-screen composer from
     // turning the expand button into a dead end. It is never persisted.
     const bottoms = [c ? c.y - 8 : v.y + v.height, v.y + v.height, v.y + 100];
     for (const bottom of bottoms) {
-      const g = dockGeometry({ ...profile, preset: 'composer' }, v, expanded, { x: v.x, y: bottom, width: v.width, height: 0 }, languageDirection(this.language()) === 'rtl', true);
+      const g = dockGeometry({ ...profile, preset: 'composer' }, v, expanded, { x: v.x, y: bottom, width: v.width, height: 0 }, languageDirection(this.language()) === 'rtl', true, { actions });
       if (!g) continue;
       const parts = expanded ? [g.surface!, g.circle] : [g.circle];
       if (parts.every(r => !obstacles.some(o => intersects(r, o)) && (!c || !intersects(r, c)))) return { ...g, attachedToComposer: false };

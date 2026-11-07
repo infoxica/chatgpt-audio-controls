@@ -1,9 +1,9 @@
 export const LAYOUT_KEY = 'cgpt-ra-layout-v1';
-export const PRESETS = ['original', 'bottom-left', 'bottom-right', 'top-left', 'top-right', 'left', 'right', 'composer'] as const;
+export const PRESETS = ['composer', 'original', 'split-bottom', 'bottom-left', 'bottom-right', 'top-left', 'top-right', 'left', 'right'] as const;
 export type LayoutPreset = typeof PRESETS[number];
 export type LayoutProfile = { preset: LayoutPreset; seekFirst: boolean };
 export type LayoutPreferences = { version: 2; desktop: LayoutProfile; narrow: LayoutProfile };
-export const defaultProfile = (narrow = false): LayoutProfile => ({ preset: narrow ? 'composer' : 'original', seekFirst: true });
+export const defaultProfile = (_narrow = false): LayoutProfile => ({ preset: 'composer', seekFirst: true });
 export const defaultLayout = (): LayoutPreferences => ({ version: 2, desktop: defaultProfile(), narrow: defaultProfile(true) });
 export function isLayoutProfile(value: unknown): value is LayoutProfile {
   if (!value || typeof value !== 'object') return false;
@@ -19,6 +19,8 @@ export function migrateLayout(value: unknown): LayoutPreferences {
   const old = value as { version?: number; desktop?: { mode?: string; anchor?: string; arrangement?: string; seekFirst?: boolean }; narrow?: { seekFirst?: boolean } } | null;
   const next = defaultLayout();
   if (old?.version !== 1) return next;
+  // Preserve the previous automatic placement when migrating a saved v1 profile.
+  next.desktop.preset = 'original';
   const p = old.desktop;
   if (p && typeof p.seekFirst === 'boolean') {
     next.desktop.seekFirst = p.seekFirst;
