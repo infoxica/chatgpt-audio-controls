@@ -43,6 +43,28 @@ lacks a source/stack trace; existing settings handlers settle both success and
 failure paths, and no specific missing response was reproduced. Neither message
 alone proves the cause of the audio interruption.
 
+## Additional 1.4.1 reports (2026-11-07 investigation)
+
+Grouped under [GitHub issue #30](https://github.com/infoxica/chatgpt-audio-controls/issues/30):
+
+- November 6, Chromium/Windows, Spanish UI: playback stops partway through;
+  restarting Read Aloud is necessary, and pause/backward seek can leave it stuck.
+- November 6, Chromium/macOS, English UI: playback stops after about a minute;
+  repeated reinstallations do not help.
+
+Version 1.4.1 contains the same fixed-timeout mechanism corrected in PR #29.
+These reports are consistent with that defect, but neither original user session
+was reproduced and a Mac platform result cannot be inferred from Chromium fixtures.
+No additional audio-path change was needed based on this investigation.
+
+Existing tests cover destructive native pause, pending retention, repeated resume,
+seek anchors, source replacement and decoder fallback. A new browser regression
+delays the retained response body in chunks across 118 seconds of simulated time,
+then exercises native source removal on pause, backward seek, repeated resume and
+an exact-byte download. It asserts one speech request, in both distributions.
+This adds body-progress integration coverage to the existing delayed-header and
+capture-unit tests; it does not represent 118 seconds of real-device listening.
+
 ## Release boundary
 
 The correction is prepared in the unreleased 1.4.2 candidate for both the

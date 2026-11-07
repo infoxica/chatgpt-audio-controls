@@ -506,6 +506,57 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     }
     await setting(page,{language:'en'});await page.close();
   });
+  test('renamed and localized composers use the painted surface and inset the collapsed tab',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    await page.evaluate(()=>{
+      const form=document.querySelector('form'),surface=document.createElement('div');surface.id='painted-composer';
+      surface.style.cssText='background:#212121;border-radius:28px;border:1px solid #424242;padding:12px';
+      surface.append(...form.childNodes);form.append(surface);form.dataset.type='unified-composer';
+      form.style.cssText+=';background:transparent;border-radius:0;padding:10px';
+      const input=surface.querySelector('[contenteditable]');input.classList.add('ProseMirror');input.setAttribute('aria-label','Work with ChatGPT');
+    });
+    const nativeStyle=await page.locator('#painted-composer').getAttribute('style');
+    await layout(page,profile({preset:'composer'}));
+    for(const [label,lang] of [['Work with ChatGPT','en'],['Trabaja con ChatGPT','es'],['اكتب رسالة','ar']]) {
+      await page.locator('#painted-composer [contenteditable]').evaluate((e,label)=>e.setAttribute('aria-label',label),label);
+      await setting(page,{language:lang,notifyDownloadReady:false});
+      const circle=page.locator('#cgpt-ra-floating-toggle');
+      await expect(circle).toHaveAttribute('aria-expanded','false');
+      await expect.poll(()=>circle.evaluate(e=>{const r=e.getBoundingClientRect(),c=document.querySelector('#painted-composer').getBoundingClientRect();return e.dir==='rtl'?r.left+6-c.left:c.right-r.right+6;})).toBe(34);
+      const c=await page.locator('#painted-composer').boundingBox();
+      if(lang==='en')await page.screenshot({path:`build/dock-corrected-collapsed-${distribution}.png`,clip:{x:c.x-2,y:c.y-54,width:c.width+4,height:c.height+56}});
+      await circle.click();
+      await expect(page.locator('#cgpt-ra-dock')).toHaveCSS('border-top-left-radius','28px');
+      await expect.poll(()=>page.evaluate(()=>{const d=document.querySelector('#cgpt-ra-dock').getBoundingClientRect(),c=document.querySelector('#painted-composer').getBoundingClientRect();return Math.abs(d.bottom-c.top)<.5&&Math.abs(d.width-c.width)<.5;})).toBe(true);
+      expect(await page.locator('#painted-composer').getAttribute('style')).toBe(nativeStyle);
+      if(lang==='en')await page.screenshot({path:`build/dock-corrected-expanded-${distribution}.png`,clip:{x:c.x-2,y:c.y-54,width:c.width+4,height:c.height+56}});
+      await circle.click();
+    }
+    await setting(page,{language:'en'});await layout(page);await page.close();
+  });
+  test('docking reserves eight pixels around nearby native buttons and restores the saved dock',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    await layout(page,profile({preset:'composer'}));await page.locator('#cgpt-ra-floating-toggle').click();
+    const saved=await storedLayout(page),nativeStyle=await page.locator('form').getAttribute('style');
+    await page.evaluate(()=>{
+      const c=document.querySelector('form').getBoundingClientRect(),button=document.createElement('button');
+      button.id='nearby-native-action';button.textContent='Copy response';
+      button.style.cssText=`position:fixed;left:${c.left+12}px;top:${c.top-42}px;width:44px;height:36px`;
+      button.onclick=()=>button.dataset.clicked='true';document.querySelector('article').append(button);
+    });
+    const action=page.locator('#nearby-native-action'),style=await action.getAttribute('style');
+    await expect.poll(()=>page.evaluate(()=>{
+      const a=document.querySelector('#nearby-native-action').getBoundingClientRect();
+      return ['#cgpt-ra-dock','#cgpt-ra-floating-toggle'].every(id=>{const r=document.querySelector(id).getBoundingClientRect();return r.bottom<=a.top-8||r.top>=a.bottom+8||r.right<=a.left-8||r.left>=a.right+8;});
+    })).toBe(true);
+    await action.click();await expect(action).toHaveAttribute('data-clicked','true');
+    expect(await action.getAttribute('style')).toBe(style);expect(await page.locator('form').getAttribute('style')).toBe(nativeStyle);
+    await action.evaluate(e=>e.remove());
+    await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('#cgpt-ra-dock').getBoundingClientRect().bottom-document.querySelector('form').getBoundingClientRect().top))).toBeLessThan(.5);
+    expect(await storedLayout(page)).toEqual(saved);await layout(page);await page.close();
+  });
   test('rounded composer corners join visually without covering native input',async()=>{
     const page=await open(1366);await setting(page,{notifyDownloadReady:false});
     await layout(page,profile({preset:'composer'}));await page.locator('#native-read').click();
@@ -681,6 +732,57 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
         await expect.poll(()=>page.evaluate(()=>window.slowResult)).toBe('native response continues');
       }
     } finally {release();await page.close();}
+  });
+  test('progressing speech retention beyond one minute preserves pause, backward seek and download',async()=>{
+    const page=await open();await setting(page,{notifyDownloadReady:false});await page.clock.install();
+    let requests=0;page.on('request',r=>{if(r.url().endsWith('/speech.mp3'))requests++;});
+    await page.evaluate(async()=>{
+      // Delay the retained response body, independently of the native consumer.
+      // This exercises the real clone reader and inactivity deadline, not just headers.
+      const clone=Response.prototype.clone;
+      Response.prototype.clone=function(){
+        const copy=clone.call(this);if(!this.url.endsWith('/speech.mp3'))return copy;
+        const stream=new ReadableStream({start(controller){window.retainedBody=controller;},cancel(){window.retainedCanceled=true;}});
+        void copy.arrayBuffer().then(bytes=>window.retainedBytes=new Uint8Array(bytes));
+        return new Response(stream,{headers:this.headers});
+      };
+      const response=await fetch('/speech.mp3',{signal:(window.speechAbort=new AbortController()).signal});
+      const source=new MediaSource(),host=document.getElementById('host');
+      host.addEventListener('pause',()=>window.speechAbort.abort(),{once:true});
+      source.addEventListener('sourceopen',async()=>{
+        const buffer=source.addSourceBuffer('audio/mpeg'),bytes=await response.arrayBuffer();
+        buffer.addEventListener('updateend',()=>{if(source.readyState==='open')source.endOfStream();},{once:true});buffer.appendBuffer(bytes);
+      },{once:true});
+      host.src=URL.createObjectURL(source);void host.play().catch(()=>{});
+    });
+    await expect.poll(()=>page.evaluate(()=>!!window.retainedBytes)).toBe(true);
+    await expect(page.locator('.cgpt-ra-play')).toBeEnabled();
+    for(const last of [false,true]) {
+      await page.clock.fastForward(59000);
+      expect(await page.evaluate(()=>!!window.retainedCanceled)).toBe(false);
+      await page.evaluate(last=>{
+        const bytes=window.retainedBytes,half=Math.floor(bytes.length/2);
+        window.retainedBody.enqueue(last?bytes.slice(half):bytes.slice(0,half));
+        if(last)window.retainedBody.close();
+      },last);
+      // Allow the clone's read loop to observe the chunk before advancing time.
+      await page.evaluate(()=>new Promise(resolve=>queueMicrotask(resolve)));
+    }
+    await page.clock.resume();
+    await page.locator('#host').evaluate(audio=>audio.currentTime=15);
+    await expect.poll(()=>time(page)).toBeGreaterThanOrEqual(15);
+    await page.locator('.cgpt-ra-play').click();
+    await expect(page.locator('#host')).not.toHaveAttribute('src');
+    await page.locator('.cgpt-ra-back').click();
+    await expect.poll(()=>time(page)).toBeLessThan(10);
+    const pausedAt=await time(page);
+    await page.locator('.cgpt-ra-play').click();
+    await expect.poll(()=>time(page)).toBeGreaterThan(pausedAt);
+    await page.locator('.cgpt-ra-play').click();await page.locator('.cgpt-ra-play').click();
+    await expect(page.locator('.cgpt-ra-play rect')).toHaveCount(2);
+    const downloading=page.waitForEvent('download');await revealSecondary(page);await page.locator('.cgpt-ra-download').click();
+    expect(await fs.readFile(await (await downloading).path())).toEqual(await fs.readFile('tests/fixtures/speech.mp3'));
+    expect(requests).toBe(1);await page.close();
   });
   test('MediaSource speech survives host abort, source removal and file-decoder rejection',async()=>{
     const page=await open();

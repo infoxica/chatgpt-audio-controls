@@ -75,6 +75,52 @@ skipped. Logs: `build/ci29-after.log` and `build/ci29-unit.log`. Build, userscri
 parity, version and ZIP validation pass. The next PR CI run must confirm the full
 browser suite. The owner will test Mac and Edge Android; acceptance remains unset.
 
+## Additional reports and dock corrections (2026-11-07)
+
+The two November 6 reports on 1.4.1 (Chromium/Windows and Chromium/macOS) are
+grouped into issue #30. Inspection of the `v1.4.1` tag confirms the shared native
+request still had the fixed 60-second timer. The existing 1.4.2 correction covers
+that mechanism; the exact customer sessions have not been reproduced.
+
+A new integration regression delays the retained response body across 118 seconds
+of simulated delivery, then verifies destructive pause, backward seek, repeated
+resume and an exact-byte download with one speech request. Both distributions
+pass. This supplements delayed-header, capture-unit and seek-anchor coverage.
+
+Docking had a separate defect: the painted-surface lookup depended on the English
+`Ask ChatGPT` editor label. With `Work with ChatGPT` or a translated label it could
+sample the square outer wrapper. The new test failed in both distributions before
+the correction: the collapsed tab extended 4px beyond the actual surface instead
+of clearing its 28px corner by 6px. Structural editor detection now samples the
+rounded surface for geometry, borders and tab placement. English, Spanish and RTL
+Arabic fixtures verify this without modifying native composer styles.
+
+Actual nearby native buttons receive 8px collision clearance, including the whole
+dock surface. When necessary, the player temporarily uses its compact fallback;
+removing the obstruction restores docking with identical saved preferences.
+No permanent spacing or styling changes are made to native buttons.
+
+Validation: type checking/build, all 80 unit tests (including exact userscript
+parity and 67 locales), and 22 targeted browser regressions pass. Logs:
+`build/current-fixes-build.log`, `build/current-fixes-unit.log`,
+`build/current-fixes-browser.log`. The corrected composer case was first reproduced
+against the previous build in `build/dock-regression-before.log`.
+
+Additional layout/playback coverage includes all desktop presets and pill orders,
+magnetic targets, cancellation, saved placement, email headers, native menus,
+early pause and direct-source recovery (`build/current-fixes-layout.log`). One
+extension drag/cancellation case initially timed out during hover; its isolated
+trace-enabled rerun passed for both distributions (`build/drag-recheck.log`).
+Record this intermittent result rather than treating the first run as green.
+Privacy-safe fixture captures in `build/dock-corrected-expanded-extension.png`
+and `build/dock-corrected-collapsed-extension.png` were visually inspected;
+equivalent userscript captures are also available.
+
+Rebuilt local package: `dist-zip/chatgpt-audio-controls-v1.4.2.zip`, 99 entries,
+SHA-256 `733732f8271a61bb0d933f40dfcc895abc15bc7bebffb319e036e742788e399f`.
+Version/source release checks pass; tagged publication acceptance was not granted.
+This supersedes the earlier local package hash above.
+
 ## Acceptance boundaries
 
 Verify live slow/long Read Aloud responses in Chrome and Edge, including playback

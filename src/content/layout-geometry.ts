@@ -25,7 +25,7 @@ function resolveWithActions(p: LayoutProfile, v: Rect, expanded: boolean, compos
   for (let attempt = 0; attempt <= (environment.actions?.length || 0); attempt++) {
     const result = resolveGeometry(p, area, expanded, composer, rtl, narrow, environment, controlsLength);
     if (!result) return null;
-    const parts = expanded ? [result.seek, result.controls, result.circle] : [result.circle];
+    const parts = expanded ? [result.seek, result.controls, result.circle, ...(result.surface ? [result.surface] : [])] : [result.circle];
     const collision = environment.actions?.find(o => parts.some(r => intersects(r, { x: o.x - 8, y: o.y - 8, width: o.width + 16, height: o.height + 16 })));
     if (!collision) return result;
     if (!p.preset.startsWith('top')) return null;

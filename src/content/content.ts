@@ -1106,11 +1106,13 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       getComputedStyle(el).visibility !== 'hidden');
   }
   function getComposer(): HTMLElement | null {
-    const candidates = document.querySelectorAll<HTMLElement>('[data-chatgpt-composer], [data-type="unified-composer"]');
-    const composer = Array.from(candidates).find(el => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"]'));
-    // Prefer the painted composer surface over a surrounding form or embedded editor.
+    const editors = '#prompt-textarea, [data-testid="composer-text-input"], [data-composer-markdown][contenteditable="true"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"], textarea[placeholder*="Ask"]';
     const isComposerEditor = (el: HTMLElement) => !el.closest('article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]') && el.getBoundingClientRect().height > 0;
-    const editor = Array.from(document.querySelectorAll<HTMLElement>('.ProseMirror[contenteditable="true"][aria-label="Ask ChatGPT"]')).find(isComposerEditor);
+    const candidates = document.querySelectorAll<HTMLElement>('[data-chatgpt-composer], [data-type="unified-composer"]');
+    const composer = Array.from(candidates).find(el => isComposerEditor(el) && el.querySelector(editors));
+    // Labels change with ChatGPT modes and languages. Locate the editor by its
+    // structure, then sample its actual painted surface rather than a square wrapper.
+    const editor = (composer?.querySelector<HTMLElement>(editors)) || Array.from(document.querySelectorAll<HTMLElement>(editors)).find(isComposerEditor);
     if (editor) {
       for (let parent = editor.parentElement; parent && parent !== document.body; parent = parent.parentElement) {
         const style = getComputedStyle(parent), r = parent.getBoundingClientRect();
@@ -1118,8 +1120,7 @@ const standalone = typeof __USERSCRIPT__ !== 'undefined' && __USERSCRIPT__;
       }
     }
     if (composer) return composer;
-    const prompt = Array.from(document.querySelectorAll<HTMLElement>('#prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"], textarea[placeholder*="Ask"]')).find(isComposerEditor);
-    return prompt?.closest('form') || prompt?.parentElement || null;
+    return editor?.closest('form') || editor?.parentElement || null;
   }
 
   function syncComposerLayout(): void {

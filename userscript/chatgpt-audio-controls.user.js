@@ -19387,7 +19387,7 @@
       const result = resolveGeometry(p, area, expanded, composer, rtl, narrow, environment, controlsLength);
       if (!result)
         return null;
-      const parts = expanded ? [result.seek, result.controls, result.circle] : [result.circle];
+      const parts = expanded ? [result.seek, result.controls, result.circle, ...result.surface ? [result.surface] : []] : [result.circle];
       const collision = environment.actions?.find((o) => parts.some((r) => intersects(r, { x: o.x - 8, y: o.y - 8, width: o.width + 16, height: o.height + 16 })));
       if (!collision)
         return result;
@@ -19713,8 +19713,20 @@
     obstacles() {
       return Array.from(document.querySelectorAll('header, [role="banner"], nav[aria-label], [data-testid="page-header"], [data-testid="app-shell-sidebar"], #app-shell-sidebar')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]')).map(visibleBounds).filter((r) => !!r && r.width <= innerWidth && (r.height < innerHeight * 0.7 || r.width < innerWidth * 0.45));
     }
-    nativeActions() {
-      return Array.from(document.querySelectorAll('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]')).map(visibleBounds).filter((r) => !!r);
+    nativeActions(nearComposer = false) {
+      const actions = Array.from(document.querySelectorAll('header button, [role="banner"] button, [data-testid="page-header"] button, [data-testid="conversation-header"] button, #conversation-header-actions button, [data-testid="share-chat-button"], [data-testid="conversation-options-button"]')).filter((e) => !e.closest('[id^="cgpt-ra"], article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block], form, [contenteditable]')).map(visibleBounds).filter((r) => !!r);
+      if (nearComposer && this.composer) {
+        const c = bounds(this.composer);
+        const vicinity = { x: c.x - 8, y: c.y - 112, width: c.width + 16, height: 120 };
+        for (const el of document.querySelectorAll('button, [role="button"]')) {
+          if (el.closest('[id^="cgpt-ra"], [role="menu"], [role="dialog"], dialog, [contenteditable]'))
+            continue;
+          const r = visibleBounds(el);
+          if (r && intersects(r, vicinity))
+            actions.push(r);
+        }
+      }
+      return actions;
     }
     geometry(p, expanded) {
       const viewport = this.viewport(), obstacles = this.obstacles(), area = { ...viewport };
@@ -19733,7 +19745,7 @@
       const c = this.composer ? bounds(this.composer) : undefined;
       const native = this.composer && getComputedStyle(this.composer);
       const radius = (value) => value?.endsWith("%") ? (parseFloat(value) || 0) * (c?.width || 0) / 100 : parseFloat(value || "") || 0;
-      const environment = { actions: this.nativeActions(), cornerLeft: radius(native?.borderTopLeftRadius), cornerRight: radius(native?.borderTopRightRadius) };
+      const environment = { actions: this.nativeActions(p.preset === "composer"), cornerLeft: radius(native?.borderTopLeftRadius), cornerRight: radius(native?.borderTopRightRadius) };
       let result = dockGeometry(p, area, expanded, c, languageDirection(this.language()) === "rtl", layoutProfile(innerWidth) === "narrow", environment);
       if (c && expanded && p.preset.startsWith("bottom") && (!result || [result.seek, result.controls, result.circle].some((r) => intersects(r, c)))) {
         result = dockGeometry(p, { ...area, height: c.y - area.y - 8 }, expanded, c, false, false, environment);
@@ -19747,9 +19759,10 @@
     }
     compactGeometry(profile, expanded) {
       const v = this.viewport(), obstacles = this.obstacles(), c = this.composer && bounds(this.composer);
+      const actions = this.nativeActions(profile.preset === "composer");
       const bottoms = [c ? c.y - 8 : v.y + v.height, v.y + v.height, v.y + 100];
       for (const bottom of bottoms) {
-        const g = dockGeometry({ ...profile, preset: "composer" }, v, expanded, { x: v.x, y: bottom, width: v.width, height: 0 }, languageDirection(this.language()) === "rtl", true);
+        const g = dockGeometry({ ...profile, preset: "composer" }, v, expanded, { x: v.x, y: bottom, width: v.width, height: 0 }, languageDirection(this.language()) === "rtl", true, { actions });
         if (!g)
           continue;
         const parts = expanded ? [g.surface, g.circle] : [g.circle];
@@ -22845,10 +22858,11 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       return !Array.from(document.querySelectorAll('dialog[open], [aria-modal="true"]')).some((el) => !el.closest('[id^="cgpt-ra"]') && el.getClientRects().length > 0 && getComputedStyle(el).visibility !== "hidden");
     }
     function getComposer() {
-      const candidates = document.querySelectorAll('[data-chatgpt-composer], [data-type="unified-composer"]');
-      const composer = Array.from(candidates).find((el) => el.getBoundingClientRect().height > 0 && el.querySelector('[data-composer-markdown], #prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"]'));
+      const editors = '#prompt-textarea, [data-testid="composer-text-input"], [data-composer-markdown][contenteditable="true"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"], textarea[placeholder*="Ask"]';
       const isComposerEditor = (el) => !el.closest('article, [data-message-author-role], [data-testid^="conversation-turn"], [data-writing-block]') && el.getBoundingClientRect().height > 0;
-      const editor = Array.from(document.querySelectorAll('.ProseMirror[contenteditable="true"][aria-label="Ask ChatGPT"]')).find(isComposerEditor);
+      const candidates = document.querySelectorAll('[data-chatgpt-composer], [data-type="unified-composer"]');
+      const composer = Array.from(candidates).find((el) => isComposerEditor(el) && el.querySelector(editors));
+      const editor = composer?.querySelector(editors) || Array.from(document.querySelectorAll(editors)).find(isComposerEditor);
       if (editor) {
         for (let parent = editor.parentElement;parent && parent !== document.body; parent = parent.parentElement) {
           const style = getComputedStyle(parent), r = parent.getBoundingClientRect();
@@ -22858,8 +22872,7 @@ html.dark #cgpt-ra-ready-toast, [data-theme=dark] #cgpt-ra-ready-toast { backgro
       }
       if (composer)
         return composer;
-      const prompt = Array.from(document.querySelectorAll('#prompt-textarea, [data-testid="composer-text-input"], .ProseMirror[contenteditable="true"], [aria-label="Ask ChatGPT"], textarea[placeholder*="Ask"]')).find(isComposerEditor);
-      return prompt?.closest("form") || prompt?.parentElement || null;
+      return editor?.closest("form") || editor?.parentElement || null;
     }
     function syncComposerLayout() {
       if (!leftRail || !rightRail || !floatingToggle)
