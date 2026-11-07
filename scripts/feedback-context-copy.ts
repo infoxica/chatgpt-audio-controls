@@ -1,0 +1,81 @@
+import { LOCALES } from '../src/shared/i18n/core';
+import { releaseLocales } from '../src/shared/i18n/release-copy';
+
+// Feature labels reuse the existing complete catalogs. New prompts/symptoms have
+// their own small catalog so the ordered release-copy arrays remain unchanged.
+const labels: Record<string, string> = {
+  en: 'Feature (optional)|What happened? (optional)|Not working|Missing|Incorrect|Slow|Intermittent',
+  hi: 'सुविधा (वैकल्पिक)|क्या हुआ? (वैकल्पिक)|काम नहीं कर रहा|गायब|गलत|धीमा|कभी-कभी',
+  bn: 'বৈশিষ্ট্য (ঐচ্ছিক)|কী হয়েছে? (ঐচ্ছিক)|কাজ করছে না|অনুপস্থিত|ভুল|ধীর|মাঝেমধ্যে',
+  mr: 'वैशिष्ट्य (ऐच्छिक)|काय झाले? (ऐच्छिक)|काम करत नाही|गहाळ|चुकीचे|मंद|अधूनमधून',
+  te: 'ఫీచర్ (ఐచ్ఛికం)|ఏమైంది? (ఐచ్ఛికం)|పని చేయడం లేదు|కనిపించడం లేదు|సరికాదు|నెమ్మదిగా|అప్పుడప్పుడు',
+  ta: 'அம்சம் (விருப்பம்)|என்ன நடந்தது? (விருப்பம்)|வேலை செய்யவில்லை|காணவில்லை|தவறு|மெதுவாக|அவ்வப்போது',
+  ar: 'الميزة (اختياري)|ماذا حدث؟ (اختياري)|لا تعمل|مفقودة|غير صحيحة|بطيئة|متقطعة',
+  fa: 'قابلیت (اختیاری)|چه اتفاقی افتاد؟ (اختیاری)|کار نمی‌کند|وجود ندارد|نادرست|کند|گاه‌به‌گاه',
+  he: 'תכונה (רשות)|מה קרה? (רשות)|לא פועל|חסר|שגוי|איטי|לסירוגין',
+  'zh-CN': '功能（可选）|发生了什么？（可选）|无法使用|缺失|不正确|缓慢|间歇出现',
+  'zh-TW': '功能（選填）|發生了什麼？（選填）|無法使用|缺少|不正確|緩慢|間歇出現',
+  ja: '機能（任意）|何が起きましたか？（任意）|動作しない|表示されない|正しくない|遅い|時々発生',
+  ko: '기능 (선택 사항)|무슨 일이 있었나요? (선택 사항)|작동하지 않음|없음|잘못됨|느림|간헐적',
+  id: 'Fitur (opsional)|Apa yang terjadi? (opsional)|Tidak berfungsi|Hilang|Tidak benar|Lambat|Kadang-kadang',
+  vi: 'Tính năng (không bắt buộc)|Điều gì đã xảy ra? (không bắt buộc)|Không hoạt động|Bị thiếu|Không chính xác|Chậm|Thỉnh thoảng',
+  th: 'คุณสมบัติ (ไม่บังคับ)|เกิดอะไรขึ้น? (ไม่บังคับ)|ไม่ทำงาน|หายไป|ไม่ถูกต้อง|ช้า|เป็นบางครั้ง',
+  es: 'Función (opcional)|¿Qué ocurrió? (opcional)|No funciona|Falta|Incorrecto|Lento|Intermitente',
+  'pt-BR': 'Recurso (opcional)|O que aconteceu? (opcional)|Não funciona|Ausente|Incorreto|Lento|Intermitente',
+  'pt-PT': 'Funcionalidade (opcional)|O que aconteceu? (opcional)|Não funciona|Em falta|Incorreto|Lento|Intermitente',
+  ru: 'Функция (необязательно)|Что произошло? (необязательно)|Не работает|Отсутствует|Неверно|Медленно|Периодически',
+  fr: 'Fonction (facultatif)|Que s’est-il passé ? (facultatif)|Ne fonctionne pas|Manquant|Incorrect|Lent|Intermittent',
+  de: 'Funktion (optional)|Was ist passiert? (optional)|Funktioniert nicht|Fehlt|Fehlerhaft|Langsam|Zeitweise',
+  it: 'Funzione (facoltativo)|Che cosa è successo? (facoltativo)|Non funziona|Mancante|Errato|Lento|Intermittente',
+  tr: 'Özellik (isteğe bağlı)|Ne oldu? (isteğe bağlı)|Çalışmıyor|Eksik|Yanlış|Yavaş|Aralıklı',
+  pl: 'Funkcja (opcjonalnie)|Co się stało? (opcjonalnie)|Nie działa|Brakuje|Niepoprawnie|Wolno|Sporadycznie',
+  hu: 'Funkció (nem kötelező)|Mi történt? (nem kötelező)|Nem működik|Hiányzik|Hibás|Lassú|Időszakos',
+  sv: 'Funktion (valfritt)|Vad hände? (valfritt)|Fungerar inte|Saknas|Felaktigt|Långsamt|Ibland',
+  cs: 'Funkce (nepovinné)|Co se stalo? (nepovinné)|Nefunguje|Chybí|Nesprávné|Pomalé|Občasné',
+  uk: 'Функція (необов’язково)|Що сталося? (необов’язково)|Не працює|Відсутнє|Неправильно|Повільно|Періодично',
+  ca: 'Funció (opcional)|Què ha passat? (opcional)|No funciona|Falta|Incorrecte|Lent|Intermitent',
+  el: 'Λειτουργία (προαιρετικό)|Τι συνέβη; (προαιρετικό)|Δεν λειτουργεί|Λείπει|Λανθασμένο|Αργό|Διακοπτόμενο',
+  ro: 'Funcție (opțional)|Ce s-a întâmplat? (opțional)|Nu funcționează|Lipsește|Incorect|Lent|Intermitent',
+  nb: 'Funksjon (valgfritt)|Hva skjedde? (valgfritt)|Virker ikke|Mangler|Feil|Tregt|Av og til',
+  am: 'ባህሪ (አማራጭ)|ምን ተከሰተ? (አማራጭ)|አይሰራም|ጠፍቷል|ትክክል አይደለም|ዝግ ያለ|አልፎ አልፎ',
+  bg: 'Функция (по избор)|Какво се случи? (по избор)|Не работи|Липсва|Неправилно|Бавно|Понякога',
+  bs: 'Funkcija (opcionalno)|Šta se dogodilo? (opcionalno)|Ne radi|Nedostaje|Pogrešno|Sporo|Povremeno',
+  da: 'Funktion (valgfrit)|Hvad skete der? (valgfrit)|Virker ikke|Mangler|Forkert|Langsomt|Af og til',
+  et: 'Funktsioon (valikuline)|Mis juhtus? (valikuline)|Ei tööta|Puudub|Vale|Aeglane|Vahelduv',
+  fil: 'Tampok (opsyonal)|Ano ang nangyari? (opsyonal)|Hindi gumagana|Nawawala|Mali|Mabagal|Paminsan-minsan',
+  fi: 'Toiminto (valinnainen)|Mitä tapahtui? (valinnainen)|Ei toimi|Puuttuu|Virheellinen|Hidas|Ajoittainen',
+  gu: 'સુવિધા (વૈકલ્પિક)|શું થયું? (વૈકલ્પિક)|કામ કરતું નથી|ગાયબ|ખોટું|ધીમું|ક્યારેક',
+  hr: 'Značajka (neobavezno)|Što se dogodilo? (neobavezno)|Ne radi|Nedostaje|Netočno|Sporo|Povremeno',
+  hy: 'Գործառույթ (ըստ ցանկության)|Ի՞նչ է պատահել (ըստ ցանկության)|Չի աշխատում|Բացակայում է|Սխալ|Դանդաղ|Երբեմն',
+  is: 'Eiginleiki (valfrjálst)|Hvað gerðist? (valfrjálst)|Virkar ekki|Vantar|Rangt|Hægt|Stundum',
+  ka: 'ფუნქცია (არასავალდებულო)|რა მოხდა? (არასავალდებულო)|არ მუშაობს|აკლია|არასწორია|ნელია|პერიოდულად',
+  kk: 'Мүмкіндік (міндетті емес)|Не болды? (міндетті емес)|Жұмыс істемейді|Жоқ|Қате|Баяу|Кейде',
+  kn: 'ವೈಶಿಷ್ಟ್ಯ (ಐಚ್ಛಿಕ)|ಏನಾಯಿತು? (ಐಚ್ಛಿಕ)|ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ|ಕಾಣೆಯಾಗಿದೆ|ತಪ್ಪಾಗಿದೆ|ನಿಧಾನ|ಕೆಲವೊಮ್ಮೆ',
+  lt: 'Funkcija (neprivaloma)|Kas nutiko? (neprivaloma)|Neveikia|Trūksta|Neteisinga|Lėtai|Protarpiais',
+  lv: 'Funkcija (neobligāti)|Kas notika? (neobligāti)|Nedarbojas|Trūkst|Nepareizi|Lēni|Periodiski',
+  mk: 'Функција (незадолжително)|Што се случи? (незадолжително)|Не работи|Недостасува|Неточно|Бавно|Повремено',
+  ml: 'സവിശേഷത (ഐച്ഛികം)|എന്ത് സംഭവിച്ചു? (ഐച്ഛികം)|പ്രവർത്തിക്കുന്നില്ല|കാണാനില്ല|തെറ്റാണ്|മന്ദഗതിയിൽ|ഇടയ്ക്കിടെ',
+  mn: 'Боломж (заавал биш)|Юу болсон бэ? (заавал биш)|Ажиллахгүй|Алга|Буруу|Удаан|Заримдаа',
+  ms: 'Ciri (pilihan)|Apa yang berlaku? (pilihan)|Tidak berfungsi|Hilang|Tidak betul|Perlahan|Sekali-sekala',
+  my: 'လုပ်ဆောင်ချက် (ရွေးချယ်နိုင်)|ဘာဖြစ်ခဲ့သလဲ။ (ရွေးချယ်နိုင်)|အလုပ်မလုပ်ပါ|ပျောက်နေသည်|မမှန်ပါ|နှေးသည်|တစ်ခါတစ်ရံ',
+  nl: 'Functie (optioneel)|Wat gebeurde er? (optioneel)|Werkt niet|Ontbreekt|Onjuist|Traag|Af en toe',
+  pa: 'ਵਿਸ਼ੇਸ਼ਤਾ (ਵਿਕਲਪਿਕ)|ਕੀ ਹੋਇਆ? (ਵਿਕਲਪਿਕ)|ਕੰਮ ਨਹੀਂ ਕਰਦਾ|ਗਾਇਬ|ਗਲਤ|ਹੌਲੀ|ਕਦੇ-ਕਦੇ',
+  sk: 'Funkcia (nepovinné)|Čo sa stalo? (nepovinné)|Nefunguje|Chýba|Nesprávne|Pomalé|Občasné',
+  sl: 'Funkcija (neobvezno)|Kaj se je zgodilo? (neobvezno)|Ne deluje|Manjka|Napačno|Počasi|Občasno',
+  so: 'Astaanta (ikhtiyaari)|Maxaa dhacay? (ikhtiyaari)|Ma shaqaynayo|Maqan|Khaldan|Gaabis|Mararka qaarkood',
+  sq: 'Veçoria (opsionale)|Çfarë ndodhi? (opsionale)|Nuk funksionon|Mungon|E pasaktë|E ngadaltë|Herë pas here',
+  sr: 'Функција (необавезно)|Шта се догодило? (необавезно)|Не ради|Недостаје|Нетачно|Споро|Повремено',
+  sw: 'Kipengele (hiari)|Nini kilitokea? (hiari)|Hakifanyi kazi|Hakipo|Si sahihi|Polepole|Mara kwa mara',
+  ur: 'خصوصیت (اختیاری)|کیا ہوا؟ (اختیاری)|کام نہیں کرتا|غائب|غلط|سست|کبھی کبھار',
+  'hi-Latn': 'Feature (vaikalpik)|Kya hua? (vaikalpik)|Kaam nahi kar raha|Gayab|Galat|Dheema|Kabhi-kabhi',
+};
+labels['es-419'] = labels.es; labels['fr-CA'] = labels.fr; labels['zh-HK'] = labels['zh-TW'];
+
+export const feedbackContextCopy = Object.fromEntries(Object.entries(releaseLocales).map(([locale, release]) => {
+  const t = LOCALES[locale as keyof typeof LOCALES];
+  const values = labels[locale]?.split('|');
+  if (!values || values.length !== 7 || values.some(value => !value.trim())) throw new Error(`Incomplete optional feedback copy: ${locale}`);
+  return [locale, { featurePrompt: values[0], symptomPrompt: values[1],
+    features: { controls: t.popup.tabs.controls, playback: t.content.shortcutsPopover.playPause, seek: t.content.shortcutsPopover.smoothScrub, speed: t.content.tooltips.speed, volume: t.content.tooltips.volume, download: t.content.tooltips.download, shortcuts: t.content.tooltips.shortcuts, language: release.language, other: release.reasonOther },
+    symptoms: { not_working: values[2], missing: values[3], incorrect: values[4], slow: values[5], intermittent: values[6], other: release.reasonOther } }];
+}));
