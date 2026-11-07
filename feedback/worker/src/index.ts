@@ -1,3 +1,4 @@
+import { parseFeedbackContext, canonicalFeedbackPayload } from './context';
 import releaseLocales from './locales.generated.json';
 import { renderForm } from './page';
 import { refreshStats, serveStats } from './extension-stats';
@@ -69,7 +70,9 @@ export default {
       || typeof browser !== 'string' || !browsers.includes(browser)
       || typeof os !== 'string' || !systems.includes(os)
       || typeof token !== 'string' || token.length > 2048 || input.website) return json({ saved: false, error: 'invalid' }, 400);
-    const payload = JSON.stringify([source, reason, comment, locale, version, browser, os, 1]);
+    const context = parseFeedbackContext(input);
+    if (!context) return json({ saved: false, error: 'invalid' }, 400);
+    const payload = canonicalFeedbackPayload([source, reason, comment, locale, version, browser, os], context);
     const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(payload))), b => b.toString(16).padStart(2, '0')).join('');
     try {
       const existing = await env.DB.prepare('SELECT payload_hash FROM feedback WHERE id = ?').bind(id).first<{ payload_hash: string }>();
@@ -82,8 +85,14 @@ export default {
       const challenge = await verification.json<{ success: boolean; hostname?: string; action?: string }>();
       if (!challenge.success || (env.ENVIRONMENT !== 'local' && (challenge.hostname !== url.hostname || challenge.action !== 'feedback'))) return json({ saved: false, error: 'challenge' }, 403);
       // A unique primary key closes the race between simultaneous submissions.
-      await env.DB.prepare('INSERT INTO feedback (id, source, reason, comment, locale, extension_version, browser, os, form_version, payload_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?) ON CONFLICT(id) DO NOTHING')
-        .bind(id, source, reason, comment, locale, version, browser, os, hash).run();
+      if (context.formVersion === 1) {
+        // The old write path remains compatible before and after the additive migration.
+        await env.DB.prepare('INSERT INTO feedback (id, source, reason, comment, locale, extension_version, browser, os, form_version, payload_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?) ON CONFLICT(id) DO NOTHING')
+          .bind(id, source, reason, comment, locale, version, browser, os, hash).run();
+      } else {
+        await env.DB.prepare('INSERT INTO feedback (id, source, reason, comment, locale, extension_version, browser, os, form_version, payload_hash, feature, symptom, context_schema_version) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 2, ?, ?, ?, 2) ON CONFLICT(id) DO NOTHING')
+          .bind(id, source, reason, comment, locale, version, browser, os, hash, context.feature, context.symptom).run();
+      }
       const saved = await env.DB.prepare('SELECT payload_hash FROM feedback WHERE id = ?').bind(id).first<{ payload_hash: string }>();
       if (saved?.payload_hash !== hash) return json({ saved: false, error: 'conflict' }, 409);
       console.log(JSON.stringify({ event: 'feedback_saved', source }));

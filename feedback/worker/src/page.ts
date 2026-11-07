@@ -1,3 +1,5 @@
+import contextCopy from './context.generated.json';
+import { feedbackFeatures, feedbackSymptoms } from './context';
 import { directionForLocale } from '../../../src/shared/i18n/direction';
 import locales from './locales.generated.json';
 import names from './names.generated.json';
@@ -8,7 +10,7 @@ export function renderForm(url: URL, siteKey: string, nonce: string): string {
     siteUrl: release.siteUrl,
     intent: p.get('source') === 'installed' && ['bug', 'suggestion'].includes(p.get('intent') || '') ? p.get('intent') : null,
     locale: p.get('lang') && Object.hasOwn(locales, p.get('lang')!) ? p.get('lang') : 'en',
-    locales, names, directions: Object.fromEntries(Object.keys(locales).map(code => [code, directionForLocale(code)])), source: p.get('source') === 'installed' ? 'installed' : 'uninstall',
+    contextCopy, feedbackFeatures, feedbackSymptoms, locales, names, directions: Object.fromEntries(Object.keys(locales).map(code => [code, directionForLocale(code)])), source: p.get('source') === 'installed' ? 'installed' : 'uninstall',
     version: /^\d{1,5}\.\d{1,5}\.\d{1,5}$/.test(p.get('version') || '') ? p.get('version') : 'unknown',
     browser: ['Chrome','Chromium','Edge','Firefox','Safari'].includes(p.get('browser') || '') ? p.get('browser') : 'Other',
     os: ['Windows','macOS','Linux','ChromeOS','Android'].includes(p.get('os') || '') ? p.get('os') : 'Other',
@@ -26,6 +28,7 @@ applyTheme();
 
 *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--text);font:17px/1.5 system-ui,sans-serif}main{max-width:700px;margin:auto;padding:32px 20px 64px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px}select{max-width:150px;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)}h1{font-size:clamp(28px,6vw,42px);line-height:1.15;margin:42px 0 16px;letter-spacing:-.035em}p{margin:12px 0}.muted{color:var(--muted);font-size:14px}fieldset{border:0;padding:0;margin:24px 0}legend{margin-bottom:12px}.reason{display:flex;align-items:center;gap:12px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:8px 0;cursor:pointer}.reason:has(input:checked){border-color:var(--accent);background:var(--selected);box-shadow:0 0 0 1px var(--accent)}input[type=radio]{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}button{font:inherit;border-radius:10px;padding:12px 20px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text)}button[type=submit]{background:var(--button);color:var(--on-button);border-color:var(--button)}button:disabled{opacity:.6;cursor:wait}:focus-visible{outline:3px solid #df9a32;outline-offset:3px}textarea{display:block;width:100%;min-height:110px;resize:vertical;border:1px solid var(--border);border-radius:8px;padding:12px;font:inherit;background:var(--surface);color:var(--text)}summary{cursor:pointer;padding:12px 0}.actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}#error{color:var(--error)}#done{padding:40px 0}.trap{position:fixed;left:0;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}[hidden]{display:none!important}
 a{color:var(--accent)}.preferences{display:flex;gap:8px}.preference{position:relative;display:flex;align-items:center;justify-content:center;gap:5px;width:58px;height:44px;border:1px solid var(--border);border-radius:12px;background:var(--page)}.preference:hover{background:var(--hover)}.preference:focus-within{outline:2px solid var(--accent);outline-offset:4px}.preference:has(select:disabled){opacity:.6}.preference svg{width:20px;height:20px;pointer-events:none;flex-shrink:0}.preference .chevron{width:14px;height:14px}.preference select{position:absolute;inset:0;width:100%;height:100%;max-width:none;opacity:0;cursor:pointer}.preference select:disabled{cursor:wait}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.theme-icon{display:none}.preference[data-choice=system] .system-icon,.preference[data-choice=light] .sun-icon,.preference[data-choice=dark] .moon-icon{display:block}:focus-visible{outline-color:var(--accent)}@media(forced-colors:active){.preference{width:auto;min-width:58px}.preference svg{display:none!important}.preference select{position:static;opacity:1;width:auto}}
+.context-options{display:flex;flex-wrap:wrap;gap:8px}.context-options button{font-size:14px;min-height:44px;padding:8px 12px;max-width:100%;overflow-wrap:anywhere}.context-options button[aria-pressed=true]{border-color:var(--accent);background:var(--selected)}
 </style></head><body><main>
 <header><strong>ChatGPT Audio Controls</strong><div class="preferences">
 <label class="preference"><span id="languageLabel" class="sr-only">Language</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6m-7 0 6-6 2-3M2 5h12M7 2v3m15 17-5-10-5 10m2-4h6"/></svg><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><select id="language"></select></label>
@@ -37,6 +40,8 @@ a{color:var(--accent)}.preferences{display:flex;gap:8px}.preference{position:rel
 </div></header>
 <section id="survey"><h1 data-copy="surveyTitle"></h1><p data-copy="surveyIntro"></p>
 <form id="form"><fieldset id="reasons"><legend data-copy="surveyHint"></legend></fieldset>
+<fieldset id="feature-context" hidden><legend id="feature-prompt"></legend><div id="features" class="context-options"></div></fieldset>
+<fieldset id="symptom-context" hidden><legend id="symptom-prompt"></legend><div id="symptoms" class="context-options"></div></fieldset>
 <details><summary data-copy="addNote"></summary><label class="muted" for="note" data-copy="noteHint"></label><textarea id="note" maxlength="1000" aria-describedby="privacy"></textarea></details>
 <label class="trap" aria-hidden="true">Website<input id="website" tabindex="-1" autocomplete="off"></label>
 <div id="challenge"></div><p id="error" role="alert"></p><div class="actions"><button id="send" type="submit" data-copy="send"></button><button type="button" id="skip" data-copy="skip"></button></div>
@@ -47,7 +52,7 @@ const state = ${JSON.stringify(state).replace(/</g, '\\u003c')};
 const codes = state.source === 'installed' ? ['bug','suggestion','other'] : ['broken','intrusive','slow','difficult','missing','language','unneeded','other'];
 const keys = state.source === 'installed' ? ['feedbackBug','feedbackSuggestion','reasonOther'] : ['reasonBroken','reasonIntrusive','reasonSlow','reasonDifficult','reasonMissing','reasonLanguage','reasonUnneeded','reasonOther'];
 const $ = id => document.getElementById(id);
-let saving=false, finished='', errorKey='', widget, challengeToken='', lastPayload='', requestId=crypto.randomUUID();
+let saving=false, finished='', errorKey='', widget, challengeToken='', lastPayload='', requestId=crypto.randomUUID(), feature=null, symptom=null;
 const copy=()=>state.locales[state.locale]||state.locales.en;
 if(state.source==='installed') {
  document.querySelector('[data-copy="surveyTitle"]').dataset.copy='send';
@@ -56,10 +61,14 @@ if(state.source==='installed') {
 for(const [value,name] of Object.entries(state.names)) $('language').add(new Option(name,value));
 $('language').value=state.locale;$('theme').value=themeChoice;
 codes.forEach((code,index)=>{const label=document.createElement('label');label.className='reason';const input=document.createElement('input');input.type='radio';input.name='reason';input.value=code;input.checked=code===state.intent;const text=document.createElement('span');text.dataset.copy=keys[index];label.append(input,text);$('reasons').append(label);});
+function contextLabels(){const c=state.contextCopy[state.locale];$('feature-prompt').textContent=c.featurePrompt;$('symptom-prompt').textContent=c.symptomPrompt;for(const button of $('features').children)button.textContent=c.features[button.value];for(const button of $('symptoms').children)button.textContent=c.symptoms[button.value];}
+function contextVisibility(){const selected=document.querySelector('input[name=reason]:checked');const visible=selected&&['bug','broken'].includes(selected.value);if(!visible){feature=null;symptom=null;}$('feature-context').hidden=!visible;$('symptom-context').hidden=!visible||!feature;for(const button of $('features').children)button.setAttribute('aria-pressed',String(button.value===feature));for(const button of $('symptoms').children)button.setAttribute('aria-pressed',String(button.value===symptom));}
+for(const [group,values] of [['features',state.feedbackFeatures],['symptoms',state.feedbackSymptoms]])for(const value of values){const button=document.createElement('button');button.type='button';button.value=value;button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>{if(saving)return;if(group==='features'){feature=feature===value?null:value;symptom=null;}else symptom=symptom===value?null:value;contextVisibility();});$(group).append(button);}
+$('reasons').addEventListener('change',contextVisibility);
 function preferenceLabels(){$('language').title=copy().language+': '+state.names[state.locale];$('theme').title=copy().appearance+': '+$('theme').selectedOptions[0].textContent;$('theme-control').dataset.choice=themeChoice;}
-function translate(){document.documentElement.lang=state.locale;document.documentElement.dir=state.directions[state.locale];$('privacy-link').href=state.siteUrl+(state.locale==='en'?'':state.locale+'/')+'#privacy';document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=copy()[el.dataset.copy]);$('languageLabel').textContent=copy().language;preferenceLabels();$('error').textContent=errorKey?copy()[errorKey]:'';if(finished)$('confirmation').textContent=copy()[finished];}
+function translate(){contextLabels();document.documentElement.lang=state.locale;document.documentElement.dir=state.directions[state.locale];$('privacy-link').href=state.siteUrl+(state.locale==='en'?'':state.locale+'/')+'#privacy';document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=copy()[el.dataset.copy]);$('languageLabel').textContent=copy().language;preferenceLabels();$('error').textContent=errorKey?copy()[errorKey]:'';if(finished)$('confirmation').textContent=copy()[finished];}
 function done(key){finished=key;$('survey').hidden=true;$('done').hidden=false;translate();$('done').focus();}
-function busy(value){saving=value;for(const id of ['send','skip','language','theme','reasons','note'])$(id).disabled=value;$('send').textContent=copy()[value?'sending':'send'];}
+function busy(value){saving=value;for(const id of ['send','skip','language','theme','reasons','note','feature-context','symptom-context'])$(id).disabled=value;$('send').textContent=copy()[value?'sending':'send'];}
 $('language').addEventListener('change',()=>{state.locale=$('language').value;translate();});
 $('skip').addEventListener('click',()=>{if(!saving)done('goodbye');});
 window.feedbackChallengeReady=()=>{widget=turnstile.render('#challenge',{sitekey:${JSON.stringify(siteKey)},action:'feedback',theme:document.documentElement.dataset.theme,callback:token=>{challengeToken=token;},'expired-callback':()=>{challengeToken='';},'error-callback':()=>{challengeToken='';errorKey='feedbackError';translate();}});};
@@ -72,6 +81,7 @@ $('form').addEventListener('submit',async event=>{
  const selected=document.querySelector('input[name=reason]:checked');
  if(!selected){errorKey='chooseReason';translate();document.querySelector('input[name=reason]').focus();return;}
  const data={source:state.source,reason:selected.value,comment:$('note').value,locale:state.locale,version:state.version,browser:state.browser,os:state.os};
+ if(feature){data.form_version=2;data.context_schema_version=2;data.feature=feature;if(symptom)data.symptom=symptom;}
  const serialized=JSON.stringify(data);if(lastPayload&&lastPayload!==serialized)requestId=crypto.randomUUID();lastPayload=serialized;
  errorKey='';translate();busy(true);
  try{
@@ -80,6 +90,6 @@ $('form').addEventListener('submit',async event=>{
   busy(false);done(state.source==='installed'?'feedbackThanks':'thanks');
  }catch{busy(false);errorKey='feedbackError';translate();challengeToken='';if(window.turnstile&&widget!==undefined)turnstile.reset(widget);}
 });
-translate();
+contextVisibility();translate();
 </script><script nonce="${nonce}" src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=feedbackChallengeReady&render=explicit" async defer></script></body></html>`;
 }
