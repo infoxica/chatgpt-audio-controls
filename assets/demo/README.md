@@ -1,32 +1,36 @@
-# Website demo — 2026-11-01
+# Website demonstration media
 
-The 23-second silent MP4 and four screenshots were captured from the built 1.4.0 extension in a fresh temporary Chromium profile. The conversation is a locally served fictional morning-routine example, not a personal chat. The player UI is real; the surrounding page is a demonstration fixture, not a live ChatGPT acceptance recording. Generated silent PCM supplies the retained audio payload, so the video makes no voice-quality claim.
+## Current screenshots — 2026-11-07
 
-## Privacy
+The current 1.4.2 build supplies six 1920×1080 PNGs: `composer-dock.png`,
+`corner-layout.png`, `side-layout.png`, `original-layout.png`, `split-bottom.png`
+and `settings.png`. The split-bottom capture uses a taller fictional composer.
+The website uses dock, corner, side, bottom split and settings; README also shows
+original top alignment. Captures are native-size, not enlarged store images.
 
-- No connection to the owner's browser, profile, cookies, account, tabs, chat history or desktop recording.
-- Only page content is captured; no browser chrome, notifications, filenames or account identity.
-- All page network requests are fulfilled locally or blocked, except the installed extension's own static assets. The capture log contains only the fictional page, generated audio and extension bundles.
-- Video audio and metadata are removed during H.264 encoding. No microphone or system audio is recorded.
-- Reviewed all four screenshots and a contact sheet sampled every three seconds from the final video.
-- These replace the website's earlier live-composer screenshot and dashboard image. Older store assets are unchanged.
+Run `bun run build`, then `node scripts/build-store-assets.mjs` to refresh both
+website and store screenshots. The fixture is `scripts/fixtures/website-demo.html`.
+The capture verifies player bounds and the attached dock width, and saves its
+network audit in `build/store-artwork/network-audit.json`. Inspect regenerated
+images before running `bun run build:site` or publishing.
 
-## Contents and reproduction
+## Existing walkthrough
 
-- `walkthrough.mp4`: playback, speed selection, seeking, retained-audio download, collapse/expand and corner/composer placement; 1920×1080 (16:9) H.264, 1,004,159 bytes, 22.88 seconds.
-- `composer-dock.png`, `corner-layout.png`, `settings.png`, `original-layout.png`: 1920×1080 screenshots.
-- `chapters.json`: accessible English transcript, also rendered below the website video.
+`walkthrough.mp4` and `chapters.json` retain the previously recorded silent FHD
+walkthrough: playback, speed, seeking, download, collapse and docking. This task
+refreshes screenshots and promotional artwork; it does not rerecord that video.
+To regenerate the video separately, use `node scripts/capture-website-demo.mjs`
+with FFmpeg installed, then rerun the store-artwork script for the current stills.
+The video has native controls, no autoplay and no third-party embed.
 
-Run `bun run build`, then `node scripts/capture-website-demo.mjs` with Playwright Chromium and FFmpeg installed. The script deliberately uses a disposable profile. Never substitute a personal profile or a real logged-in page. Inspect all regenerated media before publishing. Then run `bun run build:site`.
+## Privacy and verification boundary
 
-The site hosts its own video, with native controls, `preload="none"`, no autoplay and no third-party video embed. Demo notices are localized in all 33 website languages; the recorded interface and transcript are explicitly English. Screenshots link to full-resolution assets.
+All stills use a disposable Chromium profile, locally fulfilled fictional chat
+and generated silent PCM. Only the mock page/audio and installed extension assets
+are permitted; external requests are blocked. No personal browser profile,
+conversation, account details, desktop, microphone or system audio is captured.
+The settings screenshot is a scrolled view of the real extension page.
 
-## Validation
-
-- Type checking and all 165 localized page builds passed.
-- Four browser tests passed: video playback at 1280px, 360px and Arabic RTL at 390px, plus existing consent/attribution behavior. No horizontal overflow or video request before playback.
-- Desktop/mobile screenshots reviewed locally. Publication has not been performed.
-
-## FHD refinement
-
-Captured at a 1920×1080 CSS viewport and device scale factor 1; no upscaling. The synthetic shell now follows the supplied reference: slim icon sidebar, near-black background, blue prompt bubble, centered writing card and suggestions, compact composer, and generic account icon. Actual response text and the profile image were not copied. Large chapter overlays are hidden for screenshots; the video uses compact lower-left annotations. `original-layout.png` is an additional collapsed-player comparison image. The three website images and video are refreshed; original-layout remains an extra review asset.
+These captures illustrate the current player; they do not establish live ChatGPT,
+Mac or Android acceptance. Technical capture details belong here rather than in
+public-facing README captions. Store upload and website deployment are separate.

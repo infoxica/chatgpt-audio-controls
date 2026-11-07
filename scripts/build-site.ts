@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import statsCopy from "../site/stats-copy.json";
 import imageViewerCopy from "../site/image-viewer-copy.json";
 import supportAnalyticsCopy from "../site/support-analytics-copy.json";
@@ -101,7 +101,7 @@ const changed = execFileSync(
   { encoding: "utf8" },
 )
   .split("\0")
-  .filter(Boolean);
+  .filter(file => file && existsSync(file));
 const lastModified = new Date(
   Math.max(
     Date.parse(committed),
@@ -164,7 +164,7 @@ copyFileSync(
 copyFileSync("public/icons/icon-128.png", "site-dist/assets/icon.png");
 copyFileSync("assets/demo/composer-dock.png", "site-dist/assets/player.png");
 copyFileSync("assets/demo/settings.png", "site-dist/assets/popup.png");
-for (const file of ["walkthrough.mp4", "corner-layout.png"])
+for (const file of ["walkthrough.mp4", "corner-layout.png", "side-layout.png", "split-bottom.png"])
   copyFileSync("assets/demo/" + file, "site-dist/assets/" + file);
 // Render the existing Lucide components at build time; no icon runtime or CDN.
 const icon = (component: LucideIcon, className = "") =>
@@ -514,7 +514,7 @@ for (const [code, base] of Object.entries(LOCALES)) {
   <section class="section demo-section" id="demo" aria-labelledby="demo-title"><h2 id="demo-title">${escape(demo[0])}</h2><p class="small" id="demo-note">${escape(demo[1])}</p>
   <video controls playsinline preload="none" poster="${path}assets/player.png" width="1920" height="1080" aria-label="${escape(demo[0])}" aria-describedby="demo-note"><source src="${path}assets/walkthrough.mp4" type="video/mp4"></video>
   <details class="demo-transcript" lang="en" dir="ltr"><summary>Video transcript (English)</summary><ol>${demoChapters.map((chapter) => `<li>${escape(chapter.text)}</li>`).join("")}</ol></details>
-  <div class="demo-gallery"><figure><a href="${path}assets/player.png"><img src="${path}assets/player.png" alt="${escape(c.screenshot)}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(base.content.shortcutsPopover.playPause)} · ${escape(base.content.tooltips.speed)} · ${escape(base.content.tooltips.download)}</figcaption></figure><figure><a href="${path}assets/corner-layout.png"><img src="${path}assets/corner-layout.png" alt="${escape(f.layout)}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(f.layout)}</figcaption></figure></div></section>
+  <div class="demo-gallery"><figure><a href="${path}assets/player.png"><img src="${path}assets/player.png" alt="${escape(c.screenshot)}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(base.content.shortcutsPopover.playPause)} · ${escape(base.content.tooltips.speed)} · ${escape(base.content.tooltips.download)}</figcaption></figure><figure><a href="${path}assets/corner-layout.png"><img src="${path}assets/corner-layout.png" alt="${escape(f.layout)}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(f.presets["bottom-right"])}</figcaption></figure><figure><a href="${path}assets/side-layout.png"><img src="${path}assets/side-layout.png" alt="${escape(f.presets["left"])}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(f.presets["left"])}</figcaption></figure><figure><a href="${path}assets/split-bottom.png"><img src="${path}assets/split-bottom.png" alt="${escape(f.presets["split-bottom"])}" width="1920" height="1080" loading="lazy"></a><figcaption>${escape(f.presets["split-bottom"])}</figcaption></figure></div></section>
   <section class="section feature-section" id="features"><h2>${escape(c.features)}</h2><div class="features">${features.map(([title, body], index) => `<article><span class="feature-icon">${featureIcons[index % featureIcons.length]}</span><div><h3>${escape(title)}</h3><p>${escape(body)}</p>${index === 1 ? `<div class="speed-presets" aria-label="${escape(base.content.tooltips.speed)}">${SPEED_PRESETS.map((speed) => `<span>${speed}×</span>`).join("")}</div>` : ""}</div></article>`).join("")}</div></section>
   <section class="section setup-section" id="setup"><div><h2>${escape(c.setup)}</h2><ol><li>${escape(c.stepInstall)}${install("setup")}</li><li>${escape(c.stepRead)}<p class="step-action">${linkButton("https://chatgpt.com/", base.common.openChatGPT, true)}</p></li><li>${escape(c.stepControl)}</li></ol></div><div class="shortcuts-panel"><h3>${escape(base.popup.shortcuts.title)}</h3><table><thead><tr><th scope="col">${escape(base.popup.tabs.controls)}</th><th scope="col">Windows / Linux</th><th scope="col">macOS</th></tr></thead><tbody>${shortcutRows.map(([label, windows, mac]) => `<tr><td>${escape(label)}</td><td><kbd>${escape(windows)}</kbd></td><td><kbd>${escape(mac)}</kbd></td></tr>`).join("")}</tbody></table></div></section>
   <section class="section settings-story" id="dashboard"><div><h2>${escape(base.common.dashboard)}</h2><p>${escape(base.options.headers.preferencesDesc)}</p><h3>${escape(base.options.general.languageTitle)}</h3><p>${escape(base.options.general.languageDesc)}</p><h3>${escape(base.options.general.seekTitle)}</h3><p>${escape(base.options.general.seekDesc)}</p><h3>${escape(base.options.nav.darkMode)} / ${escape(base.options.nav.lightMode)}</h3></div><figure><img src="${path}assets/popup.png" alt="${escape(base.options.headers.preferencesTitle)}" width="1920" height="1080" loading="lazy"><figcaption class="small">${escape(base.options.headers.preferencesTitle)}</figcaption></figure></section>

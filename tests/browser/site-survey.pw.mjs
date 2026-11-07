@@ -81,7 +81,7 @@ for(const [width,locale] of [[1280,''],[360,''],[390,'ar/']])test(`private demo 
   await expect.poll(()=>video.evaluate(el=>el.currentTime)).toBeGreaterThan(0.2);
   expect(await video.evaluate(el=>[el.videoWidth,el.videoHeight])).toEqual([1920,1080]);
   await video.evaluate(el=>el.pause());
-  await expect(page.locator('.demo-gallery img')).toHaveCount(2);
+  await expect(page.locator('.demo-gallery img')).toHaveCount(4);
   await page.locator('.demo-transcript summary').click();await expect(page.locator('.demo-transcript li')).toHaveCount(7);
   await page.screenshot({path:`build/browser-results/demo-site-${width}.png`});
 });
@@ -331,8 +331,8 @@ for(const [width,locale] of [[1920,''],[1920,'ar/'],[768,'de/'],[360,''],[390,'a
  await serveSite(context);await page.setViewportSize({width,height:1080});await page.goto(base+locale);
  await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar/'?'rtl':'ltr');
  await page.locator('#analytics-decline').click();
- const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(3);
- for(let i=0;i<3;i++){
+ const triggers=page.locator('main figure .image-viewer-trigger');await expect(triggers).toHaveCount(5);
+ for(let i=0;i<await triggers.count();i++){
   const trigger=triggers.nth(i);await trigger.scrollIntoViewIfNeeded();await trigger.focus();await trigger.press('Enter');
   const viewer=page.getByRole('dialog');await expect(viewer).toBeVisible();await expect(viewer.locator('button')).toBeFocused();
   await expect.poll(()=>viewer.locator('img').evaluate(el=>el.naturalWidth)).toBe(1920);

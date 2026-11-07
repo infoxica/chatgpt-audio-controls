@@ -56,9 +56,17 @@ See playback, seeking, speed, downloads and docking in action.
 
 ![Corner layout with the seekbar and playback controls](assets/demo/corner-layout.png)
 
-### Original layout
+### Split layouts
 
-![Original split player layout beside the composer](assets/demo/original-layout.png)
+Align the controls with the top or bottom of your composer.
+
+![Top-aligned split player beside the composer](assets/demo/original-layout.png)
+
+![Bottom-aligned split player beside a taller composer](assets/demo/split-bottom.png)
+
+### Side layout
+
+![Vertical playback controls and seekbar beside the conversation](assets/demo/side-layout.png)
 
 ## ✨ Features
 
