@@ -66,7 +66,7 @@ function resolveGeometry(p: LayoutProfile, v: Rect, expanded: boolean, composer:
       circle.x = rtl ? composer.x + radius : composer.x + width - radius - 44;
     }
     circleVisual = rect(circle.x + 6, circle.y + (expanded ? 8 : 16), 32, 28);
-  } else if (p.preset === 'original') {
+  } else if (p.preset === 'original' || p.preset === 'split-bottom') {
     const width = Math.min(420, v.width - 50);
     const leftSpace = composer ? composer.x - v.x - gap : 0;
     const rightSpace = composer ? v.x + v.width - composer.x - composer.width - 44 - gap * 2 : 0;
@@ -77,9 +77,10 @@ function resolveGeometry(p: LayoutProfile, v: Rect, expanded: boolean, composer:
     }
     if (composer && leftSpace >= (p.seekFirst ? 220 : controlsLength) && rightSpace >= (p.seekFirst ? controlsLength : 220)) {
       const length = Math.min(560, p.seekFirst ? leftSpace : rightSpace);
-      circle = rect(composer.x + composer.width + gap, composer.y + 2, 44, 44);
-      a = rect(p.seekFirst ? composer.x - length - gap : circle.x + 44 + gap, composer.y, length, 48);
-      b = rect(p.seekFirst ? circle.x + 44 + gap : composer.x - controlsLength - gap, composer.y, controlsLength, 48);
+      const y = p.preset === 'split-bottom' ? Math.max(composer.y, composer.y + composer.height - thick) : composer.y;
+      circle = rect(composer.x + composer.width + gap, y + 2, 44, 44);
+      a = rect(p.seekFirst ? composer.x - length - gap : circle.x + 44 + gap, y, length, 48);
+      b = rect(p.seekFirst ? circle.x + 44 + gap : composer.x - controlsLength - gap, y, controlsLength, 48);
     } else {
       const h = 48;
       compactControls = width < FULL_CONTROLS_LENGTH;

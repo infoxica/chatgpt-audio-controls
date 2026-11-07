@@ -121,6 +121,38 @@ SHA-256 `733732f8271a61bb0d933f40dfcc895abc15bc7bebffb319e036e742788e399f`.
 Version/source release checks pass; tagged publication acceptance was not granted.
 This supersedes the earlier local package hash above.
 
+## Split alignment and docked defaults (2026-11-07)
+
+- Desktop placement now offers `Split (top)` (the existing `original` preset)
+  and `Split (bottom)` (`split-bottom`). Bottom alignment follows the composer's
+  lower edge as its height changes, for either pill order. The same geometry is
+  used by rendering, collisions and drag previews. Constrained screens retain
+  the existing temporary fallback rather than overwriting the saved choice.
+- Fresh profiles and Reset layout use composer docking on desktop and mobile.
+  Existing version-2 preferences are unchanged. Version-1 automatic/unsupported
+  profiles still migrate to their previous original split behavior.
+- The shared settings selectors and userscript expose localized split labels in
+  all 67 locales. Layout storage keys/schema, physical RTL positioning, playback
+  controls and permissions are unchanged.
+- Type checking/build, all 82 unit tests, exact userscript parity, locale-key
+  coverage and 1.4.2 version/package checks pass. Logs: `build/split-bottom-build.log`
+  and `build/split-bottom-unit.log`.
+- The earlier hover timeout recurred in the focused run. The drag fixture now
+  foregrounds its page (fresh installation can open the tour) and awaits FLIP
+  completion before hover hit testing. Two repeated runs pass in both distributions
+  (`build/split-drag-check.log`), without forced clicks or disabled animations.
+- Local ZIP: `dist-zip/chatgpt-audio-controls-v1.4.2.zip`, 99 entries, SHA-256
+  `352fefd51a9c873b14c0b6c719cf2efcc5e44b72c926ccfe7830b3ed52e9e15b`.
+  This supersedes the preceding package hashes. Native-device acceptance remains
+  pending; these checks do not publish the candidate.
+- The complete player and support browser suites pass: 101 passed, one expected
+  userscript-only skip for extension dashboard/popup pages (8.2 minutes).
+  Log: `build/split-final-browser.log`. Coverage includes fresh dock defaults,
+  both split alignments/orders, composer growth, active drop geometry, persistence,
+  narrow-screen restoration, keyboard settings/reset and playback recovery in both
+  distributions. Privacy-safe tall-composer captures are
+  `build/split-bottom-extension.png` and `build/split-bottom-userscript.png`.
+
 ## Acceptance boundaries
 
 Verify live slow/long Read Aloud responses in Chrome and Edge, including playback

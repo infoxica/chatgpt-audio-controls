@@ -147,11 +147,14 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     else await page.evaluate(value=>{localStorage.setItem('cgpt-ra-settings',JSON.stringify(value));window.postMessage({source:'chatgpt-audio-controls-settings-bridge',type:'CGPT_RA_SETTINGS_UPDATE',settings:value},'*');},value);
   }
   async function startDrag(page, selector) {
-    await page.locator(selector).hover();
+    // Fresh installs may open the welcome tab. A drag is a foreground action;
+    // settle its animation before hit testing rather than hovering a moving rail.
+    await page.bringToFront();
     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     // Layout saves settle with a FLIP animation. Read coordinates after it
     // finishes so a normal drag cannot miss the moving handle.
     await page.locator(selector).evaluate(el=>Promise.all(el.getAnimations().map(animation=>animation.finished.catch(()=>{}))));
+    await page.locator(selector).hover();
     const box=await page.locator(selector).boundingBox();
     await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.down();await page.mouse.move(box.x+box.width/2-12,box.y+box.height/2-12);
     await expect(page.locator('#cgpt-ra-drop-targets')).toBeVisible();
@@ -285,7 +288,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     await circle.click();await expect(circle).toHaveAttribute('aria-expanded','false');await circle.click();
     const box=await circle.boundingBox();await page.mouse.move(box.x+22,box.y+22);await page.mouse.down();await page.mouse.move(box.x+25,box.y+22);
     await expect(page.locator('#cgpt-ra-drop-targets')).toHaveCount(0);await page.mouse.up();await expect(circle).toHaveAttribute('aria-expanded','false');await circle.click();await expect(circle).toHaveAttribute('aria-expanded','true');
-    await startDrag(page,'#cgpt-ra-floating-toggle');await expect(page.locator('.cgpt-ra-drop-target')).toHaveCount(8);
+    await startDrag(page,'#cgpt-ra-floating-toggle');await expect(page.locator('.cgpt-ra-drop-target')).toHaveCount(9);
     await drop(page,'.cgpt-ra-drop-target[data-preset="top-left"] [data-part="circle"]');
     await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');await expect(circle).toHaveAttribute('aria-expanded','true');
     const saved=await storedLayout(page);
@@ -356,7 +359,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
   });
   test('all desktop arrangements and orders fit, narrow fallback preserves preference',async()=>{
     const page=await open(1600);await page.setViewportSize({width:1600,height:1100});await page.locator('#native-read').click();
-    for(const preset of ['original','composer','top-left','top-right','bottom-left','bottom-right','left','right'])for(const seekFirst of [true,false]) {
+    for(const preset of ['original','split-bottom','composer','top-left','top-right','bottom-left','bottom-right','left','right'])for(const seekFirst of [true,false]) {
       await layout(page,profile({preset,seekFirst}));
       await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('data-preset',preset);
       await expect.poll(()=>page.evaluate(()=>{const ids=['cgpt-ra-left','cgpt-ra-right','cgpt-ra-floating-toggle'];const rects=ids.map(id=>document.getElementById(id).getBoundingClientRect());return rects.every((r,i)=>r.width>0&&r.height>0&&r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight&&rects.every((s,j)=>i===j||r.right<=s.left||r.left>=s.right||r.bottom<=s.top||r.top>=s.bottom));})).toBe(true);
@@ -375,6 +378,42 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       expect(await storedLayout(page)).toEqual(saved);
     }
     await page.setViewportSize({width:390,height:400});await expect(page.locator('#cgpt-ra-floating-toggle')).toBeVisible();expect(await storedLayout(page)).toEqual(saved);
+    await layout(page);await page.close();
+  });
+  test('fresh layout docks and split bottom tracks a tall composer with exact drag previews',async()=>{
+    const page=await open(1512);await page.emulateMedia({reducedMotion:'reduce'});
+    await setting(page,{language:'en',notifyDownloadReady:false});
+    if(distribution==='extension')await worker.evaluate(key=>chrome.storage.local.remove(key),layoutKey);
+    else await page.evaluate(key=>localStorage.removeItem(key),layoutKey);
+    await page.reload();const circle=page.locator('#cgpt-ra-floating-toggle');
+    await expect(circle).toHaveAttribute('data-preset','composer');
+    await circle.click();await expect(page.locator('#cgpt-ra-dock')).toBeVisible();
+    for(const seekFirst of [true,false]) {
+      await layout(page,profile({preset:'split-bottom',seekFirst}));
+      for(const height of [120,450,650]) {
+        await page.locator('form').evaluate((e,height)=>e.style.height=height+'px',height);
+        await expect.poll(()=>page.evaluate(()=>{
+          const c=document.querySelector('form').getBoundingClientRect();
+          return ['#cgpt-ra-left','#cgpt-ra-right'].every(id=>Math.abs(document.querySelector(id).getBoundingClientRect().bottom-c.bottom)<.5);
+        })).toBe(true);
+      }
+      if(seekFirst)await page.screenshot({path:`build/split-bottom-${distribution}.png`});
+      await startDrag(page,'#cgpt-ra-left .cgpt-ra-grip');
+      await expect(page.locator('.cgpt-ra-drop-target')).toHaveAttribute('data-preset','split-bottom');
+      await page.keyboard.press('Escape');await page.mouse.up();
+    }
+    await layout(page,profile());await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('#cgpt-ra-left').getBoundingClientRect().top-document.querySelector('form').getBoundingClientRect().top))).toBeLessThan(.5);
+    await startDrag(page,'#cgpt-ra-floating-toggle');
+    const target=page.locator('.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="circle"]');
+    const box=await target.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+    await expect(page.locator('.cgpt-ra-drop-target[data-preset="split-bottom"]')).toHaveClass(/cgpt-ra-drop-active/);
+    await expect.poll(()=>page.evaluate(()=>Math.abs(document.querySelector('.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="seek"]').getBoundingClientRect().bottom-document.querySelector('form').getBoundingClientRect().bottom))).toBeLessThan(.5);
+    await drop(page,'.cgpt-ra-drop-target[data-preset="split-bottom"] [data-part="circle"]');
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('split-bottom');
+    await page.reload();await expect(circle).toHaveAttribute('data-preset','split-bottom');await circle.click();
+    await page.setViewportSize({width:390,height:800});await expect(circle).toHaveAttribute('data-preset','composer');
+    expect((await storedLayout(page)).desktop.preset).toBe('split-bottom');
+    await page.setViewportSize({width:1512,height:800});await expect(circle).toHaveAttribute('data-preset','split-bottom');
     await layout(page);await page.close();
   });
   test('download readiness precedes playback end, reuses bytes, obeys preference and clears on navigation',async()=>{
@@ -874,12 +913,12 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
       }
     }
     await setting(page,{language:'en'});await page.reload();
-    await page.locator('.layout-settings').getByLabel('Placement',{exact:true}).selectOption('top-left');
-    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('top-left');
+    await page.locator('.layout-settings').getByLabel('Placement',{exact:true}).selectOption({label:'Split (bottom)'});
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('split-bottom');
     await page.locator('.layout-settings').getByLabel('Seek pill first',{exact:true}).uncheck();
     await expect.poll(async()=>(await storedLayout(page)).desktop.seekFirst).toBe(false);
     await page.locator('.layout-settings').getByRole('button',{name:'Reset layout'}).click();
-    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('original');
+    await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('composer');
     await page.getByRole('button',{name:'Shortcuts & Gestures'}).click();
     await expect(page.locator('.release-ui kbd')).toHaveCount(15);await expect(page.locator('.release-ui')).toContainText('Alt+Shift+Y');
     await page.close();
@@ -972,7 +1011,7 @@ for (const distribution of ['extension','userscript']) test.describe(distributio
     const downloading=page.waitForEvent('download');await command('download-audio');expect(await fs.readFile(await(await downloading).path())).toEqual(wav());
     await command('toggle-collapse');await expect(page.locator('#cgpt-ra-floating-toggle')).toHaveAttribute('aria-expanded','false');await command('toggle-collapse');
     await command('toggle-floating-ui');await expect.poll(()=>worker.evaluate(()=>chrome.storage.sync.get('cgpt-ra-settings.floatingUiHidden').then(v=>v['cgpt-ra-settings.floatingUiHidden']))).toBe(true);await command('toggle-floating-ui');
-    await layout(page,profile({preset:'top-left'}));await command('reset-layout');await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('original');
+    await layout(page,profile({preset:'top-left'}));await command('reset-layout');await expect.poll(async()=>(await storedLayout(page)).desktop.preset).toBe('composer');
     await command('open-help');await expect(page.locator('.cgpt-ra-help')).toBeVisible();
     const opened=context.waitForEvent('page');await command('open-settings');const options=await opened;await options.waitForLoadState();await options.close();
     await worker.evaluate(()=>chrome.storage.sync.set({'cgpt-ra-settings.enableShortcuts':false}));await command('play-pause');await expect(page.locator('.cgpt-ra-play polygon')).toHaveCount(1);

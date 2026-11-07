@@ -123,8 +123,8 @@
 
   // src/shared/layout.ts
   var LAYOUT_KEY = "cgpt-ra-layout-v1";
-  var PRESETS = ["original", "bottom-left", "bottom-right", "top-left", "top-right", "left", "right", "composer"];
-  var defaultProfile = (narrow = false) => ({ preset: narrow ? "composer" : "original", seekFirst: true });
+  var PRESETS = ["composer", "original", "split-bottom", "bottom-left", "bottom-right", "top-left", "top-right", "left", "right"];
+  var defaultProfile = (_narrow = false) => ({ preset: "composer", seekFirst: true });
   var defaultLayout = () => ({ version: 2, desktop: defaultProfile(), narrow: defaultProfile(true) });
   function isLayoutProfile(value) {
     if (!value || typeof value !== "object")
@@ -143,6 +143,7 @@
     const next = defaultLayout();
     if (old?.version !== 1)
       return next;
+    next.desktop.preset = "original";
     const p = old.desktop;
     if (p && typeof p.seekFirst === "boolean") {
       next.desktop.seekFirst = p.seekFirst;
@@ -2255,6 +2256,76 @@
         "撰寫評價"
       ]
     }
+  };
+  // src/shared/i18n/split-layout.json
+  var split_layout_default = {
+    am: ["የተለያዩ አሞሌዎች (ላይ)", "የተለያዩ አሞሌዎች (ታች)"],
+    ar: ["شريطان منفصلان (أعلى)", "شريطان منفصلان (أسفل)"],
+    bg: ["Разделени ленти (горе)", "Разделени ленти (долу)"],
+    bn: ["আলাদা বার (উপরে)", "আলাদা বার (নিচে)"],
+    bs: ["Odvojene trake (gore)", "Odvojene trake (dolje)"],
+    ca: ["Barres separades (a dalt)", "Barres separades (a baix)"],
+    cs: ["Oddělené lišty (nahoře)", "Oddělené lišty (dole)"],
+    da: ["Separate bjælker (øverst)", "Separate bjælker (nederst)"],
+    de: ["Getrennte Leisten (oben)", "Getrennte Leisten (unten)"],
+    el: ["Χωριστές μπάρες (επάνω)", "Χωριστές μπάρες (κάτω)"],
+    en: ["Split (top)", "Split (bottom)"],
+    es: ["Barras separadas (arriba)", "Barras separadas (abajo)"],
+    "es-419": ["Barras separadas (arriba)", "Barras separadas (abajo)"],
+    et: ["Eraldi ribad (üleval)", "Eraldi ribad (all)"],
+    fa: ["نوارهای جدا (بالا)", "نوارهای جدا (پایین)"],
+    fi: ["Erilliset palkit (ylhäällä)", "Erilliset palkit (alhaalla)"],
+    fil: ["Magkahiwalay na bar (itaas)", "Magkahiwalay na bar (ibaba)"],
+    fr: ["Barres séparées (en haut)", "Barres séparées (en bas)"],
+    "fr-CA": ["Barres séparées (en haut)", "Barres séparées (en bas)"],
+    gu: ["અલગ પટ્ટીઓ (ઉપર)", "અલગ પટ્ટીઓ (નીચે)"],
+    he: ["סרגלים נפרדים (למעלה)", "סרגלים נפרדים (למטה)"],
+    hi: ["अलग पट्टियाँ (ऊपर)", "अलग पट्टियाँ (नीचे)"],
+    "hi-Latn": ["Alag pattiyan (upar)", "Alag pattiyan (neeche)"],
+    hr: ["Odvojene trake (gore)", "Odvojene trake (dolje)"],
+    hu: ["Külön sávok (felül)", "Külön sávok (alul)"],
+    hy: ["Առանձին վահանակներ (վերևում)", "Առանձին վահանակներ (ներքևում)"],
+    id: ["Bilah terpisah (atas)", "Bilah terpisah (bawah)"],
+    is: ["Aðskildar stikur (efst)", "Aðskildar stikur (neðst)"],
+    it: ["Barre separate (in alto)", "Barre separate (in basso)"],
+    ja: ["分割配置（上端）", "分割配置（下端）"],
+    ka: ["ცალკე ზოლები (ზემოთ)", "ცალკე ზოლები (ქვემოთ)"],
+    kk: ["Бөлек жолақтар (жоғарыда)", "Бөлек жолақтар (төменде)"],
+    kn: ["ಪ್ರತ್ಯೇಕ ಪಟ್ಟಿಗಳು (ಮೇಲೆ)", "ಪ್ರತ್ಯೇಕ ಪಟ್ಟಿಗಳು (ಕೆಳಗೆ)"],
+    ko: ["분리 배치 (상단)", "분리 배치 (하단)"],
+    lt: ["Atskiros juostos (viršuje)", "Atskiros juostos (apačioje)"],
+    lv: ["Atsevišķas joslas (augšā)", "Atsevišķas joslas (apakšā)"],
+    mk: ["Одделни ленти (горе)", "Одделни ленти (долу)"],
+    ml: ["വേർതിരിച്ച ബാറുകൾ (മുകളിൽ)", "വേർതിരിച്ച ബാറുകൾ (താഴെ)"],
+    mn: ["Тусдаа самбарууд (дээд)", "Тусдаа самбарууд (доод)"],
+    mr: ["वेगळ्या पट्ट्या (वर)", "वेगळ्या पट्ट्या (खाली)"],
+    ms: ["Bar berasingan (atas)", "Bar berasingan (bawah)"],
+    my: ["သီးခြားဘားများ (အပေါ်)", "သီးခြားဘားများ (အောက်)"],
+    nb: ["Separate linjer (øverst)", "Separate linjer (nederst)"],
+    nl: ["Aparte balken (boven)", "Aparte balken (onder)"],
+    pa: ["ਵੱਖਰੀਆਂ ਪੱਟੀਆਂ (ਉੱਪਰ)", "ਵੱਖਰੀਆਂ ਪੱਟੀਆਂ (ਹੇਠਾਂ)"],
+    pl: ["Oddzielne paski (u góry)", "Oddzielne paski (u dołu)"],
+    "pt-BR": ["Barras separadas (em cima)", "Barras separadas (embaixo)"],
+    "pt-PT": ["Barras separadas (em cima)", "Barras separadas (em baixo)"],
+    ro: ["Bare separate (sus)", "Bare separate (jos)"],
+    ru: ["Раздельные панели (сверху)", "Раздельные панели (снизу)"],
+    sk: ["Oddelené lišty (hore)", "Oddelené lišty (dole)"],
+    sl: ["Ločeni vrstici (zgoraj)", "Ločeni vrstici (spodaj)"],
+    so: ["Baarar kala go'an (sare)", "Baarar kala go'an (hoose)"],
+    sq: ["Shirita të ndarë (sipër)", "Shirita të ndarë (poshtë)"],
+    sr: ["Одвојене траке (горе)", "Одвојене траке (доле)"],
+    sv: ["Separata fält (överst)", "Separata fält (nederst)"],
+    sw: ["Pau tofauti (juu)", "Pau tofauti (chini)"],
+    ta: ["தனித்தனி பட்டைகள் (மேலே)", "தனித்தனி பட்டைகள் (கீழே)"],
+    te: ["వేర్వేరు పట్టీలు (పైన)", "వేర్వేరు పట్టీలు (కింద)"],
+    th: ["แถบแยก (ด้านบน)", "แถบแยก (ด้านล่าง)"],
+    tr: ["Ayrı çubuklar (üstte)", "Ayrı çubuklar (altta)"],
+    uk: ["Окремі панелі (зверху)", "Окремі панелі (знизу)"],
+    ur: ["الگ پٹیاں (اوپر)", "الگ پٹیاں (نیچے)"],
+    vi: ["Thanh tách rời (trên)", "Thanh tách rời (dưới)"],
+    "zh-CN": ["分离布局（顶部）", "分离布局（底部）"],
+    "zh-HK": ["分離佈局（頂部）", "分離佈局（底部）"],
+    "zh-TW": ["分離配置（頂部）", "分離配置（底部）"]
   };
 
   // src/shared/i18n/direction.ts
@@ -17005,7 +17076,8 @@
   Object.assign(dockLabels, Object.fromEntries(Object.entries(chatgpt_features_default).map(([code, copy]) => [code, copy.dock])));
   function featureCopy(language) {
     const a = catalogs[resolveLanguage(language)] || english;
-    return { presets: { original: a[3], composer: dockLabels[resolveLanguage(language)], "top-left": a[23], "top-right": a[25], left: a[26], right: a[27], "bottom-left": a[28], "bottom-right": a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
+    const split = split_layout_default[resolveLanguage(language)] || split_layout_default.en;
+    return { presets: { original: split[0], "split-bottom": split[1], composer: dockLabels[resolveLanguage(language)], "top-left": a[23], "top-right": a[25], left: a[26], right: a[27], "bottom-left": a[28], "bottom-right": a[30] }, layout: a[0], desktop: a[1], narrow: a[2], auto: a[3], placement: a[4], arrangement: a[5], arrangements: a.slice(6, 10), seekFirst: a[10], circleSide: a[11], left: a[12], right: a[13], reset: a[14], drag: a[15], ready: a[16], notify: a[17], desktopShortcuts: a[18], speedReset: a[19], volumeUp: a[20], volumeDown: a[21], mute: a[22], anchors: a.slice(23, 31), saved: a[31], swap: a[32] };
   }
   var seekCommands = {
     en: "Seek backward|Seek forward",
@@ -19446,7 +19518,7 @@
         circle.x = rtl ? composer.x + radius : composer.x + width - radius - 44;
       }
       circleVisual = rect(circle.x + 6, circle.y + (expanded ? 8 : 16), 32, 28);
-    } else if (p.preset === "original") {
+    } else if (p.preset === "original" || p.preset === "split-bottom") {
       const width = Math.min(420, v.width - 50);
       const leftSpace = composer ? composer.x - v.x - gap : 0;
       const rightSpace = composer ? v.x + v.width - composer.x - composer.width - 44 - gap * 2 : 0;
@@ -19457,9 +19529,10 @@
       }
       if (composer && leftSpace >= (p.seekFirst ? 220 : controlsLength) && rightSpace >= (p.seekFirst ? controlsLength : 220)) {
         const length = Math.min(560, p.seekFirst ? leftSpace : rightSpace);
-        circle = rect(composer.x + composer.width + gap, composer.y + 2, 44, 44);
-        a = rect(p.seekFirst ? composer.x - length - gap : circle.x + 44 + gap, composer.y, length, 48);
-        b = rect(p.seekFirst ? circle.x + 44 + gap : composer.x - controlsLength - gap, composer.y, controlsLength, 48);
+        const y = p.preset === "split-bottom" ? Math.max(composer.y, composer.y + composer.height - thick) : composer.y;
+        circle = rect(composer.x + composer.width + gap, y + 2, 44, 44);
+        a = rect(p.seekFirst ? composer.x - length - gap : circle.x + 44 + gap, y, length, 48);
+        b = rect(p.seekFirst ? circle.x + 44 + gap : composer.x - controlsLength - gap, y, controlsLength, 48);
       } else {
         const h = 48;
         compactControls = width < FULL_CONTROLS_LENGTH;
